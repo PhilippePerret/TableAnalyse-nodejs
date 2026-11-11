@@ -5,3 +5,5 @@ export const APP_FOLDER      = path.dirname(path.dirname(fileURLToPath(import.me
 export const RENDERER_FOLDER = path.join(APP_FOLDER, 'renderer')
 export const ASSETS_FOLDER   = path.join(APP_FOLDER, 'assets')
 
+
+export const APP_NAME        = "Table d'analyse"

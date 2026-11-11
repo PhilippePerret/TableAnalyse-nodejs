@@ -17,7 +17,7 @@ import { createAnalyse } from './createAnalyse.js'
 import { exportToHtml } from './exportHtml.js'
 import { buildImageFromCode } from './scoreImage.js'
 import { loadYAML } from './yaml.js'
-import { APP_FOLDER, ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
+import { APP_FOLDER, APP_NAME, ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
 
 const SMOKE = !!process.env.SA_SMOKE // lancement de contrôle, sans fenêtre visible
 
@@ -31,6 +31,13 @@ const MIME_TYPES = {
   , '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.webp': 'image/webp'
   , '.otf': 'font/otf', '.ttf': 'font/ttf', '.woff': 'font/woff', '.woff2': 'font/woff2'
 }
+
+// Nom de l'application (sinon « Electron » en développement). Le
+// dossier des données utilisateur (prefs.json) est conservé.
+const USER_DATA_FOLDER = path.join(app.getPath('appData'), 'ScoreAnalyse')
+app.setName(APP_NAME)
+app.setPath('userData', USER_DATA_FOLDER)
+app.setAboutPanelOptions({applicationName: APP_NAME, applicationVersion: APP_VERSION})
 
 let mainWindow  = null
 let current     = null    // {Analyse} analyse courante
@@ -106,7 +113,7 @@ function createWindow(){
       width:  1400
     , height: 1000
     , show:   !SMOKE
-    , title:  "Table d'analyse"
+    , title:  APP_NAME
     , webPreferences: {
           preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
         , contextIsolation: true
