@@ -114,6 +114,7 @@ function createWindow(){
     , height: 1000
     , show:   !SMOKE
     , title:  APP_NAME
+    , titleBarStyle: 'hidden' // pas de barre de titre (boutons de fenêtre conservés)
     , webPreferences: {
           preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
         , contextIsolation: true
