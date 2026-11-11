@@ -1,0 +1,4 @@
+#!/bin/zsh
+# Découpe une partition PDF en systèmes JPG (cf. main/cutter/cli.js)
+APP_FOLDER="${0:A:h:h}"
+exec "$APP_FOLDER/node_modules/.bin/electron" "$APP_FOLDER/main/cutter/cli.js" "$@"

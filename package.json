@@ -15,7 +15,8 @@
   "private": true,
   "dependencies": {
     "image-size": "^2.1.0",
-    "js-yaml": "^5.5.0"
+    "js-yaml": "^5.5.0",
+    "pdfjs-dist": "^5.4.296"
   },
   "devDependencies": {
     "electron": "^45.3.0",
