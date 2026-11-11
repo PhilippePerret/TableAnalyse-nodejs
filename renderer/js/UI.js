@@ -110,6 +110,7 @@ export class UIClass {
     listen(this.btnSaveAnalyse, 'click', AnalyseSaver.save.bind(AnalyseSaver))
       
     listen(DGet('footer'), 'click', function(e){return stopEvent(e)})
+    listen(DGet('footer'), 'dblclick', function(e){e.stopPropagation()})
 
     // Liens vers d'autres marques ([#id] dans les textes)
     listen(this.TableAnalyse, 'click', (e) => {

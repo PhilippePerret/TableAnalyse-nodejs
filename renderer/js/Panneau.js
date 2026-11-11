@@ -24,6 +24,7 @@ export class Panneau {
     UI.desactiveCurrentShortcuts()
     if ( 'function' == typeof this.owner.onKeyPress) { window.onkeypress = this.owner.onKeyPress.bind(this)}
     this.obj || this.owner.build()
+    this.observeDoubleClick()
     this.obj.classList.remove('hidden')
     this.isOpened = true
     'function' == typeof this.owner.onOpen  && this.owner.onOpen()
@@ -37,6 +38,16 @@ export class Panneau {
 
   observe(){
     listen(this.obj, 'click', (e)=>{e.stopPropagation();return true})
+  }
+
+  /**
+   * Un double-clic dans le panneau (par exemple pour sélectionner un
+   * mot) ne doit pas remonter jusqu'à la table (création de marque).
+   */
+  observeDoubleClick(){
+    if ( this.dblClickObserved ) return
+    listen(this.obj, 'dblclick', (e)=>{e.stopPropagation()})
+    this.dblClickObserved = true
   }
 
   get obj(){
