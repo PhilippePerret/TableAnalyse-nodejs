@@ -1,0 +1,35 @@
+---
+- type: mod
+  prolong: false
+  content: Cm
+  top: 1000
+  left: 883
+  id: 11
+- type: acc
+  prolong: true
+  content: 'Cm '
+  top: 100
+  left: 200
+  id: 13
+  width: 386
+- type: har
+  prolong: true
+  content: 'I '
+  top: 447
+  left: 201
+  id: 14
+  width: 156
+- type: cad
+  prolong: false
+  subtype: par
+  content: I
+  top: 398
+  left: 1327
+  id: 17
+  width: 395
+- type: emp
+  prolong: false
+  content: B-
+  top: 596
+  left: 613
+  id: 18

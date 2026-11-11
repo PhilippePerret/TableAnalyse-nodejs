@@ -1,0 +1,8 @@
+---
+- type: txt
+  prolong: false
+  subtype: size3
+  content: Une petite indication quelque part.
+  top: 562.0000019073486
+  left: 451
+  id: 23

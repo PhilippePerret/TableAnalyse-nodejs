@@ -1,0 +1,21 @@
+.aobj {
+  border: 4px solid transparent;
+}
+
+.aobj:not(.selected) {
+  border-color: transparent;
+}
+
+.aobj:not(.selected):not(.systeme) {
+  z-index: 2;
+}
+
+
+img.systeme:not(.selected){
+  //border: 4px solid transparent;
+}
+img.systeme.selected {
+  border-color: rgb(150,180,250);
+  z-index: 20;
+}
+

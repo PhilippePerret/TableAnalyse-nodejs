@@ -1,0 +1,23 @@
+---
+- id: 1
+  top: 46
+  left: 1
+  width: 200
+  type: txt
+  subtype: size3
+  content: Double-cliquer sur la table pour créer une nouvelle marque d'analyse à
+    l'endroit voulu.
+- id: 2
+  top: 46
+  left: 228
+  width: 200
+  type: txt
+  subtype: size3
+  content: Jouer ⇧M pour ouvrir le manuel d'utilisation
+- id: 3
+  top: 41
+  left: 960
+  width: 200
+  type: txt
+  subtype: size3
+  content: Jouer ⇧T pour ouvrir le tutoriel

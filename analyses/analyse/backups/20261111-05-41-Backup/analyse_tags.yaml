@@ -1,0 +1,26 @@
+---
+- type: har
+  prolong: false
+  content: I
+  top: 435
+  left: 946
+  id: 8
+- type: mod
+  prolong: false
+  content: Cm
+  top: 1000
+  left: 883
+  id: 11
+- type: har
+  prolong: false
+  content: I
+  top: 435
+  left: 1230
+  id: 12
+- type: acc
+  prolong: true
+  content: 'Cm '
+  top: 100
+  left: 200
+  id: 13
+  width: 81

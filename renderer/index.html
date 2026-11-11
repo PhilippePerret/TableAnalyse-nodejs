@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self'">
+  <title>TABLE D'ANALYSE</title>
+  <!-- STYLES -->
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/AObjet.css">
+  <link rel="stylesheet" type="text/css" href="css/AMark.css">
+  <link rel="stylesheet" type="text/css" href="css/Forme.css">
+  <link rel="stylesheet" type="text/css" href="css/Preferences.css">
+  <link rel="stylesheet" type="text/css" href="css/Manuel.css">
+  <link rel="stylesheet" type="text/css" href="css/Editeur.css">
+  <link rel="stylesheet" type="text/css" href="css/GetterInList.css">
+  <link rel="stylesheet" type="text/css" href="css/Print.css">
+  <link rel="stylesheet" type="text/css" href="css/fonts.css">
+  <link rel="stylesheet" type="text/css" href="css/interact.css">
+
+  <!-- SCRIPTS (modules ES, point d'entrée : js/main.js) -->
+  <script type="module" src="js/main.js"></script>
+
+</head>
+<body>
+
+  <!-- 
+
+      TABLE D'ANALYSE 
+
+  -->
+  <section id="content">
+    <!-- Partie où seront placés tous les éléments de l'analyse -->
+  </section>
+
+  <!--
+      
+      PANNEAU INFOS DE L'ANALYSE
+
+    -->
+  <div id="panneau_infos" class="panneau hidden">
+
+    <h3>MÉTADONNÉES DE L'ANALYSE</h3>
+    <table id="table_metadata">
+      <tr>
+        <td>Titre de la pièce</td>
+        <td><input type="text" id="metadata_piece_title"></td>
+      </tr>
+      <tr>
+        <td>Compositeur</td>
+        <td><input type="text" id="metadata_composer"></td>
+      </tr>
+      <tr>
+        <td>Titre de l'analyse</td>
+        <td><input type="text" id="metadata_analyse_title"></td>
+      </tr>
+      <tr>
+        <td>Identifiant/Affixe</td>
+        <td><input type="text" id="metadata_analyse_id" placeholder="Identifiant (a-zA-Z0-9_-)"></td>
+      </tr>
+      <tr>
+        <td>Chemin d'accès</td>
+        <td><input type="text" id="metadata_folder" placeholder="chemin d'accès (dossier)"> <button id="btn_choose_folder" class="creation-only">Choisir…</button></td>
+      </tr>
+      <tr>
+        <td>Analyste</td>
+        <td><input type="text" id="metadata_analyst" placeholder="Analyste" value="Philippe Perret"></td>
+      </tr>
+      <tr class="creation-only">
+        <td>Images des systèmes</td>
+        <td><input type="text" id="metadata_systems_source" placeholder="dossier des images (optionnel)"> <button id="btn_choose_systems">Choisir…</button></td>
+      </tr>
+    </table>
+
+    <div class="buttons right">
+      <button id="btn_infos_close" style="float:left;">Fermer</button>
+      <button id="btn_infos_create" class="creation-only">Créer la nouvelle analyse</button>
+      <button id="btn_infos_save" class="edition-only">Enregistrer</button>
+    </div>
+
+  </div><!-- / fin du panneau -->
+
+  <!-- 
+
+    BOITE À OUTILS
+
+    -->
+  <div id="panneau_outils" class="panneau hidden">
+
+    <div>
+      <span><b>Partition rapide</b><br>Construire une image à partir du code muscore : </span>
+      <textarea id="music_score_code" style="width:100%;height:180px;background-color:black;color:white;"></textarea>
+      <div class="right">
+        <select id="assistant_muscode">
+          <option value="">Ajouter…</option>
+          <option value="-> NOM_IMAGE">Nom de l'image</option>
+          <option value="--tune F # ou G, UT3, ...">Tonalité</option>
+          <option value="--time 3/4">Métrique</option>
+          <option value="--proximity 5 # (moyenne)">Proximité</option>
+          <option value="--barres">Afficher les barres</option>
+          <option value="--no_stem">Ne pas afficher les hampes</option>
+        </select>
+        <button id="btn_build_score">Construire</button>
+      </div>
+    </div>
+
+    <div>    
+      <button id="btn_distribute_systems">Répartir les systèmes</button> <span>Écart entre les systèmes : </span>
+      <input type="text" id="tool_inter_system" value="" style="width:60px">
+      <div class="explication">(si l'écart n'est pas précisé, ce sera la valeur définie en préférence qui sera appliquée, qui vaut <span id="value_ecart_preferences">XXX</span>px</div>
+    </div>
+
+    <div>
+      <h2>Export de l'image de l'analyse</h2>
+      <fieldset>      
+        <div>
+          <span>Systèmes </span><input type="text" id="systems_to_export" value="1">
+          <div class='explication'>Systèmes à produire. Laisser vide pour tous</div>
+        </div>
+        <div>
+          <input type="checkbox" id="export_one_image_per_system">
+          <label for="export_one_image_per_system">Une image par système</label>
+        </div>
+        <div class="buttons">
+          <button id="btn_export_image">Produire l'image (statique)</button>
+          <span>   </span>
+          <button id="btn_export_svg">Produire l'image SVG (non fonctionnel)</button>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="buttons">
+      <button id="btn_close_tools">Fermer</button>
+    </div>
+
+  </div>
+
+
+  <div id="coordonnates">x: --- y: ---</div>
+  <!-- 
+
+    FOOTER 
+
+  -->
+  <footer>
+    
+    <img id="cb_staves_lock" class="btn fright" src="img/staves_lock.svg" />
+    
+    <button id="cb_recording" class="fright">Enregistrer</button>
+    <div id="red-light"></div>
+
+    <span id="tooltip" class="fright">---</span>
+
+    <!-- 
+      
+      FORME
+
+     -->
+    <div id="panel_form" class="hidden">
+      <div class="titre">FORME DE LA PIÈCE</div>
+      <div id="form_objets"></div>
+      <!-- Menu des types à déplacer -->
+      <select id="fobj_types" class="hidden"></select>
+      <select id="fobj_parents" class="hidden"></select>
+      <!-- Modèle dupliqué -->
+      <div id="formobj_template" class="fobj hidden" data-edit="false">
+        <input type="hidden" class="fobj-id">
+        <div><label>Name</label><input type="text" class="fobj-name"><label>Type</label><span class="fobj-type">---</span><label>Parent</label><span class="fobj-parent">Pièce</span></div>
+        <div><label>De mesure</label><input type="text" class="fobj-start"><label>à mesure</label><input type="text" class="fobj-end"><label>Tonalité(s)</label><input type="text" class="fobj-ton1 fobj-ton"><input type="text" class="fobj-ton2 fobj-ton"><input type="text" class="fobj-ton3 fobj-ton"><input type="text" class="fobj-ton4 fobj-ton"><input type="text" class="fobj-ton5 fobj-ton"><input type="text" class="fobj-ton6 fobj-ton"></div>
+        <div><span class="mini-btns"><button class="btn-delete">✖️</button><button class="btn-goto-measure">⎆</button><button class="btn-build-on-table" title="Le poser sur la table d'analyse">⍗</button><button class="btn-save">OK</button><button class="btn-edit">🖋</button></span> </div>
+      </div>
+      <div class="buttons">
+        <button class="btn-add">➕</button>
+      </div>
+    </div>
+    <button id="form_button" class="fright">Forme…</button>
+
+    <select id="open_menu">
+      <option value="">Fichier…</option>
+      <option value="newAnalyse">Nouvelle analyse… ⌘N</option>
+      <option value="openAnalyse">Ouvrir une analyse… ⌘O</option>
+      <option></option>
+      <option value="infosAnalyse">Informations… ⇧I</option>
+      <option></option>
+      <option value="exportToHTML">Exporter en HTML</option>
+      <option></option>
+      <option value="toolsPanel">Boite à outils… ⇧O</option>
+      <option></option>
+      <option value="manual">Manuel… ⇧M</option>
+      <option></option>
+      <option value="prefs">Préférences… ⇧P</option>
+    </select>
+
+    <select id="options_tool">
+      <option value="">Options…</option>
+      <option value="cancel"></option>
+      <option value="cancelInList">Historique des annulations</option>
+      <option></option>
+      <option value="toggleGrid" data-checked="false" data-role="cb">☐ Grille magnétique</option>
+      <option value="toggleColor" data-checked="false" data-role="cb">☐ Version couleur</option>
+    </select>
+
+    <select id="amark_menu">
+      <option value="">Marque</option>
+      <option value="toogleLock" data-ope="lock">Verrouiller la marque</option>
+      <option value="changeType">Mettre le type à…</option>
+      <option><hr/></option>
+      <option value="justifyText">Justifier le texte</option>
+      <option value="alignTextCenter">Aligner le texte au centre</option>
+      <option value="alignTextRight">Aligner le texte à droite</option>
+      <option value="alignTextLeft">Aligner le texte à gauche</option>
+      <option><hr/></option>
+    </select>
+
+    <select id="align_menu">
+      <option value="">Aligner</option>
+      <option value="right">… à droite</option>
+      <option value="left">… à gauche</option>
+      <option value="top">… en haut</option>
+      <option value="bottom">… en bas</option>
+      <option><hr/></option>
+      <option value="cancel">Annuler l’alignement</option>
+    </select>
+
+    <select id="adjust_menu">
+      <option value="">Ajuster</option>
+      <option value="SV">Répartir verticalement</option>
+      <option value="SH">Répartir horizontalement</option>
+      <option></option>
+      <option value="H">… horizontalement</option>
+      <option value="V">… verticalement</option>
+      <option value="cancel">Annuler l'ajustement</option>
+    </select>
+
+    <select id="selection_tool">
+      <option value="">Selection…</option>
+      <option value="groupSelection">Grouper les éléments sélectionnés</option>
+      <option value="degroupSelection">Dégrouper les éléments sélectionnés</option>
+      <option value="selectAll">Sélectionner tous les…</option>
+    </select>
+
+    <select id="borders_tool" style="width:120px">
+      <option value="">Bords…</option>
+      <option value="add" data-css="no_left_border">Supprimer le bord gauche</option>
+      <option value="remove" data-css="no_left_border">Remettre le bord gauche</option>
+      <option value="add" data-css="no_right_border">Supprimer le bord droit</option>
+      <option value="remove" data-css="no_right_border">Remettre le bord droit</option>
+      <option value="add" data-css="no_bottom_border">Supprimer le bord bas</option>
+      <option value="remove" data-css="no_bottom_border">Remettre le bord bas</option>
+      <option value="add" data-css="no_top_border">Supprimer le bord haut</option>
+      <option value="remove" data-css="no_top_border">Remettre le bord haut</option>
+    </select>
+
+
+  </footer>
+
+
+
+</body>
+</html>

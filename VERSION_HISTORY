@@ -1,0 +1,50 @@
+# 3.0.0
+
+  - Portage en application Electron (Node.js), autonome (plus de
+    dépendance à la librairie commune ScoreSuite ni à Ruby/Selenium).
+  - Interface en modules ES, sans jQuery.
+  - Ouverture et création des analyses depuis le menu « Fichier ».
+
+# 2.2.6
+
+  - Éclairage du bouton "Enregistrer" en cas de modification des données.
+  
+# 2.2.5
+
+  - Gestion de la position des systèmes à chaque chargement
+  - Gestion des changements de systèmes
+  
+# 2.2.4
+
+  - Traitement du type de note à l'exportation
+  - Ajout de méthode pour rectifier facilement les positions dans 
+    l'exportation sous forme d'image
+    
+# 2.2.3
+
+  - Utilisation d'ID uniques pour les marques
+  
+# 2.2.2
+  
+  - Possibilité de définir la hauteur de la ligne verticale de modulation
+  - Modification de l'aspect de la modulation sur la table d'analyse.
+  
+# 2.2.1
+
+  - Rationnalisation de la production des images (exportation)
+  
+# 2.2.0
+  
+  - production des images (exportation)
+  - rationnalisation des lignes de prolongation et lignes verticales
+    (utilisation jQuery#resizable qui fonctionne très bien pour ça)
+    
+# 2.1.0
+
+  Passage à la version "ScoreAnalyse" (au lieu de Table_Analyse) pour meilleure intégration à la suite **Score-Suite**.
+  
+# 2.0.0
+  
+* Copie de la version 1 pour transformation en version WAA. La
+  version WAA permet d'enregistrer les éléments sur le disque 
+  dur.

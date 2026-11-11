@@ -1,0 +1,15 @@
+---
+- type: txt
+  prolong: false
+  subtype: size3
+  content: Une petite indication quelque part.
+  top: 562.0000019073486
+  left: 451
+  id: 23
+- type: txt
+  prolong: false
+  subtype: size3
+  content: Le plus petit texte.
+  top: 516
+  left: 891
+  id: 24

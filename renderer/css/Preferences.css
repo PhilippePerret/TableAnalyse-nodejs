@@ -1,0 +1,62 @@
+/*
+  Version 1.0.1
+*/
+section#preferences-panel {
+  position: fixed;
+  top: 5em;
+  max-height: 600px;
+  overflow: auto;
+  left: 12em;
+  background-color: #EFEFEF;
+  font-family:  'Arial Narrow';
+  font-size: 16pt;
+  padding: 1em 4em 3em;
+  border: 1px solid;
+  border-radius: 1em;
+  z-index: 4000;
+}
+section#preferences-panel div#tip-close {
+  position: absolute;
+  right: 2em;
+  top:  2em;
+  font-style: italic;
+  opacity: 0.5;
+}
+
+section#preferences-panel div.div-data {
+  margin-top: 1em;
+}
+section#preferences-panel div.description {
+  margin-left:  4em;
+  margin-top: 8px;
+  font-size: 0.75em;
+}
+
+section#preferences-panel div.div-data input[type="checkbox"] {
+  scale:  1.7;
+  vertical-align: unset;
+}
+section#preferences-panel div.div-data input[type="checkbox"] + label
+{
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+section#preferences-panel div.type-valeur label {
+  display: inline-block;
+  width: 500px;
+}
+section#preferences-panel div.type-valeur label:after {
+  content:  " : ";
+}
+section#preferences-panel div.type-valeur button {
+  font-size: inherit;
+  font-family:  inherit;
+  /*margin-left: 1em;*/
+  width: 100px;
+}
+section#preferences-panel div.type-valeur input[type="text"] {
+  font-size: inherit;
+  font-family: inherit;
+  width: 100px; /* même que bouton, pour aspect */
+  text-align: center;
+}

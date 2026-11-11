@@ -1,0 +1,103 @@
+---
+piece_title: ''
+composer: ''
+analyse_title: ''
+analyse_id: analyse
+folder: "/Users/philippeperret/Programmes/ScoreSuite/ScoreAnalyse/analyses"
+analyst: ''
+systems:
+- image_name: system-32N.jpg
+  top: 100
+  left: 0
+- image_name: system-33N.jpg
+  top: 604
+  left: 0
+- image_name: system-34N.jpg
+  top: 1110
+  left: 0
+- image_name: system-35N.jpg
+  top: 1599
+  left: 0
+- image_name: system-36N.jpg
+  top: 2090
+  left: 0
+- image_name: system-37N.jpg
+  top: 2572
+  left: 0
+- image_name: system-38N.jpg
+  top: 3088
+  left: 0
+- image_name: system-39N.jpg
+  top: 3590
+  left: 0
+- image_name: system-40N.jpg
+  top: 4030
+  left: 0
+- image_name: system-41N.jpg
+  top: 4490
+  left: 0
+- image_name: system-42N.jpg
+  top: 4962
+  left: 0
+- image_name: system-43N.jpg
+  top: 5420
+  left: 0
+- image_name: system-44N.jpg
+  top: 5925
+  left: 0
+- image_name: system-45N.jpg
+  top: 6522
+  left: 0
+- image_name: system-46N.jpg
+  top: 7106
+  left: 0
+- image_name: system-47N.jpg
+  top: 7671
+  left: 0
+- image_name: system-48N.jpg
+  top: 8247
+  left: 0
+- image_name: system-49N.jpg
+  top: 8800
+  left: 0
+- image_name: system-50N.jpg
+  top: 9320
+  left: 0
+- image_name: system-51N.jpg
+  top: 9802
+  left: 0
+- image_name: system-52N.jpg
+  top: 10309
+  left: 0
+- image_name: system-53N.jpg
+  top: 10812
+  left: 0
+- image_name: system-54N.jpg
+  top: 11328
+  left: 0
+- image_name: system-55N.jpg
+  top: 11860
+  left: 0
+- image_name: system-56N.jpg
+  top: 12373
+  left: 0
+- image_name: system-57N.jpg
+  top: 12869
+  left: 0
+- image_name: system-58N.jpg
+  top: 13361
+  left: 0
+- image_name: system-59N.jpg
+  top: 13874
+  left: 0
+- image_name: system-60N.jpg
+  top: 14389
+  left: 0
+- image_name: system-61N.jpg
+  top: 14917
+  left: 0
+- image_name: system-62N.jpg
+  top: 15631
+  left: 0
+form: 
+updated_at: 1794369943

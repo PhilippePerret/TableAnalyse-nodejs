@@ -1,0 +1,13 @@
+[[systems]]
+== Les systèmes ==
+
+[[systems-preparation]]
+=== Préparation des systèmes ===
+
+Pour travailler, l'app a besoin des systèmes séparés de la partition. Pour se faire, il faut : 
+
+* partir du fichier PDF de la partition,
+* enregistrer les pages en JPG,
+* découper chaque page en ses systèmes.
+
+L'application **ScoreCutting** de la **SuiteScore** permet de faire cette opération très facilement. Se référer à son utilisation.

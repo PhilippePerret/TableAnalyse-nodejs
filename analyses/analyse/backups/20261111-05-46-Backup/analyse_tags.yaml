@@ -1,0 +1,14 @@
+---
+- type: mod
+  prolong: false
+  content: Cm
+  top: 1000
+  left: 883
+  id: 11
+- type: acc
+  prolong: true
+  content: 'Cm '
+  top: 100
+  left: 200
+  id: 13
+  width: 81

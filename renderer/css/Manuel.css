@@ -1,0 +1,58 @@
+/**
+ * Manuel
+ * ------
+ * Version 0.1.0
+ * 
+ */
+section#manuel {
+  position: fixed;
+  top: 2em;
+  left: calc(100%/2 - 430px);
+  width: 860px;
+  max-height: 800px;
+  overflow: auto;
+  background-color: #EFEFEF;
+  color: #555; /* pas trop noir */
+  font-family:  'Arial Narrow';
+  font-size: 16pt;
+  padding: 1em 4em 3em;
+  border: 1px solid;
+  border-radius: 1em;
+  z-index: 4000;
+}
+
+section#manuel div.operation-manuel {
+  border: 1px solid #CCC;
+  padding: 1em;
+}
+
+section#manuel div.operation-manuel div.operation-titre {
+  font-weight: bold;
+  cursor: pointer;
+}
+section#manuel div.operation-manuel div.operation-procedure {
+  margin-left: 2em;
+}
+section#manuel div.operation-manuel div.operation-precision {
+  font-style: italic;
+  font-size: 0.75em;
+  margin-left: 2em;
+}
+
+
+section#manuel section#manuel_shortcuts {
+
+}
+section#manuel section#manuel_shortcuts table td {
+  vertical-align: top;
+}
+section#manuel section#manuel_shortcuts td.ope_td {
+  width: 30%;
+}
+section#manuel section#manuel_shortcuts td.shortcut_td {
+  width: 20%;
+}
+section#manuel section#manuel_shortcuts td.precision_td {
+  width: 50%;
+  font-size: 0.75em;
+}

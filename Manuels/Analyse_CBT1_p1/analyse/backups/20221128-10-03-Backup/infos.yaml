@@ -1,0 +1,73 @@
+---
+folder: "/Users/philippeperret/Programmes/ScoreSuite/ScoreAnalyse/Manuels/Analyse_CBT1_p1"
+analyse_id: analyse
+piece_title: Prélude
+composer: Bach
+analyse_title: Analyse
+analyste: Phil
+path: "/Users/philippeperret/Programmes/ScoreSuite/ScoreAnalyse/Manuels/Analyse_CBT1_p1/analyse"
+created_at: 1669626183
+updated_at: 1669626183
+waa_version: '1.0'
+app_version: '2.2'
+systems:
+- :id: 1
+  :image_name: system-1.jpg
+  :top: 400
+  :left: 0
+  :height: 348
+- :id: 2
+  :image_name: system-10.jpg
+  :top: 848
+  :left: 0
+  :height: 401
+- :id: 3
+  :image_name: system-11.jpg
+  :top: 1349
+  :left: 0
+  :height: 436
+- :id: 4
+  :image_name: system-12.jpg
+  :top: 1885
+  :left: 0
+  :height: 457
+- :id: 5
+  :image_name: system-2.jpg
+  :top: 2442
+  :left: 0
+  :height: 365
+- :id: 6
+  :image_name: system-3.jpg
+  :top: 2907
+  :left: 0
+  :height: 366
+- :id: 7
+  :image_name: system-4.jpg
+  :top: 3373
+  :left: 0
+  :height: 378
+- :id: 8
+  :image_name: system-5.jpg
+  :top: 3851
+  :left: 0
+  :height: 382
+- :id: 9
+  :image_name: system-6.jpg
+  :top: 4333
+  :left: 0
+  :height: 365
+- :id: 10
+  :image_name: system-7.jpg
+  :top: 4798
+  :left: 0
+  :height: 389
+- :id: 11
+  :image_name: system-8.jpg
+  :top: 5287
+  :left: 0
+  :height: 417
+- :id: 12
+  :image_name: system-9.jpg
+  :top: 5804
+  :left: 0
+  :height: 419

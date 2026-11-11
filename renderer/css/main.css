@@ -1,0 +1,266 @@
+body {
+  margin: 0;
+  padding: 0;
+  /*position: relative;*/
+  user-select: none;
+  margin-bottom: 20em!important;
+  font-family: 'Arial Narrow', Geneva, Helvetica;
+  font-size: 16pt;
+}
+
+input, textarea, select, select > option {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.fright {float: right}
+
+.smaller {font-size:0.75em;}
+
+.invisible {
+  visibility: hidden;
+}
+
+.hidden {
+  display: none;
+}
+.right {text-align: right}
+
+.explication {
+  font-style: italic;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
+div.buttons {
+  text-align: right;
+}
+
+
+div#red-light {
+  display: inline-block;
+  float: right;  
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  margin-top: 9px;
+}
+div#red-light:not(.red) {
+ background-color: #44f744; 
+}
+div#red-light.red {
+ background-color: #ff2e2e; 
+}
+button#cb_recording {
+  padding: 0 1em;
+}
+button#cb_recording.actived {
+  background-color: red;
+  color: white;
+}
+
+section#content {
+  margin-bottom: 400px!important;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: inline;
+  width: calc(100% - 2em);
+  padding: 0.2em 1em;
+  /*background-color: transparent*/
+  background-color: #D68362;
+  z-index: 1000;
+}
+/*footer * {
+  visibility: hidden;
+}
+footer:hover {
+  background-color: #D68362;
+}
+footer:hover, footer:hover * {
+  visibility: visible;
+}
+*/
+footer > button, footer > img {
+  margin: 0 8px;
+}
+
+footer img.btn {
+  width: 30px;
+  border-width: 2px;
+  border-style: solid;
+  padding: 2px 8px;
+
+}
+footer img.btn:not(.pressed){
+  border-color: #CCC #555 #555 #CCC;
+}
+footer img.btn.pressed {
+  background-color: #84FB84;
+  border-color: #555 #CCC #CCC #555;
+}
+
+footer button, footer > select {
+  font-family: inherit;
+  font-size: inherit;
+  margin-top: 4px;
+}
+
+footer button#btn-activer-son {
+  background-color: red;
+  color: white;
+  margin-right: 4em;
+}
+
+footer span#tooltip {
+  display:inline-block;
+  background-color:#F0AE94;
+  color:#ba3535;
+  width:300px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-right:1em;
+  margin-top:6px;
+  padding:0 0.5em;
+}
+
+div.aobj {
+  position: absolute;
+}
+
+img.systeme {
+  position: absolute;
+}
+
+/* Les messages à l'écran */
+
+div#message {
+  position: fixed;
+  color: white;
+  left: calc(100%/2 - 200px);
+  width: 400px;
+  top: 8em;
+  padding: 1em 2em;
+  z-index: 1000;
+  cursor: pointer;
+}
+div#message.error {
+  background-color: red;
+}
+div#message.notice {
+  background-color: blue;
+}
+div#message.doaction {
+  background-color: orange;
+}
+div#message span.close-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 18pt;
+  color: #ffa2a2;  
+}
+
+div.panneau {
+  position: fixed;
+  top: 100px;
+  left: calc(50% - 420px);
+  z-index: 100;
+  padding: 1em 2em;
+  background-color: #DDD;
+  width: 840px;
+  font-size: 18pt;  
+}
+div#panneau_infos {
+}
+div.panneau input,
+div.panneau button {
+  font-size: 18pt;
+  margin-top: 0.3em;
+}
+div#panneau_infos table#table_metadata {
+  width: 100%;
+}
+div#panneau_infos table#table_metadata input {
+  width: 95%;
+}
+div#panneau_infos > div {
+  width: 100%;
+}
+div#panneau_infos > div > input[type="text"] {
+  width: 90%;
+}
+
+div#panneau_infos div.buttons {
+  margin-top: 1em;
+}
+
+div#panneau_outils > div {
+  margin-top: 1em;
+}
+div#coordonnates {
+  position:fixed;
+  width:150px;
+  bottom:47px;
+  text-align:center;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  background-color:black;
+  color:white;
+}
+
+mus {
+  font-family:'PhilNote2';
+  font-size: inherit;
+}
+
+/*
+  --- ANNULATIONS ---
+*/
+div#historique_annulations {
+  position:fixed;
+  bottom: 48px;
+  right: 8px;
+  z-index: 100;
+  background-color:#CCC;
+  border:1px solid black;
+  width:300px;
+  min-height: 400px;
+  max-height: 2000px;
+  y-overflow: auto;
+  padding-top: 2em;
+}
+div#historique_annulations span.close-box {
+  position:absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 10pt;
+  cursor:pointer;
+}
+div#historique_annulations > div {
+  padding:0.5em 1em;
+  border-bottom:1px solid white;
+  border-top:1px solid white;
+}
+div#historique_annulations > div:hover {
+  background-color:#DDD;
+}
+div#historique_annulations > div:hover:before {
+  position:absolute;
+  left:-60px;
+  content: "Annuler :";
+  font-weight:bold;
+  color:red;
+  z-index:101;
+}
+
+/* Panneau des informations : éléments propres à la création ou à
+   l'édition de l'analyse */
+#panneau_infos:not(.creation) .creation-only { display: none; }
+#panneau_infos.creation .edition-only { display: none; }
+
+/* Liens vers une autre marque ([#id] dans les textes) */
+span.goto-tag { cursor: pointer; }

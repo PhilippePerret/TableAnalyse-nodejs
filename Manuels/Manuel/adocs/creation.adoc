@@ -1,0 +1,5 @@
+== Création d'une analyse ==
+
+* Préparer le dossier
+** créer un dossier avec le nom `systems`
+** mettre dedans les systèmes de la partition (voir <<systems-preparation, comment les préparer>>)

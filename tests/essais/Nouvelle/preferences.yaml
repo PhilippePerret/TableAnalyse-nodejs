@@ -1,0 +1,19 @@
+---
+lock_systems: true
+systeme_width: 1860
+top_first_system: 50
+distance_systemes: 50
+adjust_same_mark: true
+snap_for_adjust_pos: 50
+marque_accords_size: 60
+marque_harmonie_size: 60
+marque_modulation_size: 60
+marque_pedale_size: 40
+marque_texte_size_1: 70
+marque_texte_size_2: 50
+marque_texte_size_3: 30
+note_volume: 0.5
+vitesse_relecture: 20
+minimum_duree_notes: 0.5
+autosave: true
+animate: false

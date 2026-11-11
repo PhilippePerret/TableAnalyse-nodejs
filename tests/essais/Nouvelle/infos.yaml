@@ -1,0 +1,18 @@
+---
+piece_title: Pour essai systèmes
+composer: Moi
+analyse_title: Pour essai
+analyse_id: Nouvelle
+folder: "/Users/philippeperret/Programmes/ScoreSuite/ScoreAnalyse/tests/essais"
+analyst: ''
+systems:
+- image_name: system-2.jpg
+  top: 100
+  left: 0
+- image_name: system-3.jpg
+  top: 688
+  left: 0
+- image_name: system-4.jpg
+  top: 1304
+  left: 0
+updated_at: 1663930372

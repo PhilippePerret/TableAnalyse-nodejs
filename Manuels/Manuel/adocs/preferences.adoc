@@ -1,0 +1,4 @@
+[[prefs]]
+== Préférences ==
+
+Pour ouvrir le panneau des préférences, jouer Maj-P ou choisir le menu « Préférences » dans le menu « Fichier » en pied de page.

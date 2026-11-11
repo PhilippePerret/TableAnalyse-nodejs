@@ -1,0 +1,15 @@
+@font-face {
+  font-family:  PhilNote;
+  src: url("../assets/fonts/PhilNote2-Regular.otf");
+}
+@font-face {
+  font-family:  PhilNote;
+  src: url("../assets/fonts/PhilNote2-Bold.otf");
+  font-weight: bold;
+}
+
+
+.philnote {
+  font-family: PhilNote;
+  font-size: 32px;  
+}

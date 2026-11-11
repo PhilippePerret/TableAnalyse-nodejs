@@ -1,0 +1,92 @@
+[[tags]]
+== Marques ==
+
+Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'analyse pour analyser la partition. Ce sont les noms des accords, les marques d'harmonie, les marques de modulation, d'emprunt, etc. Voir tous les <<tags-types>>.
+
+[[tags-types]]
+=== Types de marques ===
+
+[cols="2,5,1,1"]
+|====
+| Accord | Nom et nature de l'accord, en général au-dessus du système. | Dm7 | <<tags-chord, voir>>
+| Harmonie | Chiffre romain indiquant la fonction de l'accord dans l'harmonie courante | VI | <<tags-chiffrage, voir>> 
+| Modulation | Marque indiquant une modulation dans la pièce. | ... | <<tags-modulation, voir>>
+| Emprunt | Marque indiquant un emprunt à une tonalité dans la pièce. | ... | <<tags-emprunt, voir>>
+| Cadence | Marque indiquant une cadence (parfaite, imparfaite, etc.). | ... | <<tags-cadence, voir>>
+| Cadre | Ajout d'un cadre autour d'une partie de la partition. | ... | <<tags-cadre, voir>>
+| Type de note | Marque permettant d'indiquer la nature mélodique d'une note sur la partition. | AP | <<tags-note, voir>>
+| Degré de note | Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l'accord. | 2 | <<tags-note-degree, voir>>
+| Segment | Pour dessiner un segment avec légende ou pas sur ou sous la portée. | ... | <<tags-segment, voir>>
+| Image | Pour insérer une image quelconque dans l'analyse de la partition. | ... | <<tags-image, voir>>
+| Texte | Pour insérer un texte quelconque dans l'analyse de la partition. | ... | <<tags-text, voir>>
+| Pédale | Pour indiquer l'usage d'une pédage, sous le système. | 4 ——— | <<tags-pedal, voir>> 
+| Cercle | Simple cercle pour mettre une note ou des notes en exergue. | ... | <<tags-circle, voir>>
+|====
+
+[[tags-chord]]
+==== Marque Accord ====
+
+[[tags-chiffrage]]
+==== Marque d'Harmonie (chiffrage) ====
+
+[[tags-modulation]]
+==== Marque de Modulation ====
+
+[[tags-emprunt]]
+==== Marque d'Empreint ====
+
+[[tags-cadence]]
+==== Marque de cadence ====
+
+[[tags-cadre]]
+==== Cadre ====
+
+Pour entourer une partie de la partition par un cadre.
+
+[[tags-note]]
+==== Marque de type de note ====
+
+Marque permettant d'indiquer la nature mélodique d'une note sur la partition. Le choix de cette marque ouvre un autre panneau qui permet de préciser la nature de la note.
+
+[[tags-note-degree]]
+==== Marque de degré de note ====
+
+Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l'accord (à bien préciser). 
+
+[[tags-segment]]
+==== Segment ====
+
+Pour dessiner un segment avec légende ou pas sur ou sous la portée. Pour indiquer des marches harmoniques, par exemple.
+
+Quand on choisit cette marque, un nouveau panneau permet de choisir le type de segment.
+
+[cols="1,3"]
+|====
+| Plat sur la portée | Pour une indication horizontale AU-DESSUS de la portée.
+| Plat sous la portée | Pour une indication horizontale AU-DESSOUS de la portée. 
+| Vertical trait gauche | Pour un segment vertical avec le trait À GAUCHE
+| Vertical trait droit | Pour un segment vertical avec le trait À DROITE
+|====
+
+[[tags-image]]
+==== Image ====
+
+Pour insérer une image quelconque dans l'analyse de la partition.
+
+[[tags-text]]
+==== Texte ==== 
+
+Pour insérer un texte quelconque dans l'analyse de la partition.
+
+[[tags-pedal]]
+==== Marque de pédale ====
+
+Pour indiquer l'usage d'une pédage, sous le système. Elle correspond au degré de la note (chiffre arabe) dans la tonalité courante.
+
+[[tags-circle]]
+==== Marque de cercle ===
+
+* Double-cliqer à l'endroit voulu,
+* choisir « Cercle » ou taper la lettre « r ».
+
+Pour définir la taille du cercle, bouger ses bords. La touche MAJ permet d'augmenter la taille en conservant la forme (le cercle, par défaut, ou l'ovale si la dimension horizontale a été modifiéee).

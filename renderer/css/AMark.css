@@ -1,0 +1,514 @@
+div.amark {
+  /*overflow: hidden;*/
+  overflow: visible;
+  z-index: 2;
+}
+div.amark span.content {
+  display:inline-block; /* pour pouvoir aligner le texte */
+}
+
+div.amark span.content.left     {text-align:left    }
+div.amark span.content.right    {text-align:right   }
+div.amark span.content.center   {text-align:center  }
+div.amark span.content.justify  {text-align:justify }
+
+div.amark:hover {
+  cursor: pointer;
+}
+
+div.amark.locked:hover {
+  cursor:not-allowed;
+}
+@media screen {
+  div.amark.locked {opacity: 0.6}
+  div.amark.locked:before {
+    position:absolute;
+    top:-24px;
+    left:-28px;
+    content:'⚓︎';
+    color:#FFA1A1;
+    font-size:24pt;
+  }
+}
+
+div.amark.selected {
+  background-color: rgba(150,180,250, 0.4);
+  z-index: 20;
+}
+
+div.amark:not(.philnote):not(.deg) span.content {
+  font-family: 'Arial Narrow', Arial, Helvetica, Geneva;
+}
+
+div.amark.philnote span.content, 
+.amark.philnote {
+  font-family: PhilNote;
+  font-size: 32pt;
+}
+
+div.amark:not(.txt) span.content {
+  padding: 8px;
+}
+
+/* Ligne de prolongation */
+div.amark:not(.not) span.pline {
+  display: inline-block;
+  width: 200px;
+  border-top: 3px solid #222;
+  margin-left: 0.3em;
+  overflow: hidden;
+}
+div.amark:not(.not) span.pline {
+  border-width: 3px;
+}
+div.amark.ped span.pline {
+  padding-bottom: 9px;
+}
+div.amark.har,
+div.amark.acc,
+div.amark.har span.content,
+div.amark.acc span.content,
+div.amark.txt,
+div.amark.txt span.content {
+  z-index: 5 !important;  
+}
+div.amark.har span.pline,
+div.amark.acc span.pline
+{
+  padding-bottom: 16px;
+}
+div.amark.deg span.pline {
+  padding-bottom: 7px; /* pour être bien au milieu verticalement */
+}
+div.amark.not span.pline {
+  border-width: 2px;
+  padding-bottom: 7px;   /* pour être bien au milieu verticalement */
+}
+
+/* La poignée pour allonger la ligne de prolongation */
+div.amark:not(.selected) div.handler_prolong {
+  display: none;
+}
+
+div.amark.selected div.handler_prolong {
+  display: inline-block;
+  position: absolute;
+  height: 200px; /*overflow hidden*/
+  top: 0px;
+  right: 0px;
+}
+
+div.amark.selected div.handler_prolong:not(.activated){
+  background-color: #C9FFC5;
+  width: 15px;
+}
+div.amark.selected div.handler_prolong.activated {
+  background-color: red;
+  width: 120px;
+  rigth: -20px;
+}
+
+
+/* Pour le différents types de marque (modulation, pédale, etc.) */
+div.amark.ped span.content {
+  line-height: 26px !important;
+}
+
+/* Pédale */
+div.amark.ped span.content {
+  display: inline-block;
+  font-size: 30pt;
+  vertical-align: bottom;
+  border: 4px solid;
+  border-radius: 1em;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  padding-top: 12px;
+  line-height: 0.7em;
+  background-color: black;
+  color: white;
+}
+
+/* 
+
+  MODULATION ET EMPRUNT 
+
+*/
+div.amark.emp, 
+div.amark.mod {
+  width: 134px;
+  height: 110px;
+  z-index: 0;
+}
+div.amark.mod {
+  padding-top: 70px;
+  padding-left: 20px;
+}
+div.amark.emp {
+  border-width: 2px;
+  border-bottom-width:0;
+  border-style: solid;
+  border-color: #777777;
+}
+/* 
+  Modulation : pour le trait au-dessus de travers 
+  Note : pas pour l'emprunt
+*/
+div.amark.mod:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  transform: rotate(-30deg);
+  border-top: 2px solid black;
+  width: 120px;
+  top: 40px;
+  left: -6px;
+}
+div.amark.mod span.content {
+  display: inline-block;
+  padding: unset;
+  transform: rotate(-30deg);
+  position: absolute;
+  top: 50px;
+  left: 36px;
+}
+div.amark.emp span.content {
+  color: #777777;
+}
+div.amark.mod span.content {
+  margin-left: 0px;
+}
+
+/* Cadence */
+div.amark.cad {
+  border-width: 0 5px 5px 0;
+  border-style: solid;
+  border-color: #333;
+  text-align: right;
+  width: 130px;
+  overflow: unset; /* il faut montrer ce qui dépasse */
+  z-index: 1;
+}
+div.amark.cad.selected {
+  border-width: 2px;
+  border-color: unset;
+}
+div.amark.cad span.content {
+  display: inline-block;
+  padding: unset;
+  padding-right: 24px;
+  margin-top: 12px;
+}
+
+/* Pour le nom de la cadence 
+
+  Mais je l'appelle 'mtype' pour "marque type" dans le cas où
+  d'autres marques pourraient nécessiter ce genre d'ajouter ou de
+  précision
+*/
+div.amark.cad div.mtype {
+  position: absolute;
+  font-family: 'Arial Narrow', Helvetica, Geneva, Arial;
+  font-size: 18pt;
+  font-variant: all-small-caps;
+  top: 86px;
+  right: 0px;
+  width: 180px;
+}
+
+div.amark.deg {
+  font-size: 1.5em;
+  font-family: PhilNote;
+  font-weight: bold;
+}
+
+div.amark.seg {
+  border-style: solid;
+  border-color: #333;
+  border-width: 2px; /* sera redéfini par les préférences */
+  overflow: visible;
+}
+div.amark.seg span.content {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+div.amark.seg.h-up span.content {
+  top: -40px;
+}
+div.amark.seg.h-down span.content {
+  bottom: -42px;
+}
+
+
+div.amark.seg.h-up,
+div.amark.seg.h-down
+{
+  width: 200px;
+  height: 30px;  
+}
+div.amark.seg.v-right,
+div.amark.seg.v-left
+{
+  width: 30px;
+  height: 200px;  
+}
+div.amark.seg.v-left span.content {
+  text-align: right;
+  width: 150px;
+  left: -170px;
+}
+div.amark.seg.v-right span.content{
+  text-align: left;
+  width: 150px;
+  right: -170px;
+}
+
+div.amark.seg.h-up {
+  border-bottom-width: 0px;
+}
+div.amark.seg.h-down {
+  border-top-width: 0px;  
+}
+div.amark.seg.v-right {
+  border-left-width: 0px; 
+}
+div.amark.seg.v-left {
+  border-right-width: 0px;  
+}
+
+div.amark.not:not(.selected) {
+  background-color: white;
+}
+div.amark.not {
+  overflow: visible !important;
+}
+div.amark.not span.content {
+  display: inline-block;
+  border: 2px solid #333;
+  border-radius: 50px;
+  padding: 0px!important;
+  width: 32px;
+  height: 24px;
+  text-align: center;
+}
+
+div.amark.not span.pline {
+  position: absolute;
+  height: 2px;
+  background: black;
+  top: 10px;
+}
+
+div.amark.cir span.content, 
+div.amark.box span.content 
+{
+  display: none;
+}
+
+div.amark.cir,
+div.amark.box 
+{
+  border-color: #399933;
+}
+
+div.amark.cir {
+  border-width: 5px;
+  border-style: solid;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+div.amark.box {
+  width: 200px;
+  height: 100px;
+}
+div.amark.box {
+  border: 5px solid #555;
+}
+
+/* PARTIES & SECTIONS */
+
+div.amark.prt,
+div.amark.prtz,
+div.amark.sec,
+div.amark.secz  {
+  z-index:0;
+}
+div.amark.prt span.content,
+div.amark.prtz span.content,
+div.amark.sec span.content,
+div.amark.secz span.content  {
+  color: #444444;
+  z-index:0;
+}
+div.amark.prt, 
+div.amark.prtz {
+  font-size: 24pt;
+  overflow: visible;
+}
+div.amark.sec, div.amark.secz {
+  font-size: 22pt;
+  overflow: visible;
+}
+div.amark.cel span.content,
+div.amark.prt span.content,
+div.amark.prtz span.content {
+  padding: 4px 20px;
+}
+div.amark.sec span.content, 
+div.amark.secz span.content {
+  border: 2px solid #777;
+  padding: 4px 12px;  
+}
+/*
+    LIGNE VERTICALE
+    (pour modulation, partie, section)
+*/
+div.amark span.vline {
+  display: inline-block;
+  position: absolute;
+  width: 20px;
+  height: 100px;
+  left:0px;
+  border-color: #777;
+  border-style: solid;
+  border-width: 0px;
+  border-left-width: 2px;
+  background-color: transparent;
+}
+
+/*
+    LES TYPES BOITES (bbx, partie, section, celllule, …)
+*/
+
+div.amark.bbx, div.amark.bbx span.content {
+  z-index: 0 !important;
+}
+div.amark.bbx:not(.cel):not(.bxt) span.content {
+  border-style:solid;
+  border-color:#777;
+  border-width:4px;
+}
+div.amark.cel span.content {
+  position: absolute;
+  top: -1.7em;
+  width: max-content;
+  text-align:center;
+}
+div.amark.cel {
+  border: 5px solid #777;
+  min-width: 60px;
+  min-height: 30px;
+  width: 300px;
+  height:200px;
+}
+
+/* Texte dans une boite */
+div.amark.bbx.bxt {
+  display: flex;
+  width:300px;
+  height:80px;
+  align-items:center;
+  justify-content:center;
+  border-style:solid;
+  border-color:#777;
+  border-width:4px;
+}
+div.amark.bbx.bxt span.content {
+  padding:none;
+}
+
+/* Partie : ligne verticale */
+div.amark.prt span.vline,
+div.amark.prtz span.vline {
+  height: 200px;
+}
+div.amark.prt span.vline {border-left-width:4px;}
+div.amark.sec span.vline {border-left-width:4px;}
+
+div.amark.prt span.vline,
+div.amark.sec span.vline {
+  left: 0px;
+}
+/* Fin de Partie : ligne verticale */
+div.amark.prtz span.vline,
+div.amark.secz span.vline {
+  left: auto;
+  border-left: none;
+  right: 0px;
+}
+div.amark.prtz span.vline {border-right-width:4px}
+div.amark.secz span.vline {border-right-width:4px}
+
+/*
+    TEXTES
+
+    Les styles div.amark.txt.size1 etc. sont définis en dur dans la
+    page construite en fonction des préférences.
+    
+*/
+div.amark.txt.mes {
+  /* défini en dur */
+/*  color:blue; *//* Pour les distinguer */
+}
+div.amark.txt.idx {
+  left:   10px!important;
+  color:  blue;
+  font-weight:bold;
+}
+
+/*
+
+    IMAGES
+
+*/
+div.amark.img {
+
+}
+div.amark.img img.content {
+  width: 100%;
+  height: 100%;
+}
+/* pour le fichier exporté */
+div.amark.img svg {
+  width: inherit;
+  height: inherit;
+}
+
+/*
+  
+    GESTION DES BORDS
+
+*/
+/* Bord gauche */
+div.amark.no_left_border {border-left-color: transparent !important;}
+div.amark.no_left_border:before {
+  content:'…';
+  position:absolute;
+  font-size:24pt;
+  left: -30px;
+}
+div.amark.no_left_border.h-up:before {top: -29px}
+div.amark.no_left_border.h-down:before {bottom: -10px}
+/* Bord droit */
+div.amark.no_right_border { border-right-color: transparent !important;}
+div.amark.no_right_border:after {
+  display: block;
+  position: absolute;
+  content: '…';
+  right: -30px;
+  font-size: 24pt;
+}
+div.amark.no_right_border.h-up:after { top: -29px; }
+div.amark.no_right_border.h-down:after { bottom: -10px; }
+
+div.amark.no_top_border {
+  border-top-color: transparent !important;
+}
+div.amark.no_bottom_border {
+  border-bottom-color: transparent !important;
+}

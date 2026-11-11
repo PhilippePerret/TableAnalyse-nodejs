@@ -1,0 +1,21 @@
+{
+  "name": "score-analyse",
+  "productName": "ScoreAnalyse",
+  "version": "3.0.0",
+  "description": "Table d'analyse musicale (ScoreSuite) — application Electron",
+  "type": "module",
+  "main": "main/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Philippe Perret",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "image-size": "^2.1.0",
+    "js-yaml": "^5.5.0"
+  },
+  "devDependencies": {
+    "electron": "^45.3.0"
+  }
+}

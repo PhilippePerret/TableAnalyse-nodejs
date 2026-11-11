@@ -1,0 +1,26 @@
+---
+marque_accords_size:    22
+marque_harmonie_size:   22
+marque_modulation_size: 14
+marque_emprunt_size:    14
+marque_cellule_size:    22
+marque_pedale_size:     30
+marque_texte_size_1:    60
+marque_texte_size_2:    30
+marque_texte_size_3:    14
+marque_texte_size_4:    12
+marque_measure:         14
+# --- Épaisseur des traits ---
+thiness_segment_line:   2
+thiness_cellule_line:   2
+thiness_border:         3
+# --- Couleurs ---
+color_mesure:           000099
+color_mark_parties:     CC0000
+color_mark_sections:    CC0000
+color_harmonie:         999999
+color_accords:          999999
+color_cellule:          8383ed
+color_segments:         333333
+color_modulations:      009900
+color_emprunts:         22BB22

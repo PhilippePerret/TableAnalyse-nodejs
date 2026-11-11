@@ -1,0 +1,46 @@
+---
+piece_title: Prélude
+composer: Bach
+analyse_title: Analyse
+analyse_id: analyse
+folder: "/Users/philippeperret/Programmes/ScoreSuite/ScoreAnalyse/Manuels/Analyse_CBT1_p1"
+analyst: ''
+systems:
+- image_name: system-1.jpg
+  top: 400
+  left: 0
+- image_name: system-10.jpg
+  top: 848
+  left: 0
+- image_name: system-11.jpg
+  top: 1349
+  left: 0
+- image_name: system-12.jpg
+  top: 1885
+  left: 0
+- image_name: system-2.jpg
+  top: 2442
+  left: 0
+- image_name: system-3.jpg
+  top: 2907
+  left: 0
+- image_name: system-4.jpg
+  top: 3373
+  left: 0
+- image_name: system-5.jpg
+  top: 3851
+  left: 0
+- image_name: system-6.jpg
+  top: 4333
+  left: 0
+- image_name: system-7.jpg
+  top: 4798
+  left: 0
+- image_name: system-8.jpg
+  top: 5287
+  left: 0
+- image_name: system-9.jpg
+  top: 5804
+  left: 0
+form:
+updated_at: 1669628060
