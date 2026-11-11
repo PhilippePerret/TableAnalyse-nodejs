@@ -113,8 +113,7 @@ function createWindow(){
       width:  1400
     , height: 1000
     , show:   !SMOKE
-    , title:  APP_NAME
-    , titleBarStyle: 'hidden' // pas de barre de titre (boutons de fenêtre conservés)
+    , title:  ''
     , webPreferences: {
           preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
         , contextIsolation: true
@@ -123,6 +122,8 @@ function createWindow(){
       }
   })
   mainWindow.loadURL('sa://app/index.html')
+  // Barre de titre sans titre (le <title> de la page ne s'y affiche pas)
+  mainWindow.on('page-title-updated', (e) => e.preventDefault())
 
   mainWindow.on('close', (e) => {
     if ( closeAllowed || SMOKE ) return
