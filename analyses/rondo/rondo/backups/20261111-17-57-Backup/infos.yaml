@@ -1,0 +1,321 @@
+---
+piece_title: Rondo
+composer: titi
+analyse_title: Mesures
+analyse_id: rondo
+folder: /Users/philippeperret/Programmes/ScoreSuite/ScoreAnalyse-Nodejs/analyses/rondo
+analyst: Phil
+systems:
+  - id: 1
+    image_name: system-001.jpg
+    top: 400
+    left: 0
+    height: 594
+  - id: 2
+    image_name: system-002.jpg
+    top: 1094
+    left: 0
+    height: 491
+  - id: 3
+    image_name: system-003.jpg
+    top: 1685
+    left: 0
+    height: 535
+  - id: 4
+    image_name: system-004.jpg
+    top: 2320
+    left: 0
+    height: 507
+  - id: 5
+    image_name: system-005.jpg
+    top: 2927
+    left: 0
+    height: 529
+  - id: 6
+    image_name: system-006.jpg
+    top: 3556
+    left: 0
+    height: 560
+  - id: 7
+    image_name: system-007.jpg
+    top: 4216
+    left: 0
+    height: 523
+  - id: 8
+    image_name: system-008.jpg
+    top: 4839
+    left: 0
+    height: 495
+  - id: 9
+    image_name: system-009.jpg
+    top: 5434
+    left: 0
+    height: 554
+  - id: 10
+    image_name: system-010.jpg
+    top: 6088
+    left: 0
+    height: 644
+  - id: 11
+    image_name: system-011.jpg
+    top: 6832
+    left: 0
+    height: 579
+  - id: 12
+    image_name: system-012.jpg
+    top: 7511
+    left: 0
+    height: 527
+  - id: 13
+    image_name: system-013.jpg
+    top: 8138
+    left: 0
+    height: 514
+  - id: 14
+    image_name: system-014.jpg
+    top: 8752
+    left: 0
+    height: 510
+  - id: 15
+    image_name: system-015.jpg
+    top: 9362
+    left: 0
+    height: 500
+  - id: 16
+    image_name: system-016.jpg
+    top: 9962
+    left: 0
+    height: 534
+  - id: 17
+    image_name: system-017.jpg
+    top: 10596
+    left: 0
+    height: 583
+  - id: 18
+    image_name: system-018.jpg
+    top: 11279
+    left: 0
+    height: 565
+  - id: 19
+    image_name: system-019.jpg
+    top: 11944
+    left: 0
+    height: 527
+  - id: 20
+    image_name: system-020.jpg
+    top: 12571
+    left: 0
+    height: 585
+  - id: 21
+    image_name: system-021.jpg
+    top: 13256
+    left: 0
+    height: 574
+  - id: 22
+    image_name: system-022.jpg
+    top: 13930
+    left: 0
+    height: 534
+  - id: 23
+    image_name: system-023.jpg
+    top: 14564
+    left: 0
+    height: 681
+  - id: 24
+    image_name: system-024.jpg
+    top: 15345
+    left: 0
+    height: 580
+  - id: 25
+    image_name: system-025.jpg
+    top: 16025
+    left: 0
+    height: 474
+  - id: 26
+    image_name: system-026.jpg
+    top: 16599
+    left: 0
+    height: 475
+  - id: 27
+    image_name: system-027.jpg
+    top: 17174
+    left: 0
+    height: 420
+  - id: 28
+    image_name: system-028.jpg
+    top: 17694
+    left: 0
+    height: 507
+  - id: 29
+    image_name: system-029.jpg
+    top: 18301
+    left: 0
+    height: 511
+  - id: 30
+    image_name: system-030.jpg
+    top: 18912
+    left: 0
+    height: 510
+  - id: 31
+    image_name: system-031.jpg
+    top: 19522
+    left: 0
+    height: 512
+  - id: 32
+    image_name: system-032.jpg
+    top: 20134
+    left: 0
+    height: 510
+  - id: 33
+    image_name: system-033.jpg
+    top: 20744
+    left: 0
+    height: 550
+  - id: 34
+    image_name: system-034.jpg
+    top: 21394
+    left: 0
+    height: 509
+  - id: 35
+    image_name: system-035.jpg
+    top: 22003
+    left: 0
+    height: 547
+  - id: 36
+    image_name: system-036.jpg
+    top: 22650
+    left: 0
+    height: 508
+  - id: 37
+    image_name: system-037.jpg
+    top: 23258
+    left: 0
+    height: 546
+  - id: 38
+    image_name: system-038.jpg
+    top: 23904
+    left: 0
+    height: 553
+  - id: 39
+    image_name: system-039.jpg
+    top: 24557
+    left: 0
+    height: 461
+  - id: 40
+    image_name: system-040.jpg
+    top: 25118
+    left: 0
+    height: 486
+  - id: 41
+    image_name: system-041.jpg
+    top: 25704
+    left: 0
+    height: 508
+  - id: 42
+    image_name: system-042.jpg
+    top: 26312
+    left: 0
+    height: 483
+  - id: 43
+    image_name: system-043.jpg
+    top: 26895
+    left: 0
+    height: 494
+  - id: 44
+    image_name: system-044.jpg
+    top: 27489
+    left: 0
+    height: 625
+  - id: 45
+    image_name: system-045.jpg
+    top: 28214
+    left: 0
+    height: 640
+  - id: 46
+    image_name: system-046.jpg
+    top: 28954
+    left: 0
+    height: 620
+  - id: 47
+    image_name: system-047.jpg
+    top: 29674
+    left: 0
+    height: 642
+  - id: 48
+    image_name: system-048.jpg
+    top: 30416
+    left: 0
+    height: 658
+  - id: 49
+    image_name: system-049.jpg
+    top: 31174
+    left: 0
+    height: 592
+  - id: 50
+    image_name: system-050.jpg
+    top: 31866
+    left: 0
+    height: 507
+  - id: 51
+    image_name: system-051.jpg
+    top: 32473
+    left: 0
+    height: 540
+  - id: 52
+    image_name: system-052.jpg
+    top: 33113
+    left: 0
+    height: 535
+  - id: 53
+    image_name: system-053.jpg
+    top: 33748
+    left: 0
+    height: 541
+  - id: 54
+    image_name: system-054.jpg
+    top: 34389
+    left: 0
+    height: 579
+  - id: 55
+    image_name: system-055.jpg
+    top: 35068
+    left: 0
+    height: 554
+  - id: 56
+    image_name: system-056.jpg
+    top: 35722
+    left: 0
+    height: 529
+  - id: 57
+    image_name: system-057.jpg
+    top: 36351
+    left: 0
+    height: 513
+  - id: 58
+    image_name: system-058.jpg
+    top: 36964
+    left: 0
+    height: 546
+  - id: 59
+    image_name: system-059.jpg
+    top: 37610
+    left: 0
+    height: 548
+  - id: 60
+    image_name: system-060.jpg
+    top: 38258
+    left: 0
+    height: 546
+  - id: 61
+    image_name: system-061.jpg
+    top: 38904
+    left: 0
+    height: 597
+  - id: 62
+    image_name: system-062.jpg
+    top: 39601
+    left: 0
+    height: 618
+created_at: 1794416270
+updated_at: 1794416270
+app_version: 3.0.0

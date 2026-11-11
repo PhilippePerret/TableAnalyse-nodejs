@@ -3,7 +3,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import { Analyse, imageHeight, isSystemImage } from './Analyse.js'
+import { Analyse, MEASURES_FILE, imageHeight, isSystemImage } from './Analyse.js'
 import { APP_FOLDER, ASSETS_FOLDER } from './paths.js'
 
 const FIRST_TAGS_MESSAGES = [
@@ -34,11 +34,12 @@ function checkData(data){
 
 /**
  * Copie les images de systèmes du dossier +source+ (if any) dans le
- * dossier des systèmes de l'analyse.
+ * dossier des systèmes de l'analyse, ainsi que les numéros de mesure
+ * produits par la découpe.
  */
 function copySystems(source, systemsFolder){
   if ( !source || !fs.existsSync(source) ) return
-  fs.readdirSync(source).filter(isSystemImage).forEach(name => {
+  fs.readdirSync(source).filter(name => isSystemImage(name) || name == MEASURES_FILE).forEach(name => {
     fs.copyFileSync(path.join(source, name), path.join(systemsFolder, name))
   })
 }

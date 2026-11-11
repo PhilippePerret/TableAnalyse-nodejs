@@ -76,6 +76,11 @@ export class Systeme extends AObjet {
    */
   static getSystemeAssociated(aobj) {
     /*
+    |  Numéro de mesure posé sur la ligne des numéros : il appartient au
+    |  système au-dessus duquel il se trouve.
+    */
+    if ( aobj.data && aobj.data.line ) return this.getSystemeOfMeasure(aobj)
+    /*
     |  Systèmes avant et après (if any)
     */
     var [sysAuDessus, sysEnDessous] = this.getSystemAvantEtApres(aobj.top, aobj.bottom)
@@ -114,6 +119,71 @@ export class Systeme extends AObjet {
 
     }
 
+  }
+
+  /**
+   * @return le système d'un numéro de mesure de la ligne des numéros :
+   * le dernier système qui commence au-dessus de lui.
+   */
+  static getSystemeOfMeasure(aobj){
+    var found = this.all[0]
+    this.each(sys => { if ( sys.top <= aobj.top ) found = sys })
+    return found
+  }
+
+  /**
+   * NUMÉROS DE MESURE (ligne des numéros)
+   * -------------------------------------
+   * Les numéros de mesure produits par la découpe (marques texte « mes »
+   * avec `line: true`) sont posés sur une ligne fine, sous chaque
+   * système, à la distance définie en préférence (measure_line_offset).
+   * Ils suivent leur système. Le système d'un numéro est mémorisé
+   * (_msys) pour qu'il ne change pas quand on déplace les systèmes.
+   */
+  static get measureMarks(){
+    return AObjet.select(ao => ao.subtype == 'mes' && ao.data && ao.data.line)
+  }
+  static get hasMeasureLine(){ return this.measureMarks.length > 0 }
+
+  static systemOfMeasure(ao){
+    return ao._msys || (ao._msys = this.getSystemeOfMeasure(ao))
+  }
+
+  /**
+   * Pose les numéros de mesure sur la ligne de leur système (et dessine
+   * cette ligne). +offset+ : distance de la ligne sous le système (par
+   * défaut, la préférence).
+   */
+  static placeMeasureNumbers(offset){
+    if ( undefined === offset ) offset = Number(Preferences.get('measure_line_offset'))
+    const bySystem = new Map()
+    this.measureMarks.forEach(ao => {
+      const sys = this.systemOfMeasure(ao)
+      if ( !sys ) return
+      bySystem.has(sys) || bySystem.set(sys, [])
+      bySystem.get(sys).push(ao)
+    })
+    this.each(sys => sys.placeMeasureLine(bySystem.get(sys) || [], offset))
+  }
+
+  /**
+   * Renumérote les numéros de mesure dans l'ordre de la partition
+   * (système, puis de gauche à droite) à partir de +fromMark+, dont le
+   * numéro fait foi (ou du premier numéro). Ainsi, un numéro ajouté (en
+   * double) décale les suivants vers le haut, un numéro supprimé (qui
+   * manque) les décale vers le bas.
+   */
+  static renumberMeasures(fromMark){
+    const index = (ao) => this.all.indexOf(this.systemOfMeasure(ao))
+    const marks = this.measureMarks.sort((a, b) => (index(a) - index(b)) || (a.left - b.left))
+    if ( marks.length == 0 ) return
+    let i = Math.max(0, marks.indexOf(fromMark))
+    let n = parseInt(marks[i].content, 10)
+    if ( isNaN(n) ) return
+    for ( ++i ; i < marks.length ; ++i ) {
+      const v = String(++n)
+      if ( marks[i].content != v ) { marks[i].content = v ; setModified() }
+    }
   }
 
   /**
@@ -176,6 +246,7 @@ export class Systeme extends AObjet {
     // Les nouveaux systèmes ont été placés sans connaitre leur
     // hauteur ; on corrige les chevauchements.
     this.checkAndRepareSystemsPosition()
+    this.placeMeasureNumbers()
   }
 
   static checkAndRepareSystemsPosition(){
@@ -306,6 +377,31 @@ export class Systeme extends AObjet {
     |  Déplacement de tous ses objets associés
     */
     onlySystem || this.objets.forEach(ao => { ao.top = ao.top + diff })
+    Systeme.placeMeasureNumbers()
+  }
+
+  /**
+   * Ligne des numéros de mesure du système (cf. Systeme.placeMeasureNumbers)
+   * et pose de ses numéros (+marks+) sur cette ligne.
+   */
+  placeMeasureLine(marks, offset){
+    const height = this.obj && this.obj.complete ? this.obj.offsetHeight : 0
+    if ( marks.length == 0 || !height ) {
+      this.measureLine && this.measureLine.remove()
+      this.measureLine = null
+      return
+    }
+    const y = Math.round(this.top + height + offset)
+    if ( !this.measureLine ) {
+      this.measureLine = DCreate('DIV', {class: 'measure-line'})
+      UI.TableAnalyse.appendChild(this.measureLine)
+    }
+    this.measureLine.style.top   = px(y)
+    this.measureLine.style.width = px(Preferences.get('systeme_width'))
+    marks.forEach(ao => {
+      const top = Math.round(y - ao.height)
+      if ( ao.top != top ) ao.top = top
+    })
   }
 
   /**
@@ -466,3 +562,12 @@ export class Systeme extends AObjet {
   get image_name(){ return this.data.image_name }
 
 }// class Systeme
+
+/*
+|  Suppression d'un numéro de mesure de la ligne : les suivants sont
+|  renumérotés (crochet appelé par AObjet.remove, qui ne peut pas
+|  importer Systeme).
+*/
+AObjet.afterRemove = (aobjet) => {
+  if ( aobjet.subtype == 'mes' && aobjet.data && aobjet.data.line ) Systeme.renumberMeasures()
+}

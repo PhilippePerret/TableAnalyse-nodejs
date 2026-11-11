@@ -455,6 +455,14 @@ div.amark.txt.mes {
   /* défini en dur */
 /*  color:blue; *//* Pour les distinguer */
 }
+/* Ligne des numéros de mesure, sous chaque système (cf. Systeme.js) */
+div.measure-line {
+  position:       absolute;
+  left:           0;
+  height:         0;
+  border-top:     1px solid #d6d6d6;
+  pointer-events: none;
+}
 div.amark.txt.idx {
   left:   10px!important;
   color:  blue;

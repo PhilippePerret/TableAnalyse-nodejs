@@ -55,11 +55,19 @@ export class AMark extends AObjet {
       // console.info("CREATE: Marque d'analyse avec données : ", params)
       // Identifiant unique
       Object.assign(params, { id: Current.analyse.newId() })
+      // Numéro de mesure ajouté quand la ligne des numéros existe : il
+      // y prend place et renumérote les suivants
+      const onMeasureLine = params.subtype == 'mes' && Systeme.hasMeasureLine
+      if ( onMeasureLine ) params.line = true
       const newMark = AMark.instanciate(Current.analyse, params)
       newMark.setValues(params)
       newMark.build_and_observe()
       newMark.toggleFromSelection(/* keep_other = */ false)
       newMark.ajustePosition(newMark.left, newMark.top)
+      if ( onMeasureLine ) {
+        Systeme.placeMeasureNumbers()
+        Systeme.renumberMeasures(newMark)
+      }
       UI.allumeRedLight()
 
       return newMark
@@ -211,6 +219,9 @@ setValue(newvalue){
   }
 
   this.isCadence && this.buildPoigneeCadence()
+
+  // Numéro de mesure modifié : il fait foi pour les suivants
+  this.subtype == 'mes' && this.data.line && Systeme.renumberMeasures(this)
 
   setModified()
 

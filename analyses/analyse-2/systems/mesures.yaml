@@ -1,0 +1,598 @@
+# Numéros de mesure détectés par la découpe (coordonnées en pixels de chaque image).
+# Importés à l'ouverture de l'analyse comme numéros de mesure, posés sous chaque système.
+---
+- image: system-001.jpg
+  width: 2536
+  height: 594
+  measures:
+    - {number: 1, x: 155}
+    - {number: 2, x: 550}
+    - {number: 3, x: 787}
+    - {number: 4, x: 1030}
+    - {number: 5, x: 1290}
+    - {number: 6, x: 1621}
+    - {number: 7, x: 2021}
+- image: system-002.jpg
+  width: 2582
+  height: 491
+  measures:
+    - {number: 8, x: 51}
+    - {number: 9, x: 735}
+    - {number: 10, x: 1156}
+    - {number: 11, x: 1570}
+    - {number: 12, x: 1901}
+    - {number: 13, x: 2175}
+- image: system-003.jpg
+  width: 2580
+  height: 535
+  measures:
+    - {number: 14, x: 49}
+    - {number: 15, x: 558}
+    - {number: 16, x: 969}
+    - {number: 17, x: 1346}
+    - {number: 18, x: 1675}
+    - {number: 19, x: 2032}
+    - {number: 20, x: 2325}
+- image: system-004.jpg
+  width: 2579
+  height: 507
+  measures:
+    - {number: 21, x: 50}
+    - {number: 22, x: 588}
+    - {number: 23, x: 992}
+    - {number: 24, x: 1391}
+    - {number: 25, x: 1785}
+    - {number: 26, x: 2143}
+- image: system-005.jpg
+  width: 2584
+  height: 529
+  measures:
+    - {number: 27, x: 54}
+    - {number: 28, x: 606}
+    - {number: 29, x: 854}
+    - {number: 30, x: 1134}
+    - {number: 31, x: 1490}
+    - {number: 32, x: 1933}
+    - {number: 33, x: 2289}
+- image: system-006.jpg
+  width: 2584
+  height: 560
+  measures:
+    - {number: 34, x: 53}
+    - {number: 35, x: 576}
+    - {number: 36, x: 1010}
+    - {number: 37, x: 1364}
+    - {number: 38, x: 1769}
+    - {number: 39, x: 2176}
+- image: system-007.jpg
+  width: 2620
+  height: 523
+  measures:
+    - {number: 40, x: 51}
+    - {number: 41, x: 702}
+    - {number: 42, x: 1173}
+    - {number: 43, x: 1652}
+    - {number: 44, x: 2125}
+- image: system-008.jpg
+  width: 2622
+  height: 492
+  measures:
+    - {number: 45, x: 59}
+    - {number: 46, x: 716}
+    - {number: 47, x: 1202}
+    - {number: 48, x: 1644}
+    - {number: 49, x: 2136}
+- image: system-009.jpg
+  width: 2613
+  height: 554
+  measures:
+    - {number: 50, x: 50}
+    - {number: 51, x: 642}
+    - {number: 52, x: 1022}
+    - {number: 53, x: 1434}
+    - {number: 54, x: 1813}
+    - {number: 55, x: 2210}
+- image: system-010.jpg
+  width: 2608
+  height: 644
+  measures:
+    - {number: 56, x: 50}
+    - {number: 57, x: 677}
+    - {number: 58, x: 1091}
+    - {number: 59, x: 1536}
+    - {number: 60, x: 1964}
+- image: system-011.jpg
+  width: 2615
+  height: 579
+  measures:
+    - {number: 61, x: 52}
+    - {number: 62, x: 668}
+    - {number: 63, x: 1096}
+    - {number: 64, x: 1514}
+    - {number: 65, x: 1978}
+    - {number: 66, x: 2248}
+- image: system-012.jpg
+  width: 2617
+  height: 527
+  measures:
+    - {number: 67, x: 51}
+    - {number: 68, x: 608}
+    - {number: 69, x: 1037}
+    - {number: 70, x: 1314}
+    - {number: 71, x: 1710}
+    - {number: 72, x: 2139}
+- image: system-013.jpg
+  width: 2596
+  height: 514
+  measures:
+    - {number: 73, x: 51}
+    - {number: 74, x: 485}
+    - {number: 75, x: 830}
+    - {number: 76, x: 1181}
+    - {number: 77, x: 1593}
+    - {number: 78, x: 2200}
+- image: system-014.jpg
+  width: 2587
+  height: 510
+  measures:
+    - {number: 79, x: 50}
+    - {number: 80, x: 541}
+    - {number: 81, x: 857}
+    - {number: 82, x: 1083}
+    - {number: 83, x: 1394}
+    - {number: 84, x: 1670}
+    - {number: 85, x: 1994}
+    - {number: 86, x: 2227}
+- image: system-015.jpg
+  width: 2581
+  height: 500
+  measures:
+    - {number: 87, x: 47}
+    - {number: 88, x: 494}
+    - {number: 89, x: 896}
+    - {number: 90, x: 1325}
+    - {number: 91, x: 1760}
+    - {number: 92, x: 2191}
+- image: system-016.jpg
+  width: 2586
+  height: 534
+  measures:
+    - {number: 93, x: 53}
+    - {number: 94, x: 706}
+    - {number: 95, x: 1092}
+    - {number: 96, x: 1479}
+    - {number: 97, x: 1796}
+    - {number: 98, x: 2195}
+- image: system-017.jpg
+  width: 2579
+  height: 583
+  measures:
+    - {number: 99, x: 50}
+    - {number: 100, x: 845}
+    - {number: 101, x: 1349}
+    - {number: 102, x: 1962}
+- image: system-018.jpg
+  width: 2582
+  height: 565
+  measures:
+    - {number: 103, x: 52}
+    - {number: 104, x: 844}
+    - {number: 105, x: 1354}
+    - {number: 106, x: 1954}
+- image: system-019.jpg
+  width: 2603
+  height: 527
+  measures:
+    - {number: 107, x: 47}
+    - {number: 108, x: 805}
+    - {number: 109, x: 1414}
+- image: system-020.jpg
+  width: 2608
+  height: 585
+  measures:
+    - {number: 110, x: 49}
+    - {number: 111, x: 786}
+    - {number: 112, x: 1343}
+    - {number: 113, x: 1931}
+- image: system-021.jpg
+  width: 2607
+  height: 574
+  measures:
+    - {number: 114, x: 42}
+    - {number: 115, x: 1068}
+    - {number: 116, x: 1543}
+    - {number: 117, x: 1949}
+- image: system-022.jpg
+  width: 2605
+  height: 534
+  measures:
+    - {number: 118, x: 48}
+    - {number: 119, x: 893}
+    - {number: 120, x: 1496}
+- image: system-023.jpg
+  width: 2612
+  height: 681
+  measures:
+    - {number: 121, x: 52}
+    - {number: 122, x: 793}
+    - {number: 123, x: 1427}
+    - {number: 124, x: 2036}
+- image: system-024.jpg
+  width: 2615
+  height: 580
+  measures:
+    - {number: 125, x: 54}
+    - {number: 126, x: 928}
+    - {number: 127, x: 1494}
+    - {number: 128, x: 2128}
+- image: system-025.jpg
+  width: 2590
+  height: 474
+  measures:
+    - {number: 129, x: 51}
+    - {number: 130, x: 805}
+    - {number: 131, x: 1360}
+    - {number: 132, x: 1954}
+- image: system-026.jpg
+  width: 2583
+  height: 475
+  measures:
+    - {number: 133, x: 48}
+    - {number: 134, x: 832}
+    - {number: 135, x: 1386}
+    - {number: 136, x: 1983}
+- image: system-027.jpg
+  width: 2580
+  height: 420
+  measures:
+    - {number: 137, x: 49}
+    - {number: 138, x: 797}
+    - {number: 139, x: 1352}
+    - {number: 140, x: 1959}
+- image: system-028.jpg
+  width: 2580
+  height: 507
+  measures:
+    - {number: 141, x: 49}
+    - {number: 142, x: 798}
+    - {number: 143, x: 1367}
+    - {number: 144, x: 1949}
+- image: system-029.jpg
+  width: 2587
+  height: 511
+  measures:
+    - {number: 145, x: 51}
+    - {number: 146, x: 808}
+    - {number: 147, x: 1386}
+    - {number: 148, x: 1953}
+- image: system-030.jpg
+  width: 2588
+  height: 510
+  measures:
+    - {number: 149, x: 51}
+    - {number: 150, x: 783}
+    - {number: 151, x: 1283}
+    - {number: 152, x: 1791}
+    - {number: 153, x: 2020}
+    - {number: 154, x: 2253}
+- image: system-031.jpg
+  width: 2595
+  height: 512
+  measures:
+    - {number: 155, x: 49}
+    - {number: 156, x: 527}
+    - {number: 157, x: 869}
+    - {number: 158, x: 1271}
+    - {number: 159, x: 1654}
+    - {number: 160, x: 1957}
+- image: system-032.jpg
+  width: 2615
+  height: 510
+  measures:
+    - {number: 161, x: 49}
+    - {number: 162, x: 462}
+    - {number: 163, x: 808}
+    - {number: 164, x: 1133}
+    - {number: 165, x: 1523}
+    - {number: 166, x: 1900}
+    - {number: 167, x: 2201}
+- image: system-033.jpg
+  width: 2612
+  height: 550
+  measures:
+    - {number: 168, x: 42}
+    - {number: 169, x: 576}
+    - {number: 170, x: 835}
+    - {number: 171, x: 1211}
+    - {number: 172, x: 1567}
+    - {number: 173, x: 1925}
+    - {number: 174, x: 2287}
+- image: system-034.jpg
+  width: 2614
+  height: 509
+  measures:
+    - {number: 175, x: 48}
+    - {number: 176, x: 620}
+    - {number: 177, x: 958}
+    - {number: 178, x: 1252}
+    - {number: 179, x: 1539}
+    - {number: 180, x: 1844}
+    - {number: 181, x: 2250}
+- image: system-035.jpg
+  width: 2614
+  height: 547
+  measures:
+    - {number: 182, x: 49}
+    - {number: 183, x: 499}
+    - {number: 184, x: 780}
+    - {number: 185, x: 1184}
+    - {number: 186, x: 1534}
+    - {number: 187, x: 1900}
+    - {number: 188, x: 2230}
+- image: system-036.jpg
+  width: 2609
+  height: 508
+  measures:
+    - {number: 189, x: 49}
+    - {number: 190, x: 613}
+    - {number: 191, x: 990}
+    - {number: 192, x: 1382}
+    - {number: 193, x: 1624}
+    - {number: 194, x: 1867}
+    - {number: 195, x: 2197}
+- image: system-037.jpg
+  width: 2612
+  height: 546
+  measures:
+    - {number: 196, x: 50}
+    - {number: 197, x: 568}
+    - {number: 198, x: 813}
+    - {number: 199, x: 1528}
+    - {number: 200, x: 1886}
+    - {number: 201, x: 2265}
+- image: system-038.jpg
+  width: 2615
+  height: 553
+  measures:
+    - {number: 202, x: 51}
+    - {number: 203, x: 610}
+    - {number: 204, x: 1025}
+    - {number: 205, x: 1366}
+    - {number: 206, x: 1748}
+    - {number: 207, x: 2121}
+- image: system-039.jpg
+  width: 2583
+  height: 461
+  measures:
+    - {number: 208, x: 55}
+    - {number: 209, x: 639}
+    - {number: 210, x: 1041}
+    - {number: 211, x: 1426}
+    - {number: 212, x: 1797}
+    - {number: 213, x: 2169}
+- image: system-040.jpg
+  width: 2584
+  height: 486
+  measures:
+    - {number: 214, x: 58}
+    - {number: 215, x: 640}
+    - {number: 216, x: 1025}
+    - {number: 217, x: 1393}
+    - {number: 218, x: 1764}
+    - {number: 219, x: 2163}
+- image: system-041.jpg
+  width: 2580
+  height: 508
+  measures:
+    - {number: 220, x: 55}
+    - {number: 221, x: 802}
+    - {number: 222, x: 1149}
+    - {number: 223, x: 1525}
+    - {number: 224, x: 1896}
+    - {number: 225, x: 2213}
+- image: system-042.jpg
+  width: 2582
+  height: 483
+  measures:
+    - {number: 226, x: 58}
+    - {number: 227, x: 652}
+    - {number: 228, x: 1037}
+    - {number: 229, x: 1417}
+    - {number: 230, x: 1798}
+    - {number: 231, x: 2179}
+- image: system-043.jpg
+  width: 2583
+  height: 494
+  measures:
+    - {number: 232, x: 58}
+    - {number: 233, x: 661}
+    - {number: 234, x: 1078}
+    - {number: 235, x: 1529}
+    - {number: 236, x: 1987}
+- image: system-044.jpg
+  width: 2574
+  height: 625
+  measures:
+    - {number: 237, x: 59}
+    - {number: 238, x: 857}
+    - {number: 239, x: 1292}
+    - {number: 240, x: 1709}
+    - {number: 241, x: 2131}
+- image: system-045.jpg
+  width: 2618
+  height: 640
+  measures:
+    - {number: 242, x: 56}
+    - {number: 243, x: 1081}
+    - {number: 244, x: 1831}
+- image: system-046.jpg
+  width: 2612
+  height: 620
+  measures:
+    - {number: 245, x: 58}
+    - {number: 246, x: 650}
+    - {number: 247, x: 1030}
+    - {number: 248, x: 1409}
+    - {number: 249, x: 1787}
+    - {number: 250, x: 2186}
+- image: system-047.jpg
+  width: 2606
+  height: 642
+  measures:
+    - {number: 251, x: 56}
+    - {number: 252, x: 653}
+    - {number: 253, x: 1034}
+    - {number: 254, x: 1416}
+    - {number: 255, x: 1791}
+- image: system-048.jpg
+  width: 2608
+  height: 658
+  measures:
+    - {number: 256, x: 57}
+    - {number: 257, x: 1074}
+    - {number: 258, x: 1458}
+    - {number: 259, x: 1827}
+    - {number: 260, x: 2200}
+- image: system-049.jpg
+  width: 2606
+  height: 592
+  measures:
+    - {number: 261, x: 59}
+    - {number: 262, x: 680}
+    - {number: 263, x: 1102}
+    - {number: 264, x: 1510}
+    - {number: 265, x: 2000}
+    - {number: 266, x: 2255}
+- image: system-050.jpg
+  width: 2609
+  height: 507
+  measures:
+    - {number: 267, x: 60}
+    - {number: 268, x: 655}
+    - {number: 269, x: 1103}
+    - {number: 270, x: 1391}
+    - {number: 271, x: 1753}
+    - {number: 272, x: 2133}
+- image: system-051.jpg
+  width: 2599
+  height: 540
+  measures:
+    - {number: 273, x: 55}
+    - {number: 274, x: 537}
+    - {number: 275, x: 912}
+    - {number: 276, x: 1198}
+    - {number: 277, x: 1610}
+    - {number: 278, x: 1871}
+    - {number: 279, x: 2212}
+- image: system-052.jpg
+  width: 2593
+  height: 535
+  measures:
+    - {number: 280, x: 55}
+    - {number: 281, x: 546}
+    - {number: 282, x: 861}
+    - {number: 283, x: 1092}
+    - {number: 284, x: 1393}
+    - {number: 285, x: 1693}
+    - {number: 286, x: 1998}
+    - {number: 287, x: 2245}
+- image: system-053.jpg
+  width: 2587
+  height: 541
+  measures:
+    - {number: 288, x: 52}
+    - {number: 289, x: 537}
+    - {number: 290, x: 922}
+    - {number: 291, x: 1331}
+    - {number: 292, x: 1763}
+    - {number: 293, x: 2186}
+- image: system-054.jpg
+  width: 2588
+  height: 579
+  measures:
+    - {number: 294, x: 53}
+    - {number: 295, x: 753}
+    - {number: 296, x: 1357}
+    - {number: 297, x: 1914}
+- image: system-055.jpg
+  width: 2589
+  height: 554
+  measures:
+    - {number: 298, x: 54}
+    - {number: 299, x: 871}
+    - {number: 300, x: 1463}
+    - {number: 301, x: 2032}
+- image: system-056.jpg
+  width: 2591
+  height: 529
+  measures:
+    - {number: 302, x: 53}
+    - {number: 303, x: 857}
+    - {number: 304, x: 1428}
+    - {number: 305, x: 2000}
+    - {number: 306, x: 2283}
+- image: system-057.jpg
+  width: 2597
+  height: 513
+  measures:
+    - {number: 307, x: 53}
+    - {number: 308, x: 541}
+    - {number: 309, x: 927}
+    - {number: 310, x: 1215}
+    - {number: 311, x: 1583}
+    - {number: 312, x: 1946}
+    - {number: 313, x: 2212}
+- image: system-058.jpg
+  width: 2596
+  height: 546
+  measures:
+    - {number: 314, x: 55}
+    - {number: 315, x: 554}
+    - {number: 316, x: 838}
+    - {number: 317, x: 1165}
+    - {number: 318, x: 1495}
+    - {number: 319, x: 1857}
+    - {number: 320, x: 2260}
+- image: system-059.jpg
+  width: 2609
+  height: 548
+  measures:
+    - {number: 321, x: 54}
+    - {number: 322, x: 610}
+    - {number: 323, x: 919}
+    - {number: 324, x: 1189}
+    - {number: 325, x: 1534}
+    - {number: 326, x: 1873}
+    - {number: 327, x: 2228}
+- image: system-060.jpg
+  width: 2596
+  height: 546
+  measures:
+    - {number: 328, x: 55}
+    - {number: 329, x: 523}
+    - {number: 330, x: 859}
+    - {number: 331, x: 1186}
+    - {number: 332, x: 1487}
+    - {number: 333, x: 1786}
+    - {number: 334, x: 2116}
+- image: system-061.jpg
+  width: 2601
+  height: 597
+  measures:
+    - {number: 335, x: 57}
+    - {number: 336, x: 666}
+    - {number: 337, x: 959}
+    - {number: 338, x: 1342}
+    - {number: 339, x: 1792}
+    - {number: 340, x: 2166}
+- image: system-062.jpg
+  width: 2605
+  height: 618
+  measures:
+    - {number: 341, x: 60}
+    - {number: 342, x: 685}
+    - {number: 343, x: 1129}
+    - {number: 344, x: 1351}
+    - {number: 345, x: 1702}
+    - {number: 346, x: 2062}
+    - {number: 347, x: 2377}

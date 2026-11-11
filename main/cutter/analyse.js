@@ -3,6 +3,7 @@
  *  - détection des lignes de portée, des portées et des systèmes,
  *  - étiquetage des composantes connexes (notes, hampes, liaisons…),
  *  - attribution de chaque composante à un système,
+ *  - barres de mesure (début de chaque mesure),
  *  - extraction d'un système (avec effacement, sur option, des éléments
  *    des autres systèmes).
  *
@@ -29,7 +30,7 @@ export function analysePage(img, options = {}){
   const {width: w, height: h} = img
   const dark   = binarize(img, opts.threshold)
   const lines  = findStaffLines(dark, w, h, Math.round(w * opts.minLineRatio))
-  const staves = findStaves(lines)
+  const staves = findStaves(lines, dark, w)
   if ( staves.length === 0 ) return {width: w, height: h, lines, staves, systems: [], warnings: ['Aucune portée détectée']}
   const systems = groupSystems(dark, w, staves, opts.staves)
   const s       = median(staves.map(st => st.s))
@@ -39,6 +40,7 @@ export function analysePage(img, options = {}){
   const dotted  = findDottedLines(comps, s, opts)
   assignComponents(comps, systems, s, opts, dotted)
   excludeMargins(comps, dotted, h, limits)
+  findMeasures(dark, w, systems, s)
   computeCrops(comps, systems, s, w, h, opts, limits)
   return {width: w, height: h, s, lines, staves, systems, comps, limits, dotted, opts, warnings: []}
 }
@@ -149,22 +151,61 @@ function lineGap(a, b){
  *  Portées : groupes de 5 lignes régulièrement espacées
  * --------------------------------------------------------------------- */
 
-function findStaves(lines){
+function findStaves(lines, dark, w){
   if ( lines.length < 4 ) return []
   const gaps = lines.slice(1).map((l, i) => lineGap(lines[i], l))
   const s = median(gaps)
   const staves = []
+  // Suites de lignes régulièrement espacées ; si une suite en compte plus
+  // de 5 (ligne pointillée d'octave, ligature… à un interligne), on garde
+  // les 5 consécutives les plus longues.
   let cur = [lines[0]]
   const flush = () => {
-    if ( cur.length === 5 || cur.length === 4 ) staves.push(makeStaff(cur))
+    if ( cur.length === 4 ) staves.push(makeStaff(completeStaff(cur, dark, w)))
+    else if ( cur.length === 5 ) staves.push(makeStaff(cur))
+    else if ( cur.length > 5 ) {
+      let best = 0, bestLen = -1
+      for ( let i = 0 ; i + 5 <= cur.length ; ++i ) {
+        const len = cur.slice(i, i + 5).reduce((n, l) => n + l.x1 - l.x0, 0)
+        if ( len > bestLen ) { best = i; bestLen = len }
+      }
+      staves.push(makeStaff(cur.slice(best, best + 5)))
+      // Le reste peut former une autre portée
+      const rest = cur.slice(best + 5)
+      if ( rest.length >= 4 ) { cur = rest; flush() }
+    }
   }
   for ( let i = 1 ; i < lines.length ; ++i ) {
-    const gap = gaps[i-1]
-    if ( Math.abs(gap - s) <= 0.35 * s && cur.length < 5 ) cur.push(lines[i])
+    if ( Math.abs(gaps[i-1] - s) <= 0.2 * s ) cur.push(lines[i])
     else { flush(); cur = [lines[i]] }
   }
   flush()
   return staves
+}
+
+/**
+ * Portée dont une ligne n'a pas été reconnue (couverte de ligatures) :
+ * on la reconstitue, parallèle aux autres, du côté où l'image est noire.
+ */
+function completeStaff(lines, dark, w){
+  const gap = lineGap(lines[0], lines[1])
+  const shifted = (line, dy) => ({
+      x0: line.x0, x1: line.x1, thickness: line.thickness
+    , yAt: (x) => line.yAt(x) + dy
+    , y: line.y + dy, y0: Math.round(line.y0 + dy), y1: Math.round(line.y1 + dy)
+  })
+  const above = shifted(lines[0], -gap), below = shifted(lines[3], gap)
+  const blackness = (line) => {
+    let n = 0, k = 0
+    for ( let x = line.x0 ; x <= line.x1 ; x += 4, ++k ) {
+      const y = Math.round(line.yAt(x))
+      if ( dark[y * w + x] || dark[(y - 1) * w + x] || dark[(y + 1) * w + x] ) ++n
+    }
+    return k ? n / k : 0
+  }
+  const ba = blackness(above), bb = blackness(below)
+  if ( Math.max(ba, bb) < 0.5 ) return lines
+  return ba > bb ? [above, ...lines] : [...lines, below]
 }
 
 function makeStaff(lines){
@@ -590,6 +631,136 @@ function alignedCount(rows, sys, side, x){
     if ( Math.abs(k - Math.round(k)) < 0.2 ) ++n
   }
   return n
+}
+
+/* ---------------------------------------------------------------------
+ *  Barres de mesure : colonnes noires qui traversent chaque portée du
+ *  système de sa première à sa dernière ligne, et restent fines sur
+ *  toute leur hauteur (une hampe, elle, porte une tête de note). Les
+ *  barres proches (double barre, reprise) n'en font qu'une.
+ *
+ *  Mesures : chacune est fermée par une barre ; la première commence au
+ *  début du système, les suivantes après chaque barre. Ce qui suit la
+ *  dernière barre n'est pas une mesure (armure ou clé de précaution).
+ *  Les numéros sont posés par l'application, sous le système.
+ * --------------------------------------------------------------------- */
+
+function findMeasures(dark, w, systems, s){
+  for ( const sys of systems ) {
+    const [left, right] = staffEdges(dark, w, sys.staves[0], s)
+    sys.staffLeft = left; sys.staffRight = right
+    const cols = []
+    for ( let x = Math.round(left + 1.5 * s) ; x <= right ; ++x ) {
+      const q = barQuality(dark, w, sys, x, s)
+      if ( q !== null ) cols.push({x, q})
+    }
+    // Colonnes contiguës → traits ; traits proches → une seule barre
+    let bars = []
+    for ( const {x, q} of cols ) {
+      const last = bars[bars.length - 1]
+      if ( last && x - last.x1 <= 1.2 * s ) { last.x1 = x; last.q = Math.max(last.q, q) }
+      else bars.push({x0: x, x1: x, q})
+    }
+    // Pas de mesure de moins de 4 interlignes : entre deux barres trop
+    // proches, la plus fine l'emporte (l'autre est une hampe)
+    for ( let changed = true ; changed ; ) {
+      changed = false
+      for ( let i = 0 ; i + 1 < bars.length ; ++i ) {
+        if ( bars[i + 1].x0 - bars[i].x1 < 4 * s ) {
+          bars.splice(bars[i].q >= bars[i + 1].q ? i + 1 : i, 1)
+          changed = true; break
+        }
+      }
+    }
+    sys.barlines = bars
+    const starts = [left]
+    bars.slice(0, -1).forEach(b => starts.push(b.x1 + 1))
+    sys.measures = starts.map(x => ({x: Math.round(x + 0.3 * s)}))
+  }
+}
+
+/**
+ * Bords gauche et droit exacts d'une portée (les lignes ne sont connues
+ * qu'à la largeur d'une bande près) : là où sa ligne du haut commence et
+ * finit vraiment.
+ */
+function staffEdges(dark, w, staff, s){
+  const line = staff.lines[0]
+  const isOn = (x) => {
+    const y = Math.round(line.yAt(x))
+    for ( let dy = -1 ; dy <= 1 ; ++dy ) if ( dark[(y + dy) * w + x] ) return true
+    return false
+  }
+  const run = Math.round(s)
+  const solid = (x, dir) => { for ( let k = 0 ; k < run ; ++k ) if ( !isOn(x + dir * k) ) return false ; return true }
+  let left = Math.max(0, line.x0 - STRIP)
+  while ( left < line.x1 && !solid(left, 1) ) ++left
+  let right = Math.min(w - 1, line.x1 + STRIP)
+  while ( right > left && !solid(right, -1) ) --right
+  return [left, right]
+}
+
+/**
+ * La colonne est-elle une barre de mesure ? (null si non, sinon une
+ * qualité : la plus faible proportion de rangées « fines » des portées)
+ * Elle doit être noire sur
+ * toute la hauteur de chaque portée (une hampe ne l'est presque jamais
+ * entièrement), puis, soit relier les portées entre elles, soit rester
+ * fine (une note ou une altération collée à la barre est tolérée sur
+ * une partie de la hauteur). Sur une page inclinée, la barre est
+ * perpendiculaire aux lignes de portée : on suit leur pente.
+ */
+function barQuality(dark, w, sys, x, s){
+  const maxWidth = 0.7 * s
+  const slope = (sys.staves[0].lines[0].yAt(x + 4 * STRIP) - sys.staves[0].lines[0].yAt(x - 4 * STRIP)) / (8 * STRIP)
+  const yRef = sys.staves[0].lines[0].yAt(x)
+  const xAt = (y) => Math.round(x - slope * (y - yRef))
+  const blackAt = (y) => { const p = y * w + xAt(y) ; return dark[p] || dark[p-1] || dark[p+1] }
+  // Une barre s'arrête net à la première et à la dernière ligne ; une
+  // hampe déborde en général (ligature, tête de note)
+  const first = sys.staves[0].lines[0], last = sys.staves[sys.staves.length - 1].lines.slice(-1)[0]
+  const beyond = (yFrom, dir) => {
+    let n = 0, k = 0
+    for ( let d = Math.round(0.25 * s) ; d <= Math.round(0.8 * s) ; ++d, ++k ) if ( blackAt(Math.round(yFrom + dir * d)) ) ++n
+    return n / k
+  }
+  if ( beyond(first.yAt(x), -1) > 0.4 || beyond(last.yAt(x), 1) > 0.4 ) return null
+  const thins = []
+  for ( const st of sys.staves ) {
+    const lines = st.lines
+    const y0 = Math.round(lines[0].yAt(x)), y1 = Math.round(lines[lines.length - 1].yAt(x))
+    const len = y1 - y0 + 1
+    let missing = 0
+    for ( let y = y0 ; y <= y1 ; ++y ) {
+      if ( !blackAt(y) && ++missing > 0.03 * len ) return null
+    }
+    // Finesse : largeur du trait noir sur les rangées hors lignes de portée
+    let rows = 0, thin = 0
+    for ( let y = y0 ; y <= y1 ; ++y ) {
+      if ( lines.some(l => Math.abs(y - l.yAt(x)) <= l.thickness) ) continue
+      ++rows
+      const row = y * w
+      const xc = xAt(y)
+      let a = xc, b = xc
+      while ( a > 0 && dark[row + a - 1] && xc - a < maxWidth ) --a
+      while ( b < w - 1 && dark[row + b + 1] && b - xc < maxWidth ) ++b
+      if ( b - a + 1 <= maxWidth ) ++thin
+    }
+    thins.push(rows ? thin / rows : 1)
+  }
+  // Barre reliant les portées (piano, chœur…)
+  if ( sys.staves.length > 1 ) {
+    let joined = true
+    for ( let i = 0 ; joined && i + 1 < sys.staves.length ; ++i ) {
+      const a = sys.staves[i], b = sys.staves[i + 1]
+      const y0 = Math.round(a.lines[a.lines.length - 1].yAt(x)), y1 = Math.round(b.lines[0].yAt(x))
+      let missing = 0
+      for ( let y = y0 ; y <= y1 ; ++y ) if ( !blackAt(y) ) ++missing
+      joined = missing <= 0.03 * (y1 - y0 + 1)
+    }
+    if ( joined ) return Math.min(...thins)
+  }
+  return Math.max(...thins) >= 0.85 && Math.min(...thins) >= 0.5 ? Math.min(...thins) : null
 }
 
 /* ---------------------------------------------------------------------

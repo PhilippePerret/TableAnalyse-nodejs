@@ -114,6 +114,7 @@ function createWindow(){
     , height: 1000
     , show:   !SMOKE
     , title:  ''
+    , icon:   path.join(ASSETS_FOLDER, 'icons', 'icon.png')
     , webPreferences: {
           preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
         , contextIsolation: true
@@ -231,6 +232,7 @@ function registerIpc(){
     // Instance vierge pour relire les fichiers (rechargement de la page)
     current = new Analyse(current.path)
     current.makeBackup()
+    current.importMeasures()
     return current.allDataForClient()
   })
 
@@ -322,6 +324,7 @@ function registerIpc(){
 /* --- Démarrage --- */
 
 app.whenReady().then(() => {
+  if ( app.dock ) app.dock.setIcon(path.join(ASSETS_FOLDER, 'icons', 'icon.png'))
   registerProtocol()
   registerIpc()
   buildMenu()

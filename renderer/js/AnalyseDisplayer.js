@@ -7,6 +7,7 @@ import { PreferencesAppData } from './Preferences_AppData.js'
 import { Form } from './Form.js'
 import { Analyse } from './Analyse.js'
 import { UI } from './UI.js'
+import { Systeme } from './Systeme.js'
 
 export class AnalyseDisplayer {
 
@@ -49,6 +50,7 @@ static display(analyse){
   |  Affichage des marques d'analyse
   */
   this.displayAnalyseTags(analyse.tags)
+  Systeme.placeMeasureNumbers() // si les images sont déjà chargées
 
   /*
   |  Données de forme

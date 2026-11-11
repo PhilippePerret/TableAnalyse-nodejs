@@ -9,6 +9,7 @@ import { loadYAML, writeYAML } from './yaml.js'
 
 const SYSTEM_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.svg']
 const MAX_BACKUPS = 100
+export const MEASURES_FILE = 'mesures.yaml' // numéros de mesure produits par la découpe
 
 export function imageHeight(imgPath){
   try {
@@ -51,6 +52,7 @@ export class Analyse {
   get imagesFolder()    { return path.join(this.path, 'images') }
   get backupsFolder()   { return path.join(this.path, 'backups') }
   get exportFolder()    { return path.join(this.path, 'export') }
+  get measuresPath()    { return path.join(this.systemsFolder, MEASURES_FILE) }
 
   get infos(){
     if ( undefined === this._infos ) {
@@ -127,6 +129,45 @@ export class Analyse {
     this.infos = Object.assign({}, this.infos, {systems: newSystems})
     this.saveInfos()
     return newSystems
+  }
+
+  /**
+   * Numéros de mesure détectés par la découpe (systems/mesures.yaml, en
+   * pixels de chaque image) : transformés en marques texte « numéro de
+   * mesure » posées sur la ligne des numéros, sous chaque système
+   * (`line: true`), à valider dans l'interface. Fait une seule fois : le
+   * fichier est ensuite renommé.
+   * @return le nombre de marques créées
+   */
+  importMeasures(){
+    if ( !fs.existsSync(this.measuresPath) ) return 0
+    const entries = loadYAML(this.measuresPath, []) || []
+    const findSystem = (image) => this.dataSystems.find(dsys => dsys.image_name == image)
+    if ( entries.some(e => !findSystem(e.image)) ) this.updateSystems()
+    const width  = Number(this.preferences.systeme_width) || 1860
+    const offset = Number(this.preferences.measure_line_offset) || 150 // ligne des numéros (repositionnés à l'affichage)
+    let id = this.tags.reduce((max, tag) => Math.max(max, Number(tag.id) || 0), 0)
+    const newTags = []
+    for ( const e of entries ) {
+      const dsys = findSystem(e.image)
+      if ( !dsys ) continue
+      const scale = width / e.width
+      for ( const m of e.measures ) {
+        newTags.push({
+            id:       ++id
+          , type:     'txt'
+          , subtype:  'mes'
+          , content:  String(m.number)
+          , top:      Math.round(dsys.top + e.height * scale + offset - 30)
+          , left:     Math.round(m.x * scale)
+          , line:     true
+        })
+      }
+    }
+    this.tags = [...this.tags, ...newTags]
+    this.saveTags()
+    fs.renameSync(this.measuresPath, this.measuresPath.replace(/\.yaml$/, '.importe.yaml'))
+    return newTags.length
   }
 
   makeBackup(){

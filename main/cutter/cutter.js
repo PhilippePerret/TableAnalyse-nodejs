@@ -48,9 +48,35 @@ async function saveDebug(img, res, file){
     ctx.fillStyle = 'black'
     ctx.font = `bold ${Math.round(res.s * 3)}px sans-serif`
     ctx.fillText(String(sys.number), x0 + 4, y0 + res.s * 3)
+    // Barres de mesure et numéros
+    ctx.fillStyle = 'rgba(255,0,0,.45)'
+    sys.barlines.forEach(b => ctx.fillRect(b.x0 - 2, sys.top - res.s, b.x1 - b.x0 + 5, sys.bottom - sys.top + 2 * res.s))
+    ctx.font = `bold ${Math.round(res.s * 1.2)}px sans-serif`
+    ctx.fillStyle = 'red'
+    sys.measures.forEach(m => ctx.fillText(String(m.number), m.x, sys.bottom + res.s * 2.5))
   })
   const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: 0.8})
   fs.writeFileSync(file, Buffer.from(await blob.arrayBuffer()))
+}
+
+/**
+ * Fichier des numéros de mesure, en coordonnées de l'image de chaque
+ * système (pixels) : importé par l'application comme marques texte.
+ */
+function mesuresYAML(mesures){
+  const out = [
+      '# Numéros de mesure détectés par la découpe (coordonnées en pixels de chaque image).'
+    , '# Importés à l\'ouverture de l\'analyse comme numéros de mesure, posés sous chaque système.'
+    , '---'
+  ]
+  for ( const m of mesures ) {
+    out.push(`- image: ${m.image}`)
+    out.push(`  width: ${m.width}`)
+    out.push(`  height: ${m.height}`)
+    out.push(`  measures:`)
+    m.measures.forEach(me => out.push(`    - {number: ${me.number}, x: ${me.x - m.x0}}`))
+  }
+  return out.join('\n') + '\n'
 }
 
 async function run(){
@@ -61,7 +87,8 @@ async function run(){
   if ( opts.pages ) fs.mkdirSync(pagesFolder, {recursive: true})
   if ( opts.controle ) fs.mkdirSync(debugFolder, {recursive: true})
 
-  let number = 0
+  let number = 0, measure = 0
+  const mesures = []
   for ( let p = 1 ; p <= pdf.numPages ; ++p ) {
     const page     = await pdf.getPage(p)
     const viewport = page.getViewport({scale: opts.dpi / 72})
@@ -81,13 +108,18 @@ async function run(){
     for ( let i = 0 ; i < res.systems.length ; ++i ) {
       const sys = res.systems[i]
       sys.number = ++number
-      await saveJPG(extractSystem(img, res, i), path.join(opts.out, `system-${String(number).padStart(3, '0')}.jpg`))
+      sys.measures.forEach(m => m.number = ++measure)
+      const image = `system-${String(number).padStart(3, '0')}.jpg`
+      await saveJPG(extractSystem(img, res, i), path.join(opts.out, image))
+      const {x0, y0, x1, y1} = sys.crop
+      mesures.push({image, width: x1 - x0 + 1, height: y1 - y0 + 1, measures: sys.measures, x0})
     }
     const detail = res.systems.map(sys => sys.staves.length).join('+')
     log(`Page ${p}/${pdf.numPages} : ${res.staves.length} portées, ${res.systems.length} systèmes (${detail})`)
     if ( opts.controle ) await saveDebug(img, res, path.join(debugFolder, pageName))
   }
-  log(`${number} systèmes écrits dans ${opts.out}`)
+  fs.writeFileSync(path.join(opts.out, 'mesures.yaml'), mesuresYAML(mesures))
+  log(`${number} systèmes (${measure} mesures) écrits dans ${opts.out}`)
 }
 
 run()

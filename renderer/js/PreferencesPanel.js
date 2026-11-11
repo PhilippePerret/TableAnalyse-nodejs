@@ -26,6 +26,9 @@ onKeyPress(e){
   if ( e.shiftKey && e.key == 'P' ) return this.toggle()
 }
 
+onChange_measure_line_offset(){
+  Systeme.placeMeasureNumbers(Number(Preferences.getValueOf('measure_line_offset')))
+}
 onChange_lock_systems(){
   Systeme.toggleLock(null, Preferences.getValueOf('lock_systems'))
 }

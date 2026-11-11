@@ -1,0 +1,196 @@
+---
+piece_title: Rondo
+composer: titi
+analyse_title: Mesures
+analyse_id: rondo
+folder: /Users/philippeperret/Programmes/ScoreSuite/ScoreAnalyse-Nodejs/analyses/rondo
+analyst: Phil
+systems:
+  - image_name: system-001.jpg
+    top: 400
+    left: 0
+  - image_name: system-002.jpg
+    top: 1094
+    left: 0
+  - image_name: system-003.jpg
+    top: 1685
+    left: 0
+  - image_name: system-004.jpg
+    top: 2320
+    left: 0
+  - image_name: system-005.jpg
+    top: 2927
+    left: 0
+  - image_name: system-006.jpg
+    top: 3556
+    left: 0
+  - image_name: system-007.jpg
+    top: 4216
+    left: 0
+  - image_name: system-008.jpg
+    top: 4839
+    left: 0
+  - image_name: system-009.jpg
+    top: 5434
+    left: 0
+  - image_name: system-010.jpg
+    top: 6088
+    left: 0
+  - image_name: system-011.jpg
+    top: 6832
+    left: 0
+  - image_name: system-012.jpg
+    top: 7511
+    left: 0
+  - image_name: system-013.jpg
+    top: 8138
+    left: 0
+  - image_name: system-014.jpg
+    top: 8752
+    left: 0
+  - image_name: system-015.jpg
+    top: 9362
+    left: 0
+  - image_name: system-016.jpg
+    top: 9962
+    left: 0
+  - image_name: system-017.jpg
+    top: 10596
+    left: 0
+  - image_name: system-018.jpg
+    top: 11279
+    left: 0
+  - image_name: system-019.jpg
+    top: 11944
+    left: 0
+  - image_name: system-020.jpg
+    top: 12571
+    left: 0
+  - image_name: system-021.jpg
+    top: 13256
+    left: 0
+  - image_name: system-022.jpg
+    top: 13930
+    left: 0
+  - image_name: system-023.jpg
+    top: 14564
+    left: 0
+  - image_name: system-024.jpg
+    top: 15345
+    left: 0
+  - image_name: system-025.jpg
+    top: 16025
+    left: 0
+  - image_name: system-026.jpg
+    top: 16599
+    left: 0
+  - image_name: system-027.jpg
+    top: 17174
+    left: 0
+  - image_name: system-028.jpg
+    top: 17694
+    left: 0
+  - image_name: system-029.jpg
+    top: 18301
+    left: 0
+  - image_name: system-030.jpg
+    top: 18912
+    left: 0
+  - image_name: system-031.jpg
+    top: 19522
+    left: 0
+  - image_name: system-032.jpg
+    top: 20134
+    left: 0
+  - image_name: system-033.jpg
+    top: 20744
+    left: 0
+  - image_name: system-034.jpg
+    top: 21394
+    left: 0
+  - image_name: system-035.jpg
+    top: 22003
+    left: 0
+  - image_name: system-036.jpg
+    top: 22650
+    left: 0
+  - image_name: system-037.jpg
+    top: 23258
+    left: 0
+  - image_name: system-038.jpg
+    top: 23904
+    left: 0
+  - image_name: system-039.jpg
+    top: 24557
+    left: 0
+  - image_name: system-040.jpg
+    top: 25118
+    left: 0
+  - image_name: system-041.jpg
+    top: 25704
+    left: 0
+  - image_name: system-042.jpg
+    top: 26312
+    left: 0
+  - image_name: system-043.jpg
+    top: 26895
+    left: 0
+  - image_name: system-044.jpg
+    top: 27489
+    left: 0
+  - image_name: system-045.jpg
+    top: 28214
+    left: 0
+  - image_name: system-046.jpg
+    top: 28954
+    left: 0
+  - image_name: system-047.jpg
+    top: 29674
+    left: 0
+  - image_name: system-048.jpg
+    top: 30416
+    left: 0
+  - image_name: system-049.jpg
+    top: 31174
+    left: 0
+  - image_name: system-050.jpg
+    top: 31866
+    left: 0
+  - image_name: system-051.jpg
+    top: 32473
+    left: 0
+  - image_name: system-052.jpg
+    top: 33113
+    left: 0
+  - image_name: system-053.jpg
+    top: 33748
+    left: 0
+  - image_name: system-054.jpg
+    top: 34389
+    left: 0
+  - image_name: system-055.jpg
+    top: 35068
+    left: 0
+  - image_name: system-056.jpg
+    top: 35722
+    left: 0
+  - image_name: system-057.jpg
+    top: 36351
+    left: 0
+  - image_name: system-058.jpg
+    top: 36964
+    left: 0
+  - image_name: system-059.jpg
+    top: 37610
+    left: 0
+  - image_name: system-060.jpg
+    top: 38258
+    left: 0
+  - image_name: system-061.jpg
+    top: 38904
+    left: 0
+  - image_name: system-062.jpg
+    top: 39601
+    left: 0
+form: null
+updated_at: 1794416436

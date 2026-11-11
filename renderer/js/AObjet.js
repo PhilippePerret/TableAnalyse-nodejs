@@ -221,6 +221,7 @@ export class AObjet {
     aobjet.destroy()
     this.items = newItems
     this.table = newTable
+    this.afterRemove && this.afterRemove(aobjet)
   }
 
   /**
