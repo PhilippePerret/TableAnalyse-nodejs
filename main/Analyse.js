@@ -6,6 +6,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { imageSize } from 'image-size'
 import { loadYAML, writeYAML } from './yaml.js'
+import { t } from './i18n.js'
 
 const SYSTEM_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.svg']
 const MAX_BACKUPS = 100
@@ -56,7 +57,7 @@ export class Analyse {
 
   get infos(){
     if ( undefined === this._infos ) {
-      if ( !fs.existsSync(this.infosPath) ) throw new Error(`Les infos sont introuvables (${this.infosPath}) !`)
+      if ( !fs.existsSync(this.infosPath) ) throw new Error(t('errors.infos_not_found', {path: this.infosPath}))
       this._infos = loadYAML(this.infosPath, {}) || {}
     }
     return this._infos

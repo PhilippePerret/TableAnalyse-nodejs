@@ -14,6 +14,7 @@ import { GetterInList } from './GetterInList.js'
 import { AMark_Editor } from './AMark_Editor.js'
 import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_PHILHARMONIEFONT } from './Constants.js'
 import { UI } from './UI.js'
+import { t } from './i18n.js'
 
 
 export class AMark extends AObjet {
@@ -261,7 +262,7 @@ groupWith(tag){
   const moi = this
 
   if ( moi.isGrouped && moi.isGroupedWith(tag) ){
-    return erreur("Les deux tags sont déjà associés.")
+    return erreur(t('errors.marks.already_associated'))
   }
 
   const tagIsGrouped = true && tag.isGrouped
@@ -292,7 +293,7 @@ degroupFrom(tag){
   const moi = this
 
   if ( not(this.isGroupedWith(tag)) ) {
-    return erreur("Les deux tags ne sont pas associés !")
+    return erreur(t('errors.marks.not_associated'))
   }
 
   if ( moi.grp.length == 2 ) { // <= une seule association
@@ -380,7 +381,7 @@ buildGetterTypeCadence(){
   var getter = new GetterInList({
     items:Object.values(CADENCES)
     , onChooseMethod: this.onChooseTypeCadence.bind(this)
-    , message: "Type de la cadence"
+    , message: t('ui.marks.getter.cadence')
   })
   return getter
 }

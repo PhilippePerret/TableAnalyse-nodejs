@@ -9,6 +9,7 @@ import { Preferences } from './Preferences.js'
 import { emit } from './events.js'
 import { TYPES_OU_SOUSTYPES_AU_DESSUS, TYPES_OU_SOUSTYPES_EN_DESSOUS } from './Constants.js'
 import { UI } from './UI.js'
+import { t } from './i18n.js'
 /**
   * Class Systeme
   * 
@@ -223,10 +224,7 @@ export class Systeme extends AObjet {
     } else {
       this.unlockAll()
       if ( not(this.alerteDeplacementSystemesOK) ) {      
-        message(`
-          <p>Par défaut, toutes les marques d'analyse ainsi que les autres systèmes suivront le déplacement.</p>
-          <p>Pour ne déplacer qu'UN SEUL SYSTÈME, tenir la touche ⌥ appuyée.</p>
-          <p>Pour ne déplacer que le système et les systèmes suivants, tenir ⌥ et ⇧.</p>`)
+        message(t('messages.systems_unlocked'))
         this.alerteDeplacementSystemesOK = true
       }
     }
@@ -281,7 +279,7 @@ export class Systeme extends AObjet {
     })
     if ( modified ){
       setModified()
-      message("La position des systèmes a été ajustée. Enregistez les nouvelles données.")
+      message(t('messages.systems_position_adjusted'))
       emit('table:changed')
     }
   }

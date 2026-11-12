@@ -1,5 +1,6 @@
 import { DGet } from './dom.js'
 import { invoke, onMain } from './api.js'
+import { t } from './i18n.js'
 /**
 
   MenusBar
@@ -15,12 +16,12 @@ import { invoke, onMain } from './api.js'
 
 */
 const MENUS = [
-    {id: 'options_tool',    label: 'Options'}
-  , {id: 'amark_menu',      label: 'Marque'}
-  , {id: 'align_menu',      label: 'Aligner'}
-  , {id: 'adjust_menu',     label: 'Ajuster'}
-  , {id: 'selection_tool',  label: 'Sélection'}
-  , {id: 'borders_tool',    label: 'Bords'}
+    {id: 'options_tool',    label: 'options'}
+  , {id: 'amark_menu',      label: 'mark'}
+  , {id: 'align_menu',      label: 'align'}
+  , {id: 'adjust_menu',     label: 'adjust'}
+  , {id: 'selection_tool',  label: 'selection'}
+  , {id: 'borders_tool',    label: 'borders'}
 ]
 
 class MenusBarClass {
@@ -60,7 +61,7 @@ class MenusBarClass {
         }
         items.push({label, index, enabled: !select.disabled && !option.disabled})
       })
-      return {id: m.id, label: m.label, items: cleanSeparators(items)}
+      return {id: m.id, label: t(`ui.menu.${m.label}`), items: cleanSeparators(items)}
     })
   }
 

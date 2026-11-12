@@ -3,6 +3,7 @@ import { isBool } from './lib/common.js'
 import { Panneau } from './Panneau.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { ManuelData, ManuelShortcutsData } from './Manuel_AppData.js'
+import { t } from './i18n.js'
 /**
  * Manuel
  * ------
@@ -24,7 +25,7 @@ class ManuelClass {
   toggle(){this.panneau.toggle.call(this.panneau)}
   get panneau(){return this._pano || (this._pano = new Panneau(this))}
   get panneauId(){return 'manuel'}
-  get panneauTitle(){return "Manuel d'utilisation"}
+  get panneauTitle(){return t('ui.panels.manual.title')}
   get panneauShortcut(){return '⇧M'}
   onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
@@ -45,7 +46,7 @@ class ManuelClass {
     // La section des raccourcis clavier (if any)
     //
     if ( this.shortcutsSection ) {
-      cont.appendChild(DCreate('BUTTON', {id:'btn_shortcuts', style:"float:right;", text:"Raccourcis clavier"}))
+      cont.appendChild(DCreate('BUTTON', {id:'btn_shortcuts', style:"float:right;", text:t('ui.panels.manual.shortcuts')}))
       o.appendChild(this.shortcutsSection)
     }
 

@@ -3,6 +3,7 @@ import { not } from './lib/common.js'
 import { erreur } from './lib/Message.js'
 import { tooltip } from './handies.js'
 import { addPanelHead } from './Panneau.js'
+import { t } from './i18n.js'
 /**
   
   Class CancelManager
@@ -40,7 +41,7 @@ export class CancelManager {
      ** dernière opération
      **/
     if ( this.items.length == 0 ) {
-      return tooltip('Aucune action n’est annulable.')
+      return tooltip(t('messages.nothing_to_cancel'))
     } else {
       this.execCancel(this.items.pop())
     }
@@ -120,7 +121,7 @@ export class CancelManager {
      ** quel ordre, contrairement aux annulations classique)
      **/
     if ( this.items.length == 0 ) {
-      erreur("Aucune action à annuler.")
+      erreur(t('errors.nothing_to_cancel'))
     } else {
       this.zChoose()
     }
@@ -144,11 +145,11 @@ export class CancelManager {
     this.obj = DCreate('DIV', {id:'historique_annulations', class:'hidden'})
     for(var i = 0, len = this.items.length; i < len; ++i){
       const item = this.items[i]
-      const dom  = DCreate('DIV', {text: `Changement : ${item.name}`})
+      const dom  = DCreate('DIV', {text: t('ui.panels.history.item', {name: item.name}), 'data-hover': t('ui.panels.history.cancel_hover')})
       this.obj.appendChild(dom)
       listen(dom, 'click', this.onCancelInHisto.bind(this, dom, i))
     }
-    addPanelHead(this.obj, {title: 'Historique des annulations', onClose: this.hideList.bind(this)})
+    addPanelHead(this.obj, {title: t('ui.panels.history.title'), onClose: this.hideList.bind(this)})
     document.body.appendChild(this.obj)
   }
 
@@ -172,7 +173,7 @@ export class CancelManager {
      **/
     if ( this.zMenu ) {
       this.zMenu.innerHTML = this.lastItem ? 
-        `Annuler : ${this.lastItem.name} ⌘z` : ''
+        t('ui.options_menu.cancel_last', {name: this.lastItem.name}) : ''
     } 
   }
 

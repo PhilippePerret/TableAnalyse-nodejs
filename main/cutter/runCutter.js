@@ -11,6 +11,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { BrowserWindow } from 'electron'
+import { t } from '../i18n.js'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url))
 
@@ -29,17 +30,20 @@ export function runCutter(opts, onLog){
       logs.push(msg)
       onLog && onLog(msg)
     })
+    const errors = []
+    win.webContents.ipc.on('cutter:error', (e, msg) => errors.push(msg))
     win.webContents.ipc.on('cutter:done', (e, code) => {
       if ( code === 0 ) return finish()
-      const errors = logs.filter(l => l.startsWith('ERREUR'))
-      finish(new Error(errors.length ? errors.join('\n') : 'La découpe a échoué.'))
+      finish(new Error(errors.length ? errors.join('\n') : t('errors.cutting_failed')))
     })
     win.webContents.on('render-process-gone', (e, details) => {
-      finish(new Error(`Processus de rendu interrompu : ${details.reason}`))
+      finish(new Error(t('errors.render_process_gone', {reason: details.reason})))
     })
     win.webContents.on('console-message', (e) => {
       if ( e.level === 'error' ) onLog && onLog(e.message)
     })
+    // Textes du journal (cf. locales/<lang>/messages.yaml)
+    opts = Object.assign({}, opts, {texts: t('messages.cutter')})
     win.loadFile(path.join(HERE, 'cutter.html'), {query: {opts: JSON.stringify(opts)}})
   })
 }

@@ -8,6 +8,7 @@ import { AMark } from './AMark.js'
 import { Current, setModified } from './Current.js'
 import { pref } from './Preferences.js'
 import { FORMOBJ_TYPES } from './Form_constants.js'
+import { t } from './i18n.js'
 /**
 
   Class Form / et class FormObj
@@ -90,7 +91,7 @@ export class Form {
 
 
   static init(){
-    addPanelHead(this.panel, {title: 'Forme de la pièce', onClose: this.hide.bind(this)})
+    addPanelHead(this.panel, {title: t('ui.panels.form.title'), onClose: this.hide.bind(this)})
     this.observe()
     this.items = []
     /*
@@ -214,9 +215,9 @@ export class FormObj {
     this.type = FormObj.hideMenuTypeAndReturnValue()
     this.fieldType.innerHTML = FORMOBJ_TYPES[this.type].name
     this.parent = FormObj.hideMenuParentAndReturnValue()
-    this.fieldParent.innerHTML = this.parent ? FormObj.get(this.parent).name : 'La pièce'
+    this.fieldParent.innerHTML = this.parent ? FormObj.get(this.parent).name : t('ui.panels.form.the_piece')
     this.tons   = this.getTonalites()
-    this.name   = DGet('input.fobj-name', this.obj).value || `${FORMOBJ_TYPES[this.type].name} sans nom`
+    this.name   = DGet('input.fobj-name', this.obj).value || t('ui.panels.form.unnamed', {type: FORMOBJ_TYPES[this.type].name})
     this.start  = DGet('input.fobj-start',this.obj).value || 0
     this.end    = DGet('input.fobj-end', this.obj).value
     this.save()
@@ -224,7 +225,7 @@ export class FormObj {
   }
 
   onClickDelete(e){
-    message("Je dois apprendre à supprimer un élément")
+    message(t('messages.form_delete_todo'))
     return stopEvent(e)
   }
 
@@ -306,7 +307,7 @@ export class FormObj {
     /*
     |  On scroll jusqu'à cette mesure
     */
-    if ( not(mesure) ) return message(`Aucun numéro de mesure ≥ ${this.start} n'a été trouvé sur la table.`)
+    if ( not(mesure) ) return message(t('messages.form_no_measure', {start: this.start}))
     window.scrollTo({top: mesure.top - 200})
   }
 
@@ -337,7 +338,7 @@ export class FormObj {
     /** Construction sur la table d'analyse, au curseur **/
     const tag = this.tag && AObjet.get(Number(this.tag))
     if ( tag ) {
-      message(`L’élément '${this.name}' possède déjà une marque. Je vais seulement l'actualiser.`)
+      message(t('messages.form_already_marked', {name: this.name}))
       tag.content = this.formatedContent
     } else {
       const y = window.scrollY + parseInt(window.innerHeight/2,10)
@@ -356,7 +357,7 @@ export class FormObj {
       amark.build_and_observe()
       amark.data.form = this.id
       this.tag = amark.id
-      tooltip(`${this.humanType} associé${this.f_e} à mark #${this.tag}`)
+      tooltip(t(this.isFem ? 'messages.form_associated_f' : 'messages.form_associated', {type: this.humanType, tag: this.tag}))
     }
   }
 

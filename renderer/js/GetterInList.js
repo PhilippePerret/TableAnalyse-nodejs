@@ -1,6 +1,7 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
 import { px } from './handies.js'
 import { draggable } from './lib/interact.js'
+import { t } from './i18n.js'
 /**
  * Class GetterInList
  * ------------------
@@ -179,7 +180,7 @@ export class GetterInList {
     menu.innerHTML = ''
     var imenu = 0
     this.shortcuts = {}
-    const fullchoix = this.data.items.concat([{name:'Renoncer',shortcut:'Escape', value:null}])
+    const fullchoix = this.data.items.concat([{name:t('ui.buttons.renounce'),shortcut:'Escape', value:null}])
     fullchoix.forEach(di => {
       var lab = di.name
       /*
@@ -231,7 +232,7 @@ export class GetterInList {
     //
     let ncss = ['gil_new_item']
     this.data.newEnable || ncss.push('hidden')
-    const n = DCreate('INPUT', {type:'text', class:'gil_new_item', placeholder:"Nouvel item"})
+    const n = DCreate('INPUT', {type:'text', class:'gil_new_item', placeholder:t('ui.panels.getter.new_item')})
     c.appendChild(n)
 
     document.body.appendChild(c)

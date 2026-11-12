@@ -18,6 +18,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL('../../node_modules/pdfjs-dist/bui
 
 const opts = JSON.parse(new URLSearchParams(location.search).get('opts'))
 const log  = (msg) => ipcRenderer.send('cutter:log', msg)
+// Textes du journal (locales/<lang>/messages.yaml, transmis par runCutter)
+const T    = (key, params) => String(opts.texts[key]).replace(/%\{(\w+)\}/g, (m, k) => (k in params ? params[k] : m))
 
 async function saveJPG(imageData, file){
   const canvas = new OffscreenCanvas(imageData.width, imageData.height)
@@ -68,8 +70,7 @@ async function saveDebug(img, res, file){
  */
 function mesuresYAML(mesures){
   const out = [
-      '# Numéros de mesure détectés par la découpe (coordonnées en pixels de chaque image).'
-    , '# Importés à l\'ouverture de l\'analyse comme numéros de mesure, posés sous chaque système.'
+      opts.texts.measures_header
     , '---'
   ]
   for ( const m of mesures ) {
@@ -107,7 +108,7 @@ async function run(){
     if ( opts.pages ) await saveJPG(img, path.join(pagesFolder, pageName))
 
     const res = analysePage(img, opts)
-    res.warnings.forEach(w => log(`  ! page ${p} : ${w}`))
+    res.warnings.forEach(w => log(T('page_warning', {page: p, warning: w})))
     for ( let i = 0 ; i < res.systems.length ; ++i ) {
       const sys = res.systems[i]
       sys.number = ++number
@@ -118,11 +119,11 @@ async function run(){
       mesures.push({image, width: x1 - x0 + 1, height: y1 - y0 + 1, measures: sys.measures, x0})
     }
     const detail = res.systems.map(sys => sys.staves.length).join('+')
-    log(`Page ${p}/${pdf.numPages} : ${res.staves.length} portées, ${res.systems.length} systèmes (${detail})`)
+    log(T('page', {page: p, pages: pdf.numPages, staves: res.staves.length, systems: res.systems.length, detail}))
     if ( opts.controle ) await saveDebug(img, res, path.join(debugFolder, pageName))
   }
   fs.writeFileSync(path.join(opts.out, 'mesures.yaml'), mesuresYAML(mesures))
-  log(`${number} systèmes (${measure} mesures) écrits dans ${opts.out}`)
+  log(T('done', {systems: number, measures: measure, out: opts.out}))
 }
 
 async function loadImage(file){
@@ -141,17 +142,17 @@ async function runNumbering(){
   for ( const image of opts.images ) {
     const img = await loadImage(path.join(opts.folder, image))
     const res = analysePage(img, opts)
-    res.warnings.forEach(w => log(`  ! ${image} : ${w}`))
-    if ( res.systems.length > 1 ) log(`  ! ${image} : ${res.systems.length} systèmes détectés`)
+    res.warnings.forEach(w => log(T('image_warning', {image, warning: w})))
+    if ( res.systems.length > 1 ) log(T('image_systems', {image, count: res.systems.length}))
     const measures = res.systems.flatMap(sys => sys.measures)
     measures.forEach(m => m.number = ++measure)
     mesures.push({image, width: img.width, height: img.height, measures, x0: 0})
-    log(`${image} : ${measures.length} mesures`)
+    log(T('image_measures', {image, count: measures.length}))
   }
   fs.writeFileSync(path.join(opts.out, 'mesures.yaml'), mesuresYAML(mesures))
-  log(`${measure} mesures numérotées dans ${opts.images.length} systèmes`)
+  log(T('numbered', {measures: measure, systems: opts.images.length}))
 }
 
 ;(opts.mode === 'numerotation' ? runNumbering() : run())
   .then(() => ipcRenderer.send('cutter:done', 0))
-  .catch(err => { log(`ERREUR : ${err.stack || err}`); ipcRenderer.send('cutter:done', 1) })
+  .catch(err => { ipcRenderer.send('cutter:error', String(err.stack || err)); ipcRenderer.send('cutter:done', 1) })

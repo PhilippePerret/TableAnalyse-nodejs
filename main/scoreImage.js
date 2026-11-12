@@ -11,6 +11,7 @@ import path from 'node:path'
 import { execFile } from 'node:child_process'
 import { clipboard } from 'electron'
 import { AppPrefs } from './AppPrefs.js'
+import { t } from './i18n.js'
 
 function run(folder, musName){
   const command = AppPrefs.get('score_image_command') || 'score-image'
@@ -48,6 +49,6 @@ export async function buildImageFromCode(analyse, code){
     clipboard.writeText(`${affixe}.svg`)
     return {ok: true, image_name: `${affixe}.svg`}
   } else {
-    return {ok: false, error: `Problème : ${res}`}
+    return {ok: false, error: t('errors.score_image_failed', {output: res})}
   }
 }

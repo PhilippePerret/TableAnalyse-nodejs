@@ -22,6 +22,7 @@ import { AnalyseDisplayer } from './AnalyseDisplayer.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
 import { PanneauInfos } from './PanneauInfos.js'
 import { TableAnalyse } from './TableAnalyse.js'
+import { t } from './i18n.js'
 
 export class Analyse {
 
@@ -253,10 +254,10 @@ checkSystems(){
             */
             isNil(o.data.top)   && o.corrigeDataValue('top')
             isNil(o.data.left)  && o.corrigeDataValue('left')
-            isNil(o.data.top)   && raise("Le top de l'objet n'est pas défini.")
-            isNil(o.data.left)  && raise("Le left ne l'objet n'est pas défini.")
-            isNaN(o.data.top)   && raise("Le top devrait être un nombre.")
-            isNaN(o.data.left)  && raise("Le left de l'objet devrait être un nombre")
+            isNil(o.data.top)   && raise(t('errors.marks.top_undefined'))
+            isNil(o.data.left)  && raise(t('errors.marks.left_undefined'))
+            isNaN(o.data.top)   && raise(t('errors.marks.top_nan'))
+            isNaN(o.data.left)  && raise(t('errors.marks.left_nan'))
           }
         } catch(err) {
           console.error("Objet erroné : ", o, err)
@@ -398,7 +399,7 @@ checkSystems(){
         return AMark.instanciate(this, dtag)
       })
       if ( erreurDoublons ) {
-        erreur("Des doubles d'identifiants ont été trouvés. Il serait plus prudent de les corriger (en éditant le fichier analyse_tags.yaml) et de recharger l'analyse. Les IDs sont indiqués en console.")
+        erreur(t('errors.marks.duplicate_ids'))
       }
       console.info("_lastId (après chargement) = ", this._lastId)
       // console.log("Tags instanciées :", this._tags)
@@ -473,7 +474,7 @@ checkSystems(){
     try {
       const pdf = await invoke('analyse:chooseScorePdf')
       if ( !pdf ) return
-      Sablier.show("Découpe et numérotation de la partition…")
+      Sablier.show(t('messages.cutting_score'))
       await invoke('analyse:cutScore', {pdf})
     } catch(err) {
       Sablier.hide()
@@ -488,7 +489,7 @@ checkSystems(){
   static async numberScore(){
     if ( !(await this.saveIfModified()) ) return
     try {
-      Sablier.show("Numérotation de la partition…")
+      Sablier.show(t('messages.numbering_score'))
       await invoke('analyse:numberScore')
     } catch(err) {
       Sablier.hide()
@@ -526,9 +527,9 @@ checkSystems(){
 
 static async exportCurrentToHtml(){
   if ( not(this.current) ) {
-    return erreur("Il n'y a pas d'analyse courante à exporter !")
+    return erreur(t('errors.no_analyse_to_export'))
   }
-  message("Exportation de l'analyse au format HTML. Merci de patienter…")
+  message(t('messages.exporting_html'))
   try {
     const content = DGet('section#content').cloneNode(true)
     /*
@@ -545,7 +546,7 @@ static async exportCurrentToHtml(){
     */
     const code = `<style type="text/css">\n${PreferencesPanel.buildSelectorsInHead()}\n</style>\n${content.outerHTML}`
     const htmlPath = await invoke('analyse:exportHtml', {code_html: code})
-    message("L'analyse a été exportée dans " + htmlPath)
+    message(t('messages.exported_html', {path: htmlPath}))
   } catch(err) {
     erreur("L'analyse n'a pas pu être exportée : " + err.message)
   }
@@ -553,9 +554,9 @@ static async exportCurrentToHtml(){
 
   static exportImage(){
     if ( ! this.current ) {
-      return erreur("Il faut d'abord choisir l'analyse.")
+      return erreur(t('errors.need_choose_analyse'))
     }
-    erreur("La production de l'image de l'analyse n'est pas encore implémentée.")
+    erreur(t('errors.image_export_todo'))
   }
 
   /**
@@ -564,9 +565,9 @@ static async exportCurrentToHtml(){
    */
   static exportToSvg(){
     if ( ! this.current ) {
-      return erreur("Il faut d'abord ouvrir une analyse !")
+      return erreur(t('errors.need_analyse_first'))
     }
-    erreur("Je ne sais pas encore exporter l'analyse en SVG.")
+    erreur(t('errors.svg_export_todo'))
   }
 
   /**
@@ -613,19 +614,19 @@ static async exportCurrentToHtml(){
   static dataAreValide(data){
     var errors = []
     if ( data.analyse_id == '' ) {
-      errors.push("- Il faut renseigner l'identifiant de l'analyse.")
+      errors.push(t('errors.creation.id_required'))
     }
     if ( data.analyse_id.replace(/[a-zA-Z0-9_\-]/g,'') != '' ) {
-      errors.push('- L’identifiant ne doit contenir que des lettres, des chiffres, des traits d’union ou des tirets plats.')
+      errors.push(t('errors.creation.id_chars'))
     }
     if ( data.piece_title == '') {
-      errors.push("- Il faut renseigner le titre de l'œuvre.")
+      errors.push(t('errors.creation.title_required'))
     }
     if ( data.composer == '') {
-      errors.push("- Il faut renseigner le compositeur de l'œuvre.")
+      errors.push(t('errors.creation.composer_required'))
     }
     if ( data.analyste == '') {
-      errors.push('– Il faut le nom de l’analyste.')
+      errors.push(t('errors.creation.analyst_required'))
     }
     if ( errors.length ) {
       erreur(errors.join('<br />'))
@@ -666,7 +667,7 @@ const HtmlImages = {
       const src = img.getAttribute('src')
       if ( !src || src.startsWith('data:') ) continue
       const response = await fetch(src)
-      if ( !response.ok ) throw new Error(`Image introuvable : ${src}`)
+      if ( !response.ok ) throw new Error(t('errors.image_not_found', {src}))
       if ( src.toLowerCase().endsWith('.svg') ) {
         const code = await response.text()
         const holder = document.createElement('div')

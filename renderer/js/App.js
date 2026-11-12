@@ -6,6 +6,7 @@ import { Preferences } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
+import { t } from './i18n.js'
 
 class AppClass {
 
@@ -36,10 +37,10 @@ class AppClass {
       analyse.scrollToLastPosition()
       PreferencesPanel.afterLoadingAnalyse()
       if ( !data.systems_in_folder.length ) {
-        message("Cette analyse ne contient aucun système.<br><br>Il faut les systèmes de la partition pour pouvoir commencer l'analyse : menu « Fichier » > « Découper la partition… ».", {keep: true})
+        message(t('messages.no_systems'), {keep: true})
       }
     } else {
-      message("Aucune analyse n'est ouverte.<br><br>Utiliser le menu « Fichier » pour ouvrir une analyse existante (⌘O) ou en créer une nouvelle (⌘N).", {keep: true})
+      message(t('messages.no_analyse_open'), {keep: true})
     }
   }
 

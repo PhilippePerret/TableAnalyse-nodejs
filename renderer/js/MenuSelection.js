@@ -5,6 +5,7 @@ import { MenusTool } from './MenusTool.js'
 import { AObjet } from './AObjet.js'
 import { setModified } from './Current.js'
 import { on } from './events.js'
+import { t } from './i18n.js'
 /**
 
   class SelectionTool
@@ -82,7 +83,7 @@ export class SelectionTool extends MenusTool {
   }
 
   static onActivate_selectAll(){
-    message("Je dois apprendre à sélectionner tous les éléments d'un certain type.")
+    message(t('messages.select_all_todo'))
   }
 
   /* --- Méthode concernant le groupement de tags --- */

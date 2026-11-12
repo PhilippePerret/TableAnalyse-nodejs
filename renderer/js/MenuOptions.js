@@ -8,6 +8,7 @@ import { UI } from './UI.js'
 import { Themes } from './Themes.js'
 import { Systeme } from './Systeme.js'
 import { on } from './events.js'
+import { t } from './i18n.js'
 /**
 
   Class OptionsTool
@@ -25,7 +26,7 @@ export class OptionsTool extends MenusTool {
 
   // Coche du menu « Verrouiller les systèmes »
   static setLockSystemsMenu(locked){
-    DGet('option[value="toggleLockSystems"]', this.menu).textContent = `${locked ? '✓ ' : ''}Verrouiller les systèmes`
+    DGet('option[value="toggleLockSystems"]', this.menu).textContent = `${locked ? '✓ ' : ''}${t('ui.options_menu.lock_systems')}`
   }
 
 

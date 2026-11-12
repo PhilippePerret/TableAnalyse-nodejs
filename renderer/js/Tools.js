@@ -8,13 +8,14 @@ import { Current } from './Current.js'
 import { Systeme } from './Systeme.js'
 import { Analyse } from './Analyse.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
+import { t } from './i18n.js'
 
 export class Tools {
 
   static toggle(){this.panneau.toggle.call(this.panneau)}
   static get panneau(){return this._pano || (this._pano = new Panneau(this))}
   static get panneauId(){return 'panneau_outils'}
-  static get panneauTitle(){return 'Boite à outils'}
+  static get panneauTitle(){return t('ui.panels.tools.title')}
   static get panneauShortcut(){return '⇧O'}
   static onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
@@ -76,12 +77,12 @@ export class Tools {
    */
   static async buildScoreFromCode(){
     const muscode = this.musCodeField.value.trim()
-    if ( !muscode ) return erreur("Il faut donner le code dans le champ.")
-    if ( !Current.analyse ) return erreur("Il faut d'abord ouvrir une analyse.")
+    if ( !muscode ) return erreur(t('errors.tools.code_required'))
+    if ( !Current.analyse ) return erreur(t('errors.need_analyse_first'))
     try {
       const res = await invoke('tools:buildImage', {code: muscode})
       if ( res.ok ) {
-        message(`L'image ${res.image_name} a été construite avec succès.\nSon nom est dans le presse-papier, tu peux créer une image pour la voir tout de suite.`)
+        message(t('messages.image_built', {name: res.image_name}))
       } else {
         erreur(res.error)
       }
@@ -105,6 +106,6 @@ export class Tools {
       sys.top = current_top
       current_top += sys.full_height + ecart
     })
-    message("Il faut penser à enregistrer l'analyse.")
+    message(t('messages.think_to_save'))
   }
 }

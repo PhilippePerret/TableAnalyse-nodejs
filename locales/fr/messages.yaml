@@ -1,0 +1,34 @@
+# Messages (informations, opérations en cours, infobulles)
+# Variables : %{nom}
+
+no_analyse_open: "Aucune analyse n'est ouverte.<br><br>Utiliser le menu « Fichier » pour ouvrir une analyse existante (⌘O) ou en créer une nouvelle (⌘N)."
+no_systems: "Cette analyse ne contient aucun système.<br><br>Il faut les systèmes de la partition pour pouvoir commencer l'analyse : menu « Fichier » > « Découper la partition… »."
+cutting_score: "Découpe et numérotation de la partition…"
+numbering_score: "Numérotation de la partition…"
+exporting_html: "Exportation de l'analyse au format HTML. Merci de patienter…"
+exported_html: "L'analyse a été exportée dans %{path}"
+image_built: "L'image %{name} a été construite avec succès.\nSon nom est dans le presse-papier, tu peux créer une image pour la voir tout de suite."
+think_to_save: "Il faut penser à enregistrer l'analyse."
+systems_unlocked: "<p>Par défaut, toutes les marques d'analyse ainsi que les autres systèmes suivront le déplacement.</p><p>Pour ne déplacer qu'UN SEUL SYSTÈME, tenir la touche ⌥ appuyée.</p><p>Pour ne déplacer que le système et les systèmes suivants, tenir ⌥ et ⇧.</p>"
+systems_position_adjusted: "La position des systèmes a été ajustée. Enregistez les nouvelles données."
+select_all_todo: "Je dois apprendre à sélectionner tous les éléments d'un certain type."
+form_delete_todo: "Je dois apprendre à supprimer un élément"
+form_no_measure: "Aucun numéro de mesure ≥ %{start} n'a été trouvé sur la table."
+form_already_marked: "L’élément '%{name}' possède déjà une marque. Je vais seulement l'actualiser."
+form_associated: "%{type} associé à mark #%{tag}"
+form_associated_f: "%{type} associée à mark #%{tag}"
+nothing_to_cancel: "Aucune action n’est annulable."
+link_to: "Lien : [#%{id}]"
+prop_of: "%{prop} de #%{id}"
+
+# Découpe de la partition (journal)
+cutter:
+  page: "Page %{page}/%{pages} : %{staves} portées, %{systems} systèmes (%{detail})"
+  page_warning: "  ! page %{page} : %{warning}"
+  done: "%{systems} systèmes (%{measures} mesures) écrits dans %{out}"
+  image_measures: "%{image} : %{count} mesures"
+  image_warning: "  ! %{image} : %{warning}"
+  image_systems: "  ! %{image} : %{count} systèmes détectés"
+  numbered: "%{measures} mesures numérotées dans %{systems} systèmes"
+  no_staff: "Aucune portée détectée"
+  measures_header: "# Numéros de mesure détectés par la découpe (coordonnées en pixels de chaque image).\n# Importés à l'ouverture de l'analyse comme numéros de mesure, posés sous chaque système."

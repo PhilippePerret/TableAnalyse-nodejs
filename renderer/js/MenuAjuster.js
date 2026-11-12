@@ -4,6 +4,7 @@ import { MenusTool } from './MenusTool.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { on } from './events.js'
+import { t } from './i18n.js'
 /**
 
   Class AjustMenu
@@ -52,7 +53,7 @@ export class AdjustMenu extends MenusTool {
     case 'SYS':
       return this.ajusterSystemsEtObjets()
     default:
-      erreur(`Je ne sais pas traiter l'ajustement '${adjust}'.`)
+      erreur(t('errors.unknown_adjust', {adjust}))
     }
   }
 

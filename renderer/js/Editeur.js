@@ -2,6 +2,7 @@ import { DCreate, DGet, listen, stopEvent } from './dom.js'
 import { px } from './handies.js'
 import { draggable } from './lib/interact.js'
 import { UI } from './UI.js'
+import { t } from './i18n.js'
 /**
  * Classe Editeur
  * --------------
@@ -139,7 +140,7 @@ export class Editeur {
     this.textarea = DCreate('TEXTAREA',{})
     o.appendChild(this.textarea)
     const divBoutons = DCreate('DIV', {class:'buttons right'})
-    divBoutons.appendChild(DCreate('BUTTON', {text:'Renoncer', class:'cancel'}))
+    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel'}))
     // divBoutons.appendChild(DCreate('BUTTON', {text:'OK', class:'ok'}))
     o.appendChild(divBoutons)
     this.obj = o

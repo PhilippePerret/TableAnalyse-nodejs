@@ -5,6 +5,7 @@ import { AObjet } from './AObjet.js'
 import { AMark_Editor } from './AMark_Editor.js'
 import { setModified } from './Current.js'
 import { on } from './events.js'
+import { t } from './i18n.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -28,8 +29,8 @@ export class AmarkMenu extends MenusTool {
     this.selection.forEach( tag => {
       if ( tag.isLocked ) enableLock = false
     })
-    const mark = this.selection.length > 1 ? 'les marques' : 'la marque'
-    this.menuLock.innerHTML = `${enableLock ? 'Verrouiller' : 'Déverrouiller'} ${mark}`
+    const many = this.selection.length > 1
+    this.menuLock.innerHTML = t(`ui.mark_menu.${enableLock ? 'lock' : 'unlock'}_${many ? 'many' : 'one'}`)
     this.menuLock.dataset.ope = enableLock ? 'lock' : 'unlock'
   }
 

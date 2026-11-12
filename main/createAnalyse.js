@@ -5,30 +5,25 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { Analyse, MEASURES_FILE, isSystemImage } from './Analyse.js'
 import { APP_FOLDER, ASSETS_FOLDER } from './paths.js'
-
-const FIRST_TAGS_MESSAGES = [
-    "Double-cliquer sur la table pour créer une nouvelle marque d'analyse à l'endroit voulu."
-  , "Jouer ⇧M pour ouvrir le manuel d'utilisation"
-  , "Utiliser le menu « Fichier » pour ouvrir ou créer une analyse"
-]
+import { t } from './i18n.js'
 
 function firstTags(){
-  return FIRST_TAGS_MESSAGES.map((msg, idx) => {
+  return t('ui.first_tags').map((msg, idx) => {
     return {id: idx + 1, top: 100, left: 220 * idx, width: 200, type: 'txt', subtype: 'size3', content: msg}
   })
 }
 
 function checkData(data){
   const folder = data.folder
-  if ( !folder ) throw new Error("Il faut indiquer le dossier dans lequel créer l'analyse.")
-  if ( path.resolve(folder) == APP_FOLDER ) throw new Error("Vous ne pouvez pas créer une analyse dans le dossier de l'application…")
-  if ( !fs.existsSync(folder) ) throw new Error(`Le dossier '${folder}' est introuvable…`)
+  if ( !folder ) throw new Error(t('errors.creation.folder_required'))
+  if ( path.resolve(folder) == APP_FOLDER ) throw new Error(t('errors.creation.folder_is_app'))
+  if ( !fs.existsSync(folder) ) throw new Error(t('errors.creation.folder_not_found', {folder}))
   const id = data.analyse_id || ''
   if ( id == '' || id.replace(/[a-zA-Z0-9_\-]/g, '') != '' ) {
-    throw new Error(`L'identifiant '${id}' est invalide (il ne doit contenir que des lettres, des chiffres, des traits plats ou des tirets)`)
+    throw new Error(t('errors.creation.invalid_id', {id}))
   }
   if ( fs.existsSync(path.join(folder, id)) ) {
-    throw new Error(`L'analyse « ${id} » existe déjà dans le dossier '${folder}'…`)
+    throw new Error(t('errors.creation.already_exists', {id, folder}))
   }
 }
 

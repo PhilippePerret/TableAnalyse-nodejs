@@ -31,7 +31,7 @@ export function analysePage(img, options = {}){
   const dark   = binarize(img, opts.threshold)
   const lines  = findStaffLines(dark, w, h, Math.round(w * opts.minLineRatio))
   const staves = findStaves(lines, dark, w)
-  if ( staves.length === 0 ) return {width: w, height: h, lines, staves, systems: [], warnings: ['Aucune portée détectée']}
+  if ( staves.length === 0 ) return {width: w, height: h, lines, staves, systems: [], warnings: [(opts.texts && opts.texts.no_staff) || 'no staff']}
   const systems = groupSystems(dark, w, staves, opts.staves)
   const s       = median(staves.map(st => st.s))
   const comps   = labelComponents(dark, w, h)

@@ -213,7 +213,7 @@ div#historique_annulations > div:not(.panneau-head):not(.buttons):hover {
 div#historique_annulations > div:hover:before {
   position:absolute;
   left:-60px;
-  content: "Annuler :";
+  content: attr(data-hover); /* cf. locales, ui.panels.history.cancel_hover */
   font-weight:bold;
   color:red;
   z-index:101;

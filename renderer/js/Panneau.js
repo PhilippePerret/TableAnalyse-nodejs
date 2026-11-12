@@ -1,12 +1,13 @@
 import { DCreate, DGet, listen } from './dom.js'
 import { raise } from './handies.js'
 import { UI } from './UI.js'
+import { t } from './i18n.js'
 
 export class Panneau {
 
   constructor(owner){
     this.owner = owner
-    this.id = owner.panneauId || raise(`${this.constructor.name} faut définir l'ID du panneau (<owner>.panneauId)`)
+    this.id = owner.panneauId || raise(t('errors.panel_id_required', {owner: this.constructor.name}))
   }
 
   toggle(){
@@ -69,7 +70,7 @@ export class Panneau {
  */
 export function addPanelHead(obj, {title, shortcut, onClose}){
   obj.classList.add('panneau-ui')
-  const close = DCreate('SPAN', {class: 'panneau-close', title: 'Fermer', text: '×'})
+  const close = DCreate('SPAN', {class: 'panneau-close', title: t('ui.buttons.close'), text: '×'})
   const head = DCreate('DIV', {class: 'panneau-head', inner: [
       close
     , DCreate('SPAN', {class: 'panneau-title',    text: title || ''})
@@ -80,7 +81,7 @@ export function addPanelHead(obj, {title, shortcut, onClose}){
   if ( !obj.querySelector('button.btn-close, button[id^="btn_"][id$="_close"], button#btn_close_tools') ) {
     let buttons = obj.querySelector(':scope > div.buttons')
     buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))
-    const btn = DCreate('BUTTON', {class: 'btn-close', text: 'Fermer', style: 'float:left;'})
+    const btn = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.close'), style: 'float:left;'})
     buttons.insertBefore(btn, buttons.firstChild)
     listen(btn, 'click', (e) => { e.stopPropagation() ; onClose() })
   }

@@ -3,6 +3,7 @@ import { erreur } from './lib/Message.js'
 import { GetterInList } from './GetterInList.js'
 import { Editeur } from './Editeur.js'
 import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT } from './Constants.js'
+import { t } from './i18n.js'
 /**
  * AMark_Editor
  * ------------
@@ -185,7 +186,7 @@ setAutoContent(){
       case 'box':
         return TYPES_CADRE[my.amark_subtype].autocontent
       default:
-        erreur("Impossible de définir l'autocontent du type '"+my.amark_type+"'…")
+        erreur(t('errors.marks.no_autocontent', {type: my.amark_type}))
         return null
     }
   })(this.amark_type)
@@ -289,7 +290,7 @@ get editorOfAMarkContent(){
 get paramsGetterOfType(){
   return {
       values:         Object.values(AMARQUES_TYPES)
-    , message:        "Type de la marque"
+    , message:        t('ui.marks.getter.type')
     , onChooseMethod: this.onChooseType.bind(this)
   }
 }
@@ -307,17 +308,17 @@ get paramsGetterOfSubtype(){
       case 'cad':
         d = {
             values: Object.values(CADENCES)
-          , message:"Type de la cadences"
+          , message:t('ui.marks.getter.cadence')
         }
         break
       case 'seg':
         d = {
             values: TYPES_SEGMENT
-          , message:"Disposition du segment"
+          , message:t('ui.marks.getter.segment')
         }
         break
       default:
-        erreur("Le type '"+this.amark_type+"' ne définit pas son sous-type…")
+        erreur(t('errors.marks.no_subtype', {type: this.amark_type}))
         return null
     }
   }

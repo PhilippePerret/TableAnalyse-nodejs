@@ -11,6 +11,7 @@ import { erreur } from './lib/Message.js'
 import { invoke } from './api.js'
 import { setModified } from './Current.js'
 import { PreferencesAppData } from './Preferences_AppData.js'
+import { t } from './i18n.js'
 
 class PreferencesClass {
 
@@ -75,7 +76,7 @@ getValueOf(key, defaut){
    **/
   const dkey = PreferencesAppData[key]
   if ( not(DGet(`#pref-${key}`)) ) {
-    erreur("Impossible de trouver l'élément préférence d'identifiant #"+key)
+    erreur(t('errors.preference_not_found', {key}))
     return null
   }
   switch(dkey.type){

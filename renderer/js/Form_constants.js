@@ -1,8 +1,9 @@
+import { t } from './i18n.js'
 
 
 export const FORMOBJ_TYPES = {
     ''    : {name:'---'       ,id:''}
-  , 'par' : {name:'Partie'    ,id:'par' ,genre:'F'}
-  , 'sec' : {name:'Section'   ,id:'sec' ,genre:'F'}
-  , 'seg' : {name:'Segment'   ,id:'seg' ,genre:'H' ,desc:""}
+  , 'par' : {name:t('ui.form_types.par')  ,id:'par' ,genre:'F'}
+  , 'sec' : {name:t('ui.form_types.sec')  ,id:'sec' ,genre:'F'}
+  , 'seg' : {name:t('ui.form_types.seg')  ,id:'seg' ,genre:'H' ,desc:""}
 }

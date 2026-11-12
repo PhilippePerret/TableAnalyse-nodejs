@@ -7,6 +7,7 @@ import { Grid } from './Grid.js'
 import { setModified } from './Current.js'
 import { emit } from './events.js'
 import { TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES } from './Constants.js'
+import { t } from './i18n.js'
 /**
  * 
  * Classe AObjet
@@ -64,7 +65,7 @@ export class AObjet {
       window.scrollTo({top:tag.top - 100})
       tag.clignote()
     } else {
-      erreur(`Le tag ${aobj_id} n'existe plus. Vous devriez supprimer ce lien.`)
+      erreur(t('errors.marks.missing_tag', {id: aobj_id}))
     }
   }
 
@@ -149,7 +150,7 @@ export class AObjet {
     } else {
       this.insertUniqObjectInSelection(aobjet)
     }
-    tooltip(`Lien : [#${aobjet.id}]`)
+    tooltip(t('messages.link_to', {id: aobjet.id}))
     this.setMenusState()
   }
 
@@ -419,7 +420,7 @@ getCssProp(prop, notANumber){
     this.modified = true
     this.isPartie && this.obj && this.top_ini != v && this.memoriseHauteurLignePartie() // pour la ligne verticale
     Cancel.z({
-        name:`top de #${this.id}`
+        name:t('messages.prop_of', {prop: 'top', id: this.id})
       , method: this.setProp.bind(this, 'top', top_ini)
     })    
     setModified()
@@ -446,7 +447,7 @@ getCssProp(prop, notANumber){
     this._left = this.data.left
     this.setLeft(this.data.left)
     Cancel.z({
-        name:`left de #${this.id}`
+        name:t('messages.prop_of', {prop: 'left', id: this.id})
       , method: this.setProp.bind(this, 'left', left_ini)
     })
     setModified()
@@ -472,7 +473,7 @@ getCssProp(prop, notANumber){
     this.data.width = v
     this.setWidth(this.data.width)
     Cancel.z({
-        name:`width de #${this.id}`
+        name:t('messages.prop_of', {prop: 'width', id: this.id})
       , method: this.setProp.bind(this, 'width', width_ini)
     })
     setModified()
@@ -504,7 +505,7 @@ getCssProp(prop, notANumber){
     this._height = this.data.height
     this.setHeight(this.data.height)
     Cancel.z({
-        name:`height de #${this.id}`
+        name:t('messages.prop_of', {prop: 'height', id: this.id})
       , method: this.setProp.bind(this, 'height', height_ini)
     })
     setModified()

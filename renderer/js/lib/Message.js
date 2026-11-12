@@ -1,4 +1,5 @@
 import { DCreate, listen } from '../dom.js'
+import { t } from '../i18n.js'
 /**
  * Class Message
  * --------------
@@ -59,7 +60,7 @@ class MessageClass {
     str = String(str).replace(/\n/g,'<br>')
     this.clearTimerMessage()
     this.divContent.innerHTML = str
-    this.divTitle.innerHTML = TITLES[type] || ''
+    this.divTitle.innerHTML = t(`ui.message_titles.${type}`)
     this.panneauMessage.className = `panneau-ui ${type} ${this.position}`
     if ( type !== 'error' && !options.keep ) this.msgTimer = setTimeout(this.hideMessage.bind(this),20*1000)
   }
@@ -81,7 +82,7 @@ class MessageClass {
    * défini par le thème de l'interface, cf. css/themes.css)
    */
   build(){
-    this.closeBox   = DCreate('SPAN', {class: 'panneau-close', title: 'Fermer', text: '×'})
+    this.closeBox   = DCreate('SPAN', {class: 'panneau-close', title: t('ui.buttons.close'), text: '×'})
     this.divTitle   = DCreate('SPAN', {class: 'panneau-title'})
     this.divContent = DCreate('DIV',  {class: 'msg-content'})
     const o = DCreate('DIV', {
@@ -111,8 +112,5 @@ class MessageClass {
 
   get panneauMessage(){ return this._msgpanel }
 }
-
-// Titre de la boite selon le type de message
-const TITLES = {notice: 'Information', error: 'Erreur', doaction: 'Opération en cours'}
 
 export const Message = new MessageClass()

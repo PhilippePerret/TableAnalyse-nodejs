@@ -5,6 +5,7 @@ import { invoke } from './api.js'
 import { Panneau } from './Panneau.js'
 import { Analyse } from './Analyse.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
+import { t } from './i18n.js'
 
 export class PanneauInfos {
 
@@ -13,7 +14,7 @@ export class PanneauInfos {
   toggle(){ this.panneau.toggle.call(this.panneau)}
   get panneau(){return this._pano||(this._pano = new Panneau(this))}
   get panneauId(){return 'panneau_infos'}
-  get panneauTitle(){return "Métadonnées de l'analyse"}
+  get panneauTitle(){return t('ui.panels.infos.title')}
   get panneauShortcut(){return '⇧I'}
   onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
@@ -28,9 +29,9 @@ export class PanneauInfos {
     const o = this.panneau.obj
     listen(DGet('#btn_infos_close', o),          'click', this.toggle.bind(this))
     listen(DGet('#btn_infos_create', o),         'click', Analyse.createNew.bind(Analyse))
-    listen(DGet('#btn_infos_save', o),           'click', () => Analyse.current ? Analyse.current.saveInfos() : erreur("Aucune analyse n'est ouverte."))
-    listen(DGet('#btn_choose_folder', o),        'click', this.chooseFolder.bind(this, 'metadata_folder', "Dossier dans lequel créer l'analyse"))
-    listen(DGet('#btn_choose_systems', o),       'click', this.chooseFolder.bind(this, 'metadata_systems_source', "Dossier contenant les images des systèmes"))
+    listen(DGet('#btn_infos_save', o),           'click', () => Analyse.current ? Analyse.current.saveInfos() : erreur(t('errors.no_analyse_open')))
+    listen(DGet('#btn_choose_folder', o),        'click', this.chooseFolder.bind(this, 'metadata_folder', t('ui.dialogs.choose_creation_folder')))
+    listen(DGet('#btn_choose_systems', o),       'click', this.chooseFolder.bind(this, 'metadata_systems_source', t('ui.dialogs.choose_systems_folder')))
   }
 
   async chooseFolder(fieldId, title){

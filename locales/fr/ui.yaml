@@ -1,0 +1,280 @@
+# Éléments d'interface (menus, panneaux, boutons, libellés…)
+# Variables : %{nom}
+
+app:
+  name: "Table d'analyse"
+  title: "TABLE D'ANALYSE"
+
+menu:
+  file:             "Fichier"
+  new_analyse:      "Nouvelle analyse…"
+  open_analyse:     "Ouvrir une analyse…"
+  reload_analyse:   "Recharger l'analyse"
+  save:             "Enregistrer"
+  cut_score:        "Découper la partition…"
+  number_score:     "Numéroter la partition"
+  infos:            "Informations… ⇧I"
+  export_html:      "Exporter en HTML"
+  show_in_finder:   "Afficher dans le Finder"
+  tools:            "Boite à outils… ⇧O"
+  manual:           "Manuel… ⇧M"
+  prefs:            "Préférences… ⇧P"
+  edit:             "Édition"
+  view:             "Affichage"
+  options:          "Options"
+  mark:             "Marque"
+  align:            "Aligner"
+  adjust:           "Ajuster"
+  selection:        "Sélection"
+  borders:          "Bords"
+
+options_menu:
+  cancel_last:      "Annuler : %{name} ⌘z"
+  cancel_history:   "Historique des annulations"
+  grid:             "Grille magnétique"
+  color:            "Version couleur"
+  lock_systems:     "Verrouiller les systèmes"
+  theme_A:          "Thème A — Sobre"
+  theme_B:          "Thème B — ScoreAnalyse"
+  theme_C:          "Thème C — Sombre"
+
+mark_menu:
+  lock_one:         "Verrouiller la marque"
+  lock_many:        "Verrouiller les marques"
+  unlock_one:       "Déverrouiller la marque"
+  unlock_many:      "Déverrouiller les marques"
+  change_type:      "Mettre le type à…"
+  justify:          "Justifier le texte"
+  center:           "Aligner le texte au centre"
+  right:            "Aligner le texte à droite"
+  left:             "Aligner le texte à gauche"
+
+align_menu:
+  right:            "… à droite"
+  left:             "… à gauche"
+  top:              "… en haut"
+  bottom:           "… en bas"
+  cancel:           "Annuler l’alignement"
+
+adjust_menu:
+  spread_v:         "Répartir verticalement"
+  spread_h:         "Répartir horizontalement"
+  h:                "… horizontalement"
+  v:                "… verticalement"
+  cancel:           "Annuler l'ajustement"
+
+selection_menu:
+  group:            "Grouper les éléments sélectionnés"
+  ungroup:          "Dégrouper les éléments sélectionnés"
+  select_all:       "Sélectionner tous les…"
+
+borders_menu:
+  remove_left:      "Supprimer le bord gauche"
+  add_left:         "Remettre le bord gauche"
+  remove_right:     "Supprimer le bord droit"
+  add_right:        "Remettre le bord droit"
+  remove_bottom:    "Supprimer le bord bas"
+  add_bottom:       "Remettre le bord bas"
+  remove_top:       "Supprimer le bord haut"
+  add_top:          "Remettre le bord haut"
+
+buttons:
+  close:            "Fermer"
+  save:             "Enregistrer"
+  choose:           "Choisir…"
+  cancel:           "Annuler"
+  renounce:         "Renoncer"
+  replace:          "Remplacer"
+  ok:               "OK"
+
+footer:
+  form:             "Forme…"
+
+message_titles:
+  notice:           "Information"
+  error:            "Erreur"
+  doaction:         "Opération en cours"
+
+panels:
+  infos:
+    title:            "Métadonnées de l'analyse"
+    piece_title:      "Titre de la pièce"
+    composer:         "Compositeur"
+    analyse_title:    "Titre de l'analyse"
+    analyse_id:       "Identifiant/Affixe"
+    analyse_id_ph:    "Identifiant (a-zA-Z0-9_-)"
+    folder:           "Chemin d'accès"
+    folder_ph:        "chemin d'accès (dossier)"
+    analyst:          "Analyste"
+    analyst_ph:       "Analyste"
+    systems_source:   "Images des systèmes"
+    systems_source_ph: "dossier des images (optionnel)"
+    create:           "Créer la nouvelle analyse"
+  tools:
+    title:            "Boite à outils"
+    quick_score:      "Partition rapide"
+    quick_score_desc: "Construire une image à partir du code muscore : "
+    add:              "Ajouter…"
+    image_name:       "Nom de l'image"
+    tune:             "Tonalité"
+    time:             "Métrique"
+    proximity:        "Proximité"
+    barres:           "Afficher les barres"
+    no_stem:          "Ne pas afficher les hampes"
+    build:            "Construire"
+    distribute:       "Répartir les systèmes"
+    inter_system:     "Écart entre les systèmes : "
+    inter_system_desc: "(si l'écart n'est pas précisé, ce sera la valeur définie en préférence qui sera appliquée, qui vaut "
+    export_title:     "Export de l'image de l'analyse"
+    systems:          "Systèmes "
+    systems_desc:     "Systèmes à produire. Laisser vide pour tous"
+    one_per_system:   "Une image par système"
+    export_image:     "Produire l'image (statique)"
+    export_svg:       "Produire l'image SVG (non fonctionnel)"
+  prefs:
+    title:            "Préférences"
+  manual:
+    title:            "Manuel d'utilisation"
+    shortcuts:        "Raccourcis clavier"
+  form:
+    title:            "Forme de la pièce"
+    name:             "Name"
+    type:             "Type"
+    parent:           "Parent"
+    piece:            "Pièce"
+    the_piece:        "La pièce"
+    from_measure:     "De mesure"
+    to_measure:       "à mesure"
+    tons:             "Tonalité(s)"
+    build_on_table:   "Le poser sur la table d'analyse"
+    unnamed:          "%{type} sans nom"
+  history:
+    title:            "Historique des annulations"
+    item:             "Changement : %{name}"
+    cancel_hover:     "Annuler :"
+  getter:
+    new_item:         "Nouvel item"
+
+dialogs:
+  choose_analyse_folder: "Choisir le dossier de l'analyse"
+  choose_folder:         "Choisir un dossier"
+  choose_creation_folder: "Dossier dans lequel créer l'analyse"
+  choose_systems_folder: "Dossier contenant les images des systèmes"
+  choose_pdf:            "Choisir le PDF de la partition"
+  pdf_filter:            "Partition PDF"
+  replace_systems:       "Remplacer les systèmes de l'analyse ?"
+  replace_systems_detail: "Les %{count} systèmes actuels seront remplacés par ceux de la découpe."
+
+# Préférences de l'analyse (label et précision)
+prefs:
+  theme:                  {label: "Thème analyse", precision: "Définit les tailles à appliquer ainsi que les couleurs (dans le mode couleur de l’analyse)"}
+  lock_systems:           {label: "Verrouiller les systèmes"}
+  grid_horizontal_space:  {label: "Espacement horizontal sur le grille"}
+  grid_vertical_space:    {label: "Espacement vertical sur le grille"}
+  systeme_width:          {label: "Largeur (en pixels) des systèmes"}
+  top_first_system:       {label: "Décalage haut du premier système (en pixels)"}
+  distance_systemes:      {label: "Distance par défaut (en pixels) des système"}
+  adjust_same_mark:       {label: "Ajuster en hauteur les marques de même type"}
+  snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
+  marque_accords_size:    {label: "Taille des marques d'accord"}
+  marque_harmonie_size:   {label: "Taille des marques d'harmonie"}
+  marque_modulation_size: {label: "Taille des marques d'harmonie"}
+  marque_emprunt_size:    {label: "Taille des marques d'emprunt"}
+  marque_cellule_size:    {label: "Taille des noms de cellules"}
+  thiness_segment_line:   {label: "Épaisseur trait segments"}
+  thiness_cellule_line:   {label: "Épaisseur trait cellules"}
+  thiness_border:         {label: "Épaisseur des traits de boites"}
+  marque_pedale_size:     {label: "Taille des pédales"}
+  marque_texte_size_1:    {label: "Taille des gros textes"}
+  marque_texte_size_2:    {label: "Taille des textes moyens"}
+  measure_line_offset:    {label: "Distance (px) de la ligne des numéros de mesure sous le système"}
+  marque_measure:         {label: "Taille numéros de mesures"}
+  marque_texte_size_3:    {label: "Taille des petits textes"}
+  marque_texte_size_4:    {label: "Taille des textes très petis"}
+  window_width:           {label: "Largeur de la fenêtre à l’ouverture"}
+  window_height:          {label: "Hauteur de la fenêtre à l’ouverture"}
+  last_scroll:            {label: "Scroll à l’ouverture"}
+  color_mesure:           {label: "Couleur des numéros de mesure"}
+  color_accords:          {label: "Couleur des noms d’accords"}
+  color_harmonie:         {label: "Couleur des chiffrages harmoniques"}
+  color_mark_parties:     {label: "Couleur des marques de partie"}
+  color_mark_sections:    {label: "Couleur des marques de sections"}
+  color_cellule:          {label: "Couleur pour les cellules & motifs"}
+  color_modulations:      {label: "Couleur des marques de modulations"}
+  color_emprunts:         {label: "Couleur des marques d’emprunts"}
+  color_segments:         {label: "Couleur des segments"}
+  vitesse_relecture:      {label: "Vitesse de la relecture (de 1 à 100)", precision: "Ça détermine le temps d'affichage d'un objet en mode relecture. Avec la valeur 100, tous les objets sont à peu près ré-écrit en même temps."}
+  autosave:               {label: "Sauvegarde automatique"}
+  animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
+
+# Marques d'analyse : nom (dans les listes de choix), message (invite
+# de l'éditeur) et contenu par défaut
+marks:
+  types:
+    acc: {name: "Accord",        message: "Nom de l'accord"}
+    har: {name: "Harmonie",      message: "Chiffrage"}
+    mod: {name: "Modulation",    message: "Nouvelle tonalité"}
+    emp: {name: "Emprunt",       message: "Tonalité de l'emprunt"}
+    cad: {name: "Cadence…"}
+    bbx: {name: "Cadre",         message: "Type de cadre"}
+    not: {name: "Type de note…", message: "Type de la note"}
+    deg: {name: "Degré note",    message: "Degré de la note"}
+    seg: {name: "Segment",       message: "Légende (vide si aucune)", default: "membre 1"}
+    img: {name: "Image",         message: "Image à insérer (path dans le dossier 'images')"}
+    txt: {name: "Texte",         message: "Texte à afficher"}
+    ped: {name: "Pédale",        message: "Degré de la pédale"}
+    cir: {name: "Cercle"}
+  frames:
+    prt:  {name: "Partie (début)",   default: "EXPO"}
+    prtz: {name: "Fin de partie",    default: "EXPO"}
+    sec:  {name: "Début section",    default: "SECTION"}
+    secz: {name: "Fin de section",   default: "SECTION"}
+    cel:  {name: "Cellule"}
+    bxt:  {name: "Texte dans cadre", default: "Texte **stylé** et _stylé_."}
+    box:  {name: "Cadre simple"}
+  texts:
+    size1: {name: "Gros",             default: "Gros texte"}
+    size2: {name: "Moyen",            default: "Texte moyen"}
+    size3: {name: "Petit",            default: "Petit texte"}
+    size4: {name: "Mini",             default: "Texte miniature"}
+    mes:   {name: "Numéro de mesure"}
+    long:  {name: "Texte long",       default: "Texte long (command + ENTER pour finir)"}
+    idx:   {name: "En marge (index)", default: "Index"}
+  notes:
+    np: "Note de passage"
+    ap: "Appoggiature"
+    ac: "Appog.chromatique"
+    re: "Retard"
+    br: "Broderie"
+    db: "Double-broderie"
+    ec: "Échappée"
+    in: "Note naturelle"
+    an: "Anacrouse"
+  cadences:
+    par: "Cadence parfaite"
+    imp: "Cadence imparfaite"
+    dem: "Demi-cadence"
+    ita: "Cadence italienne"
+    rom: "Cadence rompue"
+    pla: "Cadence plagale"
+    fau: "Cadence fauréenne"
+  segments:
+    h-up:    "À plat sur la portée"
+    h-down:  "À plat sous la portée"
+    v-left:  "Vertical trait à gauche"
+    v-right: "Vertical trait à droite"
+  getter:
+    type:         "Type de la marque"
+    cadence:      "Type de la cadence"
+    segment:      "Disposition du segment"
+
+form_types:
+  par: "Partie"
+  sec: "Section"
+  seg: "Segment"
+
+# Marques posées dans une nouvelle analyse
+first_tags:
+  - "Double-cliquer sur la table pour créer une nouvelle marque d'analyse à l'endroit voulu."
+  - "Jouer ⇧M pour ouvrir le manuel d'utilisation"
+  - "Utiliser le menu « Fichier » pour ouvrir ou créer une analyse"

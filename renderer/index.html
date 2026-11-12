@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self'">
-  <title>TABLE D'ANALYSE</title>
+  <title data-i18n="ui.app.title"></title>
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <!-- STYLES -->
   <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -47,39 +47,39 @@
 
     <table id="table_metadata">
       <tr>
-        <td>Titre de la pièce</td>
+        <td data-i18n="ui.panels.infos.piece_title"></td>
         <td><input type="text" id="metadata_piece_title"></td>
       </tr>
       <tr>
-        <td>Compositeur</td>
+        <td data-i18n="ui.panels.infos.composer"></td>
         <td><input type="text" id="metadata_composer"></td>
       </tr>
       <tr>
-        <td>Titre de l'analyse</td>
+        <td data-i18n="ui.panels.infos.analyse_title"></td>
         <td><input type="text" id="metadata_analyse_title"></td>
       </tr>
       <tr>
-        <td>Identifiant/Affixe</td>
-        <td><input type="text" id="metadata_analyse_id" placeholder="Identifiant (a-zA-Z0-9_-)"></td>
+        <td data-i18n="ui.panels.infos.analyse_id"></td>
+        <td><input type="text" id="metadata_analyse_id" data-i18n-placeholder="ui.panels.infos.analyse_id_ph"></td>
       </tr>
       <tr>
-        <td>Chemin d'accès</td>
-        <td><input type="text" id="metadata_folder" placeholder="chemin d'accès (dossier)"> <button id="btn_choose_folder" class="creation-only">Choisir…</button></td>
+        <td data-i18n="ui.panels.infos.folder"></td>
+        <td><input type="text" id="metadata_folder" data-i18n-placeholder="ui.panels.infos.folder_ph"> <button id="btn_choose_folder" class="creation-only" data-i18n="ui.buttons.choose"></button></td>
       </tr>
       <tr>
-        <td>Analyste</td>
-        <td><input type="text" id="metadata_analyst" placeholder="Analyste" value="Philippe Perret"></td>
+        <td data-i18n="ui.panels.infos.analyst"></td>
+        <td><input type="text" id="metadata_analyst" data-i18n-placeholder="ui.panels.infos.analyst_ph" value="Philippe Perret"></td>
       </tr>
       <tr class="creation-only">
-        <td>Images des systèmes</td>
-        <td><input type="text" id="metadata_systems_source" placeholder="dossier des images (optionnel)"> <button id="btn_choose_systems">Choisir…</button></td>
+        <td data-i18n="ui.panels.infos.systems_source"></td>
+        <td><input type="text" id="metadata_systems_source" data-i18n-placeholder="ui.panels.infos.systems_source_ph"> <button id="btn_choose_systems" data-i18n="ui.buttons.choose"></button></td>
       </tr>
     </table>
 
     <div class="buttons right">
-      <button id="btn_infos_close" style="float:left;">Fermer</button>
-      <button id="btn_infos_create" class="creation-only">Créer la nouvelle analyse</button>
-      <button id="btn_infos_save" class="edition-only">Enregistrer</button>
+      <button id="btn_infos_close" style="float:left;" data-i18n="ui.buttons.close"></button>
+      <button id="btn_infos_create" class="creation-only" data-i18n="ui.panels.infos.create"></button>
+      <button id="btn_infos_save" class="edition-only" data-i18n="ui.buttons.save"></button>
     </div>
 
   </div><!-- / fin du panneau -->
@@ -92,49 +92,49 @@
   <div id="panneau_outils" class="panneau hidden">
 
     <div>
-      <span><b>Partition rapide</b><br>Construire une image à partir du code muscore : </span>
+      <span><b data-i18n="ui.panels.tools.quick_score"></b><br><span data-i18n="ui.panels.tools.quick_score_desc"></span></span>
       <textarea id="music_score_code" style="width:100%;height:180px;background-color:black;color:white;"></textarea>
       <div class="right">
         <select id="assistant_muscode">
-          <option value="">Ajouter…</option>
-          <option value="-> NOM_IMAGE">Nom de l'image</option>
-          <option value="--tune F # ou G, UT3, ...">Tonalité</option>
-          <option value="--time 3/4">Métrique</option>
-          <option value="--proximity 5 # (moyenne)">Proximité</option>
-          <option value="--barres">Afficher les barres</option>
-          <option value="--no_stem">Ne pas afficher les hampes</option>
+          <option value="" data-i18n="ui.panels.tools.add"></option>
+          <option value="-> NOM_IMAGE" data-i18n="ui.panels.tools.image_name"></option>
+          <option value="--tune F # ou G, UT3, ..." data-i18n="ui.panels.tools.tune"></option>
+          <option value="--time 3/4" data-i18n="ui.panels.tools.time"></option>
+          <option value="--proximity 5 # (moyenne)" data-i18n="ui.panels.tools.proximity"></option>
+          <option value="--barres" data-i18n="ui.panels.tools.barres"></option>
+          <option value="--no_stem" data-i18n="ui.panels.tools.no_stem"></option>
         </select>
-        <button id="btn_build_score">Construire</button>
+        <button id="btn_build_score" data-i18n="ui.panels.tools.build"></button>
       </div>
     </div>
 
     <div>    
-      <button id="btn_distribute_systems">Répartir les systèmes</button> <span>Écart entre les systèmes : </span>
+      <button id="btn_distribute_systems" data-i18n="ui.panels.tools.distribute"></button> <span data-i18n="ui.panels.tools.inter_system"></span>
       <input type="text" id="tool_inter_system" value="" style="width:60px">
-      <div class="explication">(si l'écart n'est pas précisé, ce sera la valeur définie en préférence qui sera appliquée, qui vaut <span id="value_ecart_preferences">XXX</span>px</div>
+      <div class="explication"><span data-i18n="ui.panels.tools.inter_system_desc"></span><span id="value_ecart_preferences">XXX</span>px</div>
     </div>
 
     <div>
-      <h2>Export de l'image de l'analyse</h2>
+      <h2 data-i18n="ui.panels.tools.export_title"></h2>
       <fieldset>      
         <div>
-          <span>Systèmes </span><input type="text" id="systems_to_export" value="1">
-          <div class='explication'>Systèmes à produire. Laisser vide pour tous</div>
+          <span data-i18n="ui.panels.tools.systems"></span><input type="text" id="systems_to_export" value="1">
+          <div class="explication" data-i18n="ui.panels.tools.systems_desc"></div>
         </div>
         <div>
           <input type="checkbox" id="export_one_image_per_system">
-          <label for="export_one_image_per_system">Une image par système</label>
+          <label for="export_one_image_per_system" data-i18n="ui.panels.tools.one_per_system"></label>
         </div>
         <div class="buttons">
-          <button id="btn_export_image">Produire l'image (statique)</button>
+          <button id="btn_export_image" data-i18n="ui.panels.tools.export_image"></button>
           <span>   </span>
-          <button id="btn_export_svg">Produire l'image SVG (non fonctionnel)</button>
+          <button id="btn_export_svg" data-i18n="ui.panels.tools.export_svg"></button>
         </div>
       </fieldset>
     </div>
 
     <div class="buttons">
-      <button id="btn_close_tools" style="float:left;">Fermer</button>
+      <button id="btn_close_tools" style="float:left;" data-i18n="ui.buttons.close"></button>
     </div>
 
   </div>
@@ -165,15 +165,15 @@
       <!-- Modèle dupliqué -->
       <div id="formobj_template" class="fobj hidden" data-edit="false">
         <input type="hidden" class="fobj-id">
-        <div><label>Name</label><input type="text" class="fobj-name"><label>Type</label><span class="fobj-type">---</span><label>Parent</label><span class="fobj-parent">Pièce</span></div>
-        <div><label>De mesure</label><input type="text" class="fobj-start"><label>à mesure</label><input type="text" class="fobj-end"><label>Tonalité(s)</label><input type="text" class="fobj-ton1 fobj-ton"><input type="text" class="fobj-ton2 fobj-ton"><input type="text" class="fobj-ton3 fobj-ton"><input type="text" class="fobj-ton4 fobj-ton"><input type="text" class="fobj-ton5 fobj-ton"><input type="text" class="fobj-ton6 fobj-ton"></div>
-        <div><span class="mini-btns"><button class="btn-delete">✖️</button><button class="btn-goto-measure">⎆</button><button class="btn-build-on-table" title="Le poser sur la table d'analyse">⍗</button><button class="btn-save">OK</button><button class="btn-edit">🖋</button></span> </div>
+        <div><label data-i18n="ui.panels.form.name"></label><input type="text" class="fobj-name"><label data-i18n="ui.panels.form.type"></label><span class="fobj-type">---</span><label data-i18n="ui.panels.form.parent"></label><span class="fobj-parent" data-i18n="ui.panels.form.piece"></span></div>
+        <div><label data-i18n="ui.panels.form.from_measure"></label><input type="text" class="fobj-start"><label data-i18n="ui.panels.form.to_measure"></label><input type="text" class="fobj-end"><label data-i18n="ui.panels.form.tons"></label><input type="text" class="fobj-ton1 fobj-ton"><input type="text" class="fobj-ton2 fobj-ton"><input type="text" class="fobj-ton3 fobj-ton"><input type="text" class="fobj-ton4 fobj-ton"><input type="text" class="fobj-ton5 fobj-ton"><input type="text" class="fobj-ton6 fobj-ton"></div>
+        <div><span class="mini-btns"><button class="btn-delete">✖️</button><button class="btn-goto-measure">⎆</button><button class="btn-build-on-table" data-i18n-title="ui.panels.form.build_on_table">⍗</button><button class="btn-save" data-i18n="ui.buttons.ok"></button><button class="btn-edit">🖋</button></span> </div>
       </div>
       <div class="buttons">
         <button class="btn-add">➕</button>
       </div>
     </div>
-    <button id="form_button" class="fright">Forme…</button>
+    <button id="form_button" class="fright" data-i18n="ui.footer.form"></button>
 
   </footer>
 
@@ -183,68 +183,68 @@
   -->
   <div id="menus_bar_models" hidden>
     <select id="options_tool">
-      <option value="">Options…</option>
+      <option value="" data-i18n="ui.menu.options"></option>
       <option value="cancel"></option>
-      <option value="cancelInList">Historique des annulations</option>
+      <option value="cancelInList" data-i18n="ui.options_menu.cancel_history"></option>
       <option></option>
-      <option value="toggleGrid" data-checked="false" data-role="cb">☐ Grille magnétique</option>
-      <option value="toggleColor" data-checked="false" data-role="cb">☐ Version couleur</option>
-      <option value="toggleLockSystems">Verrouiller les systèmes</option>
+      <option value="toggleGrid" data-checked="false" data-role="cb" data-i18n-prefix="☐ " data-i18n="ui.options_menu.grid"></option>
+      <option value="toggleColor" data-checked="false" data-role="cb" data-i18n-prefix="☐ " data-i18n="ui.options_menu.color"></option>
+      <option value="toggleLockSystems" data-i18n="ui.options_menu.lock_systems"></option>
       <option></option>
-      <option value="theme" data-theme="A">Thème A — Sobre</option>
-      <option value="theme" data-theme="B">Thème B — ScoreAnalyse</option>
-      <option value="theme" data-theme="C">Thème C — Sombre</option>
+      <option value="theme" data-theme="A" data-i18n="ui.options_menu.theme_A"></option>
+      <option value="theme" data-theme="B" data-i18n="ui.options_menu.theme_B"></option>
+      <option value="theme" data-theme="C" data-i18n="ui.options_menu.theme_C"></option>
     </select>
 
     <select id="amark_menu">
-      <option value="">Marque</option>
-      <option value="toogleLock" data-ope="lock">Verrouiller la marque</option>
-      <option value="changeType">Mettre le type à…</option>
+      <option value="" data-i18n="ui.menu.mark"></option>
+      <option value="toogleLock" data-ope="lock" data-i18n="ui.mark_menu.lock_one"></option>
+      <option value="changeType" data-i18n="ui.mark_menu.change_type"></option>
       <option><hr/></option>
-      <option value="justifyText">Justifier le texte</option>
-      <option value="alignTextCenter">Aligner le texte au centre</option>
-      <option value="alignTextRight">Aligner le texte à droite</option>
-      <option value="alignTextLeft">Aligner le texte à gauche</option>
+      <option value="justifyText" data-i18n="ui.mark_menu.justify"></option>
+      <option value="alignTextCenter" data-i18n="ui.mark_menu.center"></option>
+      <option value="alignTextRight" data-i18n="ui.mark_menu.right"></option>
+      <option value="alignTextLeft" data-i18n="ui.mark_menu.left"></option>
       <option><hr/></option>
     </select>
 
     <select id="align_menu">
-      <option value="">Aligner</option>
-      <option value="right">… à droite</option>
-      <option value="left">… à gauche</option>
-      <option value="top">… en haut</option>
-      <option value="bottom">… en bas</option>
+      <option value="" data-i18n="ui.menu.align"></option>
+      <option value="right" data-i18n="ui.align_menu.right"></option>
+      <option value="left" data-i18n="ui.align_menu.left"></option>
+      <option value="top" data-i18n="ui.align_menu.top"></option>
+      <option value="bottom" data-i18n="ui.align_menu.bottom"></option>
       <option><hr/></option>
-      <option value="cancel">Annuler l’alignement</option>
+      <option value="cancel" data-i18n="ui.align_menu.cancel"></option>
     </select>
 
     <select id="adjust_menu">
-      <option value="">Ajuster</option>
-      <option value="SV">Répartir verticalement</option>
-      <option value="SH">Répartir horizontalement</option>
+      <option value="" data-i18n="ui.menu.adjust"></option>
+      <option value="SV" data-i18n="ui.adjust_menu.spread_v"></option>
+      <option value="SH" data-i18n="ui.adjust_menu.spread_h"></option>
       <option></option>
-      <option value="H">… horizontalement</option>
-      <option value="V">… verticalement</option>
-      <option value="cancel">Annuler l'ajustement</option>
+      <option value="H" data-i18n="ui.adjust_menu.h"></option>
+      <option value="V" data-i18n="ui.adjust_menu.v"></option>
+      <option value="cancel" data-i18n="ui.adjust_menu.cancel"></option>
     </select>
 
     <select id="selection_tool">
-      <option value="">Selection…</option>
-      <option value="groupSelection">Grouper les éléments sélectionnés</option>
-      <option value="degroupSelection">Dégrouper les éléments sélectionnés</option>
-      <option value="selectAll">Sélectionner tous les…</option>
+      <option value="" data-i18n="ui.menu.selection"></option>
+      <option value="groupSelection" data-i18n="ui.selection_menu.group"></option>
+      <option value="degroupSelection" data-i18n="ui.selection_menu.ungroup"></option>
+      <option value="selectAll" data-i18n="ui.selection_menu.select_all"></option>
     </select>
 
     <select id="borders_tool" style="width:120px">
-      <option value="">Bords…</option>
-      <option value="add" data-css="no_left_border">Supprimer le bord gauche</option>
-      <option value="remove" data-css="no_left_border">Remettre le bord gauche</option>
-      <option value="add" data-css="no_right_border">Supprimer le bord droit</option>
-      <option value="remove" data-css="no_right_border">Remettre le bord droit</option>
-      <option value="add" data-css="no_bottom_border">Supprimer le bord bas</option>
-      <option value="remove" data-css="no_bottom_border">Remettre le bord bas</option>
-      <option value="add" data-css="no_top_border">Supprimer le bord haut</option>
-      <option value="remove" data-css="no_top_border">Remettre le bord haut</option>
+      <option value="" data-i18n="ui.menu.borders"></option>
+      <option value="add" data-css="no_left_border" data-i18n="ui.borders_menu.remove_left"></option>
+      <option value="remove" data-css="no_left_border" data-i18n="ui.borders_menu.add_left"></option>
+      <option value="add" data-css="no_right_border" data-i18n="ui.borders_menu.remove_right"></option>
+      <option value="remove" data-css="no_right_border" data-i18n="ui.borders_menu.add_right"></option>
+      <option value="add" data-css="no_bottom_border" data-i18n="ui.borders_menu.remove_bottom"></option>
+      <option value="remove" data-css="no_bottom_border" data-i18n="ui.borders_menu.add_bottom"></option>
+      <option value="add" data-css="no_top_border" data-i18n="ui.borders_menu.remove_top"></option>
+      <option value="remove" data-css="no_top_border" data-i18n="ui.borders_menu.add_top"></option>
     </select>
   </div>
 

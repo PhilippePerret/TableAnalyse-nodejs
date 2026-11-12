@@ -14,6 +14,7 @@ import { Preferences } from './Preferences.js'
 import { Systeme } from './Systeme.js'
 import { Form } from './Form.js'
 import { Analyse } from './Analyse.js'
+import { t } from './i18n.js'
 
 export class AnalyseSaver {
 
@@ -26,7 +27,7 @@ export class AnalyseSaver {
   static async save(){
     const analyse = Current.analyse
     if ( !analyse ) {
-      erreur("Il faut ouvrir ou créer une analyse, pour la sauver.")
+      erreur(t('errors.need_analyse_to_save'))
       return false
     }
     // Un enregistrement est déjà en cours (⌘S + menu, par exemple)
@@ -56,7 +57,7 @@ export class AnalyseSaver {
       console.info("Enregistrement terminé.")
       return true
     } catch(err) {
-      erreur((err.message || err) + '<br><br>Je ne peux pas procéder à l’enregistrement.')
+      erreur(t('errors.cannot_save', {error: err.message || err}))
       console.error("Enregistrement interrompu.", err)
       return false
     }

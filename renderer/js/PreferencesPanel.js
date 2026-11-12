@@ -15,13 +15,14 @@ import { Systeme } from './Systeme.js'
 import { UI } from './UI.js'
 import { emit } from './events.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
+import { t } from './i18n.js'
 
 class PreferencesPanelClass {
 
 toggle(){this.panneau.toggle.call(this.panneau)}
 get panneau(){return this._pano || (this._pano = new Panneau(this))}
 get panneauId(){return 'preferences-panel'}
-get panneauTitle(){return 'Préférences'}
+get panneauTitle(){return t('ui.panels.prefs.title')}
 get panneauShortcut(){return '⇧P'}
 onKeyPress(e){
   var returnU = onKeyDownUniversel(e)
