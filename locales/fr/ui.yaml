@@ -86,8 +86,8 @@ borders_menu:
 
 # Menu contextuel d'un système
 system_menu:
-  unlock:           "Déverrouiller les systèmes"
-  lock:             "Verrouiller les systèmes"
+  unlock:           "Déverrouiller"
+  lock:             "Verrouiller"
   open_image:       "Ouvrir l'image"
   show_image:
     darwin:         "Afficher dans le Finder"
