@@ -145,6 +145,12 @@ export class Systeme extends AObjet {
   }
   static get hasMeasureLine(){ return this.measureMarks.length > 0 }
 
+  static get measureLineOffset(){ return Number(Preferences.get('measure_line_offset')) }
+
+  static measureMarksOf(sys){
+    return this.measureMarks.filter(ao => this.systemOfMeasure(ao) === sys)
+  }
+
   static systemOfMeasure(ao){
     return ao._msys || (ao._msys = this.getSystemeOfMeasure(ao))
   }
@@ -155,7 +161,7 @@ export class Systeme extends AObjet {
    * défaut, la préférence).
    */
   static placeMeasureNumbers(offset){
-    if ( undefined === offset ) offset = Number(Preferences.get('measure_line_offset'))
+    if ( undefined === offset ) offset = this.measureLineOffset
     const bySystem = new Map()
     this.measureMarks.forEach(ao => {
       const sys = this.systemOfMeasure(ao)
@@ -382,16 +388,17 @@ export class Systeme extends AObjet {
 
   /**
    * Ligne des numéros de mesure du système (cf. Systeme.placeMeasureNumbers)
-   * et pose de ses numéros (+marks+) sur cette ligne.
+   * et pose de ses numéros (+marks+) sur cette ligne. +top+ : position
+   * du système (par défaut, sa position enregistrée).
    */
-  placeMeasureLine(marks, offset){
+  placeMeasureLine(marks, offset, top = this.top){
     const height = this.obj && this.obj.complete ? this.obj.offsetHeight : 0
     if ( marks.length == 0 || !height ) {
       this.measureLine && this.measureLine.remove()
       this.measureLine = null
       return
     }
-    const y = Math.round(this.top + height + offset)
+    const y = Math.round(top + height + offset)
     if ( !this.measureLine ) {
       this.measureLine = DCreate('DIV', {class: 'measure-line'})
       UI.TableAnalyse.appendChild(this.measureLine)
@@ -527,6 +534,8 @@ export class Systeme extends AObjet {
       } else {
         console.info("OPE: Déplacement du système seul.")
       }
+      // Les lignes des numéros suivent les systèmes déplacés
+      Systeme.placeMeasureNumbers()
 
     } else {
       
@@ -545,7 +554,10 @@ export class Systeme extends AObjet {
   onMove(e){
     // Ne pas bloquer la propagation (resize des marques)
     if ( !this.moving ) return
-    this.obj.style.top = px(e.clientY - this.rectTop)
+    const top = e.clientY - this.rectTop
+    this.obj.style.top = px(top)
+    // La ligne des numéros (et ses numéros) suit le système
+    this.measureLine && this.placeMeasureLine(Systeme.measureMarksOf(this), Systeme.measureLineOffset, top)
   }
 
 
