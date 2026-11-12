@@ -6,7 +6,6 @@ import { AObjet } from './AObjet.js'
 import { AMark } from './AMark.js'
 import { Systeme } from './Systeme.js'
 import { TableAnalyse } from './TableAnalyse.js'
-import { AnalyseSaver } from './AnalyseSaver.js'
 import { Analyse } from './Analyse.js'
 import { Preferences } from './Preferences.js'
 import { Tools } from './Tools.js'
@@ -111,7 +110,6 @@ export class UIClass {
     listen(window, 'dblclick', this.onDoubleClick.bind(this))
     // listen(this.TableAnalyse, 'click', (e)=>{/*console.log("Un clic sur la table d'analyse.")*/})
 
-    listen(this.btnSaveAnalyse, 'click', AnalyseSaver.save.bind(AnalyseSaver))
       
     listen(DGet('footer'), 'click', function(e){return stopEvent(e)})
     listen(DGet('footer'), 'dblclick', function(e){e.stopPropagation()})
@@ -143,11 +141,9 @@ export class UIClass {
    * 
    */
   eteinsRedLight(){
-    this.btnSaveAnalyse.classList.remove('actived')
     this.redLight.classList.remove('red')
   }
   allumeRedLight(){
-    this.btnSaveAnalyse.classList.add('actived')
     this.redLight.classList.add('red')
   }
   get redLight(){
@@ -212,7 +208,6 @@ export class UIClass {
 
   // Le picto pour verrouiller les systèmes
   // Le picto pour activer l'enregistrement
-  get btnSaveAnalyse(){return this._btnrecord || (this._btnrecord = DGet('footer #cb_recording'))}
 
   get TableAnalyse(){
     return this._tableana || (this._tableana = DGet('body section#content'))

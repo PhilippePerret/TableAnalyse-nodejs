@@ -51,13 +51,6 @@ div#red-light:not(.red) {
 div#red-light.red {
  background-color: #ff2e2e; 
 }
-button#cb_recording {
-  padding: 0 1em;
-}
-button#cb_recording.actived {
-  background-color: red;
-  color: white;
-}
 
 section#content {
   margin-bottom: 400px!important;

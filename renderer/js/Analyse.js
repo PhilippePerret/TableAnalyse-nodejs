@@ -649,7 +649,6 @@ static async exportCurrentToHtml(){
  * Allume ou éteint la lumière d'enregistrement
  */
 function setRedLight(on){
-  DGet('footer #cb_recording').classList[on ? 'add' : 'remove']('actived')
   DGet('#red-light').classList[on ? 'add' : 'remove']('red')
 }
 
