@@ -59,13 +59,14 @@ class MessageClass {
     str = String(str).replace(/\n/g,'<br>')
     this.clearTimerMessage()
     this.divContent.innerHTML = str
-    this.panneauMessage.className = `${type} ${this.position}`
+    this.divTitle.innerHTML = TITLES[type] || ''
+    this.panneauMessage.className = `panneau-ui ${type} ${this.position}`
     if ( type !== 'error' && !options.keep ) this.msgTimer = setTimeout(this.hideMessage.bind(this),20*1000)
   }
 
   hideMessage(){
-    this.panneauMessage.innerHTML = ""
-    this.panneauMessage.className = 'hidden'
+    this.divContent.innerHTML = ""
+    this.panneauMessage.className = 'panneau-ui hidden'
     this.clearTimerMessage()
   }
   clearTimerMessage(){
@@ -76,22 +77,17 @@ class MessageClass {
   }
 
   /**
-   * Construction de la boite qui contiendra tous les messages
-   * 
+   * Construction de la boite qui contiendra tous les messages (aspect
+   * défini par le thème de l'interface, cf. css/themes.css)
    */
   build(){
-    const script = DCreate('STYLE',{type:'text/css', text: this.stylesCSS})
-    document.head.appendChild(script)
-
-    this.closeBox = DCreate('SPAN', {
-        text:'❌'
-      , class:'close-btn'
-    })
-    this.divContent  = DCreate('DIV', {style:'font-family:"Arial Narrow",Geneva,Helvetica;font-size:14pt;'})
+    this.closeBox   = DCreate('SPAN', {class: 'panneau-close', title: 'Fermer', text: '×'})
+    this.divTitle   = DCreate('SPAN', {class: 'panneau-title'})
+    this.divContent = DCreate('DIV',  {class: 'msg-content'})
     const o = DCreate('DIV', {
         id:     'message'
-      , class:  `hidden ${this.position}`
-      , inner:  [this.divContent, this.closeBox]
+      , class:  `panneau-ui hidden ${this.position}`
+      , inner:  [DCreate('DIV', {class: 'panneau-head', inner: [this.closeBox, this.divTitle]}), this.divContent]
     })
     document.body.appendChild(o)
     this._msgpanel = o
@@ -105,7 +101,7 @@ class MessageClass {
 
   setPosition(v){ 
     v = v || this.position 
-    this.panneauMessage.className = v
+    this.panneauMessage.className = `panneau-ui ${v}`
   }
   get position(){return this._position || 'center'}
   set position(v){
@@ -114,42 +110,9 @@ class MessageClass {
   }
 
   get panneauMessage(){ return this._msgpanel }
+}
 
-  get stylesCSS(){
-    return `
-div#message {
-  position: fixed;
-  color: white;
-  width: 400px;
-  padding: 8px 12px;
-  font-size: 12pt;
-  z-index:5000
-}
-div#message.center {
-  left: calc(50% - 200px);
-  top: 100px;
-}
-div#message.bottom-left{ left:0; bottom:0 }
-div#message.bottom-right { right:0; bottom:0 }
-div#message.top-right { top:0; right:0 }
-div#message.top-left { top:0: left:0 }
-div#message span.close-btn {
-  position:absolute;
-  right:10px;
-  top:10px;
-  font-size:10pt;
-  cursor:pointer;
-}
-div#message.error {
-  background-color: red;
-}
-div#message.notice {
-  background-color: #38389d;
-}
-div#message.doaction {
-  background-color: orange;
-}
-    `
-  }
-}
+// Titre de la boite selon le type de message
+const TITLES = {notice: 'Information', error: 'Erreur', doaction: 'Opération en cours'}
+
 export const Message = new MessageClass()

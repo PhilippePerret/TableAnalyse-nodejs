@@ -2,6 +2,7 @@ import { DCreate, listen, stopEvent } from './dom.js'
 import { not } from './lib/common.js'
 import { erreur } from './lib/Message.js'
 import { tooltip } from './handies.js'
+import { addPanelHead } from './Panneau.js'
 /**
   
   Class CancelManager
@@ -141,15 +142,13 @@ export class CancelManager {
      ** Produire this.obj
      **/
     this.obj = DCreate('DIV', {id:'historique_annulations', class:'hidden'})
-    const closeBox = DCreate('SPAN', {text:'❌', class:'close-box'})
-    listen(closeBox, 'click', this.hideList.bind(this))
-    this.obj.appendChild(closeBox)
     for(var i = 0, len = this.items.length; i < len; ++i){
       const item = this.items[i]
       const dom  = DCreate('DIV', {text: `Changement : ${item.name}`})
       this.obj.appendChild(dom)
       listen(dom, 'click', this.onCancelInHisto.bind(this, dom, i))
     }
+    addPanelHead(this.obj, {title: 'Historique des annulations', onClose: this.hideList.bind(this)})
     document.body.appendChild(this.obj)
   }
 

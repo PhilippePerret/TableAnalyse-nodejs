@@ -22,10 +22,10 @@ class SablierClass {
     this.obj = DCreate('DIV', {
         id:     'sablier'
       , class:  'hidden'
-      , inner:  [
+      , inner:  DCreate('DIV', {class: 'panneau-ui sablier-box', inner: [
             DCreate('DIV', {class: 'sablier-icon', text: '⏳'})
           , DCreate('DIV', {class: 'sablier-message'})
-        ]
+        ]})
     })
     document.body.appendChild(this.obj)
   }
