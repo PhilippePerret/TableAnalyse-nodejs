@@ -1,4 +1,4 @@
 @media print {
   div#coordonnates{display:none}
-  footer {display:none}
+  footer, div#titlebar {display:none}
 }

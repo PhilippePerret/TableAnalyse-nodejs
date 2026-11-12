@@ -37,13 +37,26 @@ div.buttons {
 }
 
 
+/* Bande supérieure de la fenêtre (barre de titre masquée, cf. main.js) */
+div#titlebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+  background-color: rgba(236,236,236,.92);
+  border-bottom: 1px solid #d0d0d0;
+  -webkit-app-region: drag;
+}
 div#red-light {
-  display: inline-block;
-  float: right;  
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-  margin-top: 9px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
 div#red-light:not(.red) {
  background-color: #44f744; 

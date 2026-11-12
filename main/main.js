@@ -118,6 +118,7 @@ function createWindow(){
     , height: 1000
     , show:   !SMOKE
     , title:  ''
+    , titleBarStyle: 'hiddenInset' // bande supérieure dessinée par la page (#titlebar)
     , icon:   path.join(ASSETS_FOLDER, 'icons', 'icon.png')
     , webPreferences: {
           preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
