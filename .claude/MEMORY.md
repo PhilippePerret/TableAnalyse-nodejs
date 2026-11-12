@@ -11,6 +11,7 @@
 - Contrôle sans fenêtre : `SA_SMOKE=8 SA_SMOKE_JS=<script> npx electron . <analyse>` (cf. Manuel_dev).
 - Dossier analyse : `infos.yaml`, `preferences.yaml`, `analyse_tags.yaml`, `systems/`, `images/`, `backups/`, `export/`.
 - Découpe PDF → systèmes JPG : `bin/decoupe-partition` (Electron caché, `main/cutter/` : cli.js, cutter.js (pdf.js), analyse.js (portées, composantes connexes, attribution)). `--debug` interdit (pris par Electron) → `--controle`. Menus Fichier « Découper la partition… » et « Numéroter la partition » (`main/cutter/runCutter.js`, mode `numerotation` dans cutter.js). Produit aussi `systems/mesures.yaml` (barres de mesure → numéros, coords image) ; importé une fois à l'ouverture (`Analyse.importMeasures`, marques txt/mes) puis renommé `mesures.importe.yaml`.
+- Localisation : `locales/<lang>/{ui,messages,errors}.yaml`, `t()` dans `main/i18n.js` et `renderer/js/i18n.js` (data-i18n dans index.html). Manuel non localisé.
 - Doc : `Manuels/Manuel_dev.md`, `Manuels/Tutoriel_ScoreAnalyse.md` (tutoriel non mis à jour : commandes terminal Ruby).
 
 ## Notes de session
@@ -18,7 +19,7 @@
 - À LIRE en début de prochaine session : `.claude/A_LIRE_session_2026-11-11.md` (dernier compte rendu, ligne des numéros de mesure ; travail non commité).
 
 - Réponses : « Fait. » + strict minimum. Aucune explication non demandée.
-- Git : interdit en écriture sans autorisation expresse de Phil.
+- Git : interdit en écriture sans autorisation expresse de Phil, SAUF commit obligatoire après chaque correction d'issue (un commit par issue, message contenant « Fixed #N » pour fermer l'issue au push).
 - Commande lancée par Phil lui-même (`!…`) : aucune réponse, aucun commentaire.
 - Après une correction : « Fait. » SEUL.
 - Exception : signaler ce qui sort de la demande ET change ce que l'utilisateur vit (données supprimées/remplacées, confirmation ajoutée…). Jugés inutiles par Phil (2026-11-12) : placements de menus, détails d'implémentation, éléments laissés en place.
