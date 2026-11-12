@@ -49,7 +49,7 @@ div#titlebar {
   align-items: center;
   justify-content: flex-end;
   padding-right: 12px;
-  background-color: rgba(236,236,236,.92);
+  background-color: #ececec;
   border-bottom: 1px solid #d0d0d0;
   -webkit-app-region: drag;
 }
