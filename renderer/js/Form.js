@@ -91,6 +91,8 @@ export class Form {
 
 
   static init(){
+    // Clics et double-clics du panneau sans effet sur la table
+    listen(this.panel, 'click', (e) => e.stopPropagation())
     addPanelHead(this.panel, {title: t('ui.panels.form.title'), onClose: this.hide.bind(this)})
     this.observe()
     this.items = []
@@ -104,7 +106,6 @@ export class Form {
   }
   static observe(){
     listen(this.panel, 'dblclick', this.onDblClick.bind(this))
-    listen(this.btnToggle,'click', this.togglePanel.bind(this))
     listen(this.btnAdd, 'click', this.onAddObjet.bind(this))
   }
   /**
@@ -120,7 +121,6 @@ export class Form {
   static get listing(){return this._lstobj||(this._lstobj = DGet('#form_objets'))}
   static get panel(){return this._panel || (this._panel = DGet('#panel_form'))}
   /* - boutons - */
-  static get btnToggle(){return DGet('#form_button')}
   static get btnAdd(){return DGet('.btn-add', this.panel)}
 
 }

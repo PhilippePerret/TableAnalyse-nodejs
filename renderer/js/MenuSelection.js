@@ -14,7 +14,7 @@ import { t } from './i18n.js'
 
   POUR AJOUTER UN OUTIL
   ---------------------
-    - créer son <option> dans le menu #selection_tool (footer de 
+    - créer son <option> dans le menu #selection_tool (barre de menus, 
       index.html)
     - lui donner une @value adéquate
     - créer la méthode statique SelectionTool::onActivate_<@value> 

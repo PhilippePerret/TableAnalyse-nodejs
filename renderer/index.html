@@ -141,41 +141,28 @@
 
 
   <div id="coordonnates">x: --- y: ---</div>
-  <!-- 
+  <!--
 
-    FOOTER 
+    PANNEAU DE LA FORME
 
   -->
-  <footer>
-    
-    
-
-    <span id="tooltip" class="fright">---</span>
-
-    <!-- 
-      
-      FORME
-
-     -->
-    <div id="panel_form" class="hidden">
-      <div id="form_objets"></div>
-      <!-- Menu des types à déplacer -->
-      <select id="fobj_types" class="hidden"></select>
-      <select id="fobj_parents" class="hidden"></select>
-      <!-- Modèle dupliqué -->
-      <div id="formobj_template" class="fobj hidden" data-edit="false">
-        <input type="hidden" class="fobj-id">
-        <div><label data-i18n="ui.panels.form.name"></label><input type="text" class="fobj-name"><label data-i18n="ui.panels.form.type"></label><span class="fobj-type">---</span><label data-i18n="ui.panels.form.parent"></label><span class="fobj-parent" data-i18n="ui.panels.form.piece"></span></div>
-        <div><label data-i18n="ui.panels.form.from_measure"></label><input type="text" class="fobj-start"><label data-i18n="ui.panels.form.to_measure"></label><input type="text" class="fobj-end"><label data-i18n="ui.panels.form.tons"></label><input type="text" class="fobj-ton1 fobj-ton"><input type="text" class="fobj-ton2 fobj-ton"><input type="text" class="fobj-ton3 fobj-ton"><input type="text" class="fobj-ton4 fobj-ton"><input type="text" class="fobj-ton5 fobj-ton"><input type="text" class="fobj-ton6 fobj-ton"></div>
-        <div><span class="mini-btns"><button class="btn-delete">✖️</button><button class="btn-goto-measure">⎆</button><button class="btn-build-on-table" data-i18n-title="ui.panels.form.build_on_table">⍗</button><button class="btn-save" data-i18n="ui.buttons.ok"></button><button class="btn-edit">🖋</button></span> </div>
-      </div>
-      <div class="buttons">
-        <button class="btn-add">➕</button>
-      </div>
+  <div id="panel_form" class="hidden">
+    <div id="form_objets"></div>
+    <!-- Menu des types à déplacer -->
+    <select id="fobj_types" class="hidden"></select>
+    <select id="fobj_parents" class="hidden"></select>
+    <!-- Modèle dupliqué -->
+    <div id="formobj_template" class="fobj hidden" data-edit="false">
+      <input type="hidden" class="fobj-id">
+      <div><label data-i18n="ui.panels.form.name"></label><input type="text" class="fobj-name"><label data-i18n="ui.panels.form.type"></label><span class="fobj-type">---</span><label data-i18n="ui.panels.form.parent"></label><span class="fobj-parent" data-i18n="ui.panels.form.piece"></span></div>
+      <div><label data-i18n="ui.panels.form.from_measure"></label><input type="text" class="fobj-start"><label data-i18n="ui.panels.form.to_measure"></label><input type="text" class="fobj-end"><label data-i18n="ui.panels.form.tons"></label><input type="text" class="fobj-ton1 fobj-ton"><input type="text" class="fobj-ton2 fobj-ton"><input type="text" class="fobj-ton3 fobj-ton"><input type="text" class="fobj-ton4 fobj-ton"><input type="text" class="fobj-ton5 fobj-ton"><input type="text" class="fobj-ton6 fobj-ton"></div>
+      <div><span class="mini-btns"><button class="btn-delete">✖️</button><button class="btn-goto-measure">⎆</button><button class="btn-build-on-table" data-i18n-title="ui.panels.form.build_on_table">⍗</button><button class="btn-save" data-i18n="ui.buttons.ok"></button><button class="btn-edit">🖋</button></span> </div>
     </div>
-    <button id="form_button" class="fright" data-i18n="ui.footer.form"></button>
+    <div class="buttons">
+      <button class="btn-add">➕</button>
+    </div>
+  </div>
 
-  </footer>
 
   <!--
     Modèles des menus « Options », « Marque », « Aligner », etc. de la

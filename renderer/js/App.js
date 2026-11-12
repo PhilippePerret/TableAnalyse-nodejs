@@ -6,6 +6,7 @@ import { Preferences } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
+import { Form } from './Form.js'
 import { t } from './i18n.js'
 
 class AppClass {
@@ -60,6 +61,7 @@ class AppClass {
       case 'infosAnalyse':  return Analyse.panneau_infos.toggle()
       case 'exportToHTML':  return Analyse.exportCurrentToHtml()
       case 'toolsPanel':    return Tools.toggle()
+      case 'formPanel':     return Form.togglePanel()
       case 'prefs':         return PreferencesPanel.toggle()
       case 'manual':        return Manuel.toggle()
       default: console.error("Commande de menu inconnue : %s", command)

@@ -196,8 +196,6 @@ function buildMenu(){
         , {label: t('ui.menu.export_html'),     click: () => sendMenuCommand('exportToHTML')}
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path)}
         , {type: 'separator'}
-        , {label: t('ui.menu.tools'),           click: () => sendMenuCommand('toolsPanel')}
-        , {type: 'separator'}
         , {label: t('ui.menu.manual'),          click: () => sendMenuCommand('manual')}
         , {type: 'separator'}
         , {label: t('ui.menu.prefs'),           click: () => sendMenuCommand('prefs')}
@@ -217,6 +215,13 @@ function buildMenu(){
           , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
         })
     })),
+    {
+      label: t('ui.menu.tools_menu'),
+      submenu: [
+          {label: t('ui.menu.tools'),           click: () => sendMenuCommand('toolsPanel')}
+        , {label: t('ui.menu.form'),            click: () => sendMenuCommand('formPanel')}
+      ]
+    },
     {
       label: t('ui.menu.view'),
       submenu: [

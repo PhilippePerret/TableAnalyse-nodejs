@@ -1,8 +1,7 @@
 /*
     THÈMES DE L'INTERFACE
     ---------------------
-    Aspect des panneaux (.panneau-ui, cf. Panneau.js) et du pied de
-    page. La table d'analyse n'est pas concernée.
+    Aspect des panneaux (.panneau-ui, cf. Panneau.js). La table d'analyse n'est pas concernée.
     Thème choisi dans le menu « Options » (cf. Themes.js) : classe
     theme-A, theme-B ou theme-C sur le <body>.
 */
@@ -100,19 +99,6 @@ body.theme-A .panneau-ui select {
   border-radius:    6px;
   background-color: white;
 }
-body.theme-A footer {
-  font-family:      -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
-  font-size:        13px;
-  background-color: rgba(246,246,246,.95);
-  border-top:       1px solid #d6d6d6;
-}
-body.theme-A footer span#tooltip { background-color: #ececec; color: #555; border-radius: 4px; }
-body.theme-A footer > button {
-  padding:          3px 12px;
-  border:           1px solid #c8c8c8;
-  border-radius:    6px;
-  background-color: white;
-}
 body.theme-A div#panel_form > div.buttons { background-color: #ececec; border: none; border-top: 1px solid #d6d6d6; border-radius: 0 0 10px 10px; }
 
 
@@ -167,13 +153,6 @@ body.theme-B .panneau-ui select {
   background-color: white;
   color:            #3a925e;
 }
-body.theme-B footer {
-  font-family:      "Avenir Next", Avenir, "Helvetica Neue", sans-serif;
-  font-size:        13.5px;
-  background-color: #2f5d43;
-  color:            white;
-}
-body.theme-B footer span#tooltip { background-color: #3a925e; color: white; }
 body.theme-B div#panel_form > div.buttons { background-color: #eaf3ed; border: none; border-top: 1px solid #cfe3d6; }
 
 
@@ -228,11 +207,4 @@ body.theme-C .panneau-ui select {
   background-color: #36393f;
   color:            #e8e6e3;
 }
-body.theme-C footer {
-  font-family:      "Gill Sans", "Gill Sans MT", "Helvetica Neue", sans-serif;
-  font-size:        14px;
-  background-color: #1e1f22;
-  color:            #ccc;
-}
-body.theme-C footer span#tooltip { background-color: #2b2d31; color: #f3d9a4; }
 body.theme-C div#panel_form > div.buttons { background-color: #1e1f22; border: none; border-top: 1px solid #44474d; border-radius: 0 0 8px 8px; }

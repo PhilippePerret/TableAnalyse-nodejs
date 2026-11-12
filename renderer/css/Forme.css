@@ -2,7 +2,7 @@ div#panel_form {
   position:fixed;
   z-index:100;
   right:1em;
-  bottom:48px;
+  bottom:8px;
   width:840px;
   min-height:400px;
 }

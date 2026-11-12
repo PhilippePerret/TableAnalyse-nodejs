@@ -1,5 +1,5 @@
 import { DGet } from './dom.js'
-import { erreur } from './lib/Message.js'
+import { erreur, message } from './lib/Message.js'
 
 export function px(nombre){
   return `${nombre}px`
@@ -9,10 +9,9 @@ export function unpx(valeur){
   return Number(valeur.substring(0, valeur.length - 2))
 }
 
-/** Pour afficher un message discret dans le footer **/
+/** Message discret (boite des messages, cf. lib/Message.js) **/
 export function tooltip(msg){
-  window.__tooltipField || (window.__tooltipField = DGet('#tooltip'))
-  window.__tooltipField.innerHTML = msg
+  message(msg)
 }
 
 /** Pour écrire les coordonnées de la souris en bas à gauche de l'écran **/

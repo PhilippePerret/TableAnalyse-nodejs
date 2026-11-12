@@ -5,7 +5,7 @@ import { px } from './handies.js'
 
   class MenusTool
   ---------------
-  Classe abstraite pour tous les menus du footer.
+  Classe abstraite pour les menus de la barre de menus (cf. MenusBar.js).
 
   REQUIS
   ------

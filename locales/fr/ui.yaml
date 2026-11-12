@@ -16,7 +16,9 @@ menu:
   infos:            "Informations… ⇧I"
   export_html:      "Exporter en HTML"
   show_in_finder:   "Afficher dans le Finder"
+  tools_menu:       "Outils"
   tools:            "Boite à outils… ⇧O"
+  form:             "Forme…"
   manual:           "Manuel… ⇧M"
   prefs:            "Préférences… ⇧P"
   edit:             "Édition"
@@ -86,9 +88,6 @@ buttons:
   renounce:         "Renoncer"
   replace:          "Remplacer"
   ok:               "OK"
-
-footer:
-  form:             "Forme…"
 
 message_titles:
   notice:           "Information"

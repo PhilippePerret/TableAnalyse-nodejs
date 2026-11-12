@@ -111,8 +111,6 @@ export class UIClass {
     // listen(this.TableAnalyse, 'click', (e)=>{/*console.log("Un clic sur la table d'analyse.")*/})
 
       
-    listen(DGet('footer'), 'click', function(e){return stopEvent(e)})
-    listen(DGet('footer'), 'dblclick', function(e){e.stopPropagation()})
 
     // Liens vers d'autres marques ([#id] dans les textes)
     listen(this.TableAnalyse, 'click', (e) => {

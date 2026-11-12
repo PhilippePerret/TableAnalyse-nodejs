@@ -69,67 +69,6 @@ section#content {
   margin-bottom: 400px!important;
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: inline;
-  width: calc(100% - 2em);
-  padding: 0.2em 1em;
-  z-index: 1000;
-}
-/*footer * {
-  visibility: hidden;
-}
-footer:hover {
-  background-color: #D68362;
-}
-footer:hover, footer:hover * {
-  visibility: visible;
-}
-*/
-footer > button, footer > img {
-  margin: 0 8px;
-}
-
-footer img.btn {
-  width: 30px;
-  border-width: 2px;
-  border-style: solid;
-  padding: 2px 8px;
-
-}
-footer img.btn:not(.pressed){
-  border-color: #CCC #555 #555 #CCC;
-}
-footer img.btn.pressed {
-  background-color: #84FB84;
-  border-color: #555 #CCC #CCC #555;
-}
-
-footer button, footer > select {
-  font-family: inherit;
-  font-size: inherit;
-  margin-top: 4px;
-}
-
-footer button#btn-activer-son {
-  background-color: red;
-  color: white;
-  margin-right: 4em;
-}
-
-footer span#tooltip {
-  display:inline-block;
-  background-color:#F0AE94;
-  color:#ba3535;
-  width:300px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  margin-right:1em;
-  margin-top:6px;
-  padding:0 0.5em;
-}
 
 div.aobj {
   position: absolute;
@@ -177,7 +116,7 @@ div#panneau_outils > div {
 div#coordonnates {
   position:fixed;
   width:150px;
-  bottom:47px;
+  bottom:0;
   text-align:center;
   text-overflow:ellipsis;
   overflow:hidden;
