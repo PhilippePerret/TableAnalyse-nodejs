@@ -9,13 +9,26 @@
  * data-i18n-placeholder ou data-i18n-title reçoivent leur texte au
  * chargement (localizeDocument).
  */
-const DATA = (window.api && window.api.locale) || {}
+const DATA     = (window.api && window.api.locale) || {}
+const PLATFORM = (window.api && window.api.platform) || 'linux'
+// Touche de commande du système, pour %{cmd}
+const CMD      = PLATFORM == 'darwin' ? '⌘' : 'Ctrl+'
 
+/**
+ * Un texte propre à chaque système est une table {darwin, win32, linux}.
+ */
 export function t(key, params){
-  const value = key.split('.').reduce((node, k) => (node == null ? undefined : node[k]), DATA)
+  let value = key.split('.').reduce((node, k) => (node == null ? undefined : node[k]), DATA)
   if ( value === undefined ) return key
-  if ( typeof value != 'string' || !params ) return value
+  if ( value && typeof value == 'object' && 'darwin' in value ) value = value[PLATFORM] || value.linux
+  if ( typeof value != 'string' ) return value
+  params = Object.assign({cmd: CMD}, params)
   return value.replace(/%\{(\w+)\}/g, (m, name) => (name in params ? params[name] : m))
+}
+
+// Remplace ⌘ par la touche de commande du système
+export function cmdText(str){
+  return CMD == '⌘' ? str : str.replace(/⌘\s?/g, CMD)
 }
 
 export function localizeDocument(root = document){

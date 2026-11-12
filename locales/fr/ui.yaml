@@ -1,5 +1,6 @@
 # Éléments d'interface (menus, panneaux, boutons, libellés…)
-# Variables : %{nom}
+# Variables : %{nom} ; %{cmd} = touche de commande du système (⌘ ou Ctrl+)
+# Texte propre à un système : table {darwin:, win32:, linux:}
 
 app:
   name: "Table d'analyse"
@@ -15,7 +16,10 @@ menu:
   number_score:     "Numéroter la partition"
   infos:            "Informations… ⇧I"
   export_html:      "Exporter en HTML"
-  show_in_finder:   "Afficher dans le Finder"
+  show_in_finder:
+    darwin:         "Afficher dans le Finder"
+    win32:          "Afficher dans l'Explorateur"
+    linux:          "Afficher dans le gestionnaire de fichiers"
   tools_menu:       "Outils"
   tools:            "Boite à outils… ⇧O"
   form:             "Forme…"
@@ -31,7 +35,7 @@ menu:
   borders:          "Bords"
 
 options_menu:
-  cancel_last:      "Annuler : %{name} ⌘z"
+  cancel_last:      "Annuler : %{name} %{cmd}Z"
   cancel_history:   "Historique des annulations"
   grid:             "Grille magnétique"
   color:            "Version couleur"

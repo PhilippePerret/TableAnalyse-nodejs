@@ -48,7 +48,8 @@ div#titlebar {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 12px;
+  /* À gauche des boutons de la fenêtre (Windows, Linux) */
+  padding-right: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, 100vw) + 12px);
   background-color: #ececec;
   border-bottom: 1px solid #d0d0d0;
   -webkit-app-region: drag;

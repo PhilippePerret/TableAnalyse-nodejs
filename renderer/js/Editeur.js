@@ -1,4 +1,4 @@
-import { DCreate, DGet, listen, stopEvent } from './dom.js'
+import { DCreate, DGet, listen, stopEvent, cmdKey } from './dom.js'
 import { px } from './handies.js'
 import { draggable } from './lib/interact.js'
 import { UI } from './UI.js'
@@ -172,7 +172,7 @@ export class Editeur {
     // console.log("e.key = '%s'", e.key)
     if (e.key == 'Enter') {
       if ( this.isLongText ) {
-        if ( e.metaKey ) {
+        if ( cmdKey(e) ) {
           
         } else {
           return true 
@@ -185,7 +185,7 @@ export class Editeur {
     else return true
   }
   onKeyDown(e){
-    if (this.isLongText && e.metaKey && e.key == 'Enter') {
+    if (this.isLongText && cmdKey(e) && e.key == 'Enter') {
       return this.onClickOK.call(this, e)
     }
   }

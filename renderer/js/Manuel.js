@@ -3,7 +3,7 @@ import { isBool } from './lib/common.js'
 import { Panneau } from './Panneau.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { ManuelData, ManuelShortcutsData } from './Manuel_AppData.js'
-import { t } from './i18n.js'
+import { t, cmdText } from './i18n.js'
 /**
  * Manuel
  * ------
@@ -53,7 +53,7 @@ class ManuelClass {
 
     var ioperation = 0
     ManuelData.forEach(md => {
-      const op = new ManuelItem(Object.assign(md, {index: ++ioperation}))
+      const op = new ManuelItem(Object.assign(cmdData(md), {index: ++ioperation}))
       cont.appendChild(op.build())
     })
     o.appendChild(cont)
@@ -80,7 +80,7 @@ class ManuelClass {
     o.appendChild(tbl)
     var ishortcut = 0
     ManuelShortcutsData.forEach(msd => {
-      const shc = new ManuelShortcut(Object.assign(msd, {index:++ishortcut}))
+      const shc = new ManuelShortcut(Object.assign(cmdData(msd), {index:++ishortcut}))
       tbl.appendChild(shc.build())
     })
     this.shortcutsSection = o
@@ -114,6 +114,12 @@ class ManuelClass {
 */
 export const Manuel = new ManuelClass()
 
+
+// Le manuel est écrit avec ⌘ : touche de commande du système
+function cmdData(data){
+  const fix = (v) => typeof v == 'string' ? cmdText(v) : (Array.isArray(v) ? v.map(fix) : v)
+  return Object.fromEntries(Object.entries(data).map(([k, v]) => [k, fix(v)]))
+}
 
 class ManuelItem {
   constructor(data){

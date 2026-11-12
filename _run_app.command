@@ -11,7 +11,7 @@ cd "$APP_FOLDER" || exit 1
 # fiable : le paquet est réécrit sur place).
 STAMP="dist/.build-stamp"
 APP_PATH=( dist/mac*/"Table d'analyse.app"(N) )
-if [[ -z "$APP_PATH" ]] || [[ ! -f "$STAMP" ]] || [[ -n $(find main renderer assets package.json VERSION -newer "$STAMP" -print -quit) ]]; then
+if [[ -z "$APP_PATH" ]] || [[ ! -f "$STAMP" ]] || [[ -n $(find main renderer assets locales package.json VERSION -newer "$STAMP" -print -quit) ]]; then
   mkdir -p dist && touch "$STAMP.next"
   npm run dist:mac || exit 1
   mv "$STAMP.next" "$STAMP"

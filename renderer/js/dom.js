@@ -5,6 +5,10 @@ export function unlisten(objet, eventType, method){
   objet.removeEventListener(eventType, method)
 }
 
+// Touche de commande du système : ⌘ sur macOS, Ctrl ailleurs
+const IS_MAC = (window.api && window.api.platform) == 'darwin'
+export function cmdKey(e){ return IS_MAC ? e.metaKey : e.ctrlKey }
+
 export function stopEvent(e){
   e.preventDefault()
   e.stopPropagation()

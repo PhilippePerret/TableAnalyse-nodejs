@@ -13,7 +13,7 @@ import { t } from './i18n.js'
   Dans un gestionnaire d'évènements keyboard, ajouter :
 
   case 'z':
-    if (e.metaKey) { return Cancel.zLast(e) }
+    if (cmdKey(e)) { return Cancel.zLast(e) }
 
   Définir le menu (<option>) qui va afficher l'action annulable
   -------------------------------------------------------------

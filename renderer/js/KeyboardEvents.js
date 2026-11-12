@@ -1,7 +1,7 @@
 /**
 * Voir la classe UI qui définit ces raccourcis.
 */
-import { stopEvent } from './dom.js'
+import { cmdKey, stopEvent } from './dom.js'
 import { Cancel } from './CancelManager.js'
 import { AObjet } from './AObjet.js'
 import { AMark } from './AMark.js'
@@ -81,8 +81,8 @@ export function onKeyUpOnAnalyse(e){
 */
 export function onKeyDownUniversel(e){
 
-  if ( e.metaKey ) {
-    switch(e.key) {
+  if ( cmdKey(e) ) {
+    switch(e.key.toLowerCase()) {
       case 's':
         Analyse.current && AnalyseSaver.save()
         return stopEvent(e)

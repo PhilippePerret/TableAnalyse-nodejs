@@ -1,10 +1,14 @@
 # Messages (informations, opérations en cours, infobulles)
-# Variables : %{nom}
+# Variables : %{nom} ; %{cmd} = touche de commande du système (⌘ ou Ctrl+)
+# Texte propre à un système : table {darwin:, win32:, linux:}
 
-no_analyse_open: "Aucune analyse n'est ouverte.<br><br>Utiliser le menu « Fichier » pour ouvrir une analyse existante (⌘O) ou en créer une nouvelle (⌘N)."
+no_analyse_open: "Aucune analyse n'est ouverte.<br><br>Utiliser le menu « Fichier » pour ouvrir une analyse existante (%{cmd}O) ou en créer une nouvelle (%{cmd}N)."
 no_systems: "Cette analyse ne contient aucun système.<br><br>Il faut les systèmes de la partition pour pouvoir commencer l'analyse : menu « Fichier » > « Découper la partition… »."
 cutting_score: "Découpe et numérotation de la partition…"
-after_cut: "Passez en revue chaque système pour voir s’il y a des parties à « gommer » (numéros de pages, notes ou indications d’un autre système, etc.) et gommez-les en utilisant un outil graphique (par exemple Aperçu, sur macOS). Vous pouvez également les supprimer en recoupant les systèmes manuellement."
+after_cut:
+  darwin: "Passez en revue chaque système pour voir s’il y a des parties à « gommer » (numéros de pages, notes ou indications d’un autre système, etc.) et gommez-les en utilisant un outil graphique (par exemple Aperçu). Vous pouvez également les supprimer en recoupant les systèmes manuellement."
+  win32: "Passez en revue chaque système pour voir s’il y a des parties à « gommer » (numéros de pages, notes ou indications d’un autre système, etc.) et gommez-les en utilisant un outil graphique (par exemple Paint). Vous pouvez également les supprimer en recoupant les systèmes manuellement."
+  linux: "Passez en revue chaque système pour voir s’il y a des parties à « gommer » (numéros de pages, notes ou indications d’un autre système, etc.) et gommez-les en utilisant un outil graphique (par exemple GIMP). Vous pouvez également les supprimer en recoupant les systèmes manuellement."
 numbering_score: "Numérotation de la partition…"
 exporting_html: "Exportation de l'analyse au format HTML. Merci de patienter…"
 exported_html: "L'analyse a été exportée dans %{path}"

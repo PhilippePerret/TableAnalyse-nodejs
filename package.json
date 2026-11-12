@@ -8,6 +8,7 @@
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder",
+    "decoupe": "electron main/cutter/cli.js",
     "dist:mac": "electron-builder --mac --dir"
   },
   "author": "Philippe Perret",
@@ -29,6 +30,7 @@
       "main/**",
       "renderer/**",
       "assets/**",
+      "locales/**",
       "VERSION",
       "package.json"
     ],

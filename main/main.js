@@ -120,7 +120,10 @@ function createWindow(){
     , height: 1000
     , show:   !SMOKE
     , title:  ''
-    , titleBarStyle: 'hiddenInset' // bande supérieure dessinée par la page (#titlebar)
+    // Bande supérieure dessinée par la page (#titlebar), avec les
+    // boutons de la fenêtre du système
+    , titleBarStyle:   process.platform == 'darwin' ? 'hiddenInset' : 'hidden'
+    , titleBarOverlay: process.platform == 'darwin' ? false : {color: '#ececec', symbolColor: '#333333', height: 28}
     , icon:   path.join(ASSETS_FOLDER, 'icons', 'icon.png')
     , webPreferences: {
           preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
