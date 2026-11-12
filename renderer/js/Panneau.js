@@ -63,8 +63,9 @@ export class Panneau {
 }
 
 /**
- * En-tête commun des panneaux (cf. thèmes, css/themes/) : croix de
- * fermeture à gauche, titre et raccourci.
+ * En-tête commun des panneaux (cf. thèmes, css/themes.css) : croix de
+ * fermeture à gauche, titre et raccourci. Ajoute aussi un bouton
+ * « Fermer » en bas à gauche si le panneau n'en a pas.
  */
 export function addPanelHead(obj, {title, shortcut, onClose}){
   obj.classList.add('panneau-ui')
@@ -76,5 +77,12 @@ export function addPanelHead(obj, {title, shortcut, onClose}){
   ]})
   obj.insertBefore(head, obj.firstChild)
   listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })
+  if ( !obj.querySelector('button.btn-close, button[id^="btn_"][id$="_close"], button#btn_close_tools') ) {
+    let buttons = obj.querySelector(':scope > div.buttons')
+    buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))
+    const btn = DCreate('BUTTON', {class: 'btn-close', text: 'Fermer', style: 'float:left;'})
+    buttons.insertBefore(btn, buttons.firstChild)
+    listen(btn, 'click', (e) => { e.stopPropagation() ; onClose() })
+  }
   return head
 }
