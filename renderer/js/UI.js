@@ -111,7 +111,6 @@ export class UIClass {
     listen(window, 'dblclick', this.onDoubleClick.bind(this))
     // listen(this.TableAnalyse, 'click', (e)=>{/*console.log("Un clic sur la table d'analyse.")*/})
 
-    listen(this.btnLockSystems, 'click', Systeme.toggleLock.bind(Systeme))
     listen(this.btnSaveAnalyse, 'click', AnalyseSaver.save.bind(AnalyseSaver))
       
     listen(DGet('footer'), 'click', function(e){return stopEvent(e)})
@@ -212,7 +211,6 @@ export class UIClass {
 
 
   // Le picto pour verrouiller les systèmes
-  get btnLockSystems(){return this._btnlocksys || (this._btnlocksys = DGet('footer #cb_staves_lock'))}
   // Le picto pour activer l'enregistrement
   get btnSaveAnalyse(){return this._btnrecord || (this._btnrecord = DGet('footer #cb_recording'))}
 

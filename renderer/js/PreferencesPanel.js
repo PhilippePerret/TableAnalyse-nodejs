@@ -13,6 +13,7 @@ import { PreferencesAppData } from './Preferences_AppData.js'
 import { Grid } from './Grid.js'
 import { Systeme } from './Systeme.js'
 import { UI } from './UI.js'
+import { emit } from './events.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 
 class PreferencesPanelClass {
@@ -68,7 +69,7 @@ afterLoadingAnalyse(){
   this.prepareOnChangeMethods()
   const locked = Preferences.get('lock_systems')
   Systeme[locked ? 'lockAll':'unlockAll'].call(Systeme)
-  UI.btnLockSystems.classList[ locked ? 'add' : 'remove']('pressed')
+  emit('systems:locked', {locked: !!locked})
 }
 
 prepareOnChangeMethods(){

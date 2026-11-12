@@ -6,6 +6,8 @@ import { Current } from './Current.js'
 import { Grid } from './Grid.js'
 import { UI } from './UI.js'
 import { Themes } from './Themes.js'
+import { Systeme } from './Systeme.js'
+import { on } from './events.js'
 /**
 
   Class OptionsTool
@@ -18,6 +20,12 @@ export class OptionsTool extends MenusTool {
   static init(){
     super.init()
     Cancel.zMenu = DGet('option[value="cancel"]', this.menu)
+    on('systems:locked', ({locked}) => this.setLockSystemsMenu(locked))
+  }
+
+  // Coche du menu « Verrouiller les systèmes »
+  static setLockSystemsMenu(locked){
+    DGet('option[value="toggleLockSystems"]', this.menu).textContent = `${locked ? '✓ ' : ''}Verrouiller les systèmes`
   }
 
 
@@ -38,6 +46,10 @@ export class OptionsTool extends MenusTool {
     Grid.toggleGridMode(modeON)
     option.dataset.checked = modeON ? 'true' : 'false'
     UI.toggleGridDisplay(modeON)
+  }
+
+  static onActivate_toggleLockSystems(){
+    Systeme.toggleLock()
   }
 
   static onActivate_theme(e, option){

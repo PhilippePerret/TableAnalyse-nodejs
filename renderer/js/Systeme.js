@@ -210,13 +210,14 @@ export class Systeme extends AObjet {
   }
 
   /**
-   * Méthode appelée quand on clique le bouton pour verrouiller ou 
-   * déverrouiller les systèmes sur la table d'analyse.
+   * Méthode appelée par le menu « Options » pour verrouiller ou
+   * déverrouiller les systèmes sur la table d'analyse. Déverrouillés,
+   * un seul système peut être déplacé : ils sont reverrouillés après.
    */
   static toggleLock(e, lockState){
     if ( undefined == lockState ) lockState = !Preferences.get('lock_systems')
     this.systemsLocked = lockState
-    UI.btnLockSystems.classList[this.systemsLocked?'add':'remove']('pressed')
+    emit('systems:locked', {locked: this.systemsLocked})
     if ( this.systemsLocked ) {
       this.lockAll()
     } else {
@@ -234,7 +235,7 @@ export class Systeme extends AObjet {
   }
 
   static setLockSystemsOnLoad(){
-    UI.btnLockSystems.classList[Preferences.get('lock_systems')?'add':'remove']('pressed')
+    emit('systems:locked', {locked: !!Preferences.get('lock_systems')})
   }
 
   static lockAll(){
@@ -536,6 +537,9 @@ export class Systeme extends AObjet {
       }
       // Les lignes des numéros suivent les systèmes déplacés
       Systeme.placeMeasureNumbers()
+      // Un seul déplacement de système à la fois
+      this.moving = false
+      return Systeme.toggleLock(null, true)
 
     } else {
       
