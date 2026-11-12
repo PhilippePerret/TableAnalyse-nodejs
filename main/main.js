@@ -45,6 +45,7 @@ app.setAboutPanelOptions({applicationName: t('ui.app.name'), applicationVersion:
 let mainWindow  = null
 let current     = null    // {Analyse} analyse courante
 let closeAllowed = false
+let justCut     = false   // la partition vient d'être découpée (message au rechargement)
 let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
 
 protocol.registerSchemesAsPrivileged([{
@@ -279,7 +280,9 @@ function registerIpc(){
     current = new Analyse(current.path)
     current.makeBackup()
     current.importMeasures()
-    return current.allDataForClient()
+    const data = Object.assign(current.allDataForClient(), {just_cut: justCut})
+    justCut = false
+    return data
   })
 
   handle('analyse:saveInfos', ({infos}) => {
@@ -364,6 +367,7 @@ function registerIpc(){
     try {
       await runCutter({pdf, out, dpi: 300, quality: 90})
       analyse.replaceSystems(out)
+      justCut = true
     } finally {
       fs.rmSync(out, {recursive: true, force: true})
     }

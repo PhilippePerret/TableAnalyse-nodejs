@@ -36,7 +36,9 @@ class AppClass {
       analyse.applyWindowSize()
       analyse.scrollToLastPosition()
       PreferencesPanel.afterLoadingAnalyse()
-      if ( !data.systems_in_folder.length ) {
+      if ( data.just_cut ) {
+        message(t('messages.after_cut'), {keep: true})
+      } else if ( !data.systems_in_folder.length ) {
         message(t('messages.no_systems'), {keep: true})
       }
     } else {
