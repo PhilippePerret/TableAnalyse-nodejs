@@ -3,7 +3,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import { Analyse, MEASURES_FILE, imageHeight, isSystemImage } from './Analyse.js'
+import { Analyse, MEASURES_FILE, isSystemImage } from './Analyse.js'
 import { APP_FOLDER, ASSETS_FOLDER } from './paths.js'
 
 const FIRST_TAGS_MESSAGES = [
@@ -44,16 +44,6 @@ function copySystems(source, systemsFolder){
   })
 }
 
-function prepareSystemsPositions(systemsFolder){
-  let curtop = 400
-  return fs.readdirSync(systemsFolder).filter(isSystemImage).sort().map((name, idx) => {
-    const height = imageHeight(path.join(systemsFolder, name))
-    const dsys = {id: idx + 1, image_name: name, top: curtop, left: 0, height: height}
-    curtop += height + 100
-    return dsys
-  })
-}
-
 /**
  * @return {Analyse} la nouvelle analyse
  */
@@ -74,7 +64,7 @@ export function createAnalyse(data, appVersion){
     , analyse_id:     data.analyse_id
     , folder:         data.folder
     , analyst:        data.analyst       || ''
-    , systems:        prepareSystemsPositions(analyse.systemsFolder)
+    , systems:        analyse.layoutSystems()
     , created_at:     now
     , updated_at:     now
     , app_version:    appVersion

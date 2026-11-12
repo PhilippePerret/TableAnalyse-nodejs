@@ -11,13 +11,6 @@ section#manuel {
   width: 860px;
   max-height: 800px;
   overflow: auto;
-  background-color: #EFEFEF;
-  color: #555; /* pas trop noir */
-  font-family:  'Arial Narrow';
-  font-size: 16pt;
-  padding: 1em 4em 3em;
-  border: 1px solid;
-  border-radius: 1em;
   z-index: 4000;
 }
 

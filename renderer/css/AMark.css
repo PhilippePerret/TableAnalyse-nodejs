@@ -455,6 +455,17 @@ div.amark.txt.mes {
   /* défini en dur */
 /*  color:blue; *//* Pour les distinguer */
 }
+/* Numéros de mesure sur la ligne : boite de taille unique (« 999 ») */
+div.amark.txt.mes.on-line span.content {
+  display:              inline-block;
+  box-sizing:           border-box;
+  width:                calc(3ch + 0.6em);
+  padding:              0 0.3em;
+  border:               1px solid currentColor;
+  background-color:     white;
+  text-align:           center;
+  font-variant-numeric: tabular-nums;
+}
 /* Ligne des numéros de mesure, sous chaque système (cf. Systeme.js) */
 div.measure-line {
   position:       absolute;

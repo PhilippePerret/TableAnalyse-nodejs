@@ -2,6 +2,9 @@
  * Processus de rendu (fenêtre cachée) de la découpe de partition :
  * rend chaque page du PDF (pdf.js), l'analyse et écrit les systèmes en JPG.
  *
+ * Mode « numerotation » : ne fait que relever les mesures dans les images
+ * de systèmes existantes (opts.images, dans opts.folder).
+ *
  * Les options arrivent en JSON dans le paramètre « opts » de l'URL.
  */
 import * as pdfjs from '../../node_modules/pdfjs-dist/build/pdf.mjs'
@@ -122,6 +125,33 @@ async function run(){
   log(`${number} systèmes (${measure} mesures) écrits dans ${opts.out}`)
 }
 
-run()
+async function loadImage(file){
+  const bitmap = await createImageBitmap(new Blob([fs.readFileSync(file)]))
+  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height)
+  const ctx = canvas.getContext('2d', {willReadFrequently: true})
+  ctx.fillStyle = 'white'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.drawImage(bitmap, 0, 0)
+  return ctx.getImageData(0, 0, canvas.width, canvas.height)
+}
+
+async function runNumbering(){
+  let measure = 0
+  const mesures = []
+  for ( const image of opts.images ) {
+    const img = await loadImage(path.join(opts.folder, image))
+    const res = analysePage(img, opts)
+    res.warnings.forEach(w => log(`  ! ${image} : ${w}`))
+    if ( res.systems.length > 1 ) log(`  ! ${image} : ${res.systems.length} systèmes détectés`)
+    const measures = res.systems.flatMap(sys => sys.measures)
+    measures.forEach(m => m.number = ++measure)
+    mesures.push({image, width: img.width, height: img.height, measures, x0: 0})
+    log(`${image} : ${measures.length} mesures`)
+  }
+  fs.writeFileSync(path.join(opts.out, 'mesures.yaml'), mesuresYAML(mesures))
+  log(`${measure} mesures numérotées dans ${opts.images.length} systèmes`)
+}
+
+;(opts.mode === 'numerotation' ? runNumbering() : run())
   .then(() => ipcRenderer.send('cutter:done', 0))
   .catch(err => { log(`ERREUR : ${err.stack || err}`); ipcRenderer.send('cutter:done', 1) })

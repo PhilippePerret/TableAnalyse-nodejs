@@ -5,13 +5,7 @@ div#panel_form {
   bottom:48px;
   width:840px;
   min-height:400px;
-  border:1px solid #CCCCCC;
-  border-radius:8px;
-  box-shadow: 10px 10px 40px #CCCCCC;
-  padding:1em;
-  background-color:rgba(235, 235, 235, 0.94);
 }
-div#panel_form div.titre {font-weight:bold;font-size:1.2em;}
 
 div#panel_form > div.buttons {
   position: absolute;

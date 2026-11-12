@@ -35,6 +35,9 @@ class AppClass {
       analyse.applyWindowSize()
       analyse.scrollToLastPosition()
       PreferencesPanel.afterLoadingAnalyse()
+      if ( !data.systems_in_folder.length ) {
+        message("Cette analyse ne contient aucun système.<br><br>Il faut les systèmes de la partition pour pouvoir commencer l'analyse : menu « Fichier » > « Découper la partition… ».", {keep: true})
+      }
     } else {
       message("Aucune analyse n'est ouverte.<br><br>Utiliser le menu « Fichier » pour ouvrir une analyse existante (⌘O) ou en créer une nouvelle (⌘N).", {keep: true})
     }
@@ -49,6 +52,8 @@ class AppClass {
       case 'openAnalyse':   return Analyse.openAnalyse()
       case 'reloadAnalyse': return Analyse.reloadAnalyse()
       case 'save':          return AnalyseSaver.save()
+      case 'cutScore':      return Analyse.cutScore()
+      case 'numberScore':   return Analyse.numberScore()
       case 'infosAnalyse':  return Analyse.panneau_infos.toggle()
       case 'exportToHTML':  return Analyse.exportCurrentToHtml()
       case 'toolsPanel':    return Tools.toggle()

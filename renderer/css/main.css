@@ -70,8 +70,6 @@ footer {
   display: inline;
   width: calc(100% - 2em);
   padding: 0.2em 1em;
-  /*background-color: transparent*/
-  background-color: #D68362;
   z-index: 1000;
 }
 /*footer * {
@@ -169,16 +167,12 @@ div.panneau {
   top: 100px;
   left: calc(50% - 420px);
   z-index: 100;
-  padding: 1em 2em;
-  background-color: #DDD;
   width: 840px;
-  font-size: 18pt;  
 }
 div#panneau_infos {
 }
 div.panneau input,
 div.panneau button {
-  font-size: 18pt;
   margin-top: 0.3em;
 }
 div#panneau_infos table#table_metadata {
@@ -264,3 +258,26 @@ div#historique_annulations > div:hover:before {
 
 /* Liens vers une autre marque ([#id] dans les textes) */
 span.goto-tag { cursor: pointer; }
+
+/* Sablier des opérations longues (découpe, numérotation) */
+div#sablier {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255,255,255,0.7);
+  font-size: 14pt;
+}
+div#sablier.hidden { display: none; }
+div#sablier .sablier-icon {
+  font-size: 48pt;
+  animation: sablier-rotation 2s ease-in-out infinite;
+}
+@keyframes sablier-rotation {
+  0%, 40%   { transform: rotate(0deg); }
+  50%, 90%  { transform: rotate(180deg); }
+  100%      { transform: rotate(360deg); }
+}

@@ -16,9 +16,10 @@ import { SelectionTool } from './MenuSelection.js'
 import { BordersTool } from './MenuBords.js'
 import { OptionsTool } from './MenuOptions.js'
 import { AmarkMenu } from './MenuAMark.js'
-import { OpenMenu } from './MenuOpen.js'
 import { AlignMenu } from './MenuAligner.js'
 import { AdjustMenu } from './MenuAjuster.js'
+import { MenusBar } from './MenusBar.js'
+import { Themes } from './Themes.js'
 import { onKeyUpOnAnalyse, onKeyDownOnAnalyse, onKeypressOnAnalyse, onKeyDownUniversel } from './KeyboardEvents.js'
 
 export class UIClass {
@@ -70,14 +71,18 @@ export class UIClass {
     // Le menu "AMarque"
     AmarkMenu.init()
 
-    // Le menu "Ouvrir"
-    OpenMenu.init()
 
     // Le menu "Aligner…"
     AlignMenu.init()
 
     // Le menu "Ajuster"
     AdjustMenu.init()
+
+    // Thème de l'interface (avant l'envoi des menus)
+    Themes.init()
+
+    // Ces menus dans la barre de menus de l'application
+    MenusBar.init()
 
     // Tout ce qui concerne la forme
     Form.init()

@@ -1,3 +1,4 @@
+import { addPanelHead } from './Panneau.js'
 import { DCreate, DGet, DGetAll, listen, stopEvent } from './dom.js'
 import { not } from './lib/common.js'
 import { message } from './lib/Message.js'
@@ -89,6 +90,7 @@ export class Form {
 
 
   static init(){
+    addPanelHead(this.panel, {title: 'Forme de la pièce', onClose: this.hide.bind(this)})
     this.observe()
     this.items = []
     /*

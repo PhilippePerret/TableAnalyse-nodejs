@@ -9,6 +9,7 @@
  *   3. aucune (utiliser le menu Fichier).
  */
 import fs from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 import { app, BrowserWindow, dialog, ipcMain, Menu, protocol, shell } from 'electron'
 import { Analyse } from './Analyse.js'
@@ -16,6 +17,7 @@ import { AppPrefs } from './AppPrefs.js'
 import { createAnalyse } from './createAnalyse.js'
 import { exportToHtml } from './exportHtml.js'
 import { buildImageFromCode } from './scoreImage.js'
+import { runCutter } from './cutter/runCutter.js'
 import { loadYAML } from './yaml.js'
 import { APP_FOLDER, APP_NAME, ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
 
@@ -42,6 +44,7 @@ app.setAboutPanelOptions({applicationName: APP_NAME, applicationVersion: APP_VER
 let mainWindow  = null
 let current     = null    // {Analyse} analyse courante
 let closeAllowed = false
+let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
 
 protocol.registerSchemesAsPrivileged([{
   scheme: 'sa',
@@ -53,6 +56,7 @@ protocol.registerSchemesAsPrivileged([{
 function setCurrent(folder){
   current = folder ? new Analyse(folder) : null
   if ( current ) AppPrefs.set({last_analyse_path: current.path})
+  updateMenu()
 }
 
 function findStartAnalyse(){
@@ -181,9 +185,19 @@ function buildMenu(){
         , {type: 'separator'}
         , {label: 'Enregistrer',            accelerator: 'CmdOrCtrl+S', click: () => sendMenuCommand('save')}
         , {type: 'separator'}
-        , {label: 'Informations…',          click: () => sendMenuCommand('infosAnalyse')}
+        , {label: 'Découper la partition…',   id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
+        , {label: 'Numéroter la partition',   id: 'numberScore', click: () => sendMenuCommand('numberScore')}
+        , {type: 'separator'}
+        , {label: 'Informations… ⇧I',       click: () => sendMenuCommand('infosAnalyse')}
+        , {type: 'separator'}
         , {label: 'Exporter en HTML',       click: () => sendMenuCommand('exportToHTML')}
         , {label: 'Afficher dans le Finder', click: () => current && showInFinder(current.path)}
+        , {type: 'separator'}
+        , {label: 'Boite à outils… ⇧O',     click: () => sendMenuCommand('toolsPanel')}
+        , {type: 'separator'}
+        , {label: 'Manuel… ⇧M',             click: () => sendMenuCommand('manual')}
+        , {type: 'separator'}
+        , {label: 'Préférences… ⇧P',        click: () => sendMenuCommand('prefs')}
         , ...(isMac ? [] : [{type: 'separator'}, {role: 'quit'}])
       ]
     },
@@ -192,20 +206,47 @@ function buildMenu(){
       label: 'Édition',
       submenu: [{role: 'cut'}, {role: 'copy'}, {role: 'paste'}, {role: 'selectAll'}]
     },
+    ...dynamicMenus.map(m => ({
+        label:   m.label
+      , submenu: m.items.map(item => item.type ? item : {
+            label:   item.label
+          , enabled: item.enabled
+          , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
+        })
+    })),
     {
       label: 'Affichage',
       submenu: [
-          {label: 'Boite à outils… ⇧O',  click: () => sendMenuCommand('toolsPanel')}
-        , {label: 'Préférences… ⇧P',     click: () => sendMenuCommand('prefs')}
-        , {label: 'Manuel… ⇧M',          click: () => sendMenuCommand('manual')}
-        , {type: 'separator'}
-        , {role: 'toggleDevTools'}
+          {role: 'toggleDevTools'}
         , {role: 'togglefullscreen'}
       ]
     },
     {role: 'windowMenu'}
   ]
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  updateMenu()
+}
+
+// Menus inaccessibles sans analyse courante
+function updateMenu(){
+  const menu = Menu.getApplicationMenu()
+  if ( !menu ) return
+  ;['cutScore', 'numberScore'].forEach(id => {
+    const item = menu.getMenuItemById(id)
+    if ( item ) item.enabled = !!current
+  })
+}
+
+/* --- Fenêtres de choix (dernier dossier mémorisé) --- */
+
+async function showOpenDialog(options){
+  const last = AppPrefs.get('last_dialog_folder')
+  if ( !options.defaultPath && last && fs.existsSync(last) ) options.defaultPath = last
+  const res = await dialog.showOpenDialog(mainWindow, options)
+  if ( !res.canceled && res.filePaths.length ) {
+    AppPrefs.set({last_dialog_folder: path.dirname(res.filePaths[0])})
+  }
+  return res
 }
 
 /* --- IPC --- */
@@ -259,7 +300,7 @@ function registerIpc(){
   })
 
   handle('analyse:open', async () => {
-    const res = await dialog.showOpenDialog(mainWindow, {
+    const res = await showOpenDialog({
         title: "Choisir le dossier de l'analyse"
       , properties: ['openDirectory']
     })
@@ -285,8 +326,55 @@ function registerIpc(){
     return analyse.path
   })
 
-  handle('dialog:chooseFolder', async ({title}) => {
+  /*
+   * Découpe de la partition : choix du PDF (null si annulé), puis
+   * découpe, qui remplace les systèmes et leurs numéros de mesure.
+   */
+  handle('analyse:chooseScorePdf', async () => {
+    const analyse = requireCurrent()
     const res = await dialog.showOpenDialog(mainWindow, {
+        title:       'Choisir le PDF de la partition'
+      , defaultPath: analyse.path
+      , properties:  ['openFile']
+      , filters:     [{name: 'Partition PDF', extensions: ['pdf']}]
+    })
+    if ( res.canceled || !res.filePaths.length ) return null
+    if ( analyse.systemsInFolder.length ) {
+      const {response} = await dialog.showMessageBox(mainWindow, {
+          type:      'warning'
+        , message:   "Remplacer les systèmes de l'analyse ?"
+        , detail:    `Les ${analyse.systemsInFolder.length} systèmes actuels seront remplacés par ceux de la découpe.`
+        , buttons:   ['Annuler', 'Remplacer']
+        , defaultId: 1
+        , cancelId:  0
+      })
+      if ( response !== 1 ) return null
+    }
+    return res.filePaths[0]
+  })
+
+  handle('analyse:cutScore', async ({pdf}) => {
+    const analyse = requireCurrent()
+    const out = fs.mkdtempSync(path.join(os.tmpdir(), 'decoupe-'))
+    try {
+      await runCutter({pdf, out, dpi: 300, quality: 90})
+      analyse.replaceSystems(out)
+    } finally {
+      fs.rmSync(out, {recursive: true, force: true})
+    }
+    setTimeout(reloadWindow, 10)
+  })
+
+  handle('analyse:numberScore', async () => {
+    const analyse = requireCurrent()
+    const images = analyse.systemsInFolder
+    if ( !images.length ) throw new Error("L'analyse ne contient aucun système à numéroter.")
+    await runCutter({mode: 'numerotation', folder: analyse.systemsFolder, images, out: analyse.systemsFolder})
+    setTimeout(reloadWindow, 10)
+  })
+
+  handle('dialog:chooseFolder', async ({title}) => {
+    const res = await showOpenDialog({
         title: title || 'Choisir un dossier'
       , properties: ['openDirectory', 'createDirectory']
     })
@@ -309,6 +397,11 @@ function registerIpc(){
 
   handle('tools:buildImage', ({code}) => {
     return buildImageFromCode(requireCurrent(), code)
+  })
+
+  handle('menu:setDynamic', ({menus}) => {
+    dynamicMenus = menus || []
+    buildMenu()
   })
 
   handle('window:setSize', ({width, height}) => {

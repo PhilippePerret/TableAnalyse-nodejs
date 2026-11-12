@@ -55,6 +55,13 @@ export function onKeyDownOnAnalyse(e){
     const precision = e.altKey    ? 1  : 4
     AMark.moveSelection(sens,multi,precision)
     return stopEvent(e)
+  case 'Enter':
+    // Édition de la marque, seulement si elle est seule sélectionnée
+    const sel = AObjet.selection
+    if ( sel && sel.length == 1 && sel[0] instanceof AMark ) {
+      sel[0].edit()
+      return stopEvent(e)
+    }
   }
 }
 

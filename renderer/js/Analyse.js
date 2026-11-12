@@ -10,6 +10,7 @@ import { not, isNil } from './lib/common.js'
 import { message, erreur } from './lib/Message.js'
 import { raise } from './handies.js'
 import { invoke } from './api.js'
+import { Sablier } from './Sablier.js'
 import { Current } from './Current.js'
 import { Preferences, pref } from './Preferences.js'
 import { PreferencesAppData } from './Preferences_AppData.js'
@@ -461,6 +462,38 @@ checkSystems(){
   static async reloadAnalyse(){
     if ( !(await this.saveIfModified()) ) return
     invoke('analyse:reload').catch(err => erreur(err.message))
+  }
+
+  /**
+   * Découpe la partition PDF en systèmes, numérotés. La fenêtre est
+   * ensuite rechargée.
+   */
+  static async cutScore(){
+    if ( !(await this.saveIfModified()) ) return
+    try {
+      const pdf = await invoke('analyse:chooseScorePdf')
+      if ( !pdf ) return
+      Sablier.show("Découpe et numérotation de la partition…")
+      await invoke('analyse:cutScore', {pdf})
+    } catch(err) {
+      Sablier.hide()
+      erreur(err.message)
+    }
+  }
+
+  /**
+   * Numérote les mesures des systèmes existants. La fenêtre est
+   * ensuite rechargée.
+   */
+  static async numberScore(){
+    if ( !(await this.saveIfModified()) ) return
+    try {
+      Sablier.show("Numérotation de la partition…")
+      await invoke('analyse:numberScore')
+    } catch(err) {
+      Sablier.hide()
+      erreur(err.message)
+    }
   }
 
   /**

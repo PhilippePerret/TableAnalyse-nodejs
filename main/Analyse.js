@@ -132,11 +132,38 @@ export class Analyse {
   }
 
   /**
+   * Positions initiales des systèmes du dossier, les uns sous les autres.
+   */
+  layoutSystems(){
+    let curtop = 400
+    return this.systemsInFolder.map((name, idx) => {
+      const height = imageHeight(path.join(this.systemsFolder, name))
+      const dsys = {id: idx + 1, image_name: name, top: curtop, left: 0, height: height}
+      curtop += height + 100
+      return dsys
+    })
+  }
+
+  /**
+   * Remplace les images de systèmes (et les numéros de mesure) par celles
+   * du dossier +source+ (produit par la découpe) et replace les systèmes.
+   */
+  replaceSystems(source){
+    this.systemsInFolder.forEach(name => fs.rmSync(path.join(this.systemsFolder, name)))
+    fs.readdirSync(source).filter(name => isSystemImage(name) || name == MEASURES_FILE).forEach(name => {
+      fs.copyFileSync(path.join(source, name), path.join(this.systemsFolder, name))
+    })
+    this.infos = Object.assign({}, this.infos, {systems: this.layoutSystems()})
+    this.saveInfos()
+  }
+
+  /**
    * Numéros de mesure détectés par la découpe (systems/mesures.yaml, en
    * pixels de chaque image) : transformés en marques texte « numéro de
    * mesure » posées sur la ligne des numéros, sous chaque système
-   * (`line: true`), à valider dans l'interface. Fait une seule fois : le
-   * fichier est ensuite renommé.
+   * (`line: true`), à valider dans l'interface. Ils remplacent ceux d'une
+   * numérotation précédente. Fait une seule fois : le fichier est ensuite
+   * renommé.
    * @return le nombre de marques créées
    */
   importMeasures(){
@@ -164,7 +191,8 @@ export class Analyse {
         })
       }
     }
-    this.tags = [...this.tags, ...newTags]
+    const oldTags = this.tags.filter(tag => !(tag.subtype == 'mes' && tag.line))
+    this.tags = [...oldTags, ...newTags]
     this.saveTags()
     fs.renameSync(this.measuresPath, this.measuresPath.replace(/\.yaml$/, '.importe.yaml'))
     return newTags.length

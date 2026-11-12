@@ -9,11 +9,9 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app } from 'electron'
 import { DEFAULTS } from './analyse.js'
-
-const HERE = path.dirname(fileURLToPath(import.meta.url))
+import { runCutter } from './runCutter.js'
 
 const USAGE = `
 Usage : decoupe-partition <partition.pdf> [options]
@@ -56,21 +54,12 @@ if ( !fs.existsSync(opts.pdf) ) {
 }
 opts.out = path.resolve(opts.out || opts.pdf.replace(/\.pdf$/i, '') + '-systemes')
 
-ipcMain.on('cutter:log',  (e, msg)  => console.log(msg))
-ipcMain.on('cutter:done', (e, code) => app.exit(code))
+// La fenêtre cachée détruite ne doit pas quitter avant le code de sortie
+app.on('window-all-closed', () => {})
 
 app.whenReady().then(() => {
   if ( app.dock ) app.dock.hide()
-  const win = new BrowserWindow({
-      show: false
-    , webPreferences: {nodeIntegration: true, contextIsolation: false, sandbox: false}
-  })
-  win.webContents.on('render-process-gone', (e, details) => {
-    console.error(`Processus de rendu interrompu : ${details.reason}`)
-    app.exit(1)
-  })
-  win.webContents.on('console-message', (e) => {
-    if ( e.level === 'error' ) console.error(e.message)
-  })
-  win.loadFile(path.join(HERE, 'cutter.html'), {query: {opts: JSON.stringify(opts)}})
+  runCutter(opts, (msg) => console.log(msg))
+    .then(() => app.exit(0))
+    .catch(err => { console.error(err.message); app.exit(1) })
 })

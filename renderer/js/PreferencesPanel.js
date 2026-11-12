@@ -20,6 +20,8 @@ class PreferencesPanelClass {
 toggle(){this.panneau.toggle.call(this.panneau)}
 get panneau(){return this._pano || (this._pano = new Panneau(this))}
 get panneauId(){return 'preferences-panel'}
+get panneauTitle(){return 'Préférences'}
+get panneauShortcut(){return '⇧P'}
 onKeyPress(e){
   var returnU = onKeyDownUniversel(e)
   if ( isBool(returnU) ) return returnU
@@ -159,8 +161,6 @@ build(){
     return
   }
   var o = DCreate('SECTION', {id:'preferences-panel', class:'hidden'})
-  o.appendChild(DCreate('DIV', {id:'tip-close', text:"(⇧ P pour fermer)"}))
-  o.appendChild(DCreate('H2',{text:'Préférences'}))
 
   // Pour simplifier l'écriture
   

@@ -350,6 +350,8 @@ applyCss(){
   if ( this.data.align ) {
     this.spanContent.classList.add(this.data.align)
   }
+  // Numéro de mesure sur la ligne des numéros (boite, cf. AMark.css)
+  if ( this.data.line ) this.obj.classList.add('on-line')
 }
 
 /**

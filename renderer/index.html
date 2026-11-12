@@ -17,6 +17,7 @@
   <link rel="stylesheet" type="text/css" href="css/Print.css">
   <link rel="stylesheet" type="text/css" href="css/fonts.css">
   <link rel="stylesheet" type="text/css" href="css/interact.css">
+  <link rel="stylesheet" type="text/css" href="css/themes.css">
 
   <!-- SCRIPTS (modules ES, point d'entrée : js/main.js) -->
   <script type="module" src="js/main.js"></script>
@@ -40,7 +41,6 @@
     -->
   <div id="panneau_infos" class="panneau hidden">
 
-    <h3>MÉTADONNÉES DE L'ANALYSE</h3>
     <table id="table_metadata">
       <tr>
         <td>Titre de la pièce</td>
@@ -130,7 +130,7 @@
     </div>
 
     <div class="buttons">
-      <button id="btn_close_tools">Fermer</button>
+      <button id="btn_close_tools" style="float:left;">Fermer</button>
     </div>
 
   </div>
@@ -157,7 +157,6 @@
 
      -->
     <div id="panel_form" class="hidden">
-      <div class="titre">FORME DE LA PIÈCE</div>
       <div id="form_objets"></div>
       <!-- Menu des types à déplacer -->
       <select id="fobj_types" class="hidden"></select>
@@ -175,22 +174,13 @@
     </div>
     <button id="form_button" class="fright">Forme…</button>
 
-    <select id="open_menu">
-      <option value="">Fichier…</option>
-      <option value="newAnalyse">Nouvelle analyse… ⌘N</option>
-      <option value="openAnalyse">Ouvrir une analyse… ⌘O</option>
-      <option></option>
-      <option value="infosAnalyse">Informations… ⇧I</option>
-      <option></option>
-      <option value="exportToHTML">Exporter en HTML</option>
-      <option></option>
-      <option value="toolsPanel">Boite à outils… ⇧O</option>
-      <option></option>
-      <option value="manual">Manuel… ⇧M</option>
-      <option></option>
-      <option value="prefs">Préférences… ⇧P</option>
-    </select>
+  </footer>
 
+  <!--
+    Modèles des menus « Options », « Marque », « Aligner », etc. de la
+    barre de menus de l'application (cf. MenusBar.js) : jamais affichés.
+  -->
+  <div id="menus_bar_models" hidden>
     <select id="options_tool">
       <option value="">Options…</option>
       <option value="cancel"></option>
@@ -198,6 +188,10 @@
       <option></option>
       <option value="toggleGrid" data-checked="false" data-role="cb">☐ Grille magnétique</option>
       <option value="toggleColor" data-checked="false" data-role="cb">☐ Version couleur</option>
+      <option></option>
+      <option value="theme" data-theme="A">Thème A — Sobre</option>
+      <option value="theme" data-theme="B">Thème B — ScoreAnalyse</option>
+      <option value="theme" data-theme="C">Thème C — Sombre</option>
     </select>
 
     <select id="amark_menu">
@@ -250,9 +244,7 @@
       <option value="add" data-css="no_top_border">Supprimer le bord haut</option>
       <option value="remove" data-css="no_top_border">Remettre le bord haut</option>
     </select>
-
-
-  </footer>
+  </div>
 
 
 

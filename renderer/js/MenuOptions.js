@@ -5,6 +5,7 @@ import { Cancel } from './CancelManager.js'
 import { Current } from './Current.js'
 import { Grid } from './Grid.js'
 import { UI } from './UI.js'
+import { Themes } from './Themes.js'
 /**
 
   Class OptionsTool
@@ -37,6 +38,10 @@ export class OptionsTool extends MenusTool {
     Grid.toggleGridMode(modeON)
     option.dataset.checked = modeON ? 'true' : 'false'
     UI.toggleGridDisplay(modeON)
+  }
+
+  static onActivate_theme(e, option){
+    Themes.apply(option.dataset.theme)
   }
 
   static onActivate_cancel(e, option){

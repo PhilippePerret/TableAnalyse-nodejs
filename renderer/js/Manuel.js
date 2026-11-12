@@ -24,6 +24,8 @@ class ManuelClass {
   toggle(){this.panneau.toggle.call(this.panneau)}
   get panneau(){return this._pano || (this._pano = new Panneau(this))}
   get panneauId(){return 'manuel'}
+  get panneauTitle(){return "Manuel d'utilisation"}
+  get panneauShortcut(){return '⇧M'}
   onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU
@@ -35,7 +37,6 @@ class ManuelClass {
     this.buildShortcutPanel()
 
     const o = DCreate('SECTION', {id:"manuel", class:'hidden'})
-    o.appendChild(DCreate('DIV', {id:'tip-close', style:"float:right;", text:"(⇧M pour fermer)"}))
 
     const cont = DCreate('DIV', {id:'contenu_manuel', class:'content'})
    
@@ -48,7 +49,6 @@ class ManuelClass {
       o.appendChild(this.shortcutsSection)
     }
 
-    cont.appendChild(DCreate('H2', {text:"Manuel d'utilisation"}))
 
     var ioperation = 0
     ManuelData.forEach(md => {

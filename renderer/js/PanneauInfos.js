@@ -13,6 +13,8 @@ export class PanneauInfos {
   toggle(){ this.panneau.toggle.call(this.panneau)}
   get panneau(){return this._pano||(this._pano = new Panneau(this))}
   get panneauId(){return 'panneau_infos'}
+  get panneauTitle(){return "Métadonnées de l'analyse"}
+  get panneauShortcut(){return '⇧I'}
   onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU

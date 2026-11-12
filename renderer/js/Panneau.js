@@ -1,4 +1,4 @@
-import { DGet, listen } from './dom.js'
+import { DCreate, DGet, listen } from './dom.js'
 import { raise } from './handies.js'
 import { UI } from './UI.js'
 
@@ -24,6 +24,11 @@ export class Panneau {
     UI.desactiveCurrentShortcuts()
     if ( 'function' == typeof this.owner.onKeyPress) { window.onkeypress = this.owner.onKeyPress.bind(this)}
     this.obj || this.owner.build()
+    this.head || (this.head = addPanelHead(this.obj, {
+        title:    this.owner.panneauTitle
+      , shortcut: this.owner.panneauShortcut
+      , onClose:  this.hide.bind(this)
+    }))
     this.observeDoubleClick()
     this.obj.classList.remove('hidden')
     this.isOpened = true
@@ -55,4 +60,21 @@ export class Panneau {
   }
   set obj(v){ this._obj = v }
   
+}
+
+/**
+ * En-tête commun des panneaux (cf. thèmes, css/themes/) : croix de
+ * fermeture à gauche, titre et raccourci.
+ */
+export function addPanelHead(obj, {title, shortcut, onClose}){
+  obj.classList.add('panneau-ui')
+  const close = DCreate('SPAN', {class: 'panneau-close', title: 'Fermer', text: '×'})
+  const head = DCreate('DIV', {class: 'panneau-head', inner: [
+      close
+    , DCreate('SPAN', {class: 'panneau-title',    text: title || ''})
+    , DCreate('SPAN', {class: 'panneau-shortcut', text: shortcut || ''})
+  ]})
+  obj.insertBefore(head, obj.firstChild)
+  listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })
+  return head
 }
