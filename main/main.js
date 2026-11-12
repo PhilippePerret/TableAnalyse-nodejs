@@ -416,6 +416,24 @@ function registerIpc(){
     return buildImageFromCode(requireCurrent(), code)
   })
 
+  /*
+   * Menu contextuel d'un système. Renvoie la commande à exécuter par le
+   * renderer (null si aucune).
+   */
+  handle('menu:systemContext', ({image, locked}) => {
+    const file = path.join(requireCurrent().systemsFolder, path.basename(image))
+    return new Promise(resolve => {
+      const menu = Menu.buildFromTemplate([
+          {label: t(locked ? 'ui.system_menu.unlock' : 'ui.system_menu.lock'), click: () => resolve('toggleLock')}
+        , {type: 'separator'}
+        , {label: t('ui.system_menu.open_image'),  click: () => showInFinder(file)}
+        , {label: t('ui.system_menu.show_image'),  click: () => showInFinder(file, true)}
+      ])
+      // La fermeture du menu peut précéder le clic sur un de ses items
+      menu.popup({window: mainWindow, callback: () => setTimeout(() => resolve(null), 200)})
+    })
+  })
+
   handle('menu:setDynamic', ({menus}) => {
     dynamicMenus = menus || []
     buildMenu()

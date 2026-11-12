@@ -2,7 +2,7 @@ import { DCreate, listen, stopEvent } from './dom.js'
 import { not } from './lib/common.js'
 import { message } from './lib/Message.js'
 import { px } from './handies.js'
-import { analyseUrl } from './api.js'
+import { analyseUrl, invoke } from './api.js'
 import { AObjet } from './AObjet.js'
 import { Current, setModified } from './Current.js'
 import { Preferences } from './Preferences.js'
@@ -420,6 +420,21 @@ export class Systeme extends AObjet {
   observe(){
     listen(this.obj, 'click',     this.toggleMoving.bind(this))
     listen(this.obj, 'mousemove', this.onMove.bind(this))
+    listen(this.obj, 'contextmenu', this.onContextMenu.bind(this))
+  }
+
+  /**
+   * Menu contextuel du système (menu natif, cf. main.js) : verrouiller
+   * ou déverrouiller les systèmes, ouvrir l'image, l'afficher dans le
+   * gestionnaire de fichiers.
+   */
+  onContextMenu(e){
+    stopEvent(e)
+    const locked = !!Preferences.get('lock_systems')
+    invoke('menu:systemContext', {image: this.image_name, locked})
+      .then(choice => { if ( choice == 'toggleLock' ) Systeme.toggleLock(null, !locked) })
+      .catch(err => console.error(err))
+    return false
   }
 
   /**

@@ -84,6 +84,16 @@ borders_menu:
   remove_top:       "Supprimer le bord haut"
   add_top:          "Remettre le bord haut"
 
+# Menu contextuel d'un système
+system_menu:
+  unlock:           "Déverrouiller les systèmes"
+  lock:             "Verrouiller les systèmes"
+  open_image:       "Ouvrir l'image"
+  show_image:
+    darwin:         "Afficher dans le Finder"
+    win32:          "Afficher dans l'Explorateur"
+    linux:          "Afficher dans le gestionnaire de fichiers"
+
 buttons:
   close:            "Fermer"
   save:             "Enregistrer"
