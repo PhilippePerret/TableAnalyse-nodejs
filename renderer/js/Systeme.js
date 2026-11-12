@@ -404,8 +404,11 @@ export class Systeme extends AObjet {
     }
     this.measureLine.style.top   = px(y)
     this.measureLine.style.width = px(Preferences.get('systeme_width'))
+    // Le bas de la boite du numéro (cf. AMark.css) est posé sur la ligne
     marks.forEach(ao => {
-      const top = Math.round(y - ao.height)
+      const box = ao.obj && ao.obj.querySelector('span.content')
+      const bottom = box ? box.getBoundingClientRect().bottom - ao.obj.getBoundingClientRect().top : ao.height
+      const top = Math.round(y - bottom)
       if ( ao.top != top ) ao.top = top
     })
   }
