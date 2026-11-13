@@ -29,8 +29,10 @@ import { t } from './i18n.js'
 
   Pendant l'animation, la table ne peut pas être défilée (elle suit le
   curseur). Boite de contrôle au centre, en bas, masquée tant que la
-  souris n'approche pas du bas de la fenêtre : lancer/pause, pas à pas
-  (marque suivante), arrêt (retour au début), tempo et fin définitive.
+  souris n'approche pas du bas de la fenêtre. L'animation n'est lancée
+  que par l'utilisateur (▶). Pas à pas : ← marque précédente, → marque
+  suivante (les « pas » sont les marques dans l'ordre d'apparition).
+  ■ : retour au début. « Quitter l'animation » : tout réaffiché.
 
 */
 const BEATS_PER_MEASURE = 4       // métrique par défaut (4/4)
@@ -54,12 +56,13 @@ class AnimationClass {
       this.marksBySys[this.systems.indexOf(sys)].push(m)
     })
     this.marksBySys.forEach(list => list.sort((a, b) => a.left - b.left))
+    // Les « pas » : les marques dans l'ordre de leur apparition
+    this.sequence = this.marksBySys.flatMap((list, isys) => list.map(mark => ({mark, isys})))
     AObjet.deselectAll()
     this.lockScroll()
     this.buildCursor()
     this.buildBox()
     this.rewind()
-    this.play()
   }
 
   /* --- Contrôles --- */
@@ -90,15 +93,31 @@ class AnimationClass {
     this.updateBox()
   }
 
+  // Pas suivant : marque suivante affichée, curseur sur elle
   next(){
-    for ( let i = this.isys ; i < this.systems.length ; ++i ) {
-      const mark = this.marksBySys[i].find(m => m.obj.style.visibility == 'hidden')
-      if ( !mark ) continue
-      if ( i != this.isys ) { this.isys = i ; this.followSystem() }
-      this.progress = Math.min(1, Math.max(0, (mark.left - this.sysLeft) / this.sysWidth))
-      return this.update()
-    }
-    this.end()
+    const step = this.sequence.find(st => st.mark.obj.style.visibility == 'hidden')
+    if ( !step ) return this.end()
+    step.mark.obj.style.visibility = ''
+    this.moveCursorTo(step)
+  }
+
+  // Pas précédent : dernière marque affichée masquée, curseur sur la
+  // marque d'avant (ou au début)
+  previous(){
+    const shown = this.sequence.filter(st => st.mark.obj.style.visibility != 'hidden')
+    const last = shown.pop()
+    if ( !last ) return
+    last.mark.obj.style.visibility = 'hidden'
+    this.ended = false
+    const before = shown.pop()
+    if ( before ) this.moveCursorTo(before)
+    else { this.isys = 0 ; this.progress = 0 ; this.followSystem() ; this.placeCursor() }
+  }
+
+  moveCursorTo({mark, isys}){
+    if ( isys != this.isys ) { this.isys = isys ; this.followSystem() }
+    this.progress = Math.min(1, Math.max(0, (mark.left - this.sysLeft) / this.sysWidth))
+    this.placeCursor()
   }
 
   // Arrêt : retour au début (toutes les marques masquées)
@@ -178,10 +197,16 @@ class AnimationClass {
 
   // Curseur placé et marques atteintes affichées
   update(){
-    const x = this.sysLeft + this.progress * this.sysWidth
-    this.cursor.style.left = px(Math.round(x))
+    const x = this.placeCursor()
     this.marksBySys[this.isys].forEach(m => { if ( m.left <= x ) m.obj.style.visibility = '' })
     this.updateBox()
+  }
+
+  placeCursor(){
+    const x = this.sysLeft + this.progress * this.sysWidth
+    this.cursor.style.left = px(Math.round(x))
+    this.updateBox()
+    return x
   }
 
   /**
@@ -238,18 +263,19 @@ class AnimationClass {
 
   buildBox(){
     const T = (k) => t(`ui.panels.animation.${k}`)
-    this.btnPause = DCreate('BUTTON', {class: 'btn-pause'})
-    this.btnStep  = DCreate('BUTTON', {class: 'btn-step', text: T('step')})
-    this.btnNext  = DCreate('BUTTON', {class: 'btn-next', text: T('next')})
-    this.btnStop  = DCreate('BUTTON', {class: 'btn-stop', text: T('stop')})
-    const btnFinish = DCreate('BUTTON', {class: 'btn-default', text: T('finish')})
+    // Boutons de taille fixe (cf. main.css) : pictos qui changent sans
+    // que rien ne bouge
+    this.btnStep  = DCreate('BUTTON', {class: 'anim-btn btn-step', text: T('step'), title: T('step_desc')})
+    this.btnPlay  = DCreate('BUTTON', {class: 'anim-btn anim-icon btn-play'})
+    this.btnNext  = DCreate('BUTTON', {class: 'anim-btn anim-icon btn-next', text: '→', title: T('next')})
+    this.btnStop  = DCreate('BUTTON', {class: 'anim-btn anim-icon btn-stop', text: '■', title: T('stop')})
+    const btnFinish = DCreate('BUTTON', {class: 'btn-default btn-close', text: T('finish')}) // seul bouton de fermeture
     this.tempoField = DCreate('INPUT', {type: 'range', min: '20', max: '240', value: String(this.tempo)})
     this.tempoValue = DCreate('SPAN', {class: 'anim-tempo'})
     const meter = DCreate('SPAN', {class: 'anim-meter', text: T('meter'), title: T('meter_desc')})
-    this.counter = DCreate('SPAN', {class: 'anim-counter'})
     const box = DCreate('DIV', {id: 'animation_box', inner: [
-        DCreate('DIV', {class: 'anim-row', inner: [this.btnPause, this.btnStep, this.btnNext, this.btnStop]})
-      , DCreate('DIV', {class: 'anim-row', inner: [DCreate('LABEL', {text: T('tempo')}), this.tempoField, this.tempoValue, meter, this.counter]})
+        DCreate('DIV', {class: 'anim-row', inner: [this.btnStep, this.btnPlay, this.btnNext, this.btnStop]})
+      , DCreate('DIV', {class: 'anim-row', inner: [DCreate('LABEL', {text: T('tempo')}), this.tempoField, this.tempoValue, meter]})
       , DCreate('DIV', {class: 'buttons', inner: [btnFinish]})
     ]})
     document.body.appendChild(box)
@@ -257,7 +283,8 @@ class AnimationClass {
     addPanelHead(box, {title: T('title'), onClose: this.finish.bind(this)})
     listen(box, 'click', (e) => e.stopPropagation())
     listen(box, 'dblclick', (e) => e.stopPropagation())
-    listen(this.btnPause, 'click', this.togglePause.bind(this))
+    // Lecture/pause ; en pas à pas : pas précédent
+    listen(this.btnPlay,  'click', () => this.stepMode ? this.previous() : this.togglePause())
     listen(this.btnStep,  'click', this.toggleStepMode.bind(this))
     listen(this.btnNext,  'click', this.next.bind(this))
     listen(this.btnStop,  'click', this.stop.bind(this))
@@ -291,13 +318,15 @@ class AnimationClass {
   updateBox(){
     if ( !this.box ) return
     const T = (k, v) => t(`ui.panels.animation.${k}`, v)
-    const shown = this.marks.filter(m => m.obj.style.visibility != 'hidden').length
-    this.btnPause.textContent = T(this.playing ? 'pause' : (shown ? 'resume' : 'play'))
-    this.btnPause.disabled = this.ended
+    const shown = this.sequence.some(st => st.mark.obj.style.visibility != 'hidden')
     this.btnStep.classList.toggle('active', !!this.stepMode)
-    this.btnNext.disabled = this.playing || this.ended
+    if ( this.stepMode ) {
+      Object.assign(this.btnPlay, {textContent: '←', title: T('previous'), disabled: !shown})
+    } else {
+      Object.assign(this.btnPlay, {textContent: this.playing ? '❚❚' : '▶', title: T(this.playing ? 'pause' : 'play'), disabled: this.ended})
+    }
+    this.btnNext.disabled = !this.stepMode || this.ended
     this.tempoValue.textContent = T('tempo_value', {tempo: this.tempo})
-    this.counter.textContent = `${shown} / ${this.marks.length}`
   }
 }
 
