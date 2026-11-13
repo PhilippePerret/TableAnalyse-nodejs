@@ -57,7 +57,8 @@ menu:
 options_menu:
   cancel_last:      "Annuler : %{name}"
   cancel_history:   "Historique des annulations"
-  grid:             "Grille magnétique"
+  grid_v:           "Magnétiser verticalement"
+  grid_h:           "Magnétiser horizontalement"
   color:            "Version couleur"
   lock_systems:     "Verrouiller les systèmes"
   coordinates:      "Afficher les coordonnées"

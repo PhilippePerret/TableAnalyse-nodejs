@@ -155,14 +155,16 @@ export class UIClass {
     return Grid.on
   }
 
-  toggleGridDisplay(modeON){
+  toggleGridDisplay(){
     /**
-     ** Méthode appelée quand on active ou désactive le mode Grid (a-
-     ** lignement sur une grille). Elle affiche (construit) ou la 
-     ** masque  
+     ** Méthode appelée quand on active ou désactive un magnétisme. Elle
+     ** affiche (construit) ou masque la grille : lignes horizontales
+     ** pour le magnétisme vertical, verticales pour l'horizontal.
     */
     this.MagneticGrid || this.buildGrid()
-    this.MagneticGrid.classList[modeON?'remove':'add']('hidden')
+    this.MagneticGrid.classList[Grid.on ? 'remove' : 'add']('hidden')
+    this.gridHLines.hidden = !Grid.vertical
+    this.gridVLines.hidden = !Grid.horizontal
   }
   buildGrid(){
     /**
@@ -172,6 +174,10 @@ export class UIClass {
     |  La grille (objet DOM)
     */
     this.MagneticGrid = DCreate('DIV',{id:'magnetic-grid',class:'hidden',style:'position:absolute;top:0px;left:0px;'})
+    this.gridHLines = DCreate('DIV', {class: 'grid-hlines'})
+    this.gridVLines = DCreate('DIV', {class: 'grid-vlines'})
+    this.MagneticGrid.appendChild(this.gridHLines)
+    this.MagneticGrid.appendChild(this.gridVLines)
     document.body.appendChild(this.MagneticGrid)
 
     /*
@@ -180,7 +186,6 @@ export class UIClass {
     const hsnap   = Number(pref('grid_horizontal_space'))
     const vsnap   = Number(pref('grid_vertical_space'))
     const maxTop  = unpx(DGet('section#content').style.height) + 500
-    console.debug("maxTop = ", maxTop, typeof maxTop)
     const maxLeft = unpx(getComputedStyle(DGet('section#content')).getPropertyValue('width')) + 100
     /*
     |  Les lignes horizontales
@@ -188,7 +193,7 @@ export class UIClass {
     var curTop =  0 /* rectif */
     while ( curTop < maxTop ) {
       const hLine = DCreate('DIV', {style:`top:${curTop}px;width:${maxLeft}px;position:absolute;height:1px;background-color:pink;opacity:0.5;`})
-      this.MagneticGrid.appendChild(hLine)
+      this.gridHLines.appendChild(hLine)
       curTop += vsnap
     }
     /*
@@ -197,7 +202,7 @@ export class UIClass {
     var curLeft = 0 /* rectif */
     while ( curLeft < maxLeft ) {
       const vLine = DCreate('DIV', {style:`left:${curLeft}px;height:${maxTop}px;position:absolute;top:0px;width:1px;background-color:pink;opacity:0.5;`})
-      this.MagneticGrid.appendChild(vLine)
+      this.gridVLines.appendChild(vLine)
       curLeft += hsnap
     }
   

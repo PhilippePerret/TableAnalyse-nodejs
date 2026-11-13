@@ -40,15 +40,18 @@ export class OptionsTool extends MenusTool {
     option.dataset.checked = colorMode ? 'true' : 'false'
   }
 
-  static onActivate_toggleGrid(e, option){
-    /**
-     ** Appelée quand on active ou désactive le menu d'alignement
-     ** sur la grille. 
-    **/
+  static onActivate_toggleGridV(e, option){ this.toggleGrid('vertical', option) }
+  static onActivate_toggleGridH(e, option){ this.toggleGrid('horizontal', option) }
+
+  /**
+   * Magnétisme vertical ou horizontal (+dir+) activé ou désactivé, avec
+   * l'affichage des lignes correspondantes de la grille
+   */
+  static toggleGrid(dir, option){
     var modeON = not(option.dataset.checked == 'true')
-    Grid.toggleGridMode(modeON)
+    Grid.toggleGridMode(dir, modeON)
     option.dataset.checked = modeON ? 'true' : 'false'
-    UI.toggleGridDisplay(modeON)
+    UI.toggleGridDisplay()
   }
 
   static onActivate_toggleCoordinates(){

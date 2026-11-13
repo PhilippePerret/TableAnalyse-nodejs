@@ -5,17 +5,27 @@ import { pref } from './Preferences.js'
 
 export const Grid = {
 
-  on: false,  // true quand la grille est activée
+  on: false,  // true quand un magnétisme (vertical ou horizontal) est activé
+
+  // Magnétisme vertical : positions verticales (top) calées sur les
+  // lignes horizontales de la grille ; horizontal : positions
+  // horizontales calées sur les lignes verticales
+  vertical:   false,
+  horizontal: false,
 
   vSnap: null,
   hSnap: null,
   _bSnap: null,
 
-  toggleGridMode(modeON){
-    this.on    = modeON
-    this.vSnap = modeON ? Number(pref('grid_vertical_space'))   : null
-    this.hSnap = modeON ? Number(pref('grid_horizontal_space')) : null
-    this.bSnap = modeON ? pref('thiness_cellule_line')  : 0
+  /**
+   * Active ou désactive le magnétisme +dir+ ('vertical' ou 'horizontal')
+   */
+  toggleGridMode(dir, modeON){
+    this[dir]  = modeON
+    this.on    = this.vertical || this.horizontal
+    this.vSnap = this.vertical   ? Number(pref('grid_vertical_space'))   : null
+    this.hSnap = this.horizontal ? Number(pref('grid_horizontal_space')) : null
+    this.bSnap = this.on ? pref('thiness_cellule_line')  : 0
   },
 
   snapVertical(v){
