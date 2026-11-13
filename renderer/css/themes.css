@@ -115,6 +115,13 @@ body.theme-A .panneau-ui > div.panneau-foot {
   border-top:       1px solid #e0e0e0;
   border-radius:    0 0 10px 10px;
 }
+/* Bouton par défaut (Entrée) */
+body.theme-A .panneau-ui button.btn-default {
+  background-color: #3a925e;
+  border-color:     #2f7a4e;
+  color:            white;
+  font-weight:      600;
+}
 body.theme-A div#panel_form > div.buttons { background-color: #ececec; border: none; border-top: 1px solid #d6d6d6; border-radius: 0 0 10px 10px; }
 
 

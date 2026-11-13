@@ -69,7 +69,8 @@ export class Panneau {
  * fermeture à gauche, titre et raccourci. Les boutons du bas forment un
  * pied de page (filet) ; un bouton « Fermer » y est ajouté si le panneau
  * n'en a pas : à droite s'il est seul, à gauche sinon.
- * Le panneau est déplaçable.
+ * Le panneau est déplaçable. Son bouton par défaut (classe btn-default)
+ * répond à la touche Entrée.
  */
 export function addPanelHead(obj, {title, shortcut, onClose}){
   obj.classList.add('panneau-ui')
@@ -88,6 +89,13 @@ export function addPanelHead(obj, {title, shortcut, onClose}){
     Object.assign(obj.style, {left: `${r.left}px`, top: `${r.top}px`, right: 'auto', bottom: 'auto', transform: 'none'})
   })
   draggable(obj)
+  listen(obj, 'keydown', (e) => {
+    if ( e.key != 'Enter' || e.isComposing || ['TEXTAREA', 'BUTTON', 'SELECT'].includes(e.target.tagName) ) return
+    const btn = Array.from(obj.querySelectorAll('button.btn-default')).find(b => !b.disabled && b.offsetParent)
+    if ( !btn ) return
+    e.preventDefault() ; e.stopPropagation()
+    btn.click()
+  })
   let buttons = obj.querySelector(':scope > div.buttons')
   buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))
   // Pied de page déjà dessiné par le panneau (p.e. « Forme ») : laissé tel quel

@@ -40,6 +40,7 @@ export class PanneauInfos {
     Object.assign(Analyse.current.data.infos, this.getData())
     setWindowTitle(Analyse.current.data.infos)
     Analyse.current.saveInfos()
+    this.panneau.isOpened && this.toggle()
   }
 
   async chooseFolder(fieldId, title){

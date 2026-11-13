@@ -99,7 +99,7 @@ class ExporterClass {
     const margin = DCreate('INPUT', {type: 'text', id: 'export_margin', value: String(pref('export_page_margin')), style: 'width:50px;'})
 
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
-    const btnExport = DCreate('BUTTON', {text: T('export')})
+    const btnExport = DCreate('BUTTON', {class: 'btn-default', text: T('export')})
     const inner = []
     format == 'pdf' && inner.push(radio('page', false), radio('book', true))
     inner.push(
@@ -170,7 +170,7 @@ class ExporterClass {
     selUnit.value = unit
     const row = (label, field) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), field]})
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
-    const btnOk = DCreate('BUTTON', {text: t('ui.buttons.ok')})
+    const btnOk = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
     const panel = DCreate('DIV', {id: 'export_custom_size', inner: [
         row(T('width'), fWidth), row(T('height'), fHeight), row(T('unit'), selUnit)
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
