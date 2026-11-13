@@ -42,6 +42,19 @@ onKeyPress(e){
   if ( isBool(returnU) ) return returnU
 }
 
+/**
+ * Bouton « Appliquer » de la préférence +key+ : traitement propre
+ * (onApply_<key>) ou, sinon, styles (taille, épaisseur), couleurs et
+ * traitement du changement (onChange_<key>)
+ */
+apply(key){
+  if ( 'function' == typeof this[`onApply_${key}`] ) return this[`onApply_${key}`]()
+  const dp = PreferencesAppData[key]
+  dp.selector && this.updateStylesInHead()
+  dp.typeV == 'color' && Current.analyse && Current.analyse.updateModeColor()
+  'function' == typeof this[`onChange_${key}`] && this[`onChange_${key}`]()
+}
+
 onChange_measure_line_offset(){
   Systeme.placeMeasureNumbers(Number(Preferences.getValueOf('measure_line_offset')))
 }
@@ -65,9 +78,11 @@ onChange_thiness_cellule_line(){
 }
 onChange_grid_horizontal_space(){
   Grid.hSnap && (Grid.hSnap = Number(Preferences.getValueOf('grid_horizontal_space')))
+  UI.rebuildGrid()
 }
 onChange_grid_vertical_space(){
   Grid.vSnap && (Grid.vSnap = Number(Preferences.getValueOf('grid_vertical_space')))
+  UI.rebuildGrid()
 }
 onChange_theme(){
   const theme = Preferences.getValueOf('theme')
@@ -381,7 +396,7 @@ buildInputText(params){
       stopEvent(e)
       // Valeur affichée dans le champ, celle qu'on applique
       Preferences.saveData(params.id, field.value)
-      this[`onApply_${params.id}`]()
+      this.apply(params.id)
     })
     cell.appendChild(btn)
   }

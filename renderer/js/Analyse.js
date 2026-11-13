@@ -152,16 +152,26 @@ toggleModeColor(modeON){
 * Construire la balise <style> pour le mode couleur
 */
 buildStyleTagForModeColor(){
+  const tag = DCreate('STYLE', {id:'mode_couleur', type:'text/css', text: this.stylesForModeColor()})
+  document.head.appendChild(tag)
+}
+/**
+* Actualisation des couleurs (préférences modifiées) ; le mode couleur
+* reste actif ou non
+*/
+updateModeColor(){
+  const tag = DGet('style#mode_couleur')
+  tag && (tag.textContent = this.stylesForModeColor())
+}
+stylesForModeColor(){
   var styles = []
   Object.values(PreferencesAppData).forEach(dp =>{
     if ( dp.typeV != 'color' ) return
     var color = Preferences.get(dp.id)
     styles.push(`${dp.selectors} {border-color:#${color}!important;color:#${color}!important;}`)
   })
-  styles = "\n/* Ce code est produit automatiquement en fonction des préférences */\n" + 
+  return "\n/* Ce code est produit automatiquement en fonction des préférences */\n" + 
     styles.join("\n") + "\n"
-  const tag = DCreate('STYLE', {id:'mode_couleur', type:'text/css', text: styles})
-  document.head.appendChild(tag)
 }
 
 /* --- Staff Methods --- */

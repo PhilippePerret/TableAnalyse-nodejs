@@ -169,6 +169,13 @@ export class UIClass {
     this.gridHLines.hidden = !Grid.vertical
     this.gridVLines.hidden = !Grid.horizontal
   }
+  // Grille reconstruite (pas modifiés), affichée si elle l'était
+  rebuildGrid(){
+    if ( !this.MagneticGrid ) return
+    this.MagneticGrid.remove()
+    this.MagneticGrid = null
+    this.toggleGridDisplay()
+  }
   buildGrid(){
     /**
      ** (Re)Construction de la grille magnétique.
