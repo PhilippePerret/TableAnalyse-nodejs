@@ -413,6 +413,8 @@ build_and_observe(){
   this.build()
   this.observe()
   this.associateWithSystem()
+  // Verrouillage enregistré
+  this.isLocked && this.lock()
 }
 
 /**
