@@ -292,7 +292,7 @@ export class Systeme extends AObjet {
    * déverrouiller les systèmes sur la table d'analyse. Déverrouillés,
    * un seul système peut être déplacé : ils sont reverrouillés après.
    */
-  static toggleLock(e, lockState){
+  static toggleLock(e, lockState, quiet = false){
     if ( undefined == lockState ) lockState = !Preferences.get('lock_systems')
     this.systemsLocked = lockState
     emit('systems:locked', {locked: this.systemsLocked})
@@ -300,7 +300,9 @@ export class Systeme extends AObjet {
       this.lockAll()
     } else {
       this.unlockAll()
-      if ( not(this.alerteDeplacementSystemesOK) ) {      
+      // Aide affichée une fois, seulement depuis le menu (pas depuis la
+      // case des préférences)
+      if ( !quiet && not(this.alerteDeplacementSystemesOK) ) {
         message(t('messages.systems_unlocked'))
         this.alerteDeplacementSystemesOK = true
       }

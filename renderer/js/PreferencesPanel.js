@@ -71,7 +71,7 @@ onChange_systeme_width(){
   Current.analyse && Current.analyse.fitWindowToSystems()
 }
 onChange_lock_systems(){
-  Systeme.toggleLock(null, Preferences.getValueOf('lock_systems'))
+  Systeme.toggleLock(null, Preferences.getValueOf('lock_systems'), /* quiet = */ true)
 }
 onChange_thiness_cellule_line(){
   Grid.bSnap = Preferences.getValueOf('thiness_cellule_line')
