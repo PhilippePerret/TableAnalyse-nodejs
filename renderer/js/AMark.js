@@ -159,7 +159,6 @@ onDoubleClick(e){
  * 
  */
 edit(){
-  if ( this.isLocked ) return // marque verrouillée : pas d'édition
   this.editor = this.editor || new Editeur(this)
   this.editor.value = this.content + (this.hasProlongLine ? '--' : '')
   this.editor.show({top:this.top, left:this.left}, AMARQUES_TYPES[this.type].message)
@@ -751,7 +750,7 @@ onContextMenu(e){
   const T = (k) => t(`ui.mark_context.${k}`)
   const items = [
       {label: T(this.isLocked ? 'unlock' : 'lock'), value: 'lock'}
-    , {label: T('edit'), value: 'edit', enabled: !this.isLocked}
+    , {label: T('edit'), value: 'edit'}
     , {type: 'separator'}
     , {label: T('align'), value: 'align'}
   ]

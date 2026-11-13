@@ -59,7 +59,8 @@ export function onKeyDownOnAnalyse(e){
   case 'Enter':
     // Édition de la marque, seulement si elle est seule sélectionnée
     const sel = AObjet.selection
-    if ( sel && sel.length == 1 && sel[0] instanceof AMark ) {
+    // (marque verrouillée : édition seulement par son menu contextuel)
+    if ( sel && sel.length == 1 && sel[0] instanceof AMark && !sel[0].isLocked ) {
       sel[0].edit()
       return stopEvent(e)
     }
