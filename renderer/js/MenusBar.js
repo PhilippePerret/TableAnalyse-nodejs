@@ -61,7 +61,7 @@ class MenusBarClass {
           if ( option.value == '' ) items.push({type: 'separator'})
           return
         }
-        items.push({label, index, enabled: !select.disabled && !option.disabled})
+        items.push({label, index, enabled: !select.disabled && !option.disabled, accelerator: option.dataset.accelerator})
       })
       return {id: m.id, label: t(`ui.menu.${m.label}`), parent: m.parent, items: cleanSeparators(items)}
     })

@@ -38,7 +38,11 @@ const MIME_TYPES = {
 
 // Nom de l'application (sinon « Electron » en développement). Le
 // dossier des données utilisateur (prefs.json) est conservé.
-const USER_DATA_FOLDER = path.join(app.getPath('appData'), 'ScoreAnalyse')
+// Lancement de contrôle : dossier temporaire, pour ne jamais toucher aux
+// données de l'application (dernière analyse ouverte, etc.)
+const USER_DATA_FOLDER = SMOKE
+  ? fs.mkdtempSync(path.join(os.tmpdir(), 'score-analyse-smoke-'))
+  : path.join(app.getPath('appData'), 'ScoreAnalyse')
 app.setPath('userData', USER_DATA_FOLDER)
 app.setName(t('ui.app.name'))
 app.setAboutPanelOptions({applicationName: t('ui.app.name'), applicationVersion: APP_VERSION})
@@ -204,7 +208,7 @@ function buildMenu(){
         , {type: 'separator'}
         , {label: t('ui.menu.save'),            accelerator: 'CmdOrCtrl+S', click: () => sendMenuCommand('save')}
         , {type: 'separator'}
-        , {label: t('ui.menu.infos'),           click: () => sendMenuCommand('infosAnalyse')}
+        , {label: t('ui.menu.infos'),           accelerator: 'Shift+I', registerAccelerator: false, click: () => sendMenuCommand('infosAnalyse')}
         , {type: 'separator'}
         , {label: t('ui.menu.export'), submenu: [
               {label: t('ui.menu.export_html'), click: () => sendMenuCommand('exportToHTML')}
@@ -213,9 +217,9 @@ function buildMenu(){
           ]}
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path)}
         , {type: 'separator'}
-        , {label: t('ui.menu.manual'),          click: () => sendMenuCommand('manual')}
+        , {label: t('ui.menu.manual'),          accelerator: 'Shift+M', registerAccelerator: false, click: () => sendMenuCommand('manual')}
         , {type: 'separator'}
-        , {label: t('ui.menu.prefs'),           click: () => sendMenuCommand('prefs')}
+        , {label: t('ui.menu.prefs'),           accelerator: 'Shift+P', registerAccelerator: false, click: () => sendMenuCommand('prefs')}
         , ...(isMac ? [] : [{type: 'separator'}, {role: 'quit', label: t('ui.menu.quit', {name: app.name})}])
       ]
     },
@@ -237,7 +241,7 @@ function buildMenu(){
     {
       label: t('ui.menu.tools_menu'),
       submenu: [
-          {label: t('ui.menu.tools'),           click: () => sendMenuCommand('toolsPanel')}
+          {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: () => sendMenuCommand('toolsPanel')}
         , {label: t('ui.menu.form'),            click: () => sendMenuCommand('formPanel')}
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
@@ -263,6 +267,8 @@ function dynamicItems(m){
   return m.items.map(item => item.type ? item : {
       label:   item.label
     , enabled: item.enabled
+    // Raccourci affiché à droite, géré par le renderer
+    , ...(item.accelerator ? {accelerator: item.accelerator, registerAccelerator: false} : {})
     , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
   })
 }
