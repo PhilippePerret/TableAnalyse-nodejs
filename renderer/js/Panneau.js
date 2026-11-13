@@ -1,4 +1,5 @@
 import { DCreate, DGet, listen } from './dom.js'
+import { draggable } from './lib/interact.js'
 import { raise } from './handies.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
@@ -68,6 +69,7 @@ export class Panneau {
  * fermeture à gauche, titre et raccourci. Les boutons du bas forment un
  * pied de page (filet) ; un bouton « Fermer » y est ajouté si le panneau
  * n'en a pas : à droite s'il est seul, à gauche sinon.
+ * Le panneau est déplaçable.
  */
 export function addPanelHead(obj, {title, shortcut, onClose}){
   obj.classList.add('panneau-ui')
@@ -79,6 +81,13 @@ export function addPanelHead(obj, {title, shortcut, onClose}){
   ]})
   obj.insertBefore(head, obj.firstChild)
   listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })
+  // Position ramenée à left/top (sans right, bottom ni transform) avant
+  // un déplacement
+  listen(obj, 'mousedown', () => {
+    const r = obj.getBoundingClientRect()
+    Object.assign(obj.style, {left: `${r.left}px`, top: `${r.top}px`, right: 'auto', bottom: 'auto', transform: 'none'})
+  })
+  draggable(obj)
   let buttons = obj.querySelector(':scope > div.buttons')
   buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))
   // Pied de page déjà dessiné par le panneau (p.e. « Forme ») : laissé tel quel
