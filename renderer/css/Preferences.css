@@ -32,6 +32,7 @@ section#preferences-panel > div.pref-group {
 }
 section#preferences-panel > div.pref-group:first-of-type { margin-top: 0; }
 section#preferences-panel span.pref-field { display: flex; align-items: center; gap: 8px; }
+section#preferences-panel span.pref-unit { font-size: 14px; color: #777; min-width: 1.5em; }
 section#preferences-panel div.description {
   margin-left:  2em;
   font-size: 0.75em;

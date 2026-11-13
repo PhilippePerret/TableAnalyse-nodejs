@@ -8,13 +8,13 @@ import { t } from './i18n.js'
 export const PreferencesAppData = {
     theme                   :{type:'select'       ,typeV:'string'   ,default:null, values: null /* défini par Preferences */}
   , lock_systems            :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
-  , grid_horizontal_space   :{type:'inputtext'    ,typeV:'number'   ,default:50}
-  , grid_vertical_space     :{type:'inputtext'    ,typeV:'number'   ,default:50}
-  , systeme_width           :{type:'inputtext'    ,typeV:'number'   ,default:1860, selector:'img.systeme', selector_value:"width:__VALUE__px;"}
-  , top_first_system        :{type:'inputtext'    ,typeV:'number'   ,default:100, apply:true}
-  , distance_systemes       :{type:'inputtext'    ,typeV:'number'   ,default:50}
+  , grid_horizontal_space   :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px'}
+  , grid_vertical_space     :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px'}
+  , systeme_width           :{type:'inputtext'    ,typeV:'number'   ,default:1860, selector:'img.systeme', selector_value:"width:__VALUE__px;" ,unite:'px'}
+  , top_first_system        :{type:'inputtext'    ,typeV:'number'   ,default:100, apply:true ,unite:'px'}
+  , distance_systemes       :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px'}
   , adjust_same_mark        :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
-  , snap_for_adjust_pos     :{type:'inputtext'    ,typeV:'number'   ,default:50}
+  , snap_for_adjust_pos     :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px'}
   , marque_accords_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.aobj.acc span.content', selector_value:'font-size:__VALUE__pt;'}
   , marque_harmonie_size    :{type:'inputtext'    ,typeV:'number'   ,default:26    ,unite:'pt' ,selector:'div.aobj.har span.content, div.aobj.cad span.content', selector_value:'font-size:__VALUE__pt;'}
   , marque_modulation_size  :{type:'inputtext'    ,typeV:'number'   ,default:26    ,unite:'pt' ,selector:'div.aobj.mod span.content', selector_value:'font-size:__VALUE__pt;'}
@@ -26,8 +26,8 @@ export const PreferencesAppData = {
   , marque_pedale_size      :{type:'inputtext'    ,typeV:'number'   ,default:40             ,unite:'px' ,selector:'div.aobj.ped span.content', selector_value:'font-size:__VALUE__px;width:calc(__VALUE__px / 2);height:calc(__VALUE__px / 2);line-height:calc(__VALUE__px / 2);'}
   , marque_texte_size_1     :{type:'inputtext'    ,typeV:'number'   ,default:60         ,unite:'px' ,selector:'div.amark.txt.size1 span.content'    ,selector_value:'font-size:__VALUE__px;'}
   , marque_texte_size_2     :{type:'inputtext'    ,typeV:'number'   ,default:40       ,unite:'px' ,selector:'div.amark.txt.size2 span.content'    ,selector_value:'font-size:__VALUE__px;'}
-  , measure_line_offset     :{type:'inputtext'    ,typeV:'number'   ,default:150}
-  , distance_after_measure_line :{type:'inputtext' ,typeV:'number'  ,default:250, apply:true}
+  , measure_line_offset     :{type:'inputtext'    ,typeV:'number'   ,default:150 ,unite:'px'}
+  , distance_after_measure_line :{type:'inputtext' ,typeV:'number'  ,default:250, apply:true ,unite:'px'}
   , marque_measure          :{type:'inputtext'    ,typeV:'number'   ,default:24        ,unite:'px' ,selector:'div.amark.txt.mes span.content'    ,selector_value:'font-size:__VALUE__px;'}
   , marque_texte_size_3     :{type:'inputtext'    ,typeV:'number'   ,default:24         ,unite:'px' ,selector:'div.amark.txt.size3 span.content'  ,selector_value:'font-size:__VALUE__px;'}
   , marque_texte_size_4     :{type:'inputtext'    ,typeV:'number'   ,default:16     ,unite:'px' ,selector:'div.amark.txt.size4 span.content'  ,selector_value:'font-size:__VALUE__px;'}
