@@ -48,6 +48,9 @@ onChange_measure_line_offset(){
 onApply_top_first_system(){
   Systeme.moveToFirstSystemTop()
 }
+onApply_distance_systemes(){
+  Systeme.spaceSystems()
+}
 onApply_distance_after_measure_line(){
   Systeme.spaceAfterMeasureLines()
 }

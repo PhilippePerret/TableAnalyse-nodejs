@@ -222,6 +222,33 @@ export class Systeme extends AObjet {
   }
 
   /**
+   * Replace les systèmes pour laisser, entre l'élément le plus bas d'un
+   * système (marques comprises) et l'élément le plus haut du suivant, la
+   * distance de la préférence distance_systemes. Tout ce qui suit est
+   * décalé d'autant.
+   */
+  static spaceSystems(){
+    const gap = Number(Preferences.get('distance_systemes'))
+    const blocks = this.all.map(sys => [sys])
+    AObjet.items.forEach(ao => {
+      if ( ao.type == 'systeme' ) return
+      const sys = this.getSystemeAssociated(ao)
+      sys && blocks[this.all.indexOf(sys)].push(ao)
+    })
+    for ( let i = 0 ; i < blocks.length - 1 ; ++i ) {
+      const bottom = Math.max(...blocks[i].map(ao => ao.top + ao.height))
+      const top    = Math.min(...blocks[i + 1].map(ao => ao.top))
+      const diff = Math.round(bottom + gap - top)
+      if ( diff == 0 ) continue
+      const ids = new Set(blocks.slice(i + 1).flat())
+      AObjet.items.forEach(ao => { if ( ids.has(ao) ) ao.top = ao.top + diff })
+      setModified()
+    }
+    emit('table:changed')
+    this.placeMeasureNumbers()
+  }
+
+  /**
    * Renumérote les numéros de mesure dans l'ordre de la partition
    * (système, puis de gauche à droite) à partir de +fromMark+, dont le
    * numéro fait foi (ou du premier numéro). Ainsi, un numéro ajouté (en
