@@ -27,7 +27,6 @@ form_already_marked: "L’élément '%{name}' possède déjà une marque. Je vai
 form_associated: "%{type} associé à mark #%{tag}"
 form_associated_f: "%{type} associée à mark #%{tag}"
 nothing_to_cancel: "Aucune opération à annuler."
-link_to: "Lien : [#%{id}]"
 prop_of: "%{prop} de #%{id}"
 
 # Découpe de la partition (journal)

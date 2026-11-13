@@ -1,6 +1,6 @@
 import { stopEvent } from './dom.js'
 import { erreur } from './lib/Message.js'
-import { px, unpx, tooltip } from './handies.js'
+import { px, unpx } from './handies.js'
 import { Cancel } from './CancelManager.js'
 import { pref } from './Preferences.js'
 import { Grid } from './Grid.js'
@@ -150,7 +150,6 @@ export class AObjet {
     } else {
       this.insertUniqObjectInSelection(aobjet)
     }
-    tooltip(t('messages.link_to', {id: aobjet.id}))
     this.setMenusState()
   }
 
