@@ -7,6 +7,7 @@ import { Preferences, pref } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
 import { Analyse } from './Analyse.js'
 import { AObjet } from './AObjet.js'
+import { Systeme } from './Systeme.js'
 /**
 
   Exporter
@@ -328,8 +329,11 @@ class Stage {
       if ( el.id.startsWith('systeme-') ) return Number(el.id.split('-')[1])
       if ( el.dataset.sys ) return Number(el.dataset.sys)
       if ( el.id.startsWith('amark-') ) {
+        // Système recalculé : celui mémorisé par la marque peut dater
+        // d'avant le chargement des images des systèmes
         const ao = AObjet.get(Number(el.id.split('-')[1]))
-        return ao && ao.system ? ao.system.index : null
+        const sys = ao && Systeme.getSystemeAssociated(ao)
+        return sys ? sys.index : null
       }
       return null
     }

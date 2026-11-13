@@ -82,6 +82,16 @@ export class Systeme extends AObjet {
     */
     if ( aobj.data && aobj.data.line ) return this.getSystemeOfMeasure(aobj)
     /*
+    |  Marque posée sur un système : elle lui appartient (le plus grand
+    |  chevauchement s'il y en a plusieurs)
+    */
+    let onSys = null, maxOverlap = 0
+    this.each(sys => {
+      const overlap = Math.min(sys.bottom, aobj.bottom) - Math.max(sys.top, aobj.top)
+      if ( overlap > maxOverlap ) { maxOverlap = overlap ; onSys = sys }
+    })
+    if ( onSys ) return onSys
+    /*
     |  Systèmes avant et après (if any)
     */
     var [sysAuDessus, sysEnDessous] = this.getSystemAvantEtApres(aobj.top, aobj.bottom)
