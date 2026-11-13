@@ -454,6 +454,12 @@ checkSystems(){
     return this._path || (this._path = this.data.path)
   }
 
+  // Chemin +p+ relatif au dossier de l'analyse (« ./export/… »)
+  relativePath(p){
+    const root = String(this.path || '').replace(/[\\/]+$/, '')
+    return root && p.startsWith(root) ? '.' + p.slice(root.length).replace(/\\/g, '/') : p
+  }
+
 
 
 /*****************************************************************/
@@ -573,7 +579,7 @@ static async exportCurrentToHtml(){
     */
     const code = `<style type="text/css">\n${PreferencesPanel.buildSelectorsInHead()}\n</style>\n${content.outerHTML}`
     const htmlPath = await invoke('analyse:exportHtml', {code_html: code})
-    message(t('messages.exported_html', {path: htmlPath}))
+    message(t('messages.exported_html', {path: Analyse.current.relativePath(htmlPath)}))
   } catch(err) {
     erreur("L'analyse n'a pas pu être exportée : " + err.message)
   }

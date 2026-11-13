@@ -50,7 +50,7 @@ div#message.bottom-left  { left: 8px;  bottom: 8px; }
 div#message.bottom-right { right: 8px; bottom: 8px; }
 div#message.top-right    { right: 8px; top: 36px; }
 div#message.top-left     { left: 8px;  top: 36px; }
-div#message div.msg-content { line-height: 1.45; }
+div#message div.msg-content { line-height: 1.45; overflow-wrap: anywhere; }
 div#message div.msg-content p { margin: 0 0 .6em; }
 div#message.error    span.panneau-title { color: #d0342c; }
 div#message.doaction span.panneau-title { color: #d98a00; }

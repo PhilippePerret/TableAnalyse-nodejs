@@ -265,7 +265,7 @@ class ExporterClass {
       const res = format == 'pdf'
         ? await invoke('analyse:exportPdf', await stage.pdfData(layout))
         : await invoke('analyse:exportSvg', {pages: await stage.svgPages(layout)})
-      message(t(`messages.exported_${format}`, {path: res}))
+      message(t(`messages.exported_${format}`, {path: Analyse.current.relativePath(res)}))
     } catch(err) {
       console.error(err)
       erreur(t('errors.export_failed', {error: err.message || err}))
