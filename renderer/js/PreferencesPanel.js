@@ -46,6 +46,9 @@ onKeyPress(e){
 onChange_measure_line_offset(){
   Systeme.placeMeasureNumbers(Number(Preferences.getValueOf('measure_line_offset')))
 }
+onApply_top_first_system(){
+  Systeme.moveToFirstSystemTop()
+}
 onApply_distance_after_measure_line(){
   Systeme.spaceAfterMeasureLines()
 }

@@ -144,7 +144,7 @@ export class Analyse {
    * Positions initiales des systèmes du dossier, les uns sous les autres.
    */
   layoutSystems(){
-    let curtop = 400
+    let curtop = Number(this.preferences.top_first_system) || 100
     // Avec les numéros de mesure : place pour leur ligne sous le système
     const gap = fs.existsSync(this.measuresPath)
       ? (Number(this.preferences.measure_line_offset) || 150) + (Number(this.preferences.distance_after_measure_line) || 250)

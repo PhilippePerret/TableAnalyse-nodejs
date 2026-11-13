@@ -4,7 +4,7 @@ lock_systems: true
 grid_horizontal_space: 80
 grid_vertical_space: 80
 systeme_width: 1860
-top_first_system: 50
+top_first_system: 100
 distance_systemes: 50
 adjust_same_mark: true
 snap_for_adjust_pos: 20

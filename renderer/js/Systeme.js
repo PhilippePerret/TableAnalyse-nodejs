@@ -174,6 +174,20 @@ export class Systeme extends AObjet {
   }
 
   /**
+   * Place le premier système à la distance top_first_system du haut, en
+   * déplaçant d'autant tous les éléments de la table
+   */
+  static moveToFirstSystemTop(){
+    const first = this.all[0]
+    if ( !first ) return
+    const diff = Number(Preferences.get('top_first_system')) - first.top
+    if ( diff == 0 ) return
+    AObjet.moveAllBelow({top: -Infinity, offset: diff, sauf: []})
+    setModified()
+    this.placeMeasureNumbers()
+  }
+
+  /**
    * Replace les systèmes pour laisser, entre la ligne des numéros de
    * mesure d'un système et ce qui la suit (marques posées sous la ligne,
    * système suivant), la distance de la préférence
