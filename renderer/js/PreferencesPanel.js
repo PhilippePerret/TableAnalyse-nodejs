@@ -327,13 +327,15 @@ buildInputText(params){
   const lab = DCreate('LABEL', {text:params.label})
   div.appendChild(lab)
   const field = DCreate('INPUT', {type:'text', id:domId, value: params.value||params.default})
-  div.appendChild(field)
+  // Champ et bouton éventuel dans une même cellule (cf. Preferences.css)
+  const cell = DCreate('SPAN', {class:'pref-field', inner: [field]})
+  div.appendChild(cell)
   // Bouton « Appliquer » (méthode onApply_<id>) pour régler tout de
   // suite l'analyse ouverte
   if ( params.apply ) {
     const btn = DCreate('BUTTON', {class:'btn-apply', text: t('ui.buttons.apply')})
     listen(btn, 'click', (e) => { stopEvent(e) ; this[`onApply_${params.id}`]() })
-    div.appendChild(btn)
+    cell.appendChild(btn)
   }
   // La description (if any)
   if (params.description){

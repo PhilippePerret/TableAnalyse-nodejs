@@ -8,14 +8,21 @@ section#preferences-panel {
   overflow: auto;
   left: 12em;
   z-index: 4000;
+  /* Libellés en colonne (largeur du plus long), valeurs à côté */
+  display: grid;
+  grid-template-columns: max-content auto;
+  column-gap: 16px;
+  row-gap: .5em;
+  align-items: center;
 }
-
-section#preferences-panel div.div-data {
-  margin-top: 1em;
-}
+section#preferences-panel > div.panneau-head,
+section#preferences-panel > div.panneau-foot,
+section#preferences-panel > div.description,
+section#preferences-panel > div.div-checkbox { grid-column: 1 / -1; }
+section#preferences-panel div.type-valeur { display: contents; }
+section#preferences-panel span.pref-field { display: flex; align-items: center; gap: 8px; }
 section#preferences-panel div.description {
-  margin-left:  4em;
-  margin-top: 8px;
+  margin-left:  2em;
   font-size: 0.75em;
 }
 
@@ -30,20 +37,11 @@ section#preferences-panel div.div-data input[type="checkbox"] + label
 }
 section#preferences-panel div.type-valeur label {
   display: inline-block;
-  width: 500px;
 }
 section#preferences-panel div.type-valeur label:after {
   content:  " : ";
 }
-section#preferences-panel div.type-valeur button {
-  font-size: inherit;
-  font-family:  inherit;
-  /*margin-left: 1em;*/
-  width: 100px;
-}
 section#preferences-panel div.type-valeur input[type="text"] {
-  font-size: inherit;
-  font-family: inherit;
-  width: 100px; /* même que bouton, pour aspect */
+  width: 80px;
   text-align: center;
 }

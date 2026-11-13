@@ -21,7 +21,9 @@
 .panneau-ui input,
 .panneau-ui button,
 .panneau-ui select,
-.panneau-ui textarea { font-family: inherit; font-size: inherit; }
+.panneau-ui textarea { font-family: inherit; font-size: 14px; }
+/* Tailles : textes 18px (cf. thème), champs et boutons 14px, boutons du pied de page 16px */
+.panneau-ui > div.panneau-foot button { font-size: 16px; }
 .panneau-ui button { cursor: pointer; }
 /* Pied de page (boutons du bas, cf. addPanelHead dans Panneau.js) */
 .panneau-ui > div.panneau-foot {
@@ -61,7 +63,7 @@ div#message.notice   { border-left: 4px solid #3a7bf6 !important; }
    =================================================================== */
 body.theme-A .panneau-ui {
   font-family:      system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Ubuntu, sans-serif;
-  font-size:        13px;
+  font-size:        18px;
   color:            #222;
   background-color: #f7f7f7;
   border:           1px solid #d0d0d0;
@@ -115,10 +117,16 @@ body.theme-A .panneau-ui > div.panneau-foot {
   border-top:       1px solid #e0e0e0;
   border-radius:    0 0 10px 10px;
 }
-/* Bouton par défaut (Entrée) */
+/* Bouton par défaut (Entrée) et bouton dangereux (suppression…) */
 body.theme-A .panneau-ui button.btn-default {
   background-color: #3a925e;
   border-color:     #2f7a4e;
+  color:            white;
+  font-weight:      600;
+}
+body.theme-A .panneau-ui button.btn-danger {
+  background-color: #d0342c;
+  border-color:     #a92a23;
   color:            white;
   font-weight:      600;
 }
