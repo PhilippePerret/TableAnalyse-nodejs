@@ -397,6 +397,14 @@ marks:
     rom: "Cadence rompue"
     pla: "Cadence plagale"
     fau: "Cadence fauréenne"
+  cadences_abbr:
+    par: "C.P."
+    imp: "C.I."
+    dem: "D.C."
+    ita: "C.It."
+    rom: "C.R."
+    pla: "C.Pg."
+    fau: "C.F."
   segments:
     h-up:    "À plat sur la portée"
     h-down:  "À plat sous la portée"

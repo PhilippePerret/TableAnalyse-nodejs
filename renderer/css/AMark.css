@@ -201,13 +201,13 @@ div.amark.cad span.content {
   précision
 */
 div.amark.cad div.mtype {
+  /* Type de la cadence, petit, juste après le trait vertical */
   position: absolute;
+  left: calc(100% + 12px); /* au-delà du trait (bordure de 5px) */
+  bottom: 2px;
   font-family: 'Arial Narrow', Helvetica, Geneva, Arial;
-  font-size: 18pt;
-  font-variant: all-small-caps;
-  top: 86px;
-  right: 0px;
-  width: 180px;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 div.amark.deg {

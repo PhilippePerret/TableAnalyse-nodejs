@@ -85,13 +85,13 @@ export const SUBTYPES_AJUSTABLES = {
  * 
  */
 export const CADENCES = {
-  'par': {name:t('ui.marks.cadences.par'),   value:'par', autocontent:'I',  shortcut:'p'}
-  , 'imp': {name:t('ui.marks.cadences.imp'), value:'imp', autocontent:'I',  shortcut:'n'}
-  , 'dem': {name:t('ui.marks.cadences.dem'),       value:'dem', autocontent:'V',  shortcut:'d'}
-  , 'ita': {name:t('ui.marks.cadences.ita'),  value:'ita', autocontent:'I',  shortcut:'i'}
-  , 'rom': {name:t('ui.marks.cadences.rom'),     value:'rom', autocontent:'VI', shortcut:'r'}
-  , 'pla': {name:t('ui.marks.cadences.pla'),    value:'pla', autocontent:'I',  shortcut:'g'}
-  , 'fau': {name:t('ui.marks.cadences.fau'),  value:'fau', autocontent:'I',  shortcut:'f'}
+  'par': {name:t('ui.marks.cadences.par'),   value:'par', abbr:t('ui.marks.cadences_abbr.par'), autocontent:'I',  shortcut:'p'}
+  , 'imp': {name:t('ui.marks.cadences.imp'), value:'imp', abbr:t('ui.marks.cadences_abbr.imp'), autocontent:'I',  shortcut:'n'}
+  , 'dem': {name:t('ui.marks.cadences.dem'),       value:'dem', abbr:t('ui.marks.cadences_abbr.dem'), autocontent:'V',  shortcut:'d'}
+  , 'ita': {name:t('ui.marks.cadences.ita'),  value:'ita', abbr:t('ui.marks.cadences_abbr.ita'), autocontent:'I',  shortcut:'i'}
+  , 'rom': {name:t('ui.marks.cadences.rom'),     value:'rom', abbr:t('ui.marks.cadences_abbr.rom'), autocontent:'VI', shortcut:'r'}
+  , 'pla': {name:t('ui.marks.cadences.pla'),    value:'pla', abbr:t('ui.marks.cadences_abbr.pla'), autocontent:'I',  shortcut:'g'}
+  , 'fau': {name:t('ui.marks.cadences.fau'),  value:'fau', abbr:t('ui.marks.cadences_abbr.fau'), autocontent:'I',  shortcut:'f'}
 }
 
 

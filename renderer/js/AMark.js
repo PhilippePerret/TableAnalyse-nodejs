@@ -446,6 +446,7 @@ build(){
   this.hasVerticalLine && this.buildVerticalLine()
   this.prolong    && this.buildLigneProlongation()
   this.isCadence  && this.buildPoigneeCadence()
+  this.isCadence  && this.marquerCadence()
   
   // Position et taille de la marque
   this.data.width   && this.applyWidth(this.width)
@@ -944,18 +945,19 @@ buildPoigneeCadence(){
 }
 
 /**
- * Pour construire la marque de la cadence
- * 
- * Rappel : ce type est consigné dans this.cadenceType
- * 
+ * Type de la cadence (abréviation : C.P., D.C.…) écrit après son trait
+ * vertical. Le type est le sous-type de la marque.
  */ 
 marquerCadence(){
+  const cadence = CADENCES[this.subtype || this.cadenceType]
   let divMType = DGet('.mtype', this.obj)
+  if ( !cadence ) return divMType && divMType.remove()
   if ( !divMType ){
     divMType = DCreate('DIV', {class:'mtype'})
     this.obj.appendChild(divMType)
   }
-  divMType.innerHTML = CADENCES[this.cadenceType].name
+  divMType.textContent = cadence.abbr
+  divMType.title = cadence.name
 }
 
 /**
@@ -1031,6 +1033,7 @@ set type(t){
   this.data.type = t
   this.obj && this.obj.classList.add(this._type)
   this.obj && this.obj.classList.toggle('philnote', TYPES_PHILHARMONIEFONT.includes(t))
+  this.obj && t != 'cad' && this.obj.querySelectorAll('div.mtype').forEach(e => e.remove())
   t != type_ini && setModified()
 }
 get subtype(){return this._subtype || (this._subtype = this.data.subtype)}
@@ -1041,6 +1044,7 @@ set subtype(v){
   this._subtype = v
   this.data.subtype = v
   this.obj && this.obj.classList.add(this._subtype)
+  this.obj && this.isCadence && this.marquerCadence()
   v != subtype_ini && setModified()
 }
 
