@@ -15,6 +15,8 @@ section#preferences-panel {
   row-gap: .5em;
   align-items: center;
 }
+/* display: grid ci-dessus l'emporterait sur .hidden */
+section#preferences-panel.hidden { display: none; }
 section#preferences-panel > div.panneau-head,
 section#preferences-panel > div.panneau-foot,
 section#preferences-panel > div.description,
