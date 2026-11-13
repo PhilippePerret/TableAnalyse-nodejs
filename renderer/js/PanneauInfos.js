@@ -53,11 +53,35 @@ export class PanneauInfos {
     })
     DGet('#metadata_systems_source').value = ''
     this.panneau.obj.classList.add('creation')
+    this.applyMode()
     this.panneau.isOpened || this.toggle()
   }
 
+  onOpen(){ this.applyMode() }
+
   onClose(){
     this.panneau.obj.classList.remove('creation')
+  }
+
+  /**
+   * Même panneau en création et en édition. En édition, le conteneur,
+   * l'identifiant et les systèmes (dossier de l'analyse) ne sont pas
+   * modifiables.
+   */
+  applyMode(){
+    const creation = this.panneau.obj.classList.contains('creation')
+    ;['metadata_analyse_id', 'metadata_folder', 'metadata_systems_source', 'btn_choose_folder', 'btn_choose_systems'].forEach(id => {
+      DGet(`#${id}`).disabled = !creation
+    })
+    // En édition : emplacement réel de l'analyse
+    const apath = !creation && Analyse.current && Analyse.current.data.path
+    if ( apath ) {
+      const sep = apath.includes('\\') ? '\\' : '/'
+      const parts = apath.split(sep)
+      DGet('#metadata_analyse_id').value     = parts[parts.length - 1]
+      DGet('#metadata_folder').value         = parts.slice(0, -1).join(sep)
+      DGet('#metadata_systems_source').value = [apath, 'systems'].join(sep)
+    }
   }
 
   /**
