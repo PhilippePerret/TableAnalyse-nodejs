@@ -7,12 +7,6 @@ import { Analyse, MEASURES_FILE, isSystemImage } from './Analyse.js'
 import { APP_FOLDER, ASSETS_FOLDER } from './paths.js'
 import { t } from './i18n.js'
 
-function firstTags(){
-  return t('ui.first_tags').map((msg, idx) => {
-    return {id: idx + 1, top: 100, left: 220 * idx, width: 200, type: 'txt', subtype: 'size3', content: msg}
-  })
-}
-
 function checkData(data){
   const folder = data.folder
   if ( !folder ) throw new Error(t('errors.creation.folder_required'))
@@ -66,7 +60,7 @@ export function createAnalyse(data, appVersion){
   }
   analyse.saveInfos()
 
-  analyse.tags = firstTags()
+  analyse.tags = []
   analyse.saveTags()
 
   return analyse
