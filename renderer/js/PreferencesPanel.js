@@ -365,7 +365,9 @@ buildInputText(params){
   const div = DCreate('DIV', {id:`div-${params.id}`, class:'type-valeur div-data'})
   const lab = DCreate('LABEL', {text:params.label})
   div.appendChild(lab)
-  const field = DCreate('INPUT', {type:'text', id:domId, value: params.value||params.default})
+  // 0 est une valeur (seules les valeurs absentes prennent le défaut)
+  const value = (undefined === params.value || null === params.value || '' === params.value) ? params.default : params.value
+  const field = DCreate('INPUT', {type:'text', id:domId, value: value})
   // Champ et bouton éventuel dans une même cellule (cf. Preferences.css)
   const cell = DCreate('SPAN', {class:'pref-field', inner: [field]})
   // Unité après le champ
@@ -375,7 +377,12 @@ buildInputText(params){
   // suite l'analyse ouverte
   if ( params.apply ) {
     const btn = DCreate('BUTTON', {class:'btn-apply', text: t('ui.buttons.apply')})
-    listen(btn, 'click', (e) => { stopEvent(e) ; this[`onApply_${params.id}`]() })
+    listen(btn, 'click', (e) => {
+      stopEvent(e)
+      // Valeur affichée dans le champ, celle qu'on applique
+      Preferences.saveData(params.id, field.value)
+      this[`onApply_${params.id}`]()
+    })
     cell.appendChild(btn)
   }
   // La description (if any)

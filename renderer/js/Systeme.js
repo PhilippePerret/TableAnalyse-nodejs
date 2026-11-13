@@ -215,7 +215,9 @@ export class Systeme extends AObjet {
       const firstTop = Math.min(next.top, ...below.map(ao => ao.top))
       const diff = Math.round(lineY + gap - firstTop)
       if ( diff == 0 ) return
-      AObjet.moveAllBelow({top: lineY + 1, offset: diff, sauf: []})
+      // À partir du premier élément qui suit la ligne (le système
+      // suivant peut être posé exactement sur la ligne)
+      AObjet.moveAllBelow({top: Math.min(firstTop, lineY + 1), offset: diff, sauf: []})
       setModified()
     })
     this.placeMeasureNumbers()
