@@ -240,6 +240,8 @@ class AnimationClass {
     document.documentElement.classList.add('animation-running')
     this.blockScroll || (this.blockScroll = (e) => {
       if ( !this.scrollLocked ) return
+      // Seule la table est bloquée : panneaux et listes défilent
+      if ( e.target instanceof Element && e.target.closest('.panneau-ui, .container_getter_in_list') ) return
       if ( e.type == 'keydown' && !['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key) ) return
       if ( e.type == 'keydown' && ['INPUT', 'BUTTON', 'SELECT', 'TEXTAREA'].includes(e.target.tagName) ) return
       e.preventDefault()
