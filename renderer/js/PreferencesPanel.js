@@ -6,6 +6,8 @@
 */
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
 import { isBool } from './lib/common.js'
+import { erreur } from './lib/Message.js'
+import { Current } from './Current.js'
 import { draggable } from './lib/interact.js'
 import { Panneau } from './Panneau.js'
 import { Preferences } from './Preferences.js'
@@ -186,6 +188,11 @@ build(){
     }
   })
 
+  // Pied de page : « Enregistrer » (bouton par défaut)
+  const btnSave = DCreate('BUTTON', {class:'btn-default', text: t('ui.buttons.save')})
+  listen(btnSave, 'click', this.save.bind(this))
+  o.appendChild(DCreate('DIV', {class:'buttons', inner: [btnSave]}))
+
   document.body.appendChild(o)
 
   this.obj = o
@@ -193,6 +200,13 @@ build(){
 
   this.isBuilt = true
 
+}
+
+// Enregistrement des préférences de l'analyse, puis fermeture
+save(){
+  if ( !Current.analyse ) return erreur(t('errors.no_analyse_open'))
+  Current.analyse.savePreferences()
+  this.panneau.isOpened && this.toggle()
 }
 
 observe(){
