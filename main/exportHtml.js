@@ -37,7 +37,7 @@ function pageTitre(infos){
 `
 }
 
-function head(infos){
+export function head(infos){
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -79,14 +79,19 @@ function head(infos){
 `
 }
 
+// Nom des fichiers d'export : analyse-<jour>_<mois>_<année>
+export function exportName(){
+  const d = new Date()
+  const pad = n => String(n).padStart(2, '0')
+  return `analyse-${pad(d.getDate())}_${pad(d.getMonth() + 1)}_${d.getFullYear()}`
+}
+
 /**
  * @return {String} le chemin du fichier produit
  */
 export function exportToHtml(analyse, codeHtml){
   fs.mkdirSync(analyse.exportFolder, {recursive: true})
-  const d = new Date()
-  const pad = n => String(n).padStart(2, '0')
-  const htmlPath = path.join(analyse.exportFolder, `analyse-${pad(d.getDate())}_${pad(d.getMonth() + 1)}_${d.getFullYear()}.html`)
+  const htmlPath = path.join(analyse.exportFolder, `${exportName()}.html`)
   fs.writeFileSync(htmlPath, head(analyse.infos) + pageTitre(analyse.infos) + codeHtml + '</body></html>')
   return htmlPath
 }

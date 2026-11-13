@@ -32,6 +32,11 @@ export const PreferencesAppData = {
   , marque_texte_size_3     :{type:'inputtext'    ,typeV:'number'   ,default:24         ,unite:'px' ,selector:'div.amark.txt.size3 span.content'  ,selector_value:'font-size:__VALUE__px;'}
   , marque_texte_size_4     :{type:'inputtext'    ,typeV:'number'   ,default:16     ,unite:'px' ,selector:'div.amark.txt.size4 span.content'  ,selector_value:'font-size:__VALUE__px;'}
   
+  // --- Export PDF/SVG (mm) ---
+  , export_page_width       :{type:'inputtext'    ,typeV:'number'   ,default:210}
+  , export_page_height      :{type:'inputtext'    ,typeV:'number'   ,default:297}
+  , export_page_margin      :{type:'inputtext'    ,typeV:'number'   ,default:10}
+
   // --- Window ---
   , window_width            :{type:'inputtext'    ,typeV:'number'   ,default:null}
   , window_height           :{type:'inputtext'    ,typeV:'number'   ,default:null}

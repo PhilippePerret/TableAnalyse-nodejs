@@ -127,6 +127,17 @@ mus {
   font-size: inherit;
 }
 
+/* Panneau d'export PDF/SVG (cf. Exporter.js) */
+div#export_panel {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4500;
+  width: max-content;
+}
+div#export_panel > div:not(.panneau-head) { margin-top: .6em; }
+
 /*
   --- ANNULATIONS ---
 */

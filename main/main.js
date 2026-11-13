@@ -16,6 +16,7 @@ import { Analyse } from './Analyse.js'
 import { AppPrefs } from './AppPrefs.js'
 import { createAnalyse } from './createAnalyse.js'
 import { exportToHtml } from './exportHtml.js'
+import { exportToPdf, exportToSvg } from './exportPdfSvg.js'
 import { buildImageFromCode } from './scoreImage.js'
 import { runCutter } from './cutter/runCutter.js'
 import { loadYAML } from './yaml.js'
@@ -197,6 +198,8 @@ function buildMenu(){
         , {label: t('ui.menu.infos'),           click: () => sendMenuCommand('infosAnalyse')}
         , {type: 'separator'}
         , {label: t('ui.menu.export_html'),     click: () => sendMenuCommand('exportToHTML')}
+        , {label: t('ui.menu.export_pdf'),      click: () => sendMenuCommand('exportToPDF')}
+        , {label: t('ui.menu.export_svg'),      click: () => sendMenuCommand('exportToSVG')}
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path)}
         , {type: 'separator'}
         , {label: t('ui.menu.manual'),          click: () => sendMenuCommand('manual')}
@@ -406,6 +409,18 @@ function registerIpc(){
     const htmlPath = exportToHtml(requireCurrent(), code_html)
     showInFinder(htmlPath, true)
     return htmlPath
+  })
+
+  handle('analyse:exportPdf', async (data) => {
+    const pdfPath = await exportToPdf(requireCurrent(), data)
+    showInFinder(pdfPath, true)
+    return pdfPath
+  })
+
+  handle('analyse:exportSvg', ({pages}) => {
+    const folder = exportToSvg(requireCurrent(), pages)
+    showInFinder(folder, true)
+    return folder
   })
 
   handle('app:themes', () => {

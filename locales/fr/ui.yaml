@@ -16,6 +16,8 @@ menu:
   number_score:     "Numéroter la partition"
   infos:            "Informations… ⇧I"
   export_html:      "Exporter en HTML"
+  export_pdf:       "Exporter en PDF…"
+  export_svg:       "Exporter en SVG…"
   show_in_finder:
     darwin:         "Afficher dans le Finder"
     win32:          "Afficher dans l'Explorateur"
@@ -166,6 +168,16 @@ panels:
     title:            "Historique des annulations"
     item:             "Changement : %{name}"
     cancel_hover:     "Annuler :"
+  export:
+    title_pdf:        "Exporter en PDF"
+    title_svg:        "Exporter en SVG (un fichier par page)"
+    mode_page:        "Page unique (lecture à l'écran)"
+    mode_book:        "Pages de taille fixe (livre)"
+    size:             "Taille des pages :"
+    margin:           "Marge :"
+    remember:         "Mémoriser cette taille dans l'analyse"
+    export:           "Exporter"
+    bad_size:         "Taille ou marge des pages invalide."
   getter:
     new_item:         "Nouvel item"
 
@@ -202,6 +214,9 @@ prefs:
   marque_texte_size_1:    {label: "Taille des gros textes"}
   marque_texte_size_2:    {label: "Taille des textes moyens"}
   measure_line_offset:    {label: "Distance (px) de la ligne des numéros de mesure sous le système"}
+  export_page_width:      {label: "Largeur (mm) des pages d'export PDF/SVG"}
+  export_page_height:     {label: "Hauteur (mm) des pages d'export PDF/SVG"}
+  export_page_margin:     {label: "Marge (mm) des pages d'export PDF/SVG"}
   distance_after_measure_line: {label: "Distance (px) entre la ligne des numéros de mesure et le système suivant"}
   marque_measure:         {label: "Taille numéros de mesures"}
   marque_texte_size_3:    {label: "Taille des petits textes"}

@@ -7,6 +7,7 @@ import { PreferencesPanel } from './PreferencesPanel.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 import { Form } from './Form.js'
+import { Exporter } from './Exporter.js'
 import { t } from './i18n.js'
 
 class AppClass {
@@ -60,6 +61,8 @@ class AppClass {
       case 'numberScore':   return Analyse.numberScore()
       case 'infosAnalyse':  return Analyse.panneau_infos.toggle()
       case 'exportToHTML':  return Analyse.exportCurrentToHtml()
+      case 'exportToPDF':   return Exporter.ask('pdf')
+      case 'exportToSVG':   return Exporter.ask('svg')
       case 'toolsPanel':    return Tools.toggle()
       case 'formPanel':     return Form.togglePanel()
       case 'prefs':         return PreferencesPanel.toggle()
