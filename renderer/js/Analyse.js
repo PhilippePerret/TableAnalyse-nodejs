@@ -661,6 +661,16 @@ static async exportCurrentToHtml(){
 }
 
 /**
+ * Titre de l'œuvre, compositeur et titre de l'analyse (s'ils existent)
+ * au centre de la bande supérieure de la fenêtre
+ */
+export function setWindowTitle(infos){
+  infos = infos || {}
+  DGet('#window-title').textContent = [infos.piece_title, infos.composer, infos.analyse_title]
+    .map(s => String(s || '').trim()).filter(Boolean).join(', ')
+}
+
+/**
  * Allume ou éteint la lumière d'enregistrement
  */
 function setRedLight(on){

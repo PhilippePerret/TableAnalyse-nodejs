@@ -5,7 +5,7 @@
  */
 import { PreferencesAppData } from './Preferences_AppData.js'
 import { Form } from './Form.js'
-import { Analyse } from './Analyse.js'
+import { Analyse, setWindowTitle } from './Analyse.js'
 import { UI } from './UI.js'
 import { Systeme } from './Systeme.js'
 
@@ -31,6 +31,7 @@ static display(analyse){
   |  Application des métadonnées
   */
   Analyse.panneau_infos.setData(analyse.infos)
+  setWindowTitle(analyse.infos)
 
   /*
   |  Application des préférences

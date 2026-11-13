@@ -3,7 +3,7 @@ import { isBool } from './lib/common.js'
 import { erreur } from './lib/Message.js'
 import { invoke } from './api.js'
 import { Panneau } from './Panneau.js'
-import { Analyse } from './Analyse.js'
+import { Analyse, setWindowTitle } from './Analyse.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { t } from './i18n.js'
 
@@ -38,6 +38,7 @@ export class PanneauInfos {
   saveInfos(){
     if ( !Analyse.current ) return erreur(t('errors.no_analyse_open'))
     Object.assign(Analyse.current.data.infos, this.getData())
+    setWindowTitle(Analyse.current.data.infos)
     Analyse.current.saveInfos()
   }
 
