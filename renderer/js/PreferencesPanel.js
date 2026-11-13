@@ -79,6 +79,7 @@ afterLoadingAnalyse(){
 prepareOnChangeMethods(){
   const my = this
   Object.values(PreferencesAppData).forEach(dpref => {
+    if ( dpref.hidden ) return
     const key = dpref.id
     const methChange = `onChange_${key}`
     const obj = DGet(`#pref-${key}`)
@@ -170,6 +171,7 @@ build(){
   // Pour simplifier l'écriture
   
   Object.values(PreferencesAppData).forEach( dp => {
+    if ( dp.hidden ) return // réglée ailleurs (p.e. panneau d'export)
     if ( dp.type == 'inputtext'){
       o.appendChild(this.buildInputText(dp))
     } else if ( dp.type == 'checkbox' ) {

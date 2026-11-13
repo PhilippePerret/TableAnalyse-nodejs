@@ -20,8 +20,8 @@ import { Analyse } from './Analyse.js'
   Les pages sont coupées dans les blancs entre les éléments de la table
   (entre les systèmes), sauf élément plus haut qu'une page.
 
-  Taille des pages (mm) : préférences de l'analyse export_page_width,
-  export_page_height et export_page_margin.
+  Taille des pages : format courant ou taille personnalisée (préférences
+  de l'analyse export_page_*, en mm).
 
 */
 const PX_PER_MM   = 96 / 25.4
@@ -29,6 +29,26 @@ const PAD         = 10      // blanc (px) au-dessus et au-dessous du contenu
 const MAX_PDF_MM  = 5080    // taille maximale d'une page PDF (200 pouces)
 const EXCLUDED    = '.ui-resizable-handle'
 const UI_CLASSES  = ['selected', 'locked']
+
+// Formats de page courants (mm, portrait)
+const PAGE_FORMATS = {
+    A3:         [297, 420]
+  , A4:         [210, 297]
+  , A5:         [148, 210]
+  , A6:         [105, 148]
+  , B4:         [250, 353]
+  , B5:         [176, 250]
+  , letter:     [215.9, 279.4]
+  , legal:      [215.9, 355.6]
+  , tabloid:    [279.4, 431.8]
+  , executive:  [184.2, 266.7]
+}
+
+// Unités de la taille personnalisée (en mm)
+const UNITS = {mm: 1, cm: 10, in: 25.4, pt: 25.4 / 72, pc: 25.4 / 6}
+const toMm   = (v, unit) => v * UNITS[unit]
+const fromMm = (v, unit) => Math.round(v / UNITS[unit] * 100) / 100
+const decimal = (n) => String(n).replace('.', t('ui.decimal_separator'))
 
 class ExporterClass {
 
@@ -38,24 +58,54 @@ class ExporterClass {
   ask(format){
     if ( !Analyse.current ) return erreur(t('errors.no_analyse_to_export'))
     this.panel && this.panel.remove()
-    const T = (k) => t(`ui.panels.export.${k}`)
-    const field = (id, value) => DCreate('INPUT', {type: 'text', id, value: String(value), style: 'width:60px;'})
+    const T = (k, v) => t(`ui.panels.export.${k}`, v)
     const radio = (value, checked) => {
       const input = DCreate('INPUT', {type: 'radio', name: 'export_mode', id: `export_mode_${value}`, value})
       input.checked = checked
       return DCreate('DIV', {inner: [input, DCreate('LABEL', {for: input.id, text: ' ' + T(`mode_${value}`)})]})
     }
+    const row = (label, ...fields) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), ...fields]})
+    // Taille personnalisée courante (mm, unité d'affichage)
+    this.custom = {
+        width:  Number(pref('export_page_width'))
+      , height: Number(pref('export_page_height'))
+      , unit:   pref('export_page_unit') || 'mm'
+    }
+    const selFormat = DCreate('SELECT', {id: 'export_format'})
+    Object.entries(PAGE_FORMATS).forEach(([name, [w, h]]) => {
+      selFormat.appendChild(DCreate('OPTION', {value: name, text: T('format', {name: T(`formats.${name}`), width: decimal(w), height: decimal(h)})}))
+    })
+    selFormat.appendChild(DCreate('OPTION', {disabled: true, text: '──────────'}))
+    const optCustom = DCreate('OPTION', {value: 'custom'})
+    selFormat.appendChild(optCustom)
+    const updateCustomLabel = () => {
+      const {width, height, unit} = this.custom
+      optCustom.textContent = width > 0 && height > 0
+        ? T('custom_size', {width: decimal(fromMm(width, unit)), height: decimal(fromMm(height, unit)), unit: T(`units.${unit}`)})
+        : T('custom')
+    }
+    updateCustomLabel()
+    selFormat.value = PAGE_FORMATS[pref('export_page_format')] || pref('export_page_format') == 'custom' ? pref('export_page_format') : 'A4'
+    let lastFormat = selFormat.value
+    listen(selFormat, 'change', () => {
+      if ( selFormat.value != 'custom' ) { lastFormat = selFormat.value ; return }
+      this.askCustomSize(
+          () => { updateCustomLabel() ; lastFormat = 'custom' }
+        , () => { selFormat.value = lastFormat }
+      )
+    })
+    const selOrient = DCreate('SELECT', {id: 'export_orientation', inner: ['portrait', 'landscape'].map(o => DCreate('OPTION', {value: o, text: T(o)}))})
+    selOrient.value = pref('export_page_orientation') || 'portrait'
+    const margin = DCreate('INPUT', {type: 'text', id: 'export_margin', value: String(pref('export_page_margin')), style: 'width:50px;'})
+
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
     const btnExport = DCreate('BUTTON', {text: T('export')})
     const inner = []
     format == 'pdf' && inner.push(radio('page', false), radio('book', true))
     inner.push(
-        DCreate('DIV', {class: 'size', inner: [
-            DCreate('SPAN', {text: T('size') + ' '}), field('export_width', pref('export_page_width'))
-          , DCreate('SPAN', {text: ' × '}), field('export_height', pref('export_page_height'))
-          , DCreate('SPAN', {text: ' mm   ' + T('margin') + ' '}), field('export_margin', pref('export_page_margin'))
-          , DCreate('SPAN', {text: ' mm'})
-        ]})
+        row(T('size'), selFormat)
+      , row(T('orientation'), selOrient)
+      , row(T('margin'), margin, DCreate('SPAN', {text: ' ' + T('units.mm')}))
       , DCreate('DIV', {inner: [
             DCreate('INPUT', {type: 'checkbox', id: 'export_remember'})
           , DCreate('LABEL', {for: 'export_remember', text: ' ' + T('remember')})
@@ -66,29 +116,89 @@ class ExporterClass {
     const panel = DCreate('DIV', {id: 'export_panel', inner})
     document.body.appendChild(panel)
     this.panel = panel
-    const close = () => { panel.remove() ; this.panel = null }
+    // Page unique : pas de taille de page
+    const setMode = () => {
+      const book = format == 'svg' || DGet('#export_mode_book', panel).checked
+      selFormat.disabled = selOrient.disabled = !book
+    }
+    format == 'pdf' && panel.querySelectorAll('input[name="export_mode"]').forEach(r => listen(r, 'change', setMode))
+    setMode()
+    const close = () => { this.closeCustom() ; panel.remove() ; this.panel = null }
     addPanelHead(panel, {title: T(`title_${format}`), onClose: close})
     listen(panel, 'click', (e) => e.stopPropagation())
     listen(panel, 'dblclick', (e) => e.stopPropagation())
     listen(btnCancel, 'click', close)
     listen(btnExport, 'click', () => {
+      const name = selFormat.value
+      let [width, height] = name == 'custom' ? [this.custom.width, this.custom.height] : PAGE_FORMATS[name]
+      if ( (selOrient.value == 'landscape') != (width > height) ) [width, height] = [height, width]
       const opts = {
           mode:   format == 'svg' || DGet('#export_mode_book', panel).checked ? 'book' : 'page'
-        , width:  Number(DGet('#export_width', panel).value)
-        , height: Number(DGet('#export_height', panel).value)
-        , margin: Number(DGet('#export_margin', panel).value)
+        , width, height
+        , margin: Number(margin.value)
       }
-      if ( opts.mode == 'book' && !(opts.width > 0 && opts.height > 0 && opts.margin >= 0 && 2 * opts.margin < Math.min(opts.width, opts.height)) ) {
+      if ( !(opts.margin >= 0) || (opts.mode == 'book' && !(width > 0 && height > 0 && 2 * opts.margin < Math.min(width, height))) ) {
         return erreur(T('bad_size'))
       }
-      if ( DGet('#export_remember', panel).checked ) this.rememberSize(opts)
+      if ( DGet('#export_remember', panel).checked ) {
+        const [w, h] = name == 'custom' ? [this.custom.width, this.custom.height] : PAGE_FORMATS[name]
+        this.remember({
+            export_page_format:       name
+          , export_page_width:        w
+          , export_page_height:       h
+          , export_page_unit:         this.custom.unit
+          , export_page_orientation:  selOrient.value
+          , export_page_margin:       opts.margin
+        })
+      }
       close()
       this.export(format, opts)
     })
   }
 
-  rememberSize({width, height, margin}){
-    ;[['export_page_width', width], ['export_page_height', height], ['export_page_margin', margin]].forEach(([key, value]) => {
+  /**
+   * Petit formulaire de la taille personnalisée (largeur, hauteur et
+   * unité). +onOk+ quand elle est définie, +onCancel+ sinon.
+   */
+  askCustomSize(onOk, onCancel){
+    this.closeCustom()
+    const T = (k) => t(`ui.panels.export.${k}`)
+    const {unit} = this.custom
+    const field = (id, mm) => DCreate('INPUT', {type: 'text', id, value: mm > 0 ? decimal(fromMm(mm, unit)) : '', style: 'width:70px;'})
+    const fWidth = field('custom_width', this.custom.width), fHeight = field('custom_height', this.custom.height)
+    const selUnit = DCreate('SELECT', {id: 'custom_unit', inner: Object.keys(UNITS).map(u => DCreate('OPTION', {value: u, text: T(`units_long.${u}`)}))})
+    selUnit.value = unit
+    const row = (label, field) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), field]})
+    const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
+    const btnOk = DCreate('BUTTON', {text: t('ui.buttons.ok')})
+    const panel = DCreate('DIV', {id: 'export_custom_size', inner: [
+        row(T('width'), fWidth), row(T('height'), fHeight), row(T('unit'), selUnit)
+      , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
+    ]})
+    document.body.appendChild(panel)
+    this.customPanel = panel
+    const cancel = () => { this.closeCustom() ; onCancel() }
+    addPanelHead(panel, {title: T('custom_title'), onClose: cancel})
+    listen(panel, 'click', (e) => e.stopPropagation())
+    listen(panel, 'dblclick', (e) => e.stopPropagation())
+    listen(btnCancel, 'click', cancel)
+    listen(btnOk, 'click', () => {
+      const w = Number(fWidth.value.replace(',', '.')), h = Number(fHeight.value.replace(',', '.'))
+      if ( !(w > 0 && h > 0) ) return erreur(T('bad_size'))
+      this.custom = {width: toMm(w, selUnit.value), height: toMm(h, selUnit.value), unit: selUnit.value}
+      this.closeCustom()
+      onOk()
+    })
+    fWidth.focus()
+  }
+
+  closeCustom(){
+    this.customPanel && this.customPanel.remove()
+    this.customPanel = null
+  }
+
+  remember(values){
+    Object.entries(values).forEach(([key, value]) => {
       Preferences.saveData(key, value)
       Preferences.set(key, value)
     })

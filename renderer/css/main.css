@@ -147,6 +147,20 @@ div#export_panel {
   width: max-content;
 }
 div#export_panel > div:not(.panneau-head) { margin-top: .6em; }
+div#export_custom_size {
+  position: fixed;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4600;
+  width: max-content;
+}
+div#export_custom_size > div:not(.panneau-head) { margin-top: .6em; }
+/* Libellé et champ sur une ligne, libellés de même largeur */
+div#export_panel div.row,
+div#export_custom_size div.row { display: flex; align-items: center; gap: 8px; }
+div#export_panel div.row > label,
+div#export_custom_size div.row > label { width: 90px; }
 
 /*
   --- ANNULATIONS ---
