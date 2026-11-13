@@ -139,6 +139,9 @@ set prolong(v){
  * 
  */
 onDoubleClick(e){
+  // Marque verrouillée : le double-clic crée une nouvelle marque (cf.
+  // UI.onDoubleClick), comme sur la table
+  if ( this.isLocked ) return
   try{
     this.edit()
   } catch(err){
@@ -156,6 +159,7 @@ onDoubleClick(e){
  * 
  */
 edit(){
+  if ( this.isLocked ) return // marque verrouillée : pas d'édition
   this.editor = this.editor || new Editeur(this)
   this.editor.value = this.content + (this.hasProlongLine ? '--' : '')
   this.editor.show({top:this.top, left:this.left}, AMARQUES_TYPES[this.type].message)
@@ -747,7 +751,7 @@ onContextMenu(e){
   const T = (k) => t(`ui.mark_context.${k}`)
   const items = [
       {label: T(this.isLocked ? 'unlock' : 'lock'), value: 'lock'}
-    , {label: T('edit'), value: 'edit'}
+    , {label: T('edit'), value: 'edit', enabled: !this.isLocked}
     , {type: 'separator'}
     , {label: T('align'), value: 'align'}
   ]
