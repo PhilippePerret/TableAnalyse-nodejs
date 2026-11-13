@@ -9,6 +9,7 @@ import { Themes } from './Themes.js'
 import { Systeme } from './Systeme.js'
 import { on } from './events.js'
 import { t } from './i18n.js'
+import { toggleCoordinates } from './handies.js'
 /**
 
   Class OptionsTool
@@ -47,6 +48,10 @@ export class OptionsTool extends MenusTool {
     Grid.toggleGridMode(modeON)
     option.dataset.checked = modeON ? 'true' : 'false'
     UI.toggleGridDisplay(modeON)
+  }
+
+  static onActivate_toggleCoordinates(){
+    toggleCoordinates()
   }
 
   static onActivate_toggleLockSystems(){

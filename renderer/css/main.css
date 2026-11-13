@@ -135,6 +135,8 @@ div#panneau_infos > div > input[type="text"] {
 div#panneau_outils > div {
   margin-top: 1em;
 }
+/* Masquées par défaut (menus « Options » et « Marque ») */
+body:not(.show-coordinates) div#coordonnates { display: none; }
 div#coordonnates {
   position:fixed;
   width:150px;

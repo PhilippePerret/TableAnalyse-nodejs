@@ -6,6 +6,7 @@ import { AMark_Editor } from './AMark_Editor.js'
 import { setModified } from './Current.js'
 import { on } from './events.js'
 import { t } from './i18n.js'
+import { toggleCoordinates } from './handies.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -17,10 +18,11 @@ export class AmarkMenu extends MenusTool {
 
 
   static setAllMenus(state){
-    this.menu.disabled = not(state)
+    // Menu toujours actif : ses éléments sont (dés)activés un à un
     const nombreMenus = this.menu.options.length - 1
     for(var i = 1; i < nombreMenus ; ++i){
-      this.menu.options[i].disabled = not(state)
+      const option = this.menu.options[i]
+      option.disabled = not(state) && !option.dataset.always
     }
     /*
     |  Réglage du menu "Verrouiller/déverouiller"
@@ -37,6 +39,10 @@ export class AmarkMenu extends MenusTool {
   static get selection(){ return AObjet.selection || []}
 
   /* --- OnActivate Methods --- */
+
+  static onActivate_toggleCoordinates(){
+    toggleCoordinates()
+  }
 
   static onActivate_toogleLock(){
     /** Verrouiller ou déverrouiller les marques sélectionnées **/
