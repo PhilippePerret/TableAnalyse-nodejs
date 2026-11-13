@@ -814,8 +814,25 @@ alignHorizontallyOn(type, msgNone){
     if ( d < ecart ) { ecart = d ; best = ao }
   })
   if ( !best || ecart > TOLERANCE ) return message(t(`messages.${msgNone}`), {duration: 3000})
-  this.left = best.left
+  // Alignement sur le texte lui-même (sans les marges de la boite) :
+  // centres alignés, ou début du texte si une marque a une ligne de
+  // prolongation (son centre n'est pas celui du texte)
+  const a = this.textRect, b = best.textRect
+  const z = this.obj.currentCSSZoom || 1
+  const dx = (this.prolong || best.prolong)
+    ? b.left - a.left
+    : (b.left + b.width / 2) - (a.left + a.width / 2)
+  this.left = Math.round(this.left + dx / z)
   setModified()
+}
+
+// Rectangle (écran) du texte de la marque, sans les marges de sa boite
+get textRect(){
+  const span = this.obj.querySelector('span.content') || this.obj
+  const range = document.createRange()
+  range.selectNodeContents(span)
+  const r = range.getBoundingClientRect()
+  return r.width ? r : span.getBoundingClientRect()
 }
 
 // cf. issue #10
