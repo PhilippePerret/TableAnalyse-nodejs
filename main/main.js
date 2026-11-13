@@ -217,11 +217,7 @@ function buildMenu(){
         , {type: 'separator'}
         , {label: t('ui.menu.infos'),           accelerator: 'CmdOrCtrl+Shift+I', click: () => sendMenuCommand('infosAnalyse')}
         , {type: 'separator'}
-        , {label: t('ui.menu.export'), submenu: [
-              {label: t('ui.menu.export_html'), click: () => sendMenuCommand('exportToHTML')}
-            , {label: t('ui.menu.export_pdf'),  click: () => sendMenuCommand('exportToPDF')}
-            , {label: t('ui.menu.export_svg'),  click: () => sendMenuCommand('exportToSVG')}
-          ]}
+        , {label: t('ui.menu.export'),          accelerator: 'CmdOrCtrl+E', click: () => sendMenuCommand('export')}
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path)}
         , {type: 'separator'}
         , {label: t('ui.menu.help'), submenu: [

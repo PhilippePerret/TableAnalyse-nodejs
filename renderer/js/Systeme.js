@@ -423,7 +423,7 @@ export class Systeme extends AObjet {
     }
     const y = Math.round(top + height + offset)
     if ( !this.measureLine ) {
-      this.measureLine = DCreate('DIV', {class: 'measure-line'})
+      this.measureLine = DCreate('DIV', {class: 'measure-line', 'data-sys': this.index})
       UI.TableAnalyse.appendChild(this.measureLine)
     }
     this.measureLine.style.top   = px(y)

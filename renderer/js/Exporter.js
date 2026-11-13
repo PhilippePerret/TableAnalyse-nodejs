@@ -6,6 +6,7 @@ import { addPanelHead } from './Panneau.js'
 import { Preferences, pref } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
 import { Analyse } from './Analyse.js'
+import { AObjet } from './AObjet.js'
 /**
 
   Exporter
@@ -44,6 +45,9 @@ const PAGE_FORMATS = {
   , executive:  [184.2, 266.7]
 }
 
+// Formats d'export
+const EXPORT_TYPES = ['pdf', 'svg', 'html']
+
 // Unités de la taille personnalisée (en mm)
 const UNITS = {mm: 1, cm: 10, in: 25.4, pt: 25.4 / 72, pc: 25.4 / 6}
 const toMm   = (v, unit) => v * UNITS[unit]
@@ -53,17 +57,21 @@ const decimal = (n) => String(n).replace('.', t('ui.decimal_separator'))
 class ExporterClass {
 
   /**
-   * Panneau de réglage de l'export (+format+ : 'pdf' ou 'svg')
+   * Panneau de l'export (menu « Analyse > Exporter… », ⌘E) : format
+   * (PDF, SVG, HTML), taille des pages, distance entre les systèmes
    */
-  ask(format){
+  ask(){
     if ( !Analyse.current ) return erreur(t('errors.no_analyse_to_export'))
     this.panel && this.panel.remove()
     const T = (k, v) => t(`ui.panels.export.${k}`, v)
     const radio = (value, checked) => {
       const input = DCreate('INPUT', {type: 'radio', name: 'export_mode', id: `export_mode_${value}`, value})
       input.checked = checked
-      return DCreate('DIV', {inner: [input, DCreate('LABEL', {for: input.id, text: ' ' + T(`mode_${value}`)})]})
+      return DCreate('DIV', {class: 'pdf-only', inner: [input, DCreate('LABEL', {for: input.id, text: ' ' + T(`mode_${value}`)})]})
     }
+    const selType = DCreate('SELECT', {id: 'export_type', inner: EXPORT_TYPES.map(type => DCreate('OPTION', {value: type, text: T(`types.${type}`)}))})
+    selType.value = EXPORT_TYPES.includes(pref('export_type')) ? pref('export_type') : 'pdf'
+    const gap = DCreate('INPUT', {type: 'text', id: 'export_gap', value: decimal(Number(pref('export_systems_gap'))), style: 'width:50px;'})
     const row = (label, ...fields) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), ...fields]})
     // Taille personnalisée courante (mm, unité d'affichage)
     this.custom = {
@@ -100,35 +108,50 @@ class ExporterClass {
 
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
     const btnExport = DCreate('BUTTON', {class: 'btn-default', text: T('export')})
-    const inner = []
-    format == 'pdf' && inner.push(radio('page', false), radio('book', true))
-    inner.push(
-        row(T('size'), selFormat)
-      , row(T('orientation'), selOrient)
-      , row(T('margin'), margin, DCreate('SPAN', {text: ' ' + T('units.mm')}))
-      , DCreate('DIV', {inner: [
-            DCreate('INPUT', {type: 'checkbox', id: 'export_remember'})
-          , DCreate('LABEL', {for: 'export_remember', text: ' ' + T('remember')})
+    const inner = [
+        row(T('type'), selType)
+      , radio('page', false), radio('book', true)
+      , DCreate('DIV', {class: 'not-html', inner: [
+            row(T('size'), selFormat)
+          , row(T('orientation'), selOrient)
+          , row(T('margin'), margin, DCreate('SPAN', {text: ' ' + T('units.mm')}))
+          , row(T('gap'), gap, DCreate('SPAN', {text: ' ' + T('units.pt')}))
+          , DCreate('DIV', {class: 'explication', text: T('gap_desc')})
+          , DCreate('DIV', {inner: [
+                DCreate('INPUT', {type: 'checkbox', id: 'export_remember'})
+              , DCreate('LABEL', {for: 'export_remember', text: ' ' + T('remember')})
+            ]})
         ]})
-    )
-    format == 'svg' && inner.push(DCreate('DIV', {class: 'explication', text: T('fonts_notice')}))
-    inner.push(DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnExport]}))
+      , DCreate('DIV', {class: 'explication svg-only', text: T('fonts_notice')})
+      , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnExport]})
+    ]
     const panel = DCreate('DIV', {id: 'export_panel', inner})
     document.body.appendChild(panel)
     this.panel = panel
-    // Page unique : pas de taille de page
+    // Éléments selon le format ; page unique (PDF) : pas de taille de page
     const setMode = () => {
-      const book = format == 'svg' || DGet('#export_mode_book', panel).checked
+      const type = selType.value
+      panel.querySelectorAll('.pdf-only').forEach(e => e.hidden = type != 'pdf')
+      panel.querySelectorAll('.svg-only').forEach(e => e.hidden = type != 'svg')
+      panel.querySelectorAll('.not-html').forEach(e => e.hidden = type == 'html')
+      const book = type == 'svg' || DGet('#export_mode_book', panel).checked
       selFormat.disabled = selOrient.disabled = !book
     }
-    format == 'pdf' && panel.querySelectorAll('input[name="export_mode"]').forEach(r => listen(r, 'change', setMode))
+    listen(selType, 'change', setMode)
+    panel.querySelectorAll('input[name="export_mode"]').forEach(r => listen(r, 'change', setMode))
     setMode()
     const close = () => { this.closeCustom() ; panel.remove() ; this.panel = null }
-    addPanelHead(panel, {title: T(`title_${format}`), onClose: close})
+    addPanelHead(panel, {title: T('title'), onClose: close})
     listen(panel, 'click', (e) => e.stopPropagation())
     listen(panel, 'dblclick', (e) => e.stopPropagation())
     listen(btnCancel, 'click', close)
     listen(btnExport, 'click', () => {
+      const format = selType.value
+      if ( format == 'html' ) {
+        this.remember({export_type: format})
+        close()
+        return Analyse.exportCurrentToHtml()
+      }
       const name = selFormat.value
       let [width, height] = name == 'custom' ? [this.custom.width, this.custom.height] : PAGE_FORMATS[name]
       if ( (selOrient.value == 'landscape') != (width > height) ) [width, height] = [height, width]
@@ -136,7 +159,9 @@ class ExporterClass {
           mode:   format == 'svg' || DGet('#export_mode_book', panel).checked ? 'book' : 'page'
         , width, height
         , margin: Number(margin.value)
+        , gap:    Number(gap.value.replace(',', '.'))
       }
+      if ( !(opts.gap >= 0) ) return erreur(T('bad_gap'))
       if ( !(opts.margin >= 0) || (opts.mode == 'book' && !(width > 0 && height > 0 && 2 * opts.margin < Math.min(width, height))) ) {
         return erreur(T('bad_size'))
       }
@@ -149,8 +174,10 @@ class ExporterClass {
           , export_page_unit:         this.custom.unit
           , export_page_orientation:  selOrient.value
           , export_page_margin:       opts.margin
+          , export_systems_gap:       opts.gap
         })
       }
+      this.remember({export_type: format})
       close()
       this.export(format, opts)
     })
@@ -209,6 +236,7 @@ class ExporterClass {
     const stage = new Stage()
     try {
       await stage.build()
+      stage.respace(opts)
       const layout = stage.layout(opts)
       const res = format == 'pdf'
         ? await invoke('analyse:exportPdf', await stage.pdfData(layout))
@@ -262,6 +290,47 @@ class Stage {
       if ( right - left == 0 && bottom - top == 0 ) return null
       return {el, index, left: left - base.left, top: top - base.top, right: right - base.left, bottom: bottom - base.top}
     }).filter(Boolean)
+  }
+
+  /**
+   * Distance +opts.gap+ (pt, à l'échelle de l'export) entre l'élément le
+   * plus bas d'un système et l'élément le plus haut du système suivant :
+   * chaque système est déplacé avec ses éléments (marques associées,
+   * ligne des numéros). Fait sur la copie, avant le découpage en pages.
+   */
+  respace(opts){
+    if ( !(opts.gap >= 0) || !this.items.length ) return
+    const x0 = Math.min(...this.items.map(i => i.left)), x1 = Math.max(...this.items.map(i => i.right))
+    const scale = opts.mode == 'book'
+      ? (opts.width - 2 * opts.margin) / (x1 - x0)
+      : Math.min(1 / PX_PER_MM, (MAX_PDF_MM - 2 * (opts.margin || 0)) / (x1 - x0))
+    const gapPx = opts.gap * 25.4 / 72 / scale
+    // Système (index) de chaque élément
+    const systemOf = (el) => {
+      if ( el.id.startsWith('systeme-') ) return Number(el.id.split('-')[1])
+      if ( el.dataset.sys ) return Number(el.dataset.sys)
+      if ( el.id.startsWith('amark-') ) {
+        const ao = AObjet.get(Number(el.id.split('-')[1]))
+        return ao && ao.system ? ao.system.index : null
+      }
+      return null
+    }
+    const blocks = new Map()
+    this.items.forEach(item => {
+      const index = systemOf(item.el)
+      if ( index === null ) return
+      blocks.has(index) || blocks.set(index, [])
+      blocks.get(index).push(item)
+    })
+    let cursor = null
+    Array.from(blocks.keys()).sort((a, b) => a - b).forEach(index => {
+      const items = blocks.get(index)
+      const top = Math.min(...items.map(i => i.top)), bottom = Math.max(...items.map(i => i.bottom))
+      const diff = cursor === null ? 0 : cursor + gapPx - top
+      if ( diff ) items.forEach(i => { i.el.style.top = `${parseFloat(getComputedStyle(i.el).top) + diff}px` })
+      cursor = bottom + diff
+    })
+    this.items = this.measureItems()
   }
 
   /**

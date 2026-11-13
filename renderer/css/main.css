@@ -1,3 +1,16 @@
+/*
+  Affichage réduit quand l'écran est trop étroit pour les systèmes
+  (cf. Analyse.fitWindowToSystems) : les éléments d'interface gardent
+  leur taille (zoom inverse).
+*/
+:root { --ui-zoom: 1; }
+.panneau-ui,
+div#titlebar,
+div#sablier,
+div#coordonnates,
+div.mini_editeur,
+div.container_getter_in_list { zoom: var(--ui-zoom); }
+
 body {
   margin: 0;
   padding: 0;
@@ -163,6 +176,8 @@ div#export_panel {
   width: max-content;
 }
 div#export_panel > div:not(.panneau-head) { margin-top: .6em; }
+div#export_panel div.not-html > div { margin-top: .6em; }
+div#export_panel div.explication { max-width: 32em; }
 div#export_custom_size {
   position: fixed;
   top: 160px;

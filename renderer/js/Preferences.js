@@ -62,7 +62,7 @@ set(key,value){
         element.value = value
         break
     }
-  } else {
+  } else if ( !this.data[key].hidden ) { // préférence cachée : pas de champ
     console.error("L'élément préférences #%s est introuvable…", key)
   }
 
