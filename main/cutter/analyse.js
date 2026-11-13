@@ -14,7 +14,8 @@ export const DEFAULTS = {
     threshold:    160   // niveau de gris sous lequel un pixel est « noir »
   , minLineRatio: 0.2   // longueur minimale d'une ligne de portée (× largeur page)
   , reach:        8     // distance max d'un élément à son système (× interligne)
-  , margin:       1     // marge autour du système (× interligne)
+  , margin:       1     // marge à gauche et à droite du système (× interligne)
+  , vmargin:      6     // marge au-dessus et au-dessous du système (px)
   , halo:         2     // rayon d'effacement autour des éléments étrangers (px)
   , minPixels:    4     // en dessous : poussière, effacée
   , staves:       null  // nombre forcé de portées par système
@@ -778,11 +779,11 @@ function computeCrops(comps, systems, s, w, h, opts, limits){
     if ( c.minY < cr.y0 ) cr.y0 = c.minY
     if ( c.maxY > cr.y1 ) cr.y1 = c.maxY
   }
-  const pad = Math.round(opts.margin * s)
+  const pad = Math.round(opts.margin * s), vpad = Math.round(opts.vmargin)
   systems.forEach(sys => {
     const cr = sys.crop
-    cr.x0 = Math.max(0, cr.x0 - pad); cr.y0 = Math.max(limits.top, cr.y0 - pad)
-    cr.x1 = Math.min(w - 1, cr.x1 + pad); cr.y1 = Math.min(limits.bottom, cr.y1 + pad)
+    cr.x0 = Math.max(0, cr.x0 - pad); cr.y0 = Math.max(limits.top, cr.y0 - vpad)
+    cr.x1 = Math.min(w - 1, cr.x1 + pad); cr.y1 = Math.min(limits.bottom, cr.y1 + vpad)
   })
 }
 

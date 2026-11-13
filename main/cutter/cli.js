@@ -21,7 +21,8 @@ Usage : decoupe-partition <partition.pdf> [options]
   --quality <n>        Qualité JPG, 1-100 (défaut : 90)
   --staves <n>         Nombre de portées par système (défaut : détection)
   --reach <n>          Distance max d'un élément à son système, en interlignes (défaut : ${DEFAULTS.reach})
-  --margin <n>         Marge autour du système, en interlignes (défaut : ${DEFAULTS.margin})
+  --margin <n>         Marge à gauche et à droite du système, en interlignes (défaut : ${DEFAULTS.margin})
+  --vmargin <n>        Marge au-dessus et au-dessous du système, en pixels (défaut : ${DEFAULTS.vmargin})
   --threshold <n>      Seuil de noir, 0-255 (défaut : ${DEFAULTS.threshold})
   --effacer            Efface dans chaque système les éléments des autres systèmes
   --pages              Écrit aussi chaque page en JPG (dossier pages/)
@@ -30,7 +31,7 @@ Usage : decoupe-partition <partition.pdf> [options]
 
 function parseArgs(argv){
   const opts = {dpi: 300, quality: 90, pages: false, controle: false, effacer: false}
-  const numeric = ['dpi', 'quality', 'staves', 'reach', 'margin', 'threshold']
+  const numeric = ['dpi', 'quality', 'staves', 'reach', 'margin', 'vmargin', 'threshold']
   for ( let i = 0 ; i < argv.length ; ++i ) {
     const arg = argv[i]
     if ( ['--pages', '--controle', '--effacer'].includes(arg) ) opts[arg.slice(2)] = true
