@@ -87,7 +87,7 @@ div#red-light {
   border-radius: 50%;
 }
 div#red-light:not(.red) {
- background-color: #44f744; 
+ background-color: #2ecc40; 
 }
 div#red-light.red {
  background-color: #ff2e2e; 
