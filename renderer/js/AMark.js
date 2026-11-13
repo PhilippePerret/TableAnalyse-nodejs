@@ -635,6 +635,16 @@ observe(){
       }
     , drag:function(e,ui){
         // if ( e.shiftKey ){ ui.position.top = my.top }
+        // Les autres marques sélectionnées suivent la marque déplacée
+        if ( !this.forDuplication && my.isSelected ) {
+          const diffTop   = this.debTop - ui.position.top
+          const diffLeft  = this.debLeft - ui.position.left
+          AObjet.eachSelection(ao => {
+            if ( ao === my || !ao.obj ) return
+            ao.obj.style.top   = px(ao.top - diffTop)
+            ao.obj.style.left  = px(ao.left - diffLeft)
+          })
+        }
         if ( my.isGrouped && e.shiftKey) {
           /*
           |  Pour voir les associés (groupe) se déplacer en même
@@ -688,7 +698,7 @@ observe(){
          * S'il y a d'autres objets sélectionnés, on les 
          * déplace aussi
          */
-        AObjet.eachSelection(ao => {
+        this.forDuplication || AObjet.eachSelection(ao => {
           if ( ao.id == saufId ) return
           ao.left = ao.left - diffLeft
           ao.top  = ao.top - diffTop
@@ -716,8 +726,12 @@ memoriseTailleAvantResize(widthOnly){
 onClick(e){
   if ( this.justMoved ) {
     this.justMoved = false
+  } else if ( e.shiftKey ) {
+    this.toggleFromSelection(/* keep_other = */ true)
   } else {
-    this.toggleFromSelection(/* keep_other = */ e.shiftKey)
+    // Clic simple : la marque devient la seule sélectionnée
+    AObjet.deselectAll()
+    AObjet.addToSelection(this)
   }
   return stopEvent(e)
 }
@@ -747,8 +761,10 @@ onMouseOut(e){
 }
 
 // cf. issue #10
+// Marque déjà sélectionnée : la sélection est gardée (déplacement,
+// redimensionnement de toutes les marques sélectionnées)
 onMouseDown(e){
-  e.shiftKey || AObjet.deselectAll()
+  e.shiftKey || this.isSelected || AObjet.deselectAll()
 }
 
 toggleFromSelection(keep_other){

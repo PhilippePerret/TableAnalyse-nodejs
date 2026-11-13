@@ -40,29 +40,21 @@ export class BordersTool extends MenusTool {
   static modifyBorder(action){
     const classe = this.menu.options[this.menu.selectedIndex].dataset.css
 
-    const tag = AObjet.selection[0]
+    const selection = AObjet.selection || []
+    if ( !selection.length ) return
     /*
-    |  Ajout ou retrait de la classe du tag
+    |  Ajout ou retrait de la classe de chaque marque sélectionnée et
+    |  enregistrement dans ses données
     */
-    tag.obj.classList[action](classe)
-    /*
-    |  Enregistrement dans les données du tag
-    */
-    tag[action+"Css"](classe)
+    selection.forEach(tag => {
+      tag.obj.classList[action](classe)
+      tag[action+"Css"](classe)
+    })
     setModified()
     /*
-    |  Actualisation du menu des bords pour ce tag
+    |  Actualisation du menu des bords (première marque)
     */
-    this.setMenuBordsFor(tag)
-    /*
-    |  Alerte (console) pour dire qu'on n'affecte que la première
-    |  selection.
-    */
-    if ( not(this.alertOnlyFirstSelectionDone) ) {
-      console.info("Par mesure de prudence, je n'applique ce choix qu'à la première sélection possible.")
-      this.alertOnlyFirstSelectionDone = true
-    }
-
+    this.setMenuBordsFor(selection[0])
   }
 
   /**
