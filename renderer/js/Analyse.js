@@ -639,9 +639,6 @@ static async exportCurrentToHtml(){
     if ( data.folder == '' ) {
       errors.push(t('errors.creation.folder_required'))
     }
-    if ( data.analyst == '') {
-      errors.push(t('errors.creation.analyst_required'))
-    }
     if ( errors.length ) {
       erreur(errors.join('<br />'))
       return false
