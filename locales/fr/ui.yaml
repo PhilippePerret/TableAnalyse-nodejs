@@ -93,7 +93,7 @@ adjust_menu:
 selection_menu:
   group:            "Grouper les éléments sélectionnés"
   ungroup:          "Dégrouper les éléments sélectionnés"
-  select_all:       "Sélectionner tous les…"
+  select_all:       "Sélectionner des marques…"
 
 borders_menu:
   remove_left:      "Supprimer le bord gauche"
@@ -239,6 +239,12 @@ panels:
     export:           "Exporter"
     bad_size:         "Taille ou marge des pages invalide."
     fonts_notice:     "Les polices de l'analyse (PhilNote…) doivent être installées sur l'ordinateur qui ouvrira les fichiers SVG."
+  select_marks:
+    title:            "Sélectionner des marques"
+    select:           "Sélectionner"
+    regex_ph:         "expression régulière (vide : toutes)"
+    count_one:        "%{n} marque trouvée"
+    count_many:       "%{n} marques trouvées"
   getter:
     new_item:         "Nouvel item"
 

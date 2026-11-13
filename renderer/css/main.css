@@ -193,6 +193,28 @@ div#export_custom_size div.row { display: flex; align-items: center; gap: 8px; }
 div#export_panel div.row > label,
 div#export_custom_size div.row > label { width: 90px; }
 
+/* Sélection des marques par type (cf. MarksSelector.js) */
+div#marks_selector {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4500;
+  width: max-content;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+div#marks_selector div.marks-rows {
+  display: grid;
+  grid-template-columns: max-content minmax(16em, auto);
+  column-gap: 16px;
+  row-gap: .5em;
+  align-items: center;
+}
+div#marks_selector div.marks-row { display: contents; }
+div#marks_selector input.invalid { border-color: #d0342c; color: #d0342c; }
+div#marks_selector div.marks-count { margin-top: .8em; font-weight: 600; color: #3a925e; }
+
 /*
   --- ANNULATIONS ---
 */

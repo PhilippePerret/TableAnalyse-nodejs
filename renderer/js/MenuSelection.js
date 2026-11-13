@@ -1,11 +1,11 @@
 import { DGet } from './dom.js'
 import { not } from './lib/common.js'
-import { message } from './lib/Message.js'
 import { MenusTool } from './MenusTool.js'
 import { AObjet } from './AObjet.js'
 import { setModified } from './Current.js'
 import { on } from './events.js'
 import { t } from './i18n.js'
+import { MarksSelector } from './MarksSelector.js'
 /**
 
   class SelectionTool
@@ -83,7 +83,7 @@ export class SelectionTool extends MenusTool {
   }
 
   static onActivate_selectAll(){
-    message(t('messages.select_all_todo'))
+    MarksSelector.show()
   }
 
   /* --- Méthode concernant le groupement de tags --- */

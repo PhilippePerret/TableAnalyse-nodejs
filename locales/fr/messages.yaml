@@ -20,7 +20,6 @@ image_built: "L'image %{name} a été construite avec succès.\nSon nom est dans
 think_to_save: "Il faut penser à enregistrer l'analyse."
 systems_unlocked: "<p>Par défaut, toutes les marques d'analyse ainsi que les autres systèmes suivront le déplacement.</p><p>Pour ne déplacer qu'UN SEUL SYSTÈME, tenir la touche ⌥ appuyée.</p><p>Pour ne déplacer que le système et les systèmes suivants, tenir ⌥ et ⇧.</p>"
 systems_position_adjusted: "La position des systèmes a été ajustée. Enregistez les nouvelles données."
-select_all_todo: "Je dois apprendre à sélectionner tous les éléments d'un certain type."
 form_delete_todo: "Je dois apprendre à supprimer un élément"
 form_no_measure: "Aucun numéro de mesure ≥ %{start} n'a été trouvé sur la table."
 form_already_marked: "L’élément '%{name}' possède déjà une marque. Je vais seulement l'actualiser."
