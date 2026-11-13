@@ -69,7 +69,7 @@ export class Panneau {
  * fermeture à gauche, titre et raccourci. Les boutons du bas forment un
  * pied de page (filet) ; un bouton « Fermer » y est ajouté si le panneau
  * n'en a pas : à droite s'il est seul, à gauche sinon.
- * Le panneau est déplaçable. Son bouton par défaut (classe btn-default)
+ * Le panneau est déplaçable par sa bande supérieure. Son bouton par défaut (classe btn-default)
  * répond à la touche Entrée.
  */
 export function addPanelHead(obj, {title, shortcut, onClose}){
@@ -84,11 +84,11 @@ export function addPanelHead(obj, {title, shortcut, onClose}){
   listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })
   // Position ramenée à left/top (sans right, bottom ni transform) avant
   // un déplacement
-  listen(obj, 'mousedown', () => {
-    const r = obj.getBoundingClientRect()
-    Object.assign(obj.style, {left: `${r.left}px`, top: `${r.top}px`, right: 'auto', bottom: 'auto', transform: 'none'})
+  listen(head, 'mousedown', () => {
+    const r = obj.getBoundingClientRect(), z = obj.currentCSSZoom || 1
+    Object.assign(obj.style, {left: `${r.left / z}px`, top: `${r.top / z}px`, right: 'auto', bottom: 'auto', transform: 'none'})
   })
-  draggable(obj)
+  draggable(obj, {handle: '.panneau-head'})
   listen(obj, 'keydown', (e) => {
     if ( e.key != 'Enter' || e.isComposing || ['TEXTAREA', 'BUTTON', 'SELECT'].includes(e.target.tagName) ) return
     const btn = Array.from(obj.querySelectorAll('button.btn-default')).find(b => !b.disabled && b.offsetParent)

@@ -63,6 +63,8 @@ export function draggable(el, opts){
 
 function onDragMouseDown(el, st, e){
   if ( st.disabled || e.button !== 0 ) return
+  // Poignée (opts.handle, sélecteur) : déplacement seulement depuis elle
+  if ( st.opts.handle && !e.target.closest(st.opts.handle) ) return
   const cancel = e.target.closest(CANCEL_SELECTOR)
   if ( cancel && el.contains(cancel) ) return
   e.preventDefault()
@@ -106,7 +108,9 @@ function onDragMouseDown(el, st, e){
         if ( !start(ev) ) { started = null ; return }
         started = true
       }
-      ui.position = {left: startLeft + ev.pageX - startX, top: startTop + ev.pageY - startY}
+      // Élément zoomé (cf. --ui-zoom) : left/top en px de l'élément
+      const z = el.currentCSSZoom || 1
+      ui.position = {left: startLeft + (ev.pageX - startX) / z, top: startTop + (ev.pageY - startY) / z}
       if ( st.opts.drag && st.opts.drag.call(el, ev, ui) === false ) return
       helper.style.left = `${ui.position.left}px`
       helper.style.top  = `${ui.position.top}px`
