@@ -1,5 +1,5 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
-import { px } from './handies.js'
+import { px, uiZoom } from './handies.js'
 import { draggable } from './lib/interact.js'
 import { t } from './i18n.js'
 /**
@@ -66,8 +66,9 @@ export class GetterInList {
 
   show(params){
     params = params || {}
-    if (params.top) this.obj.style.top = px(params.top)
-    if (params.left) this.obj.style.left = px(params.left)
+    // Position en px de la page, élément zoomé (cf. --ui-zoom)
+    if (params.top) this.obj.style.top = px(params.top / uiZoom())
+    if (params.left) this.obj.style.left = px(params.left / uiZoom())
     var method = params.newEnable ? 'remove' : 'add'
     //console.log("method:", method)
     this.newItemField.classList[method]('hidden')

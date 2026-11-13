@@ -49,6 +49,9 @@ onChange_measure_line_offset(){
 onApply_distance_after_measure_line(){
   Systeme.spaceAfterMeasureLines()
 }
+onChange_systeme_width(){
+  Current.analyse && Current.analyse.fitWindowToSystems()
+}
 onChange_lock_systems(){
   Systeme.toggleLock(null, Preferences.getValueOf('lock_systems'))
 }
@@ -84,9 +87,11 @@ afterLoadingAnalyse(){
   this.build()
   this.insertStylesCSSInHead();
   this.prepareOnChangeMethods()
-  const locked = Preferences.get('lock_systems')
-  Systeme[locked ? 'lockAll':'unlockAll'].call(Systeme)
-  emit('systems:locked', {locked: !!locked})
+  // Systèmes toujours verrouillés à l'ouverture
+  Preferences.set('lock_systems', true)
+  Systeme.systemsLocked = true
+  Systeme.lockAll()
+  emit('systems:locked', {locked: true})
 }
 
 prepareOnChangeMethods(){

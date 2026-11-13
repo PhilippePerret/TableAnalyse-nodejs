@@ -7,7 +7,7 @@ import { t } from './i18n.js'
 
 export const PreferencesAppData = {
     theme                   :{type:'select'       ,typeV:'string'   ,default:null, values: null /* défini par Preferences */}
-  , lock_systems            :{type:'checkbox'     ,typeV:'boolean'  ,default:false}
+  , lock_systems            :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
   , grid_horizontal_space   :{type:'inputtext'    ,typeV:'number'   ,default:50}
   , grid_vertical_space     :{type:'inputtext'    ,typeV:'number'   ,default:50}
   , systeme_width           :{type:'inputtext'    ,typeV:'number'   ,default:1860, selector:'img.systeme', selector_value:"width:__VALUE__px;"}

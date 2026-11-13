@@ -24,6 +24,9 @@ import { PanneauInfos } from './PanneauInfos.js'
 import { TableAnalyse } from './TableAnalyse.js'
 import { t } from './i18n.js'
 
+// Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
+const SYSTEMS_MARGIN = 40
+
 export class Analyse {
 
   static get current(){ return Current.analyse }
@@ -83,10 +86,23 @@ export class Analyse {
    */
   applyWindowSize(){
     const w = pref('window_width'), h = pref('window_height')
-    const done = () => setTimeout(() => { this.windowSizeApplied = true }, 300)
+    const done = () => this.fitWindowToSystems().finally(() => setTimeout(() => { this.windowSizeApplied = true }, 300))
     if ( w && h ) {
       invoke('window:setSize', {width: w, height: h}).catch(err => console.error(err)).finally(done)
     } else done()
+  }
+
+  /**
+   * Fenêtre à la largeur des systèmes (cf. main.js, window:fitWidth) ;
+   * les éléments d'interface gardent leur taille si l'affichage est
+   * réduit (--ui-zoom, cf. main.css)
+   */
+  async fitWindowToSystems(){
+    const width = Number(pref('systeme_width')) + SYSTEMS_MARGIN
+    try {
+      const zoom = await invoke('window:fitWidth', {width})
+      document.documentElement.style.setProperty('--ui-zoom', String(1 / zoom))
+    } catch(err) { console.error(err) }
   }
 
   scrollToLastPosition(){

@@ -1,5 +1,5 @@
 import { DCreate, DGet, listen, stopEvent, cmdKey } from './dom.js'
-import { px } from './handies.js'
+import { px, uiZoom } from './handies.js'
 import { draggable } from './lib/interact.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
@@ -219,12 +219,13 @@ export class Editeur {
     this.obj.style.position = pos.fixed ? 'fixed' : 'absolute'
   }
 
+  // Position en px de la page, élément zoomé (cf. --ui-zoom)
   set top(v){ 
-    if ( 'number' == typeof v ) v = px(v)
+    if ( 'number' == typeof v ) v = px(v / uiZoom())
     this.obj.style.top = v 
   }
   set left(v){
-    if ( 'number' == typeof v ) v = px(v)
+    if ( 'number' == typeof v ) v = px(v / uiZoom())
     this.obj.style.left = v
   }
 
