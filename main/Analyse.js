@@ -145,10 +145,14 @@ export class Analyse {
    */
   layoutSystems(){
     let curtop = 400
+    // Avec les numéros de mesure : place pour leur ligne sous le système
+    const gap = fs.existsSync(this.measuresPath)
+      ? (Number(this.preferences.measure_line_offset) || 150) + (Number(this.preferences.distance_after_measure_line) || 100)
+      : 100
     return this.systemsInFolder.map((name, idx) => {
       const height = imageHeight(path.join(this.systemsFolder, name))
       const dsys = {id: idx + 1, image_name: name, top: curtop, left: 0, height: height}
-      curtop += height + 100
+      curtop += height + gap
       return dsys
     })
   }

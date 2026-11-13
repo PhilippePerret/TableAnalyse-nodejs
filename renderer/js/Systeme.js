@@ -174,6 +174,28 @@ export class Systeme extends AObjet {
   }
 
   /**
+   * Replace les systèmes pour laisser, entre la ligne des numéros de
+   * mesure d'un système et le système suivant (et ses objets), la
+   * distance de la préférence distance_after_measure_line. Les systèmes
+   * suivants sont décalés d'autant.
+   */
+  static spaceAfterMeasureLines(){
+    const gap = Number(Preferences.get('distance_after_measure_line'))
+    const offset = this.measureLineOffset
+    let shift = 0, lineBottom = null
+    this.each(sys => {
+      let top = sys.top + shift
+      if ( lineBottom !== null ) {
+        const wanted = lineBottom + gap + (sys.top - sys.extentTop)
+        shift += wanted - top
+        top = wanted
+      }
+      sys.positionne(top)
+      lineBottom = sys.measureLine ? Math.max(sys.extentBottom, sys.top + sys.obj.offsetHeight + offset) : null
+    })
+  }
+
+  /**
    * Renumérote les numéros de mesure dans l'ordre de la partition
    * (système, puis de gauche à droite) à partir de +fromMark+, dont le
    * numéro fait foi (ou du premier numéro). Ainsi, un numéro ajouté (en
@@ -469,6 +491,14 @@ export class Systeme extends AObjet {
       offset = 0
     }
     this.positionne(v + offset)
+  }
+
+  // Haut et bas du système avec ses objets
+  get extentTop(){
+    return this.objets.reduce((min, ao) => Math.min(min, ao.top), this.top)
+  }
+  get extentBottom(){
+    return this.objets.reduce((max, ao) => Math.max(max, ao.bottom), this.bottom)
   }
 
   get full_height(){

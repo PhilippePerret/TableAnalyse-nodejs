@@ -27,6 +27,7 @@ export const PreferencesAppData = {
   , marque_texte_size_1     :{type:'inputtext'    ,typeV:'number'   ,default:60         ,unite:'px' ,selector:'div.amark.txt.size1 span.content'    ,selector_value:'font-size:__VALUE__px;'}
   , marque_texte_size_2     :{type:'inputtext'    ,typeV:'number'   ,default:40       ,unite:'px' ,selector:'div.amark.txt.size2 span.content'    ,selector_value:'font-size:__VALUE__px;'}
   , measure_line_offset     :{type:'inputtext'    ,typeV:'number'   ,default:150}
+  , distance_after_measure_line :{type:'inputtext' ,typeV:'number'  ,default:100, apply:true}
   , marque_measure          :{type:'inputtext'    ,typeV:'number'   ,default:24        ,unite:'px' ,selector:'div.amark.txt.mes span.content'    ,selector_value:'font-size:__VALUE__px;'}
   , marque_texte_size_3     :{type:'inputtext'    ,typeV:'number'   ,default:24         ,unite:'px' ,selector:'div.amark.txt.size3 span.content'  ,selector_value:'font-size:__VALUE__px;'}
   , marque_texte_size_4     :{type:'inputtext'    ,typeV:'number'   ,default:16     ,unite:'px' ,selector:'div.amark.txt.size4 span.content'  ,selector_value:'font-size:__VALUE__px;'}

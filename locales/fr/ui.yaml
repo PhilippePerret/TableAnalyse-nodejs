@@ -102,6 +102,7 @@ buttons:
   renounce:         "Renoncer"
   replace:          "Remplacer"
   ok:               "OK"
+  apply:            "Appliquer"
 
 message_titles:
   notice:           "Information"
@@ -201,6 +202,7 @@ prefs:
   marque_texte_size_1:    {label: "Taille des gros textes"}
   marque_texte_size_2:    {label: "Taille des textes moyens"}
   measure_line_offset:    {label: "Distance (px) de la ligne des numéros de mesure sous le système"}
+  distance_after_measure_line: {label: "Distance (px) entre la ligne des numéros de mesure et le système suivant"}
   marque_measure:         {label: "Taille numéros de mesures"}
   marque_texte_size_3:    {label: "Taille des petits textes"}
   marque_texte_size_4:    {label: "Taille des textes très petis"}

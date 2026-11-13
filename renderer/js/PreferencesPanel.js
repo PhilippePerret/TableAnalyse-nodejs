@@ -33,6 +33,9 @@ onKeyPress(e){
 onChange_measure_line_offset(){
   Systeme.placeMeasureNumbers(Number(Preferences.getValueOf('measure_line_offset')))
 }
+onApply_distance_after_measure_line(){
+  Systeme.spaceAfterMeasureLines()
+}
 onChange_lock_systems(){
   Systeme.toggleLock(null, Preferences.getValueOf('lock_systems'))
 }
@@ -323,6 +326,13 @@ buildInputText(params){
   div.appendChild(lab)
   const field = DCreate('INPUT', {type:'text', id:domId, value: params.value||params.default})
   div.appendChild(field)
+  // Bouton « Appliquer » (méthode onApply_<id>) pour régler tout de
+  // suite l'analyse ouverte
+  if ( params.apply ) {
+    const btn = DCreate('BUTTON', {class:'btn-apply', text: t('ui.buttons.apply')})
+    listen(btn, 'click', (e) => { stopEvent(e) ; this[`onApply_${params.id}`]() })
+    div.appendChild(btn)
+  }
   // La description (if any)
   if (params.description){
     div.appendChild(DCreate('DIV', {class:'description', text:params.description}))
