@@ -2,8 +2,8 @@
 # Variables : %{nom} ; %{cmd} = touche de commande du système (⌘ ou Ctrl+)
 # Texte propre à un système : table {darwin:, win32:, linux:}
 
-no_analyse_open: "Aucune analyse n'est ouverte.<br><br>Utiliser le menu « Fichier » pour ouvrir une analyse existante (%{cmd}O) ou en créer une nouvelle (%{cmd}N)."
-no_systems: "Cette analyse ne contient aucun système.<br><br>Il faut les systèmes de la partition pour pouvoir commencer l'analyse : menu « Fichier » > « Découper la partition… »."
+no_analyse_open: "Aucune analyse n'est ouverte.<br><br>Utiliser le menu « Analyse » pour ouvrir une analyse existante (%{cmd}O) ou en créer une nouvelle (%{cmd}N)."
+no_systems: "Cette analyse ne contient aucun système.<br><br>Il faut les systèmes de la partition pour pouvoir commencer l'analyse : menu « Analyse » > « Découper la partition… »."
 cutting_score: "Découpe et numérotation de la partition…"
 after_cut:
   darwin: "Passez en revue chaque système pour voir s’il y a des parties à « gommer » (numéros de pages, notes ou indications d’un autre système, etc.) et gommez-les en utilisant un outil graphique (par exemple Aperçu). Vous pouvez également les supprimer en recoupant les systèmes manuellement."

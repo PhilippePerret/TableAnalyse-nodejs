@@ -6,7 +6,7 @@
  * Analyse ouverte au démarrage (ordre de précédence) :
  *   1. le dossier d'analyse passé en argument,
  *   2. la dernière analyse ouverte,
- *   3. aucune (utiliser le menu Fichier).
+ *   3. aucune (utiliser le menu Analyse).
  */
 import fs from 'node:fs'
 import os from 'node:os'

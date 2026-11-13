@@ -7,7 +7,7 @@ app:
   title: "TABLE D'ANALYSE"
 
 menu:
-  file:             "Fichier"
+  file:             "Analyse"
   new_analyse:      "Nouvelle analyse…"
   open_analyse:     "Ouvrir une analyse…"
   reload_analyse:   "Recharger l'analyse"
@@ -290,4 +290,4 @@ form_types:
 first_tags:
   - "Double-cliquer sur la table pour créer une nouvelle marque d'analyse à l'endroit voulu."
   - "Jouer ⇧M pour ouvrir le manuel d'utilisation"
-  - "Utiliser le menu « Fichier » pour ouvrir ou créer une analyse"
+  - "Utiliser le menu « Analyse » pour ouvrir ou créer une analyse"
