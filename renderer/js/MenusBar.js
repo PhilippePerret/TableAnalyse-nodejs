@@ -15,13 +15,15 @@ import { t } from './i18n.js'
   revient ici et active l'<option> correspondante.
 
 */
+// +parent+ : menu dans lequel placer le menu en sous-menu ('edit' :
+// menu « Édition » du processus principal)
 const MENUS = [
     {id: 'options_tool',    label: 'options'}
   , {id: 'amark_menu',      label: 'mark'}
-  , {id: 'align_menu',      label: 'align'}
-  , {id: 'adjust_menu',     label: 'adjust'}
+  , {id: 'align_menu',      label: 'align',     parent: 'edit'}
+  , {id: 'adjust_menu',     label: 'adjust',    parent: 'amark_menu'}
+  , {id: 'borders_tool',    label: 'borders',   parent: 'amark_menu'}
   , {id: 'selection_tool',  label: 'selection'}
-  , {id: 'borders_tool',    label: 'borders'}
 ]
 
 class MenusBarClass {
@@ -61,7 +63,7 @@ class MenusBarClass {
         }
         items.push({label, index, enabled: !select.disabled && !option.disabled})
       })
-      return {id: m.id, label: t(`ui.menu.${m.label}`), items: cleanSeparators(items)}
+      return {id: m.id, label: t(`ui.menu.${m.label}`), parent: m.parent, items: cleanSeparators(items)}
     })
   }
 

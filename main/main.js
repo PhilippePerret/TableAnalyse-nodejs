@@ -204,14 +204,13 @@ function buildMenu(){
         , {type: 'separator'}
         , {label: t('ui.menu.save'),            accelerator: 'CmdOrCtrl+S', click: () => sendMenuCommand('save')}
         , {type: 'separator'}
-        , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
-        , {label: t('ui.menu.number_score'),    id: 'numberScore', click: () => sendMenuCommand('numberScore')}
-        , {type: 'separator'}
         , {label: t('ui.menu.infos'),           click: () => sendMenuCommand('infosAnalyse')}
         , {type: 'separator'}
-        , {label: t('ui.menu.export_html'),     click: () => sendMenuCommand('exportToHTML')}
-        , {label: t('ui.menu.export_pdf'),      click: () => sendMenuCommand('exportToPDF')}
-        , {label: t('ui.menu.export_svg'),      click: () => sendMenuCommand('exportToSVG')}
+        , {label: t('ui.menu.export'), submenu: [
+              {label: t('ui.menu.export_html'), click: () => sendMenuCommand('exportToHTML')}
+            , {label: t('ui.menu.export_pdf'),  click: () => sendMenuCommand('exportToPDF')}
+            , {label: t('ui.menu.export_svg'),  click: () => sendMenuCommand('exportToSVG')}
+          ]}
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path)}
         , {type: 'separator'}
         , {label: t('ui.menu.manual'),          click: () => sendMenuCommand('manual')}
@@ -228,28 +227,21 @@ function buildMenu(){
         , {role: 'copy',      label: t('ui.menu.copy')}
         , {role: 'paste',     label: t('ui.menu.paste')}
         , {role: 'selectAll', label: t('ui.menu.select_all')}
+        , ...dynamicSubmenus('edit')
       ]
     },
-    ...dynamicMenus.map(m => ({
+    ...dynamicMenus.filter(m => !m.parent).map(m => ({
         label:   m.label
-      , submenu: m.items.map(item => item.type ? item : {
-            label:   item.label
-          , enabled: item.enabled
-          , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
-        })
+      , submenu: [...dynamicItems(m), ...dynamicSubmenus(m.id)]
     })),
     {
       label: t('ui.menu.tools_menu'),
       submenu: [
           {label: t('ui.menu.tools'),           click: () => sendMenuCommand('toolsPanel')}
         , {label: t('ui.menu.form'),            click: () => sendMenuCommand('formPanel')}
-      ]
-    },
-    {
-      label: t('ui.menu.view'),
-      submenu: [
-          {role: 'toggleDevTools',    label: t('ui.menu.dev_tools')}
-        , {role: 'togglefullscreen',  label: t('ui.menu.fullscreen')}
+        , {type: 'separator'}
+        , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
+        , {label: t('ui.menu.number_score'),    id: 'numberScore', click: () => sendMenuCommand('numberScore')}
       ]
     },
     {
@@ -264,6 +256,22 @@ function buildMenu(){
   ]
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
   updateMenu()
+}
+
+// Éléments d'un menu décrit par le renderer (cf. MenusBar.js)
+function dynamicItems(m){
+  return m.items.map(item => item.type ? item : {
+      label:   item.label
+    , enabled: item.enabled
+    , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
+  })
+}
+
+// Menus du renderer placés en sous-menus de +parent+ (après un séparateur)
+function dynamicSubmenus(parent){
+  const subs = dynamicMenus.filter(m => m.parent == parent)
+  if ( !subs.length ) return []
+  return [{type: 'separator'}, ...subs.map(m => ({label: m.label, submenu: dynamicItems(m)}))]
 }
 
 // Menus inaccessibles sans analyse courante
