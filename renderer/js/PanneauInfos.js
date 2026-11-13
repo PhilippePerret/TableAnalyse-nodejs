@@ -29,9 +29,16 @@ export class PanneauInfos {
     const o = this.panneau.obj
     listen(DGet('#btn_infos_close', o),          'click', this.toggle.bind(this))
     listen(DGet('#btn_infos_create', o),         'click', Analyse.createNew.bind(Analyse))
-    listen(DGet('#btn_infos_save', o),           'click', () => Analyse.current ? Analyse.current.saveInfos() : erreur(t('errors.no_analyse_open')))
+    listen(DGet('#btn_infos_save', o),           'click', this.saveInfos.bind(this))
     listen(DGet('#btn_choose_folder', o),        'click', this.chooseFolder.bind(this, 'metadata_folder', t('ui.dialogs.choose_creation_folder')))
     listen(DGet('#btn_choose_systems', o),       'click', this.chooseFolder.bind(this, 'metadata_systems_source', t('ui.dialogs.choose_systems_folder')))
+  }
+
+  // Enregistrement des infos du panneau (édition)
+  saveInfos(){
+    if ( !Analyse.current ) return erreur(t('errors.no_analyse_open'))
+    Object.assign(Analyse.current.data.infos, this.getData())
+    Analyse.current.saveInfos()
   }
 
   async chooseFolder(fieldId, title){
@@ -73,14 +80,16 @@ export class PanneauInfos {
     ;['metadata_analyse_id', 'metadata_folder', 'metadata_systems_source', 'btn_choose_folder', 'btn_choose_systems'].forEach(id => {
       DGet(`#${id}`).disabled = !creation
     })
-    // En édition : emplacement réel de l'analyse
+    // En édition : infos de l'analyse (les champs ont pu être vidés pour
+    // une création) et emplacement réel
     const apath = !creation && Analyse.current && Analyse.current.data.path
     if ( apath ) {
+      this.setData(Analyse.current.data.infos)
       const sep = apath.includes('\\') ? '\\' : '/'
       const parts = apath.split(sep)
       DGet('#metadata_analyse_id').value     = parts[parts.length - 1]
       DGet('#metadata_folder').value         = parts.slice(0, -1).join(sep)
-      DGet('#metadata_systems_source').value = [apath, 'systems'].join(sep)
+      DGet('#metadata_systems_source').value = '' // dossier « systems » de l'analyse
     }
   }
 

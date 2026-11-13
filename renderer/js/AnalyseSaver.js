@@ -64,7 +64,8 @@ export class AnalyseSaver {
   }
 
   static async saveInfos(analyse){
-    var newInfos = Analyse.panneau_infos.getData()
+    // Infos de l'analyse (et non du panneau, qui peut servir à une création)
+    var newInfos = Object.assign({}, analyse.data.infos)
     Object.assign(newInfos, {
         systems:  Systeme.getData()
       , form:     Form.getData()
