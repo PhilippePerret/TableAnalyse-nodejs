@@ -23,8 +23,8 @@ export class TableAnalyse {
 
   /**
    * SÉLECTION PAR RECTANGLE
-   * Souris pressée sur la table (hors marque, panneau, système
-   * déplaçable) puis déplacée : un rectangle en pointillé se dessine ;
+   * Souris pressée sur la table (vide, élément verrouillé : marque,
+   * système) puis déplacée : un rectangle en pointillé se dessine ;
    * au relâchement, chaque marque non verrouillée qu'il touche est
    * sélectionnée (ou désélectionnée si elle l'était).
    */
@@ -32,7 +32,10 @@ export class TableAnalyse {
     if ( e.button !== 0 || document.documentElement.classList.contains('animation-running') ) return
     const target = e.target
     if ( !(target instanceof Element) || !this.obj.contains(target) && target !== document.body && target !== document.documentElement ) return
-    if ( target.closest('.amark, .panneau-ui, button, input, select, textarea') ) return
+    if ( target.closest('.panneau-ui, button, input, select, textarea') ) return
+    // Une marque verrouillée peut servir de départ, pas une marque libre
+    const mark = target.closest('.amark')
+    if ( mark && !mark.classList.contains('locked') ) return
     if ( target.matches('img.systeme') && !Systeme.systemsLocked ) return
     this.rectStart = {x: e.clientX, y: e.clientY}
     listen(document, 'mousemove', this.boundMouseMove)
