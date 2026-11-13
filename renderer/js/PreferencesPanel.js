@@ -19,6 +19,18 @@ import { emit } from './events.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { t } from './i18n.js'
 
+// Groupes du panneau (titres : ui.prefs_groups.<id>)
+const PREFS_GROUPS = [
+    {id: 'general',  keys: ['theme', 'autosave', 'animate', 'vitesse_relecture']}
+  , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes']}
+  , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
+  , {id: 'grid',     keys: ['grid_horizontal_space', 'grid_vertical_space', 'adjust_same_mark', 'snap_for_adjust_pos']}
+  , {id: 'sizes',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
+  , {id: 'lines',    keys: ['thiness_segment_line', 'thiness_cellule_line', 'thiness_border']}
+  , {id: 'colors',   keys: ['color_accords', 'color_harmonie', 'color_mark_parties', 'color_mark_sections', 'color_cellule', 'color_modulations', 'color_emprunts', 'color_segments']}
+  , {id: 'window',   keys: ['window_width', 'window_height', 'last_scroll']}
+]
+
 class PreferencesPanelClass {
 
 toggle(){this.panneau.toggle.call(this.panneau)}
@@ -169,23 +181,14 @@ build(){
   }
   var o = DCreate('SECTION', {id:'preferences-panel', class:'hidden'})
 
-  // Pour simplifier l'écriture
-  
-  Object.values(PreferencesAppData).forEach( dp => {
-    if ( dp.hidden ) return // réglée ailleurs (p.e. panneau d'export)
-    if ( dp.type == 'inputtext'){
-      o.appendChild(this.buildInputText(dp))
-    } else if ( dp.type == 'checkbox' ) {
-      o.appendChild(this.buildCheckBox(dp))
-    } else if ( dp.type == 'select' ) {
-      o.appendChild(this.buildMenuSelect(dp))
-    } else if ( dp.type == 'pressoir' ) {
-      o.appendChild(this.buildChoixPressoirs(dp))
-    }
-    // Si des précisions sont à apporter
-    if ( dp.precision ) {
-      o.appendChild(DCreate('DIV',{class:'description', text:dp.precision}))
-    }
+  // Préférences par groupe (titre), puis celles d'aucun groupe
+  const grouped = new Set(PREFS_GROUPS.flatMap(g => g.keys))
+  const others  = Object.keys(PreferencesAppData).filter(k => !grouped.has(k))
+  ;[...PREFS_GROUPS, {id: 'others', keys: others}].forEach(group => {
+    const prefs = group.keys.map(k => PreferencesAppData[k]).filter(dp => dp && !dp.hidden)
+    if ( !prefs.length ) return
+    o.appendChild(DCreate('DIV', {class:'pref-group', text: t(`ui.prefs_groups.${group.id}`)}))
+    prefs.forEach(dp => this.buildPref(o, dp))
   })
 
   // Pied de page : « Enregistrer » (bouton par défaut)
@@ -200,6 +203,22 @@ build(){
 
   this.isBuilt = true
 
+}
+
+buildPref(o, dp){
+  if ( dp.type == 'inputtext'){
+    o.appendChild(this.buildInputText(dp))
+  } else if ( dp.type == 'checkbox' ) {
+    o.appendChild(this.buildCheckBox(dp))
+  } else if ( dp.type == 'select' ) {
+    o.appendChild(this.buildMenuSelect(dp))
+  } else if ( dp.type == 'pressoir' ) {
+    o.appendChild(this.buildChoixPressoirs(dp))
+  }
+  // Si des précisions sont à apporter
+  if ( dp.precision ) {
+    o.appendChild(DCreate('DIV',{class:'description', text:dp.precision}))
+  }
 }
 
 // Enregistrement des préférences de l'analyse, puis fermeture

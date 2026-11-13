@@ -20,6 +20,15 @@ section#preferences-panel > div.panneau-foot,
 section#preferences-panel > div.description,
 section#preferences-panel > div.div-checkbox { grid-column: 1 / -1; }
 section#preferences-panel div.type-valeur { display: contents; }
+section#preferences-panel > div.pref-group {
+  grid-column: 1 / -1;
+  margin-top: .8em;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #d6d6d6;
+  font-weight: 600;
+  color: #3a925e;
+}
+section#preferences-panel > div.pref-group:first-of-type { margin-top: 0; }
 section#preferences-panel span.pref-field { display: flex; align-items: center; gap: 8px; }
 section#preferences-panel div.description {
   margin-left:  2em;

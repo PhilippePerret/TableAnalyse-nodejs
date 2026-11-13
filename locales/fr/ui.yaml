@@ -249,8 +249,8 @@ dialogs:
 prefs:
   theme:                  {label: "Thème analyse", precision: "Définit les tailles à appliquer ainsi que les couleurs (dans le mode couleur de l’analyse)"}
   lock_systems:           {label: "Verrouiller les systèmes"}
-  grid_horizontal_space:  {label: "Espacement horizontal sur le grille"}
-  grid_vertical_space:    {label: "Espacement vertical sur le grille"}
+  grid_horizontal_space:  {label: "Espacement horizontal sur la grille"}
+  grid_vertical_space:    {label: "Espacement vertical sur la grille"}
   systeme_width:          {label: "Largeur (en pixels) des systèmes"}
   top_first_system:       {label: "Décalage haut du premier système (en pixels)"}
   distance_systemes:      {label: "Distance par défaut (en pixels) des systèmes"}
@@ -258,7 +258,7 @@ prefs:
   snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
   marque_accords_size:    {label: "Taille des marques d'accord"}
   marque_harmonie_size:   {label: "Taille des marques d'harmonie"}
-  marque_modulation_size: {label: "Taille des marques d'harmonie"}
+  marque_modulation_size: {label: "Taille des marques de modulation"}
   marque_emprunt_size:    {label: "Taille des marques d'emprunt"}
   marque_cellule_size:    {label: "Taille des noms de cellules"}
   thiness_segment_line:   {label: "Épaisseur trait segments"}
@@ -271,7 +271,7 @@ prefs:
   distance_after_measure_line: {label: "Distance (px) entre la ligne des numéros de mesure et le système suivant"}
   marque_measure:         {label: "Taille numéros de mesures"}
   marque_texte_size_3:    {label: "Taille des petits textes"}
-  marque_texte_size_4:    {label: "Taille des textes très petis"}
+  marque_texte_size_4:    {label: "Taille des textes très petits"}
   window_width:           {label: "Largeur de la fenêtre à l’ouverture"}
   window_height:          {label: "Hauteur de la fenêtre à l’ouverture"}
   last_scroll:            {label: "Scroll à l’ouverture"}
@@ -287,6 +287,17 @@ prefs:
   vitesse_relecture:      {label: "Vitesse de la relecture (de 1 à 100)", precision: "Ça détermine le temps d'affichage d'un objet en mode relecture. Avec la valeur 100, tous les objets sont à peu près ré-écrit en même temps."}
   autosave:               {label: "Sauvegarde automatique"}
   animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
+
+prefs_groups:
+  general:                "Général"
+  systems:                "Systèmes"
+  measures:               "Numéros de mesure"
+  grid:                   "Grille et alignement"
+  sizes:                  "Taille des marques"
+  lines:                  "Traits"
+  colors:                 "Couleurs"
+  window:                 "Fenêtre"
+  others:                 "Autres"
 
 # Marques d'analyse : nom (dans les listes de choix), message (invite
 # de l'éditeur) et contenu par défaut
