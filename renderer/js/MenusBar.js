@@ -20,7 +20,7 @@ import { t } from './i18n.js'
 const MENUS = [
     {id: 'options_tool',    label: 'options'}
   , {id: 'amark_menu',      label: 'mark'}
-  , {id: 'align_menu',      label: 'align',     parent: 'edit'}
+  , {id: 'align_menu',      label: 'align',     parent: 'amark_menu'}
   , {id: 'adjust_menu',     label: 'adjust',    parent: 'amark_menu'}
   , {id: 'borders_tool',    label: 'borders',   parent: 'amark_menu'}
   , {id: 'selection_tool',  label: 'selection'}

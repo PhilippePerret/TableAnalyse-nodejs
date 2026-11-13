@@ -77,10 +77,12 @@ mark_menu:
   left:             "Aligner le texte à gauche"
 
 align_menu:
-  right:            "… à droite"
-  left:             "… à gauche"
-  top:              "… en haut"
-  bottom:           "… en bas"
+  top:              "En haut"
+  bottom:           "En bas"
+  vcenter:          "Au centre vertical"
+  right:            "À droite"
+  left:             "À gauche"
+  hcenter:          "Au centre horizontal"
   cancel:           "Annuler l’alignement"
 
 adjust_menu:

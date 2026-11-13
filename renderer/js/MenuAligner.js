@@ -21,47 +21,39 @@ export class AlignMenu extends MenusTool {
     on('selection:changed', ({selection}) => this.setStateBySelection(selection.length))
   }
 
+  /**
+   * Aligne les marques sélectionnées (sans changer leur taille) : bord
+   * haut, bas, gauche ou droit de la sélection, ou son centre vertical
+   * ou horizontal. 'cancel' remet les marques à leur position d'avant.
+   */
   static onActivate(e, align, option){
-    /**
-     * Suivant la valeur de +align+, on prend une valeur de référence
-     * différente. Par exemple, si l'alignement est à gauche, on prend
-     * l'objet qui a le left le plus petit et on l'applique aux autres
-     */
-    if ( align == 'cancel') {
-      /*
-      |  On désactive le menu pour ne pas pouvoir annuler deux fois
-      */
-      this.setStateCancelMenu(false)      
-    } else {
-      this.refAlignValue = null
-      /*
-      |  Récupération de la valeur de référence
-      */
-      AObjet.eachSelection(this.getRefValue.bind(this, align))
-      // Enabled le menu annuler
-      this.setStateCancelMenu(true)
+    const sel = AObjet.dupSelection()
+    if ( align == 'cancel' ) {
+      sel.forEach(aob => {
+        if ( undefined !== aob.old_align_left ) aob.left = aob.old_align_left
+        if ( undefined !== aob.old_align_top  ) aob.top  = aob.old_align_top
+      })
+      // Pour ne pas pouvoir annuler deux fois
+      return this.setStateCancelMenu(false)
     }
-    var methodOpe ;
-    switch(align){
-      case 'cancel':
-        methodOpe = function(aob){
-          ['left','right','top','bottom'].forEach( aprop => {
-            const old_prop = 'old_' + aprop;
-            if ( aob[old_prop] ) aob[aprop] = aob[old_prop]
-          })
-        }
-        break
-      case 'center','middle':
-        break
-      default:
-        methodOpe = function(aob){ 
-          const old_prop = 'old_' + align;
-          aob[old_prop] = 0 + aob[align] // pour annulation
-          aob[align] = AlignMenu.refAlignValue 
-        }
-    }
-    AObjet.eachSelection(methodOpe)
-
+    const box = sel.map(aob => ({aob, left: aob.left, top: aob.top, width: aob.width, height: aob.height}))
+    const minLeft   = Math.min(...box.map(b => b.left))
+    const maxRight  = Math.max(...box.map(b => b.left + b.width))
+    const minTop    = Math.min(...box.map(b => b.top))
+    const maxBottom = Math.max(...box.map(b => b.top + b.height))
+    box.forEach(b => {
+      b.aob.old_align_left = b.left
+      b.aob.old_align_top  = b.top
+      switch(align){
+        case 'top':     b.aob.top  = minTop ; break
+        case 'bottom':  b.aob.top  = maxBottom - b.height ; break
+        case 'vcenter': b.aob.top  = Math.round((minTop + maxBottom - b.height) / 2) ; break
+        case 'left':    b.aob.left = minLeft ; break
+        case 'right':   b.aob.left = maxRight - b.width ; break
+        case 'hcenter': b.aob.left = Math.round((minLeft + maxRight - b.width) / 2) ; break
+      }
+    })
+    this.setStateCancelMenu(true)
   }
 
   /* --- Public Methods --- */
@@ -72,23 +64,11 @@ export class AlignMenu extends MenusTool {
 
   /* --- Fonctional Methods --- */
 
-  static getRefValue(prop, aob){
-    const my = AlignMenu
-    if ( my.refAlignValue != null ) {
-      if ( prop == 'left' || prop == 'top' ) {
-        if ( aob[prop] < my.refAlignValue ) my.refAlignValue = aob[prop]
-      } else {
-        if ( aob[prop] > my.refAlignValue ) my.refAlignValue = aob[prop]
-      }
-    } else {
-      my.refAlignValue = aob[prop]      
-    }
-  }
-
   static setAllMenuAlignment(state){
-    for(var i = 1; i < 5; ++i){
-      this.menu.options[i].disabled = not(state)
-    }
+    Array.from(this.menu.options).forEach((option, i) => {
+      if ( i == 0 || !option.value || option.value == 'cancel' ) return
+      option.disabled = not(state)
+    })
   }
 
   static setStateCancelMenu(state){
