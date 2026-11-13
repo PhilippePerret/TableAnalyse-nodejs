@@ -1,0 +1,52 @@
+# 错误消息
+# 变量：%{名称}
+
+no_analyse_open: "没有打开的分析。"
+need_analyse_first: "请先打开一个分析。"
+need_analyse_to_save: "需要打开或创建分析才能保存。"
+cannot_save: "%{error}<br><br>无法保存。"
+no_analyse_to_export: "没有可导出的当前分析！"
+nothing_to_export: "分析台为空：没有可导出的内容。"
+export_failed: "无法导出分析：%{error}"
+need_choose_analyse: "请先选择分析。"
+image_export_todo: "生成分析图像的功能尚未实现。"
+svg_export_todo: "尚不能将分析导出为 SVG。"
+image_not_found: "找不到图像：%{src}"
+infos_not_found: "找不到信息（%{path}）！"
+not_an_analyse_folder: "文件夹“%{folder}”不是分析文件夹（必须包含 'infos.yaml' 文件和 'systems' 文件夹）。"
+no_systems_to_number: "分析中没有可编号的声部组。"
+cutting_failed: "切分失败。"
+render_process_gone: "渲染进程已中断：%{reason}"
+score_image_failed: "问题：%{output}"
+
+creation:
+  folder_required: "必须指定创建分析的文件夹。"
+  folder_is_app: "不能在应用程序文件夹中创建分析…"
+  folder_not_found: "找不到文件夹 '%{folder}'…"
+  invalid_id: "标识符 '%{id}' 无效（只能包含字母、数字、下划线或连字符）"
+  already_exists: "分析“%{id}”已存在于文件夹 '%{folder}' 中…"
+  id_required: "- 必须填写分析的标识符。"
+  id_chars: "- 标识符只能包含字母、数字、连字符或下划线。"
+  title_required: "- 必须填写作品标题。"
+  composer_required: "- 必须填写作品的作曲家。"
+  analyst_required: "– 必须填写分析者姓名。"
+
+tools:
+  code_required: "必须在字段中填写代码。"
+
+marks:
+  no_autocontent: "无法定义类型 '%{type}' 的自动内容…"
+  no_subtype: "类型 '%{type}' 未定义其子类型…"
+  already_associated: "这两个标记已关联。"
+  not_associated: "这两个标记未关联！"
+  missing_tag: "标记 %{id} 已不存在。应删除此链接。"
+  top_undefined: "对象的上边位置（top）未定义。"
+  left_undefined: "对象的左边位置（left）未定义。"
+  top_nan: "上边位置（top）应为数字。"
+  left_nan: "对象的左边位置（left）应为数字"
+  duplicate_ids: "发现重复的标识符。最好先修正它们（编辑 analyse_tags.yaml 文件）并重新载入分析。这些 ID 显示在控制台中。"
+
+preference_not_found: "找不到标识符为 #%{key} 的偏好设置元素"
+unknown_adjust: "无法处理调整 '%{adjust}'。"
+panel_id_required: "%{owner} 必须定义面板的 ID（<owner>.panneauId）"
+manual_not_found: "找不到手册：%{path}"

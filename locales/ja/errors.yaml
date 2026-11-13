@@ -1,0 +1,52 @@
+# エラーメッセージ
+# 変数：%{名前}
+
+no_analyse_open: "開いている分析はありません。"
+need_analyse_first: "まず分析を開いてください。"
+need_analyse_to_save: "保存するには分析を開くか作成してください。"
+cannot_save: "%{error}<br><br>保存できません。"
+no_analyse_to_export: "書き出す分析がありません！"
+nothing_to_export: "分析テーブルは空です：書き出すものがありません。"
+export_failed: "分析を書き出せませんでした：%{error}"
+need_choose_analyse: "まず分析を選択してください。"
+image_export_todo: "分析画像の作成はまだ実装されていません。"
+svg_export_todo: "分析を SVG に書き出すことはまだできません。"
+image_not_found: "画像が見つかりません：%{src}"
+infos_not_found: "情報が見つかりません（%{path}）！"
+not_an_analyse_folder: "フォルダ「%{folder}」は分析フォルダではありません（'infos.yaml' ファイルと 'systems' フォルダが必要です）。"
+no_systems_to_number: "分析に番号を付ける段がありません。"
+cutting_failed: "切り分けに失敗しました。"
+render_process_gone: "レンダリングプロセスが中断されました：%{reason}"
+score_image_failed: "問題：%{output}"
+
+creation:
+  folder_required: "分析を作成するフォルダを指定してください。"
+  folder_is_app: "アプリケーションのフォルダに分析は作成できません…"
+  folder_not_found: "フォルダ '%{folder}' が見つかりません…"
+  invalid_id: "識別子 '%{id}' は無効です（英字、数字、アンダースコア、ハイフンのみ使用できます）"
+  already_exists: "分析「%{id}」はフォルダ '%{folder}' にすでにあります…"
+  id_required: "- 分析の識別子を入力してください。"
+  id_chars: "- 識別子には英字、数字、ハイフン、アンダースコアのみ使用できます。"
+  title_required: "- 曲名を入力してください。"
+  composer_required: "- 作曲者を入力してください。"
+  analyst_required: "– 分析者の名前が必要です。"
+
+tools:
+  code_required: "フィールドにコードを入力してください。"
+
+marks:
+  no_autocontent: "種類 '%{type}' の自動内容を定義できません…"
+  no_subtype: "種類 '%{type}' はサブタイプを定義していません…"
+  already_associated: "2 つのマークはすでに関連付けられています。"
+  not_associated: "2 つのマークは関連付けられていません！"
+  missing_tag: "マーク %{id} はもう存在しません。このリンクを削除してください。"
+  top_undefined: "オブジェクトの上の位置（top）が定義されていません。"
+  left_undefined: "オブジェクトの左の位置（left）が定義されていません。"
+  top_nan: "上の位置（top）は数値である必要があります。"
+  left_nan: "オブジェクトの左の位置（left）は数値である必要があります"
+  duplicate_ids: "重複した識別子が見つかりました。修正（analyse_tags.yaml ファイルを編集）してから分析を再読み込みすることをお勧めします。ID はコンソールに表示されています。"
+
+preference_not_found: "識別子 #%{key} の環境設定要素が見つかりません"
+unknown_adjust: "調整 '%{adjust}' は処理できません。"
+panel_id_required: "%{owner} はパネルの ID を定義する必要があります（<owner>.panneauId）"
+manual_not_found: "マニュアルが見つかりません：%{path}"

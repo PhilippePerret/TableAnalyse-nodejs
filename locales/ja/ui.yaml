@@ -1,0 +1,423 @@
+# インターフェース要素（メニュー、パネル、ボタン、ラベル…）
+# 変数：%{名前}；%{cmd} = システムのコマンドキー（⌘ または Ctrl+）
+# システム固有のテキスト：テーブル {darwin:, win32:, linux:}
+
+app:
+  name: "分析テーブル"
+  title: "分析テーブル"
+
+decimal_separator: "."
+
+menu:
+  file:             "分析"
+  new_analyse:      "新規分析…"
+  open_analyse:     "分析を開く…"
+  reload_analyse:   "分析を再読み込み"
+  save:             "保存"
+  cut_score:        "楽譜を切り分ける…"
+  number_score:     "楽譜に番号を付ける"
+  infos:            "情報…"
+  export:           "書き出し…"
+  show_in_finder:
+    darwin:         "Finder に表示"
+    win32:          "エクスプローラーに表示"
+    linux:          "ファイルマネージャーに表示"
+  tools_menu:       "ツール"
+  tools:            "ツールボックス…"
+  form:             "楽式…"
+  animate:          "アニメーションを開始"
+  help:             "ヘルプ"
+  help_html:        "HTML"
+  help_epub:        "ePub"
+  prefs:            "環境設定…"
+  language:         "言語"
+  edit:             "編集"
+  options:          "オプション"
+  mark:             "マーク"
+  align:            "整列"
+  adjust:           "調整"
+  selection:        "選択"
+  borders:          "枠線"
+  window:           "ウインドウ"
+  minimize:
+    darwin:         "Dock に入れる"
+    win32:          "最小化"
+    linux:          "最小化"
+  zoom:             "拡大／縮小"
+  front:            "すべてを手前に移動"
+  close_window:     "ウインドウを閉じる"
+  cut:              "カット"
+  copy:             "コピー"
+  paste:            "ペースト"
+  select_all:       "すべてを選択"
+  about:            "%{name} について"
+  hide:             "%{name} を隠す"
+  hide_others:      "ほかを隠す"
+  unhide:           "すべてを表示"
+  quit:             "%{name} を終了"
+
+options_menu:
+  cancel_last:      "取り消す：%{name}"
+  cancel_history:   "取り消しの履歴"
+  grid_v:           "縦方向にスナップ"
+  grid_h:           "横方向にスナップ"
+  color:            "カラー版"
+  lock_systems:     "段をロック"
+  coordinates:      "座標を表示"
+  theme_A:          "テーマ A — シンプル"
+  theme_B:          "テーマ B — ScoreAnalyse"
+  theme_C:          "テーマ C — ダーク"
+
+mark_menu:
+  lock_one:         "マークをロック"
+  lock_many:        "マークをロック"
+  unlock_one:       "マークのロックを解除"
+  unlock_many:      "マークのロックを解除"
+  change_type:      "種類を設定…"
+  justify:          "テキストを両端揃え"
+  center:           "テキストを中央揃え"
+  right:            "テキストを右揃え"
+  left:             "テキストを左揃え"
+
+align_menu:
+  top:              "上"
+  bottom:           "下"
+  vcenter:          "上下中央"
+  right:            "右"
+  left:             "左"
+  hcenter:          "左右中央"
+  cancel:           "整列を取り消す"
+
+adjust_menu:
+  spread_v:         "縦方向に均等配置"
+  spread_h:         "横方向に均等配置"
+  h:                "…横方向"
+  v:                "…縦方向"
+  cancel:           "調整を取り消す"
+
+selection_menu:
+  group:            "選択した要素をグループ化"
+  ungroup:          "選択した要素のグループを解除"
+  select_all:       "マークを選択…"
+
+borders_menu:
+  remove_left:      "左の枠線を削除"
+  add_left:         "左の枠線を戻す"
+  remove_right:     "右の枠線を削除"
+  add_right:        "右の枠線を戻す"
+  remove_bottom:    "下の枠線を削除"
+  add_bottom:       "下の枠線を戻す"
+  remove_top:       "上の枠線を削除"
+  add_top:          "上の枠線を戻す"
+
+# マークのコンテキストメニュー
+mark_context:
+  lock:             "ロック"
+  unlock:           "ロックを解除"
+  edit:             "編集…"
+  align:            "同じ種類のマークに揃える"
+  align_harmony:    "和声記号に揃える"
+  align_chord:      "コードに揃える"
+  delete:           "削除"
+
+system_menu:
+  unlock:           "ロックを解除"
+  lock:             "ロック"
+  open_image:       "画像を開く"
+  show_image:
+    darwin:         "Finder に表示"
+    win32:          "エクスプローラーに表示"
+    linux:          "ファイルマネージャーに表示"
+
+buttons:
+  close:            "閉じる"
+  save:             "保存"
+  choose:           "選択…"
+  cancel:           "キャンセル"
+  renounce:         "やめる"
+  replace:          "置き換える"
+  ok:               "OK"
+  apply:            "適用"
+  type:             "種類…"
+
+message_titles:
+  notice:           "お知らせ"
+  error:            "エラー"
+  doaction:         "処理中"
+
+panels:
+  infos:
+    title:            "分析のメタデータ"
+    piece_title:      "曲名"
+    composer:         "作曲者"
+    analyse_title:    "分析のタイトル"
+    analyse_id:       "識別子／接辞"
+    analyse_id_ph:    "識別子 (a-zA-Z0-9_-)"
+    folder:           "保存先"
+    folder_ph:        "分析を含むフォルダ"
+    analyst:          "分析者"
+    analyst_ph:       "分析者"
+    systems_source:   "段"
+    systems_source_ph: "画像のフォルダ（任意）"
+    create:           "新しい分析を作成"
+    required:         "必須情報"
+  tools:
+    title:            "ツールボックス"
+    quick_score:      "クイック楽譜"
+    quick_score_desc: "muscore コードから画像を作成："
+    add:              "追加…"
+    image_name:       "画像名"
+    tune:             "調"
+    time:             "拍子"
+    proximity:        "間隔"
+    barres:           "小節線を表示"
+    no_stem:          "符幹を表示しない"
+    build:            "作成"
+    distribute:       "段を配置"
+    inter_system:     "段の間隔："
+    inter_system_desc: "（間隔を指定しない場合は環境設定の値が使われます。その値は "
+    export_title:     "分析画像の書き出し"
+    systems:          "段 "
+    systems_desc:     "作成する段。空欄ですべて"
+    one_per_system:   "段ごとに 1 枚の画像"
+    export_image:     "画像を作成（静止画）"
+    export_svg:       "SVG 画像を作成（未対応）"
+  prefs:
+    title:            "環境設定"
+  manual:
+    title:            "ユーザーマニュアル"
+    shortcuts:        "キーボードショートカット"
+    manual_button:    "マニュアル"
+    shortcuts_list:   "ショートカット一覧"
+  form:
+    title:            "曲の楽式"
+    name:             "名前"
+    type:             "種類"
+    parent:           "親"
+    piece:            "曲"
+    the_piece:        "曲"
+    from_measure:     "開始小節"
+    to_measure:       "終了小節"
+    tons:             "調"
+    build_on_table:   "分析テーブルに配置"
+    unnamed:          "名前のない%{type}"
+  history:
+    title:            "取り消しの履歴"
+    item:             "変更：%{name}"
+    cancel_hover:     "取り消す："
+  export:
+    title:            "分析を書き出す"
+    type:             "形式"
+    types:
+      pdf:            "PDF"
+      svg:            "SVG"
+      html:           "HTML"
+    svg_desc:         "1 ページにつき 1 つの SVG ファイル。"
+    legend_title:     "使用した記号"
+    gap:              "段の間隔"
+    gap_desc:         "前の段のいちばん下のオブジェクトと次の段のいちばん上のオブジェクトの距離。書き出した文書では、すべての要素がそれに合わせて移動します。"
+    bad_gap:          "段の間隔が無効です。"
+    mode_page:        "単一ページ（画面で読む）"
+    mode_book:        "固定サイズのページ（本）"
+    size:             "サイズ"
+    orientation:      "方向"
+    portrait:         "縦"
+    landscape:        "横"
+    margin:           "余白"
+    format:           "%{name}（%{width} × %{height} %{unit}）"
+    formats:
+      A3:             "A3"
+      A4:             "A4"
+      A5:             "A5"
+      A6:             "A6"
+      B4:             "B4"
+      B5:             "B5"
+      letter:         "US レター"
+      legal:          "US リーガル"
+      tabloid:        "タブロイド"
+      executive:      "エグゼクティブ"
+    custom:           "カスタムサイズ…"
+    custom_size:      "カスタムサイズ（%{width} × %{height} %{unit}）…"
+    custom_title:     "カスタムサイズ"
+    width:            "幅"
+    height:           "高さ"
+    unit:             "単位"
+    units:
+      mm:             "mm"
+      cm:             "cm"
+      in:             "in"
+      pt:             "pt"
+      pc:             "pc"
+    units_long:
+      mm:             "ミリメートル"
+      cm:             "センチメートル"
+      in:             "インチ"
+      pt:             "ポイント"
+      pc:             "パイカ"
+    remember:         "この設定を分析に保存"
+    export:           "書き出す"
+    bad_size:         "ページのサイズまたは余白が無効です。"
+    fonts_notice:     "SVG ファイルを開くコンピュータに、分析のフォント（PhilNote…）がインストールされている必要があります。"
+  mark_editor:
+    title:            "マークの編集"
+  animation:
+    title:            "アニメーション"
+    play:             "再生"
+    pause:            "一時停止"
+    step:             "ステップ"
+    step_desc:        "マークごと：← 前のマーク、→ 次のマーク"
+    previous:         "前のマーク"
+    next:             "次のマーク"
+    stop:             "停止（先頭に戻る）"
+    finish:           "アニメーションを終了"
+    tempo:            "テンポ"
+    tempo_value:      "♩ = %{tempo}"
+    meter:            "4/4"
+    meter_desc:       "既定の拍子（分析で未定義）"
+    no_marks:         "アニメーションするマークがありません。"
+  select_marks:
+    title:            "マークを選択"
+    select:           "選択"
+    regex_ph:         "正規表現（空欄：すべて）"
+    systems:          "段"
+    count_one:        "%{n} 個のマークが見つかりました"
+    count_many:       "%{n} 個のマークが見つかりました"
+  getter:
+    new_item:         "新しい項目"
+
+dialogs:
+  choose_analyse_folder: "分析のフォルダを選択"
+  choose_folder:         "フォルダを選択"
+  choose_creation_folder: "分析を作成するフォルダ"
+  choose_systems_folder: "段の画像を含むフォルダ"
+  choose_pdf:            "楽譜の PDF を選択"
+  pdf_filter:            "PDF 楽譜"
+  replace_systems:       "分析の段を置き換えますか？"
+  replace_systems_detail: "現在の %{count} 段は、切り分けで得られた段に置き換えられます。"
+
+# 分析の環境設定（ラベルと説明）
+prefs:
+  theme:                  {label: "分析のテーマ", precision: "適用するサイズと色を定義します（分析のカラーモード時）"}
+  lock_systems:           {label: "段をロック"}
+  grid_horizontal_space:  {label: "グリッドの横の間隔"}
+  grid_vertical_space:    {label: "グリッドの縦の間隔"}
+  systeme_width:          {label: "段の幅"}
+  top_first_system:       {label: "最初の段の上の位置"}
+  distance_systemes:      {label: "段の既定の間隔"}
+  adjust_same_mark:       {label: "同じ種類のマークの高さを揃える"}
+  snap_for_adjust_pos:    {label: "マーク整列のスナップ距離", precision: "同じ種類のマークに作用し、上の「高さを揃える」が有効な場合のみ働きます。"}
+  marque_accords_size:    {label: "コードマークのサイズ"}
+  marque_harmonie_size:   {label: "和声記号のサイズ"}
+  marque_modulation_size: {label: "転調マークのサイズ"}
+  marque_emprunt_size:    {label: "借用マークのサイズ"}
+  marque_cellule_size:    {label: "動機セル名のサイズ"}
+  thiness_segment_line:   {label: "セグメントの線の太さ"}
+  thiness_cellule_line:   {label: "セルの線の太さ"}
+  thiness_border:         {label: "枠の線の太さ"}
+  marque_pedale_size:     {label: "保続音のサイズ"}
+  marque_texte_size_1:    {label: "大きいテキストのサイズ"}
+  marque_texte_size_2:    {label: "中くらいのテキストのサイズ"}
+  measure_line_offset:    {label: "段の下の小節番号行までの距離"}
+  distance_after_measure_line: {label: "小節番号行と次の段の距離"}
+  marque_measure:         {label: "小節番号のサイズ"}
+  marque_texte_size_3:    {label: "小さいテキストのサイズ"}
+  marque_texte_size_4:    {label: "とても小さいテキストのサイズ"}
+  window_width:           {label: "開いたときのウインドウの幅"}
+  window_height:          {label: "開いたときのウインドウの高さ"}
+  last_scroll:            {label: "開いたときのスクロール位置"}
+  color_mesure:           {label: "小節番号"}
+  color_accords:          {label: "コードネーム"}
+  color_harmonie:         {label: "和声記号"}
+  color_mark_parties:     {label: "部分のマーク"}
+  color_mark_sections:    {label: "セクションのマーク"}
+  color_cellule:          {label: "セルと動機"}
+  color_modulations:      {label: "転調のマーク"}
+  color_emprunts:         {label: "借用のマーク"}
+  color_segments:         {label: "セグメント"}
+  animation_tempo:        {label: "アニメーションのテンポ", precision: "アニメーションのカーソルの速さ（1 分あたりの四分音符の数、既定の拍子は 4/4）。"}
+  autosave:               {label: "自動保存"}
+  animate:                {label: "分析をアニメーション表示", precision: "マークが順に表示されます"}
+
+prefs_groups:
+  general:                "一般"
+  systems:                "段"
+  measures:               "小節番号"
+  grid:                   "グリッドと整列"
+  marks:                  "マーク"
+  lines:                  "線"
+  colors:                 "色"
+  window:                 "ウインドウ"
+  others:                 "その他"
+
+# 分析マーク：名前（選択リスト内）、メッセージ（エディタの案内）、既定の内容
+marks:
+  types:
+    acc: {name: "コード",        message: "コードネーム"}
+    har: {name: "和声",          message: "和声記号"}
+    mod: {name: "転調",          message: "新しい調"}
+    emp: {name: "借用",          message: "借用の調"}
+    cad: {name: "終止…"}
+    bbx: {name: "枠",            message: "枠の種類"}
+    not: {name: "音の種類…",     message: "音の種類"}
+    deg: {name: "音度",          message: "音の度数"}
+    seg: {name: "セグメント",    message: "説明（なければ空欄）", default: "部分 1"}
+    img: {name: "画像",          message: "挿入する画像（'images' フォルダ内のパス）"}
+    txt: {name: "テキスト",      message: "表示するテキスト"}
+    ped: {name: "保続音",        message: "保続音の度数"}
+    cir: {name: "円"}
+  frames:
+    prt:  {name: "部分（開始）",     default: "提示部"}
+    prtz: {name: "部分の終わり",     default: "提示部"}
+    sec:  {name: "セクションの開始", default: "セクション"}
+    secz: {name: "セクションの終わり", default: "セクション"}
+    cel:  {name: "セル"}
+    bxt:  {name: "枠内のテキスト",   default: "**装飾付き**と_装飾付き_のテキスト。"}
+    box:  {name: "シンプルな枠"}
+  texts:
+    size1: {name: "大",               default: "大きいテキスト"}
+    size2: {name: "中",               default: "中くらいのテキスト"}
+    size3: {name: "小",               default: "小さいテキスト"}
+    size4: {name: "ミニ",             default: "とても小さいテキスト"}
+    mes:   {name: "小節番号"}
+    long:  {name: "長いテキスト",     default: "長いテキスト（コマンド + Enter で終了）"}
+    idx:   {name: "余白（索引）",     default: "索引"}
+  notes:
+    np: "経過音"
+    ap: "倚音"
+    ac: "半音階的倚音"
+    re: "掛留音"
+    br: "刺繍音"
+    db: "二重刺繍音"
+    ec: "逸音"
+    in: "和声音"
+    an: "先取音"
+  cadences:
+    par: "完全終止"
+    imp: "不完全終止"
+    dem: "半終止"
+    ita: "イタリア終止"
+    rom: "偽終止"
+    pla: "変格終止"
+    fau: "フォーレ終止"
+  cadences_abbr:
+    par: "完終"
+    imp: "不完終"
+    dem: "半終"
+    ita: "伊終"
+    rom: "偽終"
+    pla: "変終"
+    fau: "フ終"
+  segments:
+    h-up:    "水平、譜表の上"
+    h-down:  "水平、譜表の下"
+    v-left:  "垂直、線は左"
+    v-right: "垂直、線は右"
+  getter:
+    type:         "マークの種類"
+    cadence:      "終止の種類"
+    segment:      "セグメントの配置"
+
+form_types:
+  par: "部分"
+  sec: "セクション"
+  seg: "セグメント"

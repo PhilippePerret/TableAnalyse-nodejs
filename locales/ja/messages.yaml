@@ -1,0 +1,44 @@
+# メッセージ（情報、処理中の操作、ヒント）
+# 変数：%{名前}；%{cmd} = システムのコマンドキー（⌘ または Ctrl+）
+# システム固有のテキスト：テーブル {darwin:, win32:, linux:}
+
+no_analyse_open: "開いている分析はありません。<br><br>「分析」メニューから既存の分析を開く（%{cmd}O）か、新しい分析を作成（%{cmd}N）してください。"
+no_systems: "この分析には段がありません。<br><br>分析を始めるには楽譜の段が必要です：「分析」メニュー >「楽譜を切り分ける…」。"
+cutting_score: "楽譜を切り分けて番号を付けています…"
+after_cut:
+  darwin: "各段を確認し、「消す」べき部分（ページ番号、ほかの段の音符や指示など）があれば、画像ツール（例：プレビュー）で消してください。段を手作業で切り直して取り除くこともできます。"
+  win32: "各段を確認し、「消す」べき部分（ページ番号、ほかの段の音符や指示など）があれば、画像ツール（例：ペイント）で消してください。段を手作業で切り直して取り除くこともできます。"
+  linux: "各段を確認し、「消す」べき部分（ページ番号、ほかの段の音符や指示など）があれば、画像ツール（例：GIMP）で消してください。段を手作業で切り直して取り除くこともできます。"
+numbering_score: "楽譜に番号を付けています…"
+exporting_html: "分析を HTML に書き出しています。しばらくお待ちください…"
+exported_html: "分析を %{path} に書き出しました"
+exporting_pdf: "分析を PDF に書き出しています。しばらくお待ちください…"
+exported_pdf: "分析を %{path} に書き出しました"
+exporting_svg: "分析を SVG に書き出しています。しばらくお待ちください…"
+exported_svg: "分析をフォルダ %{path} に書き出しました（1 ページにつき 1 つの SVG ファイル）"
+image_built: "画像 %{name} を作成しました。\n名前はクリップボードにあります：画像を作成してすぐに確認できます。"
+think_to_save: "分析を保存してください。"
+systems_unlocked: "<p>既定では、すべての分析マークとほかの段が移動に従います。</p><p>1 つの段だけを移動するには、⌥ キーを押したままにします。</p><p>その段と後続の段だけを移動するには、⌥ と ⇧ を押したままにします。</p>"
+systems_position_adjusted: "段の位置を調整しました。新しいデータを保存してください。"
+form_delete_todo: "要素の削除はまだできません"
+form_no_measure: "テーブル上に %{start} 以上の小節番号が見つかりません。"
+form_already_marked: "要素 '%{name}' にはすでにマークがあります。更新のみ行います。"
+form_associated: "%{type} をマーク #%{tag} に関連付けました"
+form_associated_f: "%{type} をマーク #%{tag} に関連付けました"
+nothing_to_cancel: "取り消す操作はありません。"
+prop_of: "#%{id} の %{prop}"
+no_same_type_mark: "この段には同じ種類のマークがありません。"
+no_harmony_mark: "和声記号がありません。"
+no_chord_mark: "コードのマークがありません。"
+
+# 楽譜の切り分け（ログ）
+cutter:
+  page: "ページ %{page}/%{pages}：譜表 %{staves} 本、段 %{systems} 個（%{detail}）"
+  page_warning: "  ! ページ %{page}：%{warning}"
+  done: "段 %{systems} 個（%{measures} 小節）を %{out} に書き込みました"
+  image_measures: "%{image}：%{count} 小節"
+  image_warning: "  ! %{image}：%{warning}"
+  image_systems: "  ! %{image}：段を %{count} 個検出"
+  numbered: "%{systems} 段の %{measures} 小節に番号を付けました"
+  no_staff: "譜表が検出されません"
+  measures_header: "# 切り分けで検出した小節番号（各画像のピクセル座標）。\n# 分析を開くときに小節番号として読み込まれ、各段の下に配置されます。"

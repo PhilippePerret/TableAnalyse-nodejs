@@ -1,0 +1,424 @@
+# Interface elements (menus, panels, buttons, labels…)
+# Variables: %{name}; %{cmd} = system command key (⌘ or Ctrl+)
+# System-specific text: table {darwin:, win32:, linux:}
+
+app:
+  name: "Analysis Table"
+  title: "ANALYSIS TABLE"
+
+decimal_separator: "."
+
+menu:
+  file:             "Analysis"
+  new_analyse:      "New Analysis…"
+  open_analyse:     "Open Analysis…"
+  reload_analyse:   "Reload Analysis"
+  save:             "Save"
+  cut_score:        "Cut the Score…"
+  number_score:     "Number the Score"
+  infos:            "Information…"
+  export:           "Export…"
+  show_in_finder:
+    darwin:         "Show in Finder"
+    win32:          "Show in Explorer"
+    linux:          "Show in File Manager"
+  tools_menu:       "Tools"
+  tools:            "Toolbox…"
+  form:             "Form…"
+  animate:          "Start Animation"
+  help:             "Help"
+  help_html:        "HTML"
+  help_epub:        "ePub"
+  prefs:            "Preferences…"
+  language:         "Language"
+  edit:             "Edit"
+  options:          "Options"
+  mark:             "Mark"
+  align:            "Align"
+  adjust:           "Adjust"
+  selection:        "Selection"
+  borders:          "Borders"
+  window:           "Window"
+  minimize:
+    darwin:         "Minimize"
+    win32:          "Minimize"
+    linux:          "Minimize"
+  zoom:             "Zoom"
+  front:            "Bring All to Front"
+  close_window:     "Close Window"
+  cut:              "Cut"
+  copy:             "Copy"
+  paste:            "Paste"
+  select_all:       "Select All"
+  about:            "About %{name}"
+  hide:             "Hide %{name}"
+  hide_others:      "Hide Others"
+  unhide:           "Show All"
+  quit:             "Quit %{name}"
+
+options_menu:
+  cancel_last:      "Undo: %{name}"
+  cancel_history:   "Undo History"
+  grid_v:           "Snap Vertically"
+  grid_h:           "Snap Horizontally"
+  color:            "Color Version"
+  lock_systems:     "Lock Systems"
+  coordinates:      "Show Coordinates"
+  theme_A:          "Theme A — Plain"
+  theme_B:          "Theme B — ScoreAnalyse"
+  theme_C:          "Theme C — Dark"
+
+mark_menu:
+  lock_one:         "Lock Mark"
+  lock_many:        "Lock Marks"
+  unlock_one:       "Unlock Mark"
+  unlock_many:      "Unlock Marks"
+  change_type:      "Set Type to…"
+  justify:          "Justify Text"
+  center:           "Center Text"
+  right:            "Align Text Right"
+  left:             "Align Text Left"
+
+align_menu:
+  top:              "Top"
+  bottom:           "Bottom"
+  vcenter:          "Vertical Center"
+  right:            "Right"
+  left:             "Left"
+  hcenter:          "Horizontal Center"
+  cancel:           "Undo Alignment"
+
+adjust_menu:
+  spread_v:         "Distribute Vertically"
+  spread_h:         "Distribute Horizontally"
+  h:                "… Horizontally"
+  v:                "… Vertically"
+  cancel:           "Undo Adjustment"
+
+selection_menu:
+  group:            "Group Selected Items"
+  ungroup:          "Ungroup Selected Items"
+  select_all:       "Select Marks…"
+
+borders_menu:
+  remove_left:      "Remove Left Border"
+  add_left:         "Restore Left Border"
+  remove_right:     "Remove Right Border"
+  add_right:        "Restore Right Border"
+  remove_bottom:    "Remove Bottom Border"
+  add_bottom:       "Restore Bottom Border"
+  remove_top:       "Remove Top Border"
+  add_top:          "Restore Top Border"
+
+# Context menu of a mark
+mark_context:
+  lock:             "Lock"
+  unlock:           "Unlock"
+  edit:             "Edit…"
+  align:            "Align with Marks of the Same Type"
+  align_harmony:    "Align with the Harmony"
+  align_chord:      "Align with the Chord"
+  delete:           "Delete"
+
+system_menu:
+  unlock:           "Unlock"
+  lock:             "Lock"
+  open_image:       "Open Image"
+  show_image:
+    darwin:         "Show in Finder"
+    win32:          "Show in Explorer"
+    linux:          "Show in File Manager"
+
+buttons:
+  close:            "Close"
+  save:             "Save"
+  choose:           "Choose…"
+  cancel:           "Cancel"
+  renounce:         "Cancel"
+  replace:          "Replace"
+  ok:               "OK"
+  apply:            "Apply"
+  type:             "Type…"
+
+message_titles:
+  notice:           "Information"
+  error:            "Error"
+  doaction:         "In Progress"
+
+panels:
+  infos:
+    title:            "Analysis Metadata"
+    piece_title:      "Title of the Piece"
+    composer:         "Composer"
+    analyse_title:    "Title of the Analysis"
+    analyse_id:       "Identifier/Affix"
+    analyse_id_ph:    "Identifier (a-zA-Z0-9_-)"
+    folder:           "Container"
+    folder_ph:        "folder containing the analysis"
+    analyst:          "Analyst"
+    analyst_ph:       "Analyst"
+    systems_source:   "Systems"
+    systems_source_ph: "image folder (optional)"
+    create:           "Create the New Analysis"
+    required:         "Required information"
+  tools:
+    title:            "Toolbox"
+    quick_score:      "Quick Score"
+    quick_score_desc: "Build an image from muscore code: "
+    add:              "Add…"
+    image_name:       "Image name"
+    tune:             "Key"
+    time:             "Meter"
+    proximity:        "Proximity"
+    barres:           "Show bar lines"
+    no_stem:          "Hide stems"
+    build:            "Build"
+    distribute:       "Distribute the Systems"
+    inter_system:     "Space between systems: "
+    inter_system_desc: "(if no space is given, the value set in the preferences is used, which is "
+    export_title:     "Export the Analysis Image"
+    systems:          "Systems "
+    systems_desc:     "Systems to produce. Leave empty for all"
+    one_per_system:   "One image per system"
+    export_image:     "Produce the image (static)"
+    export_svg:       "Produce the SVG image (not functional)"
+  prefs:
+    title:            "Preferences"
+  manual:
+    title:            "User Manual"
+    shortcuts:        "Keyboard Shortcuts"
+    manual_button:    "Manual"
+    shortcuts_list:   "List of Shortcuts"
+  form:
+    title:            "Form of the Piece"
+    name:             "Name"
+    type:             "Type"
+    parent:           "Parent"
+    piece:            "Piece"
+    the_piece:        "The piece"
+    from_measure:     "From measure"
+    to_measure:       "to measure"
+    tons:             "Key(s)"
+    build_on_table:   "Place it on the analysis table"
+    unnamed:          "Unnamed %{type}"
+  history:
+    title:            "Undo History"
+    item:             "Change: %{name}"
+    cancel_hover:     "Undo:"
+  export:
+    title:            "Export the Analysis"
+    type:             "Format"
+    types:
+      pdf:            "PDF"
+      svg:            "SVG"
+      html:           "HTML"
+    svg_desc:         "One SVG file per page."
+    legend_title:     "Signs Used"
+    gap:              "Space between systems"
+    gap_desc:         "Space between the lowest object of the previous system and the highest object of the next one. All elements are moved accordingly in the exported document."
+    bad_gap:          "Invalid space between systems."
+    mode_page:        "Single page (screen reading)"
+    mode_book:        "Fixed-size pages (book)"
+    size:             "Size"
+    orientation:      "Orientation"
+    portrait:         "Portrait"
+    landscape:        "Landscape"
+    margin:           "Margin"
+    format:           "%{name} (%{width} × %{height} %{unit})"
+    formats:
+      A3:             "A3"
+      A4:             "A4"
+      A5:             "A5"
+      A6:             "A6"
+      B4:             "B4"
+      B5:             "B5"
+      letter:         "US Letter"
+      legal:          "US Legal"
+      tabloid:        "Tabloid"
+      executive:      "Executive"
+    custom:           "Custom size…"
+    custom_size:      "Custom size (%{width} × %{height} %{unit})…"
+    custom_title:     "Custom Size"
+    width:            "Width"
+    height:           "Height"
+    unit:             "Unit"
+    units:
+      mm:             "mm"
+      cm:             "cm"
+      in:             "in"
+      pt:             "pt"
+      pc:             "pc"
+    units_long:
+      mm:             "millimeters"
+      cm:             "centimeters"
+      in:             "inches"
+      pt:             "points"
+      pc:             "picas"
+    remember:         "Remember these settings in the analysis"
+    export:           "Export"
+    bad_size:         "Invalid page size or margin."
+    fonts_notice:     "The analysis fonts (PhilNote…) must be installed on the computer that opens the SVG files."
+  mark_editor:
+    title:            "Edit Mark"
+  animation:
+    title:            "Animation"
+    play:             "Play"
+    pause:            "Pause"
+    step:             "Step by step"
+    step_desc:        "Mark by mark: ← previous mark, → next mark"
+    previous:         "Previous mark"
+    next:             "Next mark"
+    stop:             "Stop (back to start)"
+    finish:           "Quit Animation"
+    tempo:            "Tempo"
+    tempo_value:      "♩ = %{tempo}"
+    meter:            "4/4"
+    meter_desc:       "Default meter (not defined in the analysis)"
+    no_marks:         "No marks to animate."
+  select_marks:
+    title:            "Select Marks"
+    select:           "Select"
+    regex_ph:         "regular expression (empty: all)"
+    systems:          "Systems"
+    count_one:        "%{n} mark found"
+    count_many:       "%{n} marks found"
+  getter:
+    new_item:         "New item"
+
+dialogs:
+  choose_analyse_folder: "Choose the analysis folder"
+  choose_folder:         "Choose a folder"
+  choose_creation_folder: "Folder in which to create the analysis"
+  choose_systems_folder: "Folder containing the system images"
+  choose_pdf:            "Choose the PDF of the score"
+  pdf_filter:            "PDF score"
+  replace_systems:       "Replace the systems of the analysis?"
+  replace_systems_detail: "The %{count} current systems will be replaced by those of the cut."
+
+# Analysis preferences (label and precision)
+prefs:
+  theme:                  {label: "Analysis theme", precision: "Defines the sizes to apply and the colors (in the color mode of the analysis)"}
+  lock_systems:           {label: "Lock systems"}
+  grid_horizontal_space:  {label: "Horizontal grid step"}
+  grid_vertical_space:    {label: "Vertical grid step"}
+  systeme_width:          {label: "Width of the systems"}
+  top_first_system:       {label: "Top offset of the first system"}
+  distance_systemes:      {label: "Default space between systems"}
+  adjust_same_mark:       {label: "Align marks of the same type vertically"}
+  snap_for_adjust_pos:    {label: "Mark alignment snap distance", precision: "Affects marks of the same type, and only if the “Align vertically” preference above is checked."}
+  marque_accords_size:    {label: "Size of chord marks"}
+  marque_harmonie_size:   {label: "Size of harmony marks"}
+  marque_modulation_size: {label: "Size of modulation marks"}
+  marque_emprunt_size:    {label: "Size of borrowing marks"}
+  marque_cellule_size:    {label: "Size of cell names"}
+  thiness_segment_line:   {label: "Segment line thickness"}
+  thiness_cellule_line:   {label: "Cell line thickness"}
+  thiness_border:         {label: "Box line thickness"}
+  marque_pedale_size:     {label: "Size of pedals"}
+  marque_texte_size_1:    {label: "Size of large texts"}
+  marque_texte_size_2:    {label: "Size of medium texts"}
+  measure_line_offset:    {label: "Distance of the measure number line below the system"}
+  distance_after_measure_line: {label: "Distance between the measure number line and the next system"}
+  marque_measure:         {label: "Size of measure numbers"}
+  marque_texte_size_3:    {label: "Size of small texts"}
+  marque_texte_size_4:    {label: "Size of very small texts"}
+  window_width:           {label: "Window width at opening"}
+  window_height:          {label: "Window height at opening"}
+  last_scroll:            {label: "Scroll at opening"}
+  color_mesure:           {label: "Measure numbers"}
+  color_accords:          {label: "Chord names"}
+  color_harmonie:         {label: "Harmonic figures"}
+  color_mark_parties:     {label: "Part marks"}
+  color_mark_sections:    {label: "Section marks"}
+  color_cellule:          {label: "Cells & motifs"}
+  color_modulations:      {label: "Modulation marks"}
+  color_emprunts:         {label: "Borrowing marks"}
+  color_segments:         {label: "Segments"}
+  animation_tempo:        {label: "Animation tempo", precision: "Speed of the animation cursor, in quarter notes per minute (4/4 meter by default)."}
+  autosave:               {label: "Autosave"}
+  animate:                {label: "Animate the analysis", precision: "Marks will be displayed progressively"}
+
+prefs_groups:
+  general:                "General"
+  systems:                "Systems"
+  measures:               "Measure numbers"
+  grid:                   "Grid and alignment"
+  marks:                  "Marks"
+  lines:                  "Lines"
+  colors:                 "Colors"
+  window:                 "Window"
+  others:                 "Others"
+
+# Analysis marks: name (in choice lists), message (editor prompt) and
+# default content
+marks:
+  types:
+    acc: {name: "Chord",         message: "Chord name"}
+    har: {name: "Harmony",       message: "Figure"}
+    mod: {name: "Modulation",    message: "New key"}
+    emp: {name: "Borrowing",     message: "Key of the borrowing"}
+    cad: {name: "Cadence…"}
+    bbx: {name: "Box",           message: "Box type"}
+    not: {name: "Note type…",    message: "Type of the note"}
+    deg: {name: "Note degree",   message: "Degree of the note"}
+    seg: {name: "Segment",       message: "Caption (empty if none)", default: "member 1"}
+    img: {name: "Image",         message: "Image to insert (path in the 'images' folder)"}
+    txt: {name: "Text",          message: "Text to display"}
+    ped: {name: "Pedal",         message: "Degree of the pedal"}
+    cir: {name: "Circle"}
+  frames:
+    prt:  {name: "Part (start)",     default: "EXPO"}
+    prtz: {name: "End of part",      default: "EXPO"}
+    sec:  {name: "Section start",    default: "SECTION"}
+    secz: {name: "End of section",   default: "SECTION"}
+    cel:  {name: "Cell"}
+    bxt:  {name: "Text in box",      default: "**Styled** and _styled_ text."}
+    box:  {name: "Simple box"}
+  texts:
+    size1: {name: "Large",            default: "Large text"}
+    size2: {name: "Medium",           default: "Medium text"}
+    size3: {name: "Small",            default: "Small text"}
+    size4: {name: "Mini",             default: "Tiny text"}
+    mes:   {name: "Measure number"}
+    long:  {name: "Long text",        default: "Long text (command + ENTER to finish)"}
+    idx:   {name: "In margin (index)", default: "Index"}
+  notes:
+    np: "Passing note"
+    ap: "Appoggiatura"
+    ac: "Chromatic appoggiatura"
+    re: "Suspension"
+    br: "Neighbor note"
+    db: "Double neighbor"
+    ec: "Escape tone"
+    in: "Chord tone"
+    an: "Anticipation"
+  cadences:
+    par: "Perfect cadence"
+    imp: "Imperfect cadence"
+    dem: "Half cadence"
+    ita: "Italian cadence"
+    rom: "Deceptive cadence"
+    pla: "Plagal cadence"
+    fau: "Fauré cadence"
+  cadences_abbr:
+    par: "P.C."
+    imp: "I.C."
+    dem: "H.C."
+    ita: "It.C."
+    rom: "D.C."
+    pla: "Pl.C."
+    fau: "F.C."
+  segments:
+    h-up:    "Flat above the staff"
+    h-down:  "Flat below the staff"
+    v-left:  "Vertical, line on the left"
+    v-right: "Vertical, line on the right"
+  getter:
+    type:         "Type of the mark"
+    cadence:      "Type of the cadence"
+    segment:      "Layout of the segment"
+
+form_types:
+  par: "Part"
+  sec: "Section"
+  seg: "Segment"

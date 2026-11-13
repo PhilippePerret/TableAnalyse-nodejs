@@ -8,7 +8,7 @@ import { app } from 'electron'
 
 const DEFAULT_PREFERENCES = {
     load_last_analyse:  true
-  , lang:               'fr'
+  , lang:               null   // null : langue du système (cf. i18n.js)
   , last_analyse_path:  null
   , last_dialog_folder: null
   , score_image_command: null

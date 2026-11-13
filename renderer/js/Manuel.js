@@ -73,8 +73,8 @@ class ManuelClass {
    */
   buildShortcutPanel(){
     const o = DCreate('SECTION', {id:'manuel_shortcuts', class:'hidden'})
-    o.appendChild(DCreate('BUTTON', {id:'btn_manuel', style:"float:right;", text:"Manuel"}))
-    o.appendChild(DCreate('H2', {text:"Liste des raccourcis"}))
+    o.appendChild(DCreate('BUTTON', {id:'btn_manuel', style:"float:right;", text:t('ui.panels.manual.manual_button')}))
+    o.appendChild(DCreate('H2', {text:t('ui.panels.manual.shortcuts_list')}))
     const tbl = DCreate('TABLE', {id:'table_shortcuts'})
     o.appendChild(tbl)
     var ishortcut = 0

@@ -236,7 +236,7 @@ div#animation_box span.anim-tempo { min-width: 4.5em; font-variant-numeric: tabu
 div#animation_box span.anim-meter { padding: 0 6px; border: 1px solid currentColor; border-radius: 4px; font-size: .85em; opacity: .7; }
 /* Boutons de taille fixe : leurs pictos changent sans que rien ne bouge */
 div#animation_box button.anim-icon { width: 3.2em; padding-left: 0; padding-right: 0; text-align: center; }
-div#animation_box button.btn-step { width: 7.5em; }
+
 div#animation_box button.btn-step.active { background-color: #3a925e; border-color: #2f7a4e; color: white; }
 /* Curseur de l'animation et table non défilable */
 div#animation_cursor {

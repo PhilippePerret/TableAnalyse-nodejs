@@ -1,0 +1,423 @@
+# 인터페이스 요소(메뉴, 패널, 버튼, 레이블…)
+# 변수: %{이름}; %{cmd} = 시스템 명령 키(⌘ 또는 Ctrl+)
+# 시스템별 텍스트: 테이블 {darwin:, win32:, linux:}
+
+app:
+  name: "분석 테이블"
+  title: "분석 테이블"
+
+decimal_separator: "."
+
+menu:
+  file:             "분석"
+  new_analyse:      "새 분석…"
+  open_analyse:     "분석 열기…"
+  reload_analyse:   "분석 다시 불러오기"
+  save:             "저장"
+  cut_score:        "악보 자르기…"
+  number_score:     "악보에 번호 매기기"
+  infos:            "정보…"
+  export:           "내보내기…"
+  show_in_finder:
+    darwin:         "Finder에서 보기"
+    win32:          "탐색기에서 보기"
+    linux:          "파일 관리자에서 보기"
+  tools_menu:       "도구"
+  tools:            "도구 상자…"
+  form:             "형식…"
+  animate:          "애니메이션 시작"
+  help:             "도움말"
+  help_html:        "HTML"
+  help_epub:        "ePub"
+  prefs:            "환경설정…"
+  language:         "언어"
+  edit:             "편집"
+  options:          "옵션"
+  mark:             "표시"
+  align:            "정렬"
+  adjust:           "조정"
+  selection:        "선택"
+  borders:          "테두리"
+  window:           "윈도우"
+  minimize:
+    darwin:         "Dock으로 최소화"
+    win32:          "최소화"
+    linux:          "최소화"
+  zoom:             "확대/축소"
+  front:            "모두 앞으로 가져오기"
+  close_window:     "윈도우 닫기"
+  cut:              "오려두기"
+  copy:             "복사하기"
+  paste:            "붙여넣기"
+  select_all:       "모두 선택"
+  about:            "%{name}에 관하여"
+  hide:             "%{name} 가리기"
+  hide_others:      "기타 가리기"
+  unhide:           "모두 보기"
+  quit:             "%{name} 종료"
+
+options_menu:
+  cancel_last:      "실행 취소: %{name}"
+  cancel_history:   "실행 취소 기록"
+  grid_v:           "세로로 맞춤"
+  grid_h:           "가로로 맞춤"
+  color:            "컬러 버전"
+  lock_systems:     "단 잠그기"
+  coordinates:      "좌표 보기"
+  theme_A:          "테마 A — 단순"
+  theme_B:          "테마 B — ScoreAnalyse"
+  theme_C:          "테마 C — 어두움"
+
+mark_menu:
+  lock_one:         "표시 잠그기"
+  lock_many:        "표시 잠그기"
+  unlock_one:       "표시 잠금 해제"
+  unlock_many:      "표시 잠금 해제"
+  change_type:      "종류 설정…"
+  justify:          "텍스트 양쪽 정렬"
+  center:           "텍스트 가운데 정렬"
+  right:            "텍스트 오른쪽 정렬"
+  left:             "텍스트 왼쪽 정렬"
+
+align_menu:
+  top:              "위"
+  bottom:           "아래"
+  vcenter:          "세로 가운데"
+  right:            "오른쪽"
+  left:             "왼쪽"
+  hcenter:          "가로 가운데"
+  cancel:           "정렬 실행 취소"
+
+adjust_menu:
+  spread_v:         "세로로 분배"
+  spread_h:         "가로로 분배"
+  h:                "… 가로로"
+  v:                "… 세로로"
+  cancel:           "조정 실행 취소"
+
+selection_menu:
+  group:            "선택한 요소 그룹화"
+  ungroup:          "선택한 요소 그룹 해제"
+  select_all:       "표시 선택…"
+
+borders_menu:
+  remove_left:      "왼쪽 테두리 제거"
+  add_left:         "왼쪽 테두리 복원"
+  remove_right:     "오른쪽 테두리 제거"
+  add_right:        "오른쪽 테두리 복원"
+  remove_bottom:    "아래쪽 테두리 제거"
+  add_bottom:       "아래쪽 테두리 복원"
+  remove_top:       "위쪽 테두리 제거"
+  add_top:          "위쪽 테두리 복원"
+
+# 표시의 컨텍스트 메뉴
+mark_context:
+  lock:             "잠그기"
+  unlock:           "잠금 해제"
+  edit:             "편집…"
+  align:            "같은 종류의 표시에 맞추기"
+  align_harmony:    "화성 표시에 맞추기"
+  align_chord:      "코드에 맞추기"
+  delete:           "삭제"
+
+system_menu:
+  unlock:           "잠금 해제"
+  lock:             "잠그기"
+  open_image:       "이미지 열기"
+  show_image:
+    darwin:         "Finder에서 보기"
+    win32:          "탐색기에서 보기"
+    linux:          "파일 관리자에서 보기"
+
+buttons:
+  close:            "닫기"
+  save:             "저장"
+  choose:           "선택…"
+  cancel:           "취소"
+  renounce:         "그만두기"
+  replace:          "대치"
+  ok:               "확인"
+  apply:            "적용"
+  type:             "종류…"
+
+message_titles:
+  notice:           "알림"
+  error:            "오류"
+  doaction:         "작업 중"
+
+panels:
+  infos:
+    title:            "분석 메타데이터"
+    piece_title:      "곡 제목"
+    composer:         "작곡가"
+    analyse_title:    "분석 제목"
+    analyse_id:       "식별자/접사"
+    analyse_id_ph:    "식별자 (a-zA-Z0-9_-)"
+    folder:           "위치"
+    folder_ph:        "분석이 들어 있는 폴더"
+    analyst:          "분석자"
+    analyst_ph:       "분석자"
+    systems_source:   "단"
+    systems_source_ph: "이미지 폴더(선택 사항)"
+    create:           "새 분석 만들기"
+    required:         "필수 정보"
+  tools:
+    title:            "도구 상자"
+    quick_score:      "빠른 악보"
+    quick_score_desc: "muscore 코드로 이미지 만들기: "
+    add:              "추가…"
+    image_name:       "이미지 이름"
+    tune:             "조성"
+    time:             "박자"
+    proximity:        "간격"
+    barres:           "마디선 보기"
+    no_stem:          "기둥 숨기기"
+    build:            "만들기"
+    distribute:       "단 분배"
+    inter_system:     "단 사이 간격: "
+    inter_system_desc: "(간격을 지정하지 않으면 환경설정에 정의된 값이 적용되며, 그 값은 "
+    export_title:     "분석 이미지 내보내기"
+    systems:          "단 "
+    systems_desc:     "만들 단. 모두는 비워 두기"
+    one_per_system:   "단마다 이미지 한 장"
+    export_image:     "이미지 만들기(정지)"
+    export_svg:       "SVG 이미지 만들기(작동 안 함)"
+  prefs:
+    title:            "환경설정"
+  manual:
+    title:            "사용 설명서"
+    shortcuts:        "키보드 단축키"
+    manual_button:    "설명서"
+    shortcuts_list:   "단축키 목록"
+  form:
+    title:            "곡의 형식"
+    name:             "이름"
+    type:             "종류"
+    parent:           "상위"
+    piece:            "곡"
+    the_piece:        "곡"
+    from_measure:     "시작 마디"
+    to_measure:       "끝 마디"
+    tons:             "조성"
+    build_on_table:   "분석 테이블에 놓기"
+    unnamed:          "이름 없는 %{type}"
+  history:
+    title:            "실행 취소 기록"
+    item:             "변경: %{name}"
+    cancel_hover:     "실행 취소:"
+  export:
+    title:            "분석 내보내기"
+    type:             "형식"
+    types:
+      pdf:            "PDF"
+      svg:            "SVG"
+      html:           "HTML"
+    svg_desc:         "페이지마다 SVG 파일 하나."
+    legend_title:     "사용한 기호"
+    gap:              "단 사이 거리"
+    gap_desc:         "앞 단의 가장 낮은 개체와 다음 단의 가장 높은 개체 사이의 거리. 내보낸 문서에서 모든 요소가 이에 맞게 이동합니다."
+    bad_gap:          "단 사이 거리가 올바르지 않습니다."
+    mode_page:        "단일 페이지(화면 읽기)"
+    mode_book:        "고정 크기 페이지(책)"
+    size:             "크기"
+    orientation:      "방향"
+    portrait:         "세로"
+    landscape:        "가로"
+    margin:           "여백"
+    format:           "%{name} (%{width} × %{height} %{unit})"
+    formats:
+      A3:             "A3"
+      A4:             "A4"
+      A5:             "A5"
+      A6:             "A6"
+      B4:             "B4"
+      B5:             "B5"
+      letter:         "US 레터"
+      legal:          "US 리갈"
+      tabloid:        "타블로이드"
+      executive:      "이그제큐티브"
+    custom:           "사용자 크기…"
+    custom_size:      "사용자 크기 (%{width} × %{height} %{unit})…"
+    custom_title:     "사용자 크기"
+    width:            "너비"
+    height:           "높이"
+    unit:             "단위"
+    units:
+      mm:             "mm"
+      cm:             "cm"
+      in:             "in"
+      pt:             "pt"
+      pc:             "pc"
+    units_long:
+      mm:             "밀리미터"
+      cm:             "센티미터"
+      in:             "인치"
+      pt:             "포인트"
+      pc:             "파이카"
+    remember:         "이 설정을 분석에 저장"
+    export:           "내보내기"
+    bad_size:         "페이지 크기 또는 여백이 올바르지 않습니다."
+    fonts_notice:     "SVG 파일을 열 컴퓨터에 분석 글꼴(PhilNote…)이 설치되어 있어야 합니다."
+  mark_editor:
+    title:            "표시 편집"
+  animation:
+    title:            "애니메이션"
+    play:             "재생"
+    pause:            "일시 정지"
+    step:             "단계별"
+    step_desc:        "표시마다: ← 이전 표시, → 다음 표시"
+    previous:         "이전 표시"
+    next:             "다음 표시"
+    stop:             "정지(처음으로)"
+    finish:           "애니메이션 끝내기"
+    tempo:            "템포"
+    tempo_value:      "♩ = %{tempo}"
+    meter:            "4/4"
+    meter_desc:       "기본 박자(분석에 정의되지 않음)"
+    no_marks:         "애니메이션할 표시가 없습니다."
+  select_marks:
+    title:            "표시 선택"
+    select:           "선택"
+    regex_ph:         "정규 표현식(비우면 모두)"
+    systems:          "단"
+    count_one:        "표시 %{n}개 찾음"
+    count_many:       "표시 %{n}개 찾음"
+  getter:
+    new_item:         "새 항목"
+
+dialogs:
+  choose_analyse_folder: "분석 폴더 선택"
+  choose_folder:         "폴더 선택"
+  choose_creation_folder: "분석을 만들 폴더"
+  choose_systems_folder: "단 이미지가 들어 있는 폴더"
+  choose_pdf:            "악보 PDF 선택"
+  pdf_filter:            "PDF 악보"
+  replace_systems:       "분석의 단을 대치하시겠습니까?"
+  replace_systems_detail: "현재 단 %{count}개가 자르기로 얻은 단으로 대치됩니다."
+
+# 분석 환경설정(레이블과 설명)
+prefs:
+  theme:                  {label: "분석 테마", precision: "적용할 크기와 색을 정의합니다(분석의 컬러 모드에서)"}
+  lock_systems:           {label: "단 잠그기"}
+  grid_horizontal_space:  {label: "격자 가로 간격"}
+  grid_vertical_space:    {label: "격자 세로 간격"}
+  systeme_width:          {label: "단 너비"}
+  top_first_system:       {label: "첫 단의 위쪽 위치"}
+  distance_systemes:      {label: "단 기본 간격"}
+  adjust_same_mark:       {label: "같은 종류의 표시 높이 맞추기"}
+  snap_for_adjust_pos:    {label: "표시 정렬 맞춤 거리", precision: "같은 종류의 표시에 적용되며, 위의 “높이 맞추기”가 켜져 있을 때만 작동합니다."}
+  marque_accords_size:    {label: "코드 표시 크기"}
+  marque_harmonie_size:   {label: "화성 표시 크기"}
+  marque_modulation_size: {label: "전조 표시 크기"}
+  marque_emprunt_size:    {label: "차용 표시 크기"}
+  marque_cellule_size:    {label: "동기 셀 이름 크기"}
+  thiness_segment_line:   {label: "구간 선 두께"}
+  thiness_cellule_line:   {label: "셀 선 두께"}
+  thiness_border:         {label: "상자 선 두께"}
+  marque_pedale_size:     {label: "지속음 크기"}
+  marque_texte_size_1:    {label: "큰 텍스트 크기"}
+  marque_texte_size_2:    {label: "중간 텍스트 크기"}
+  measure_line_offset:    {label: "단 아래 마디 번호 줄까지의 거리"}
+  distance_after_measure_line: {label: "마디 번호 줄과 다음 단 사이 거리"}
+  marque_measure:         {label: "마디 번호 크기"}
+  marque_texte_size_3:    {label: "작은 텍스트 크기"}
+  marque_texte_size_4:    {label: "아주 작은 텍스트 크기"}
+  window_width:           {label: "열 때 윈도우 너비"}
+  window_height:          {label: "열 때 윈도우 높이"}
+  last_scroll:            {label: "열 때 스크롤 위치"}
+  color_mesure:           {label: "마디 번호"}
+  color_accords:          {label: "코드 이름"}
+  color_harmonie:         {label: "화성 기호"}
+  color_mark_parties:     {label: "부분 표시"}
+  color_mark_sections:    {label: "섹션 표시"}
+  color_cellule:          {label: "셀과 동기"}
+  color_modulations:      {label: "전조 표시"}
+  color_emprunts:         {label: "차용 표시"}
+  color_segments:         {label: "구간"}
+  animation_tempo:        {label: "애니메이션 템포", precision: "애니메이션 커서의 속도, 분당 4분음표 수(기본 박자 4/4)."}
+  autosave:               {label: "자동 저장"}
+  animate:                {label: "분석 애니메이션", precision: "표시가 차례로 나타납니다"}
+
+prefs_groups:
+  general:                "일반"
+  systems:                "단"
+  measures:               "마디 번호"
+  grid:                   "격자와 정렬"
+  marks:                  "표시"
+  lines:                  "선"
+  colors:                 "색"
+  window:                 "윈도우"
+  others:                 "기타"
+
+# 분석 표시: 이름(선택 목록), 메시지(편집기 안내), 기본 내용
+marks:
+  types:
+    acc: {name: "코드",          message: "코드 이름"}
+    har: {name: "화성",          message: "화성 기호"}
+    mod: {name: "전조",          message: "새 조성"}
+    emp: {name: "차용",          message: "차용한 조성"}
+    cad: {name: "종지…"}
+    bbx: {name: "상자",          message: "상자 종류"}
+    not: {name: "음 종류…",      message: "음의 종류"}
+    deg: {name: "음도",          message: "음의 도수"}
+    seg: {name: "구간",          message: "설명(없으면 비워 두기)", default: "부분 1"}
+    img: {name: "이미지",        message: "삽입할 이미지('images' 폴더 안의 경로)"}
+    txt: {name: "텍스트",        message: "표시할 텍스트"}
+    ped: {name: "지속음",        message: "지속음의 도수"}
+    cir: {name: "원"}
+  frames:
+    prt:  {name: "부분(시작)",       default: "제시부"}
+    prtz: {name: "부분 끝",          default: "제시부"}
+    sec:  {name: "섹션 시작",        default: "섹션"}
+    secz: {name: "섹션 끝",          default: "섹션"}
+    cel:  {name: "셀"}
+    bxt:  {name: "상자 안 텍스트",   default: "**서식** 있는 _서식_ 텍스트."}
+    box:  {name: "단순 상자"}
+  texts:
+    size1: {name: "크게",             default: "큰 텍스트"}
+    size2: {name: "보통",             default: "보통 텍스트"}
+    size3: {name: "작게",             default: "작은 텍스트"}
+    size4: {name: "미니",             default: "아주 작은 텍스트"}
+    mes:   {name: "마디 번호"}
+    long:  {name: "긴 텍스트",        default: "긴 텍스트(Command + Enter로 끝내기)"}
+    idx:   {name: "여백(색인)",       default: "색인"}
+  notes:
+    np: "경과음"
+    ap: "전타음"
+    ac: "반음계적 전타음"
+    re: "계류음"
+    br: "보조음"
+    db: "이중 보조음"
+    ec: "이탈음"
+    in: "화성음"
+    an: "선행음"
+  cadences:
+    par: "완전 종지"
+    imp: "불완전 종지"
+    dem: "반종지"
+    ita: "이탈리아 종지"
+    rom: "거짓 종지"
+    pla: "변격 종지"
+    fau: "포레 종지"
+  cadences_abbr:
+    par: "완종"
+    imp: "불완종"
+    dem: "반종"
+    ita: "이종"
+    rom: "거종"
+    pla: "변종"
+    fau: "포종"
+  segments:
+    h-up:    "가로, 보표 위"
+    h-down:  "가로, 보표 아래"
+    v-left:  "세로, 선은 왼쪽"
+    v-right: "세로, 선은 오른쪽"
+  getter:
+    type:         "표시 종류"
+    cadence:      "종지 종류"
+    segment:      "구간 배치"
+
+form_types:
+  par: "부분"
+  sec: "섹션"
+  seg: "구간"

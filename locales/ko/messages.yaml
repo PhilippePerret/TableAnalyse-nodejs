@@ -1,0 +1,44 @@
+# 메시지(정보, 진행 중인 작업, 도움말)
+# 변수: %{이름}; %{cmd} = 시스템 명령 키(⌘ 또는 Ctrl+)
+# 시스템별 텍스트: 테이블 {darwin:, win32:, linux:}
+
+no_analyse_open: "열린 분석이 없습니다.<br><br>“분석” 메뉴에서 기존 분석을 열거나(%{cmd}O) 새 분석을 만드십시오(%{cmd}N)."
+no_systems: "이 분석에는 단이 없습니다.<br><br>분석을 시작하려면 악보의 단이 필요합니다: “분석” 메뉴 > “악보 자르기…”."
+cutting_score: "악보를 자르고 번호를 매기는 중…"
+after_cut:
+  darwin: "각 단을 살펴보고 “지워야” 할 부분(페이지 번호, 다른 단의 음표나 지시 등)이 있으면 그래픽 도구(예: 미리보기)로 지우십시오. 단을 손으로 다시 잘라 제거할 수도 있습니다."
+  win32: "각 단을 살펴보고 “지워야” 할 부분(페이지 번호, 다른 단의 음표나 지시 등)이 있으면 그래픽 도구(예: 그림판)로 지우십시오. 단을 손으로 다시 잘라 제거할 수도 있습니다."
+  linux: "각 단을 살펴보고 “지워야” 할 부분(페이지 번호, 다른 단의 음표나 지시 등)이 있으면 그래픽 도구(예: GIMP)로 지우십시오. 단을 손으로 다시 잘라 제거할 수도 있습니다."
+numbering_score: "악보에 번호를 매기는 중…"
+exporting_html: "분석을 HTML로 내보내는 중입니다. 잠시 기다리십시오…"
+exported_html: "분석을 %{path}(으)로 내보냈습니다"
+exporting_pdf: "분석을 PDF로 내보내는 중입니다. 잠시 기다리십시오…"
+exported_pdf: "분석을 %{path}(으)로 내보냈습니다"
+exporting_svg: "분석을 SVG로 내보내는 중입니다. 잠시 기다리십시오…"
+exported_svg: "분석을 %{path} 폴더로 내보냈습니다(페이지마다 SVG 파일 하나)"
+image_built: "이미지 %{name}을(를) 만들었습니다.\n이름이 클립보드에 있습니다: 이미지를 만들어 바로 볼 수 있습니다."
+think_to_save: "분석을 저장하는 것을 잊지 마십시오."
+systems_unlocked: "<p>기본적으로 모든 분석 표시와 다른 단이 이동을 따릅니다.</p><p>단 하나만 이동하려면 ⌥ 키를 누른 채로 있으십시오.</p><p>그 단과 뒤따르는 단만 이동하려면 ⌥와 ⇧를 누른 채로 있으십시오.</p>"
+systems_position_adjusted: "단의 위치를 조정했습니다. 새 데이터를 저장하십시오."
+form_delete_todo: "요소를 삭제하는 방법은 아직 배우지 못했습니다"
+form_no_measure: "테이블에서 %{start} 이상의 마디 번호를 찾지 못했습니다."
+form_already_marked: "요소 '%{name}'에는 이미 표시가 있습니다. 갱신만 하겠습니다."
+form_associated: "%{type}을(를) 표시 #%{tag}에 연결함"
+form_associated_f: "%{type}을(를) 표시 #%{tag}에 연결함"
+nothing_to_cancel: "실행 취소할 작업이 없습니다."
+prop_of: "#%{id}의 %{prop}"
+no_same_type_mark: "이 단에는 같은 종류의 표시가 없습니다."
+no_harmony_mark: "화성 표시가 없습니다."
+no_chord_mark: "코드 표시가 없습니다."
+
+# 악보 자르기(기록)
+cutter:
+  page: "페이지 %{page}/%{pages}: 보표 %{staves}개, 단 %{systems}개 (%{detail})"
+  page_warning: "  ! 페이지 %{page}: %{warning}"
+  done: "단 %{systems}개(%{measures}마디)를 %{out}에 기록함"
+  image_measures: "%{image}: %{count}마디"
+  image_warning: "  ! %{image}: %{warning}"
+  image_systems: "  ! %{image}: 단 %{count}개 감지"
+  numbered: "단 %{systems}개의 %{measures}마디에 번호를 매김"
+  no_staff: "보표를 감지하지 못함"
+  measures_header: "# 자르기로 감지한 마디 번호(각 이미지의 픽셀 좌표).\n# 분석을 열 때 마디 번호로 가져와 각 단 아래에 놓습니다."

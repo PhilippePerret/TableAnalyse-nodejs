@@ -21,7 +21,7 @@ import { buildImageFromCode } from './scoreImage.js'
 import { runCutter } from './cutter/runCutter.js'
 import { loadYAML } from './yaml.js'
 import { APP_FOLDER, ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
-import { locale, t } from './i18n.js'
+import { locale, t, LANGUAGES, currentLang } from './i18n.js'
 
 const SMOKE = !!process.env.SA_SMOKE // lancement de contrôle, sans fenêtre visible
 
@@ -190,6 +190,17 @@ function reloadWindow(){
 
 /* --- Menu de l'application --- */
 
+/**
+ * Choix de la langue (menu « Langue ») : enregistrée, puis l'application
+ * est relancée (l'analyse modifiée est enregistrée à la fermeture)
+ */
+function chooseLanguage(code){
+  if ( code == currentLang() ) return
+  AppPrefs.set({lang: code})
+  app.relaunch()
+  app.quit()
+}
+
 function buildMenu(){
   const isMac = process.platform == 'darwin'
   const template = [
@@ -226,6 +237,9 @@ function buildMenu(){
           ]}
         , {type: 'separator'}
         , {label: t('ui.menu.prefs'),           accelerator: 'CmdOrCtrl+,', click: () => sendMenuCommand('prefs')}
+        , {label: t('ui.menu.language'),        submenu: Object.entries(LANGUAGES).map(([code, name]) => ({
+              label: name, type: 'radio', checked: code == currentLang(), click: () => chooseLanguage(code)
+          }))}
         , ...(isMac ? [] : [{type: 'separator'}, {role: 'quit', label: t('ui.menu.quit', {name: app.name})}])
       ]
     },

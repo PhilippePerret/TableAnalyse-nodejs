@@ -1,0 +1,44 @@
+# 消息（信息、进行中的操作、提示）
+# 变量：%{名称}；%{cmd} = 系统命令键（⌘ 或 Ctrl+）
+# 系统专用文本：表 {darwin:, win32:, linux:}
+
+no_analyse_open: "没有打开的分析。<br><br>请使用“分析”菜单打开已有分析（%{cmd}O）或新建分析（%{cmd}N）。"
+no_systems: "此分析不包含任何声部组。<br><br>开始分析需要乐谱的声部组：“分析”菜单 > “切分乐谱…”。"
+cutting_score: "正在切分乐谱并编号…"
+after_cut:
+  darwin: "请逐一检查每个声部组，看是否有需要“擦除”的部分（页码、其他声部组的音符或标记等），并用图形工具（例如“预览”）擦除。也可以手动重新裁切声部组来去除它们。"
+  win32: "请逐一检查每个声部组，看是否有需要“擦除”的部分（页码、其他声部组的音符或标记等），并用图形工具（例如“画图”）擦除。也可以手动重新裁切声部组来去除它们。"
+  linux: "请逐一检查每个声部组，看是否有需要“擦除”的部分（页码、其他声部组的音符或标记等），并用图形工具（例如 GIMP）擦除。也可以手动重新裁切声部组来去除它们。"
+numbering_score: "正在为乐谱编号…"
+exporting_html: "正在将分析导出为 HTML，请稍候…"
+exported_html: "分析已导出到 %{path}"
+exporting_pdf: "正在将分析导出为 PDF，请稍候…"
+exported_pdf: "分析已导出到 %{path}"
+exporting_svg: "正在将分析导出为 SVG，请稍候…"
+exported_svg: "分析已导出（每页一个 SVG 文件）到文件夹 %{path}"
+image_built: "图像 %{name} 已成功生成。\n其名称已在剪贴板中：可以创建图像立即查看。"
+think_to_save: "请记得保存分析。"
+systems_unlocked: "<p>默认情况下，所有分析标记和其他声部组都会跟随移动。</p><p>若只移动一个声部组，请按住 ⌥ 键。</p><p>若只移动该声部组及其后的声部组，请按住 ⌥ 和 ⇧。</p>"
+systems_position_adjusted: "声部组的位置已调整。请保存新数据。"
+form_delete_todo: "我还需要学习如何删除元素"
+form_no_measure: "在分析台上未找到 ≥ %{start} 的小节号。"
+form_already_marked: "元素 '%{name}' 已有标记。我只会更新它。"
+form_associated: "%{type} 已关联到标记 #%{tag}"
+form_associated_f: "%{type} 已关联到标记 #%{tag}"
+nothing_to_cancel: "没有可撤销的操作。"
+prop_of: "#%{id} 的 %{prop}"
+no_same_type_mark: "此声部组中没有同类标记。"
+no_harmony_mark: "没有和声标记。"
+no_chord_mark: "没有和弦标记。"
+
+# 乐谱切分（日志）
+cutter:
+  page: "第 %{page}/%{pages} 页：%{staves} 行谱表，%{systems} 个声部组（%{detail}）"
+  page_warning: "  ! 第 %{page} 页：%{warning}"
+  done: "%{systems} 个声部组（%{measures} 小节）已写入 %{out}"
+  image_measures: "%{image}：%{count} 小节"
+  image_warning: "  ! %{image}：%{warning}"
+  image_systems: "  ! %{image}：检测到 %{count} 个声部组"
+  numbered: "已为 %{systems} 个声部组中的 %{measures} 个小节编号"
+  no_staff: "未检测到谱表"
+  measures_header: "# 切分时检测到的小节号（各图像中的像素坐标）。\n# 打开分析时作为小节号导入，放在每个声部组下方。"

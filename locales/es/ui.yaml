@@ -1,0 +1,424 @@
+# Elementos de la interfaz (menús, paneles, botones, etiquetas…)
+# Variables: %{nombre}; %{cmd} = tecla de comando del sistema (⌘ o Ctrl+)
+# Texto propio de un sistema: tabla {darwin:, win32:, linux:}
+
+app:
+  name: "Mesa de análisis"
+  title: "MESA DE ANÁLISIS"
+
+decimal_separator: ","
+
+menu:
+  file:             "Análisis"
+  new_analyse:      "Nuevo análisis…"
+  open_analyse:     "Abrir análisis…"
+  reload_analyse:   "Recargar el análisis"
+  save:             "Guardar"
+  cut_score:        "Recortar la partitura…"
+  number_score:     "Numerar la partitura"
+  infos:            "Información…"
+  export:           "Exportar…"
+  show_in_finder:
+    darwin:         "Mostrar en el Finder"
+    win32:          "Mostrar en el Explorador"
+    linux:          "Mostrar en el gestor de archivos"
+  tools_menu:       "Herramientas"
+  tools:            "Caja de herramientas…"
+  form:             "Forma…"
+  animate:          "Iniciar la animación"
+  help:             "Ayuda"
+  help_html:        "HTML"
+  help_epub:        "ePub"
+  prefs:            "Preferencias…"
+  language:         "Idioma"
+  edit:             "Edición"
+  options:          "Opciones"
+  mark:             "Marca"
+  align:            "Alinear"
+  adjust:           "Ajustar"
+  selection:        "Selección"
+  borders:          "Bordes"
+  window:           "Ventana"
+  minimize:
+    darwin:         "Minimizar en el Dock"
+    win32:          "Minimizar"
+    linux:          "Minimizar"
+  zoom:             "Zoom"
+  front:            "Traer todo al frente"
+  close_window:     "Cerrar la ventana"
+  cut:              "Cortar"
+  copy:             "Copiar"
+  paste:            "Pegar"
+  select_all:       "Seleccionar todo"
+  about:            "Acerca de %{name}"
+  hide:             "Ocultar %{name}"
+  hide_others:      "Ocultar otros"
+  unhide:           "Mostrar todo"
+  quit:             "Salir de %{name}"
+
+options_menu:
+  cancel_last:      "Deshacer: %{name}"
+  cancel_history:   "Historial de deshacer"
+  grid_v:           "Imantar verticalmente"
+  grid_h:           "Imantar horizontalmente"
+  color:            "Versión en color"
+  lock_systems:     "Bloquear los sistemas"
+  coordinates:      "Mostrar las coordenadas"
+  theme_A:          "Tema A — Sobrio"
+  theme_B:          "Tema B — ScoreAnalyse"
+  theme_C:          "Tema C — Oscuro"
+
+mark_menu:
+  lock_one:         "Bloquear la marca"
+  lock_many:        "Bloquear las marcas"
+  unlock_one:       "Desbloquear la marca"
+  unlock_many:      "Desbloquear las marcas"
+  change_type:      "Cambiar el tipo a…"
+  justify:          "Justificar el texto"
+  center:           "Centrar el texto"
+  right:            "Alinear el texto a la derecha"
+  left:             "Alinear el texto a la izquierda"
+
+align_menu:
+  top:              "Arriba"
+  bottom:           "Abajo"
+  vcenter:          "Al centro vertical"
+  right:            "A la derecha"
+  left:             "A la izquierda"
+  hcenter:          "Al centro horizontal"
+  cancel:           "Deshacer la alineación"
+
+adjust_menu:
+  spread_v:         "Distribuir verticalmente"
+  spread_h:         "Distribuir horizontalmente"
+  h:                "… horizontalmente"
+  v:                "… verticalmente"
+  cancel:           "Deshacer el ajuste"
+
+selection_menu:
+  group:            "Agrupar los elementos seleccionados"
+  ungroup:          "Desagrupar los elementos seleccionados"
+  select_all:       "Seleccionar marcas…"
+
+borders_menu:
+  remove_left:      "Quitar el borde izquierdo"
+  add_left:         "Restaurar el borde izquierdo"
+  remove_right:     "Quitar el borde derecho"
+  add_right:        "Restaurar el borde derecho"
+  remove_bottom:    "Quitar el borde inferior"
+  add_bottom:       "Restaurar el borde inferior"
+  remove_top:       "Quitar el borde superior"
+  add_top:          "Restaurar el borde superior"
+
+# Menú contextual de una marca
+mark_context:
+  lock:             "Bloquear"
+  unlock:           "Desbloquear"
+  edit:             "Editar…"
+  align:            "Alinear con las marcas del mismo tipo"
+  align_harmony:    "Alinear con la armonía"
+  align_chord:      "Alinear con el acorde"
+  delete:           "Eliminar"
+
+system_menu:
+  unlock:           "Desbloquear"
+  lock:             "Bloquear"
+  open_image:       "Abrir la imagen"
+  show_image:
+    darwin:         "Mostrar en el Finder"
+    win32:          "Mostrar en el Explorador"
+    linux:          "Mostrar en el gestor de archivos"
+
+buttons:
+  close:            "Cerrar"
+  save:             "Guardar"
+  choose:           "Elegir…"
+  cancel:           "Cancelar"
+  renounce:         "Renunciar"
+  replace:          "Reemplazar"
+  ok:               "Aceptar"
+  apply:            "Aplicar"
+  type:             "Tipo…"
+
+message_titles:
+  notice:           "Información"
+  error:            "Error"
+  doaction:         "Operación en curso"
+
+panels:
+  infos:
+    title:            "Metadatos del análisis"
+    piece_title:      "Título de la obra"
+    composer:         "Compositor"
+    analyse_title:    "Título del análisis"
+    analyse_id:       "Identificador/Afijo"
+    analyse_id_ph:    "Identificador (a-zA-Z0-9_-)"
+    folder:           "Contenedor"
+    folder_ph:        "carpeta que contiene el análisis"
+    analyst:          "Analista"
+    analyst_ph:       "Analista"
+    systems_source:   "Sistemas"
+    systems_source_ph: "carpeta de imágenes (opcional)"
+    create:           "Crear el nuevo análisis"
+    required:         "Información obligatoria"
+  tools:
+    title:            "Caja de herramientas"
+    quick_score:      "Partitura rápida"
+    quick_score_desc: "Construir una imagen a partir del código muscore: "
+    add:              "Añadir…"
+    image_name:       "Nombre de la imagen"
+    tune:             "Tonalidad"
+    time:             "Compás"
+    proximity:        "Proximidad"
+    barres:           "Mostrar las barras de compás"
+    no_stem:          "No mostrar las plicas"
+    build:            "Construir"
+    distribute:       "Distribuir los sistemas"
+    inter_system:     "Separación entre sistemas: "
+    inter_system_desc: "(si no se indica la separación, se aplica el valor definido en las preferencias, que es "
+    export_title:     "Exportación de la imagen del análisis"
+    systems:          "Sistemas "
+    systems_desc:     "Sistemas que producir. Dejar vacío para todos"
+    one_per_system:   "Una imagen por sistema"
+    export_image:     "Producir la imagen (estática)"
+    export_svg:       "Producir la imagen SVG (no funcional)"
+  prefs:
+    title:            "Preferencias"
+  manual:
+    title:            "Manual de uso"
+    shortcuts:        "Atajos de teclado"
+    manual_button:    "Manual"
+    shortcuts_list:   "Lista de atajos"
+  form:
+    title:            "Forma de la obra"
+    name:             "Nombre"
+    type:             "Tipo"
+    parent:           "Padre"
+    piece:            "Obra"
+    the_piece:        "La obra"
+    from_measure:     "Del compás"
+    to_measure:       "al compás"
+    tons:             "Tonalidad(es)"
+    build_on_table:   "Colocarlo en la mesa de análisis"
+    unnamed:          "%{type} sin nombre"
+  history:
+    title:            "Historial de deshacer"
+    item:             "Cambio: %{name}"
+    cancel_hover:     "Deshacer:"
+  export:
+    title:            "Exportar el análisis"
+    type:             "Formato"
+    types:
+      pdf:            "PDF"
+      svg:            "SVG"
+      html:           "HTML"
+    svg_desc:         "Un archivo SVG por página."
+    legend_title:     "Signos utilizados"
+    gap:              "Distancia entre sistemas"
+    gap_desc:         "Distancia entre el objeto más bajo del sistema anterior y el objeto más alto del sistema siguiente. Todos los elementos se desplazan en consecuencia en el documento exportado."
+    bad_gap:          "Distancia entre sistemas no válida."
+    mode_page:        "Página única (lectura en pantalla)"
+    mode_book:        "Páginas de tamaño fijo (libro)"
+    size:             "Tamaño"
+    orientation:      "Orientación"
+    portrait:         "Vertical"
+    landscape:        "Horizontal"
+    margin:           "Margen"
+    format:           "%{name} (%{width} × %{height} %{unit})"
+    formats:
+      A3:             "A3"
+      A4:             "A4"
+      A5:             "A5"
+      A6:             "A6"
+      B4:             "B4"
+      B5:             "B5"
+      letter:         "Carta US"
+      legal:          "Legal US"
+      tabloid:        "Tabloide"
+      executive:      "Ejecutivo"
+    custom:           "Tamaño personalizado…"
+    custom_size:      "Tamaño personalizado (%{width} × %{height} %{unit})…"
+    custom_title:     "Tamaño personalizado"
+    width:            "Anchura"
+    height:           "Altura"
+    unit:             "Unidad"
+    units:
+      mm:             "mm"
+      cm:             "cm"
+      in:             "pulg"
+      pt:             "pt"
+      pc:             "pc"
+    units_long:
+      mm:             "milímetros"
+      cm:             "centímetros"
+      in:             "pulgadas"
+      pt:             "puntos"
+      pc:             "picas"
+    remember:         "Memorizar estos ajustes en el análisis"
+    export:           "Exportar"
+    bad_size:         "Tamaño o margen de página no válido."
+    fonts_notice:     "Las fuentes del análisis (PhilNote…) deben estar instaladas en el ordenador que abra los archivos SVG."
+  mark_editor:
+    title:            "Edición de la marca"
+  animation:
+    title:            "Animación"
+    play:             "Reproducir"
+    pause:            "Pausa"
+    step:             "Paso a paso"
+    step_desc:        "Marca por marca: ← marca anterior, → marca siguiente"
+    previous:         "Marca anterior"
+    next:             "Marca siguiente"
+    stop:             "Detener (volver al inicio)"
+    finish:           "Salir de la animación"
+    tempo:            "Tempo"
+    tempo_value:      "♩ = %{tempo}"
+    meter:            "4/4"
+    meter_desc:       "Compás por defecto (no definido en el análisis)"
+    no_marks:         "Ninguna marca que animar."
+  select_marks:
+    title:            "Seleccionar marcas"
+    select:           "Seleccionar"
+    regex_ph:         "expresión regular (vacía: todas)"
+    systems:          "Sistemas"
+    count_one:        "%{n} marca encontrada"
+    count_many:       "%{n} marcas encontradas"
+  getter:
+    new_item:         "Nuevo elemento"
+
+dialogs:
+  choose_analyse_folder: "Elegir la carpeta del análisis"
+  choose_folder:         "Elegir una carpeta"
+  choose_creation_folder: "Carpeta en la que crear el análisis"
+  choose_systems_folder: "Carpeta con las imágenes de los sistemas"
+  choose_pdf:            "Elegir el PDF de la partitura"
+  pdf_filter:            "Partitura PDF"
+  replace_systems:       "¿Reemplazar los sistemas del análisis?"
+  replace_systems_detail: "Los %{count} sistemas actuales se reemplazarán por los del recorte."
+
+# Preferencias del análisis (etiqueta y precisión)
+prefs:
+  theme:                  {label: "Tema del análisis", precision: "Define los tamaños que aplicar y los colores (en el modo color del análisis)"}
+  lock_systems:           {label: "Bloquear los sistemas"}
+  grid_horizontal_space:  {label: "Paso horizontal de la cuadrícula"}
+  grid_vertical_space:    {label: "Paso vertical de la cuadrícula"}
+  systeme_width:          {label: "Anchura de los sistemas"}
+  top_first_system:       {label: "Desplazamiento superior del primer sistema"}
+  distance_systemes:      {label: "Distancia por defecto de los sistemas"}
+  adjust_same_mark:       {label: "Igualar en altura las marcas del mismo tipo"}
+  snap_for_adjust_pos:    {label: "Distancia de imantación de la alineación", precision: "Afecta a las marcas del mismo tipo y solo si la preferencia «Igualar en altura» de arriba está activada."}
+  marque_accords_size:    {label: "Tamaño de las marcas de acorde"}
+  marque_harmonie_size:   {label: "Tamaño de las marcas de armonía"}
+  marque_modulation_size: {label: "Tamaño de las marcas de modulación"}
+  marque_emprunt_size:    {label: "Tamaño de las marcas de préstamo"}
+  marque_cellule_size:    {label: "Tamaño de los nombres de células"}
+  thiness_segment_line:   {label: "Grosor del trazo de segmentos"}
+  thiness_cellule_line:   {label: "Grosor del trazo de células"}
+  thiness_border:         {label: "Grosor de los trazos de recuadros"}
+  marque_pedale_size:     {label: "Tamaño de los pedales"}
+  marque_texte_size_1:    {label: "Tamaño de los textos grandes"}
+  marque_texte_size_2:    {label: "Tamaño de los textos medianos"}
+  measure_line_offset:    {label: "Distancia de la línea de números de compás bajo el sistema"}
+  distance_after_measure_line: {label: "Distancia entre la línea de números de compás y el sistema siguiente"}
+  marque_measure:         {label: "Tamaño de los números de compás"}
+  marque_texte_size_3:    {label: "Tamaño de los textos pequeños"}
+  marque_texte_size_4:    {label: "Tamaño de los textos muy pequeños"}
+  window_width:           {label: "Anchura de la ventana al abrir"}
+  window_height:          {label: "Altura de la ventana al abrir"}
+  last_scroll:            {label: "Desplazamiento al abrir"}
+  color_mesure:           {label: "Números de compás"}
+  color_accords:          {label: "Nombres de acordes"}
+  color_harmonie:         {label: "Cifrados armónicos"}
+  color_mark_parties:     {label: "Marcas de parte"}
+  color_mark_sections:    {label: "Marcas de sección"}
+  color_cellule:          {label: "Células y motivos"}
+  color_modulations:      {label: "Marcas de modulación"}
+  color_emprunts:         {label: "Marcas de préstamo"}
+  color_segments:         {label: "Segmentos"}
+  animation_tempo:        {label: "Tempo de la animación", precision: "Velocidad del cursor de la animación, en negras por minuto (compás de 4/4 por defecto)."}
+  autosave:               {label: "Guardado automático"}
+  animate:                {label: "Animar el análisis", precision: "Las marcas se mostrarán progresivamente"}
+
+prefs_groups:
+  general:                "General"
+  systems:                "Sistemas"
+  measures:               "Números de compás"
+  grid:                   "Cuadrícula y alineación"
+  marks:                  "Marcas"
+  lines:                  "Trazos"
+  colors:                 "Colores"
+  window:                 "Ventana"
+  others:                 "Otros"
+
+# Marcas de análisis: nombre (en las listas de elección), mensaje
+# (indicación del editor) y contenido por defecto
+marks:
+  types:
+    acc: {name: "Acorde",        message: "Nombre del acorde"}
+    har: {name: "Armonía",       message: "Cifrado"}
+    mod: {name: "Modulación",    message: "Nueva tonalidad"}
+    emp: {name: "Préstamo",      message: "Tonalidad del préstamo"}
+    cad: {name: "Cadencia…"}
+    bbx: {name: "Recuadro",      message: "Tipo de recuadro"}
+    not: {name: "Tipo de nota…", message: "Tipo de la nota"}
+    deg: {name: "Grado de nota", message: "Grado de la nota"}
+    seg: {name: "Segmento",      message: "Leyenda (vacía si no hay)", default: "miembro 1"}
+    img: {name: "Imagen",        message: "Imagen que insertar (ruta en la carpeta 'images')"}
+    txt: {name: "Texto",         message: "Texto que mostrar"}
+    ped: {name: "Pedal",         message: "Grado del pedal"}
+    cir: {name: "Círculo"}
+  frames:
+    prt:  {name: "Parte (inicio)",   default: "EXPO"}
+    prtz: {name: "Fin de parte",     default: "EXPO"}
+    sec:  {name: "Inicio de sección", default: "SECCIÓN"}
+    secz: {name: "Fin de sección",   default: "SECCIÓN"}
+    cel:  {name: "Célula"}
+    bxt:  {name: "Texto en recuadro", default: "Texto **con estilo** y _con estilo_."}
+    box:  {name: "Recuadro simple"}
+  texts:
+    size1: {name: "Grande",           default: "Texto grande"}
+    size2: {name: "Mediano",          default: "Texto mediano"}
+    size3: {name: "Pequeño",          default: "Texto pequeño"}
+    size4: {name: "Mini",             default: "Texto diminuto"}
+    mes:   {name: "Número de compás"}
+    long:  {name: "Texto largo",      default: "Texto largo (comando + INTRO para terminar)"}
+    idx:   {name: "En el margen (índice)", default: "Índice"}
+  notes:
+    np: "Nota de paso"
+    ap: "Apoyatura"
+    ac: "Apoyatura cromática"
+    re: "Retardo"
+    br: "Bordadura"
+    db: "Doble bordadura"
+    ec: "Escapada"
+    in: "Nota real"
+    an: "Anticipación"
+  cadences:
+    par: "Cadencia perfecta"
+    imp: "Cadencia imperfecta"
+    dem: "Semicadencia"
+    ita: "Cadencia italiana"
+    rom: "Cadencia rota"
+    pla: "Cadencia plagal"
+    fau: "Cadencia de Fauré"
+  cadences_abbr:
+    par: "C.P."
+    imp: "C.I."
+    dem: "S.C."
+    ita: "C.It."
+    rom: "C.R."
+    pla: "C.Pl."
+    fau: "C.F."
+  segments:
+    h-up:    "Horizontal sobre el pentagrama"
+    h-down:  "Horizontal bajo el pentagrama"
+    v-left:  "Vertical, trazo a la izquierda"
+    v-right: "Vertical, trazo a la derecha"
+  getter:
+    type:         "Tipo de la marca"
+    cadence:      "Tipo de la cadencia"
+    segment:      "Disposición del segmento"
+
+form_types:
+  par: "Parte"
+  sec: "Sección"
+  seg: "Segmento"

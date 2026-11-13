@@ -30,6 +30,7 @@ menu:
   help_html:        "HTML"
   help_epub:        "ePub"
   prefs:            "Préférences…"
+  language:         "Langue"
   edit:             "Édition"
   options:          "Options"
   mark:             "Marque"
@@ -109,7 +110,7 @@ borders_menu:
   remove_top:       "Supprimer le bord haut"
   add_top:          "Remettre le bord haut"
 
-# Menu contextuel d'un système
+# Menu contextuel d'une marque
 mark_context:
   lock:             "Verrouiller"
   unlock:           "Déverrouiller"
@@ -186,6 +187,8 @@ panels:
   manual:
     title:            "Manuel d'utilisation"
     shortcuts:        "Raccourcis clavier"
+    manual_button:    "Manuel"
+    shortcuts_list:   "Liste des raccourcis"
   form:
     title:            "Forme de la pièce"
     name:             "Name"

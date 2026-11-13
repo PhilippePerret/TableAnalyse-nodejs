@@ -1,0 +1,424 @@
+# Oberflächenelemente (Menüs, Bereiche, Tasten, Beschriftungen…)
+# Variablen: %{name}; %{cmd} = Befehlstaste des Systems (⌘ oder Strg+)
+# Systemabhängiger Text: Tabelle {darwin:, win32:, linux:}
+
+app:
+  name: "Analysetisch"
+  title: "ANALYSETISCH"
+
+decimal_separator: ","
+
+menu:
+  file:             "Analyse"
+  new_analyse:      "Neue Analyse…"
+  open_analyse:     "Analyse öffnen…"
+  reload_analyse:   "Analyse neu laden"
+  save:             "Sichern"
+  cut_score:        "Partitur zerschneiden…"
+  number_score:     "Partitur nummerieren"
+  infos:            "Informationen…"
+  export:           "Exportieren…"
+  show_in_finder:
+    darwin:         "Im Finder zeigen"
+    win32:          "Im Explorer zeigen"
+    linux:          "Im Dateimanager zeigen"
+  tools_menu:       "Werkzeuge"
+  tools:            "Werkzeugkasten…"
+  form:             "Form…"
+  animate:          "Animation starten"
+  help:             "Hilfe"
+  help_html:        "HTML"
+  help_epub:        "ePub"
+  prefs:            "Einstellungen…"
+  language:         "Sprache"
+  edit:             "Bearbeiten"
+  options:          "Optionen"
+  mark:             "Markierung"
+  align:            "Ausrichten"
+  adjust:           "Anpassen"
+  selection:        "Auswahl"
+  borders:          "Ränder"
+  window:           "Fenster"
+  minimize:
+    darwin:         "Im Dock ablegen"
+    win32:          "Minimieren"
+    linux:          "Minimieren"
+  zoom:             "Zoomen"
+  front:            "Alle nach vorne bringen"
+  close_window:     "Fenster schließen"
+  cut:              "Ausschneiden"
+  copy:             "Kopieren"
+  paste:            "Einsetzen"
+  select_all:       "Alles auswählen"
+  about:            "Über %{name}"
+  hide:             "%{name} ausblenden"
+  hide_others:      "Andere ausblenden"
+  unhide:           "Alle einblenden"
+  quit:             "%{name} beenden"
+
+options_menu:
+  cancel_last:      "Widerrufen: %{name}"
+  cancel_history:   "Verlauf der Widerrufe"
+  grid_v:           "Vertikal einrasten"
+  grid_h:           "Horizontal einrasten"
+  color:            "Farbversion"
+  lock_systems:     "Systeme sperren"
+  coordinates:      "Koordinaten anzeigen"
+  theme_A:          "Thema A — Schlicht"
+  theme_B:          "Thema B — ScoreAnalyse"
+  theme_C:          "Thema C — Dunkel"
+
+mark_menu:
+  lock_one:         "Markierung sperren"
+  lock_many:        "Markierungen sperren"
+  unlock_one:       "Markierung entsperren"
+  unlock_many:      "Markierungen entsperren"
+  change_type:      "Typ setzen auf…"
+  justify:          "Text im Blocksatz"
+  center:           "Text zentrieren"
+  right:            "Text rechtsbündig"
+  left:             "Text linksbündig"
+
+align_menu:
+  top:              "Oben"
+  bottom:           "Unten"
+  vcenter:          "Vertikal zentriert"
+  right:            "Rechts"
+  left:             "Links"
+  hcenter:          "Horizontal zentriert"
+  cancel:           "Ausrichtung widerrufen"
+
+adjust_menu:
+  spread_v:         "Vertikal verteilen"
+  spread_h:         "Horizontal verteilen"
+  h:                "… horizontal"
+  v:                "… vertikal"
+  cancel:           "Anpassung widerrufen"
+
+selection_menu:
+  group:            "Ausgewählte Elemente gruppieren"
+  ungroup:          "Gruppierung der Auswahl aufheben"
+  select_all:       "Markierungen auswählen…"
+
+borders_menu:
+  remove_left:      "Linken Rand entfernen"
+  add_left:         "Linken Rand wiederherstellen"
+  remove_right:     "Rechten Rand entfernen"
+  add_right:        "Rechten Rand wiederherstellen"
+  remove_bottom:    "Unteren Rand entfernen"
+  add_bottom:       "Unteren Rand wiederherstellen"
+  remove_top:       "Oberen Rand entfernen"
+  add_top:          "Oberen Rand wiederherstellen"
+
+# Kontextmenü einer Markierung
+mark_context:
+  lock:             "Sperren"
+  unlock:           "Entsperren"
+  edit:             "Bearbeiten…"
+  align:            "An Markierungen gleichen Typs ausrichten"
+  align_harmony:    "An der Harmonie ausrichten"
+  align_chord:      "Am Akkord ausrichten"
+  delete:           "Löschen"
+
+system_menu:
+  unlock:           "Entsperren"
+  lock:             "Sperren"
+  open_image:       "Bild öffnen"
+  show_image:
+    darwin:         "Im Finder zeigen"
+    win32:          "Im Explorer zeigen"
+    linux:          "Im Dateimanager zeigen"
+
+buttons:
+  close:            "Schließen"
+  save:             "Sichern"
+  choose:           "Wählen…"
+  cancel:           "Abbrechen"
+  renounce:         "Verzichten"
+  replace:          "Ersetzen"
+  ok:               "OK"
+  apply:            "Anwenden"
+  type:             "Typ…"
+
+message_titles:
+  notice:           "Information"
+  error:            "Fehler"
+  doaction:         "Vorgang läuft"
+
+panels:
+  infos:
+    title:            "Metadaten der Analyse"
+    piece_title:      "Titel des Stücks"
+    composer:         "Komponist"
+    analyse_title:    "Titel der Analyse"
+    analyse_id:       "Kennung/Kürzel"
+    analyse_id_ph:    "Kennung (a-zA-Z0-9_-)"
+    folder:           "Behälter"
+    folder_ph:        "Ordner, der die Analyse enthält"
+    analyst:          "Analytiker"
+    analyst_ph:       "Analytiker"
+    systems_source:   "Systeme"
+    systems_source_ph: "Bilderordner (optional)"
+    create:           "Neue Analyse erstellen"
+    required:         "Erforderliche Angaben"
+  tools:
+    title:            "Werkzeugkasten"
+    quick_score:      "Schnellpartitur"
+    quick_score_desc: "Ein Bild aus muscore-Code erzeugen: "
+    add:              "Hinzufügen…"
+    image_name:       "Bildname"
+    tune:             "Tonart"
+    time:             "Taktart"
+    proximity:        "Nähe"
+    barres:           "Taktstriche anzeigen"
+    no_stem:          "Hälse nicht anzeigen"
+    build:            "Erzeugen"
+    distribute:       "Systeme verteilen"
+    inter_system:     "Abstand zwischen den Systemen: "
+    inter_system_desc: "(ohne Angabe gilt der in den Einstellungen festgelegte Wert, nämlich "
+    export_title:     "Bild der Analyse exportieren"
+    systems:          "Systeme "
+    systems_desc:     "Zu erzeugende Systeme. Leer lassen für alle"
+    one_per_system:   "Ein Bild pro System"
+    export_image:     "Bild erzeugen (statisch)"
+    export_svg:       "SVG-Bild erzeugen (nicht funktionsfähig)"
+  prefs:
+    title:            "Einstellungen"
+  manual:
+    title:            "Benutzerhandbuch"
+    shortcuts:        "Tastaturkürzel"
+    manual_button:    "Handbuch"
+    shortcuts_list:   "Liste der Tastaturkürzel"
+  form:
+    title:            "Form des Stücks"
+    name:             "Name"
+    type:             "Typ"
+    parent:           "Übergeordnet"
+    piece:            "Stück"
+    the_piece:        "Das Stück"
+    from_measure:     "Von Takt"
+    to_measure:       "bis Takt"
+    tons:             "Tonart(en)"
+    build_on_table:   "Auf den Analysetisch legen"
+    unnamed:          "%{type} ohne Namen"
+  history:
+    title:            "Verlauf der Widerrufe"
+    item:             "Änderung: %{name}"
+    cancel_hover:     "Widerrufen:"
+  export:
+    title:            "Analyse exportieren"
+    type:             "Format"
+    types:
+      pdf:            "PDF"
+      svg:            "SVG"
+      html:           "HTML"
+    svg_desc:         "Eine SVG-Datei pro Seite."
+    legend_title:     "Verwendete Zeichen"
+    gap:              "Abstand zwischen Systemen"
+    gap_desc:         "Abstand zwischen dem tiefsten Objekt des vorigen Systems und dem höchsten Objekt des nächsten. Alle Elemente werden im exportierten Dokument entsprechend verschoben."
+    bad_gap:          "Ungültiger Abstand zwischen Systemen."
+    mode_page:        "Einzelne Seite (Lesen am Bildschirm)"
+    mode_book:        "Seiten fester Größe (Buch)"
+    size:             "Größe"
+    orientation:      "Ausrichtung"
+    portrait:         "Hochformat"
+    landscape:        "Querformat"
+    margin:           "Rand"
+    format:           "%{name} (%{width} × %{height} %{unit})"
+    formats:
+      A3:             "A3"
+      A4:             "A4"
+      A5:             "A5"
+      A6:             "A6"
+      B4:             "B4"
+      B5:             "B5"
+      letter:         "US-Letter"
+      legal:          "US-Legal"
+      tabloid:        "Tabloid"
+      executive:      "Executive"
+    custom:           "Eigene Größe…"
+    custom_size:      "Eigene Größe (%{width} × %{height} %{unit})…"
+    custom_title:     "Eigene Größe"
+    width:            "Breite"
+    height:           "Höhe"
+    unit:             "Einheit"
+    units:
+      mm:             "mm"
+      cm:             "cm"
+      in:             "Zoll"
+      pt:             "pt"
+      pc:             "pc"
+    units_long:
+      mm:             "Millimeter"
+      cm:             "Zentimeter"
+      in:             "Zoll"
+      pt:             "Punkt"
+      pc:             "Pica"
+    remember:         "Diese Einstellungen in der Analyse speichern"
+    export:           "Exportieren"
+    bad_size:         "Ungültige Seitengröße oder ungültiger Rand."
+    fonts_notice:     "Die Schriften der Analyse (PhilNote…) müssen auf dem Computer installiert sein, der die SVG-Dateien öffnet."
+  mark_editor:
+    title:            "Markierung bearbeiten"
+  animation:
+    title:            "Animation"
+    play:             "Abspielen"
+    pause:            "Pause"
+    step:             "Schrittweise"
+    step_desc:        "Markierung für Markierung: ← vorige Markierung, → nächste Markierung"
+    previous:         "Vorige Markierung"
+    next:             "Nächste Markierung"
+    stop:             "Stopp (zurück zum Anfang)"
+    finish:           "Animation beenden"
+    tempo:            "Tempo"
+    tempo_value:      "♩ = %{tempo}"
+    meter:            "4/4"
+    meter_desc:       "Standard-Taktart (in der Analyse nicht festgelegt)"
+    no_marks:         "Keine Markierungen zu animieren."
+  select_marks:
+    title:            "Markierungen auswählen"
+    select:           "Auswählen"
+    regex_ph:         "regulärer Ausdruck (leer: alle)"
+    systems:          "Systeme"
+    count_one:        "%{n} Markierung gefunden"
+    count_many:       "%{n} Markierungen gefunden"
+  getter:
+    new_item:         "Neuer Eintrag"
+
+dialogs:
+  choose_analyse_folder: "Ordner der Analyse wählen"
+  choose_folder:         "Ordner wählen"
+  choose_creation_folder: "Ordner, in dem die Analyse erstellt wird"
+  choose_systems_folder: "Ordner mit den Bildern der Systeme"
+  choose_pdf:            "PDF der Partitur wählen"
+  pdf_filter:            "PDF-Partitur"
+  replace_systems:       "Die Systeme der Analyse ersetzen?"
+  replace_systems_detail: "Die %{count} aktuellen Systeme werden durch die des Zerschneidens ersetzt."
+
+# Einstellungen der Analyse (Beschriftung und Erläuterung)
+prefs:
+  theme:                  {label: "Thema der Analyse", precision: "Legt die anzuwendenden Größen und die Farben fest (im Farbmodus der Analyse)"}
+  lock_systems:           {label: "Systeme sperren"}
+  grid_horizontal_space:  {label: "Horizontaler Rasterschritt"}
+  grid_vertical_space:    {label: "Vertikaler Rasterschritt"}
+  systeme_width:          {label: "Breite der Systeme"}
+  top_first_system:       {label: "Oberer Abstand des ersten Systems"}
+  distance_systemes:      {label: "Standardabstand der Systeme"}
+  adjust_same_mark:       {label: "Markierungen gleichen Typs in der Höhe angleichen"}
+  snap_for_adjust_pos:    {label: "Einrastabstand für die Ausrichtung", precision: "Betrifft Markierungen gleichen Typs, und nur wenn die Einstellung „in der Höhe angleichen“ oben aktiviert ist."}
+  marque_accords_size:    {label: "Größe der Akkordmarkierungen"}
+  marque_harmonie_size:   {label: "Größe der Harmoniemarkierungen"}
+  marque_modulation_size: {label: "Größe der Modulationsmarkierungen"}
+  marque_emprunt_size:    {label: "Größe der Ausweichungsmarkierungen"}
+  marque_cellule_size:    {label: "Größe der Zellennamen"}
+  thiness_segment_line:   {label: "Linienstärke der Segmente"}
+  thiness_cellule_line:   {label: "Linienstärke der Zellen"}
+  thiness_border:         {label: "Linienstärke der Rahmen"}
+  marque_pedale_size:     {label: "Größe der Orgelpunkte"}
+  marque_texte_size_1:    {label: "Größe großer Texte"}
+  marque_texte_size_2:    {label: "Größe mittlerer Texte"}
+  measure_line_offset:    {label: "Abstand der Taktnummernlinie unter dem System"}
+  distance_after_measure_line: {label: "Abstand zwischen der Taktnummernlinie und dem nächsten System"}
+  marque_measure:         {label: "Größe der Taktnummern"}
+  marque_texte_size_3:    {label: "Größe kleiner Texte"}
+  marque_texte_size_4:    {label: "Größe sehr kleiner Texte"}
+  window_width:           {label: "Fensterbreite beim Öffnen"}
+  window_height:          {label: "Fensterhöhe beim Öffnen"}
+  last_scroll:            {label: "Bildlauf beim Öffnen"}
+  color_mesure:           {label: "Taktnummern"}
+  color_accords:          {label: "Akkordnamen"}
+  color_harmonie:         {label: "Harmonische Bezifferung"}
+  color_mark_parties:     {label: "Teilmarkierungen"}
+  color_mark_sections:    {label: "Abschnittsmarkierungen"}
+  color_cellule:          {label: "Zellen & Motive"}
+  color_modulations:      {label: "Modulationsmarkierungen"}
+  color_emprunts:         {label: "Ausweichungsmarkierungen"}
+  color_segments:         {label: "Segmente"}
+  animation_tempo:        {label: "Tempo der Animation", precision: "Geschwindigkeit des Animationscursors in Viertelnoten pro Minute (standardmäßig 4/4-Takt)."}
+  autosave:               {label: "Automatisch sichern"}
+  animate:                {label: "Analyse animieren", precision: "Die Markierungen werden nach und nach angezeigt"}
+
+prefs_groups:
+  general:                "Allgemein"
+  systems:                "Systeme"
+  measures:               "Taktnummern"
+  grid:                   "Raster und Ausrichtung"
+  marks:                  "Markierungen"
+  lines:                  "Linien"
+  colors:                 "Farben"
+  window:                 "Fenster"
+  others:                 "Sonstiges"
+
+# Analysemarkierungen: Name (in den Auswahllisten), Hinweis (Eingabe im
+# Editor) und Standardinhalt
+marks:
+  types:
+    acc: {name: "Akkord",        message: "Name des Akkords"}
+    har: {name: "Harmonie",      message: "Bezifferung"}
+    mod: {name: "Modulation",    message: "Neue Tonart"}
+    emp: {name: "Ausweichung",   message: "Tonart der Ausweichung"}
+    cad: {name: "Kadenz…"}
+    bbx: {name: "Rahmen",        message: "Rahmentyp"}
+    not: {name: "Notentyp…",     message: "Typ der Note"}
+    deg: {name: "Notenstufe",    message: "Stufe der Note"}
+    seg: {name: "Segment",       message: "Beschriftung (leer, wenn keine)", default: "Glied 1"}
+    img: {name: "Bild",          message: "Einzufügendes Bild (Pfad im Ordner 'images')"}
+    txt: {name: "Text",          message: "Anzuzeigender Text"}
+    ped: {name: "Orgelpunkt",    message: "Stufe des Orgelpunkts"}
+    cir: {name: "Kreis"}
+  frames:
+    prt:  {name: "Teil (Beginn)",    default: "EXPO"}
+    prtz: {name: "Ende des Teils",   default: "EXPO"}
+    sec:  {name: "Abschnittsbeginn", default: "ABSCHNITT"}
+    secz: {name: "Abschnittsende",   default: "ABSCHNITT"}
+    cel:  {name: "Zelle"}
+    bxt:  {name: "Text im Rahmen",   default: "**Formatierter** und _formatierter_ Text."}
+    box:  {name: "Einfacher Rahmen"}
+  texts:
+    size1: {name: "Groß",             default: "Großer Text"}
+    size2: {name: "Mittel",           default: "Mittlerer Text"}
+    size3: {name: "Klein",            default: "Kleiner Text"}
+    size4: {name: "Mini",             default: "Winziger Text"}
+    mes:   {name: "Taktnummer"}
+    long:  {name: "Langer Text",      default: "Langer Text (Befehl + ENTER zum Beenden)"}
+    idx:   {name: "Am Rand (Index)",  default: "Index"}
+  notes:
+    np: "Durchgangsnote"
+    ap: "Vorhalt (Appoggiatur)"
+    ac: "Chromatische Appoggiatur"
+    re: "Vorhalt"
+    br: "Wechselnote"
+    db: "Doppelte Wechselnote"
+    ec: "Abspringende Note"
+    in: "Akkordton"
+    an: "Vorausnahme"
+  cadences:
+    par: "Ganzschluss"
+    imp: "Unvollkommener Ganzschluss"
+    dem: "Halbschluss"
+    ita: "Italienische Kadenz"
+    rom: "Trugschluss"
+    pla: "Plagalschluss"
+    fau: "Fauré-Kadenz"
+  cadences_abbr:
+    par: "GS"
+    imp: "UGS"
+    dem: "HS"
+    ita: "It.K."
+    rom: "TS"
+    pla: "PS"
+    fau: "F.K."
+  segments:
+    h-up:    "Waagerecht über dem System"
+    h-down:  "Waagerecht unter dem System"
+    v-left:  "Senkrecht, Strich links"
+    v-right: "Senkrecht, Strich rechts"
+  getter:
+    type:         "Typ der Markierung"
+    cadence:      "Typ der Kadenz"
+    segment:      "Anordnung des Segments"
+
+form_types:
+  par: "Teil"
+  sec: "Abschnitt"
+  seg: "Segment"

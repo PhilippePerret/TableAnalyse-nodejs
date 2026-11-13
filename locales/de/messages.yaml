@@ -1,0 +1,44 @@
+# Meldungen (Informationen, laufende Vorgänge, Tooltips)
+# Variablen: %{name}; %{cmd} = Befehlstaste des Systems (⌘ oder Strg+)
+# Systemabhängiger Text: Tabelle {darwin:, win32:, linux:}
+
+no_analyse_open: "Keine Analyse geöffnet.<br><br>Über das Menü „Analyse“ eine vorhandene Analyse öffnen (%{cmd}O) oder eine neue erstellen (%{cmd}N)."
+no_systems: "Diese Analyse enthält kein System.<br><br>Für die Analyse werden die Systeme der Partitur benötigt: Menü „Analyse“ > „Partitur zerschneiden…“."
+cutting_score: "Partitur wird zerschnitten und nummeriert…"
+after_cut:
+  darwin: "Gehen Sie jedes System durch, um zu sehen, ob Teile „wegradiert“ werden müssen (Seitenzahlen, Noten oder Angaben eines anderen Systems usw.), und entfernen Sie sie mit einem Grafikprogramm (zum Beispiel Vorschau). Sie können sie auch entfernen, indem Sie die Systeme von Hand neu zuschneiden."
+  win32: "Gehen Sie jedes System durch, um zu sehen, ob Teile „wegradiert“ werden müssen (Seitenzahlen, Noten oder Angaben eines anderen Systems usw.), und entfernen Sie sie mit einem Grafikprogramm (zum Beispiel Paint). Sie können sie auch entfernen, indem Sie die Systeme von Hand neu zuschneiden."
+  linux: "Gehen Sie jedes System durch, um zu sehen, ob Teile „wegradiert“ werden müssen (Seitenzahlen, Noten oder Angaben eines anderen Systems usw.), und entfernen Sie sie mit einem Grafikprogramm (zum Beispiel GIMP). Sie können sie auch entfernen, indem Sie die Systeme von Hand neu zuschneiden."
+numbering_score: "Partitur wird nummeriert…"
+exporting_html: "Die Analyse wird als HTML exportiert. Bitte warten…"
+exported_html: "Die Analyse wurde exportiert nach %{path}"
+exporting_pdf: "Die Analyse wird als PDF exportiert. Bitte warten…"
+exported_pdf: "Die Analyse wurde exportiert nach %{path}"
+exporting_svg: "Die Analyse wird als SVG exportiert. Bitte warten…"
+exported_svg: "Die Analyse wurde exportiert (eine SVG-Datei pro Seite) in den Ordner %{path}"
+image_built: "Das Bild %{name} wurde erfolgreich erzeugt.\nSein Name ist in der Zwischenablage: Sie können ein Bild erstellen, um es sofort zu sehen."
+think_to_save: "Denken Sie daran, die Analyse zu sichern."
+systems_unlocked: "<p>Standardmäßig folgen alle Analysemarkierungen und die anderen Systeme der Verschiebung.</p><p>Um NUR EIN SYSTEM zu verschieben, die Taste ⌥ gedrückt halten.</p><p>Um nur das System und die folgenden Systeme zu verschieben, ⌥ und ⇧ gedrückt halten.</p>"
+systems_position_adjusted: "Die Position der Systeme wurde angepasst. Sichern Sie die neuen Daten."
+form_delete_todo: "Ich muss noch lernen, ein Element zu löschen"
+form_no_measure: "Auf dem Tisch wurde keine Taktnummer ≥ %{start} gefunden."
+form_already_marked: "Das Element '%{name}' hat bereits eine Markierung. Ich aktualisiere sie nur."
+form_associated: "%{type} mit Markierung #%{tag} verknüpft"
+form_associated_f: "%{type} mit Markierung #%{tag} verknüpft"
+nothing_to_cancel: "Nichts zu widerrufen."
+prop_of: "%{prop} von #%{id}"
+no_same_type_mark: "Keine Markierung gleichen Typs in diesem System."
+no_harmony_mark: "Keine Harmoniemarkierung."
+no_chord_mark: "Keine Akkordmarkierung."
+
+# Zerschneiden der Partitur (Protokoll)
+cutter:
+  page: "Seite %{page}/%{pages}: %{staves} Notenzeilen, %{systems} Systeme (%{detail})"
+  page_warning: "  ! Seite %{page}: %{warning}"
+  done: "%{systems} Systeme (%{measures} Takte) geschrieben nach %{out}"
+  image_measures: "%{image}: %{count} Takte"
+  image_warning: "  ! %{image}: %{warning}"
+  image_systems: "  ! %{image}: %{count} Systeme erkannt"
+  numbered: "%{measures} Takte in %{systems} Systemen nummeriert"
+  no_staff: "Keine Notenzeile erkannt"
+  measures_header: "# Beim Zerschneiden erkannte Taktnummern (Pixelkoordinaten jedes Bildes).\n# Beim Öffnen der Analyse als Taktnummern importiert, unter jedes System gesetzt."

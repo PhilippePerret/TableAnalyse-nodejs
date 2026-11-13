@@ -53,6 +53,15 @@ SA_SMOKE=8 SA_SMOKE_JS=/chemin/script.js npx electron . /chemin/analyse
 Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes.
 
 
+### Localisation
+
+Textes dans `locales/<langue>/` (`ui.yaml`, `messages.yaml`, `errors.yaml`) : `fr` (référence), `en`, `de`, `it`, `es`, `zh`, `ja`, `ko`. `t()` dans `main/i18n.js` et `renderer/js/i18n.js`.
+
+Langue : préférence `lang` de l'application (menu « Analyse > Langue », relance de l'application), sinon langue du système si elle est traduite, sinon français. Un texte absent d'une langue est pris en français.
+
+Toute nouvelle clé s'ajoute dans **toutes** les langues (même structure, mêmes variables `%{…}`).
+
+
 ## Les objets
 
 ### Association de l'objet avec son système

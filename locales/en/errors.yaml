@@ -1,0 +1,52 @@
+# Error messages
+# Variables: %{name}
+
+no_analyse_open: "No analysis is open."
+need_analyse_first: "You must open an analysis first."
+need_analyse_to_save: "You must open or create an analysis to save it."
+cannot_save: "%{error}<br><br>I cannot save."
+no_analyse_to_export: "There is no current analysis to export!"
+nothing_to_export: "The analysis table is empty: nothing to export."
+export_failed: "The analysis could not be exported: %{error}"
+need_choose_analyse: "You must choose the analysis first."
+image_export_todo: "Producing the image of the analysis is not implemented yet."
+svg_export_todo: "I cannot export the analysis to SVG yet."
+image_not_found: "Image not found: %{src}"
+infos_not_found: "The information cannot be found (%{path})!"
+not_an_analyse_folder: "The folder “%{folder}” is not an analysis folder (it must contain an 'infos.yaml' file and a 'systems' folder)."
+no_systems_to_number: "The analysis contains no system to number."
+cutting_failed: "The cut failed."
+render_process_gone: "Render process stopped: %{reason}"
+score_image_failed: "Problem: %{output}"
+
+creation:
+  folder_required: "You must give the folder in which to create the analysis."
+  folder_is_app: "You cannot create an analysis in the application folder…"
+  folder_not_found: "The folder '%{folder}' cannot be found…"
+  invalid_id: "The identifier '%{id}' is invalid (it may only contain letters, digits, underscores or hyphens)"
+  already_exists: "The analysis “%{id}” already exists in the folder '%{folder}'…"
+  id_required: "- The identifier of the analysis is required."
+  id_chars: "- The identifier may only contain letters, digits, hyphens or underscores."
+  title_required: "- The title of the piece is required."
+  composer_required: "- The composer of the piece is required."
+  analyst_required: "– The name of the analyst is required."
+
+tools:
+  code_required: "You must give the code in the field."
+
+marks:
+  no_autocontent: "Cannot define the autocontent of the type '%{type}'…"
+  no_subtype: "The type '%{type}' does not define its subtype…"
+  already_associated: "The two tags are already associated."
+  not_associated: "The two tags are not associated!"
+  missing_tag: "The tag %{id} no longer exists. You should delete this link."
+  top_undefined: "The top of the object is not defined."
+  left_undefined: "The left of the object is not defined."
+  top_nan: "The top should be a number."
+  left_nan: "The left of the object should be a number"
+  duplicate_ids: "Duplicate identifiers were found. It would be safer to fix them (by editing the analyse_tags.yaml file) and reload the analysis. The IDs are shown in the console."
+
+preference_not_found: "Cannot find the preference element with identifier #%{key}"
+unknown_adjust: "I cannot handle the adjustment '%{adjust}'."
+panel_id_required: "%{owner} must define the panel ID (<owner>.panneauId)"
+manual_not_found: "Manual not found: %{path}"

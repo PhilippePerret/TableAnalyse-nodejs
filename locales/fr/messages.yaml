@@ -27,6 +27,9 @@ form_associated: "%{type} associé à mark #%{tag}"
 form_associated_f: "%{type} associée à mark #%{tag}"
 nothing_to_cancel: "Aucune opération à annuler."
 prop_of: "%{prop} de #%{id}"
+no_same_type_mark: "Pas de marque de même type dans ce système."
+no_harmony_mark: "Pas de marque d'harmonie."
+no_chord_mark: "Pas de marque d'accord."
 
 # Découpe de la partition (journal)
 cutter:
@@ -39,6 +42,3 @@ cutter:
   numbered: "%{measures} mesures numérotées dans %{systems} systèmes"
   no_staff: "Aucune portée détectée"
   measures_header: "# Numéros de mesure détectés par la découpe (coordonnées en pixels de chaque image).\n# Importés à l'ouverture de l'analyse comme numéros de mesure, posés sous chaque système."
-no_same_type_mark: "Pas de marque de même type dans ce système."
-no_harmony_mark: "Pas de marque d'harmonie."
-no_chord_mark: "Pas de marque d'accord."

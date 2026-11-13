@@ -1,0 +1,52 @@
+# Messaggi d'errore
+# Variabili: %{nome}
+
+no_analyse_open: "Nessuna analisi aperta."
+need_analyse_first: "Occorre prima aprire un'analisi."
+need_analyse_to_save: "Occorre aprire o creare un'analisi per salvarla."
+cannot_save: "%{error}<br><br>Impossibile procedere al salvataggio."
+no_analyse_to_export: "Non c'è alcuna analisi corrente da esportare!"
+nothing_to_export: "Il tavolo d'analisi è vuoto: niente da esportare."
+export_failed: "Impossibile esportare l'analisi: %{error}"
+need_choose_analyse: "Occorre prima scegliere l'analisi."
+image_export_todo: "La produzione dell'immagine dell'analisi non è ancora implementata."
+svg_export_todo: "Non so ancora esportare l'analisi in SVG."
+image_not_found: "Immagine non trovata: %{src}"
+infos_not_found: "Informazioni non trovate (%{path})!"
+not_an_analyse_folder: "La cartella «%{folder}» non è una cartella d'analisi (deve contenere un file 'infos.yaml' e una cartella 'systems')."
+no_systems_to_number: "L'analisi non contiene alcun sistema da numerare."
+cutting_failed: "Il taglio non è riuscito."
+render_process_gone: "Processo di rendering interrotto: %{reason}"
+score_image_failed: "Problema: %{output}"
+
+creation:
+  folder_required: "Occorre indicare la cartella in cui creare l'analisi."
+  folder_is_app: "Non potete creare un'analisi nella cartella dell'applicazione…"
+  folder_not_found: "La cartella '%{folder}' non è stata trovata…"
+  invalid_id: "L'identificativo '%{id}' non è valido (deve contenere solo lettere, cifre, trattini bassi o trattini)"
+  already_exists: "L'analisi «%{id}» esiste già nella cartella '%{folder}'…"
+  id_required: "- Occorre indicare l'identificativo dell'analisi."
+  id_chars: "- L'identificativo deve contenere solo lettere, cifre, trattini o trattini bassi."
+  title_required: "- Occorre indicare il titolo dell'opera."
+  composer_required: "- Occorre indicare il compositore dell'opera."
+  analyst_required: "– Occorre il nome dell'analista."
+
+tools:
+  code_required: "Occorre inserire il codice nel campo."
+
+marks:
+  no_autocontent: "Impossibile definire il contenuto automatico del tipo '%{type}'…"
+  no_subtype: "Il tipo '%{type}' non definisce il suo sottotipo…"
+  already_associated: "I due segni sono già associati."
+  not_associated: "I due segni non sono associati!"
+  missing_tag: "Il segno %{id} non esiste più. Dovreste eliminare questo collegamento."
+  top_undefined: "La posizione superiore (top) dell'oggetto non è definita."
+  left_undefined: "La posizione sinistra (left) dell'oggetto non è definita."
+  top_nan: "La posizione superiore (top) dovrebbe essere un numero."
+  left_nan: "La posizione sinistra (left) dell'oggetto dovrebbe essere un numero"
+  duplicate_ids: "Sono stati trovati identificativi doppi. Sarebbe più prudente correggerli (modificando il file analyse_tags.yaml) e ricaricare l'analisi. Gli ID sono indicati nella console."
+
+preference_not_found: "Impossibile trovare l'elemento di preferenza con identificativo #%{key}"
+unknown_adjust: "Non so gestire l'adattamento '%{adjust}'."
+panel_id_required: "%{owner} deve definire l'ID del pannello (<owner>.panneauId)"
+manual_not_found: "Manuale non trovato: %{path}"

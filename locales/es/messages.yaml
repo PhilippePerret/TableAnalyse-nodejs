@@ -1,0 +1,44 @@
+# Mensajes (información, operaciones en curso, ayudas emergentes)
+# Variables: %{nombre}; %{cmd} = tecla de comando del sistema (⌘ o Ctrl+)
+# Texto propio de un sistema: tabla {darwin:, win32:, linux:}
+
+no_analyse_open: "No hay ningún análisis abierto.<br><br>Use el menú «Análisis» para abrir un análisis existente (%{cmd}O) o crear uno nuevo (%{cmd}N)."
+no_systems: "Este análisis no contiene ningún sistema.<br><br>Se necesitan los sistemas de la partitura para empezar el análisis: menú «Análisis» > «Recortar la partitura…»."
+cutting_score: "Recorte y numeración de la partitura…"
+after_cut:
+  darwin: "Revise cada sistema para ver si hay partes que «borrar» (números de página, notas o indicaciones de otro sistema, etc.) y bórrelas con una herramienta gráfica (por ejemplo Vista Previa). También puede eliminarlas recortando los sistemas a mano."
+  win32: "Revise cada sistema para ver si hay partes que «borrar» (números de página, notas o indicaciones de otro sistema, etc.) y bórrelas con una herramienta gráfica (por ejemplo Paint). También puede eliminarlas recortando los sistemas a mano."
+  linux: "Revise cada sistema para ver si hay partes que «borrar» (números de página, notas o indicaciones de otro sistema, etc.) y bórrelas con una herramienta gráfica (por ejemplo GIMP). También puede eliminarlas recortando los sistemas a mano."
+numbering_score: "Numeración de la partitura…"
+exporting_html: "Exportando el análisis en HTML. Espere, por favor…"
+exported_html: "El análisis se ha exportado a %{path}"
+exporting_pdf: "Exportando el análisis en PDF. Espere, por favor…"
+exported_pdf: "El análisis se ha exportado a %{path}"
+exporting_svg: "Exportando el análisis en SVG. Espere, por favor…"
+exported_svg: "El análisis se ha exportado (un archivo SVG por página) a la carpeta %{path}"
+image_built: "La imagen %{name} se ha construido correctamente.\nSu nombre está en el portapapeles: puede crear una imagen para verla enseguida."
+think_to_save: "Recuerde guardar el análisis."
+systems_unlocked: "<p>Por defecto, todas las marcas de análisis y los demás sistemas siguen el desplazamiento.</p><p>Para mover UN SOLO SISTEMA, mantenga pulsada la tecla ⌥.</p><p>Para mover solo el sistema y los sistemas siguientes, mantenga pulsadas ⌥ y ⇧.</p>"
+systems_position_adjusted: "Se ha ajustado la posición de los sistemas. Guarde los nuevos datos."
+form_delete_todo: "Todavía tengo que aprender a eliminar un elemento"
+form_no_measure: "No se ha encontrado ningún número de compás ≥ %{start} en la mesa."
+form_already_marked: "El elemento '%{name}' ya tiene una marca. Solo la actualizaré."
+form_associated: "%{type} asociado a la marca #%{tag}"
+form_associated_f: "%{type} asociada a la marca #%{tag}"
+nothing_to_cancel: "Ninguna operación que deshacer."
+prop_of: "%{prop} de #%{id}"
+no_same_type_mark: "Ninguna marca del mismo tipo en este sistema."
+no_harmony_mark: "Ninguna marca de armonía."
+no_chord_mark: "Ninguna marca de acorde."
+
+# Recorte de la partitura (registro)
+cutter:
+  page: "Página %{page}/%{pages}: %{staves} pentagramas, %{systems} sistemas (%{detail})"
+  page_warning: "  ! página %{page}: %{warning}"
+  done: "%{systems} sistemas (%{measures} compases) escritos en %{out}"
+  image_measures: "%{image}: %{count} compases"
+  image_warning: "  ! %{image}: %{warning}"
+  image_systems: "  ! %{image}: %{count} sistemas detectados"
+  numbered: "%{measures} compases numerados en %{systems} sistemas"
+  no_staff: "Ningún pentagrama detectado"
+  measures_header: "# Números de compás detectados por el recorte (coordenadas en píxeles de cada imagen).\n# Importados al abrir el análisis como números de compás, colocados bajo cada sistema."

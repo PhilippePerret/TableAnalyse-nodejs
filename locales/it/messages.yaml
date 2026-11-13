@@ -1,0 +1,44 @@
+# Messaggi (informazioni, operazioni in corso, suggerimenti)
+# Variabili: %{nome}; %{cmd} = tasto comando del sistema (⌘ o Ctrl+)
+# Testo specifico di un sistema: tabella {darwin:, win32:, linux:}
+
+no_analyse_open: "Nessuna analisi aperta.<br><br>Usare il menu «Analisi» per aprire un'analisi esistente (%{cmd}O) o crearne una nuova (%{cmd}N)."
+no_systems: "Questa analisi non contiene alcun sistema.<br><br>Servono i sistemi della partitura per iniziare l'analisi: menu «Analisi» > «Taglia la partitura…»."
+cutting_score: "Taglio e numerazione della partitura…"
+after_cut:
+  darwin: "Esaminate ogni sistema per vedere se ci sono parti da «cancellare» (numeri di pagina, note o indicazioni di un altro sistema, ecc.) e cancellatele con uno strumento grafico (per esempio Anteprima). Potete anche eliminarle ritagliando i sistemi a mano."
+  win32: "Esaminate ogni sistema per vedere se ci sono parti da «cancellare» (numeri di pagina, note o indicazioni di un altro sistema, ecc.) e cancellatele con uno strumento grafico (per esempio Paint). Potete anche eliminarle ritagliando i sistemi a mano."
+  linux: "Esaminate ogni sistema per vedere se ci sono parti da «cancellare» (numeri di pagina, note o indicazioni di un altro sistema, ecc.) e cancellatele con uno strumento grafico (per esempio GIMP). Potete anche eliminarle ritagliando i sistemi a mano."
+numbering_score: "Numerazione della partitura…"
+exporting_html: "Esportazione dell'analisi in HTML. Attendere…"
+exported_html: "L'analisi è stata esportata in %{path}"
+exporting_pdf: "Esportazione dell'analisi in PDF. Attendere…"
+exported_pdf: "L'analisi è stata esportata in %{path}"
+exporting_svg: "Esportazione dell'analisi in SVG. Attendere…"
+exported_svg: "L'analisi è stata esportata (un file SVG per pagina) nella cartella %{path}"
+image_built: "L'immagine %{name} è stata costruita con successo.\nIl suo nome è negli appunti: potete creare un'immagine per vederla subito."
+think_to_save: "Ricordarsi di salvare l'analisi."
+systems_unlocked: "<p>Per impostazione predefinita, tutti i segni d'analisi e gli altri sistemi seguono lo spostamento.</p><p>Per spostare UN SOLO SISTEMA, tenere premuto il tasto ⌥.</p><p>Per spostare solo il sistema e i sistemi seguenti, tenere premuti ⌥ e ⇧.</p>"
+systems_position_adjusted: "La posizione dei sistemi è stata adattata. Salvate i nuovi dati."
+form_delete_todo: "Devo ancora imparare a eliminare un elemento"
+form_no_measure: "Nessun numero di battuta ≥ %{start} trovato sul tavolo."
+form_already_marked: "L'elemento '%{name}' ha già un segno. Lo aggiornerò soltanto."
+form_associated: "%{type} associato al segno #%{tag}"
+form_associated_f: "%{type} associata al segno #%{tag}"
+nothing_to_cancel: "Nessuna operazione da annullare."
+prop_of: "%{prop} di #%{id}"
+no_same_type_mark: "Nessun segno dello stesso tipo in questo sistema."
+no_harmony_mark: "Nessun segno d'armonia."
+no_chord_mark: "Nessun segno d'accordo."
+
+# Taglio della partitura (registro)
+cutter:
+  page: "Pagina %{page}/%{pages}: %{staves} pentagrammi, %{systems} sistemi (%{detail})"
+  page_warning: "  ! pagina %{page}: %{warning}"
+  done: "%{systems} sistemi (%{measures} battute) scritti in %{out}"
+  image_measures: "%{image}: %{count} battute"
+  image_warning: "  ! %{image}: %{warning}"
+  image_systems: "  ! %{image}: %{count} sistemi rilevati"
+  numbered: "%{measures} battute numerate in %{systems} sistemi"
+  no_staff: "Nessun pentagramma rilevato"
+  measures_header: "# Numeri di battuta rilevati dal taglio (coordinate in pixel di ogni immagine).\n# Importati all'apertura dell'analisi come numeri di battuta, posti sotto ogni sistema."

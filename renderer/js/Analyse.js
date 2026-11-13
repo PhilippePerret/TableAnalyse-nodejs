@@ -593,7 +593,7 @@ static async exportCurrentToHtml(){
     const htmlPath = await invoke('analyse:exportHtml', {code_html: code})
     message(t('messages.exported_html', {path: Analyse.current.relativePath(htmlPath)}))
   } catch(err) {
-    erreur("L'analyse n'a pas pu être exportée : " + err.message)
+    erreur(t('errors.export_failed', {error: err.message}))
   }
 }
 

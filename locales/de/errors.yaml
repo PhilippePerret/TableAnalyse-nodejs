@@ -1,0 +1,52 @@
+# Fehlermeldungen
+# Variablen: %{name}
+
+no_analyse_open: "Keine Analyse geöffnet."
+need_analyse_first: "Zuerst muss eine Analyse geöffnet werden."
+need_analyse_to_save: "Zum Sichern muss eine Analyse geöffnet oder erstellt werden."
+cannot_save: "%{error}<br><br>Sichern nicht möglich."
+no_analyse_to_export: "Keine aktuelle Analyse zum Exportieren!"
+nothing_to_export: "Der Analysetisch ist leer: nichts zu exportieren."
+export_failed: "Die Analyse konnte nicht exportiert werden: %{error}"
+need_choose_analyse: "Zuerst muss die Analyse gewählt werden."
+image_export_todo: "Das Erzeugen des Analysebildes ist noch nicht implementiert."
+svg_export_todo: "Ich kann die Analyse noch nicht als SVG exportieren."
+image_not_found: "Bild nicht gefunden: %{src}"
+infos_not_found: "Die Informationen sind nicht auffindbar (%{path})!"
+not_an_analyse_folder: "Der Ordner „%{folder}“ ist kein Analyseordner (er muss eine Datei 'infos.yaml' und einen Ordner 'systems' enthalten)."
+no_systems_to_number: "Die Analyse enthält kein zu nummerierendes System."
+cutting_failed: "Das Zerschneiden ist fehlgeschlagen."
+render_process_gone: "Renderprozess unterbrochen: %{reason}"
+score_image_failed: "Problem: %{output}"
+
+creation:
+  folder_required: "Der Ordner, in dem die Analyse erstellt wird, muss angegeben werden."
+  folder_is_app: "Eine Analyse kann nicht im Ordner der Anwendung erstellt werden…"
+  folder_not_found: "Der Ordner '%{folder}' ist nicht auffindbar…"
+  invalid_id: "Die Kennung '%{id}' ist ungültig (sie darf nur Buchstaben, Ziffern, Unterstriche oder Bindestriche enthalten)"
+  already_exists: "Die Analyse „%{id}“ existiert bereits im Ordner '%{folder}'…"
+  id_required: "- Die Kennung der Analyse muss angegeben werden."
+  id_chars: "- Die Kennung darf nur Buchstaben, Ziffern, Bindestriche oder Unterstriche enthalten."
+  title_required: "- Der Titel des Werks muss angegeben werden."
+  composer_required: "- Der Komponist des Werks muss angegeben werden."
+  analyst_required: "– Der Name des Analytikers ist erforderlich."
+
+tools:
+  code_required: "Der Code muss im Feld angegeben werden."
+
+marks:
+  no_autocontent: "Der automatische Inhalt des Typs '%{type}' kann nicht festgelegt werden…"
+  no_subtype: "Der Typ '%{type}' legt seinen Untertyp nicht fest…"
+  already_associated: "Die beiden Markierungen sind bereits verknüpft."
+  not_associated: "Die beiden Markierungen sind nicht verknüpft!"
+  missing_tag: "Die Markierung %{id} existiert nicht mehr. Sie sollten diese Verknüpfung löschen."
+  top_undefined: "Die obere Position (top) des Objekts ist nicht festgelegt."
+  left_undefined: "Die linke Position (left) des Objekts ist nicht festgelegt."
+  top_nan: "Die obere Position (top) sollte eine Zahl sein."
+  left_nan: "Die linke Position (left) des Objekts sollte eine Zahl sein"
+  duplicate_ids: "Doppelte Kennungen wurden gefunden. Es wäre sicherer, sie zu korrigieren (in der Datei analyse_tags.yaml) und die Analyse neu zu laden. Die IDs werden in der Konsole angezeigt."
+
+preference_not_found: "Einstellungselement mit der Kennung #%{key} nicht gefunden"
+unknown_adjust: "Die Anpassung '%{adjust}' kann ich nicht verarbeiten."
+panel_id_required: "%{owner} muss die ID des Bereichs festlegen (<owner>.panneauId)"
+manual_not_found: "Handbuch nicht gefunden: %{path}"

@@ -1,0 +1,44 @@
+# Messages (information, operations in progress, tooltips)
+# Variables: %{name}; %{cmd} = system command key (⌘ or Ctrl+)
+# System-specific text: table {darwin:, win32:, linux:}
+
+no_analyse_open: "No analysis is open.<br><br>Use the “Analysis” menu to open an existing analysis (%{cmd}O) or create a new one (%{cmd}N)."
+no_systems: "This analysis contains no system.<br><br>The systems of the score are needed to start the analysis: “Analysis” menu > “Cut the Score…”."
+cutting_score: "Cutting and numbering the score…"
+after_cut:
+  darwin: "Review each system to see whether there are parts to “erase” (page numbers, notes or markings from another system, etc.) and erase them with a graphics tool (for example Preview). You can also remove them by recutting the systems manually."
+  win32: "Review each system to see whether there are parts to “erase” (page numbers, notes or markings from another system, etc.) and erase them with a graphics tool (for example Paint). You can also remove them by recutting the systems manually."
+  linux: "Review each system to see whether there are parts to “erase” (page numbers, notes or markings from another system, etc.) and erase them with a graphics tool (for example GIMP). You can also remove them by recutting the systems manually."
+numbering_score: "Numbering the score…"
+exporting_html: "Exporting the analysis to HTML. Please wait…"
+exported_html: "The analysis has been exported to %{path}"
+exporting_pdf: "Exporting the analysis to PDF. Please wait…"
+exported_pdf: "The analysis has been exported to %{path}"
+exporting_svg: "Exporting the analysis to SVG. Please wait…"
+exported_svg: "The analysis has been exported (one SVG file per page) to the folder %{path}"
+image_built: "The image %{name} has been built successfully.\nIts name is in the clipboard: you can create an image to see it right away."
+think_to_save: "Remember to save the analysis."
+systems_unlocked: "<p>By default, all analysis marks and the other systems follow the move.</p><p>To move ONE SYSTEM ONLY, hold down the ⌥ key.</p><p>To move only the system and the following systems, hold down ⌥ and ⇧.</p>"
+systems_position_adjusted: "The position of the systems has been adjusted. Save the new data."
+form_delete_todo: "I still have to learn how to delete an element"
+form_no_measure: "No measure number ≥ %{start} was found on the table."
+form_already_marked: "The element '%{name}' already has a mark. I will only update it."
+form_associated: "%{type} associated with mark #%{tag}"
+form_associated_f: "%{type} associated with mark #%{tag}"
+nothing_to_cancel: "Nothing to undo."
+prop_of: "%{prop} of #%{id}"
+no_same_type_mark: "No mark of the same type in this system."
+no_harmony_mark: "No harmony mark."
+no_chord_mark: "No chord mark."
+
+# Score cutting (log)
+cutter:
+  page: "Page %{page}/%{pages}: %{staves} staves, %{systems} systems (%{detail})"
+  page_warning: "  ! page %{page}: %{warning}"
+  done: "%{systems} systems (%{measures} measures) written to %{out}"
+  image_measures: "%{image}: %{count} measures"
+  image_warning: "  ! %{image}: %{warning}"
+  image_systems: "  ! %{image}: %{count} systems detected"
+  numbered: "%{measures} measures numbered in %{systems} systems"
+  no_staff: "No staff detected"
+  measures_header: "# Measure numbers detected by the cut (pixel coordinates in each image).\n# Imported when the analysis is opened as measure numbers, placed below each system."

@@ -1,0 +1,424 @@
+# Elementi dell'interfaccia (menu, pannelli, pulsanti, etichette…)
+# Variabili: %{nome}; %{cmd} = tasto comando del sistema (⌘ o Ctrl+)
+# Testo specifico di un sistema: tabella {darwin:, win32:, linux:}
+
+app:
+  name: "Tavolo d'analisi"
+  title: "TAVOLO D'ANALISI"
+
+decimal_separator: ","
+
+menu:
+  file:             "Analisi"
+  new_analyse:      "Nuova analisi…"
+  open_analyse:     "Apri analisi…"
+  reload_analyse:   "Ricarica l'analisi"
+  save:             "Salva"
+  cut_score:        "Taglia la partitura…"
+  number_score:     "Numera la partitura"
+  infos:            "Informazioni…"
+  export:           "Esporta…"
+  show_in_finder:
+    darwin:         "Mostra nel Finder"
+    win32:          "Mostra in Esplora risorse"
+    linux:          "Mostra nel gestore di file"
+  tools_menu:       "Strumenti"
+  tools:            "Cassetta degli attrezzi…"
+  form:             "Forma…"
+  animate:          "Avvia l'animazione"
+  help:             "Aiuto"
+  help_html:        "HTML"
+  help_epub:        "ePub"
+  prefs:            "Preferenze…"
+  language:         "Lingua"
+  edit:             "Modifica"
+  options:          "Opzioni"
+  mark:             "Segno"
+  align:            "Allinea"
+  adjust:           "Adatta"
+  selection:        "Selezione"
+  borders:          "Bordi"
+  window:           "Finestra"
+  minimize:
+    darwin:         "Contrai nel Dock"
+    win32:          "Riduci a icona"
+    linux:          "Riduci a icona"
+  zoom:             "Zoom"
+  front:            "Porta tutto in primo piano"
+  close_window:     "Chiudi la finestra"
+  cut:              "Taglia"
+  copy:             "Copia"
+  paste:            "Incolla"
+  select_all:       "Seleziona tutto"
+  about:            "Informazioni su %{name}"
+  hide:             "Nascondi %{name}"
+  hide_others:      "Nascondi altre"
+  unhide:           "Mostra tutto"
+  quit:             "Esci da %{name}"
+
+options_menu:
+  cancel_last:      "Annulla: %{name}"
+  cancel_history:   "Cronologia degli annullamenti"
+  grid_v:           "Magnetizza verticalmente"
+  grid_h:           "Magnetizza orizzontalmente"
+  color:            "Versione a colori"
+  lock_systems:     "Blocca i sistemi"
+  coordinates:      "Mostra le coordinate"
+  theme_A:          "Tema A — Sobrio"
+  theme_B:          "Tema B — ScoreAnalyse"
+  theme_C:          "Tema C — Scuro"
+
+mark_menu:
+  lock_one:         "Blocca il segno"
+  lock_many:        "Blocca i segni"
+  unlock_one:       "Sblocca il segno"
+  unlock_many:      "Sblocca i segni"
+  change_type:      "Imposta il tipo a…"
+  justify:          "Giustifica il testo"
+  center:           "Centra il testo"
+  right:            "Allinea il testo a destra"
+  left:             "Allinea il testo a sinistra"
+
+align_menu:
+  top:              "In alto"
+  bottom:           "In basso"
+  vcenter:          "Al centro verticale"
+  right:            "A destra"
+  left:             "A sinistra"
+  hcenter:          "Al centro orizzontale"
+  cancel:           "Annulla l'allineamento"
+
+adjust_menu:
+  spread_v:         "Distribuisci verticalmente"
+  spread_h:         "Distribuisci orizzontalmente"
+  h:                "… orizzontalmente"
+  v:                "… verticalmente"
+  cancel:           "Annulla l'adattamento"
+
+selection_menu:
+  group:            "Raggruppa gli elementi selezionati"
+  ungroup:          "Separa gli elementi selezionati"
+  select_all:       "Seleziona segni…"
+
+borders_menu:
+  remove_left:      "Rimuovi il bordo sinistro"
+  add_left:         "Ripristina il bordo sinistro"
+  remove_right:     "Rimuovi il bordo destro"
+  add_right:        "Ripristina il bordo destro"
+  remove_bottom:    "Rimuovi il bordo inferiore"
+  add_bottom:       "Ripristina il bordo inferiore"
+  remove_top:       "Rimuovi il bordo superiore"
+  add_top:          "Ripristina il bordo superiore"
+
+# Menu contestuale di un segno
+mark_context:
+  lock:             "Blocca"
+  unlock:           "Sblocca"
+  edit:             "Modifica…"
+  align:            "Allinea ai segni dello stesso tipo"
+  align_harmony:    "Allinea con l'armonia"
+  align_chord:      "Allinea con l'accordo"
+  delete:           "Elimina"
+
+system_menu:
+  unlock:           "Sblocca"
+  lock:             "Blocca"
+  open_image:       "Apri l'immagine"
+  show_image:
+    darwin:         "Mostra nel Finder"
+    win32:          "Mostra in Esplora risorse"
+    linux:          "Mostra nel gestore di file"
+
+buttons:
+  close:            "Chiudi"
+  save:             "Salva"
+  choose:           "Scegli…"
+  cancel:           "Annulla"
+  renounce:         "Rinuncia"
+  replace:          "Sostituisci"
+  ok:               "OK"
+  apply:            "Applica"
+  type:             "Tipo…"
+
+message_titles:
+  notice:           "Informazione"
+  error:            "Errore"
+  doaction:         "Operazione in corso"
+
+panels:
+  infos:
+    title:            "Metadati dell'analisi"
+    piece_title:      "Titolo del brano"
+    composer:         "Compositore"
+    analyse_title:    "Titolo dell'analisi"
+    analyse_id:       "Identificativo/Affisso"
+    analyse_id_ph:    "Identificativo (a-zA-Z0-9_-)"
+    folder:           "Contenitore"
+    folder_ph:        "cartella che contiene l'analisi"
+    analyst:          "Analista"
+    analyst_ph:       "Analista"
+    systems_source:   "Sistemi"
+    systems_source_ph: "cartella delle immagini (facoltativa)"
+    create:           "Crea la nuova analisi"
+    required:         "Informazioni richieste"
+  tools:
+    title:            "Cassetta degli attrezzi"
+    quick_score:      "Partitura rapida"
+    quick_score_desc: "Costruire un'immagine dal codice muscore: "
+    add:              "Aggiungi…"
+    image_name:       "Nome dell'immagine"
+    tune:             "Tonalità"
+    time:             "Metro"
+    proximity:        "Prossimità"
+    barres:           "Mostra le stanghette"
+    no_stem:          "Non mostrare i gambi"
+    build:            "Costruisci"
+    distribute:       "Distribuisci i sistemi"
+    inter_system:     "Spazio tra i sistemi: "
+    inter_system_desc: "(se lo spazio non è indicato, si applica il valore definito nelle preferenze, che vale "
+    export_title:     "Esportazione dell'immagine dell'analisi"
+    systems:          "Sistemi "
+    systems_desc:     "Sistemi da produrre. Lasciare vuoto per tutti"
+    one_per_system:   "Un'immagine per sistema"
+    export_image:     "Produci l'immagine (statica)"
+    export_svg:       "Produci l'immagine SVG (non funzionante)"
+  prefs:
+    title:            "Preferenze"
+  manual:
+    title:            "Manuale d'uso"
+    shortcuts:        "Scorciatoie da tastiera"
+    manual_button:    "Manuale"
+    shortcuts_list:   "Elenco delle scorciatoie"
+  form:
+    title:            "Forma del brano"
+    name:             "Nome"
+    type:             "Tipo"
+    parent:           "Genitore"
+    piece:            "Brano"
+    the_piece:        "Il brano"
+    from_measure:     "Da battuta"
+    to_measure:       "a battuta"
+    tons:             "Tonalità"
+    build_on_table:   "Posalo sul tavolo d'analisi"
+    unnamed:          "%{type} senza nome"
+  history:
+    title:            "Cronologia degli annullamenti"
+    item:             "Modifica: %{name}"
+    cancel_hover:     "Annulla:"
+  export:
+    title:            "Esporta l'analisi"
+    type:             "Formato"
+    types:
+      pdf:            "PDF"
+      svg:            "SVG"
+      html:           "HTML"
+    svg_desc:         "Un file SVG per pagina."
+    legend_title:     "Segni utilizzati"
+    gap:              "Distanza tra i sistemi"
+    gap_desc:         "Distanza tra l'oggetto più basso del sistema precedente e l'oggetto più alto del sistema seguente. Tutti gli elementi vengono spostati di conseguenza nel documento esportato."
+    bad_gap:          "Distanza tra i sistemi non valida."
+    mode_page:        "Pagina unica (lettura a schermo)"
+    mode_book:        "Pagine di dimensione fissa (libro)"
+    size:             "Dimensione"
+    orientation:      "Orientamento"
+    portrait:         "Verticale"
+    landscape:        "Orizzontale"
+    margin:           "Margine"
+    format:           "%{name} (%{width} × %{height} %{unit})"
+    formats:
+      A3:             "A3"
+      A4:             "A4"
+      A5:             "A5"
+      A6:             "A6"
+      B4:             "B4"
+      B5:             "B5"
+      letter:         "Lettera US"
+      legal:          "Legale US"
+      tabloid:        "Tabloid"
+      executive:      "Executive"
+    custom:           "Dimensione personalizzata…"
+    custom_size:      "Dimensione personalizzata (%{width} × %{height} %{unit})…"
+    custom_title:     "Dimensione personalizzata"
+    width:            "Larghezza"
+    height:           "Altezza"
+    unit:             "Unità"
+    units:
+      mm:             "mm"
+      cm:             "cm"
+      in:             "in"
+      pt:             "pt"
+      pc:             "pc"
+    units_long:
+      mm:             "millimetri"
+      cm:             "centimetri"
+      in:             "pollici"
+      pt:             "punti"
+      pc:             "pica"
+    remember:         "Memorizza queste impostazioni nell'analisi"
+    export:           "Esporta"
+    bad_size:         "Dimensione o margine delle pagine non validi."
+    fonts_notice:     "I caratteri dell'analisi (PhilNote…) devono essere installati sul computer che aprirà i file SVG."
+  mark_editor:
+    title:            "Modifica del segno"
+  animation:
+    title:            "Animazione"
+    play:             "Avvia"
+    pause:            "Pausa"
+    step:             "Passo passo"
+    step_desc:        "Segno per segno: ← segno precedente, → segno successivo"
+    previous:         "Segno precedente"
+    next:             "Segno successivo"
+    stop:             "Ferma (ritorno all'inizio)"
+    finish:           "Esci dall'animazione"
+    tempo:            "Tempo"
+    tempo_value:      "♩ = %{tempo}"
+    meter:            "4/4"
+    meter_desc:       "Metro predefinito (non definito nell'analisi)"
+    no_marks:         "Nessun segno da animare."
+  select_marks:
+    title:            "Seleziona segni"
+    select:           "Seleziona"
+    regex_ph:         "espressione regolare (vuota: tutti)"
+    systems:          "Sistemi"
+    count_one:        "%{n} segno trovato"
+    count_many:       "%{n} segni trovati"
+  getter:
+    new_item:         "Nuova voce"
+
+dialogs:
+  choose_analyse_folder: "Scegli la cartella dell'analisi"
+  choose_folder:         "Scegli una cartella"
+  choose_creation_folder: "Cartella in cui creare l'analisi"
+  choose_systems_folder: "Cartella con le immagini dei sistemi"
+  choose_pdf:            "Scegli il PDF della partitura"
+  pdf_filter:            "Partitura PDF"
+  replace_systems:       "Sostituire i sistemi dell'analisi?"
+  replace_systems_detail: "I %{count} sistemi attuali saranno sostituiti da quelli del taglio."
+
+# Preferenze dell'analisi (etichetta e precisazione)
+prefs:
+  theme:                  {label: "Tema dell'analisi", precision: "Definisce le dimensioni da applicare e i colori (nella modalità a colori dell'analisi)"}
+  lock_systems:           {label: "Blocca i sistemi"}
+  grid_horizontal_space:  {label: "Passo orizzontale della griglia"}
+  grid_vertical_space:    {label: "Passo verticale della griglia"}
+  systeme_width:          {label: "Larghezza dei sistemi"}
+  top_first_system:       {label: "Scostamento superiore del primo sistema"}
+  distance_systemes:      {label: "Distanza predefinita dei sistemi"}
+  adjust_same_mark:       {label: "Allinea in altezza i segni dello stesso tipo"}
+  snap_for_adjust_pos:    {label: "Distanza di aggancio per l'allineamento", precision: "Riguarda i segni dello stesso tipo e solo se la preferenza “Allinea in altezza” qui sopra è attiva."}
+  marque_accords_size:    {label: "Dimensione dei segni d'accordo"}
+  marque_harmonie_size:   {label: "Dimensione dei segni d'armonia"}
+  marque_modulation_size: {label: "Dimensione dei segni di modulazione"}
+  marque_emprunt_size:    {label: "Dimensione dei segni di prestito"}
+  marque_cellule_size:    {label: "Dimensione dei nomi delle cellule"}
+  thiness_segment_line:   {label: "Spessore linea dei segmenti"}
+  thiness_cellule_line:   {label: "Spessore linea delle cellule"}
+  thiness_border:         {label: "Spessore delle linee dei riquadri"}
+  marque_pedale_size:     {label: "Dimensione dei pedali"}
+  marque_texte_size_1:    {label: "Dimensione dei testi grandi"}
+  marque_texte_size_2:    {label: "Dimensione dei testi medi"}
+  measure_line_offset:    {label: "Distanza della linea dei numeri di battuta sotto il sistema"}
+  distance_after_measure_line: {label: "Distanza tra la linea dei numeri di battuta e il sistema seguente"}
+  marque_measure:         {label: "Dimensione dei numeri di battuta"}
+  marque_texte_size_3:    {label: "Dimensione dei testi piccoli"}
+  marque_texte_size_4:    {label: "Dimensione dei testi molto piccoli"}
+  window_width:           {label: "Larghezza della finestra all'apertura"}
+  window_height:          {label: "Altezza della finestra all'apertura"}
+  last_scroll:            {label: "Scorrimento all'apertura"}
+  color_mesure:           {label: "Numeri di battuta"}
+  color_accords:          {label: "Nomi degli accordi"}
+  color_harmonie:         {label: "Cifrature armoniche"}
+  color_mark_parties:     {label: "Segni di parte"}
+  color_mark_sections:    {label: "Segni di sezione"}
+  color_cellule:          {label: "Cellule e motivi"}
+  color_modulations:      {label: "Segni di modulazione"}
+  color_emprunts:         {label: "Segni di prestito"}
+  color_segments:         {label: "Segmenti"}
+  animation_tempo:        {label: "Tempo dell'animazione", precision: "Velocità del cursore dell'animazione, in semiminime al minuto (metro 4/4 predefinito)."}
+  autosave:               {label: "Salvataggio automatico"}
+  animate:                {label: "Anima l'analisi", precision: "I segni saranno mostrati progressivamente"}
+
+prefs_groups:
+  general:                "Generale"
+  systems:                "Sistemi"
+  measures:               "Numeri di battuta"
+  grid:                   "Griglia e allineamento"
+  marks:                  "Segni"
+  lines:                  "Linee"
+  colors:                 "Colori"
+  window:                 "Finestra"
+  others:                 "Altro"
+
+# Segni d'analisi: nome (negli elenchi di scelta), messaggio (invito
+# dell'editor) e contenuto predefinito
+marks:
+  types:
+    acc: {name: "Accordo",       message: "Nome dell'accordo"}
+    har: {name: "Armonia",       message: "Cifratura"}
+    mod: {name: "Modulazione",   message: "Nuova tonalità"}
+    emp: {name: "Prestito",      message: "Tonalità del prestito"}
+    cad: {name: "Cadenza…"}
+    bbx: {name: "Riquadro",      message: "Tipo di riquadro"}
+    not: {name: "Tipo di nota…", message: "Tipo della nota"}
+    deg: {name: "Grado nota",    message: "Grado della nota"}
+    seg: {name: "Segmento",      message: "Didascalia (vuota se nessuna)", default: "membro 1"}
+    img: {name: "Immagine",      message: "Immagine da inserire (percorso nella cartella 'images')"}
+    txt: {name: "Testo",         message: "Testo da mostrare"}
+    ped: {name: "Pedale",        message: "Grado del pedale"}
+    cir: {name: "Cerchio"}
+  frames:
+    prt:  {name: "Parte (inizio)",   default: "ESPO"}
+    prtz: {name: "Fine della parte", default: "ESPO"}
+    sec:  {name: "Inizio sezione",   default: "SEZIONE"}
+    secz: {name: "Fine sezione",     default: "SEZIONE"}
+    cel:  {name: "Cellula"}
+    bxt:  {name: "Testo in riquadro", default: "Testo **formattato** e _formattato_."}
+    box:  {name: "Riquadro semplice"}
+  texts:
+    size1: {name: "Grande",           default: "Testo grande"}
+    size2: {name: "Medio",            default: "Testo medio"}
+    size3: {name: "Piccolo",          default: "Testo piccolo"}
+    size4: {name: "Mini",             default: "Testo minuscolo"}
+    mes:   {name: "Numero di battuta"}
+    long:  {name: "Testo lungo",      default: "Testo lungo (comando + INVIO per finire)"}
+    idx:   {name: "A margine (indice)", default: "Indice"}
+  notes:
+    np: "Nota di passaggio"
+    ap: "Appoggiatura"
+    ac: "Appoggiatura cromatica"
+    re: "Ritardo"
+    br: "Nota di volta"
+    db: "Doppia nota di volta"
+    ec: "Sfuggita"
+    in: "Nota reale"
+    an: "Anticipazione"
+  cadences:
+    par: "Cadenza perfetta"
+    imp: "Cadenza imperfetta"
+    dem: "Semicadenza"
+    ita: "Cadenza italiana"
+    rom: "Cadenza d'inganno"
+    pla: "Cadenza plagale"
+    fau: "Cadenza di Fauré"
+  cadences_abbr:
+    par: "C.P."
+    imp: "C.I."
+    dem: "S.C."
+    ita: "C.It."
+    rom: "C.Ing."
+    pla: "C.Pl."
+    fau: "C.F."
+  segments:
+    h-up:    "In orizzontale sul pentagramma"
+    h-down:  "In orizzontale sotto il pentagramma"
+    v-left:  "Verticale, tratto a sinistra"
+    v-right: "Verticale, tratto a destra"
+  getter:
+    type:         "Tipo del segno"
+    cadence:      "Tipo della cadenza"
+    segment:      "Disposizione del segmento"
+
+form_types:
+  par: "Parte"
+  sec: "Sezione"
+  seg: "Segmento"
