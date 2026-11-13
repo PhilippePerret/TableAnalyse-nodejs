@@ -952,6 +952,7 @@ set type(t){
   this._type = t
   this.data.type = t
   this.obj && this.obj.classList.add(this._type)
+  this.obj && this.obj.classList.toggle('philnote', TYPES_PHILHARMONIEFONT.includes(t))
   t != type_ini && setModified()
 }
 get subtype(){return this._subtype || (this._subtype = this.data.subtype)}

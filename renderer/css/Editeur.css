@@ -1,14 +1,12 @@
+/* Fond, bords et en-tête : panneau commun (cf. themes.css) */
 div.mini_editeur {
   position: absolute;
-  width: 300px;
-  padding: 1em 2em;
-  background-color: #999;
+  width: 340px;
   font-size: inherit;
   z-index: 50;
 }
 div.mini_editeur div.titre {
-  margin-bottom: 1em;
-  font-weight: bold;
+  margin: .6em 0 .5em;
 }
 
 /* Le mini-editeur, en règle générale, peut éditer un texte
@@ -33,6 +31,7 @@ div.mini_editeur.longtext textarea {
 
 div.mini_editeur input[type="text"] {
   width: 100%;
+  box-sizing: border-box;
   font-size: 20pt;
   /*font-family: "PhilNoteonieFont8";*/
   font-family: 'Arial Narrow', Arial, Geneva, Helvetica;
@@ -42,7 +41,5 @@ div.mini_editeur div.buttons {
   margin-top: 1em;
 }
 div.mini_editeur div.buttons button {
-  font-size: 14pt;
-  font-family: Arial, Helvetica, Geneva;
-  margin-left: 1em;
+  margin-left: 8px;
 }

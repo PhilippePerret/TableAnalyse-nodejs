@@ -124,6 +124,7 @@ buttons:
   replace:          "Remplacer"
   ok:               "OK"
   apply:            "Appliquer"
+  type:             "Type…"
 
 message_titles:
   notice:           "Information"
@@ -240,6 +241,8 @@ panels:
     export:           "Exporter"
     bad_size:         "Taille ou marge des pages invalide."
     fonts_notice:     "Les polices de l'analyse (PhilNote…) doivent être installées sur l'ordinateur qui ouvrira les fichiers SVG."
+  mark_editor:
+    title:            "Édition de la marque"
   select_marks:
     title:            "Sélectionner des marques"
     select:           "Sélectionner"

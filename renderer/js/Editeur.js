@@ -1,8 +1,10 @@
 import { DCreate, DGet, listen, stopEvent, cmdKey } from './dom.js'
 import { px, uiZoom } from './handies.js'
-import { draggable } from './lib/interact.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
+import { addPanelHead } from './Panneau.js'
+import { AMark_Editor } from './AMark_Editor.js'
+import { AMARQUES_TYPES } from './Constants.js'
 /**
  * Classe Editeur
  * --------------
@@ -139,23 +141,62 @@ export class Editeur {
     o.appendChild(this.textField)
     this.textarea = DCreate('TEXTAREA',{})
     o.appendChild(this.textarea)
-    const divBoutons = DCreate('DIV', {class:'buttons right'})
-    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel'}))
-    // divBoutons.appendChild(DCreate('BUTTON', {text:'OK', class:'ok'}))
+    const divBoutons = DCreate('DIV', {class:'buttons'})
+    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
+    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
+    // Marque d'analyse : changement de son type
+    if ( this.isAMark ) {
+      divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.type'), class:'type'}))
+    }
     o.appendChild(divBoutons)
     this.obj = o
     this.data.titre && (this.titre = this.data.titre)
     document.body.appendChild(o)
+    addPanelHead(o, {title: t('ui.panels.mark_editor.title'), onClose: this.onClickCancel.bind(this)})
   }
   observe(){
-    // listen(this.btnOK,      'click', this.onClickOK.bind(this))
+    listen(this.btnOK,      'click', this.onClickOK.bind(this))
     listen(this.btnCancel,  'click', this.onClickCancel.bind(this))
+    this.btnType && listen(this.btnType, 'click', this.onClickType.bind(this))
+    listen(this.obj,        'click', e => e.stopPropagation())
     listen(this.obj,        'dblclick', e => {return stopEvent(e)})
     listen(this.textField,  'focus', this.onFocusTextField.bind(this))
     listen(this.textField,  'blur',  this.onBlurTextField.bind(this))
     listen(this.textarea,   'focus', this.onFocusTextField.bind(this))
     listen(this.textarea,   'blur',  this.onBlurTextField.bind(this))
-    draggable(this.obj)
+  }
+
+  get isAMark(){
+    return !!(this.owner && this.owner.data && this.owner.data.type && 'function' == typeof this.owner.setValue)
+  }
+
+  /**
+   * Choix d'un nouveau type pour la marque éditée (menu des types
+   * habituel), le texte en cours d'édition étant conservé
+   */
+  onClickType(e){
+    const r = this.btnType.getBoundingClientRect()
+    const x = Math.round(r.left), y = Math.round(r.bottom)
+    const editor = new AMark_Editor({
+        onReleaseMethod:  this.onTypeChosen.bind(this)
+      , event:            {clientX: x, clientY: y, pageX: x + window.scrollX, pageY: y + window.scrollY}
+      , onlyType:         true
+    })
+    editor.proceed()
+    return stopEvent(e)
+  }
+  onTypeChosen(data){
+    if ( data ) {
+      const value = this.getValue()
+      this.owner.type     = data.type
+      this.owner.subtype  = data.subtype
+      const msg = AMARQUES_TYPES[data.type] && AMARQUES_TYPES[data.type].message
+      msg && (this.titre = msg)
+      this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
+      this.value = value
+    }
+    const field = this.isLongText ? this.textarea : this.textField
+    field.focus()
   }
 
   onFocusTextField(e){
@@ -234,5 +275,8 @@ export class Editeur {
   }
   get btnCancel(){
     return this._btncancel || (this._btncancel = DGet('button.cancel', this.obj))
+  }
+  get btnType(){
+    return this._btntype || (this._btntype = DGet('button.type', this.obj))
   }
 }
