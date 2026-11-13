@@ -21,7 +21,7 @@ import { t } from './i18n.js'
 
 // Groupes du panneau (titres : ui.prefs_groups.<id>)
 const PREFS_GROUPS = [
-    {id: 'general',  keys: ['theme', 'autosave', 'animate', 'vitesse_relecture']}
+    {id: 'general',  keys: ['theme', 'autosave', 'animate', 'animation_tempo']}
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
   , {id: 'grid',     keys: ['grid_horizontal_space', 'grid_vertical_space', 'adjust_same_mark', 'snap_for_adjust_pos']}

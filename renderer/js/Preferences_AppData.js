@@ -58,7 +58,7 @@ export const PreferencesAppData = {
   , color_emprunts          :{type:'inputtext'    ,typeV:'color'    ,default:'22BB22'     ,selectors:'div.amark.emp, div.amark.emp span.content' ,apply:true}
   , color_segments          :{type:'inputtext'    ,typeV:'color'    ,default:'333333'               ,selectors:'div.amark.seg, div.amark.seg span.content' ,apply:true}
   
-  , vitesse_relecture       :{type:'inputtext'    ,typeV:'number'   ,default:20}
+  , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
   , animate                 :{type:'checkbox'     ,typeV:'boolean'  ,default:false}
 }

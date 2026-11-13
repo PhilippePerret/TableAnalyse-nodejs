@@ -208,15 +208,36 @@ div#export_panel div.fields.explication { display: block; }
 /* Boite de contrôle de l'animation (cf. Animation.js) */
 div#animation_box {
   position: fixed;
-  right: 16px;
+  left: 50%;
   bottom: 16px;
+  transform: translateX(-50%);
   z-index: 4500;
   width: max-content;
+  transition: opacity .25s, transform .25s;
+}
+/* Masquée tant que la souris n'approche pas du bas de la fenêtre */
+div#animation_box.anim-hidden {
+  opacity: 0;
+  transform: translate(-50%, calc(100% + 16px));
+  pointer-events: none;
 }
 div#animation_box div.anim-row { display: flex; align-items: center; gap: 8px; margin-top: .6em; }
 div#animation_box input[type="range"] { width: 160px; }
+div#animation_box span.anim-tempo { min-width: 4.5em; font-variant-numeric: tabular-nums; }
+div#animation_box span.anim-meter { padding: 0 6px; border: 1px solid currentColor; border-radius: 4px; font-size: .85em; opacity: .7; }
 div#animation_box span.anim-counter { margin-left: auto; font-variant-numeric: tabular-nums; }
 div#animation_box button.btn-step.active { background-color: #3a925e; border-color: #2f7a4e; color: white; }
+/* Curseur de l'animation et table non défilable */
+div#animation_cursor {
+  position: absolute;
+  width: 3px;
+  margin-left: -1px;
+  background-color: #cc4870;
+  opacity: .85;
+  z-index: 30;
+  pointer-events: none;
+}
+html.animation-running { overflow: hidden; }
 
 /* Sélection des marques par type (cf. MarksSelector.js) */
 div#marks_selector {

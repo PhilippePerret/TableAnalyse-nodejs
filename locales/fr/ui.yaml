@@ -257,7 +257,10 @@ panels:
     next:             "Suivante"
     stop:             "Arrêter"
     finish:           "Finir"
-    speed:            "Vitesse"
+    tempo:            "Tempo"
+    tempo_value:      "♩ = %{tempo}"
+    meter:            "4/4"
+    meter_desc:       "Métrique par défaut (non définie dans l'analyse)"
     no_marks:         "Aucune marque à animer."
   select_marks:
     title:            "Sélectionner des marques"
@@ -318,7 +321,7 @@ prefs:
   color_modulations:      {label: "Marques de modulations"}
   color_emprunts:         {label: "Marques d’emprunts"}
   color_segments:         {label: "Segments"}
-  vitesse_relecture:      {label: "Vitesse de la relecture (de 1 à 100)", precision: "Détermine le temps d'affichage d'un objet en mode relecture. Avec la valeur 100, tous les objets sont à peu près ré-écrit en même temps."}
+  animation_tempo:        {label: "Tempo de l’animation", precision: "Vitesse du curseur de l'animation, en noires par minute (métrique 4/4 par défaut)."}
   autosave:               {label: "Sauvegarde automatique"}
   animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
 

@@ -1,4 +1,5 @@
 import { DCreate, listen } from './dom.js'
+import { px } from './handies.js'
 import { erreur } from './lib/Message.js'
 import { addPanelHead } from './Panneau.js'
 import { Preferences } from './Preferences.js'
@@ -6,32 +7,56 @@ import { Analyse } from './Analyse.js'
 import { AObjet } from './AObjet.js'
 import { AMark } from './AMark.js'
 import { Systeme } from './Systeme.js'
+import { UI } from './UI.js'
 import { t } from './i18n.js'
 /**
 
   Animation
   ---------
-  Animation de l'analyse (menu « Outils > Lancer l'animation ») : les
-  marques sont masquées puis réaffichées une à une, dans l'ordre de la
-  partition (système, puis de gauche à droite). Les numéros de mesure
-  de la ligne des numéros restent affichés.
+  Animation de l'analyse (menu « Outils > Lancer l'animation »), comme
+  si on jouait la partition : un curseur (ligne verticale) parcourt
+  chaque système de gauche à droite, à vitesse constante, et les marques
+  apparaissent quand il les atteint. Les numéros de mesure de la ligne
+  des numéros restent affichés.
 
-  Boite de contrôle : pause/reprise, pas à pas (marque suivante), arrêt
-  (retour au début), vitesse (préférence vitesse_relecture) et fin
-  définitive (toutes les marques réaffichées, boite fermée).
+  Le curseur va de la démarcation au-dessus du système (ou du haut de la
+  table) à la démarcation au-dessous, placée là où est (ou serait) la
+  ligne des numéros de mesure.
+
+  Durée d'un système : nombre de mesures × temps par mesure × durée
+  d'un temps (tempo, préférence animation_tempo). Métrique 4/4 (non
+  définie dans l'analyse) ; 4 mesures pour un système sans numéros.
+
+  Pendant l'animation, la table ne peut pas être défilée (elle suit le
+  curseur). Boite de contrôle au centre, en bas, masquée tant que la
+  souris n'approche pas du bas de la fenêtre : lancer/pause, pas à pas
+  (marque suivante), arrêt (retour au début), tempo et fin définitive.
 
 */
+const BEATS_PER_MEASURE = 4       // métrique par défaut (4/4)
+const DEFAULT_MEASURES  = 4       // système sans numéros de mesure
+const BOTTOM_ZONE       = 90      // hauteur (px) du bas de la fenêtre qui fait apparaitre la boite
+const HIDE_DELAY        = 1200    // ms avant de masquer la boite
+
 class AnimationClass {
 
   start(){
     if ( !Analyse.current ) return erreur(t('errors.no_analyse_open'))
     this.finish()
-    const order = (m) => { const sys = Systeme.getSystemeAssociated(m) ; return sys ? sys.index : 0 }
-    this.marks = AObjet.items
-      .filter(ao => ao instanceof AMark && ao.obj && !(ao.data && ao.data.line))
-      .sort((a, b) => (order(a) - order(b)) || (a.left - b.left) || (a.top - b.top))
-    if ( !this.marks.length ) return erreur(t('ui.panels.animation.no_marks'))
+    this.systems = Systeme.all.slice()
+    const marks = AObjet.items.filter(ao => ao instanceof AMark && ao.obj && !(ao.data && ao.data.line))
+    if ( !marks.length || !this.systems.length ) return erreur(t('ui.panels.animation.no_marks'))
+    // Marques de chaque système, dans l'ordre horizontal
+    this.marksBySys = this.systems.map(() => [])
+    this.marks = marks
+    marks.forEach(m => {
+      const sys = Systeme.getSystemeAssociated(m) || this.systems[0]
+      this.marksBySys[this.systems.indexOf(sys)].push(m)
+    })
+    this.marksBySys.forEach(list => list.sort((a, b) => a.left - b.left))
     AObjet.deselectAll()
+    this.lockScroll()
+    this.buildCursor()
     this.buildBox()
     this.rewind()
     this.play()
@@ -43,24 +68,37 @@ class AnimationClass {
     if ( this.ended ) return
     this.stepMode = false
     this.playing = true
-    this.schedule()
+    this.lastFrame = null
+    cancelAnimationFrame(this.raf)
+    this.raf = requestAnimationFrame(this.frame.bind(this))
     this.updateBox()
   }
 
   pause(){
     this.playing = false
-    clearTimeout(this.timer)
+    cancelAnimationFrame(this.raf)
     this.updateBox()
   }
 
   togglePause(){ this.playing ? this.pause() : this.play() }
 
-  // Pas à pas : l'animation s'arrête, chaque clic sur « Suivante »
-  // affiche la marque suivante
+  // Pas à pas : l'animation s'arrête, chaque clic sur « Suivante » mène
+  // le curseur à la marque suivante (et l'affiche)
   toggleStepMode(){
     this.pause()
     this.stepMode = !this.stepMode
     this.updateBox()
+  }
+
+  next(){
+    for ( let i = this.isys ; i < this.systems.length ; ++i ) {
+      const mark = this.marksBySys[i].find(m => m.obj.style.visibility == 'hidden')
+      if ( !mark ) continue
+      if ( i != this.isys ) { this.isys = i ; this.followSystem() }
+      this.progress = Math.min(1, Math.max(0, (mark.left - this.sysLeft) / this.sysWidth))
+      return this.update()
+    }
+    this.end()
   }
 
   // Arrêt : retour au début (toutes les marques masquées)
@@ -69,45 +107,131 @@ class AnimationClass {
     this.rewind()
   }
 
-  // Fin définitive : toutes les marques réaffichées, boite fermée
+  // Fin définitive : toutes les marques réaffichées, boite et curseur
+  // retirés, défilement rétabli
   finish(){
-    clearTimeout(this.timer)
+    cancelAnimationFrame(this.raf)
+    clearTimeout(this.hideTimer)
     this.playing = false
     this.marks && this.marks.forEach(m => m.obj && (m.obj.style.visibility = ''))
     this.marks = null
+    this.cursor && this.cursor.remove()
+    this.cursor = null
     this.box && this.box.remove()
     this.box = null
+    this.unlockScroll()
   }
 
   /* --- Fonctionnement --- */
 
   rewind(){
-    this.index = 0
     this.ended = false
+    this.isys = 0
+    this.progress = 0
+    // Marques masquées AVANT le retour en haut de la table
     this.marks.forEach(m => m.obj.style.visibility = 'hidden')
+    window.scrollTo({top: 0, behavior: 'instant'})
+    this.followSystem()
+    this.update()
+  }
+
+  get tempo(){
+    return Math.min(240, Math.max(20, Number(Preferences.get('animation_tempo')) || 60))
+  }
+
+  // Durée (ms) du système courant
+  get sysDuration(){
+    const sys = this.systems[this.isys]
+    const measures = Systeme.measureMarksOf(sys).length || DEFAULT_MEASURES
+    return measures * BEATS_PER_MEASURE * 60000 / this.tempo
+  }
+
+  get sysLeft(){ return this.systems[this.isys].left }
+  get sysWidth(){ return this.systems[this.isys].obj.offsetWidth || 1 }
+
+  frame(now){
+    if ( !this.playing ) return
+    if ( this.lastFrame !== null ) {
+      this.progress += (now - this.lastFrame) / this.sysDuration
+      if ( this.progress >= 1 ) {
+        this.update() // marques du bout du système
+        if ( this.isys + 1 >= this.systems.length ) return this.end()
+        ++ this.isys
+        this.progress = 0
+        this.followSystem()
+      }
+    }
+    this.lastFrame = now
+    this.update()
+    this.raf = requestAnimationFrame(this.frame.bind(this))
+  }
+
+  end(){
+    this.progress = 1
+    this.update()
+    this.marks.forEach(m => m.obj.style.visibility = '')
+    this.ended = true
+    this.playing = false
+    cancelAnimationFrame(this.raf)
     this.updateBox()
   }
 
-  // Délai entre deux marques : vitesse 1 → ~5 s, vitesse 100 → 20 ms
-  get delay(){
-    const speed = Math.min(100, Math.max(1, Number(Preferences.get('vitesse_relecture')) || 20))
-    return Math.max(20, (100 - speed) * 50)
-  }
-
-  schedule(){
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() => { this.next() ; this.playing && !this.ended && this.schedule() }, this.delay)
-  }
-
-  next(){
-    const mark = this.marks && this.marks[this.index]
-    if ( !mark ) return
-    mark.obj.style.visibility = ''
-    const r = mark.obj.getBoundingClientRect()
-    if ( r.top < 40 || r.bottom > window.innerHeight - 20 ) mark.obj.scrollIntoView({block: 'center', behavior: 'smooth'})
-    ++ this.index
-    if ( this.index >= this.marks.length ) { this.ended = true ; this.playing = false }
+  // Curseur placé et marques atteintes affichées
+  update(){
+    const x = this.sysLeft + this.progress * this.sysWidth
+    this.cursor.style.left = px(Math.round(x))
+    this.marksBySys[this.isys].forEach(m => { if ( m.left <= x ) m.obj.style.visibility = '' })
     this.updateBox()
+  }
+
+  /**
+   * Démarcations au-dessus et au-dessous du système +i+ : ligne des
+   * numéros de mesure (ou sa place) ; haut de la table pour le premier
+   */
+  demarcation(i){
+    const sys = this.systems[i]
+    return sys.top + sys.obj.offsetHeight + Systeme.measureLineOffset
+  }
+
+  // Curseur sur la bande du système courant, table défilée pour la montrer
+  followSystem(){
+    const top    = this.isys == 0 ? 0 : this.demarcation(this.isys - 1)
+    const bottom = this.demarcation(this.isys)
+    Object.assign(this.cursor.style, {top: px(top), height: px(bottom - top)})
+    const r = this.cursor.getBoundingClientRect()
+    const y = window.scrollY + r.top + r.height / 2 - window.innerHeight / 2
+    window.scrollTo({top: Math.max(0, this.isys == 0 ? 0 : y), behavior: 'smooth'})
+  }
+
+  buildCursor(){
+    this.cursor = DCreate('DIV', {id: 'animation_cursor'})
+    UI.TableAnalyse.appendChild(this.cursor)
+  }
+
+  /* --- Table non défilable pendant l'animation --- */
+
+  lockScroll(){
+    this.scrollLocked = true
+    document.documentElement.classList.add('animation-running')
+    this.blockScroll || (this.blockScroll = (e) => {
+      if ( !this.scrollLocked ) return
+      if ( e.type == 'keydown' && !['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key) ) return
+      if ( e.type == 'keydown' && ['INPUT', 'BUTTON', 'SELECT', 'TEXTAREA'].includes(e.target.tagName) ) return
+      e.preventDefault()
+    })
+    window.addEventListener('wheel', this.blockScroll, {passive: false})
+    window.addEventListener('touchmove', this.blockScroll, {passive: false})
+    window.addEventListener('keydown', this.blockScroll, {passive: false})
+  }
+
+  unlockScroll(){
+    if ( !this.scrollLocked ) return
+    this.scrollLocked = false
+    document.documentElement.classList.remove('animation-running')
+    window.removeEventListener('wheel', this.blockScroll)
+    window.removeEventListener('touchmove', this.blockScroll)
+    window.removeEventListener('keydown', this.blockScroll)
+    document.removeEventListener('mousemove', this.onMouseMove)
   }
 
   /* --- Boite de contrôle --- */
@@ -119,11 +243,13 @@ class AnimationClass {
     this.btnNext  = DCreate('BUTTON', {class: 'btn-next', text: T('next')})
     this.btnStop  = DCreate('BUTTON', {class: 'btn-stop', text: T('stop')})
     const btnFinish = DCreate('BUTTON', {class: 'btn-default', text: T('finish')})
-    this.speed = DCreate('INPUT', {type: 'range', min: '1', max: '100', value: String(Preferences.get('vitesse_relecture'))})
+    this.tempoField = DCreate('INPUT', {type: 'range', min: '20', max: '240', value: String(this.tempo)})
+    this.tempoValue = DCreate('SPAN', {class: 'anim-tempo'})
+    const meter = DCreate('SPAN', {class: 'anim-meter', text: T('meter'), title: T('meter_desc')})
     this.counter = DCreate('SPAN', {class: 'anim-counter'})
     const box = DCreate('DIV', {id: 'animation_box', inner: [
         DCreate('DIV', {class: 'anim-row', inner: [this.btnPause, this.btnStep, this.btnNext, this.btnStop]})
-      , DCreate('DIV', {class: 'anim-row', inner: [DCreate('LABEL', {text: T('speed')}), this.speed, this.counter]})
+      , DCreate('DIV', {class: 'anim-row', inner: [DCreate('LABEL', {text: T('tempo')}), this.tempoField, this.tempoValue, meter, this.counter]})
       , DCreate('DIV', {class: 'buttons', inner: [btnFinish]})
     ]})
     document.body.appendChild(box)
@@ -136,21 +262,42 @@ class AnimationClass {
     listen(this.btnNext,  'click', this.next.bind(this))
     listen(this.btnStop,  'click', this.stop.bind(this))
     listen(btnFinish,     'click', this.finish.bind(this))
-    listen(this.speed, 'input', () => {
-      Preferences.set('vitesse_relecture', Number(this.speed.value))
-      Preferences.saveData('vitesse_relecture', this.speed.value)
-      this.playing && this.schedule()
+    listen(this.tempoField, 'input', () => {
+      Preferences.set('animation_tempo', Number(this.tempoField.value))
+      Preferences.saveData('animation_tempo', this.tempoField.value)
+      this.updateBox()
     })
+    // Boite masquée, montrée quand la souris approche du bas de la fenêtre
+    this.onMouseMove = this.onMouseMove || ((e) => {
+      if ( !this.box ) return
+      if ( e.clientY >= window.innerHeight - BOTTOM_ZONE || this.box.contains(e.target) ) this.showBox()
+      else this.hideBoxSoon()
+    })
+    document.addEventListener('mousemove', this.onMouseMove)
+    this.showBox()
+    this.hideBoxSoon()
+  }
+
+  showBox(){
+    clearTimeout(this.hideTimer)
+    this.box.classList.remove('anim-hidden')
+  }
+
+  hideBoxSoon(){
+    clearTimeout(this.hideTimer)
+    this.hideTimer = setTimeout(() => this.box && this.box.classList.add('anim-hidden'), HIDE_DELAY)
   }
 
   updateBox(){
     if ( !this.box ) return
-    const T = (k) => t(`ui.panels.animation.${k}`)
-    this.btnPause.textContent = T(this.playing ? 'pause' : (this.index ? 'resume' : 'play'))
+    const T = (k, v) => t(`ui.panels.animation.${k}`, v)
+    const shown = this.marks.filter(m => m.obj.style.visibility != 'hidden').length
+    this.btnPause.textContent = T(this.playing ? 'pause' : (shown ? 'resume' : 'play'))
     this.btnPause.disabled = this.ended
     this.btnStep.classList.toggle('active', !!this.stepMode)
     this.btnNext.disabled = this.playing || this.ended
-    this.counter.textContent = `${this.index} / ${this.marks.length}`
+    this.tempoValue.textContent = T('tempo_value', {tempo: this.tempo})
+    this.counter.textContent = `${shown} / ${this.marks.length}`
   }
 }
 
