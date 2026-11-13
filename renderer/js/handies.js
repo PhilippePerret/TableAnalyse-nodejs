@@ -7,17 +7,32 @@ export function uiZoom(){
 }
 
 /**
- * Ramène la boite +el+ (positionnée par left) dans la largeur de la
- * fenêtre, à +margin+ px des bords : jamais de débordement à droite ni
- * à gauche
+ * Ramène la boite +el+ entièrement dans la fenêtre, à +margin+ px des
+ * bords : jamais de débordement à droite, à gauche, en haut ni en bas.
+ * Plus haute (ou large) que la fenêtre : taille limitée, contenu défilant.
  */
 export function keepInView(el, margin = 8){
-  const r = el.getBoundingClientRect()
+  let r = el.getBoundingClientRect()
+  if ( !r.width && !r.height ) return // boite fermée
   const z = el.currentCSSZoom || 1
-  let dx = 0
-  if ( r.right > window.innerWidth - margin ) dx = window.innerWidth - margin - r.right
+  const W = window.innerWidth, H = window.innerHeight
+  if ( r.height > H - 2 * margin ) { el.style.maxHeight = px((H - 2 * margin) / z) ; el.style.overflowY = 'auto' }
+  if ( r.width  > W - 2 * margin ) { el.style.maxWidth  = px((W - 2 * margin) / z) ; el.style.overflowX = 'auto' }
+  r = el.getBoundingClientRect()
+  let dx = 0, dy = 0
+  if ( r.right  > W - margin ) dx = W - margin - r.right
   if ( r.left + dx < margin ) dx = margin - r.left
-  if ( dx ) el.style.left = px(parseFloat(getComputedStyle(el).left) + dx / z)
+  if ( r.bottom > H - margin ) dy = H - margin - r.bottom
+  if ( r.top + dy < margin ) dy = margin - r.top
+  if ( !dx && !dy ) return
+  const cs = getComputedStyle(el)
+  if ( cs.position == 'fixed' ) {
+    // Position ramenée à left/top (sans right, bottom ni transform)
+    Object.assign(el.style, {left: px((r.left + dx) / z), top: px((r.top + dy) / z), right: 'auto', bottom: 'auto', transform: 'none'})
+  } else {
+    el.style.left = px(parseFloat(cs.left) + dx / z)
+    el.style.top  = px(parseFloat(cs.top)  + dy / z)
+  }
 }
 
 export function px(nombre){

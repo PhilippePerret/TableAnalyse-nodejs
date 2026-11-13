@@ -1,6 +1,6 @@
 import { DCreate, DGet, listen } from './dom.js'
 import { draggable } from './lib/interact.js'
-import { raise } from './handies.js'
+import { raise, keepInView } from './handies.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
 
@@ -73,6 +73,9 @@ export class Panneau {
  */
 export function addPanelHead(obj, {title, onClose}){
   obj.classList.add('panneau-ui')
+  // Jamais hors de la fenêtre : à l'ouverture et à chaque changement de
+  // taille (contenu, fenêtre)
+  keepPanelInView(obj)
   const close = DCreate('SPAN', {class: 'panneau-close', title: t('ui.buttons.close'), text: '×'})
   const head = DCreate('DIV', {class: 'panneau-head', inner: [
       close
@@ -108,3 +111,11 @@ export function addPanelHead(obj, {title, onClose}){
   }
   return head
 }
+
+const panelsInView = new Set()
+function keepPanelInView(obj){
+  panelsInView.add(obj)
+  new ResizeObserver(() => obj.classList.contains('anim-hidden') || keepInView(obj)).observe(obj)
+  requestAnimationFrame(() => keepInView(obj))
+}
+window.addEventListener('resize', () => panelsInView.forEach(obj => obj.isConnected ? keepInView(obj) : panelsInView.delete(obj)))
