@@ -28,7 +28,7 @@ section#preferences-panel > div.pref-group {
   padding-bottom: 3px;
   border-bottom: 1px solid #d6d6d6;
   font-weight: 600;
-  color: #3a925e;
+  color: #cc4870;
 }
 section#preferences-panel > div.pref-group:first-of-type { margin-top: 0; }
 section#preferences-panel span.pref-field { display: flex; align-items: center; gap: 8px; }
