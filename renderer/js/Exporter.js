@@ -31,6 +31,11 @@ const PAD         = 10      // blanc (px) au-dessus et au-dessous du contenu
 const MAX_PDF_MM  = 5080    // taille maximale d'une page PDF (200 pouces)
 const EXCLUDED    = '.ui-resizable-handle'
 const UI_CLASSES  = ['selected', 'locked']
+// Polices de l'application, incluses dans les fichiers SVG
+const APP_FONTS   = [
+    {family: 'PhilNote', weight: 'normal', file: 'PhilNote2-Regular.otf'}
+  , {family: 'PhilNote', weight: 'bold',   file: 'PhilNote2-Bold.otf'}
+]
 
 // Formats de page courants (mm, portrait)
 const PAGE_FORMATS = {
@@ -493,14 +498,31 @@ ${inner}
     const {width, height, margin, scale, x0, contentW} = layout
     const parts = []
     for ( const item of this.itemsIn(slice) ) parts.push(await this.svgOf(item.el))
+    const fonts = await this.svgFonts(parts.join('\n'))
     return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="${num(width)}mm" height="${num(height)}mm" viewBox="0 0 ${num(width)} ${num(height)}">
-<defs><clipPath id="page"><rect x="${num(x0)}" y="${num(y0)}" width="${num(contentW)}" height="${num(y1 - y0)}"/></clipPath></defs>
+<defs>${fonts}<clipPath id="page"><rect x="${num(x0)}" y="${num(y0)}" width="${num(contentW)}" height="${num(y1 - y0)}"/></clipPath></defs>
 <g transform="translate(${num(margin)} ${num(margin)}) scale(${num(scale, 6)}) translate(${num(-x0)} ${num(-y0)})" clip-path="url(#page)">
 ${parts.join('\n')}
 </g>
 </svg>
 `
+  }
+
+  /**
+   * Polices de l'application (PhilNote) incluses dans le fichier quand
+   * la page les utilise : affichage correct sans les installer
+   */
+  async svgFonts(code){
+    const used = APP_FONTS.filter(f => code.includes(`font-family="${f.family}`) && (f.weight == 'normal' || /font-weight="(bold|[6-9]00)"/.test(code)))
+    if ( !used.length ) return ''
+    this.fontData || (this.fontData = new Map())
+    const faces = []
+    for ( const f of used ) {
+      if ( !this.fontData.has(f.file) ) this.fontData.set(f.file, await dataUrl(`assets/fonts/${f.file}`))
+      faces.push(`@font-face { font-family: ${f.family}; font-weight: ${f.weight}; src: url(${this.fontData.get(f.file)}) format('opentype'); }`)
+    }
+    return `<style type="text/css"><![CDATA[\n${faces.join('\n')}\n]]></style>`
   }
 
   async svgOf(el){
@@ -567,7 +589,9 @@ ${parts.join('\n')}
       range.setStart(node, i) ; range.setEnd(node, i + 1)
       const rc = range.getClientRects()[0]
       if ( !rc ) continue
-      if ( cur && Math.abs(rc.top - cur.top) < 1 ) { cur.text += text[i] ; continue }
+      // Même ligne : décalage vertical inférieur à la demi-hauteur
+      // (glyphes surélevés de PhilNote, p.e. chiffrages des accords)
+      if ( cur && Math.abs(rc.top - cur.top) < Math.max(rc.height, cur.height) / 2 ) { cur.text += text[i] ; continue }
       if ( /\s/.test(text[i]) ) continue
       cur = {text: text[i], left: rc.left, top: rc.top, height: rc.height}
       runs.push(cur)
