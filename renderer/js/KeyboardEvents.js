@@ -70,6 +70,7 @@ export function onKeyUpOnAnalyse(e){
   if ( inTextField(e) ) return
   switch(e.key){
     case 'Backspace':
+    case 'Delete':
       AObjet.removeCurrentSelection()
       break
   }
