@@ -200,6 +200,7 @@ panels:
       svg:            "SVG"
       html:           "HTML"
     svg_desc:         "Un fichier SVG par page."
+    legend_title:     "Signes utilisés"
     gap:              "Distance entre systèmes"
     gap_desc:         "Distance entre l'objet le plus bas du système précédent et l'objet le plus haut du système suivant. Tous les éléments sont replacés en conséquence dans le document exporté."
     bad_gap:          "Distance entre systèmes invalide."

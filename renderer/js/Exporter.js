@@ -8,6 +8,7 @@ import { PreferencesPanel } from './PreferencesPanel.js'
 import { Analyse } from './Analyse.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
+import { TYPES_NOTES } from './Constants.js'
 /**
 
   Exporter
@@ -261,6 +262,7 @@ class ExporterClass {
     try {
       await stage.build()
       stage.respace(opts)
+      stage.addLegend()
       const layout = stage.layout(opts)
       const res = format == 'pdf'
         ? await invoke('analyse:exportPdf', await stage.pdfData(layout))
@@ -364,12 +366,47 @@ class Stage {
    * Taille des pages (mm), échelle (mm par px de la table) et tranches
    * de la table [y0, y1] de chaque page
    */
+  /**
+   * Page de nomenclature : les types de notes utilisés (signe tel qu'il
+   * apparait dans l'analyse et nom), posée au-dessus de l'analyse, sur
+   * une page à elle seule (cf. layout)
+   */
+  addLegend(){
+    const used = Object.keys(TYPES_NOTES).map(subtype => this.content.querySelector(`div.amark.not.${subtype}`)).filter(Boolean)
+    if ( !used.length ) return
+    const items = this.items
+    const legend = DCreate('DIV', {class: 'sa-legend', style: `position:absolute;left:${Math.min(...items.map(i => i.left))}px;top:0;font-family:Arial, Helvetica, sans-serif;color:#000;`})
+    legend.appendChild(DCreate('DIV', {text: t('ui.panels.export.legend_title'), style: 'font-size:60px;font-weight:bold;margin-bottom:50px;'}))
+    used.forEach(mark => {
+      const sign = mark.cloneNode(true)
+      sign.removeAttribute('id')
+      sign.querySelectorAll('span.pline, .ui-resizable-handle, div.handler_prolong').forEach(e => e.remove())
+      Object.assign(sign.style, {position: 'relative', left: 'auto', top: 'auto', width: 'auto', height: 'auto'})
+      const subtype = Object.keys(TYPES_NOTES).find(st => mark.classList.contains(st))
+      legend.appendChild(DCreate('DIV', {style: 'display:flex;align-items:center;gap:40px;margin:24px 0;', inner: [
+          DCreate('DIV', {style: 'width:160px;display:flex;justify-content:center;', inner: [sign]})
+        , DCreate('SPAN', {text: TYPES_NOTES[subtype].name, style: 'font-size:40px;'})
+      ]}))
+    })
+    this.content.appendChild(legend)
+    const minTop = Math.min(...items.map(i => i.top))
+    legend.style.top = `${minTop - 400 - legend.getBoundingClientRect().height}px`
+    this.legendEl = legend
+    this.items = this.measureItems()
+  }
+
+  // Éléments de l'analyse (sans la nomenclature)
+  get analyseItems(){
+    return this.items.filter(i => i.el !== this.legendEl)
+  }
+
   layout(opts){
-    if ( !this.items.length ) throw new Error(t('errors.nothing_to_export'))
-    const x0 = Math.min(...this.items.map(i => i.left))
-    const x1 = Math.max(...this.items.map(i => i.right))
-    const top    = Math.min(...this.items.map(i => i.top)) - PAD
-    const bottom = Math.max(...this.items.map(i => i.bottom)) + PAD
+    const items = this.analyseItems
+    if ( !items.length ) throw new Error(t('errors.nothing_to_export'))
+    const x0 = Math.min(...items.map(i => i.left))
+    const x1 = Math.max(...items.map(i => i.right))
+    const top    = Math.min(...items.map(i => i.top)) - PAD
+    const bottom = Math.max(...items.map(i => i.bottom)) + PAD
     const contentW = x1 - x0, contentH = bottom - top
     let {width, height, margin} = opts
     let scale, slices
@@ -383,6 +420,9 @@ class Stage {
       height = contentH * scale + 2 * margin
       slices = [[top, bottom]]
     }
+    // Nomenclature : première page, à elle seule
+    const legend = this.items.find(i => i.el === this.legendEl)
+    legend && slices.unshift([legend.top - PAD, legend.bottom + PAD])
     return {width, height, margin, scale, x0, contentW, slices}
   }
 
@@ -392,7 +432,7 @@ class Stage {
    */
   paginate(top, bottom, pageH){
     const merged = []
-    this.items.map(i => [i.top, i.bottom]).sort((a, b) => a[0] - b[0]).forEach(iv => {
+    this.analyseItems.map(i => [i.top, i.bottom]).sort((a, b) => a[0] - b[0]).forEach(iv => {
       const last = merged[merged.length - 1]
       if ( last && iv[0] <= last[1] ) last[1] = Math.max(last[1], iv[1])
       else merged.push(iv.slice())
