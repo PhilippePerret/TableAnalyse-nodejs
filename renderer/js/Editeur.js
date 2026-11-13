@@ -143,11 +143,12 @@ export class Editeur {
     o.appendChild(this.textarea)
     const divBoutons = DCreate('DIV', {class:'buttons'})
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
-    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
     // Marque d'analyse : changement de son type
     if ( this.isAMark ) {
       divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.type'), class:'type'}))
     }
+    // Bouton OK toujours le dernier, à droite
+    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
     o.appendChild(divBoutons)
     this.obj = o
     this.data.titre && (this.titre = this.data.titre)
