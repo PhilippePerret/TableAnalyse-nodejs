@@ -19,7 +19,7 @@ import { AlignMenu } from './MenuAligner.js'
 import { AdjustMenu } from './MenuAjuster.js'
 import { MenusBar } from './MenusBar.js'
 import { Themes } from './Themes.js'
-import { onKeyUpOnAnalyse, onKeyDownOnAnalyse, onKeypressOnAnalyse, onKeyDownUniversel } from './KeyboardEvents.js'
+import { onKeyUpOnAnalyse, onKeyDownOnAnalyse, onKeypressOnAnalyse, onKeyDownUniversel, onEscapeKey } from './KeyboardEvents.js'
 
 export class UIClass {
 
@@ -53,6 +53,9 @@ export class UIClass {
   setInterface(){
 
     Preferences.init()
+
+    // Escape : fermeture des boites et désélection (toujours active)
+    document.addEventListener('keyup', onEscapeKey)
 
     // Les panneaux de l'interface
     Analyse.panneau_infos.init()

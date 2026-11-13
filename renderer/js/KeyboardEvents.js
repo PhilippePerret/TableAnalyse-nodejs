@@ -66,6 +66,22 @@ export function onKeyDownOnAnalyse(e){
   }
 }
 
+/**
+ * Touche Escape (au relâchement) : fermeture des boites ouvertes sans
+ * rien faire (comme leur croix) et désélection de toutes les marques.
+ * Une liste de choix ouverte se ferme seule (cf. GetterInList).
+ */
+export function onEscapeKey(e){
+  if ( e.key != 'Escape' ) return
+  if ( document.querySelector('div.container_getter_in_list:not(.hidden)') ) return
+  document.querySelectorAll('.panneau-ui').forEach(box => {
+    if ( !box.getClientRects().length ) return // boite fermée
+    const close = box.querySelector(':scope > div.panneau-head span.panneau-close')
+    close && close.click()
+  })
+  AObjet.deselectAll()
+}
+
 export function onKeyUpOnAnalyse(e){
   if ( inTextField(e) ) return
   switch(e.key){
