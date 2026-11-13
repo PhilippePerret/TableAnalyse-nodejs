@@ -11,7 +11,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { app, BrowserWindow, dialog, ipcMain, Menu, protocol, shell } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, Menu, protocol, screen, shell } from 'electron'
 import { Analyse } from './Analyse.js'
 import { AppPrefs } from './AppPrefs.js'
 import { createAnalyse } from './createAnalyse.js'
@@ -279,6 +279,7 @@ function dynamicItems(m){
     , enabled: item.enabled
     // Raccourci affiché à droite, géré par le renderer
     , ...(item.accelerator ? {accelerator: item.accelerator, registerAccelerator: false} : {})
+    , ...(item.checkbox ? {type: 'checkbox', checked: item.checked} : {})
     , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
   })
 }
@@ -509,6 +510,29 @@ function registerIpc(){
 
   handle('window:setSize', ({width, height}) => {
     if ( mainWindow && width && height ) mainWindow.setSize(Math.round(width), Math.round(height))
+  })
+
+  /**
+   * Fenêtre assez large pour +width+ (px de la page) : elle est élargie
+   * si elle est plus étroite (jamais réduite). Si l'écran est trop
+   * étroit, la fenêtre prend toute sa largeur et l'affichage est réduit.
+   * @return le zoom de l'affichage
+   */
+  handle('window:fitWidth', ({width}) => {
+    if ( !mainWindow ) return 1
+    const bounds = mainWindow.getBounds()
+    const [contentW] = mainWindow.getContentSize()
+    const chrome = bounds.width - contentW
+    const area = screen.getDisplayMatching(bounds).workArea
+    let zoom = 1
+    if ( contentW < width ) {
+      const outer = Math.min(width + chrome, area.width)
+      const x = Math.max(area.x, Math.min(bounds.x, area.x + area.width - outer))
+      mainWindow.setBounds({x, y: bounds.y, width: outer, height: bounds.height})
+      if ( outer - chrome < width ) zoom = (outer - chrome) / width
+    }
+    mainWindow.webContents.setZoomFactor(zoom)
+    return zoom
   })
 
   handle('app:closeReady', () => {

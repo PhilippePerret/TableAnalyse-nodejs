@@ -61,7 +61,10 @@ class MenusBarClass {
           if ( option.value == '' ) items.push({type: 'separator'})
           return
         }
-        items.push({label, index, enabled: !select.disabled && !option.disabled, accelerator: option.dataset.accelerator})
+        const item = {label, index, enabled: !select.disabled && !option.disabled, accelerator: option.dataset.accelerator}
+        // Option à cocher (data-checked) : coche du système
+        if ( undefined !== option.dataset.checked ) Object.assign(item, {checkbox: true, checked: option.dataset.checked == 'true'})
+        items.push(item)
       })
       return {id: m.id, label: t(`ui.menu.${m.label}`), parent: m.parent, items: cleanSeparators(items)}
     })

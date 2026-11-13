@@ -28,7 +28,7 @@ export class OptionsTool extends MenusTool {
 
   // Coche du menu « Verrouiller les systèmes »
   static setLockSystemsMenu(locked){
-    DGet('option[value="toggleLockSystems"]', this.menu).textContent = `${locked ? '✓ ' : ''}${t('ui.options_menu.lock_systems')}`
+    DGet('option[value="toggleLockSystems"]', this.menu).dataset.checked = locked ? 'true' : 'false'
   }
 
 
@@ -68,16 +68,5 @@ export class OptionsTool extends MenusTool {
   }
   static onActivate_cancelInList(e, option) {
     Cancel.zInList(e)
-  }
-  /**
-  * Appelée après chaque choix de menu, cette méthode permet
-  * de changer le nom pour activer ou désactiver l'option.
-  */
-  static afterActivate(e, option){
-    if ( option.dataset.role != 'cb' ) return
-    var text = option.innerHTML
-    text = text.substring(1, text.length)
-    text = (option.dataset.checked == 'true' ? '☒' : '☐') + text
-    option.innerHTML = text
   }
 }
