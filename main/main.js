@@ -182,7 +182,19 @@ function reloadWindow(){
 function buildMenu(){
   const isMac = process.platform == 'darwin'
   const template = [
-    ...(isMac ? [{role: 'appMenu'}] : []),
+    // Menus du système avec libellés localisés (sinon, langue d'Electron)
+    ...(isMac ? [{
+        label: app.name
+      , submenu: [
+            {role: 'about',      label: t('ui.menu.about', {name: app.name})}
+          , {type: 'separator'}
+          , {role: 'hide',       label: t('ui.menu.hide', {name: app.name})}
+          , {role: 'hideOthers', label: t('ui.menu.hide_others')}
+          , {role: 'unhide',     label: t('ui.menu.unhide')}
+          , {type: 'separator'}
+          , {role: 'quit',       label: t('ui.menu.quit', {name: app.name})}
+        ]
+    }] : []),
     {
       label: t('ui.menu.file'),
       submenu: [
@@ -205,13 +217,18 @@ function buildMenu(){
         , {label: t('ui.menu.manual'),          click: () => sendMenuCommand('manual')}
         , {type: 'separator'}
         , {label: t('ui.menu.prefs'),           click: () => sendMenuCommand('prefs')}
-        , ...(isMac ? [] : [{type: 'separator'}, {role: 'quit'}])
+        , ...(isMac ? [] : [{type: 'separator'}, {role: 'quit', label: t('ui.menu.quit', {name: app.name})}])
       ]
     },
     {
       // Pas de rôle undo/redo : ⌘Z est géré par l'application
       label: t('ui.menu.edit'),
-      submenu: [{role: 'cut'}, {role: 'copy'}, {role: 'paste'}, {role: 'selectAll'}]
+      submenu: [
+          {role: 'cut',       label: t('ui.menu.cut')}
+        , {role: 'copy',      label: t('ui.menu.copy')}
+        , {role: 'paste',     label: t('ui.menu.paste')}
+        , {role: 'selectAll', label: t('ui.menu.select_all')}
+      ]
     },
     ...dynamicMenus.map(m => ({
         label:   m.label
@@ -231,11 +248,19 @@ function buildMenu(){
     {
       label: t('ui.menu.view'),
       submenu: [
-          {role: 'toggleDevTools'}
-        , {role: 'togglefullscreen'}
+          {role: 'toggleDevTools',    label: t('ui.menu.dev_tools')}
+        , {role: 'togglefullscreen',  label: t('ui.menu.fullscreen')}
       ]
     },
-    {role: 'windowMenu'}
+    {
+        role:  'windowMenu'
+      , label: t('ui.menu.window')
+      , submenu: [
+            {role: 'minimize', label: t('ui.menu.minimize')}
+          , {role: 'zoom',     label: t('ui.menu.zoom')}
+          , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
+        ]
+    }
   ]
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
   updateMenu()
