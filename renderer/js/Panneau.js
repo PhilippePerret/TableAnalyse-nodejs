@@ -65,8 +65,9 @@ export class Panneau {
 
 /**
  * En-tête commun des panneaux (cf. thèmes, css/themes.css) : croix de
- * fermeture à gauche, titre et raccourci. Ajoute aussi un bouton
- * « Fermer » en bas à gauche si le panneau n'en a pas.
+ * fermeture à gauche, titre et raccourci. Les boutons du bas forment un
+ * pied de page (filet) ; un bouton « Fermer » y est ajouté si le panneau
+ * n'en a pas : à droite s'il est seul, à gauche sinon.
  */
 export function addPanelHead(obj, {title, shortcut, onClose}){
   obj.classList.add('panneau-ui')
@@ -78,10 +79,14 @@ export function addPanelHead(obj, {title, shortcut, onClose}){
   ]})
   obj.insertBefore(head, obj.firstChild)
   listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })
+  let buttons = obj.querySelector(':scope > div.buttons')
+  buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))
+  // Pied de page déjà dessiné par le panneau (p.e. « Forme ») : laissé tel quel
+  if ( getComputedStyle(buttons).position != 'absolute' ) buttons.classList.add('panneau-foot')
   if ( !obj.querySelector('button.btn-close, button[id^="btn_"][id$="_close"], button#btn_close_tools') ) {
-    let buttons = obj.querySelector(':scope > div.buttons')
-    buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))
-    const btn = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.close'), style: 'float:left;'})
+    const alone = !buttons.querySelector('button')
+    const btn = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.close')})
+    alone || (btn.style.float = 'left')
     buttons.insertBefore(btn, buttons.firstChild)
     listen(btn, 'click', (e) => { e.stopPropagation() ; onClose() })
   }

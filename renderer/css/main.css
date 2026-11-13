@@ -107,9 +107,6 @@ div#panneau_infos > div > input[type="text"] {
   width: 90%;
 }
 
-div#panneau_infos div.buttons {
-  margin-top: 1em;
-}
 
 div#panneau_outils > div {
   margin-top: 1em;
@@ -138,8 +135,10 @@ div#historique_annulations {
   bottom: 48px;
   right: 8px;
   z-index: 100;
-  width:300px;
-  min-height: 400px;
+  /* Taille adaptée au contenu */
+  width: max-content;
+  min-width: 240px;
+  max-width: 420px;
   max-height: 80vh;
   overflow-y: auto;
 }

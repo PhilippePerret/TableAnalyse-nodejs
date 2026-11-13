@@ -23,6 +23,15 @@
 .panneau-ui select,
 .panneau-ui textarea { font-family: inherit; font-size: inherit; }
 .panneau-ui button { cursor: pointer; }
+/* Pied de page (boutons du bas, cf. addPanelHead dans Panneau.js) */
+.panneau-ui > div.panneau-foot {
+  position:         sticky;
+  bottom:           0;
+  z-index:          1;
+  text-align:       right;
+  background-color: inherit;
+}
+.panneau-ui > div.panneau-foot::after { content: ""; display: block; clear: both; }
 
 
 /* --- Boite des messages (cf. lib/Message.js) --- */
@@ -99,6 +108,13 @@ body.theme-A .panneau-ui select {
   border-radius:    6px;
   background-color: white;
 }
+body.theme-A .panneau-ui > div.panneau-foot {
+  margin:           16px -18px -16px;
+  bottom:           -16px;
+  padding:          10px 14px;
+  border-top:       1px solid #e0e0e0;
+  border-radius:    0 0 10px 10px;
+}
 body.theme-A div#panel_form > div.buttons { background-color: #ececec; border: none; border-top: 1px solid #d6d6d6; border-radius: 0 0 10px 10px; }
 
 
@@ -153,6 +169,13 @@ body.theme-B .panneau-ui select {
   background-color: white;
   color:            #3a925e;
 }
+body.theme-B .panneau-ui > div.panneau-foot {
+  margin:           18px -20px -18px;
+  bottom:           -18px;
+  padding:          10px 16px;
+  border-top:       1px solid #cfe3d6;
+  border-radius:    0 0 6px 6px;
+}
 body.theme-B div#panel_form > div.buttons { background-color: #eaf3ed; border: none; border-top: 1px solid #cfe3d6; }
 
 
@@ -206,5 +229,12 @@ body.theme-C .panneau-ui select {
   border-radius:    4px;
   background-color: #36393f;
   color:            #e8e6e3;
+}
+body.theme-C .panneau-ui > div.panneau-foot {
+  margin:           18px -20px -18px;
+  bottom:           -18px;
+  padding:          10px 16px;
+  border-top:       1px solid #44474d;
+  border-radius:    0 0 8px 8px;
 }
 body.theme-C div#panel_form > div.buttons { background-color: #1e1f22; border: none; border-top: 1px solid #44474d; border-radius: 0 0 8px 8px; }
