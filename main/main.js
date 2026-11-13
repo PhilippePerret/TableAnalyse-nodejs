@@ -218,7 +218,7 @@ function buildMenu(){
         , {label: t('ui.menu.infos'),           accelerator: 'CmdOrCtrl+Shift+I', click: () => sendMenuCommand('infosAnalyse')}
         , {type: 'separator'}
         , {label: t('ui.menu.export'),          accelerator: 'CmdOrCtrl+E', click: () => sendMenuCommand('export')}
-        , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path)}
+        , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path, true)}
         , {type: 'separator'}
         , {label: t('ui.menu.help'), submenu: [
               {label: t('ui.menu.help_html'),   click: () => openManual('html')}
