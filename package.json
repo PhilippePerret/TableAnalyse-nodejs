@@ -32,7 +32,9 @@
       "assets/**",
       "locales/**",
       "VERSION",
-      "package.json"
+      "package.json",
+      "Manuels/Manuel/Manuel.html",
+      "Manuels/Manuel/Manuel.epub"
     ],
     "directories": {
       "output": "dist"

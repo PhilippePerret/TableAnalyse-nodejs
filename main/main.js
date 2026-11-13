@@ -177,6 +177,13 @@ function showInFinder(p, reveal){
   reveal ? shell.showItemInFolder(p) : shell.openPath(p)
 }
 
+// Manuel d'utilisation (HTML ou ePub), ouvert par l'application du système
+function openManual(ext){
+  const file = path.join(APP_FOLDER, 'Manuels', 'Manuel', `Manuel.${ext}`)
+  if ( !fs.existsSync(file) ) return dialog.showErrorBox(t('ui.menu.help'), t('errors.manual_not_found', {path: file}))
+  showInFinder(file)
+}
+
 function reloadWindow(){
   mainWindow && mainWindow.webContents.reload()
 }
@@ -217,7 +224,10 @@ function buildMenu(){
           ]}
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path)}
         , {type: 'separator'}
-        , {label: t('ui.menu.manual'),          accelerator: 'Shift+M', registerAccelerator: false, click: () => sendMenuCommand('manual')}
+        , {label: t('ui.menu.help'), submenu: [
+              {label: t('ui.menu.help_html'),   click: () => openManual('html')}
+            , {label: t('ui.menu.help_epub'),   click: () => openManual('epub')}
+          ]}
         , {type: 'separator'}
         , {label: t('ui.menu.prefs'),           accelerator: 'CmdOrCtrl+,', click: () => sendMenuCommand('prefs')}
         , ...(isMac ? [] : [{type: 'separator'}, {role: 'quit', label: t('ui.menu.quit', {name: app.name})}])
