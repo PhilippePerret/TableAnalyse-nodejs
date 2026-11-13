@@ -614,9 +614,6 @@ observe(){
       }
     }) 
   }
-  // Pour sélection avec MAJ par simple passage sur l'élément
-  listen(this.obj, 'mouseover', this.onMouseOver.bind(this))
-  listen(this.obj, 'mouseout',  this.onMouseOut.bind(this))
   // Pour tout déselectionner même lors d'un déplacement
   // cf. bug #10
   listen(this.obj, 'mousedown', this.onMouseDown.bind(this))
@@ -733,30 +730,6 @@ onClick(e){
     AObjet.deselectAll()
     AObjet.addToSelection(this)
   }
-  return stopEvent(e)
-}
-
-/**
- * Quand on survole la marque, si la touche MAJ est pressée,
- * on ajoute la marque à la sélection (ou on la retire si elle
- * est déjà sélectionnée)
- */
-onMouseOver(e){
-  // console.log(e)
-  if ( this.lastToggleSelectionTime && (e.timeStamp - this.lastToggleSelectionTime) < 1000) {
-    return stopEvent(e)
-  }
-  // unlisten(this.obj, 'mouseover', this.onMouseOver.bind(this))
-  if ( this.isOver ) return stopEvent(e)
-  this.isOver = true
-  if ( e.shiftKey ) {
-    this.toggleFromSelection(/* keep_other = */ true)
-    this.lastToggleSelectionTime = e.timeStamp
-  }
-  return stopEvent(e)
-}
-onMouseOut(e){
-  this.isOver = false
   return stopEvent(e)
 }
 

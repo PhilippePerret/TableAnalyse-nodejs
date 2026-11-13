@@ -239,6 +239,15 @@ div#animation_cursor {
 }
 html.animation-running { overflow: hidden; }
 
+/* Rectangle de sélection (cf. TableAnalyse.js) */
+div#selection_rect {
+  position: fixed;
+  z-index: 4400;
+  border: 1px dashed #222;
+  background-color: rgba(150,180,250,.12);
+  pointer-events: none;
+}
+
 /* Sélection des marques par type (cf. MarksSelector.js) */
 div#marks_selector {
   position: fixed;

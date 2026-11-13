@@ -1,7 +1,8 @@
-import { listen, unlisten } from './dom.js'
+import { DCreate, listen, unlisten } from './dom.js'
 import { px } from './handies.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
+import { AMark } from './AMark.js'
 import { on } from './events.js'
 import { UI } from './UI.js'
 
@@ -21,22 +22,56 @@ export class TableAnalyse {
   }
 
   /**
-   * Quand on presse la souris, certainement pour faire une
-   * sélection rectangle.
+   * SÉLECTION PAR RECTANGLE
+   * Souris pressée sur la table (hors marque, panneau, système
+   * déplaçable) puis déplacée : un rectangle en pointillé se dessine ;
+   * au relâchement, chaque marque non verrouillée qu'il touche est
+   * sélectionnée (ou désélectionnée si elle l'était).
    */
   static onMouseDown(e){
-    listen(this.obj, 'mousemove', this.boundMouseMove)
-  }
-
-  static onMouseUp(e){
-    unlisten(this.obj, 'mousemove', this.boundMouseMove)
+    if ( e.button !== 0 || document.documentElement.classList.contains('animation-running') ) return
+    const target = e.target
+    if ( !(target instanceof Element) || !this.obj.contains(target) && target !== document.body && target !== document.documentElement ) return
+    if ( target.closest('.amark, .panneau-ui, button, input, select, textarea') ) return
+    if ( target.matches('img.systeme') && !Systeme.systemsLocked ) return
+    this.rectStart = {x: e.clientX, y: e.clientY}
+    listen(document, 'mousemove', this.boundMouseMove)
   }
 
   static onMouseMove(e){
+    const {x, y} = this.rectStart
+    if ( !this.rectDiv ) {
+      if ( Math.abs(e.clientX - x) < 4 && Math.abs(e.clientY - y) < 4 ) return
+      this.rectDiv = DCreate('DIV', {id: 'selection_rect'})
+      document.body.appendChild(this.rectDiv)
+    }
+    Object.assign(this.rectDiv.style, {
+        left:   px(Math.min(x, e.clientX)), top:    px(Math.min(y, e.clientY))
+      , width:  px(Math.abs(e.clientX - x)), height: px(Math.abs(e.clientY - y))
+    })
+    e.preventDefault()
+  }
 
+  static onMouseUp(e){
+    unlisten(document, 'mousemove', this.boundMouseMove)
+    this.rectStart = null
+    if ( !this.rectDiv ) return
+    const r = this.rectDiv.getBoundingClientRect()
+    this.rectDiv.remove()
+    this.rectDiv = null
+    AObjet.items.forEach(ao => {
+      if ( !(ao instanceof AMark) || !ao.obj || ao.isLocked ) return
+      const m = ao.obj.getBoundingClientRect()
+      if ( m.right < r.left || m.left > r.right || m.bottom < r.top || m.top > r.bottom ) return
+      ao.isSelected ? AObjet.removeFromSelection(ao) : AObjet.addToSelection(ao)
+    })
+    // Pas de désélection par le clic qui suit le relâchement
+    this.justSelected = true
+    setTimeout(() => this.justSelected = false, 0)
   }
 
   static onClick(e){
+    if ( this.justSelected ) { this.justSelected = false ; return }
     AObjet.deselectAll.call(AObjet, e)
   }
 
