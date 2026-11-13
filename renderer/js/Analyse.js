@@ -64,10 +64,18 @@ export class Analyse {
      ** Méthode appelée quand on change la taille de la fenêtre, pour
      ** pouvoir l'enregistrer.
      **/
+    // Redimensionnements du chargement ignorés (taille initiale de la
+    // fenêtre) tant que la taille enregistrée n'est pas appliquée
+    if ( !this.windowSizeApplied ) return
     if ( largeur == pref('window_width') && hauteur == pref('window_height') ) return
     Preferences.set('window_width'  , largeur)
     Preferences.set('window_height' , hauteur)
-    this.setModified()
+    // Enregistrement immédiat dans le fichier (une copie du dossier de
+    // l'analyse garde la taille, même sans enregistrement)
+    clearTimeout(this.timerWindowSize)
+    this.timerWindowSize = setTimeout(() => {
+      invoke('analyse:saveWindowSize', {width: largeur, height: hauteur}).catch(err => console.error(err))
+    }, 500)
   }
 
   /**
@@ -75,7 +83,10 @@ export class Analyse {
    */
   applyWindowSize(){
     const w = pref('window_width'), h = pref('window_height')
-    if ( w && h ) invoke('window:setSize', {width: w, height: h}).catch(err => console.error(err))
+    const done = () => setTimeout(() => { this.windowSizeApplied = true }, 300)
+    if ( w && h ) {
+      invoke('window:setSize', {width: w, height: h}).catch(err => console.error(err)).finally(done)
+    } else done()
   }
 
   scrollToLastPosition(){

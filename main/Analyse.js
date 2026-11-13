@@ -82,6 +82,14 @@ export class Analyse {
   savePreferences(){  writeYAML(this.preferencesPath, this.preferences) }
   saveTags(){         writeYAML(this.tagsPath, this.tags) }
 
+  // Taille de la fenêtre écrite seule dans le fichier des préférences
+  saveWindowSize(width, height){
+    const prefs = loadYAML(this.preferencesPath, {}) || {}
+    Object.assign(prefs, {window_width: width, window_height: height})
+    writeYAML(this.preferencesPath, prefs)
+    if ( this._prefs ) Object.assign(this._prefs, {window_width: width, window_height: height})
+  }
+
   get dataSystems(){
     return this.infos.systems || []
   }

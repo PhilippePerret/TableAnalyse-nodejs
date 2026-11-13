@@ -305,6 +305,10 @@ function registerIpc(){
     analyse.savePreferences()
   })
 
+  handle('analyse:saveWindowSize', ({width, height}) => {
+    requireCurrent().saveWindowSize(Math.round(width), Math.round(height))
+  })
+
   handle('analyse:saveTags', ({tags}) => {
     const analyse = requireCurrent()
     analyse.tags = tags
