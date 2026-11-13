@@ -10,7 +10,15 @@ import { AnalyseSaver } from './AnalyseSaver.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 
+// Saisie en cours dans un champ (panneaux) : touches laissées au champ
+function inTextField(e){
+  const el = e.target
+  return !!el && (el.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName))
+}
+
 export function onKeypressOnAnalyse(e){
+
+  if ( inTextField(e) ) return
 
   switch(e.key){
 
@@ -36,6 +44,8 @@ export function onKeyDownOnAnalyse(e){
     return returnU
   }
 
+  if ( inTextField(e) ) return
+
   switch(e.key){
   case 'ArrowRight':
   case 'ArrowLeft':
@@ -57,6 +67,7 @@ export function onKeyDownOnAnalyse(e){
 }
 
 export function onKeyUpOnAnalyse(e){
+  if ( inTextField(e) ) return
   switch(e.key){
     case 'Backspace':
       AObjet.removeCurrentSelection()
