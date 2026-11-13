@@ -328,6 +328,7 @@ class AnimationClass {
       Object.assign(this.btnPlay, {textContent: this.playing ? '❚❚' : '▶', title: T(this.playing ? 'pause' : 'play'), disabled: this.ended})
     }
     this.btnNext.disabled = !this.stepMode || this.ended
+    this.btnStop.disabled = !this.playing
     this.tempoValue.textContent = T('tempo_value', {tempo: this.tempo})
   }
 }
