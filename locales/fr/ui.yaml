@@ -142,7 +142,7 @@ panels:
     folder_ph:        "dossier contenant l'analyse"
     analyst:          "Analyste"
     analyst_ph:       "Analyste"
-    systems_source:   "Images des systèmes"
+    systems_source:   "Systèmes"
     systems_source_ph: "dossier des images (optionnel)"
     create:           "Créer la nouvelle analyse"
   tools:
