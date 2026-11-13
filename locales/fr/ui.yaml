@@ -178,6 +178,7 @@ panels:
     remember:         "Mémoriser cette taille dans l'analyse"
     export:           "Exporter"
     bad_size:         "Taille ou marge des pages invalide."
+    fonts_notice:     "Les polices de l'analyse (PhilNote…) doivent être installées sur l'ordinateur qui ouvrira les fichiers SVG."
   getter:
     new_item:         "Nouvel item"
 

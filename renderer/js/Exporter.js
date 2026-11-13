@@ -60,8 +60,9 @@ class ExporterClass {
             DCreate('INPUT', {type: 'checkbox', id: 'export_remember'})
           , DCreate('LABEL', {for: 'export_remember', text: ' ' + T('remember')})
         ]})
-      , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnExport]})
     )
+    format == 'svg' && inner.push(DCreate('DIV', {class: 'explication', text: T('fonts_notice')}))
+    inner.push(DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnExport]}))
     const panel = DCreate('DIV', {id: 'export_panel', inner})
     document.body.appendChild(panel)
     this.panel = panel
