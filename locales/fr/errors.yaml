@@ -47,7 +47,6 @@ marks:
   duplicate_ids: "Des doubles d'identifiants ont été trouvés. Il serait plus prudent de les corriger (en éditant le fichier analyse_tags.yaml) et de recharger l'analyse. Les IDs sont indiqués en console."
 
 preference_not_found: "Impossible de trouver l'élément préférence d'identifiant #%{key}"
-nothing_to_cancel: "Aucune action à annuler."
 unknown_adjust: "Je ne sais pas traiter l'ajustement '%{adjust}'."
 panel_id_required: "%{owner} faut définir l'ID du panneau (<owner>.panneauId)"
 manual_not_found: "Manuel introuvable : %{path}"

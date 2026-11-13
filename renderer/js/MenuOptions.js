@@ -22,6 +22,7 @@ export class OptionsTool extends MenusTool {
   static init(){
     super.init()
     Cancel.zMenu = DGet('option[value="cancel"]', this.menu)
+    Cancel.defineZMenu()
     on('systems:locked', ({locked}) => this.setLockSystemsMenu(locked))
   }
 

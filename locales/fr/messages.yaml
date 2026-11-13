@@ -26,7 +26,7 @@ form_no_measure: "Aucun numéro de mesure ≥ %{start} n'a été trouvé sur la 
 form_already_marked: "L’élément '%{name}' possède déjà une marque. Je vais seulement l'actualiser."
 form_associated: "%{type} associé à mark #%{tag}"
 form_associated_f: "%{type} associée à mark #%{tag}"
-nothing_to_cancel: "Aucune action n’est annulable."
+nothing_to_cancel: "Aucune opération à annuler."
 link_to: "Lien : [#%{id}]"
 prop_of: "%{prop} de #%{id}"
 

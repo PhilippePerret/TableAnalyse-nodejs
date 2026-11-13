@@ -1,6 +1,6 @@
 import { DCreate, listen, stopEvent } from './dom.js'
 import { not } from './lib/common.js'
-import { erreur } from './lib/Message.js'
+import { message } from './lib/Message.js'
 import { tooltip } from './handies.js'
 import { addPanelHead } from './Panneau.js'
 import { t } from './i18n.js'
@@ -57,6 +57,7 @@ export class CancelManager {
      ** Annule l'annulation d'index +idx+
      **/
     this.execCancel(this.items.splice(idx,1)[0])
+    this.defineZMenu()
   }
 
   execCancel(data){
@@ -121,7 +122,7 @@ export class CancelManager {
      ** quel ordre, contrairement aux annulations classique)
      **/
     if ( this.items.length == 0 ) {
-      erreur(t('errors.nothing_to_cancel'))
+      message(t('messages.nothing_to_cancel'))
     } else {
       this.zChoose()
     }
@@ -132,7 +133,9 @@ export class CancelManager {
     /**
      ** Méthode pour choisir dans la liste les actions à annuler.
      **/
-    if ( not(this.obj) ) this.build()
+    // Liste reconstruite à chaque fois (nouvelles annulations)
+    this.obj && this.obj.remove()
+    this.build()
     this.showList()
   }
 
@@ -174,6 +177,9 @@ export class CancelManager {
     if ( this.zMenu ) {
       this.zMenu.innerHTML = this.lastItem ? 
         t('ui.options_menu.cancel_last', {name: this.lastItem.name}) : ''
+      // « Historique des annulations » grisé sans annulation
+      const histo = this.zMenu.parentNode.querySelector('option[value="cancelInList"]')
+      if ( histo ) histo.disabled = this.items.length == 0
     } 
   }
 
