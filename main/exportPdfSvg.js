@@ -6,7 +6,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { BrowserWindow } from 'electron'
-import { head, exportName } from './exportHtml.js'
+import { head, exportPath } from './exportHtml.js'
 
 /**
  * PDF des pages +code_html+ de +width+ × +height+ mm, produit par une
@@ -35,7 +35,7 @@ export async function exportToPdf(analyse, {code_html, width, height}){
       , pageSize:           {width: width / 25.4, height: height / 25.4}
       , margins:            {top: 0, bottom: 0, left: 0, right: 0}
     })
-    const pdfPath = path.join(analyse.exportFolder, `${exportName()}.pdf`)
+    const pdfPath = exportPath(analyse.exportFolder, '.pdf')
     fs.writeFileSync(pdfPath, pdf)
     return pdfPath
   } finally {
@@ -49,8 +49,8 @@ export async function exportToPdf(analyse, {code_html, width, height}){
  * @return {String} le chemin du dossier
  */
 export function exportToSvg(analyse, pages){
-  const folder = path.join(analyse.exportFolder, `${exportName()}-svg`)
-  fs.rmSync(folder, {recursive: true, force: true})
+  fs.mkdirSync(analyse.exportFolder, {recursive: true})
+  const folder = exportPath(analyse.exportFolder, '-svg')
   fs.mkdirSync(folder, {recursive: true})
   const digits = String(pages.length).length
   pages.forEach((code, i) => {

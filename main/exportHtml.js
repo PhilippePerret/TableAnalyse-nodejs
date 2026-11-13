@@ -87,11 +87,22 @@ export function exportName(){
 }
 
 /**
+ * Chemin libre dans +folder+ pour l'export +suffix+ (« .pdf », « -svg »…) :
+ * numéro de version incrémenté (-v2, -v3…) plutôt qu'écraser un export
+ */
+export function exportPath(folder, suffix){
+  const base = exportName()
+  let p = path.join(folder, base + suffix)
+  for ( let v = 2 ; fs.existsSync(p) ; ++v ) p = path.join(folder, `${base}-v${v}${suffix}`)
+  return p
+}
+
+/**
  * @return {String} le chemin du fichier produit
  */
 export function exportToHtml(analyse, codeHtml){
   fs.mkdirSync(analyse.exportFolder, {recursive: true})
-  const htmlPath = path.join(analyse.exportFolder, `${exportName()}.html`)
+  const htmlPath = exportPath(analyse.exportFolder, '.html')
   fs.writeFileSync(htmlPath, head(analyse.infos) + pageTitre(analyse.infos) + codeHtml + '</body></html>')
   return htmlPath
 }
