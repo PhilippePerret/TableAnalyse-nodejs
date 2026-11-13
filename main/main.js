@@ -500,6 +500,18 @@ function registerIpc(){
     })
   })
 
+  // Menu contextuel natif décrit par le renderer : +items+ = [{label,
+  // value, enabled}] ou {type: 'separator'} ; retourne la valeur choisie
+  handle('menu:popup', ({items}) => {
+    return new Promise(resolve => {
+      const menu = Menu.buildFromTemplate(items.map(item => item.type == 'separator' ? item : {
+          label: item.label, enabled: item.enabled !== false, click: () => resolve(item.value)
+      }))
+      // La fermeture du menu peut précéder le clic sur un de ses items
+      menu.popup({window: mainWindow, callback: () => setTimeout(() => resolve(null), 200)})
+    })
+  })
+
   handle('menu:setDynamic', ({menus}) => {
     dynamicMenus = menus || []
     buildMenu()

@@ -1,8 +1,8 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
 import { not } from './lib/common.js'
-import { erreur } from './lib/Message.js'
+import { erreur, message } from './lib/Message.js'
 import { px } from './handies.js'
-import { analyseUrl } from './api.js'
+import { analyseUrl, invoke } from './api.js'
 import { draggable, resizable } from './lib/interact.js'
 import { AObjet } from './AObjet.js'
 import { Current, setModified } from './Current.js'
@@ -617,6 +617,8 @@ observe(){
   // Pour tout déselectionner même lors d'un déplacement
   // cf. bug #10
   listen(this.obj, 'mousedown', this.onMouseDown.bind(this))
+  // Menu contextuel (clic droit ou Ctrl-clic)
+  listen(this.obj, 'contextmenu', this.onContextMenu.bind(this))
 
   // Draggable
   draggable(this.obj, {
@@ -731,6 +733,87 @@ onClick(e){
     AObjet.addToSelection(this)
   }
   return stopEvent(e)
+}
+
+/**
+ * MENU CONTEXTUEL de la marque (clic droit ou Ctrl-clic)
+ * Verrouiller, aligner et supprimer s'appliquent à toute la sélection
+ * quand la marque en fait partie, à la marque seule sinon.
+ */
+onContextMenu(e){
+  stopEvent(e)
+  const T = (k) => t(`ui.mark_context.${k}`)
+  const items = [
+      {label: T(this.isLocked ? 'unlock' : 'lock'), value: 'lock'}
+    , {label: T('edit'), value: 'edit'}
+    , {type: 'separator'}
+    , {label: T('align'), value: 'align'}
+  ]
+  this.type == 'acc' && items.push({label: T('align_harmony'), value: 'alignHarmony'})
+  this.type == 'har' && items.push({label: T('align_chord'),   value: 'alignChord'})
+  items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
+  invoke('menu:popup', {items})
+    .then(choice => choice && this.onContextChoice(choice))
+    .catch(err => console.error(err))
+  return false
+}
+
+onContextChoice(choice){
+  const targets = this.isSelected && AObjet.selection.length > 1 ? AObjet.dupSelection() : [this]
+  switch(choice){
+    case 'lock':
+      const lock = !this.isLocked
+      targets.forEach(m => lock ? m.lock() : m.unlock())
+      setModified()
+      break
+    case 'edit':          return this.edit()
+    case 'align':         return targets.forEach(m => m.alignOnSameType())
+    case 'alignHarmony':  return this.alignHorizontallyOn('har', 'no_harmony_mark')
+    case 'alignChord':    return this.alignHorizontallyOn('acc', 'no_chord_mark')
+    case 'delete':
+      targets.forEach(m => AObjet.remove(m))
+      AObjet.deselectAll()
+      setModified()
+      break
+  }
+}
+
+/**
+ * Aligne verticalement la marque sur la marque de même type (ou type
+ * associé) la plus proche en hauteur, dans le même système
+ */
+alignOnSameType(){
+  const sys = Systeme.getSystemeAssociated(this)
+  let best = null, ecart = Infinity
+  AObjet.items.forEach(ao => {
+    if ( ao === this || !(ao instanceof AMark) ) return
+    if ( AObjet.areNotAjustable(ao.type, this.type) && AObjet.areNotAjustable(ao.subtype, this.subtype) ) return
+    if ( Systeme.getSystemeAssociated(ao) !== sys ) return
+    const d = Math.abs(ao.top - this.top)
+    if ( d < ecart ) { ecart = d ; best = ao }
+  })
+  if ( !best ) return message(t('messages.no_same_type_mark'), {duration: 3000})
+  this.top = best.top
+  setModified()
+}
+
+/**
+ * Aligne horizontalement la marque sur la marque de type +type+ du
+ * même système qui lui correspond (la plus proche horizontalement, à
+ * moins d'une demi-largeur de mesure environ)
+ */
+alignHorizontallyOn(type, msgNone){
+  const TOLERANCE = 120
+  const sys = Systeme.getSystemeAssociated(this)
+  let best = null, ecart = Infinity
+  AObjet.items.forEach(ao => {
+    if ( ao === this || ao.type != type || Systeme.getSystemeAssociated(ao) !== sys ) return
+    const d = Math.abs(ao.left - this.left)
+    if ( d < ecart ) { ecart = d ; best = ao }
+  })
+  if ( !best || ecart > TOLERANCE ) return message(t(`messages.${msgNone}`), {duration: 3000})
+  this.left = best.left
+  setModified()
 }
 
 // cf. issue #10

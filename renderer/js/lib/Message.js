@@ -62,7 +62,7 @@ class MessageClass {
     this.divContent.innerHTML = str
     this.divTitle.innerHTML = t(`ui.message_titles.${type}`)
     this.panneauMessage.className = `panneau-ui ${type} ${this.position}`
-    if ( type !== 'error' && !options.keep ) this.msgTimer = setTimeout(this.hideMessage.bind(this),20*1000)
+    if ( type !== 'error' && !options.keep ) this.msgTimer = setTimeout(this.hideMessage.bind(this), options.duration || 20*1000)
   }
 
   hideMessage(){

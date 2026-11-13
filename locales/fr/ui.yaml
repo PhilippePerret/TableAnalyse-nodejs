@@ -110,6 +110,15 @@ borders_menu:
   add_top:          "Remettre le bord haut"
 
 # Menu contextuel d'un système
+mark_context:
+  lock:             "Verrouiller"
+  unlock:           "Déverrouiller"
+  edit:             "Éditer…"
+  align:            "Aligner sur les marques de même type"
+  align_harmony:    "Aligner avec l’harmonie"
+  align_chord:      "Aligner sur l’accord"
+  delete:           "Supprimer"
+
 system_menu:
   unlock:           "Déverrouiller"
   lock:             "Verrouiller"
