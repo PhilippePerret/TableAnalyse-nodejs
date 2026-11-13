@@ -1,4 +1,4 @@
 [[prefs]]
 == Préférences ==
 
-Pour ouvrir le panneau des préférences, jouer Maj-P ou choisir le menu « Préférences » dans le menu « Fichier » en pied de page.
+Pour ouvrir le panneau des préférences, jouer ⌘, (Ctrl+, sous Windows et Linux) ou choisir « Préférences… » dans le menu « Analyse ».
