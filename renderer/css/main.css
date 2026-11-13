@@ -50,6 +50,15 @@ div.buttons {
 }
 
 
+/* Ascenseur de la fenêtre : commence sous la bande supérieure (28px +
+   filet), sans jamais mordre dessus. Les panneaux gardent le leur. */
+html::-webkit-scrollbar { width: 11px; height: 11px; }
+html::-webkit-scrollbar-track { background: transparent; }
+html::-webkit-scrollbar-track:vertical { margin-top: 29px; }
+html::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,.35); border-radius: 6px; border: 2px solid transparent; background-clip: padding-box; }
+html::-webkit-scrollbar-thumb:hover { background-color: rgba(0,0,0,.5); }
+html::-webkit-scrollbar-corner { background: transparent; }
+
 /* Bande supérieure de la fenêtre (barre de titre masquée, cf. main.js) */
 div#titlebar {
   position: fixed;
