@@ -243,6 +243,7 @@ panels:
     title:            "Sélectionner des marques"
     select:           "Sélectionner"
     regex_ph:         "expression régulière (vide : toutes)"
+    systems:          "Systèmes"
     count_one:        "%{n} marque trouvée"
     count_many:       "%{n} marques trouvées"
   getter:

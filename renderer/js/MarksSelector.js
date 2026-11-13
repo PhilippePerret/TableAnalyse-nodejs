@@ -2,6 +2,7 @@ import { DCreate, listen } from './dom.js'
 import { addPanelHead } from './Panneau.js'
 import { AObjet } from './AObjet.js'
 import { AMark } from './AMark.js'
+import { Systeme } from './Systeme.js'
 import { t } from './i18n.js'
 /**
 
@@ -10,7 +11,8 @@ import { t } from './i18n.js'
   Panneau de sélection des marques par type (menu « Sélection >
   Sélectionner des marques… »).
 
-  Pour chaque type de marque présent dans l'analyse : une case à cocher
+  Pour chaque type de marque présent dans l'analyse (plus les numéros de
+  mesure et les systèmes) : une case à cocher
   et un filtre, soit une expression régulière sur le texte de la marque,
   soit (types aux valeurs fixes) un menu à choix multiple des valeurs.
   Le nombre de marques trouvées est actualisé à chaque réglage.
@@ -24,8 +26,15 @@ class MarksSelectorClass {
   show(){
     this.close()
     const marks = AObjet.select(ao => ao instanceof AMark)
-    const types = Object.keys(t('ui.marks.types')).filter(type => marks.some(m => m.type == type))
-    this.rows = types.map(type => this.buildRow(type, marks.filter(m => m.type == type)))
+    const isMeasure = (m) => m.type == 'txt' && m.subtype == 'mes'
+    const groups = Object.keys(t('ui.marks.types')).map(type => ({
+        key: type
+      , name: t(`ui.marks.types.${type}.name`).replace(/…$/, '')
+      , items: marks.filter(m => m.type == type && !isMeasure(m))
+    }))
+    groups.push({key: 'mes', name: t('ui.marks.texts.mes.name'), items: marks.filter(isMeasure)})
+    groups.push({key: 'sys', name: t('ui.panels.select_marks.systems'), items: Systeme.all, text: (s) => String(s.index)})
+    this.rows = groups.filter(g => g.items.length).map(g => this.buildRow(g))
     this.count = DCreate('DIV', {class: 'marks-count'})
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
     const btnSelect = DCreate('BUTTON', {class: 'btn-default', text: t('ui.panels.select_marks.select')})
@@ -49,10 +58,10 @@ class MarksSelectorClass {
     this.panel = null
   }
 
-  buildRow(type, marks){
+  buildRow({key: type, name, items: marks, text}){
     const row = {type, marks}
     const cb = DCreate('INPUT', {type: 'checkbox', id: `selmark-${type}`})
-    const label = DCreate('LABEL', {for: cb.id, text: ` ${t(`ui.marks.types.${type}.name`).replace(/…$/, '')} (${marks.length})`})
+    const label = DCreate('LABEL', {for: cb.id, text: ` ${name} (${marks.length})`})
     let filter
     if ( FIXED_VALUES[type] ) {
       // Menu à choix multiple des valeurs présentes (aucune choisie = toutes)
@@ -64,12 +73,12 @@ class MarksSelectorClass {
         return chosen.length == 0 || chosen.includes(m.subtype)
       }
     } else {
-      // Expression régulière sur le texte (vide = toutes)
+      // Expression régulière sur le texte (vide = toutes) ; systèmes : sur leur numéro
       filter = DCreate('INPUT', {type: 'text', placeholder: t('ui.panels.select_marks.regex_ph')})
       row.match = (m) => {
         if ( filter.value == '' ) return true
         if ( !row.regex ) return false
-        return row.regex.test(String(m.content ?? ''))
+        return row.regex.test(text ? text(m) : String(m.content ?? ''))
       }
       listen(filter, 'input', () => {
         try { row.regex = new RegExp(filter.value) ; filter.classList.remove('invalid') }

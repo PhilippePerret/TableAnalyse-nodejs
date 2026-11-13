@@ -361,6 +361,15 @@ export class Systeme extends AObjet {
   get isSystem(){return true}
   get isSysteme(){return true}
 
+  setSelected(){
+    this.obj.classList.add('selected')
+    this.isSelected = true
+  }
+  unsetSelected(){
+    this.obj.classList.remove('selected')
+    this.isSelected = false
+  }
+
   /**
    * Les données qui seront enregistrées
    * 
