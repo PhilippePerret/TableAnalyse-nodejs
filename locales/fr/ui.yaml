@@ -253,7 +253,7 @@ prefs:
   grid_vertical_space:    {label: "Espacement vertical sur le grille"}
   systeme_width:          {label: "Largeur (en pixels) des systèmes"}
   top_first_system:       {label: "Décalage haut du premier système (en pixels)"}
-  distance_systemes:      {label: "Distance par défaut (en pixels) des système"}
+  distance_systemes:      {label: "Distance par défaut (en pixels) des systèmes"}
   adjust_same_mark:       {label: "Ajuster en hauteur les marques de même type"}
   snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
   marque_accords_size:    {label: "Taille des marques d'accord"}
