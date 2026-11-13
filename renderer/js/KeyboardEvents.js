@@ -8,7 +8,6 @@ import { AMark } from './AMark.js'
 import { Analyse } from './Analyse.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
 import { Manuel } from './Manuel.js'
-import { PreferencesPanel } from './PreferencesPanel.js'
 import { Tools } from './Tools.js'
 
 export function onKeypressOnAnalyse(e){
@@ -21,10 +20,6 @@ export function onKeypressOnAnalyse(e){
 
     case 'M':
       Manuel.toggle()
-      break
-
-    case 'P':
-      PreferencesPanel.toggle()
       break
 
     case 'O':

@@ -4,7 +4,7 @@
  * 
  */
 
-const Ouvrir_preferences = "Ouvrir le panneau des préférences (⇧P)"
+const Ouvrir_preferences = "Ouvrir le panneau des préférences (⌘, ou Ctrl+,)"
 
 export const ManuelData = [
 {
@@ -54,7 +54,7 @@ export const ManuelData = [
 }
 ,{ 
   operation: "Ouvrir le panneau des préférences"
-, procedure: ["Jouer le raccourci clavier ⇧P"]
+, procedure: ["Jouer le raccourci clavier ⌘, (Ctrl+, sous Windows et Linux)"]
 , precision: "(“P” comme “Préférences”)"
 }
 ,{
@@ -64,7 +64,7 @@ export const ManuelData = [
 }
 ,{
   operation: "Définir les valeurs par défaut"
-, procedure: ["Activer l'application", "jouer le raccourci ⇧P", "régler les propriétés dans le panneau de préférence qui s'ouvre."]
+, procedure: ["Activer l'application", "jouer le raccourci ⌘, (Ctrl+, sous Windows et Linux)", "régler les propriétés dans le panneau de préférence qui s'ouvre."]
 }
 ,{
   operation: "Créer une nouvelle marque d'analyse"

@@ -219,7 +219,7 @@ function buildMenu(){
         , {type: 'separator'}
         , {label: t('ui.menu.manual'),          accelerator: 'Shift+M', registerAccelerator: false, click: () => sendMenuCommand('manual')}
         , {type: 'separator'}
-        , {label: t('ui.menu.prefs'),           accelerator: 'Shift+P', registerAccelerator: false, click: () => sendMenuCommand('prefs')}
+        , {label: t('ui.menu.prefs'),           accelerator: 'CmdOrCtrl+,', click: () => sendMenuCommand('prefs')}
         , ...(isMac ? [] : [{type: 'separator'}, {role: 'quit', label: t('ui.menu.quit', {name: app.name})}])
       ]
     },

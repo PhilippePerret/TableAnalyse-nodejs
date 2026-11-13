@@ -23,11 +23,10 @@ toggle(){this.panneau.toggle.call(this.panneau)}
 get panneau(){return this._pano || (this._pano = new Panneau(this))}
 get panneauId(){return 'preferences-panel'}
 get panneauTitle(){return t('ui.panels.prefs.title')}
-get panneauShortcut(){return '⇧P'}
+get panneauShortcut(){return window.api.platform == 'darwin' ? '⌘,' : 'Ctrl+,'}
 onKeyPress(e){
   var returnU = onKeyDownUniversel(e)
   if ( isBool(returnU) ) return returnU
-  if ( e.shiftKey && e.key == 'P' ) return this.toggle()
 }
 
 onChange_measure_line_offset(){
