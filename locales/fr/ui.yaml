@@ -256,11 +256,11 @@ dialogs:
 prefs:
   theme:                  {label: "Thème analyse", precision: "Définit les tailles à appliquer ainsi que les couleurs (dans le mode couleur de l’analyse)"}
   lock_systems:           {label: "Verrouiller les systèmes"}
-  grid_horizontal_space:  {label: "Espacement horizontal sur la grille"}
-  grid_vertical_space:    {label: "Espacement vertical sur la grille"}
-  systeme_width:          {label: "Largeur (en pixels) des systèmes"}
-  top_first_system:       {label: "Décalage haut du premier système (en pixels)"}
-  distance_systemes:      {label: "Distance par défaut (en pixels) des systèmes"}
+  grid_horizontal_space:  {label: "Pas horizontal de la grille"}
+  grid_vertical_space:    {label: "Pas vertical de la grille"}
+  systeme_width:          {label: "Largeur des systèmes"}
+  top_first_system:       {label: "Décalage haut du premier système"}
+  distance_systemes:      {label: "Distance par défaut des systèmes"}
   adjust_same_mark:       {label: "Ajuster en hauteur les marques de même type"}
   snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
   marque_accords_size:    {label: "Taille des marques d'accord"}
@@ -274,24 +274,24 @@ prefs:
   marque_pedale_size:     {label: "Taille des pédales"}
   marque_texte_size_1:    {label: "Taille des gros textes"}
   marque_texte_size_2:    {label: "Taille des textes moyens"}
-  measure_line_offset:    {label: "Distance (px) de la ligne des numéros de mesure sous le système"}
-  distance_after_measure_line: {label: "Distance (px) entre la ligne des numéros de mesure et le système suivant"}
+  measure_line_offset:    {label: "Distance de la ligne des numéros de mesure sous le système"}
+  distance_after_measure_line: {label: "Distance entre la ligne des numéros de mesure et le système suivant"}
   marque_measure:         {label: "Taille numéros de mesures"}
   marque_texte_size_3:    {label: "Taille des petits textes"}
   marque_texte_size_4:    {label: "Taille des textes très petits"}
   window_width:           {label: "Largeur de la fenêtre à l’ouverture"}
   window_height:          {label: "Hauteur de la fenêtre à l’ouverture"}
   last_scroll:            {label: "Scroll à l’ouverture"}
-  color_mesure:           {label: "Couleur des numéros de mesure"}
-  color_accords:          {label: "Couleur des noms d’accords"}
-  color_harmonie:         {label: "Couleur des chiffrages harmoniques"}
-  color_mark_parties:     {label: "Couleur des marques de partie"}
-  color_mark_sections:    {label: "Couleur des marques de sections"}
-  color_cellule:          {label: "Couleur pour les cellules & motifs"}
-  color_modulations:      {label: "Couleur des marques de modulations"}
-  color_emprunts:         {label: "Couleur des marques d’emprunts"}
-  color_segments:         {label: "Couleur des segments"}
-  vitesse_relecture:      {label: "Vitesse de la relecture (de 1 à 100)", precision: "Ça détermine le temps d'affichage d'un objet en mode relecture. Avec la valeur 100, tous les objets sont à peu près ré-écrit en même temps."}
+  color_mesure:           {label: "Numéros de mesure"}
+  color_accords:          {label: "Noms d’accords"}
+  color_harmonie:         {label: "Chiffrages harmoniques"}
+  color_mark_parties:     {label: "Marques de partie"}
+  color_mark_sections:    {label: "Marques de sections"}
+  color_cellule:          {label: "Cellules & motifs"}
+  color_modulations:      {label: "Marques de modulations"}
+  color_emprunts:         {label: "Marques d’emprunts"}
+  color_segments:         {label: "Segments"}
+  vitesse_relecture:      {label: "Vitesse de la relecture (de 1 à 100)", precision: "Détermine le temps d'affichage d'un objet en mode relecture. Avec la valeur 100, tous les objets sont à peu près ré-écrit en même temps."}
   autosave:               {label: "Sauvegarde automatique"}
   animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
 
@@ -300,7 +300,7 @@ prefs_groups:
   systems:                "Systèmes"
   measures:               "Numéros de mesure"
   grid:                   "Grille et alignement"
-  sizes:                  "Taille des marques"
+  marks:                  "Marques"
   lines:                  "Traits"
   colors:                 "Couleurs"
   window:                 "Fenêtre"
