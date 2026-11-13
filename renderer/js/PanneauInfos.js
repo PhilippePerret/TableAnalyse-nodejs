@@ -15,11 +15,10 @@ export class PanneauInfos {
   get panneau(){return this._pano||(this._pano = new Panneau(this))}
   get panneauId(){return 'panneau_infos'}
   get panneauTitle(){return t('ui.panels.infos.title')}
-  get panneauShortcut(){return '⇧I'}
+  get panneauShortcut(){return window.api.platform == 'darwin' ? '⇧⌘I' : 'Ctrl+Maj+I'}
   onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU
-    if ( e.shiftKey && e.key == 'I' ) return this.toggle()
   }
 
   /**

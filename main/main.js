@@ -215,7 +215,7 @@ function buildMenu(){
         , {type: 'separator'}
         , {label: t('ui.menu.save'),            accelerator: 'CmdOrCtrl+S', click: () => sendMenuCommand('save')}
         , {type: 'separator'}
-        , {label: t('ui.menu.infos'),           accelerator: 'Shift+I', registerAccelerator: false, click: () => sendMenuCommand('infosAnalyse')}
+        , {label: t('ui.menu.infos'),           accelerator: 'CmdOrCtrl+Shift+I', click: () => sendMenuCommand('infosAnalyse')}
         , {type: 'separator'}
         , {label: t('ui.menu.export'), submenu: [
               {label: t('ui.menu.export_html'), click: () => sendMenuCommand('exportToHTML')}

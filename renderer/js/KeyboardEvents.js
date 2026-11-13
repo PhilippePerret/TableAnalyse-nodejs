@@ -14,10 +14,6 @@ export function onKeypressOnAnalyse(e){
 
   switch(e.key){
 
-    case 'I':
-      Analyse.panneau_infos.toggle()
-      break
-
     case 'M':
       Manuel.toggle()
       break

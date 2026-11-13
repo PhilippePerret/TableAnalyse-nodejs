@@ -21,7 +21,7 @@ export const ManuelData = [
 ,{
   operation: 'Informations sur l’analyse (la pièce analysée)'
 , procedure: [
-      '<ul><li>Jouer ⇧I (ou menu « Fichier » > « Informations… ») pour ouvrir le panneau des informations de l’analyse,</li><li>régler les informations,</li><li>enregistrer l’analyse à l’aide du bouton «Sauver».</li></ul>',
+      '<ul><li>Jouer ⌘⇧I (Ctrl+Maj+I sous Windows et Linux) ou menu « Analyse » > « Informations… » pour ouvrir le panneau des informations de l’analyse,</li><li>régler les informations,</li><li>enregistrer l’analyse à l’aide du bouton «Sauver».</li></ul>',
   ]
 , precision: 'Pour le moment, ces informations ne servent à rien. Mais à l’avenir on pourra imaginer qu’elles permettent de produire une première page de titre.'
 
