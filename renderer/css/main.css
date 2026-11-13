@@ -175,8 +175,8 @@ div#export_panel {
   z-index: 4500;
   width: max-content;
 }
-div#export_panel > div:not(.panneau-head) { margin-top: .6em; }
-div#export_panel div.not-html > div { margin-top: .6em; }
+div#export_panel > div:not(.panneau-head),
+div#export_custom_size > div:not(.panneau-head) { margin-top: .6em; }
 div#export_panel div.explication { max-width: 32em; }
 div#export_custom_size {
   position: fixed;
@@ -186,12 +186,24 @@ div#export_custom_size {
   z-index: 4600;
   width: max-content;
 }
-div#export_custom_size > div:not(.panneau-head) { margin-top: .6em; }
-/* Libellé et champ sur une ligne, libellés de même largeur */
+/* Libellés à droite dans leur colonne, champs alignés dans la suivante */
+div#export_panel div.rows,
+div#export_custom_size div.rows {
+  display: grid;
+  grid-template-columns: max-content auto;
+  column-gap: 10px;
+  row-gap: .5em;
+  align-items: center;
+}
 div#export_panel div.row,
-div#export_custom_size div.row { display: flex; align-items: center; gap: 8px; }
+div#export_custom_size div.row { display: contents; }
+div#export_panel div.row[hidden] { display: none; }
 div#export_panel div.row > label,
-div#export_custom_size div.row > label { width: 90px; }
+div#export_custom_size div.row > label { text-align: right; white-space: nowrap; }
+div#export_panel div.fields,
+div#export_custom_size div.fields { display: flex; align-items: center; gap: 6px; }
+div#export_panel div.fields.column { flex-direction: column; align-items: flex-start; gap: .2em; }
+div#export_panel div.fields.explication { display: block; }
 
 /* Sélection des marques par type (cf. MarksSelector.js) */
 div#marks_selector {

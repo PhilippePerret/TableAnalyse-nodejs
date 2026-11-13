@@ -64,63 +64,83 @@ class ExporterClass {
     if ( !Analyse.current ) return erreur(t('errors.no_analyse_to_export'))
     this.panel && this.panel.remove()
     const T = (k, v) => t(`ui.panels.export.${k}`, v)
+    // Unité de toutes les dimensions du panneau (taille, marge, distance)
+    const selUnit = DCreate('SELECT', {id: 'export_unit', inner: Object.keys(UNITS).map(u => DCreate('OPTION', {value: u, text: T(`units_long.${u}`)}))})
+    selUnit.value = UNITS[pref('export_page_unit')] ? pref('export_page_unit') : 'mm'
+    let unit = selUnit.value
+    const unitSpans = []
+    const unitSpan = () => { const span = DCreate('SPAN', {text: T(`units.${unit}`)}) ; unitSpans.push(span) ; return span }
+    const num = (field) => Number(field.value.replace(',', '.'))
     const radio = (value, checked) => {
       const input = DCreate('INPUT', {type: 'radio', name: 'export_mode', id: `export_mode_${value}`, value})
       input.checked = checked
-      return DCreate('DIV', {class: 'pdf-only', inner: [input, DCreate('LABEL', {for: input.id, text: ' ' + T(`mode_${value}`)})]})
+      return DCreate('DIV', {inner: [input, DCreate('LABEL', {for: input.id, text: ' ' + T(`mode_${value}`)})]})
     }
     const selType = DCreate('SELECT', {id: 'export_type', inner: EXPORT_TYPES.map(type => DCreate('OPTION', {value: type, text: T(`types.${type}`)}))})
     selType.value = EXPORT_TYPES.includes(pref('export_type')) ? pref('export_type') : 'pdf'
-    const gap = DCreate('INPUT', {type: 'text', id: 'export_gap', value: decimal(Number(pref('export_systems_gap'))), style: 'width:50px;'})
-    const row = (label, ...fields) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), ...fields]})
-    // Taille personnalisée courante (mm, unité d'affichage)
+    // Ligne libellé | champ(s) ; sans libellé : champ dans la colonne des champs
+    const row = (label, ...fields) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label || ''}), DCreate('DIV', {class: 'fields', inner: fields})]})
+    // Taille personnalisée courante (mm)
     this.custom = {
         width:  Number(pref('export_page_width'))
       , height: Number(pref('export_page_height'))
-      , unit:   pref('export_page_unit') || 'mm'
     }
     const selFormat = DCreate('SELECT', {id: 'export_format'})
-    Object.entries(PAGE_FORMATS).forEach(([name, [w, h]]) => {
-      selFormat.appendChild(DCreate('OPTION', {value: name, text: T('format', {name: T(`formats.${name}`), width: decimal(w), height: decimal(h)})}))
+    const formatOptions = Object.entries(PAGE_FORMATS).map(([name, size]) => {
+      const opt = DCreate('OPTION', {value: name})
+      selFormat.appendChild(opt)
+      return [opt, name, size]
     })
     selFormat.appendChild(DCreate('OPTION', {disabled: true, text: '──────────'}))
     const optCustom = DCreate('OPTION', {value: 'custom'})
     selFormat.appendChild(optCustom)
-    const updateCustomLabel = () => {
-      const {width, height, unit} = this.custom
+    const updateFormatLabels = () => {
+      formatOptions.forEach(([opt, name, [w, h]]) => {
+        opt.textContent = T('format', {name: T(`formats.${name}`), width: decimal(fromMm(w, unit)), height: decimal(fromMm(h, unit)), unit: T(`units.${unit}`)})
+      })
+      const {width, height} = this.custom
       optCustom.textContent = width > 0 && height > 0
         ? T('custom_size', {width: decimal(fromMm(width, unit)), height: decimal(fromMm(height, unit)), unit: T(`units.${unit}`)})
         : T('custom')
     }
-    updateCustomLabel()
+    updateFormatLabels()
     selFormat.value = PAGE_FORMATS[pref('export_page_format')] || pref('export_page_format') == 'custom' ? pref('export_page_format') : 'A4'
     let lastFormat = selFormat.value
     listen(selFormat, 'change', () => {
       if ( selFormat.value != 'custom' ) { lastFormat = selFormat.value ; return }
       this.askCustomSize(
-          () => { updateCustomLabel() ; lastFormat = 'custom' }
+          unit
+        , () => { updateFormatLabels() ; lastFormat = 'custom' }
         , () => { selFormat.value = lastFormat }
       )
     })
     const selOrient = DCreate('SELECT', {id: 'export_orientation', inner: ['portrait', 'landscape'].map(o => DCreate('OPTION', {value: o, text: T(o)}))})
     selOrient.value = pref('export_page_orientation') || 'portrait'
-    const margin = DCreate('INPUT', {type: 'text', id: 'export_margin', value: String(pref('export_page_margin')), style: 'width:50px;'})
+    // Marge (préférence en mm) et distance entre systèmes (préférence en pt)
+    const margin = DCreate('INPUT', {type: 'text', id: 'export_margin', value: decimal(fromMm(Number(pref('export_page_margin')), unit)), style: 'width:60px;'})
+    const gap = DCreate('INPUT', {type: 'text', id: 'export_gap', value: decimal(fromMm(Number(pref('export_systems_gap')) * UNITS.pt, unit)), style: 'width:60px;'})
+    listen(selUnit, 'change', () => {
+      const old = unit
+      unit = selUnit.value
+      ;[margin, gap].forEach(f => { if ( num(f) >= 0 && f.value != '' ) f.value = decimal(fromMm(toMm(num(f), old), unit)) })
+      unitSpans.forEach(span => span.textContent = T(`units.${unit}`))
+      updateFormatLabels()
+    })
 
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
     const btnExport = DCreate('BUTTON', {class: 'btn-default', text: T('export')})
     const inner = [
-        row(T('type'), selType)
-      , radio('page', false), radio('book', true)
-      , DCreate('DIV', {class: 'not-html', inner: [
-            row(T('size'), selFormat)
+        DCreate('DIV', {class: 'rows', inner: [
+            row(T('type'), selType)
+          , DCreate('DIV', {class: 'row svg-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields explication', text: T('svg_desc')})]})
+          , DCreate('DIV', {class: 'row pdf-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields column', inner: [radio('page', false), radio('book', true)]})]})
+          , row(T('unit'), selUnit)
+          , row(T('size'), selFormat)
           , row(T('orientation'), selOrient)
-          , row(T('margin'), margin, DCreate('SPAN', {text: ' ' + T('units.mm')}))
-          , row(T('gap'), gap, DCreate('SPAN', {text: ' ' + T('units.pt')}))
-          , DCreate('DIV', {class: 'explication', text: T('gap_desc')})
-          , DCreate('DIV', {inner: [
-                DCreate('INPUT', {type: 'checkbox', id: 'export_remember'})
-              , DCreate('LABEL', {for: 'export_remember', text: ' ' + T('remember')})
-            ]})
+          , row(null, DCreate('INPUT', {type: 'checkbox', id: 'export_remember'}), DCreate('LABEL', {for: 'export_remember', text: T('remember')}))
+          , row(T('margin'), margin, unitSpan())
+          , row(T('gap'), gap, unitSpan())
+          , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields explication', text: T('gap_desc')})]})
         ]})
       , DCreate('DIV', {class: 'explication svg-only', text: T('fonts_notice')})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnExport]})
@@ -131,9 +151,9 @@ class ExporterClass {
     // Éléments selon le format ; page unique (PDF) : pas de taille de page
     const setMode = () => {
       const type = selType.value
+      panel.querySelectorAll('div.rows > div.row').forEach((e, i) => e.hidden = i > 0 && type == 'html')
       panel.querySelectorAll('.pdf-only').forEach(e => e.hidden = type != 'pdf')
       panel.querySelectorAll('.svg-only').forEach(e => e.hidden = type != 'svg')
-      panel.querySelectorAll('.not-html').forEach(e => e.hidden = type == 'html')
       const book = type == 'svg' || DGet('#export_mode_book', panel).checked
       selFormat.disabled = selOrient.disabled = !book
     }
@@ -158,11 +178,11 @@ class ExporterClass {
       const opts = {
           mode:   format == 'svg' || DGet('#export_mode_book', panel).checked ? 'book' : 'page'
         , width, height
-        , margin: Number(margin.value)
-        , gap:    Number(gap.value.replace(',', '.'))
+        , margin: toMm(num(margin), unit)
+        , gap:    toMm(num(gap), unit) / UNITS.pt
       }
-      if ( !(opts.gap >= 0) ) return erreur(T('bad_gap'))
-      if ( !(opts.margin >= 0) || (opts.mode == 'book' && !(width > 0 && height > 0 && 2 * opts.margin < Math.min(width, height))) ) {
+      if ( gap.value == '' || !(opts.gap >= 0) ) return erreur(T('bad_gap'))
+      if ( margin.value == '' || !(opts.margin >= 0) || (opts.mode == 'book' && !(width > 0 && height > 0 && 2 * opts.margin < Math.min(width, height))) ) {
         return erreur(T('bad_size'))
       }
       if ( DGet('#export_remember', panel).checked ) {
@@ -171,7 +191,7 @@ class ExporterClass {
             export_page_format:       name
           , export_page_width:        w
           , export_page_height:       h
-          , export_page_unit:         this.custom.unit
+          , export_page_unit:         unit
           , export_page_orientation:  selOrient.value
           , export_page_margin:       opts.margin
           , export_systems_gap:       opts.gap
@@ -184,22 +204,20 @@ class ExporterClass {
   }
 
   /**
-   * Petit formulaire de la taille personnalisée (largeur, hauteur et
-   * unité). +onOk+ quand elle est définie, +onCancel+ sinon.
+   * Petit formulaire de la taille personnalisée (largeur et hauteur,
+   * dans l'unité +unit+ du panneau d'export). +onOk+ quand elle est
+   * définie, +onCancel+ sinon.
    */
-  askCustomSize(onOk, onCancel){
+  askCustomSize(unit, onOk, onCancel){
     this.closeCustom()
     const T = (k) => t(`ui.panels.export.${k}`)
-    const {unit} = this.custom
     const field = (id, mm) => DCreate('INPUT', {type: 'text', id, value: mm > 0 ? decimal(fromMm(mm, unit)) : '', style: 'width:70px;'})
     const fWidth = field('custom_width', this.custom.width), fHeight = field('custom_height', this.custom.height)
-    const selUnit = DCreate('SELECT', {id: 'custom_unit', inner: Object.keys(UNITS).map(u => DCreate('OPTION', {value: u, text: T(`units_long.${u}`)}))})
-    selUnit.value = unit
-    const row = (label, field) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), field]})
+    const row = (label, field) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), DCreate('DIV', {class: 'fields', inner: [field, DCreate('SPAN', {text: T(`units.${unit}`)})]})]})
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
     const btnOk = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
     const panel = DCreate('DIV', {id: 'export_custom_size', inner: [
-        row(T('width'), fWidth), row(T('height'), fHeight), row(T('unit'), selUnit)
+        DCreate('DIV', {class: 'rows', inner: [row(T('width'), fWidth), row(T('height'), fHeight)]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
     ]})
     document.body.appendChild(panel)
@@ -212,7 +230,7 @@ class ExporterClass {
     listen(btnOk, 'click', () => {
       const w = Number(fWidth.value.replace(',', '.')), h = Number(fHeight.value.replace(',', '.'))
       if ( !(w > 0 && h > 0) ) return erreur(T('bad_size'))
-      this.custom = {width: toMm(w, selUnit.value), height: toMm(h, selUnit.value), unit: selUnit.value}
+      this.custom = {width: toMm(w, unit), height: toMm(h, unit)}
       this.closeCustom()
       onOk()
     })

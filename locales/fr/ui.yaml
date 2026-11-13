@@ -193,8 +193,9 @@ panels:
     type:             "Format"
     types:
       pdf:            "PDF"
-      svg:            "SVG (un fichier par page)"
+      svg:            "SVG"
       html:           "HTML"
+    svg_desc:         "Un fichier SVG par page."
     gap:              "Distance entre systèmes"
     gap_desc:         "Distance entre l'objet le plus bas du système précédent et l'objet le plus haut du système suivant. Tous les éléments sont replacés en conséquence dans le document exporté."
     bad_gap:          "Distance entre systèmes invalide."
@@ -205,7 +206,7 @@ panels:
     portrait:         "Portrait"
     landscape:        "Paysage"
     margin:           "Marge"
-    format:           "%{name} (%{width} × %{height} mm)"
+    format:           "%{name} (%{width} × %{height} %{unit})"
     formats:
       A3:             "A3"
       A4:             "A4"
@@ -235,7 +236,7 @@ panels:
       in:             "pouces"
       pt:             "points"
       pc:             "picas"
-    remember:         "Mémoriser cette taille dans l'analyse"
+    remember:         "Mémoriser ces réglages dans l'analyse"
     export:           "Exporter"
     bad_size:         "Taille ou marge des pages invalide."
     fonts_notice:     "Les polices de l'analyse (PhilNote…) doivent être installées sur l'ordinateur qui ouvrira les fichiers SVG."
