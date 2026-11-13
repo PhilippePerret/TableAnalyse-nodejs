@@ -2,7 +2,10 @@ import { DGetAll } from './dom.js'
 /**
  * Thèmes de l'interface (css/themes.css), choisis dans le menu
  * « Options ». Le choix est mémorisé dans le navigateur de l'application.
+ * Choix désactivé (THEME_CHOICE) : thème par défaut, options du menu
+ * « Options » en commentaire dans index.html.
  */
+const THEME_CHOICE  = false
 const DEFAULT_THEME = 'A'
 const STORAGE_KEY   = 'ui_theme'
 
@@ -10,7 +13,7 @@ class ThemesClass {
 
   init(){
     let theme = DEFAULT_THEME
-    try { theme = localStorage.getItem(STORAGE_KEY) || DEFAULT_THEME } catch(err) {}
+    if ( THEME_CHOICE ) try { theme = localStorage.getItem(STORAGE_KEY) || DEFAULT_THEME } catch(err) {}
     this.apply(theme)
   }
 
