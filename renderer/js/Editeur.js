@@ -1,5 +1,5 @@
 import { DCreate, DGet, listen, stopEvent, cmdKey } from './dom.js'
-import { px, uiZoom } from './handies.js'
+import { px, uiZoom, keepInView } from './handies.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
@@ -56,6 +56,7 @@ export class Editeur {
     this.obj.classList.remove('hidden')
     console.debug("editeur", this)
     this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
+    keepInView(this.obj)
     var fieldText ;
     if ( this.isLongText ) {
       fieldText = this.textarea
@@ -194,6 +195,7 @@ export class Editeur {
       const msg = AMARQUES_TYPES[data.type] && AMARQUES_TYPES[data.type].message
       msg && (this.titre = msg)
       this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
+      keepInView(this.obj)
       this.value = value
     }
     const field = this.isLongText ? this.textarea : this.textField

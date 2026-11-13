@@ -6,6 +6,20 @@ export function uiZoom(){
   return Number(getComputedStyle(document.documentElement).getPropertyValue('--ui-zoom')) || 1
 }
 
+/**
+ * Ramène la boite +el+ (positionnée par left) dans la largeur de la
+ * fenêtre, à +margin+ px des bords : jamais de débordement à droite ni
+ * à gauche
+ */
+export function keepInView(el, margin = 8){
+  const r = el.getBoundingClientRect()
+  const z = el.currentCSSZoom || 1
+  let dx = 0
+  if ( r.right > window.innerWidth - margin ) dx = window.innerWidth - margin - r.right
+  if ( r.left + dx < margin ) dx = margin - r.left
+  if ( dx ) el.style.left = px(parseFloat(getComputedStyle(el).left) + dx / z)
+}
+
 export function px(nombre){
   return `${nombre}px`
 }

@@ -1,5 +1,5 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
-import { px, uiZoom } from './handies.js'
+import { px, uiZoom, keepInView } from './handies.js'
 import { draggable } from './lib/interact.js'
 import { t } from './i18n.js'
 /**
@@ -75,6 +75,7 @@ export class GetterInList {
     var methodVisu = params.cancelEnable ? 'remove' : 'add'
     this.cancelItem.classList[methodVisu]('hidden')
     this.obj.classList.remove('hidden')
+    keepInView(this.obj)
   }
 
   /**
