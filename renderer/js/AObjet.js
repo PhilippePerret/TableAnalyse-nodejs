@@ -282,28 +282,34 @@ export class AObjet {
  * 
  */
 static checkPositionAndAdjust(amark){
+  /*
+  |  La marque prend la hauteur de la marque ajustable (même type ou
+  |  type associé) la plus proche verticalement, si l'écart ne dépasse
+  |  pas la préférence snap_for_adjust_pos
+  */
   const snap = pref('snap_for_adjust_pos')
+  let nearest = null, best = Infinity
   for (var aobj of this.items){
+    if ( aobj === amark || aobj.type == 'systeme' ) continue
     if ( this.areNotAjustable(aobj.type, amark.type) && this.areNotAjustable(aobj.subtype, amark.subtype)){ 
       continue ;
     }
-    // S'il y a trop d'écart entre les deux éléments de type 
-    // ajustable, on ne les bouge pas
-    if ( Math.abs(aobj.top - amark.top) > snap ) {
-      continue ;
-    }
-    // Sinon, on ajuste
-    amark.top = aobj.top
+    const ecart = Math.abs(aobj.top - amark.top)
+    if ( ecart <= snap && ecart < best ) { best = ecart ; nearest = aobj }
   }
+  if ( nearest ) amark.top = nearest.top
 }
 static areAjustable(type1, type2){
-  if ( type1 == type2 ) { 
+  if ( !type1 || !type2 ) {
+    return false
+  } else if ( type1 == type2 ) { 
     return true
   } else if ( TYPES_AJUSTABLES[type1] ) {
     return TYPES_AJUSTABLES[type1].includes(type2)
   } else if ( SUBTYPES_AJUSTABLES[type1]) {
     return SUBTYPES_AJUSTABLES[type1].includes(type2)
   }
+  return false
 }
 static areNotAjustable(type1, type2){
   return !this.areAjustable(type1, type2)
