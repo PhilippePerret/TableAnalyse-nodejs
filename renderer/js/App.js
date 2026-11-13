@@ -8,6 +8,7 @@ import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 import { Form } from './Form.js'
 import { Exporter } from './Exporter.js'
+import { Animation } from './Animation.js'
 import { t } from './i18n.js'
 
 class AppClass {
@@ -63,6 +64,7 @@ class AppClass {
       case 'export':        return Exporter.ask()
       case 'toolsPanel':    return Tools.toggle()
       case 'formPanel':     return Form.togglePanel()
+      case 'animate':       return Animation.start()
       case 'prefs':         return PreferencesPanel.toggle()
       case 'manual':        return Manuel.toggle()
       default: console.error("Commande de menu inconnue : %s", command)

@@ -25,6 +25,7 @@ menu:
   tools_menu:       "Outils"
   tools:            "Boite à outils…"
   form:             "Forme…"
+  animate:          "Lancer l’animation"
   help:             "Aide"
   help_html:        "HTML"
   help_epub:        "ePub"
@@ -247,6 +248,17 @@ panels:
     fonts_notice:     "Les polices de l'analyse (PhilNote…) doivent être installées sur l'ordinateur qui ouvrira les fichiers SVG."
   mark_editor:
     title:            "Édition de la marque"
+  animation:
+    title:            "Animation"
+    play:             "Lancer"
+    pause:            "Pause"
+    resume:           "Reprendre"
+    step:             "Pas à pas"
+    next:             "Suivante"
+    stop:             "Arrêter"
+    finish:           "Finir"
+    speed:            "Vitesse"
+    no_marks:         "Aucune marque à animer."
   select_marks:
     title:            "Sélectionner des marques"
     select:           "Sélectionner"

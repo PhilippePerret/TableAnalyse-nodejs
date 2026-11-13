@@ -249,6 +249,7 @@ function buildMenu(){
       submenu: [
           {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: () => sendMenuCommand('toolsPanel')}
         , {label: t('ui.menu.form'),            click: () => sendMenuCommand('formPanel')}
+        , {label: t('ui.menu.animate'),         click: () => sendMenuCommand('animate')}
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
         , {label: t('ui.menu.number_score'),    id: 'numberScore', click: () => sendMenuCommand('numberScore')}
