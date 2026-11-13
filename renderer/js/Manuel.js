@@ -1,7 +1,7 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
 import { isBool } from './lib/common.js'
 import { Panneau } from './Panneau.js'
-import { onKeyDownUniversel } from './KeyboardEvents.js'
+import { onKeyDownUniversel, inTextField } from './KeyboardEvents.js'
 import { ManuelData, ManuelShortcutsData } from './Manuel_AppData.js'
 import { t, cmdText } from './i18n.js'
 /**
@@ -29,7 +29,7 @@ class ManuelClass {
   onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU
-    if ( e.shiftKey && e.key == 'M' ) return this.toggle()
+    if ( e.shiftKey && e.key == 'M' && !inTextField(e) ) return this.toggle()
   }
 
   build(){

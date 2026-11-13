@@ -11,7 +11,7 @@ import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 
 // Saisie en cours dans un champ (panneaux) : touches laissées au champ
-function inTextField(e){
+export function inTextField(e){
   const el = e.target
   return !!el && (el.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName))
 }
