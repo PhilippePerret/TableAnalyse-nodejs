@@ -636,7 +636,10 @@ static async exportCurrentToHtml(){
     if ( data.composer == '') {
       errors.push(t('errors.creation.composer_required'))
     }
-    if ( data.analyste == '') {
+    if ( data.folder == '' ) {
+      errors.push(t('errors.creation.folder_required'))
+    }
+    if ( data.analyst == '') {
       errors.push(t('errors.creation.analyst_required'))
     }
     if ( errors.length ) {

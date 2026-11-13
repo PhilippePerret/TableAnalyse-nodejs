@@ -145,6 +145,7 @@ panels:
     systems_source:   "Systèmes"
     systems_source_ph: "dossier des images (optionnel)"
     create:           "Créer la nouvelle analyse"
+    required:         "Informations requises"
   tools:
     title:            "Boite à outils"
     quick_score:      "Partition rapide"

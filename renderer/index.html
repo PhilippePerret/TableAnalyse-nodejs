@@ -47,11 +47,11 @@
 
     <table id="table_metadata">
       <tr>
-        <td data-i18n="ui.panels.infos.piece_title"></td>
+        <td><span data-i18n="ui.panels.infos.piece_title"></span><sup class="required">*</sup></td>
         <td><input type="text" id="metadata_piece_title"></td>
       </tr>
       <tr>
-        <td data-i18n="ui.panels.infos.composer"></td>
+        <td><span data-i18n="ui.panels.infos.composer"></span><sup class="required">*</sup></td>
         <td><input type="text" id="metadata_composer"></td>
       </tr>
       <tr>
@@ -59,15 +59,15 @@
         <td><input type="text" id="metadata_analyse_title"></td>
       </tr>
       <tr>
-        <td data-i18n="ui.panels.infos.analyse_id"></td>
+        <td><span data-i18n="ui.panels.infos.analyse_id"></span><sup class="required">*</sup></td>
         <td><input type="text" id="metadata_analyse_id" data-i18n-placeholder="ui.panels.infos.analyse_id_ph"></td>
       </tr>
       <tr>
-        <td data-i18n="ui.panels.infos.folder"></td>
+        <td><span data-i18n="ui.panels.infos.folder"></span><sup class="required">*</sup></td>
         <td class="with-button"><input type="text" id="metadata_folder" data-i18n-placeholder="ui.panels.infos.folder_ph"> <button id="btn_choose_folder" class="creation-only" data-i18n="ui.buttons.choose"></button></td>
       </tr>
       <tr>
-        <td data-i18n="ui.panels.infos.analyst"></td>
+        <td><span data-i18n="ui.panels.infos.analyst"></span><sup class="required">*</sup></td>
         <td><input type="text" id="metadata_analyst" data-i18n-placeholder="ui.panels.infos.analyst_ph" value="Philippe Perret"></td>
       </tr>
       <tr class="creation-only">
@@ -75,6 +75,7 @@
         <td class="with-button"><input type="text" id="metadata_systems_source" data-i18n-placeholder="ui.panels.infos.systems_source_ph"> <button id="btn_choose_systems" data-i18n="ui.buttons.choose"></button></td>
       </tr>
     </table>
+    <div class="explication"><sup class="required">*</sup> <span data-i18n="ui.panels.infos.required"></span></div>
 
     <div class="buttons right">
       <button id="btn_infos_close" style="float:left;" data-i18n="ui.buttons.close"></button>
