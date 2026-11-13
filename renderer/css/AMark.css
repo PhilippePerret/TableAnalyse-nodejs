@@ -19,16 +19,9 @@ div.amark:hover {
 div.amark.locked:hover {
   cursor:not-allowed;
 }
+/* Marque verrouillée : plus claire à l'écran (classe retirée à l'export) */
 @media screen {
-  div.amark.locked {opacity: 0.6}
-  div.amark.locked:before {
-    position:absolute;
-    top:-24px;
-    left:-28px;
-    content:'⚓︎';
-    color:#FFA1A1;
-    font-size:24pt;
-  }
+  div.amark.locked {opacity: 0.45}
 }
 
 div.amark.selected {

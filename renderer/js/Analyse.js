@@ -580,6 +580,8 @@ static async exportCurrentToHtml(){
     |  redimensionnement
     */
     content.querySelectorAll('.ui-resizable-handle').forEach(h => h.remove())
+    // Aucune marque d'interface à l'export (sélection, verrouillage)
+    content.querySelectorAll('.selected, .locked').forEach(e => e.classList.remove('selected', 'locked'))
     /*
     |  Les images sont mises en dur dans le code
     */
