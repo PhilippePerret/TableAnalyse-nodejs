@@ -26,7 +26,6 @@ class ManuelClass {
   get panneau(){return this._pano || (this._pano = new Panneau(this))}
   get panneauId(){return 'manuel'}
   get panneauTitle(){return t('ui.panels.manual.title')}
-  get panneauShortcut(){return '⇧M'}
   onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU

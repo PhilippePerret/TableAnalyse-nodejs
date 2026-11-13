@@ -16,7 +16,6 @@ export class Tools {
   static get panneau(){return this._pano || (this._pano = new Panneau(this))}
   static get panneauId(){return 'panneau_outils'}
   static get panneauTitle(){return t('ui.panels.tools.title')}
-  static get panneauShortcut(){return '⇧O'}
   static onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU

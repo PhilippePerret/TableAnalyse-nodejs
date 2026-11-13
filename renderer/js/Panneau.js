@@ -28,7 +28,6 @@ export class Panneau {
     this.obj || this.owner.build()
     this.head || (this.head = addPanelHead(this.obj, {
         title:    this.owner.panneauTitle
-      , shortcut: this.owner.panneauShortcut
       , onClose:  this.hide.bind(this)
     }))
     this.observeDoubleClick()
@@ -66,19 +65,19 @@ export class Panneau {
 
 /**
  * En-tête commun des panneaux (cf. thèmes, css/themes.css) : croix de
- * fermeture à gauche, titre et raccourci. Les boutons du bas forment un
+ * fermeture à gauche et titre centré. Les boutons du bas forment un
  * pied de page (filet) ; un bouton « Fermer » y est ajouté si le panneau
  * n'en a pas : à droite s'il est seul, à gauche sinon.
  * Le panneau est déplaçable par sa bande supérieure. Son bouton par défaut (classe btn-default)
  * répond à la touche Entrée.
  */
-export function addPanelHead(obj, {title, shortcut, onClose}){
+export function addPanelHead(obj, {title, onClose}){
   obj.classList.add('panneau-ui')
   const close = DCreate('SPAN', {class: 'panneau-close', title: t('ui.buttons.close'), text: '×'})
   const head = DCreate('DIV', {class: 'panneau-head', inner: [
       close
     , DCreate('SPAN', {class: 'panneau-title',    text: title || ''})
-    , DCreate('SPAN', {class: 'panneau-shortcut', text: shortcut || ''})
+    , DCreate('SPAN', {class: 'panneau-spacer'}) // pour centrer le titre
   ]})
   obj.insertBefore(head, obj.firstChild)
   listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })

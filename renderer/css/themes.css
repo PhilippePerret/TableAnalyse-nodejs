@@ -18,6 +18,7 @@
 }
 .panneau-ui span.panneau-close { cursor: pointer; flex: none; }
 .panneau-ui span.panneau-title { flex: 1; }
+.panneau-ui span.panneau-spacer { flex: none; width: 14px; }
 .panneau-ui input,
 .panneau-ui button,
 .panneau-ui select,
@@ -83,7 +84,6 @@ body.theme-A .panneau-ui span.panneau-title {
   font-weight:  600;
   text-align:   center;
 }
-body.theme-A .panneau-ui span.panneau-shortcut { color: #999; font-size: 12px; }
 body.theme-A .panneau-ui span.panneau-close {
   width:            14px;
   height:           14px;
@@ -159,7 +159,6 @@ body.theme-B .panneau-ui span.panneau-title {
   letter-spacing:   .04em;
   text-transform:   uppercase;
 }
-body.theme-B .panneau-ui span.panneau-shortcut { opacity: .7; }
 body.theme-B .panneau-ui span.panneau-close {
   font-size:      18px;
   line-height:    1;
@@ -220,7 +219,6 @@ body.theme-C .panneau-ui span.panneau-title {
   font-style:   italic;
   color:        #f3d9a4;
 }
-body.theme-C .panneau-ui span.panneau-shortcut { color: #9aa0a8; }
 body.theme-C .panneau-ui span.panneau-close {
   font-size:      13px;
   padding:        1px 9px;
