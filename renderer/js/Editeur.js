@@ -189,6 +189,7 @@ export class Editeur {
       , event:            {clientX: x, clientY: y, pageX: x + window.scrollX, pageY: y + window.scrollY}
       , onlyType:         true
       , type:             typeHasSubtype(this.owner.type) ? this.owner.type : undefined
+      , markId:           this.owner.id
     })
     editor.proceed()
     return stopEvent(e)

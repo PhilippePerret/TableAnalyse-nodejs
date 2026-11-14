@@ -423,6 +423,7 @@ marks:
     fsecz: {name: "段结束"}
     fsegz: {name: "片段结束"}
     at_measure: "%{name}（第 %{num} 小节）"
+    end_of: "此标记表示以下部分的结束："
   segments:
     h-up:    "水平，位于谱表上方"
     h-down:  "水平，位于谱表下方"
@@ -432,7 +433,6 @@ marks:
     type:         "标记类型"
     cadence:      "终止式类型"
     segment:      "片段布局"
-    form_start:   "“%{name}”的开始"
 
 form_position:
   before: "乐谱之前"

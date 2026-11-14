@@ -423,6 +423,7 @@ marks:
     fsecz: {name: "セクションの終わり"}
     fsegz: {name: "セグメントの終わり"}
     at_measure: "%{name}（%{num} 小節）"
+    end_of: "このマークは次の部分の終わりを示します："
   segments:
     h-up:    "水平、譜表の上"
     h-down:  "水平、譜表の下"
@@ -432,7 +433,6 @@ marks:
     type:         "マークの種類"
     cadence:      "終止の種類"
     segment:      "セグメントの配置"
-    form_start:   "「%{name}」の始まり"
 
 form_position:
   before: "楽譜の前"

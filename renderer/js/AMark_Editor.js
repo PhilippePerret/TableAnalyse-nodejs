@@ -1,6 +1,10 @@
 import { not } from './lib/common.js'
 import { erreur } from './lib/Message.js'
 import { GetterInList } from './GetterInList.js'
+import { DCreate, DGet, listen } from './dom.js'
+import { px, uiZoom, keepInView } from './handies.js'
+import { addPanelHead } from './Panneau.js'
+import { UI } from './UI.js'
 import { Editeur } from './Editeur.js'
 import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT, TYPES_FORME } from './Constants.js'
 import { AObjet } from './AObjet.js'
@@ -35,6 +39,7 @@ import { t } from './i18n.js'
  *    - mettre 'onlyType' à true pour ne choisir que le type et
  *      sous-type de la marque
  *    - 'type' : type déjà connu (on commence alors par le sous-type)
+ *    - 'markId' : identifiant de la marque éditée (le cas échéant)
  */
 
 
@@ -154,28 +159,51 @@ onChooseSubtype(subtype){
   this.proceed()
 }
 /**
- * Fin de portion de la forme : choix de la marque de début (toujours
- * proposé, même s'il n'y en a qu'une). Sans marque de début, ou en
- * renonçant, retour au choix du sous-type.
+ * Fin de portion de la forme : choix de la marque de début dans un menu
+ * (toujours proposé, même s'il n'y en a qu'une). Les portions qui ont
+ * déjà leur fin (autre que la marque éditée) sont grisées. Sans marque
+ * de début, ou en renonçant, retour au choix du sous-type.
  */
 getFormStart(){
   const startType = TYPES_FORME[this.amark_subtype].startOf
-  const starts = Forme.sorted(AObjet.select(ao => ao.isForme && ao.subtype == startType))
+  const forms  = AObjet.select(ao => ao.isForme)
+  const starts = Forme.sorted(forms.filter(ao => ao.subtype == startType))
   if ( starts.length == 0 ) {
     erreur(t('errors.marks.no_form_start', {name: TYPES_FORME[startType].name}))
     return this.backToSubtype()
   }
-  this._getterstart && this._getterstart.obj.remove()
-  this._getterstart = new GetterInList({
-      items: starts.map((m, i) => ({
-          name:     Forme.labelOf(m)
-        , value:    m.id
-        , shortcut: i < 9 ? String(i + 1) : undefined
-      }))
-    , message:        t('ui.marks.getter.form_start', {name: TYPES_FORME[startType].name})
-    , onChooseMethod: this.onChooseFormStart.bind(this)
-  })
-  this._getterstart.show(this.positionFixed)
+  const self   = this.data.markId && AObjet.get(this.data.markId)
+  const hasEnd = m => forms.some(ao => ao.data.start == m.id && ao.id != this.data.markId)
+  const menu = DCreate('SELECT', {class:'form-start-menu', inner: starts.map(m => {
+    const o = DCreate('OPTION', {value: m.id, text: Forme.labelOf(m)})
+    o.disabled = hasEnd(m)
+    return o
+  })})
+  const current = self && self.data.start && starts.find(m => m.id == self.data.start)
+  const first   = current || starts.find(m => !hasEnd(m))
+  first && (menu.value = first.id)
+  const btnCancel = DCreate('BUTTON', {class:'btn-close', text:t('ui.buttons.renounce'), style:'float:left;'})
+  const btnOK     = DCreate('BUTTON', {class:'btn-default', text:t('ui.buttons.ok')})
+  btnOK.disabled = !first
+  const o = DCreate('DIV', {class:'form-start-panel', inner: [
+      DCreate('P', {text: t('ui.marks.forms.end_of')})
+    , menu
+    , DCreate('DIV', {class:'buttons', inner:[btnCancel, btnOK]})
+  ]})
+  document.body.appendChild(o)
+  const close = (id) => { o.remove() ; UI.reactiveCurrentShortcuts() ; this.onChooseFormStart(id) }
+  addPanelHead(o, {title: TYPES_FORME[this.amark_subtype].name, onClose: () => close(null)})
+  listen(btnCancel, 'click', e => { e.stopPropagation() ; close(null) })
+  listen(btnOK,     'click', e => { e.stopPropagation() ; close(Number(menu.value)) })
+  // Entrée dans le menu : validation
+  listen(menu, 'keydown', e => { if ( e.key == 'Enter' && !btnOK.disabled ) { e.preventDefault() ; close(Number(menu.value)) } })
+  listen(o, 'click', e => e.stopPropagation())
+  listen(o, 'dblclick', e => e.stopPropagation())
+  UI.desactiveCurrentShortcuts()
+  o.style.top  = px(this.positionFixed.top / uiZoom())
+  o.style.left = px(this.positionFixed.left / uiZoom())
+  keepInView(o)
+  menu.focus()
 }
 onChooseFormStart(id){
   if ( null == id ) return this.backToSubtype()

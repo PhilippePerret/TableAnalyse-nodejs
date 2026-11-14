@@ -424,6 +424,7 @@ marks:
     fsecz: {name: "End of section"}
     fsegz: {name: "End of segment"}
     at_measure: "%{name} (m. %{num})"
+    end_of: "This mark ends the portion:"
   segments:
     h-up:    "Flat above the staff"
     h-down:  "Flat below the staff"
@@ -433,7 +434,6 @@ marks:
     type:         "Type of the mark"
     cadence:      "Type of the cadence"
     segment:      "Layout of the segment"
-    form_start:   "Start of the « %{name} »"
 
 form_position:
   before: "Before the score"

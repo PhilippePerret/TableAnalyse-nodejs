@@ -424,6 +424,7 @@ marks:
     fsecz: {name: "Fin de section"}
     fsegz: {name: "Fin de segment"}
     at_measure: "%{name} (mes. %{num})"
+    end_of: "Cette marque indique la fin de la portion :"
   segments:
     h-up:    "À plat sur la portée"
     h-down:  "À plat sous la portée"
@@ -433,7 +434,6 @@ marks:
     type:         "Type de la marque"
     cadence:      "Type de la cadence"
     segment:      "Disposition du segment"
-    form_start:   "Début de la portion « %{name} »"
 
 
 form_position:

@@ -52,3 +52,13 @@ div.container_getter_in_list input.gil_new_item {
   font-family: inherit;
   font-size: inherit;
 }
+
+/* Choix du début d'une fin de portion de la forme (cf. AMark_Editor) */
+div.form-start-panel {
+  position: fixed;
+  z-index: 100;
+  width: max-content;
+  zoom: var(--ui-zoom);
+}
+div.form-start-panel p { margin: 0 0 10px; }
+div.form-start-panel select { min-width: 280px; }

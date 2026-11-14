@@ -424,6 +424,7 @@ marks:
     fsecz: {name: "Fin de sección"}
     fsegz: {name: "Fin de segmento"}
     at_measure: "%{name} (c. %{num})"
+    end_of: "Esta marca indica el fin de la porción:"
   segments:
     h-up:    "Horizontal sobre el pentagrama"
     h-down:  "Horizontal bajo el pentagrama"
@@ -433,7 +434,6 @@ marks:
     type:         "Tipo de la marca"
     cadence:      "Tipo de la cadencia"
     segment:      "Disposición del segmento"
-    form_start:   "Inicio de la porción « %{name} »"
 
 form_position:
   before: "Antes de la partitura"
