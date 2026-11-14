@@ -126,6 +126,8 @@ export class GetterInList {
    * 
    */
   onClickItem(imenu, e){
+    // Second clic d'un double-clic (p.e. celui qui a ouvert la liste)
+    if ( e.detail > 1 ) return stopEvent(e)
     const value = this.data.items[imenu].value
     // Pour le moment, pas de traitement de plusieurs valeurs
     this.callChooseMethodWithValueAndHide(value)

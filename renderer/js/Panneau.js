@@ -83,6 +83,9 @@ export function addPanelHead(obj, {title, onClose}){
     , DCreate('SPAN', {class: 'panneau-spacer'}) // pour centrer le titre
   ]})
   obj.insertBefore(head, obj.firstChild)
+  // Aucun clic ne sort du panneau (création de marque sur la table)
+  listen(obj, 'click', (e) => e.stopPropagation())
+  listen(obj, 'dblclick', (e) => e.stopPropagation())
   listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })
   // Position ramenée à left/top (sans right, bottom ni transform) avant
   // un déplacement

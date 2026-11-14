@@ -149,9 +149,9 @@ set prolong(v){
  * 
  */
 onDoubleClick(e){
-  // Marque verrouillée : le double-clic crée une nouvelle marque (cf.
-  // UI.onDoubleClick), comme sur la table
-  if ( this.isLocked ) return
+  // Marque verrouillée : pas d'édition (menu contextuel) ; son clic crée
+  // une marque, comme sur la table (cf. TableAnalyse.onClick)
+  if ( this.isLocked ) return stopEvent(e)
   try{
     this.edit()
   } catch(err){
@@ -748,6 +748,8 @@ memoriseTailleAvantResize(widthOnly){
 }
 
 onClick(e){
+  // Marque verrouillée : le clic remonte jusqu'à la table (création)
+  if ( this.isLocked ) return
   if ( this.justMoved ) {
     this.justMoved = false
   } else if ( e.shiftKey ) {

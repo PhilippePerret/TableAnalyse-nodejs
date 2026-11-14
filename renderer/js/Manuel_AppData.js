@@ -68,12 +68,12 @@ export const ManuelData = [
 }
 ,{
   operation: "Créer une nouvelle marque d'analyse"
-, procedure: ["Double-cliquer à l'endroit voulu", "régler la nouvelle marque en indiquant la marque (cf. ci-dessous"]
+, procedure: ["Cliquer à l'endroit voulu (table ou élément verrouillé)", "régler la nouvelle marque en indiquant la marque (cf. ci-dessous"]
 , precision: `<pre><code>Prolongation   : terminer le nom par '--' ('cm--')</code></pre>`
 }
 ,{
   operation: 'Créer un texte dans un cadre'
-, procedure: ["Double-cliquer à l'endroit voulu","Taper 'b' ou choisir 'Cadre'","Taper 't' ou choisir 'Texte dans cadre'."]
+, procedure: ["Cliquer à l'endroit voulu","Taper 'b' ou choisir 'Cadre'","Taper 't' ou choisir 'Texte dans cadre'."]
 }
 ,{
   operation: "Les types de marque d'analyse"

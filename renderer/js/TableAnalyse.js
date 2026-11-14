@@ -29,6 +29,9 @@ export class TableAnalyse {
    * sélectionnée (ou désélectionnée si elle l'était).
    */
   static onMouseDown(e){
+    // Position de l'appui : un clic relâché plus loin n'est pas un clic
+    // (cf. onClick)
+    this.downAt = {x: e.clientX, y: e.clientY}
     if ( e.button !== 0 || document.documentElement.classList.contains('animation-running') ) return
     const target = e.target
     if ( !(target instanceof Element) || !this.obj.contains(target) && target !== document.body && target !== document.documentElement ) return
@@ -73,9 +76,32 @@ export class TableAnalyse {
     setTimeout(() => this.justSelected = false, 0)
   }
 
+  /**
+   * CLIC (non arrêté par une marque ou un panneau) : désélection de
+   * tout et, sur la table elle-même ou sur un élément verrouillé
+   * (système compris), création d'une marque.
+   * Rien quand un panneau est ouvert, pendant l'animation, après une
+   * sélection par rectangle ou un glissement, pour le second clic d'un
+   * double-clic, un clic droit ou un Ctrl-clic (menu contextuel).
+   */
   static onClick(e){
     if ( this.justSelected ) { this.justSelected = false ; return }
-    AObjet.deselectAll.call(AObjet, e)
+    if ( e.button !== 0 || e.ctrlKey || e.detail > 1 ) return
+    if ( UI.hasOpenPanel || document.documentElement.classList.contains('animation-running') ) return
+    const down = this.downAt
+    if ( down && (Math.abs(e.clientX - down.x) > 4 || Math.abs(e.clientY - down.y) > 4) ) return
+    AObjet.deselectAll()
+    if ( !e.shiftKey && !e.metaKey && !e.altKey && this.isCreationTarget(e.target) ) AMark.createNew(e)
+  }
+
+  // Cible d'un clic de création : la table (vide, ligne des numéros,
+  // grille) ou un élément verrouillé
+  static isCreationTarget(target){
+    if ( !(target instanceof Element) ) return false
+    if ( [this.obj, document.body, document.documentElement].includes(target) ) return true
+    if ( target.closest('#magnetic-grid') || target.classList.contains('measure-line') ) return true
+    if ( target.closest('.amark.locked') ) return true
+    return target.matches('img.systeme') && Systeme.systemsLocked
   }
 
 

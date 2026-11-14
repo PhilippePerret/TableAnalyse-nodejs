@@ -113,7 +113,6 @@ export class UIClass {
   }
 
   observe(){
-    listen(window, 'dblclick', this.onDoubleClick.bind(this))
     // listen(this.TableAnalyse, 'click', (e)=>{/*console.log("Un clic sur la table d'analyse.")*/})
 
       
@@ -132,12 +131,13 @@ export class UIClass {
 
   }
 
-  onDoubleClick(e){
-
-    // On crée un nouvel élément
-    AMark.createNew.call(AMark, e)
-
-    return stopEvent(e)
+  /**
+   * @return true si un panneau (ou une boite d'édition, de choix…) est
+   * ouvert : un clic sur la table ne fait alors rien. La boite des
+   * messages n'en est pas un.
+   */
+  get hasOpenPanel(){
+    return Array.from(document.querySelectorAll('.panneau-ui')).some(p => p.id != 'message' && p.checkVisibility())
   }
 
   /**

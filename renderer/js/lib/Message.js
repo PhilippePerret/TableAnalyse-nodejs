@@ -98,6 +98,8 @@ class MessageClass {
 
   observe(){
     this.closeBox.addEventListener('click', this.hideMessage.bind(this))
+    // Aucun clic ne sort de la boite (création de marque sur la table)
+    this._msgpanel.addEventListener('click', e => e.stopPropagation())
   }
 
   setPosition(v){ 
