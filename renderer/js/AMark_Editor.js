@@ -382,10 +382,21 @@ get getterOfAMarkSubtype(){
   return this._gettersubtype || (this._gettersubtype = new GetterInList(this.paramsGetterOfSubtype))
 }
 
-// Éditeur pour obtenir le contenu textuel (bouton « Type… » pour
-// changer le type choisi ou bloqué)
+// Éditeur pour obtenir le contenu textuel. Bouton « Type… » pour
+// changer le type choisi ou bloqué ; « Sous-type… » pour un type qui
+// en a (retour au choix du sous-type, qui a lui-même son bouton
+// « Type… »)
 get editorOfAMarkContent(){
-  return this._editorcontent || (this._editorcontent = new Editeur(this, {message:this.dataOfType.message, setMethod: this.onSetContent.bind(this), onTypeButton: this.onWantTypes.bind(this)}) )
+  if ( !this._editorcontent ) {
+    const sub = this.isRequiringSubType
+    this._editorcontent = new Editeur(this, {
+        message:          this.dataOfType.message
+      , setMethod:        this.onSetContent.bind(this)
+      , onTypeButton:     sub ? this.backToSubtype.bind(this) : this.onWantTypes.bind(this)
+      , typeButtonLabel:  t(sub ? 'ui.buttons.subtype' : 'ui.buttons.type')
+    })
+  }
+  return this._editorcontent
 }
 
 

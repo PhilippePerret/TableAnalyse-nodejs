@@ -149,7 +149,7 @@ export class Editeur {
     if ( this.isAMark ) {
       divBoutons.appendChild(DCreate('BUTTON', {text:this.typeButtonLabel, class:'type'}))
     } else if ( this.data.onTypeButton ) {
-      divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.type'), class:'type'}))
+      divBoutons.appendChild(DCreate('BUTTON', {text:this.data.typeButtonLabel || t('ui.buttons.type'), class:'type'}))
     }
     // Bouton OK toujours le dernier, à droite
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
