@@ -576,7 +576,9 @@ div.amark.frm span.content {
   display: none;
   position: absolute;
   left: calc(100% + 5px);
-  bottom: 0;
+  top: 50%;
+  transform: translateY(-50%); /* centré sur la borne */
+  line-height: 1;
   white-space: nowrap;
   font-size: 13pt;
   font-weight: bold;
