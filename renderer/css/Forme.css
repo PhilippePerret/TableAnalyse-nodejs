@@ -81,6 +81,7 @@ div.form-diagram div.portion.fseg { font-size: 18px; border-width: 1px; font-wei
 /* Numéros de mesure : sous un petit trait, au début de leur mesure */
 div.form-diagram div.frow.fmeasures { height: 40px; }
 div.form-diagram span.fnum {
+  cursor: pointer; /* clic : la mesure dans la partition */
   position: absolute;
   top: 0;
   padding-top: 10px;

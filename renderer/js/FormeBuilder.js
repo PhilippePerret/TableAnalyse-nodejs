@@ -1,4 +1,4 @@
-import { DCreate, DGet } from './dom.js'
+import { DCreate, DGet, listen } from './dom.js'
 import { message } from './lib/Message.js'
 import { px } from './handies.js'
 import { AObjet } from './AObjet.js'
@@ -191,6 +191,8 @@ export class FormeBuilder {
       const css = m.first ? ' first' : (m.last ? ' last' : '')
       const span = DCreate('SPAN', {class: 'fnum' + css, text: m.text})
       span.style.left = px(m.x)
+      // Clic : la mesure dans la partition
+      listen(span, 'click', (e) => { e.stopPropagation() ; Forme.gotoMeasureNumber(Number(m.text)) })
       row.appendChild(span)
       prev = m.x
     })
