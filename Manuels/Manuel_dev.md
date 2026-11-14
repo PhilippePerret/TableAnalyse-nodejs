@@ -127,6 +127,8 @@ Construction de la forme, fin d'une portion (`Forme.endOf`) :
 
 Construction (`FormeBuilder.js`, styles `css/Forme.css`) : `div#form-diagram` sur la table, avant (partition descendue si la place manque) ou après la partition. Même largeur pour chaque mesure (largeur des systèmes / dernier numéro de mesure). Une rangée par niveau, puis, selon les réglages (préférences cachées `form_build_measures`, `form_build_keys`), numéros de mesure et tonalités (marques de modulation). Redessinée à l'ouverture de l'analyse (préférence `form_built`, évènement `systems:loaded`). Noir et blanc ; couleurs des préférences en mode couleur. À l'export, page à elle seule (cf. `Exporter`, `formItem`).
 
+Type de la forme (liste modifiable `form_types` de `locales/<langue>/ui.yaml`, « other » en dernier), précision et description : panneau « Construire la forme », enregistrés dans `infos.form` ({type, other, precision, description}), affichés en tête de la forme.
+
 
 ## Groupement des tags
 

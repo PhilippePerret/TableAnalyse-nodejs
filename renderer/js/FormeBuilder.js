@@ -33,6 +33,8 @@ import { t } from './i18n.js'
 
 */
 
+const escapeHTML = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
 const GAP     = 300   // distance (px) entre la forme et la partition
 const MIN_GAP = 30    // distance minimale (px) entre deux numéros
 
@@ -54,7 +56,9 @@ export class FormeBuilder {
     const o = DCreate('DIV', {id: 'form-diagram', class: 'form-diagram', 'data-position': pref('form_position')})
     o.style.left  = px(first ? first.left : 0)
     o.style.width = px(width)
-    o.appendChild(DCreate('DIV', {class: 'ftitle', text: t('ui.form_diagram.title')}))
+    o.appendChild(this.titleDiv())
+    const description = Forme.formInfos.description
+    description && o.appendChild(DCreate('DIV', {class: 'fdescription', text: escapeHTML(description).replace(/\n/g, '<br>')}))
     ;[1, 2, 3].forEach(level => {
       const items = portions.filter(p => p.level == level)
       if ( !items.length ) return
@@ -95,6 +99,15 @@ export class FormeBuilder {
       span.style.left = px(left)
       right = left + span.offsetWidth
     })
+  }
+
+  // Titre : « Forme », type de la forme et précision
+  static titleDiv(){
+    const div = DCreate('DIV', {class: 'ftitle', text: t('ui.form_diagram.title')})
+    const type = Forme.formTypeName, precision = Forme.formInfos.precision
+    type && div.appendChild(DCreate('SPAN', {class: 'ftype', text: ' — ' + escapeHTML(type)}))
+    precision && div.appendChild(DCreate('SPAN', {class: 'fprecision', text: ' (' + escapeHTML(precision) + ')'}))
+    return div
   }
 
   static remove(){

@@ -160,6 +160,10 @@ message_titles:
 
 panels:
   form_build:
+    type:             "Formtyp"
+    other_name:       "Name der Form"
+    precision:        "Genauer"
+    description:      "Beschreibung"
     title:            "Form erstellen"
     position:         "Ort"
     build:            "Erstellen"
@@ -453,3 +457,16 @@ form_position:
 
 form_diagram:
   title: "Form"
+
+# Types de forme (menu du panneau « Construire la forme »). Liste
+# modifiable : ajouter, retirer ou renommer des lignes (garder « other »
+# en dernier).
+form_types:
+  sonata: "Sonate"
+  rondo: "Rondo"
+  lied: "Lied"
+  variations: "Thema mit Variationen"
+  fugue: "Fuge"
+  sonatina: "Sonatine"
+  verse_chorus: "Strophe/Refrain"
+  other: "Andere…"

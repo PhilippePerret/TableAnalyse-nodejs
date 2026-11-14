@@ -4,6 +4,7 @@ import { Panneau } from './Panneau.js'
 import { pref, Preferences } from './Preferences.js'
 import { on } from './events.js'
 import { invoke } from './api.js'
+import { Current, setModified } from './Current.js'
 import { FormeBuilder } from './FormeBuilder.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
@@ -257,8 +258,51 @@ export class Forme {
           DGet('#form-build-position').value  = pref('form_position')
           DGet('#form-build-measures').checked = pref('form_build_measures')
           DGet('#form-build-keys').checked     = pref('form_build_keys')
+          this.setFormFields()
         }
     }))
+  }
+
+  /**
+   * Type de la forme (liste ui.form_types des locales, modifiable ;
+   * « other » : nom donné), précision et description, enregistrés avec
+   * les infos de l'analyse (infos.form)
+   */
+  static get formInfos(){
+    return (Current.analyse && Current.analyse.data.infos.form) || {}
+  }
+  static get formTypes(){
+    return t('ui.form_types') || {}
+  }
+  static setFormFields(){
+    const d = this.formInfos
+    const known = d.type && d.type != 'other' && this.formTypes[d.type]
+    DGet('#form-build-type').value      = known ? d.type : (d.other ? 'other' : Object.keys(this.formTypes)[0])
+    DGet('#form-build-other').value     = d.other || ''
+    DGet('#form-build-precision').value = d.precision || ''
+    DGet('#form-build-description').value = d.description || ''
+    this.toggleOtherField()
+  }
+  static saveFormFields(){
+    if ( !Current.analyse ) return
+    const type = DGet('#form-build-type').value
+    Current.analyse.data.infos.form = {
+        type
+      , other:        type == 'other' ? DGet('#form-build-other').value.trim() : undefined
+      , precision:    DGet('#form-build-precision').value.trim()
+      , description:  DGet('#form-build-description').value.trim()
+    }
+    setModified()
+  }
+  // Champ du nom de la forme : seulement pour « Autre… »
+  static toggleOtherField(){
+    DGet('#form-build-other-row').classList.toggle('hidden', DGet('#form-build-type').value != 'other')
+  }
+  // Nom du type de la forme (ou null)
+  static get formTypeName(){
+    const d = this.formInfos
+    if ( !d.type ) return null
+    return d.type == 'other' ? (d.other || null) : (this.formTypes[d.type] || null)
   }
   static buildPanel(){
     const T = k => t(`ui.panels.form_build.${k}`)
@@ -269,15 +313,30 @@ export class Forme {
         DCreate('INPUT', {type: 'checkbox', id})
       , DCreate('LABEL', {for: id, text: ' ' + label})
     ]})
+    const types = DCreate('SELECT', {id: 'form-build-type', inner: Object.entries(this.formTypes).map(([value, text]) =>
+      DCreate('OPTION', {value, text})
+    )})
+    const field = (label, input, id) => [DCreate('LABEL', {text: label, ...(id ? {id: id + '-label'} : {})}), input]
+    const other       = DCreate('INPUT', {type: 'text', id: 'form-build-other'})
+    const precision   = DCreate('INPUT', {type: 'text', id: 'form-build-precision'})
+    const description = DCreate('TEXTAREA', {id: 'form-build-description', rows: '4'})
     const btn = DCreate('BUTTON', {class: 'btn-default', text: T('build')})
     listen(btn, 'click', () => this.build())
-    const o = DCreate('DIV', {id: 'form-build-panel', class: 'panneau hidden', style: 'width:max-content;left:calc(50% - 200px);', inner: [
-        DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('position') + ' '}), menu]})
+    const o = DCreate('DIV', {id: 'form-build-panel', class: 'panneau hidden', style: 'width:max-content;left:calc(50% - 250px);', inner: [
+        DCreate('DIV', {class: 'fields', inner: [
+            ...field(T('type'), types)
+          , DCreate('DIV', {id: 'form-build-other-row', class: 'subgrid', inner: field(T('other_name'), other)})
+          , ...field(T('precision'), precision)
+          , ...field(T('description'), description)
+          , ...field(T('position'), menu)
+        ]})
       , checkbox('form-build-measures', T('measures'))
       , checkbox('form-build-keys', T('keys'))
       , DCreate('DIV', {class: 'buttons', inner: [btn]})
     ]})
     document.body.appendChild(o)
+    listen(types, 'change', () => { this.toggleOtherField() ; this.saveFormFields() })
+    ;[other, precision, description].forEach(f => listen(f, 'change', () => this.saveFormFields()))
   }
 
   /**
@@ -285,6 +344,7 @@ export class Forme {
    * la forme à l'emplacement voulu (cf. FormeBuilder)
    */
   static build(){
+    this.saveFormFields()
     const settings = {
         form_position:        DGet('#form-build-position').value
       , form_build_measures:  DGet('#form-build-measures').checked

@@ -160,6 +160,10 @@ message_titles:
 
 panels:
   form_build:
+    type:             "形式の種類"
+    other_name:       "形式の名前"
+    precision:        "補足"
+    description:      "説明"
     title:            "形式を作成"
     position:         "位置"
     build:            "作成"
@@ -452,3 +456,16 @@ form_position:
 
 form_diagram:
   title: "形式"
+
+# Types de forme (menu du panneau « Construire la forme »). Liste
+# modifiable : ajouter, retirer ou renommer des lignes (garder « other »
+# en dernier).
+form_types:
+  sonata: "ソナタ"
+  rondo: "ロンド"
+  lied: "リート"
+  variations: "主題と変奏"
+  fugue: "フーガ"
+  sonatina: "ソナチネ"
+  verse_chorus: "ヴァース/コーラス"
+  other: "その他…"

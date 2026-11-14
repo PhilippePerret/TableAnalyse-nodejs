@@ -1,3 +1,19 @@
+/* Panneau « Construire la forme » (cf. Forme.js) */
+div#form-build-panel div.fields {
+  display: grid;
+  grid-template-columns: auto 380px;
+  gap: 8px 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+div#form-build-panel div.fields div.subgrid { display: contents; }
+div#form-build-panel div.fields div.subgrid.hidden { display: none; }
+div#form-build-panel div.fields label { text-align: right; }
+div#form-build-panel div.fields label:after { content: ' :'; }
+div#form-build-panel div.fields input[type="text"],
+div#form-build-panel div.fields textarea { width: 100%; box-sizing: border-box; }
+div#form-build-panel div.fields select { justify-self: start; }
+
 /*
     FORME DE LA PIÈCE construite sur la table (cf. FormeBuilder.js).
     Noir et blanc ; en mode couleur, couleurs des préférences (marques
@@ -12,6 +28,13 @@ div.form-diagram div.ftitle {
   font-size: 44px;
   font-weight: bold;
   margin-bottom: 30px;
+}
+div.form-diagram div.ftitle span.fprecision { font-weight: normal; }
+div.form-diagram div.fdescription {
+  font-size: 22px;
+  line-height: 1.4;
+  max-width: 1200px;
+  margin: -14px 0 30px;
 }
 div.form-diagram div.frow {
   position: relative;

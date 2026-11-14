@@ -160,6 +160,10 @@ message_titles:
 
 panels:
   form_build:
+    type:             "형식 종류"
+    other_name:       "형식 이름"
+    precision:        "상세"
+    description:      "설명"
     title:            "형식 만들기"
     position:         "위치"
     build:            "만들기"
@@ -452,3 +456,16 @@ form_position:
 
 form_diagram:
   title: "형식"
+
+# Types de forme (menu du panneau « Construire la forme »). Liste
+# modifiable : ajouter, retirer ou renommer des lignes (garder « other »
+# en dernier).
+form_types:
+  sonata: "소나타"
+  rondo: "론도"
+  lied: "리트"
+  variations: "주제와 변주"
+  fugue: "푸가"
+  sonatina: "소나티네"
+  verse_chorus: "절/후렴"
+  other: "기타…"

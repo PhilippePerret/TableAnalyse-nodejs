@@ -160,6 +160,10 @@ message_titles:
 
 panels:
   form_build:
+    type:             "曲式类型"
+    other_name:       "曲式名称"
+    precision:        "说明"
+    description:      "描述"
     title:            "构建曲式"
     position:         "位置"
     build:            "构建"
@@ -452,3 +456,16 @@ form_position:
 
 form_diagram:
   title: "曲式"
+
+# Types de forme (menu du panneau « Construire la forme »). Liste
+# modifiable : ajouter, retirer ou renommer des lignes (garder « other »
+# en dernier).
+form_types:
+  sonata: "奏鸣曲"
+  rondo: "回旋曲"
+  lied: "利德"
+  variations: "主题与变奏"
+  fugue: "赋格"
+  sonatina: "小奏鸣曲"
+  verse_chorus: "主歌/副歌"
+  other: "其他…"
