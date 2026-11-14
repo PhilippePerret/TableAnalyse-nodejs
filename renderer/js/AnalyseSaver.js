@@ -68,7 +68,6 @@ export class AnalyseSaver {
     Object.assign(newInfos, {
         systems:  Systeme.getData()
     })
-    delete newInfos.form // ancien panneau de la forme
     analyse.data.infos = newInfos
     await invoke('analyse:saveInfos', {infos: newInfos})
     console.info("CONF: Infos de l'analyse enregistrées.")
