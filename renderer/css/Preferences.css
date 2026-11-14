@@ -22,6 +22,15 @@ section#preferences-panel > div.panneau-foot,
 section#preferences-panel > div.description,
 section#preferences-panel > div.div-checkbox { grid-column: 1 / -1; }
 section#preferences-panel div.type-valeur { display: contents; }
+/* Pied de page : « Fermer » à gauche, « Réglages par défaut » au milieu,
+   « Enregistrer » à droite */
+section#preferences-panel > div.panneau-foot { position: sticky; }
+section#preferences-panel > div.panneau-foot button.btn-defaults {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 section#preferences-panel > div.pref-group {
   grid-column: 1 / -1;
   margin-top: .8em;
