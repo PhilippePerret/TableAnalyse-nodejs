@@ -198,6 +198,8 @@ checkSystems(){
   this.systems.forEach(sys => {
     Object.assign(table_systems, {[sys.data.image_name]: sys})
   })
+  // Systèmes connus (table_systems ne gardera que ceux à retirer)
+  const known_systems = Object.assign({}, table_systems)
   // console.log("table_systems = ", table_systems)
   /*
   * On peut vérifier maintenant la concordance (systèmes ajoutés et
@@ -230,6 +232,16 @@ checkSystems(){
   }
   if (nombreSystemesARetirer) {
     console.info("Nombre de systèmes à retirer : %i", nombreSystemesARetirer)
+    // Les numéros de mesure (ligne des numéros) des systèmes retirés
+    // disparaissent avec eux (les autres marques restent)
+    const removed = new Set(Object.values(table_systems))
+    const ordered = [...this.systems].sort((a, b) => a.top - b.top)
+    this.data.analyse_tags = this.data.analyse_tags.filter(tag => {
+      if ( !(tag.subtype == 'mes' && tag.line) ) return true
+      let sys = ordered[0]
+      ordered.forEach(s => { if ( s.top <= tag.top ) sys = s })
+      return !removed.has(sys)
+    })
     Object.values(table_systems).forEach( sys => {
       delete this.systems[sys.index - 1]
     })
@@ -243,10 +255,10 @@ checkSystems(){
   const newSystems = []
   var last_top = 0
   imgSystems.forEach(img_name => {
-    if ( table_systems[img_name] ) {
+    if ( known_systems[img_name] ) {
       // <= Un système qui existe déjà
-      // => On l'ajoute tel quel
-      newSystems.push(table_systems[img_name])
+      // => On l'ajoute tel quel (avec sa position)
+      newSystems.push(known_systems[img_name])
     } else {
       // <= Un nouveau système
       // => On lui crée une nouvelle instance
