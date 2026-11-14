@@ -47,7 +47,7 @@ export function head(infos){
   <style type="text/css">
     @font-face {
       font-family:  PhilNote;
-      src: url(${fontSource('PhilNote2-Regular.otf')});
+      src: url(${fontSource('PhilNote7-Regular.otf')});
     }
     @font-face {
       font-family:  PhilNote;

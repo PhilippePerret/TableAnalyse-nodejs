@@ -34,7 +34,7 @@ const EXCLUDED    = '.ui-resizable-handle'
 const UI_CLASSES  = ['selected', 'locked']
 // Polices de l'application, incluses dans les fichiers SVG
 const APP_FONTS   = [
-    {family: 'PhilNote', weight: 'normal', file: 'PhilNote2-Regular.otf'}
+    {family: 'PhilNote', weight: 'normal', file: 'PhilNote7-Regular.otf'}
   , {family: 'PhilNote', weight: 'bold',   file: 'PhilNote2-Bold.otf'}
 ]
 
