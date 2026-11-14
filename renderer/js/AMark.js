@@ -1,7 +1,7 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
 import { not } from './lib/common.js'
 import { erreur, message } from './lib/Message.js'
-import { px } from './handies.js'
+import { px, escapeLt } from './handies.js'
 import { analyseUrl, invoke } from './api.js'
 import { draggable, resizable } from './lib/interact.js'
 import { AObjet } from './AObjet.js'
@@ -510,9 +510,9 @@ changeTextAlignement(css){
 
 get formated_content(){
   if ( this.hasFormatedText && this.content ) {
-    return this.markdownize(this.tunize(this.content))
+    return this.markdownize(this.tunize(escapeLt(this.content)))
   } else {
-    return this.content
+    return this.content && escapeLt(this.content)
   }
 }
 markdownize(str){

@@ -2,7 +2,7 @@ import { not } from './lib/common.js'
 import { erreur } from './lib/Message.js'
 import { GetterInList } from './GetterInList.js'
 import { DCreate, DGet, listen } from './dom.js'
-import { px, uiZoom, keepInView } from './handies.js'
+import { px, uiZoom, keepInView, escapeLt } from './handies.js'
 import { addPanelHead } from './Panneau.js'
 import { UI } from './UI.js'
 import { Editeur } from './Editeur.js'
@@ -175,7 +175,7 @@ getFormStart(){
   const self   = this.data.markId && AObjet.get(this.data.markId)
   const hasEnd = m => forms.some(ao => ao.data.start == m.id && ao.id != this.data.markId)
   const menu = DCreate('SELECT', {class:'form-start-menu', inner: starts.map(m => {
-    const o = DCreate('OPTION', {value: m.id, text: Forme.labelOf(m)})
+    const o = DCreate('OPTION', {value: m.id, text: escapeLt(Forme.labelOf(m))})
     o.disabled = hasEnd(m)
     return o
   })})

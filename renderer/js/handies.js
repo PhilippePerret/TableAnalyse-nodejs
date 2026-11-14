@@ -70,3 +70,11 @@ export function raise(msg){
   erreur(msg)
   throw new Error(msg)
 }
+
+/**
+ * Texte de l'utilisateur à insérer comme HTML : « < » ne doit pas être
+ * pris pour le début d'une balise
+ */
+export function escapeLt(str){
+  return String(str).replace(/</g, '&lt;')
+}

@@ -63,7 +63,7 @@ export class FormeBuilder {
       const items = portions.filter(p => p.level == level)
       if ( !items.length ) return
       o.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: items.map(p => {
-        const box = DCreate('DIV', {class: `portion ${p.subtype}`, title: p.name, inner: [DCreate('SPAN', {text: p.name})]})
+        const box = DCreate('DIV', {class: `portion ${p.subtype}`, title: p.name, inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
         box.style.left  = px(p.from * unit)
         box.style.width = px((p.to - p.from) * unit)
         return box
@@ -182,7 +182,7 @@ export class FormeBuilder {
       .sort((a, b) => a.m - b.m)
       .forEach(k => {
         if ( k.key == prev ) return
-        const span = DCreate('SPAN', {class: 'fkey', text: k.key})
+        const span = DCreate('SPAN', {class: 'fkey', text: escapeHTML(k.key)})
         span.style.left = px((k.m - 1) * unit)
         row.appendChild(span)
         prev = k.key
