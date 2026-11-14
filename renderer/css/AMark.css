@@ -535,9 +535,6 @@ div.amark.no_bottom_border {
 */
 div.amark.frm {
   display: flex;
-  align-items: flex-end;
-  gap: 5px;
-  white-space: nowrap;
   --borne-color: #cc2a2a;
   --borne-w: 16px;
   --borne-h: 21px;
@@ -573,8 +570,14 @@ div.amark.frm.fsegz span.borne::after {
     transparent calc(50% - 1.2px), #222 calc(50% - 1.2px),
     #222 calc(50% + 1.2px), transparent calc(50% + 1.2px));
 }
+/* Nom de la portion hors du flux : la borne ne bouge pas quand il
+   s'affiche */
 div.amark.frm span.content {
   display: none;
+  position: absolute;
+  left: calc(100% + 5px);
+  bottom: 0;
+  white-space: nowrap;
   font-size: 13pt;
   font-weight: bold;
 }
