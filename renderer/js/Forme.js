@@ -53,13 +53,33 @@ export class Forme {
   }
   static onGotoMeasure(value){
     if ( null == value || value.trim() == '' ) return
-    const num = Number(value.trim())
+    this.gotoMeasureNumber(Number(value.trim())) || message(t('messages.measure_not_found', {num: value.trim()}))
+  }
+
+  /**
+   * Fait défiler la table jusqu'à la mesure +num+ : les numéros de
+   * mesure du système précédent juste sous la bande du haut (haut de la
+   * page pour le premier système). Son numéro clignote.
+   * @return false si la mesure n'existe pas
+   */
+  static gotoMeasureNumber(num){
     const found = this.measureMarks.find(m => m.number == num)
-    if ( !found ) return message(t('messages.measure_not_found', {num: value.trim()}))
+    if ( !found ) return false
     const mark = found.mark
-    const sys = Systeme.getSystemeAssociated(mark)
-    window.scrollTo({top: (sys ? sys.top : mark.top) - 100})
+    const sys  = Systeme.getSystemeAssociated(mark)
+    const prev = sys && Systeme.all[Systeme.all.indexOf(sys) - 1]
+    let top = 0
+    if ( prev ) {
+      const nums = this.measureMarksOf(prev)
+      const band = DGet('#titlebar')
+      const y = nums.length
+        ? Math.min(...nums.map(m => this.measureRect(m).top))
+        : prev.obj.getBoundingClientRect().bottom
+      top = y + window.scrollY - (band ? band.getBoundingClientRect().bottom : 0) - 4
+    }
+    window.scrollTo({top: Math.max(0, top)})
     mark.clignote()
+    return true
   }
 
   // Numéros de mesure de la table : {mark, number}
