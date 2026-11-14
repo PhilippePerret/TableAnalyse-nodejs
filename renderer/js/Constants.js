@@ -2,7 +2,7 @@ import { AObjet } from './AObjet.js'
 import { t } from './i18n.js'
 
 export const TYPES_OU_SOUSTYPES_AU_DESSUS = [
-  'acc', 'mod', 'emp', 'prt', 'prtz', 'sec','secz'
+  'acc', 'mod', 'emp', 'prt', 'prtz', 'sec','secz', 'frm'
 ]
 export const TYPES_OU_SOUSTYPES_EN_DESSOUS = [
   'har', 'ped', 'cad'
@@ -40,6 +40,13 @@ export const TYPES_NOTES = {
   , 'an': {name:t('ui.marks.notes.an')         , value:'an', autocontent:'AN'  , shortcut:'s'}
 }
 
+// Les portions de la forme (marque « Forme »)
+export const TYPES_FORME = {
+    'fpar': {name:t('ui.marks.forms.fpar.name'), value:'fpar', shortcut:'p', default:t('ui.marks.forms.fpar.default')}
+  , 'fsec': {name:t('ui.marks.forms.fsec.name'), value:'fsec', shortcut:'s', default:t('ui.marks.forms.fsec.default')}
+  , 'fseg': {name:t('ui.marks.forms.fseg.name'), value:'fseg', shortcut:'g', default:t('ui.marks.forms.fseg.default')}
+}
+
 /**
  * Les types de marques (modulation, emprunt, pédale, etc.)
  * Ils déterminent la propriété 'type' de la marque.
@@ -56,6 +63,7 @@ export const AMARQUES_TYPES = {
   , 'cad': {name:t('ui.marks.types.cad.name')     , shortcut:'c', ajustX:-70, ajustY:14,    value:'cad', subtype:true, autocontent:true}
   , 'bbx': {name:t('ui.marks.types.bbx.name')        , shortcut:'b', value:'bbx', subdata:TYPES_CADRE, message:t('ui.marks.types.bbx.message')}
   , 'not': {name:t('ui.marks.types.not.name'), shortcut:'n', value:'not', subdata:TYPES_NOTES, autocontent:true, message:t('ui.marks.types.not.message')}
+  , 'frm': {name:t('ui.marks.types.frm.name')      , shortcut:'f', value:'frm', subdata:TYPES_FORME, message:t('ui.marks.types.frm.message')}
   , 'deg': {name:t('ui.marks.types.deg.name')   , shortcut:'d', ajustX:26,  ajustY:24,  value:'deg', default:'1', message:t('ui.marks.types.deg.message')}
   , 'seg': {name:t('ui.marks.types.seg.name')      , shortcut:'s', value:'seg', subtype:true   , default:t('ui.marks.types.seg.default'), message:t('ui.marks.types.seg.message')}
   , 'img': {name:t('ui.marks.types.img.name')        , shortcut:'i', value:'img' , default:'image.jpg'  , message:t('ui.marks.types.img.message')}

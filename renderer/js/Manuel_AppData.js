@@ -84,6 +84,7 @@ Modulation  : marque de modulation
 Emprunt     : marque d'emprunt à un tonalité passagère
 Cadence     : marque de cadence
 Pédale      : une pédale (souvent le degré ou la note)
+Forme       : borne de partie, section ou segment, alignée sur le numéro de mesure (clic : déplier/replier)
 Types de notes :
     Note de passage
     Appoggiature

@@ -365,6 +365,7 @@ marks:
     txt: {name: "텍스트",        message: "표시할 텍스트"}
     ped: {name: "지속음",        message: "지속음의 도수"}
     cir: {name: "원"}
+    frm: {name: "형식…", message: "형식의 부분"}
   frames:
     prt:  {name: "부분(시작)",       default: "제시부"}
     prtz: {name: "부분 끝",          default: "제시부"}
@@ -407,6 +408,10 @@ marks:
     rom: "거종"
     pla: "변종"
     fau: "포종"
+  forms:
+    fpar: {name: "부", default: "제시부"}
+    fsec: {name: "섹션", default: "섹션 A"}
+    fseg: {name: "세그먼트", default: "세그먼트 a"}
   segments:
     h-up:    "가로, 보표 위"
     h-down:  "가로, 보표 아래"

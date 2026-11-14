@@ -366,6 +366,7 @@ marks:
     txt: {name: "Texte",         message: "Texte à afficher"}
     ped: {name: "Pédale",        message: "Degré de la pédale"}
     cir: {name: "Cercle"}
+    frm: {name: "Forme…", message: "Portion de la forme"}
   frames:
     prt:  {name: "Partie (début)",   default: "EXPO"}
     prtz: {name: "Fin de partie",    default: "EXPO"}
@@ -408,6 +409,10 @@ marks:
     rom: "C.R."
     pla: "C.Pg."
     fau: "C.F."
+  forms:
+    fpar: {name: "Partie", default: "Exposition"}
+    fsec: {name: "Section", default: "Section A"}
+    fseg: {name: "Segment", default: "Segment a"}
   segments:
     h-up:    "À plat sur la portée"
     h-down:  "À plat sous la portée"

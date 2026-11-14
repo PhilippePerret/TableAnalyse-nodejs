@@ -366,6 +366,7 @@ marks:
     txt: {name: "Text",          message: "Anzuzeigender Text"}
     ped: {name: "Orgelpunkt",    message: "Stufe des Orgelpunkts"}
     cir: {name: "Kreis"}
+    frm: {name: "Form…", message: "Formteil"}
   frames:
     prt:  {name: "Teil (Beginn)",    default: "EXPO"}
     prtz: {name: "Ende des Teils",   default: "EXPO"}
@@ -408,6 +409,10 @@ marks:
     rom: "TS"
     pla: "PS"
     fau: "F.K."
+  forms:
+    fpar: {name: "Teil", default: "Exposition"}
+    fsec: {name: "Abschnitt", default: "Abschnitt A"}
+    fseg: {name: "Segment", default: "Segment a"}
   segments:
     h-up:    "Waagerecht über dem System"
     h-down:  "Waagerecht unter dem System"

@@ -366,6 +366,7 @@ marks:
     txt: {name: "Testo",         message: "Testo da mostrare"}
     ped: {name: "Pedale",        message: "Grado del pedale"}
     cir: {name: "Cerchio"}
+    frm: {name: "Forma…", message: "Porzione della forma"}
   frames:
     prt:  {name: "Parte (inizio)",   default: "ESPO"}
     prtz: {name: "Fine della parte", default: "ESPO"}
@@ -408,6 +409,10 @@ marks:
     rom: "C.Ing."
     pla: "C.Pl."
     fau: "C.F."
+  forms:
+    fpar: {name: "Parte", default: "Esposizione"}
+    fsec: {name: "Sezione", default: "Sezione A"}
+    fseg: {name: "Segmento", default: "Segmento a"}
   segments:
     h-up:    "In orizzontale sul pentagramma"
     h-down:  "In orizzontale sotto il pentagramma"

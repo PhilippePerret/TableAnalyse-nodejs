@@ -65,6 +65,7 @@ export class AMark extends AObjet {
       newMark.build_and_observe()
       newMark.toggleFromSelection(/* keep_other = */ false)
       newMark.ajustePosition(newMark.left, newMark.top)
+      newMark.isForme && newMark.aimanteSurMesure()
       if ( onMeasureLine ) {
         Systeme.placeMeasureNumbers()
         Systeme.renumberMeasures(newMark)
@@ -431,6 +432,9 @@ build(){
   const o = this.obj
   UI.TableAnalyse.appendChild(o)
 
+  // Borne de la marque de forme (avant le nom de la portion)
+  this.isForme && o.appendChild(DCreate('SPAN', {class:'borne'}))
+
   // Content
   this.contentSpan = this.buildSpanContent()
   o.appendChild(this.contentSpan)
@@ -456,6 +460,7 @@ build(){
 
   // Css suplémentaires
   this.applyCss()
+  this.isForme && (o.title = this.content)
 
 }
 
@@ -516,6 +521,7 @@ tunize(str){
 get isMark(){ return true }
 
 get isCadence(){ return this.type == 'cad'}
+get isForme(){ return this.type == 'frm'}
 get isPartie(){ return this.type == 'bbx' && this.subtype.startsWith('prt')}
 get isSection(){ return this.type == 'bbx' && this.subtype.startsWith('sec')}
 get isModulation(){return this.type == 'mod'}
@@ -737,6 +743,8 @@ onClick(e){
     // Clic simple : la marque devient la seule sélectionnée
     AObjet.deselectAll()
     AObjet.addToSelection(this)
+    // Marque de forme : déplie/replie le nom de la portion
+    this.isForme && this.toggleExpanded()
   }
   return stopEvent(e)
 }
@@ -782,6 +790,35 @@ onContextChoice(choice){
       setModified()
       break
   }
+}
+
+/**
+ * Marque de forme : déplie (nom de la portion visible) ou replie (la
+ * borne seule). Repliée par défaut.
+ */
+toggleExpanded(expanded){
+  this.obj.classList.toggle('expanded', expanded)
+}
+
+/**
+ * Marque de forme : centre la borne sur le numéro de mesure le plus
+ * proche horizontalement, dans le même système. Elle reste ensuite
+ * déplaçable librement.
+ */
+aimanteSurMesure(){
+  const sys = Systeme.getSystemeAssociated(this)
+  let best = null, ecart = Infinity
+  AObjet.items.forEach(ao => {
+    if ( ao.subtype != 'mes' || !ao.obj || Systeme.getSystemeAssociated(ao) !== sys ) return
+    const d = Math.abs(ao.left - this.left)
+    if ( d < ecart ) { ecart = d ; best = ao }
+  })
+  if ( !best ) return
+  const a = DGet('span.borne', this.obj).getBoundingClientRect()
+  const b = best.textRect
+  const z = this.obj.currentCSSZoom || 1
+  this.left = Math.round(this.left + ((b.left + b.width / 2) - (a.left + a.width / 2)) / z)
+  setModified()
 }
 
 /**
@@ -1057,6 +1094,7 @@ set content(v){
   this._content = v
   this.data.content = v
   this.contentSpan && (this.contentSpan.innerHTML = this.formated_content )
+  this.obj && this.isForme && (this.obj.title = v)
 }
 
   get domId(){return this._domid || (this._domid = `amark-${this.id}`)}

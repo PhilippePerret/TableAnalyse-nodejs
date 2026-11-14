@@ -365,6 +365,7 @@ marks:
     txt: {name: "文本",          message: "要显示的文本"}
     ped: {name: "持续音",        message: "持续音的级数"}
     cir: {name: "圆圈"}
+    frm: {name: "曲式…", message: "曲式部分"}
   frames:
     prt:  {name: "部分（开始）",     default: "呈示部"}
     prtz: {name: "部分结束",         default: "呈示部"}
@@ -407,6 +408,10 @@ marks:
     rom: "阻止"
     pla: "变止"
     fau: "福止"
+  forms:
+    fpar: {name: "部", default: "呈示部"}
+    fsec: {name: "段", default: "A 段"}
+    fseg: {name: "片段", default: "片段 a"}
   segments:
     h-up:    "水平，位于谱表上方"
     h-down:  "水平，位于谱表下方"

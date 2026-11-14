@@ -366,6 +366,7 @@ marks:
     txt: {name: "Text",          message: "Text to display"}
     ped: {name: "Pedal",         message: "Degree of the pedal"}
     cir: {name: "Circle"}
+    frm: {name: "Form…", message: "Portion of the form"}
   frames:
     prt:  {name: "Part (start)",     default: "EXPO"}
     prtz: {name: "End of part",      default: "EXPO"}
@@ -408,6 +409,10 @@ marks:
     rom: "D.C."
     pla: "Pl.C."
     fau: "F.C."
+  forms:
+    fpar: {name: "Part", default: "Exposition"}
+    fsec: {name: "Section", default: "Section A"}
+    fseg: {name: "Segment", default: "Segment a"}
   segments:
     h-up:    "Flat above the staff"
     h-down:  "Flat below the staff"

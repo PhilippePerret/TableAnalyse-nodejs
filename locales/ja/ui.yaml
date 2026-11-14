@@ -365,6 +365,7 @@ marks:
     txt: {name: "テキスト",      message: "表示するテキスト"}
     ped: {name: "保続音",        message: "保続音の度数"}
     cir: {name: "円"}
+    frm: {name: "形式…", message: "形式の部分"}
   frames:
     prt:  {name: "部分（開始）",     default: "提示部"}
     prtz: {name: "部分の終わり",     default: "提示部"}
@@ -407,6 +408,10 @@ marks:
     rom: "偽終"
     pla: "変終"
     fau: "フ終"
+  forms:
+    fpar: {name: "部", default: "提示部"}
+    fsec: {name: "セクション", default: "セクション A"}
+    fseg: {name: "セグメント", default: "セグメント a"}
   segments:
     h-up:    "水平、譜表の上"
     h-down:  "水平、譜表の下"

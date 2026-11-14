@@ -524,3 +524,46 @@ div.amark.no_top_border {
 div.amark.no_bottom_border {
   border-bottom-color: transparent !important;
 }
+
+/*
+    MARQUE DE FORME (frm) : une borne (comme au bord des routes), le
+    nom de la portion n'apparaissant que lorsqu'elle est dépliée.
+    Partie : borne rouge, section : jaune, segment : verte.
+*/
+div.amark.frm {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  white-space: nowrap;
+  --borne-color: #cc2a2a;
+  --borne-w: 18px;
+  --borne-h: 24px;
+}
+div.amark.frm.fsec { --borne-color: #e8c21a; --borne-w: 15px; --borne-h: 20px; }
+div.amark.frm.fseg { --borne-color: #3a925e; --borne-w: 12px; --borne-h: 16px; }
+div.amark.frm span.borne {
+  flex: none;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: var(--borne-w);
+  height: var(--borne-h);
+  background-color: white;
+  border: 1.5px solid #333;
+  border-radius: calc(var(--borne-w) / 2) calc(var(--borne-w) / 2) 2px 2px;
+}
+div.amark.frm span.borne::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 42%;
+  background-color: var(--borne-color);
+}
+div.amark.frm span.content {
+  display: none;
+  font-size: 13pt;
+  font-weight: bold;
+}
+div.amark.frm.expanded span.content {
+  display: inline-block;
+}
