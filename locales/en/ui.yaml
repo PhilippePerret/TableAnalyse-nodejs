@@ -150,6 +150,10 @@ message_titles:
   doaction:         "In Progress"
 
 panels:
+  form_build:
+    title:            "Build the form"
+    position:         "Location"
+    build:            "Build"
   infos:
     title:            "Analysis Metadata"
     piece_title:      "Title of the Piece"
@@ -289,6 +293,7 @@ dialogs:
 
 # Analysis preferences (label and precision)
 prefs:
+  form_position:          {label: "Location of the built form"}
   theme:                  {label: "Analysis theme", precision: "Defines the sizes to apply and the colors (in the color mode of the analysis)"}
   lock_systems:           {label: "Lock systems"}
   grid_horizontal_space:  {label: "Horizontal grid step"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "Colors"
   window:                 "Window"
   others:                 "Others"
+  form:                   "Form"
 
 # Analysis marks: name (in choice lists), message (editor prompt) and
 # default content
@@ -414,3 +420,7 @@ marks:
     type:         "Type of the mark"
     cadence:      "Type of the cadence"
     segment:      "Layout of the segment"
+
+form_position:
+  before: "Before the score"
+  after:  "After the score"

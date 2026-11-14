@@ -100,7 +100,7 @@ export function addPanelHead(obj, {title, onClose}){
   })
   let buttons = obj.querySelector(':scope > div.buttons')
   buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))
-  // Pied de page déjà dessiné par le panneau (p.e. « Forme ») : laissé tel quel
+  // Pied de page déjà dessiné par le panneau : laissé tel quel
   if ( getComputedStyle(buttons).position != 'absolute' ) buttons.classList.add('panneau-foot')
   if ( !obj.querySelector('button.btn-close, button[id^="btn_"][id$="_close"], button#btn_close_tools') ) {
     const alone = !buttons.querySelector('button')

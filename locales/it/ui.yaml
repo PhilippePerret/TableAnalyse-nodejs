@@ -150,6 +150,10 @@ message_titles:
   doaction:         "Operazione in corso"
 
 panels:
+  form_build:
+    title:            "Costruire la forma"
+    position:         "Posizione"
+    build:            "Costruisci"
   infos:
     title:            "Metadati dell'analisi"
     piece_title:      "Titolo del brano"
@@ -289,6 +293,7 @@ dialogs:
 
 # Preferenze dell'analisi (etichetta e precisazione)
 prefs:
+  form_position:          {label: "Posizione della forma costruita"}
   theme:                  {label: "Tema dell'analisi", precision: "Definisce le dimensioni da applicare e i colori (nella modalità a colori dell'analisi)"}
   lock_systems:           {label: "Blocca i sistemi"}
   grid_horizontal_space:  {label: "Passo orizzontale della griglia"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "Colori"
   window:                 "Finestra"
   others:                 "Altro"
+  form:                   "Forma"
 
 # Segni d'analisi: nome (negli elenchi di scelta), messaggio (invito
 # dell'editor) e contenuto predefinito
@@ -414,3 +420,7 @@ marks:
     type:         "Tipo del segno"
     cadence:      "Tipo della cadenza"
     segment:      "Disposizione del segmento"
+
+form_position:
+  before: "Prima della partitura"
+  after:  "Dopo la partitura"

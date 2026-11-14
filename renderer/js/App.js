@@ -66,7 +66,7 @@ class AppClass {
       case 'gotoMeasure':   return Forme.gotoMeasure()
       case 'showForm':      return Forme.show(true)
       case 'hideForm':      return Forme.show(false)
-      case 'buildForm':     return Forme.build()
+      case 'buildForm':     return Forme.openBuildPanel()
       case 'animate':       return Animation.start()
       case 'prefs':         return PreferencesPanel.toggle()
       case 'manual':        return Manuel.toggle()

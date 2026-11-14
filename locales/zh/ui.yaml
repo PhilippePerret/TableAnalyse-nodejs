@@ -150,6 +150,10 @@ message_titles:
   doaction:         "正在进行"
 
 panels:
+  form_build:
+    title:            "构建曲式"
+    position:         "位置"
+    build:            "构建"
   infos:
     title:            "分析的元数据"
     piece_title:      "作品标题"
@@ -289,6 +293,7 @@ dialogs:
 
 # 分析的偏好设置（标签与说明）
 prefs:
+  form_position:          {label: "构建曲式的位置"}
   theme:                  {label: "分析主题", precision: "定义要应用的尺寸和颜色（在分析的彩色模式中）"}
   lock_systems:           {label: "锁定声部组"}
   grid_horizontal_space:  {label: "网格水平步长"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "颜色"
   window:                 "窗口"
   others:                 "其他"
+  form:                   "曲式"
 
 # 分析标记：名称（选择列表中）、提示（编辑器中）及默认内容
 marks:
@@ -413,3 +419,7 @@ marks:
     type:         "标记类型"
     cadence:      "终止式类型"
     segment:      "片段布局"
+
+form_position:
+  before: "乐谱之前"
+  after:  "乐谱之后"

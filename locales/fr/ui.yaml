@@ -150,6 +150,10 @@ message_titles:
   doaction:         "Opération en cours"
 
 panels:
+  form_build:
+    title:            "Construire la forme"
+    position:         "Emplacement"
+    build:            "Construire"
   infos:
     title:            "Métadonnées de l'analyse"
     piece_title:      "Titre de la pièce"
@@ -289,6 +293,7 @@ dialogs:
 
 # Préférences de l'analyse (label et précision)
 prefs:
+  form_position:          {label: "Emplacement de la construction de la forme"}
   theme:                  {label: "Thème analyse", precision: "Définit les tailles à appliquer ainsi que les couleurs (dans le mode couleur de l’analyse)"}
   lock_systems:           {label: "Verrouiller les systèmes"}
   grid_horizontal_space:  {label: "Pas horizontal de la grille"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "Couleurs"
   window:                 "Fenêtre"
   others:                 "Autres"
+  form:                   "Forme"
 
 # Marques d'analyse : nom (dans les listes de choix), message (invite
 # de l'éditeur) et contenu par défaut
@@ -415,3 +421,7 @@ marks:
     cadence:      "Type de la cadence"
     segment:      "Disposition du segment"
 
+
+form_position:
+  before: "Avant la partition"
+  after:  "Après la partition"

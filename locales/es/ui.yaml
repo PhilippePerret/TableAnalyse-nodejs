@@ -150,6 +150,10 @@ message_titles:
   doaction:         "Operación en curso"
 
 panels:
+  form_build:
+    title:            "Construir la forma"
+    position:         "Ubicación"
+    build:            "Construir"
   infos:
     title:            "Metadatos del análisis"
     piece_title:      "Título de la obra"
@@ -289,6 +293,7 @@ dialogs:
 
 # Preferencias del análisis (etiqueta y precisión)
 prefs:
+  form_position:          {label: "Ubicación de la forma construida"}
   theme:                  {label: "Tema del análisis", precision: "Define los tamaños que aplicar y los colores (en el modo color del análisis)"}
   lock_systems:           {label: "Bloquear los sistemas"}
   grid_horizontal_space:  {label: "Paso horizontal de la cuadrícula"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "Colores"
   window:                 "Ventana"
   others:                 "Otros"
+  form:                   "Forma"
 
 # Marcas de análisis: nombre (en las listas de elección), mensaje
 # (indicación del editor) y contenido por defecto
@@ -414,3 +420,7 @@ marks:
     type:         "Tipo de la marca"
     cadence:      "Tipo de la cadencia"
     segment:      "Disposición del segmento"
+
+form_position:
+  before: "Antes de la partitura"
+  after:  "Después de la partitura"

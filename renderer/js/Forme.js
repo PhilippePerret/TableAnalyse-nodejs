@@ -1,4 +1,7 @@
+import { DCreate, DGet, listen } from './dom.js'
 import { message } from './lib/Message.js'
+import { Panneau } from './Panneau.js'
+import { pref } from './Preferences.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
@@ -58,10 +61,39 @@ export class Forme {
   }
 
   /**
-   * « Construire la forme » : construira la forme à la fin de la
-   * partition, sur une nouvelle page
+   * « Construire la forme » : panneau du choix de l'emplacement (avant
+   * ou après la partition, préférence form_position par défaut)
    */
-  static build(){
+  static openBuildPanel(){
+    this.panneau.isOpened || this.panneau.show()
+  }
+  static get panneau(){
+    return this._pano || (this._pano = new Panneau({
+        panneauId:    'form-build-panel'
+      , panneauTitle: t('ui.panels.form_build.title')
+      , build:        this.buildPanel.bind(this)
+      , onOpen:       () => { DGet('#form-build-position').value = pref('form_position') }
+    }))
+  }
+  static buildPanel(){
+    const menu = DCreate('SELECT', {id: 'form-build-position', inner: ['before', 'after'].map(value =>
+      DCreate('OPTION', {value, text: t(`ui.form_position.${value}`)})
+    )})
+    const btn = DCreate('BUTTON', {class: 'btn-default', text: t('ui.panels.form_build.build')})
+    listen(btn, 'click', () => this.build(menu.value))
+    const o = DCreate('DIV', {id: 'form-build-panel', class: 'panneau hidden', style: 'width:420px;left:calc(50% - 210px);', inner: [
+        DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: t('ui.panels.form_build.position') + ' '}), menu]})
+      , DCreate('DIV', {class: 'buttons', inner: [btn]})
+    ]})
+    document.body.appendChild(o)
+  }
+
+  /**
+   * Construira la forme sur une nouvelle page, avant ou après la
+   * partition (+position+ : 'before' ou 'after')
+   */
+  static build(position){
+    this.panneau.hide()
     message(t('messages.cannot_build_form'))
   }
 }

@@ -150,6 +150,10 @@ message_titles:
   doaction:         "작업 중"
 
 panels:
+  form_build:
+    title:            "형식 만들기"
+    position:         "위치"
+    build:            "만들기"
   infos:
     title:            "분석 메타데이터"
     piece_title:      "곡 제목"
@@ -289,6 +293,7 @@ dialogs:
 
 # 분석 환경설정(레이블과 설명)
 prefs:
+  form_position:          {label: "형식을 만들 위치"}
   theme:                  {label: "분석 테마", precision: "적용할 크기와 색을 정의합니다(분석의 컬러 모드에서)"}
   lock_systems:           {label: "단 잠그기"}
   grid_horizontal_space:  {label: "격자 가로 간격"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "색"
   window:                 "윈도우"
   others:                 "기타"
+  form:                   "형식"
 
 # 분석 표시: 이름(선택 목록), 메시지(편집기 안내), 기본 내용
 marks:
@@ -413,3 +419,7 @@ marks:
     type:         "표시 종류"
     cadence:      "종지 종류"
     segment:      "구간 배치"
+
+form_position:
+  before: "악보 앞"
+  after:  "악보 뒤"

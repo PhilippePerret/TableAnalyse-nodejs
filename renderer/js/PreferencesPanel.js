@@ -28,6 +28,7 @@ const PREFS_GROUPS = [
   , {id: 'marks',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
   , {id: 'lines',    keys: ['thiness_segment_line', 'thiness_cellule_line', 'thiness_border']}
   , {id: 'colors',   keys: ['color_accords', 'color_harmonie', 'color_mark_parties', 'color_mark_sections', 'color_cellule', 'color_modulations', 'color_emprunts', 'color_segments']}
+  , {id: 'form',     keys: ['form_position']}
   , {id: 'window',   keys: ['window_width', 'window_height', 'last_scroll']}
 ]
 
@@ -284,6 +285,8 @@ buildMenuSelect(params){
   values.forEach( dvalue => {
     menu.appendChild( DCreate('OPTION',{value:dvalue.value, text:dvalue.name} ) )
   })
+  const current = Preferences.get(params.id)
+  null != current && (menu.value = current)
 
   return div
 }

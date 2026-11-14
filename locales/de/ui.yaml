@@ -150,6 +150,10 @@ message_titles:
   doaction:         "Vorgang läuft"
 
 panels:
+  form_build:
+    title:            "Form erstellen"
+    position:         "Ort"
+    build:            "Erstellen"
   infos:
     title:            "Metadaten der Analyse"
     piece_title:      "Titel des Stücks"
@@ -289,6 +293,7 @@ dialogs:
 
 # Einstellungen der Analyse (Beschriftung und Erläuterung)
 prefs:
+  form_position:          {label: "Ort der erstellten Form"}
   theme:                  {label: "Thema der Analyse", precision: "Legt die anzuwendenden Größen und die Farben fest (im Farbmodus der Analyse)"}
   lock_systems:           {label: "Systeme sperren"}
   grid_horizontal_space:  {label: "Horizontaler Rasterschritt"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "Farben"
   window:                 "Fenster"
   others:                 "Sonstiges"
+  form:                   "Form"
 
 # Analysemarkierungen: Name (in den Auswahllisten), Hinweis (Eingabe im
 # Editor) und Standardinhalt
@@ -414,3 +420,7 @@ marks:
     type:         "Typ der Markierung"
     cadence:      "Typ der Kadenz"
     segment:      "Anordnung des Segments"
+
+form_position:
+  before: "Vor der Partitur"
+  after:  "Nach der Partitur"

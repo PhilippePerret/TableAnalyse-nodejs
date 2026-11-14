@@ -58,6 +58,11 @@ export const PreferencesAppData = {
   , color_emprunts          :{type:'inputtext'    ,typeV:'color'    ,default:'22BB22'     ,selectors:'div.amark.emp, div.amark.emp span.content' ,apply:true}
   , color_segments          :{type:'inputtext'    ,typeV:'color'    ,default:'333333'               ,selectors:'div.amark.seg, div.amark.seg span.content' ,apply:true}
   
+  , form_position           :{type:'select'       ,typeV:'string'   ,default:'after', values: [
+        {name: t('ui.form_position.before'), value: 'before'}
+      , {name: t('ui.form_position.after'),  value: 'after'}
+    ]}
+
   , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
   , animate                 :{type:'checkbox'     ,typeV:'boolean'  ,default:false}

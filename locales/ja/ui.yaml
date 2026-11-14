@@ -150,6 +150,10 @@ message_titles:
   doaction:         "処理中"
 
 panels:
+  form_build:
+    title:            "形式を作成"
+    position:         "位置"
+    build:            "作成"
   infos:
     title:            "分析のメタデータ"
     piece_title:      "曲名"
@@ -289,6 +293,7 @@ dialogs:
 
 # 分析の環境設定（ラベルと説明）
 prefs:
+  form_position:          {label: "形式を作成する位置"}
   theme:                  {label: "分析のテーマ", precision: "適用するサイズと色を定義します（分析のカラーモード時）"}
   lock_systems:           {label: "段をロック"}
   grid_horizontal_space:  {label: "グリッドの横の間隔"}
@@ -340,6 +345,7 @@ prefs_groups:
   colors:                 "色"
   window:                 "ウインドウ"
   others:                 "その他"
+  form:                   "形式"
 
 # 分析マーク：名前（選択リスト内）、メッセージ（エディタの案内）、既定の内容
 marks:
@@ -413,3 +419,7 @@ marks:
     type:         "マークの種類"
     cadence:      "終止の種類"
     segment:      "セグメントの配置"
+
+form_position:
+  before: "楽譜の前"
+  after:  "楽譜の後"
