@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
   marque_accords_size:    {label: "Taille des marques d'accord"}
   marque_harmonie_size:   {label: "Taille des marques d'harmonie"}
+  marque_cadence_type_size: {label: "Taille de police du texte de marque de cadence (p.e. “C.P.”)"}
   marque_modulation_size: {label: "Taille des marques de modulation"}
   marque_emprunt_size:    {label: "Taille des marques d'emprunt"}
   marque_cellule_size:    {label: "Taille des noms de cellules"}

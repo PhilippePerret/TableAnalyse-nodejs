@@ -25,7 +25,7 @@ const PREFS_GROUPS = [
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
   , {id: 'grid',     keys: ['grid_horizontal_space', 'grid_vertical_space', 'adjust_same_mark', 'snap_for_adjust_pos']}
-  , {id: 'marks',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
+  , {id: 'marks',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_cadence_type_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
   , {id: 'lines',    keys: ['thiness_segment_line', 'thiness_cellule_line', 'thiness_border']}
   , {id: 'colors',   keys: ['color_accords', 'color_harmonie', 'color_mark_parties', 'color_mark_sections', 'color_cellule', 'color_modulations', 'color_emprunts', 'color_segments']}
   , {id: 'form',     keys: ['form_position']}

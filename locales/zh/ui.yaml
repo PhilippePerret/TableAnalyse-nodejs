@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "标记对齐的吸附距离", precision: "作用于同类标记，且仅当上方的“高度对齐”偏好已勾选时有效。"}
   marque_accords_size:    {label: "和弦标记大小"}
   marque_harmonie_size:   {label: "和声标记大小"}
+  marque_cadence_type_size: {label: "终止式标记文字的字号（例如“C.P.”）"}
   marque_modulation_size: {label: "转调标记大小"}
   marque_emprunt_size:    {label: "借用标记大小"}
   marque_cellule_size:    {label: "动机单元名称大小"}

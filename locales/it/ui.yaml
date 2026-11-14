@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "Distanza di aggancio per l'allineamento", precision: "Riguarda i segni dello stesso tipo e solo se la preferenza “Allinea in altezza” qui sopra è attiva."}
   marque_accords_size:    {label: "Dimensione dei segni d'accordo"}
   marque_harmonie_size:   {label: "Dimensione dei segni d'armonia"}
+  marque_cadence_type_size: {label: "Dimensione del testo della marca di cadenza (p.es. “C.P.”)"}
   marque_modulation_size: {label: "Dimensione dei segni di modulazione"}
   marque_emprunt_size:    {label: "Dimensione dei segni di prestito"}
   marque_cellule_size:    {label: "Dimensione dei nomi delle cellule"}

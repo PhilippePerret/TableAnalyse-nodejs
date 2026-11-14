@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "Mark alignment snap distance", precision: "Affects marks of the same type, and only if the “Align vertically” preference above is checked."}
   marque_accords_size:    {label: "Size of chord marks"}
   marque_harmonie_size:   {label: "Size of harmony marks"}
+  marque_cadence_type_size: {label: "Font size of the cadence mark text (e.g. “C.P.”)"}
   marque_modulation_size: {label: "Size of modulation marks"}
   marque_emprunt_size:    {label: "Size of borrowing marks"}
   marque_cellule_size:    {label: "Size of cell names"}

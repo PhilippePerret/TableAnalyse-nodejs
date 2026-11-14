@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "マーク整列のスナップ距離", precision: "同じ種類のマークに作用し、上の「高さを揃える」が有効な場合のみ働きます。"}
   marque_accords_size:    {label: "コードマークのサイズ"}
   marque_harmonie_size:   {label: "和声記号のサイズ"}
+  marque_cadence_type_size: {label: "終止マークの文字サイズ（例：「C.P.」）"}
   marque_modulation_size: {label: "転調マークのサイズ"}
   marque_emprunt_size:    {label: "借用マークのサイズ"}
   marque_cellule_size:    {label: "動機セル名のサイズ"}

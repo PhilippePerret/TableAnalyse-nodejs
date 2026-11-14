@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "Einrastabstand für die Ausrichtung", precision: "Betrifft Markierungen gleichen Typs, und nur wenn die Einstellung „in der Höhe angleichen“ oben aktiviert ist."}
   marque_accords_size:    {label: "Größe der Akkordmarkierungen"}
   marque_harmonie_size:   {label: "Größe der Harmoniemarkierungen"}
+  marque_cadence_type_size: {label: "Schriftgröße des Textes der Kadenzmarke (z. B. „C.P.“)"}
   marque_modulation_size: {label: "Größe der Modulationsmarkierungen"}
   marque_emprunt_size:    {label: "Größe der Ausweichungsmarkierungen"}
   marque_cellule_size:    {label: "Größe der Zellennamen"}

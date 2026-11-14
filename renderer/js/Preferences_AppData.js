@@ -17,6 +17,7 @@ export const PreferencesAppData = {
   , snap_for_adjust_pos     :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px'}
   , marque_accords_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.aobj.acc span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_harmonie_size    :{type:'inputtext'    ,typeV:'number'   ,default:26    ,unite:'pt' ,selector:'div.aobj.har span.content, div.aobj.cad span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
+  , marque_cadence_type_size:{type:'inputtext'    ,typeV:'number'   ,default:20    ,unite:'px' ,selector:'div.amark.cad div.mtype', selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_modulation_size  :{type:'inputtext'    ,typeV:'number'   ,default:26    ,unite:'pt' ,selector:'div.aobj.mod span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_emprunt_size     :{type:'inputtext'    ,typeV:'number'   ,default:24     ,unite:'pt' ,selector:'div.aobj.emp span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_cellule_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.amark.cel span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}

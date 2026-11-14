@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "표시 정렬 맞춤 거리", precision: "같은 종류의 표시에 적용되며, 위의 “높이 맞추기”가 켜져 있을 때만 작동합니다."}
   marque_accords_size:    {label: "코드 표시 크기"}
   marque_harmonie_size:   {label: "화성 표시 크기"}
+  marque_cadence_type_size: {label: "종지 표시 글자 크기 (예: “C.P.”)"}
   marque_modulation_size: {label: "전조 표시 크기"}
   marque_emprunt_size:    {label: "차용 표시 크기"}
   marque_cellule_size:    {label: "동기 셀 이름 크기"}

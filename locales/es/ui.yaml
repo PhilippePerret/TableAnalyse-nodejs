@@ -305,6 +305,7 @@ prefs:
   snap_for_adjust_pos:    {label: "Distancia de imantación de la alineación", precision: "Afecta a las marcas del mismo tipo y solo si la preferencia «Igualar en altura» de arriba está activada."}
   marque_accords_size:    {label: "Tamaño de las marcas de acorde"}
   marque_harmonie_size:   {label: "Tamaño de las marcas de armonía"}
+  marque_cadence_type_size: {label: "Tamaño de letra del texto de la marca de cadencia (p. ej. “C.P.”)"}
   marque_modulation_size: {label: "Tamaño de las marcas de modulación"}
   marque_emprunt_size:    {label: "Tamaño de las marcas de préstamo"}
   marque_cellule_size:    {label: "Tamaño de los nombres de células"}
