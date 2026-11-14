@@ -81,7 +81,7 @@ export const AMARQUES_TYPES = {
   , 'not': {name:t('ui.marks.types.not.name'), shortcut:'n', value:'not', subdata:TYPES_NOTES, autocontent:true, message:t('ui.marks.types.not.message')}
   , 'frm': {name:t('ui.marks.types.frm.name')      , shortcut:'f', value:'frm', subdata:TYPES_FORME, message:t('ui.marks.types.frm.message')}
   , 'deg': {name:t('ui.marks.types.deg.name')   , shortcut:'d', ajustX:26,  ajustY:24,  value:'deg', default:'1', message:t('ui.marks.types.deg.message')}
-  , 'seg': {name:t('ui.marks.types.seg.name')      , shortcut:'s', value:'seg', subtype:true   , default:t('ui.marks.types.seg.default'), message:t('ui.marks.types.seg.message')}
+  , 'seg': {name:t('ui.marks.types.seg.name')      , shortcut:'s', value:'seg', subtype:true   , emptyOk:true, default:t('ui.marks.types.seg.default'), message:t('ui.marks.types.seg.message')}
   , 'img': {name:t('ui.marks.types.img.name')        , shortcut:'i', value:'img' , default:'image.jpg'  , message:t('ui.marks.types.img.message')}
   , 'txt': {name:t('ui.marks.types.txt.name')        , shortcut:'t', ajustX:0,   ajustY:23       ,value:'txt', subdata:TAILLES_TEXTE,  message:t('ui.marks.types.txt.message')}
   , 'ped': {name:t('ui.marks.types.ped.name')       , shortcut:'p', ajustX:20,  ajustY:10,    value:'ped', default:'5', message:t('ui.marks.types.ped.message')}

@@ -248,7 +248,9 @@ getAMarkContent(){
  * 
  */
 onSetContent(content){
-  if ( content ) {
+  // Texte vide accepté pour les types qui le permettent (:emptyOk,
+  // p.e. segment sans légende)
+  if ( content || (content === '' && this.dataOfType.emptyOk) ) {
     this.hasProlong = content.endsWith('--')
     this._amark_content = this.hasProlong 
       ? content.substring(0, content.length - 2) 
