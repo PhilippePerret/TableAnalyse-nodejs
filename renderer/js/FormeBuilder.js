@@ -73,11 +73,11 @@ export class FormeBuilder {
     // Détail de chaque portion (ses sections, ses segments), avec une
     // même largeur de mesure pour toutes (la plus longue remplit la ligne)
     const unit = width / Math.max(...tops.map(p => p.to - p.from))
+    // (une portion sans sous-portions y figure seule, avec ses tonalités)
     tops.forEach(P => {
       const children = portions.filter(p => p.level > top && p.from >= P.from && p.from < P.to)
-      if ( !children.length ) return
       o.appendChild(DCreate('DIV', {class: 'fsubtitle', text: escapeHTML(P.name)}))
-      o.appendChild(this.block(children, P.from, P.to, unit, false))
+      o.appendChild(this.block(children.length ? children : [P], P.from, P.to, unit, false))
     })
     UI.TableAnalyse.appendChild(o)
     this.spreadKeys(o)

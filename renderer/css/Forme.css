@@ -100,11 +100,11 @@ div.form-diagram span.fnum::before {
   border-left: 1px solid #000;
 }
 /* Tonalités (modulations), au début de leur mesure */
-div.form-diagram div.frow.fkeys { height: 50px; }
+div.form-diagram div.frow.fkeys { height: 32px; }
 div.form-diagram span.fkey {
   position: absolute;
-  top: 0;
+  bottom: 4px;
   font-family: PhilNote;
-  font-size: 32pt;
+  font-size: 22px;
   white-space: nowrap;
 }
