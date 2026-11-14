@@ -66,7 +66,6 @@ export class AmarkMenu extends MenusTool {
     editor.proceed()
   }
 
-  static onActivate_justifyText()     { this.applyStyleText('justify')  }
 
 
   /* --- Functional Methods --- */
@@ -124,7 +123,7 @@ export class LockTypeMenu extends MenusTool {
 
 /**
  * Sous-menu « Marque > Aligner le texte » : au centre, à droite, à
- * gauche (texte des marques sélectionnées)
+ * gauche, justifié (texte des marques sélectionnées)
  */
 export class TextAlignMenu extends MenusTool {
 

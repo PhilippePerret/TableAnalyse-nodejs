@@ -80,7 +80,6 @@ mark_menu:
   unlock_one:       "マークのロックを解除"
   unlock_many:      "マークのロックを解除"
   change_type:      "種類を設定…"
-  justify:          "テキストを両端揃え"
 
 lock_type_menu:
   none:             "なし"
@@ -89,6 +88,7 @@ text_align_menu:
   center:           "中央揃え"
   right:            "右揃え"
   left:             "左揃え"
+  justify:          "両端揃え"
 
 align_menu:
   top:              "上"

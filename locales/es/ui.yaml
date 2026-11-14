@@ -80,7 +80,6 @@ mark_menu:
   unlock_one:       "Desbloquear la marca"
   unlock_many:      "Desbloquear las marcas"
   change_type:      "Cambiar el tipo a…"
-  justify:          "Justificar el texto"
 
 lock_type_menu:
   none:             "Ninguno"
@@ -89,6 +88,7 @@ text_align_menu:
   center:           "Al centro"
   right:            "A la derecha"
   left:             "A la izquierda"
+  justify:          "Justificado"
 
 align_menu:
   top:              "Arriba"
