@@ -16,13 +16,18 @@ import { t } from './i18n.js'
   après la partition (préférence form_position), sur sa propre page à
   l'export (cf. Exporter).
 
-  Proportionnalité : une même largeur par mesure pour toute la forme
-  (largeur des systèmes / nombre de mesures de la pièce). Une portion
-  occupe donc une largeur proportionnelle à son nombre de mesures.
+  « Forme générale » : une ligne avec les portions du plus haut niveau
+  (les parties), d'un bout à l'autre de la pièce. Puis, pour chacune,
+  son nom en titre et une ligne de détail (rangée des sections, rangée
+  des segments).
 
-  Une rangée par niveau (parties, sections, segments) et, selon les
-  réglages, les numéros de mesure des débuts de portion et les
-  tonalités (marques de modulation).
+  Proportionnalité, ligne par ligne : même largeur de mesure dans une
+  ligne ; même largeur de mesure pour toutes les lignes de détail (la
+  plus longue portion remplit la ligne).
+
+  Selon les réglages : tonalités au-dessus des blocs (la tonalité
+  courante au début de chaque ligne et de chaque partie, puis les
+  modulations) et numéros de mesure dessous.
 
   Noir et blanc par défaut ; en mode couleur, les couleurs des marques
   de partie, de section, de segment et de modulation (préférences) s'y
@@ -52,52 +57,65 @@ export class FormeBuilder {
     if ( !portions.length ) { message(t('messages.no_form_mark')) ; return false }
     const first = Systeme.first
     const width = Number(pref('systeme_width'))
-    const unit  = width / last // largeur d'une mesure
+    this.keys = this.keyChanges()
     const o = DCreate('DIV', {id: 'form-diagram', class: 'form-diagram', 'data-position': pref('form_position')})
     o.style.left  = px(first ? first.left : 0)
     o.style.width = px(width)
     o.appendChild(this.titleDiv())
     const description = Forme.formInfos.description
     description && o.appendChild(DCreate('DIV', {class: 'fdescription', text: escapeHTML(description).replace(/\n/g, '<br>')}))
-    ;[1, 2, 3].forEach(level => {
-      const items = portions.filter(p => p.level == level)
-      if ( !items.length ) return
-      o.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: items.map(p => {
-        const box = DCreate('DIV', {class: `portion ${p.subtype}`, title: p.name, inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
-        box.style.left  = px(p.from * unit)
-        box.style.width = px((p.to - p.from) * unit)
-        return box
-      })}))
+    // Forme générale : les portions du plus haut niveau, d'un bout à
+    // l'autre de la pièce
+    const top  = Math.min(...portions.map(p => p.level))
+    const tops = portions.filter(p => p.level == top)
+    o.appendChild(DCreate('DIV', {class: 'fsubtitle', text: t('ui.form_diagram.general')}))
+    o.appendChild(this.block(tops, 0, last, width / last, true))
+    // Détail de chaque portion (ses sections, ses segments), avec une
+    // même largeur de mesure pour toutes (la plus longue remplit la ligne)
+    const unit = width / Math.max(...tops.map(p => p.to - p.from))
+    tops.forEach(P => {
+      const children = portions.filter(p => p.level > top && p.from >= P.from && p.from < P.to)
+      if ( !children.length ) return
+      o.appendChild(DCreate('DIV', {class: 'fsubtitle', text: escapeHTML(P.name)}))
+      o.appendChild(this.block(children, P.from, P.to, unit, false))
     })
-    pref('form_build_measures') && o.appendChild(this.measuresRow(portions, last, unit))
-    pref('form_build_keys')     && o.appendChild(this.keysRow(unit))
     UI.TableAnalyse.appendChild(o)
-    this.fitNames(o)
     this.spreadKeys(o)
     this.place(o)
     return true
   }
 
-  // Nom trop long pour sa portion : police réduite (jusqu'à 12 px)
-  static fitNames(o){
-    o.querySelectorAll('div.portion span').forEach(span => {
-      const room = span.parentElement.clientWidth - 2
-      let size = parseFloat(getComputedStyle(span).fontSize)
-      span.style.maxWidth = 'none' // largeur naturelle
-      while ( span.offsetWidth > room && size > 12 ) {
-        span.style.fontSize = px(--size)
-      }
-      span.style.maxWidth = ''
+  /**
+   * Bloc d'une ligne de la forme, des mesures +from+ à +to+ (+unit+ :
+   * largeur d'une mesure) : tonalités au-dessus, une rangée par niveau
+   * des portions +items+, numéros de mesure dessous. +keyAtStarts+ :
+   * tonalité courante au début de chaque portion.
+   */
+  static block(items, from, to, unit, keyAtStarts){
+    const b = DCreate('DIV', {class: 'fblock'})
+    b.style.width = px((to - from) * unit)
+    pref('form_build_keys') && b.appendChild(this.keysRow(from, to, unit, keyAtStarts ? items.map(p => p.from) : []))
+    ;[...new Set(items.map(p => p.level))].sort().forEach(level => {
+      b.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: items.filter(p => p.level == level).map(p => {
+        const box = DCreate('DIV', {class: `portion ${p.subtype}`, title: p.name, inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
+        box.style.left  = px((p.from - from) * unit)
+        box.style.width = px((Math.min(p.to, to) - p.from) * unit)
+        return box
+      })}))
     })
+    pref('form_build_measures') && b.appendChild(this.measuresRow(items, from, to, unit))
+    return b
   }
 
   // Tonalités qui se chevauchent : décalées vers la droite
   static spreadKeys(o){
-    let right = -Infinity
-    o.querySelectorAll('span.fkey').forEach(span => {
-      const left = Math.max(span.offsetLeft, right + 10)
-      span.style.left = px(left)
-      right = left + span.offsetWidth
+    o.querySelectorAll('div.fkeys').forEach(row => {
+      let right = -Infinity
+      row.querySelectorAll('span.fkey').forEach(span => {
+        const left = Math.max(span.offsetLeft, right + 10)
+        span.style.left = px(left)
+        right = left + span.offsetWidth
+      })
     })
   }
 
@@ -147,14 +165,22 @@ export class FormeBuilder {
   }
 
   /**
-   * Numéros de mesure : celui du début de chaque portion et le dernier
-   * de la pièce (pas deux numéros trop proches)
+   * Numéros de mesure : celui du début de chaque portion, celui de la
+   * fin d'une portion qui n'est pas suivie d'une autre et celui de la
+   * fin de la ligne (pas deux numéros trop proches)
    */
-  static measuresRow(portions, last, unit){
+  static measuresRow(items, from, to, unit){
     const row = DCreate('DIV', {class: 'frow fmeasures'})
-    const marks = [...new Set(portions.map(p => p.from))].sort((a, b) => a - b)
-      .map(from => ({x: from * unit, text: String(from + 1)}))
-    marks.push({x: last * unit, text: String(last), last: true})
+    const marks = [...new Set(items.map(p => p.from))]
+      .map(m => ({m, x: (m - from) * unit, text: String(m + 1), first: m == from}))
+    // Fin d'une portion qui n'est pas suivie d'une autre (fin marquée)
+    items.forEach(p => {
+      if ( p.to < to && !items.some(q => q.from == p.to) && !marks.some(k => k.m == p.to || k.text == String(p.to)) ) {
+        marks.push({m: p.to, x: (p.to - from) * unit, text: String(p.to)})
+      }
+    })
+    marks.sort((a, b) => a.m - b.m)
+    marks.push({x: (to - from) * unit, text: String(to), last: true})
     let prev = -Infinity
     marks.forEach((m, i) => {
       if ( m.x - prev < MIN_GAP ) {
@@ -162,7 +188,7 @@ export class FormeBuilder {
         row.lastChild && i > 1 && row.lastChild.remove() // le dernier numéro l'emporte
       }
       // Premier numéro aligné à gauche, dernier à droite (cf. Forme.css)
-      const css = i == 0 ? ' first' : (m.last ? ' last' : '')
+      const css = m.first ? ' first' : (m.last ? ' last' : '')
       const span = DCreate('SPAN', {class: 'fnum' + css, text: m.text})
       span.style.left = px(m.x)
       row.appendChild(span)
@@ -171,22 +197,42 @@ export class FormeBuilder {
     return row
   }
 
-  // Tonalités : les modulations, au début de leur mesure (une même
-  // tonalité répétée n'est écrite qu'une fois)
-  static keysRow(unit){
-    const row = DCreate('DIV', {class: 'frow fkeys'})
-    let prev = null
-    AObjet.select(ao => ao.type == 'mod')
+  // Changements de tonalité (marques de modulation) : {m: début de la
+  // mesure (0 = début de la pièce), key}, dans l'ordre
+  static keyChanges(){
+    return AObjet.select(ao => ao.type == 'mod')
       .map(mod => ({key: mod.content, m: Forme.measureOf(mod)}))
       .filter(k => null !== k.m)
+      .map(k => ({key: k.key, m: k.m - 1}))
       .sort((a, b) => a.m - b.m)
-      .forEach(k => {
-        if ( k.key == prev ) return
-        const span = DCreate('SPAN', {class: 'fkey', text: escapeHTML(k.key)})
-        span.style.left = px((k.m - 1) * unit)
-        row.appendChild(span)
-        prev = k.key
-      })
+  }
+
+  // Tonalité courante au début de la mesure +m+ (ou null)
+  static keyAt(m){
+    let key = null
+    this.keys.forEach(k => { if ( k.m <= m ) key = k.key })
+    return key
+  }
+
+  /**
+   * Tonalités au-dessus d'une ligne : la tonalité courante au début de la
+   * ligne et de chaque portion de +starts+, puis chaque modulation (une
+   * même tonalité répétée n'est écrite qu'une fois)
+   */
+  static keysRow(from, to, unit, starts){
+    const row = DCreate('DIV', {class: 'frow fkeys'})
+    const marks = [{m: from, key: this.keyAt(from), always: true}]
+    starts.forEach(m => m > from && marks.push({m, key: this.keyAt(m), always: true}))
+    this.keys.forEach(k => k.m > from && k.m < to && marks.push({m: k.m, key: k.key}))
+    marks.sort((a, b) => a.m - b.m)
+    let prev = null, prevM = null
+    marks.forEach(k => {
+      if ( !k.key || k.m === prevM || (!k.always && k.key == prev) ) return
+      const span = DCreate('SPAN', {class: 'fkey', text: escapeHTML(k.key)})
+      span.style.left = px((k.m - from) * unit)
+      row.appendChild(span)
+      prev = k.key ; prevM = k.m
+    })
     return row
   }
 

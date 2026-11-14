@@ -460,6 +460,7 @@ form_position:
 
 form_diagram:
   title: "형식"
+  general: "전체 형식"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

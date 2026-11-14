@@ -440,16 +440,47 @@ class Stage {
       height = contentH * scale + 2 * margin
       slices = [[top, bottom]]
     }
-    // Forme : page à elle seule, avant ou après la partition
+    // Forme : pages à elle seule, avant ou après la partition
     const form = this.formItem
     if ( form ) {
-      const slice = [form.top - PAD, form.bottom + PAD]
-      form.el.dataset.position == 'before' ? slices.unshift(slice) : slices.push(slice)
+      const fslices = opts.mode == 'book'
+        ? this.formSlices(form, (height - 2 * margin) / scale)
+        : [[form.top - PAD, form.bottom + PAD]]
+      form.el.dataset.position == 'before' ? slices.unshift(...fslices) : slices.push(...fslices)
     }
     // Nomenclature : première page, à elle seule
     const legend = this.items.find(i => i.el === this.legendEl)
     legend && slices.unshift([legend.top - PAD, legend.bottom + PAD])
     return {width, height, margin, scale, x0, contentW, slices}
+  }
+
+  /**
+   * Pages de la forme (hauteur +pageH+ px) : coupées entre ses blocs,
+   * un titre restant avec le bloc qui le suit
+   */
+  formSlices(form, pageH){
+    const rects = Array.from(form.el.children).map(el => {
+      const r = el.getBoundingClientRect()
+      return {top: r.top - this.base.top, bottom: r.bottom - this.base.top, title: el.classList.contains('fsubtitle')}
+    })
+    // Titre + bloc suivant : un seul morceau
+    const parts = []
+    rects.forEach((r, i) => {
+      const prev = parts[parts.length - 1]
+      if ( prev && prev.title ) { prev.bottom = r.bottom ; prev.title = r.title }
+      else parts.push(Object.assign({}, r))
+    })
+    const slices = []
+    let start = parts[0].top - PAD, end = start
+    parts.forEach(p => {
+      if ( p.bottom + PAD - start > pageH && end > start ) {
+        slices.push([start, end])
+        start = p.top - PAD
+      }
+      end = p.bottom + PAD
+    })
+    slices.push([start, end])
+    return slices
   }
 
   /**

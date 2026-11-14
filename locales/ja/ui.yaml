@@ -460,6 +460,7 @@ form_position:
 
 form_diagram:
   title: "形式"
+  general: "全体の形式"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

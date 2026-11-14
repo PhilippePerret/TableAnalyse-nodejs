@@ -462,6 +462,7 @@ form_position:
 
 form_diagram:
   title: "Forme"
+  general: "Forme générale"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »
