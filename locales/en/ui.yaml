@@ -39,6 +39,7 @@ menu:
   mark:             "Mark"
   align:            "Align"
   align_text:       "Align Text"
+  lock_type:        "Lock Type To…"
   adjust:           "Adjust"
   selection:        "Selection"
   borders:          "Borders"
@@ -80,6 +81,9 @@ mark_menu:
   unlock_many:      "Unlock Marks"
   change_type:      "Set Type to…"
   justify:          "Justify Text"
+
+lock_type_menu:
+  none:             "None"
 
 text_align_menu:
   center:           "Center"

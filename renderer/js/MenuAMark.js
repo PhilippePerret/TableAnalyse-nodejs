@@ -7,6 +7,8 @@ import { setModified } from './Current.js'
 import { on } from './events.js'
 import { t } from './i18n.js'
 import { toggleCoordinates } from './handies.js'
+import { DCreate } from './dom.js'
+import { AMARQUES_TYPES } from './Constants.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -92,6 +94,31 @@ export class AmarkMenu extends MenusTool {
 
   static get menuLock(){
     return DGet('option[value="toogleLock"]', this.menu)
+  }
+}
+
+/**
+ * Sous-menu « Marque > Bloquer le type à… » : type des marques créées
+ * (cf. AMark_Editor.lockedType), « Aucun » par défaut. Un seul type
+ * coché.
+ */
+export class LockTypeMenu extends MenusTool {
+
+  static init(){
+    this.menu.appendChild(DCreate('OPTION', {value: 'none', text: t('ui.lock_type_menu.none')}))
+    this.menu.appendChild(DCreate('OPTION'))
+    Object.values(AMARQUES_TYPES).forEach(d => this.menu.appendChild(DCreate('OPTION', {value: d.value, text: d.name})))
+    super.init()
+    this.check('none')
+  }
+
+  static onActivate(e, value){
+    AMark_Editor.lockedType = value == 'none' ? null : value
+    this.check(value)
+  }
+
+  static check(value){
+    Array.from(this.menu.options).forEach((o, i) => i && o.value && (o.dataset.checked = o.value == value ? 'true' : 'false'))
   }
 }
 

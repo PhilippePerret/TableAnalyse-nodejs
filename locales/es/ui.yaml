@@ -39,6 +39,7 @@ menu:
   mark:             "Marca"
   align:            "Alinear"
   align_text:       "Alinear el texto"
+  lock_type:        "Bloquear el tipo en…"
   adjust:           "Ajustar"
   selection:        "Selección"
   borders:          "Bordes"
@@ -80,6 +81,9 @@ mark_menu:
   unlock_many:      "Desbloquear las marcas"
   change_type:      "Cambiar el tipo a…"
   justify:          "Justificar el texto"
+
+lock_type_menu:
+  none:             "Ninguno"
 
 text_align_menu:
   center:           "Al centro"

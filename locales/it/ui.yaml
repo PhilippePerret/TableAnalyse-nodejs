@@ -39,6 +39,7 @@ menu:
   mark:             "Segno"
   align:            "Allinea"
   align_text:       "Allinea il testo"
+  lock_type:        "Blocca il tipo su…"
   adjust:           "Adatta"
   selection:        "Selezione"
   borders:          "Bordi"
@@ -80,6 +81,9 @@ mark_menu:
   unlock_many:      "Sblocca i segni"
   change_type:      "Imposta il tipo a…"
   justify:          "Giustifica il testo"
+
+lock_type_menu:
+  none:             "Nessuno"
 
 text_align_menu:
   center:           "Al centro"

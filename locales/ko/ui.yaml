@@ -39,6 +39,7 @@ menu:
   mark:             "표시"
   align:            "정렬"
   align_text:       "텍스트 정렬"
+  lock_type:        "종류 고정…"
   adjust:           "조정"
   selection:        "선택"
   borders:          "테두리"
@@ -80,6 +81,9 @@ mark_menu:
   unlock_many:      "표시 잠금 해제"
   change_type:      "종류 설정…"
   justify:          "텍스트 양쪽 정렬"
+
+lock_type_menu:
+  none:             "없음"
 
 text_align_menu:
   center:           "가운데"

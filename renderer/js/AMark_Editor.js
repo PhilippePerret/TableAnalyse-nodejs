@@ -45,10 +45,19 @@ import { t } from './i18n.js'
 
 export class AMark_Editor {
 
+/**
+ * Type bloqué (menu « Marque > Bloquer le type à… ») : type des marques
+ * créées, sans le choisir (bouton « Type… » de l'éditeur pour en
+ * choisir un autre ponctuellement)
+ */
+static lockedType = null
+
 constructor(data){
   this.data   = data
   this.event  = data.event
   data.type && (this._amark_type = data.type)
+  // Création (pas un changement de type) : type bloqué
+  if ( !data.type && !data.onlyType && AMark_Editor.lockedType ) this._amark_type = AMark_Editor.lockedType
 
   /* Pour écrire toutes les coordonnées
   var xy = {}
@@ -230,6 +239,8 @@ onWantTypes(){
   this._amark_start   = null
   ;[this._gettertype, this._gettersubtype].forEach(g => g && g.obj.remove())
   this._gettertype    = null
+  this._editorcontent && this._editorcontent.obj && this._editorcontent.obj.remove()
+  this._editorcontent = null
   this.getAMarkType()
 }
 
@@ -371,9 +382,10 @@ get getterOfAMarkSubtype(){
   return this._gettersubtype || (this._gettersubtype = new GetterInList(this.paramsGetterOfSubtype))
 }
 
-// Éditeur pour obtenir le contenu textuel
+// Éditeur pour obtenir le contenu textuel (bouton « Type… » pour
+// changer le type choisi ou bloqué)
 get editorOfAMarkContent(){
-  return this._editorcontent || (this._editorcontent = new Editeur(this, {message:this.dataOfType.message, setMethod: this.onSetContent.bind(this)}) )
+  return this._editorcontent || (this._editorcontent = new Editeur(this, {message:this.dataOfType.message, setMethod: this.onSetContent.bind(this), onTypeButton: this.onWantTypes.bind(this)}) )
 }
 
 

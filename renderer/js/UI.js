@@ -13,7 +13,7 @@ import { Mouse } from './Mouse.js'
 import { SelectionTool } from './MenuSelection.js'
 import { BordersTool } from './MenuBords.js'
 import { OptionsTool } from './MenuOptions.js'
-import { AmarkMenu, TextAlignMenu } from './MenuAMark.js'
+import { AmarkMenu, TextAlignMenu, LockTypeMenu } from './MenuAMark.js'
 import { AlignMenu } from './MenuAligner.js'
 import { AdjustMenu } from './MenuAjuster.js'
 import { MenusBar } from './MenusBar.js'
@@ -79,6 +79,9 @@ export class UIClass {
 
     // Le menu "Aligner le texte"
     TextAlignMenu.init()
+
+    // Le menu "Bloquer le type à…"
+    LockTypeMenu.init()
 
     // Le menu "Ajuster"
     AdjustMenu.init()

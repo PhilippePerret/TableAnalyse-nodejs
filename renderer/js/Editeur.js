@@ -145,9 +145,11 @@ export class Editeur {
     const divBoutons = DCreate('DIV', {class:'buttons'})
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
     // Marque d'analyse : changement de son type (de son sous-type
-    // d'abord quand elle en a un)
+    // d'abord quand elle en a un). En création : retour au choix du type
     if ( this.isAMark ) {
       divBoutons.appendChild(DCreate('BUTTON', {text:this.typeButtonLabel, class:'type'}))
+    } else if ( this.data.onTypeButton ) {
+      divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.type'), class:'type'}))
     }
     // Bouton OK toujours le dernier, à droite
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
@@ -182,6 +184,11 @@ export class Editeur {
    * habituel), le texte en cours d'édition étant conservé
    */
   onClickType(e){
+    if ( !this.isAMark && this.data.onTypeButton ) {
+      this.hide()
+      this.data.onTypeButton.call(null)
+      return stopEvent(e)
+    }
     const r = this.btnType.getBoundingClientRect()
     const x = Math.round(r.left), y = Math.round(r.bottom)
     const editor = new AMark_Editor({
