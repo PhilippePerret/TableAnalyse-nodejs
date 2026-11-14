@@ -539,10 +539,10 @@ div.amark.frm {
   gap: 5px;
   white-space: nowrap;
   --borne-color: #cc2a2a;
-  --borne-w: 18px;
-  --borne-h: 24px;
+  --borne-w: 16px;
+  --borne-h: 21px;
 }
-div.amark.frm.fsec { --borne-color: #e8c21a; --borne-w: 15px; --borne-h: 20px; }
+div.amark.frm.fsec { --borne-color: #e8c21a; --borne-w: 14px; --borne-h: 18px; }
 div.amark.frm.fseg { --borne-color: #3a925e; --borne-w: 12px; --borne-h: 16px; }
 div.amark.frm span.borne {
   flex: none;
