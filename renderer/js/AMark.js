@@ -712,9 +712,13 @@ observe(){
           // Créer la nouvelle marque
           var newMark = AMark.createNew(e, this.initData)
           newMark.ajustePosition(ui.position.left, ui.position.top)
+          // Marque de forme : toujours à sa hauteur
+          newMark.isForme && newMark.placeAtHeight()
           saufId = newMark.id
         } else {
           my.ajustePosition(ui.position.left, ui.position.top)
+          // Marque de forme : toujours à sa hauteur
+          my.isForme && my.placeAtHeight()
           my.justMoved = true // pour empêcher le re-select
           saufId = my.id
         }
