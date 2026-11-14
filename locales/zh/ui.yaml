@@ -68,6 +68,7 @@ options_menu:
   color:            "彩色版本"
   lock_systems:     "锁定声部组"
   coordinates:      "显示坐标"
+  form_names:       "显示部分名称"
   theme_A:          "主题 A — 简洁"
   theme_B:          "主题 B — ScoreAnalyse"
   theme_C:          "主题 C — 深色"

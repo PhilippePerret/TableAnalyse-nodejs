@@ -10,6 +10,7 @@ import { Systeme } from './Systeme.js'
 import { on } from './events.js'
 import { t } from './i18n.js'
 import { toggleCoordinates } from './handies.js'
+import { Forme } from './Forme.js'
 /**
 
   Class OptionsTool
@@ -56,6 +57,10 @@ export class OptionsTool extends MenusTool {
 
   static onActivate_toggleCoordinates(){
     toggleCoordinates()
+  }
+
+  static onActivate_toggleFormNames(e, option){
+    Forme.show(option.dataset.checked != 'true')
   }
 
   static onActivate_toggleLockSystems(){

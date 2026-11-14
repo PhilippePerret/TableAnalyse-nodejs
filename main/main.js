@@ -545,6 +545,13 @@ function registerIpc(){
     })
   })
 
+  // Coche de « Forme > Voir la forme » (état de l'analyse)
+  handle('menu:formShown', ({shown}) => {
+    if ( formShown == !!shown ) return
+    formShown = !!shown
+    buildMenu()
+  })
+
   handle('menu:setDynamic', ({menus}) => {
     dynamicMenus = menus || []
     buildMenu()

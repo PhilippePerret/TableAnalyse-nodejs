@@ -68,6 +68,7 @@ options_menu:
   color:            "カラー版"
   lock_systems:     "段をロック"
   coordinates:      "座標を表示"
+  form_names:       "部分の名前を表示"
   theme_A:          "テーマ A — シンプル"
   theme_B:          "テーマ B — ScoreAnalyse"
   theme_C:          "テーマ C — ダーク"

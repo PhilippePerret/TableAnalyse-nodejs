@@ -68,6 +68,7 @@ options_menu:
   color:            "Version couleur"
   lock_systems:     "Verrouiller les systèmes"
   coordinates:      "Afficher les coordonnées"
+  form_names:       "Afficher noms des portions"
   theme_A:          "Thème A — Sobre"
   theme_B:          "Thème B — ScoreAnalyse"
   theme_C:          "Thème C — Sombre"

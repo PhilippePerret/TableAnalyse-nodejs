@@ -71,6 +71,7 @@ export const PreferencesAppData = {
   , form_build_measures     :{type:'checkbox'     ,typeV:'boolean'  ,default:true   ,hidden:true}
   , form_build_keys         :{type:'checkbox'     ,typeV:'boolean'  ,default:true   ,hidden:true}
   , form_built              :{type:'checkbox'     ,typeV:'boolean'  ,default:false  ,hidden:true}
+  , show_form_names         :{type:'checkbox'     ,typeV:'boolean'  ,default:false  ,hidden:true}
 
   , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}

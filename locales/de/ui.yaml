@@ -68,6 +68,7 @@ options_menu:
   color:            "Farbversion"
   lock_systems:     "Systeme sperren"
   coordinates:      "Koordinaten anzeigen"
+  form_names:       "Namen der Formteile anzeigen"
   theme_A:          "Thema A — Schlicht"
   theme_B:          "Thema B — ScoreAnalyse"
   theme_C:          "Thema C — Dunkel"

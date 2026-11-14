@@ -3,6 +3,7 @@ import { message } from './lib/Message.js'
 import { Panneau } from './Panneau.js'
 import { pref, Preferences } from './Preferences.js'
 import { on } from './events.js'
+import { invoke } from './api.js'
 import { FormeBuilder } from './FormeBuilder.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
@@ -20,16 +21,21 @@ import { t } from './i18n.js'
 export class Forme {
 
   /**
-   * Marques de forme dépliées (« Voir la forme »). Repliées par défaut.
+   * Noms des portions affichés (« Forme > Voir la forme », « Options >
+   * Afficher noms des portions »), enregistré avec l'analyse. Masqués
+   * par défaut.
    */
-  static shown = false
+  static get shown(){ return pref('show_form_names') }
 
   /**
    * Au lancement : forme construite (préférence form_built) redessinée
    * dès que les systèmes sont chargés
    */
   static init(){
-    on('systems:loaded', () => pref('form_built') && FormeBuilder.build())
+    on('systems:loaded', () => {
+      this.syncMenus()
+      pref('form_built') && FormeBuilder.build()
+    })
   }
 
   /**
@@ -223,8 +229,15 @@ export class Forme {
    * forme
    */
   static show(on){
-    this.shown = on
+    on != this.shown && Preferences.saveData('show_form_names', on)
     AObjet.items.forEach(ao => ao.isForme && ao.obj && ao.toggleExpanded(on))
+    this.syncMenus()
+  }
+
+  // Coches des menus « Voir la forme » et « Afficher noms des portions »
+  static syncMenus(){
+    DGet('#options_tool option[value="toggleFormNames"]').dataset.checked = this.shown ? 'true' : 'false'
+    invoke('menu:formShown', {shown: this.shown}).catch(err => console.error(err))
   }
 
   /**

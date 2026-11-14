@@ -68,6 +68,7 @@ options_menu:
   color:            "컬러 버전"
   lock_systems:     "단 잠그기"
   coordinates:      "좌표 보기"
+  form_names:       "부분 이름 표시"
   theme_A:          "테마 A — 단순"
   theme_B:          "테마 B — ScoreAnalyse"
   theme_C:          "테마 C — 어두움"
