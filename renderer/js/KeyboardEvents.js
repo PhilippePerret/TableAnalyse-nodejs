@@ -107,6 +107,8 @@ export function onKeyDownUniversel(e){
         Analyse.current && AnalyseSaver.save()
         return stopEvent(e)
       case 'z':
+        // Dans un champ : annulation de la saisie (celle du système)
+        if ( inTextField(e) ) return null
         if (e.shiftKey) {
           return Cancel.unzLast(e)
         } else {
