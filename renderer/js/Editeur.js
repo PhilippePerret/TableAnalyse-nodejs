@@ -233,6 +233,8 @@ export class Editeur {
 
   onKeyPress(e){
     // console.log("e.key = '%s'", e.key)
+    // Bouton sélectionné (Tab) : Entrée le joue (comportement normal)
+    if ( e.target.tagName == 'BUTTON' ) return true
     if (e.key == 'Enter') {
       if ( this.isLongText ) {
         if ( cmdKey(e) ) {

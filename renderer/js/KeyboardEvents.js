@@ -57,6 +57,8 @@ export function onKeyDownOnAnalyse(e){
     AMark.moveSelection(sens,multi,precision)
     return stopEvent(e)
   case 'Enter':
+    // Bouton sélectionné (Tab) : Entrée le joue
+    if ( e.target instanceof Element && e.target.closest('button') ) return
     // Édition de la marque, seulement si elle est seule sélectionnée
     const sel = AObjet.selection
     // (marque verrouillée : édition seulement par son menu contextuel)
