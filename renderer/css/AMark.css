@@ -576,8 +576,8 @@ div.amark.frm span.content {
   display: none;
   position: absolute;
   left: calc(100% + 5px);
-  top: 50%;
-  transform: translateY(-50%); /* centré sur la borne */
+  /* ligne de base du nom sur le bas de la borne (jambage sous la ligne) */
+  bottom: -0.654em;
   line-height: 1;
   white-space: nowrap;
   font-size: 13pt;
