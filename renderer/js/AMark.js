@@ -1081,12 +1081,21 @@ applyWidth(v) {
 /**
  * Changement du type (et du sous-type) d'une marque construite : elle
  * est reconstruite pour prendre tout ce qui dépend du type (poignées de
- * redimensionnement, ligne verticale, police…)
+ * redimensionnement, ligne verticale, police…) puis replacée comme une
+ * marque de ce type (marque de forme : à sa hauteur et sur sa mesure ;
+ * autres : ajustée sur les marques de même type)
  */
 changeType(type, subtype){
   this.type    = type
   this.subtype = subtype
-  this.obj && this.rebuild()
+  if ( !this.obj ) return
+  this.rebuild()
+  if ( this.isForme ) {
+    this.placeAtHeight()
+    this.placeOnMeasure()
+  } else {
+    this.ajustePosition(this.left, this.top)
+  }
 }
 
 rebuild(){
