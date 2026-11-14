@@ -583,6 +583,13 @@ div.amark.frm span.content {
   font-size: 13pt;
   font-weight: bold;
 }
+/* Fin de portion : nom à gauche de la borne */
+div.amark.frm.fparz span.content,
+div.amark.frm.fsecz span.content,
+div.amark.frm.fsegz span.content {
+  left: auto;
+  right: calc(100% + 5px);
+}
 div.amark.frm.expanded span.content {
   display: inline-block;
 }
