@@ -17,6 +17,7 @@ import { AmarkMenu } from './MenuAMark.js'
 import { AlignMenu } from './MenuAligner.js'
 import { AdjustMenu } from './MenuAjuster.js'
 import { MenusBar } from './MenusBar.js'
+import { Forme } from './Forme.js'
 import { Themes } from './Themes.js'
 import { onKeyUpOnAnalyse, onKeyDownOnAnalyse, onKeypressOnAnalyse, onKeyDownUniversel, onEscapeKey } from './KeyboardEvents.js'
 
@@ -84,6 +85,7 @@ export class UIClass {
 
     // Ces menus dans la barre de menus de l'application
     MenusBar.init()
+    Forme.init()
 
     // Tout ce qui concerne la forme
         

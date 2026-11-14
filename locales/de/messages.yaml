@@ -41,4 +41,4 @@ cutter:
 goto_measure_prompt: "Gehe zu Takt (1 bis %{last})"
 no_measure_number: "Keine Taktnummer auf der Tafel."
 measure_not_found: "Takt %{num} nicht gefunden."
-cannot_build_form: "Die Form kann noch nicht erstellt werden."
+no_form_mark: "Keine Formmarke auf der Tafel."

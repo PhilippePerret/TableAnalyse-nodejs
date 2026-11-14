@@ -41,4 +41,4 @@ cutter:
 goto_measure_prompt: "转到小节（1 至 %{last}）"
 no_measure_number: "表上没有小节号。"
 measure_not_found: "找不到第 %{num} 小节。"
-cannot_build_form: "暂时还无法构建曲式。"
+no_form_mark: "表上没有曲式标记。"

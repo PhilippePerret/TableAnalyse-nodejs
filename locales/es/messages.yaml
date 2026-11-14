@@ -41,4 +41,4 @@ cutter:
 goto_measure_prompt: "Ir al compás (1 a %{last})"
 no_measure_number: "Ningún número de compás en la tabla."
 measure_not_found: "Compás %{num} no encontrado."
-cannot_build_form: "Todavía no se puede construir la forma."
+no_form_mark: "Ninguna marca de forma en la tabla."

@@ -41,4 +41,4 @@ cutter:
 goto_measure_prompt: "Aller à la mesure (1 à %{last})"
 no_measure_number: "Aucun numéro de mesure sur la table."
 measure_not_found: "Mesure %{num} introuvable."
-cannot_build_form: "On ne peut pas encore construire la forme."
+no_form_mark: "Aucune marque de forme sur la table."

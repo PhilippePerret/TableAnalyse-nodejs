@@ -159,6 +159,8 @@ panels:
     title:            "Costruire la forma"
     position:         "Posizione"
     build:            "Costruisci"
+    measures:         "Numeri di battuta"
+    keys:             "Tonalità e modulazioni"
   infos:
     title:            "Metadati dell'analisi"
     piece_title:      "Titolo del brano"
@@ -438,3 +440,6 @@ marks:
 form_position:
   before: "Prima della partitura"
   after:  "Dopo la partitura"
+
+form_diagram:
+  title: "Forma"

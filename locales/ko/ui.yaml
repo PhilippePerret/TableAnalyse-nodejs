@@ -159,6 +159,8 @@ panels:
     title:            "형식 만들기"
     position:         "위치"
     build:            "만들기"
+    measures:         "마디 번호"
+    keys:             "조성과 전조"
   infos:
     title:            "분석 메타데이터"
     piece_title:      "곡 제목"
@@ -437,3 +439,6 @@ marks:
 form_position:
   before: "악보 앞"
   after:  "악보 뒤"
+
+form_diagram:
+  title: "형식"

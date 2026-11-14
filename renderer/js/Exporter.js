@@ -360,6 +360,7 @@ class Stage {
       cursor = bottom + diff
     })
     this.items = this.measureItems()
+    this.replaceForm(gapPx)
   }
 
   /**
@@ -395,9 +396,28 @@ class Stage {
     this.items = this.measureItems()
   }
 
-  // Éléments de l'analyse (sans la nomenclature)
+  // Éléments de l'analyse (sans la nomenclature ni la forme)
   get analyseItems(){
-    return this.items.filter(i => i.el !== this.legendEl)
+    return this.items.filter(i => i.el !== this.legendEl && i.el.id != 'form-diagram')
+  }
+
+  // Forme construite (cf. FormeBuilder), sur sa propre page
+  get formItem(){
+    return this.items.find(i => i.el.id == 'form-diagram')
+  }
+
+  /**
+   * Forme replacée avant ou après la partition (déplacée par respace)
+   */
+  replaceForm(gapPx){
+    const form = this.formItem
+    if ( !form ) return
+    const items = this.analyseItems
+    const top = form.el.dataset.position == 'before'
+      ? Math.min(...items.map(i => i.top)) - gapPx - (form.bottom - form.top)
+      : Math.max(...items.map(i => i.bottom)) + gapPx
+    form.el.style.top = `${parseFloat(getComputedStyle(form.el).top) + top - form.top}px`
+    this.items = this.measureItems()
   }
 
   layout(opts){
@@ -419,6 +439,12 @@ class Stage {
       width  = contentW * scale + 2 * margin
       height = contentH * scale + 2 * margin
       slices = [[top, bottom]]
+    }
+    // Forme : page à elle seule, avant ou après la partition
+    const form = this.formItem
+    if ( form ) {
+      const slice = [form.top - PAD, form.bottom + PAD]
+      form.el.dataset.position == 'before' ? slices.unshift(slice) : slices.push(slice)
     }
     // Nomenclature : première page, à elle seule
     const legend = this.items.find(i => i.el === this.legendEl)

@@ -144,6 +144,10 @@ Cercle      : un cercle autour d'une note par exemple
   ]
 }
 ,{
+  operation: "Construire la forme"
+, procedure: ["Poser les marques de forme (débuts et, si besoin, fins de portion)","Menu « Forme > Construire la forme »","Choisir l'emplacement et les éléments à afficher, puis « Construire »"]
+}
+,{
   operation: "Aller à une mesure"
 , procedure: ["Menu « Forme > Aller à la mesure… »","Taper le numéro de la mesure puis Entrée"]
 }

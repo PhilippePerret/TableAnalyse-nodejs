@@ -159,6 +159,8 @@ panels:
     title:            "构建曲式"
     position:         "位置"
     build:            "构建"
+    measures:         "小节号"
+    keys:             "调性与转调"
   infos:
     title:            "分析的元数据"
     piece_title:      "作品标题"
@@ -437,3 +439,6 @@ marks:
 form_position:
   before: "乐谱之前"
   after:  "乐谱之后"
+
+form_diagram:
+  title: "曲式"

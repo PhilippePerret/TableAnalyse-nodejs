@@ -125,6 +125,8 @@ Construction de la forme, fin d'une portion (`Forme.endOf`) :
 2. sinon le premier début de portion suivant, de même niveau ou de niveau supérieur (une partie termine aussi une section) ;
 3. sinon la fin de la pièce.
 
+Construction (`FormeBuilder.js`, styles `css/Forme.css`) : `div#form-diagram` sur la table, avant (partition descendue si la place manque) ou après la partition. Même largeur pour chaque mesure (largeur des systèmes / dernier numéro de mesure). Une rangée par niveau, puis, selon les réglages (préférences cachées `form_build_measures`, `form_build_keys`), numéros de mesure et tonalités (marques de modulation). Redessinée à l'ouverture de l'analyse (préférence `form_built`, évènement `systems:loaded`). Noir et blanc ; couleurs des préférences en mode couleur. À l'export, page à elle seule (cf. `Exporter`, `formItem`).
+
 
 ## Groupement des tags
 

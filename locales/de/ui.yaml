@@ -159,6 +159,8 @@ panels:
     title:            "Form erstellen"
     position:         "Ort"
     build:            "Erstellen"
+    measures:         "Taktnummern"
+    keys:             "Tonarten und Modulationen"
   infos:
     title:            "Metadaten der Analyse"
     piece_title:      "Titel des Stücks"
@@ -438,3 +440,6 @@ marks:
 form_position:
   before: "Vor der Partitur"
   after:  "Nach der Partitur"
+
+form_diagram:
+  title: "Form"

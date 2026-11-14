@@ -1,7 +1,9 @@
 import { DCreate, DGet, listen } from './dom.js'
 import { message } from './lib/Message.js'
 import { Panneau } from './Panneau.js'
-import { pref } from './Preferences.js'
+import { pref, Preferences } from './Preferences.js'
+import { on } from './events.js'
+import { FormeBuilder } from './FormeBuilder.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
@@ -21,6 +23,14 @@ export class Forme {
    * Marques de forme dépliées (« Voir la forme »). Repliées par défaut.
    */
   static shown = false
+
+  /**
+   * Au lancement : forme construite (préférence form_built) redessinée
+   * dès que les systèmes sont chargés
+   */
+  static init(){
+    on('systems:loaded', () => pref('form_built') && FormeBuilder.build())
+  }
 
   /**
    * « Aller à la mesure… » : demande le numéro de la mesure et fait
@@ -100,7 +110,7 @@ export class Forme {
     const sys = Systeme.getSystemeAssociated(mark)
     const mesures = this.measureMarksOf(sys)
     if ( !sys || mesures.length == 0 ) return false
-    const rect  = m => (DGet('span.content', m.obj) || m.obj).getBoundingClientRect()
+    const rect  = this.measureRect
     const borne = DGet('span.borne', mark.obj).getBoundingClientRect()
     undefined === x && (x = borne.left + borne.width / 2)
     let i = mesures.findLastIndex(m => rect(m).left <= x)
@@ -114,6 +124,41 @@ export class Forme {
     }
     mark.left = Math.round(mark.left + dx / (mark.obj.currentCSSZoom || 1))
     return true
+  }
+
+  // Rectangle (écran) du numéro de mesure +m+
+  static measureRect(m){
+    return (DGet('span.content', m.obj) || m.obj).getBoundingClientRect()
+  }
+
+  /**
+   * Numéro de la mesure du système +sys+ qui contient l'abscisse +x+
+   * (écran) ; la première avant le premier numéro. null sans numéros.
+   */
+  static measureNumberAt(sys, x){
+    const mesures = this.measureMarksOf(sys)
+    if ( !mesures.length ) return null
+    const i = Math.max(0, mesures.findLastIndex(m => this.measureRect(m).left <= x))
+    return Number(String(mesures[i].content).trim())
+  }
+
+  /**
+   * Numéro de la mesure d'une marque : celle où commence la borne d'un
+   * début de portion, où finit celle d'une fin, où commence toute autre
+   * marque (p.e. une modulation)
+   */
+  static measureOf(mark){
+    const sys = Systeme.getSystemeAssociated(mark)
+    if ( !sys ) return null
+    const r = (DGet('span.borne', mark.obj) || mark.obj).getBoundingClientRect()
+    const isEnd = mark.isForme && TYPES_FORME[mark.subtype].startOf
+    return this.measureNumberAt(sys, isEnd ? r.right - 2 : r.left + 2)
+  }
+
+  // Dernier numéro de mesure de la pièce
+  static get lastMeasure(){
+    const nums = this.measureMarks.map(m => m.number)
+    return nums.length ? Math.max(...nums) : null
   }
 
   // Abscisse (écran) de la fin de la dernière mesure du système
@@ -180,8 +225,9 @@ export class Forme {
   }
 
   /**
-   * « Construire la forme » : panneau du choix de l'emplacement (avant
-   * ou après la partition, préférence form_position par défaut)
+   * « Construire la forme » : panneau des réglages de la construction
+   * (emplacement, éléments à afficher), enregistrés dans les
+   * préférences de l'analyse et remis à l'ouverture
    */
   static openBuildPanel(){
     this.panneau.isOpened || this.panneau.show()
@@ -191,30 +237,52 @@ export class Forme {
         panneauId:    'form-build-panel'
       , panneauTitle: t('ui.panels.form_build.title')
       , build:        this.buildPanel.bind(this)
-      , onOpen:       () => { DGet('#form-build-position').value = pref('form_position') }
+      , onOpen:       () => {
+          DGet('#form-build-position').value  = pref('form_position')
+          DGet('#form-build-measures').checked = pref('form_build_measures')
+          DGet('#form-build-keys').checked     = pref('form_build_keys')
+        }
     }))
   }
   static buildPanel(){
+    const T = k => t(`ui.panels.form_build.${k}`)
     const menu = DCreate('SELECT', {id: 'form-build-position', inner: ['before', 'after'].map(value =>
       DCreate('OPTION', {value, text: t(`ui.form_position.${value}`)})
     )})
-    const btn = DCreate('BUTTON', {class: 'btn-default', text: t('ui.panels.form_build.build')})
-    listen(btn, 'click', () => this.build(menu.value))
-    const o = DCreate('DIV', {id: 'form-build-panel', class: 'panneau hidden', style: 'width:420px;left:calc(50% - 210px);', inner: [
-        DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: t('ui.panels.form_build.position') + ' '}), menu]})
+    const checkbox = (id, label) => DCreate('DIV', {class: 'row', inner: [
+        DCreate('INPUT', {type: 'checkbox', id})
+      , DCreate('LABEL', {for: id, text: ' ' + label})
+    ]})
+    const btn = DCreate('BUTTON', {class: 'btn-default', text: T('build')})
+    listen(btn, 'click', () => this.build())
+    const o = DCreate('DIV', {id: 'form-build-panel', class: 'panneau hidden', style: 'width:max-content;left:calc(50% - 200px);', inner: [
+        DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('position') + ' '}), menu]})
+      , checkbox('form-build-measures', T('measures'))
+      , checkbox('form-build-keys', T('keys'))
       , DCreate('DIV', {class: 'buttons', inner: [btn]})
     ]})
     document.body.appendChild(o)
   }
 
   /**
-   * Construira la forme sur une nouvelle page, avant ou après la
-   * partition (+position+ : 'before' ou 'after'), à partir des débuts
-   * de portion (numéros de mesure, tonalités et modulations). Fin de
-   * chaque portion : cf. endOf.
+   * Bouton « Construire » : réglages enregistrés, puis construction de
+   * la forme à l'emplacement voulu (cf. FormeBuilder)
    */
-  static build(position){
+  static build(){
+    const settings = {
+        form_position:        DGet('#form-build-position').value
+      , form_build_measures:  DGet('#form-build-measures').checked
+      , form_build_keys:      DGet('#form-build-keys').checked
+    }
+    if ( !AObjet.items.some(ao => ao.isForme) ) return message(t('messages.no_form_mark'))
+    Object.entries(settings).forEach(([key, value]) => {
+      Preferences.set(key, value)
+      Preferences.saveData(key, value)
+    })
     this.panneau.hide()
-    message(t('messages.cannot_build_form'))
+    if ( FormeBuilder.build() ) {
+      pref('form_built') || Preferences.saveData('form_built', true)
+      FormeBuilder.scrollTo()
+    }
   }
 }

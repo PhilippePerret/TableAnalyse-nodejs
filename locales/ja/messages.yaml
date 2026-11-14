@@ -41,4 +41,4 @@ cutter:
 goto_measure_prompt: "小節へ移動（1〜%{last}）"
 no_measure_number: "表に小節番号がありません。"
 measure_not_found: "小節 %{num} が見つかりません。"
-cannot_build_form: "形式はまだ作成できません。"
+no_form_mark: "表に形式マークがありません。"

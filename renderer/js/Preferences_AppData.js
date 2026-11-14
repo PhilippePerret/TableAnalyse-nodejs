@@ -52,12 +52,12 @@ export const PreferencesAppData = {
   , color_mesure            :{type:'inputtext'    ,typeV:'color'    ,default:'000099'      ,selectors:'div.amark.txt.mes span.content' ,apply:true}
   , color_accords           :{type:'inputtext'    ,typeV:'color'    ,default:'999999'         ,selectors:'div.amark.acc span.content' ,apply:true}
   , color_harmonie          :{type:'inputtext'    ,typeV:'color'    ,default:'999999' ,selectors:'div.amark.har span.content' ,apply:true}
-  , color_mark_parties      :{type:'inputtext'    ,typeV:'color'    ,default:'CC0000'      ,selectors:'div.amark.prt span.content, div.amark.prt span.vline, div.amark.prtz span.content, div.amark.prtz span.vline' ,apply:true}
-  , color_mark_sections     :{type:'inputtext'    ,typeV:'color'    ,default:'CC0000'    ,selectors:'div.amark.sec span.content, div.amark.sec span.vline, div.amark.secz span.content, div.amark.secz span.vline' ,apply:true}
+  , color_mark_parties      :{type:'inputtext'    ,typeV:'color'    ,default:'CC0000'      ,selectors:'div.amark.prt span.content, div.amark.prt span.vline, div.amark.prtz span.content, div.amark.prtz span.vline, div.form-diagram div.portion.fpar' ,apply:true}
+  , color_mark_sections     :{type:'inputtext'    ,typeV:'color'    ,default:'CC0000'    ,selectors:'div.amark.sec span.content, div.amark.sec span.vline, div.amark.secz span.content, div.amark.secz span.vline, div.form-diagram div.portion.fsec' ,apply:true}
   , color_cellule           :{type:'inputtext'    ,typeV:'color'    ,default:'8383ed' ,selectors:'div.amark.cel, div.amark.cel span.content' ,apply:true}
-  , color_modulations       :{type:'inputtext'    ,typeV:'color'    ,default:'009900' ,selectors:'div.amark.mod:before, div.amark.mod span.content, div.amark.mod span.vline' ,apply:true}
+  , color_modulations       :{type:'inputtext'    ,typeV:'color'    ,default:'009900' ,selectors:'div.amark.mod:before, div.amark.mod span.content, div.amark.mod span.vline, div.form-diagram span.fkey' ,apply:true}
   , color_emprunts          :{type:'inputtext'    ,typeV:'color'    ,default:'22BB22'     ,selectors:'div.amark.emp, div.amark.emp span.content' ,apply:true}
-  , color_segments          :{type:'inputtext'    ,typeV:'color'    ,default:'333333'               ,selectors:'div.amark.seg, div.amark.seg span.content' ,apply:true}
+  , color_segments          :{type:'inputtext'    ,typeV:'color'    ,default:'333333'               ,selectors:'div.amark.seg, div.amark.seg span.content, div.form-diagram div.portion.fseg' ,apply:true}
   
 
   // --- Forme (marques de forme et construction) ---
@@ -68,6 +68,9 @@ export const PreferencesAppData = {
         {name: t('ui.form_position.before'), value: 'before'}
       , {name: t('ui.form_position.after'),  value: 'after'}
     ]}
+  , form_build_measures     :{type:'checkbox'     ,typeV:'boolean'  ,default:true   ,hidden:true}
+  , form_build_keys         :{type:'checkbox'     ,typeV:'boolean'  ,default:true   ,hidden:true}
+  , form_built              :{type:'checkbox'     ,typeV:'boolean'  ,default:false  ,hidden:true}
 
   , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}

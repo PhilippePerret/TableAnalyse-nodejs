@@ -159,6 +159,8 @@ panels:
     title:            "Construire la forme"
     position:         "Emplacement"
     build:            "Construire"
+    measures:         "Numéros de mesure"
+    keys:             "Tonalités et modulations"
   infos:
     title:            "Métadonnées de l'analyse"
     piece_title:      "Titre de la pièce"
@@ -439,3 +441,6 @@ marks:
 form_position:
   before: "Avant la partition"
   after:  "Après la partition"
+
+form_diagram:
+  title: "Forme"

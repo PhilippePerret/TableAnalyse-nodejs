@@ -41,4 +41,4 @@ cutter:
 goto_measure_prompt: "Vai alla battuta (da 1 a %{last})"
 no_measure_number: "Nessun numero di battuta sulla tavola."
 measure_not_found: "Battuta %{num} non trovata."
-cannot_build_form: "Non è ancora possibile costruire la forma."
+no_form_mark: "Nessuna marca di forma sulla tavola."

@@ -331,6 +331,7 @@ export class Systeme extends AObjet {
     // hauteur ; on corrige les chevauchements.
     this.checkAndRepareSystemsPosition()
     this.placeMeasureNumbers()
+    emit('systems:loaded')
   }
 
   static checkAndRepareSystemsPosition(){

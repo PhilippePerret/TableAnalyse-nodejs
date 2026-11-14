@@ -159,6 +159,8 @@ panels:
     title:            "Build the form"
     position:         "Location"
     build:            "Build"
+    measures:         "Measure numbers"
+    keys:             "Keys and modulations"
   infos:
     title:            "Analysis Metadata"
     piece_title:      "Title of the Piece"
@@ -438,3 +440,6 @@ marks:
 form_position:
   before: "Before the score"
   after:  "After the score"
+
+form_diagram:
+  title: "Form"

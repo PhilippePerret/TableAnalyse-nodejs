@@ -159,6 +159,8 @@ panels:
     title:            "形式を作成"
     position:         "位置"
     build:            "作成"
+    measures:         "小節番号"
+    keys:             "調と転調"
   infos:
     title:            "分析のメタデータ"
     piece_title:      "曲名"
@@ -437,3 +439,6 @@ marks:
 form_position:
   before: "楽譜の前"
   after:  "楽譜の後"
+
+form_diagram:
+  title: "形式"

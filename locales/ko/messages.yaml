@@ -41,4 +41,4 @@ cutter:
 goto_measure_prompt: "마디로 이동 (1~%{last})"
 no_measure_number: "표에 마디 번호가 없습니다."
 measure_not_found: "%{num}마디를 찾을 수 없습니다."
-cannot_build_form: "아직 형식을 만들 수 없습니다."
+no_form_mark: "표에 형식 표시가 없습니다."

@@ -159,6 +159,8 @@ panels:
     title:            "Construir la forma"
     position:         "Ubicación"
     build:            "Construir"
+    measures:         "Números de compás"
+    keys:             "Tonalidades y modulaciones"
   infos:
     title:            "Metadatos del análisis"
     piece_title:      "Título de la obra"
@@ -438,3 +440,6 @@ marks:
 form_position:
   before: "Antes de la partitura"
   after:  "Después de la partitura"
+
+form_diagram:
+  title: "Forma"
