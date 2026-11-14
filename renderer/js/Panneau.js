@@ -94,6 +94,12 @@ export function addPanelHead(obj, {title, onClose}){
     Object.assign(obj.style, {left: `${r.left / z}px`, top: `${r.top / z}px`, right: 'auto', bottom: 'auto', transform: 'none'})
   })
   draggable(obj, {handle: '.panneau-head'})
+  // Touches tapées dans un champ : elles ne sortent pas du panneau (un
+  // « O » majuscule n'ouvre pas la boite à outils…). Échap excepté
+  // (fermeture des boites)
+  ;['keydown', 'keypress', 'keyup'].forEach(type => listen(obj, type, (e) => {
+    if ( e.key != 'Escape' && isTextField(e.target) ) e.stopPropagation()
+  }))
   listen(obj, 'keydown', (e) => {
     if ( e.key != 'Enter' || e.isComposing || ['TEXTAREA', 'BUTTON', 'SELECT'].includes(e.target.tagName) ) return
     const btn = Array.from(obj.querySelectorAll('button.btn-default')).find(b => !b.disabled && b.offsetParent)
@@ -113,6 +119,11 @@ export function addPanelHead(obj, {title, onClose}){
     listen(btn, 'click', (e) => { e.stopPropagation() ; onClose() })
   }
   return head
+}
+
+// Champ de saisie (texte)
+function isTextField(el){
+  return !!el && (el.isContentEditable || el.tagName == 'TEXTAREA' || (el.tagName == 'INPUT' && !['checkbox', 'radio', 'button', 'submit'].includes(el.type)))
 }
 
 const panelsInView = new Set()

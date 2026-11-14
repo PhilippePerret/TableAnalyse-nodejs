@@ -281,9 +281,7 @@ function buildMenu(){
     {
       label: t('ui.menu.tools_menu'),
       submenu: [
-          // Pas de raccourci affiché : sur Mac, « ⇧O » dans le menu serait
-          // pris même en tapant dans un champ (géré par le renderer)
-          {label: t('ui.menu.tools'),           click: () => sendMenuCommand('toolsPanel')}
+          {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: () => sendMenuCommand('toolsPanel')}
         , {label: t('ui.menu.animate'),         click: () => sendMenuCommand('animate')}
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}

@@ -169,6 +169,9 @@ export class Editeur {
     listen(this.textField,  'blur',  this.onBlurTextField.bind(this))
     listen(this.textarea,   'focus', this.onFocusTextField.bind(this))
     listen(this.textarea,   'blur',  this.onBlurTextField.bind(this))
+    listen(this.obj,        'keypress', this.onKeyPress.bind(this))
+    listen(this.obj,        'keydown',  this.onKeyDown.bind(this))
+    listen(this.obj,        'keyup',    this.onKeyUp.bind(this))
   }
 
   get typeButtonLabel(){
@@ -219,11 +222,10 @@ export class Editeur {
     field.focus()
   }
 
+  // Touches de l'éditeur écoutées sur l'éditeur lui-même (celles des
+  // champs ne sortent pas du panneau, cf. addPanelHead)
   onFocusTextField(e){
     UI.desactiveCurrentShortcuts()
-    window.onkeypress = this.onKeyPress.bind(this)
-    window.onkeyup    = this.onKeyUp.bind(this)
-    window.onkeydown  = this.onKeyDown.bind(this)
   }
   onBlurTextField(e){
     UI.reactiveCurrentShortcuts()
