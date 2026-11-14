@@ -59,13 +59,15 @@ export const PreferencesAppData = {
   , color_emprunts          :{type:'inputtext'    ,typeV:'color'    ,default:'22BB22'     ,selectors:'div.amark.emp, div.amark.emp span.content' ,apply:true}
   , color_segments          :{type:'inputtext'    ,typeV:'color'    ,default:'333333'               ,selectors:'div.amark.seg, div.amark.seg span.content' ,apply:true}
   
+
+  // --- Forme (marques de forme et construction) ---
+  , form_height_1           :{type:'inputtext'    ,typeV:'number'   ,default:160 ,unite:'px'}
+  , form_height_2           :{type:'inputtext'    ,typeV:'number'   ,default:120 ,unite:'px'}
+  , form_height_3           :{type:'inputtext'    ,typeV:'number'   ,default:80  ,unite:'px'}
   , form_position           :{type:'select'       ,typeV:'string'   ,default:'after', values: [
         {name: t('ui.form_position.before'), value: 'before'}
       , {name: t('ui.form_position.after'),  value: 'after'}
     ]}
-  , form_height_1           :{type:'inputtext'    ,typeV:'number'   ,default:160 ,unite:'px'}
-  , form_height_2           :{type:'inputtext'    ,typeV:'number'   ,default:120 ,unite:'px'}
-  , form_height_3           :{type:'inputtext'    ,typeV:'number'   ,default:80  ,unite:'px'}
 
   , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
