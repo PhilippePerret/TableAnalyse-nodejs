@@ -143,6 +143,7 @@ buttons:
   apply:            "应用"
   type:             "类型…"
   subtype:          "子类型…"
+  defaults:         "默认设置"
 
 message_titles:
   notice:           "信息"

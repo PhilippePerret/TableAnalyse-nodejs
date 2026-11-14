@@ -143,6 +143,7 @@ buttons:
   apply:            "Applica"
   type:             "Tipo…"
   subtype:          "Sottotipo…"
+  defaults:         "Impostazioni predefinite"
 
 message_titles:
   notice:           "Informazione"

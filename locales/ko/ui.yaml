@@ -143,6 +143,7 @@ buttons:
   apply:            "적용"
   type:             "종류…"
   subtype:          "하위 종류…"
+  defaults:         "기본 설정"
 
 message_titles:
   notice:           "알림"

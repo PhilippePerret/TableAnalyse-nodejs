@@ -217,10 +217,13 @@ build(){
     prefs.forEach(dp => this.buildPref(o, dp))
   })
 
-  // Pied de page : « Enregistrer » (bouton par défaut)
+  // Pied de page : « Réglages par défaut », « Enregistrer » (bouton par
+  // défaut)
+  const btnDefaults = DCreate('BUTTON', {class:'btn-defaults', text: t('ui.buttons.defaults')})
+  listen(btnDefaults, 'click', this.resetToDefaults.bind(this))
   const btnSave = DCreate('BUTTON', {class:'btn-default', text: t('ui.buttons.save')})
   listen(btnSave, 'click', this.save.bind(this))
-  o.appendChild(DCreate('DIV', {class:'buttons', inner: [btnSave]}))
+  o.appendChild(DCreate('DIV', {class:'buttons', inner: [btnDefaults, btnSave]}))
 
   document.body.appendChild(o)
 
@@ -245,6 +248,18 @@ buildPref(o, dp){
   if ( dp.precision ) {
     o.appendChild(DCreate('DIV',{class:'description', text:dp.precision}))
   }
+}
+
+// « Réglages par défaut » : valeurs par défaut réaffectées à toutes les
+// préférences du panneau
+resetToDefaults(){
+  Object.values(PreferencesAppData).forEach(dp => {
+    if ( dp.hidden ) return
+    Preferences.set(dp.id, dp.default)
+    Preferences.saveData(dp.id, dp.default)
+  })
+  this.updateStylesInHead()
+  Current.analyse && Current.analyse.updateModeColor()
 }
 
 // Enregistrement des préférences de l'analyse, puis fermeture

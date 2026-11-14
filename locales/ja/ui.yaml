@@ -143,6 +143,7 @@ buttons:
   apply:            "適用"
   type:             "種類…"
   subtype:          "サブ種類…"
+  defaults:         "既定の設定"
 
 message_titles:
   notice:           "お知らせ"
