@@ -109,9 +109,11 @@ export class Forme {
    * de portion, à droite sur sa fin (mesure suivante ou, pour la
    * dernière, dernière barre relevée par la découpe, sinon bout du
    * système) pour une fin de portion.
-   * Le début (ou la fin) de mesure le plus proche de +x+ (abscisse à
-   * l'écran, p.e. le clic) ou, sans +x+ (« Aligner à la mesure »), du bord
-   * gauche de la borne (droit pour une fin de portion).
+   * Début de portion : le début de mesure le plus proche de +x+
+   * (abscisse à l'écran, p.e. le clic) ou, sans +x+ (« Aligner à la
+   * mesure »), du bord gauche de la borne. Fin de portion : la fin de la
+   * mesure qui contient +x+ ou, sans +x+, la fin de mesure la plus
+   * proche du bord droit de la borne.
    * @return true si la marque a été placée
    */
   static placeOnMeasure(mark, x){
@@ -122,8 +124,15 @@ export class Forme {
     const borne  = DGet('span.borne', mark.obj).getBoundingClientRect()
     const starts = mesures.map(m => this.measureRect(m).left)
     const ends   = [...starts.slice(1), this.systemEndX(sys)]
-    const from = undefined === x ? (isEnd ? borne.right : borne.left) : x
-    let target = (isEnd ? ends : starts).reduce((best, v) => Math.abs(v - from) < Math.abs(best - from) ? v : best)
+    let target
+    if ( isEnd && undefined !== x ) {
+      // Fin de portion créée : fin de la mesure cliquée (la dernière de
+      // la portion)
+      target = ends[Math.max(0, starts.findLastIndex(v => v <= x))]
+    } else {
+      const from = undefined === x ? (isEnd ? borne.right : borne.left) : x
+      target = (isEnd ? ends : starts).reduce((best, v) => Math.abs(v - from) < Math.abs(best - from) ? v : best)
+    }
     // Fin de portion : bord droit de la borne sur la barre de mesure
     // elle-même (le numéro de la mesure suivante est un peu après)
     if ( isEnd ) target = this.barlineNear(sys, target, target == ends[ends.length - 1] ? 60 : 25) ?? target
