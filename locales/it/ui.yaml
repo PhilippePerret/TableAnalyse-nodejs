@@ -309,6 +309,10 @@ dialogs:
   pdf_filter:            "Partitura PDF"
   replace_systems:       "Sostituire i sistemi dell'analisi?"
   replace_systems_detail: "I %{count} sistemi attuali saranno sostituiti da quelli del taglio."
+  count_first:           "Contare e numerare la prima battuta?"
+  count_first_detail:    "Scegliere «No» se il brano inizia con un'anacrusi: la prima battuta non sarà né contata né numerata."
+  count_first_no:        "No (anacrusi)"
+  count_first_yes:       "Sì"
 
 # Preferenze dell'analisi (etichetta e precisazione)
 prefs:

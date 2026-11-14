@@ -309,6 +309,10 @@ dialogs:
   pdf_filter:            "PDF 乐谱"
   replace_systems:       "替换分析中的声部组？"
   replace_systems_detail: "当前的 %{count} 个声部组将被切分得到的声部组替换。"
+  count_first:           "是否计数并编号第一小节？"
+  count_first_detail:    "如果乐曲以弱起开始，请选择“否”：第一小节将不计数也不编号。"
+  count_first_no:        "否（弱起）"
+  count_first_yes:       "是"
 
 # 分析的偏好设置（标签与说明）
 prefs:

@@ -525,12 +525,15 @@ checkSystems(){
    * ensuite rechargée.
    */
   static async cutScore(){
+    // Première mesure comptée ? (pas en cas d'anacrouse) Demandé d'abord
+    const countFirst = await invoke('dialog:countFirstMeasure')
+    if ( null === countFirst ) return
     if ( !(await this.saveIfModified()) ) return
     try {
       const pdf = await invoke('analyse:chooseScorePdf')
       if ( !pdf ) return
       Sablier.show(t('messages.cutting_score'))
-      await invoke('analyse:cutScore', {pdf})
+      await invoke('analyse:cutScore', {pdf, countFirst})
     } catch(err) {
       Sablier.hide()
       erreur(err.message)
@@ -542,10 +545,13 @@ checkSystems(){
    * ensuite rechargée.
    */
   static async numberScore(){
+    // Première mesure comptée ? (pas en cas d'anacrouse) Demandé d'abord
+    const countFirst = await invoke('dialog:countFirstMeasure')
+    if ( null === countFirst ) return
     if ( !(await this.saveIfModified()) ) return
     try {
       Sablier.show(t('messages.numbering_score'))
-      await invoke('analyse:numberScore')
+      await invoke('analyse:numberScore', {countFirst})
     } catch(err) {
       Sablier.hide()
       erreur(err.message)

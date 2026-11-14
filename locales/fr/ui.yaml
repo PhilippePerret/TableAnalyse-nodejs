@@ -309,6 +309,10 @@ dialogs:
   pdf_filter:            "Partition PDF"
   replace_systems:       "Remplacer les systèmes de l'analyse ?"
   replace_systems_detail: "Les %{count} systèmes actuels seront remplacés par ceux de la découpe."
+  count_first:           "Faut-il compter et numéroter la première mesure ?"
+  count_first_detail:    "Choisir « Non » si la pièce commence par une anacrouse : la première mesure ne sera ni comptée ni numérotée."
+  count_first_no:        "Non (anacrouse)"
+  count_first_yes:       "Oui"
 
 # Préférences de l'analyse (label et précision)
 prefs:

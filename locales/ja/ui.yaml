@@ -309,6 +309,10 @@ dialogs:
   pdf_filter:            "PDF 楽譜"
   replace_systems:       "分析の段を置き換えますか？"
   replace_systems_detail: "現在の %{count} 段は、切り分けで得られた段に置き換えられます。"
+  count_first:           "最初の小節を数えて番号を付けますか？"
+  count_first_detail:    "アウフタクトで始まる場合は「いいえ」を選びます。最初の小節は数えず、番号も付けません。"
+  count_first_no:        "いいえ（アウフタクト）"
+  count_first_yes:       "はい"
 
 # 分析の環境設定（ラベルと説明）
 prefs:

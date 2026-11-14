@@ -58,7 +58,7 @@ async function saveDebug(img, res, file){
     sys.barlines.forEach(b => ctx.fillRect(b.x0 - 2, sys.top - res.s, b.x1 - b.x0 + 5, sys.bottom - sys.top + 2 * res.s))
     ctx.font = `bold ${Math.round(res.s * 1.2)}px sans-serif`
     ctx.fillStyle = 'red'
-    sys.measures.forEach(m => ctx.fillText(String(m.number), m.x, sys.bottom + res.s * 2.5))
+    sys.measures.forEach(m => null != m.number && ctx.fillText(String(m.number), m.x, sys.bottom + res.s * 2.5))
   })
   const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: 0.8})
   fs.writeFileSync(file, Buffer.from(await blob.arrayBuffer()))
@@ -78,11 +78,25 @@ function mesuresYAML(mesures){
     out.push(`  width: ${m.width}`)
     out.push(`  height: ${m.height}`)
     out.push(`  measures:`)
-    m.measures.forEach(me => out.push(`    - {number: ${me.number}, x: ${me.x - m.x0}}`))
+    m.measures.forEach(me => null != me.number && out.push(`    - {number: ${me.number}, x: ${me.x - m.x0}}`))
     // Fin de la dernière mesure (dernière barre)
     null != m.end && out.push(`  end: ${m.end - m.x0}`)
   }
   return out.join('\n') + '\n'
+}
+
+/**
+ * Numéros des mesures, dans l'ordre : la première n'est ni comptée ni
+ * numérotée (null) si opts.countFirst est false (anacrouse)
+ */
+function measureNumberer(){
+  let measure = 0, first = true
+  const fn = () => {
+    if ( first ) { first = false ; if ( opts.countFirst === false ) return null }
+    return ++measure
+  }
+  Object.defineProperty(fn, 'count', {get: () => measure})
+  return fn
 }
 
 async function run(){
@@ -93,7 +107,8 @@ async function run(){
   if ( opts.pages ) fs.mkdirSync(pagesFolder, {recursive: true})
   if ( opts.controle ) fs.mkdirSync(debugFolder, {recursive: true})
 
-  let number = 0, measure = 0
+  let number = 0
+  const numero = measureNumberer()
   const mesures = []
   for ( let p = 1 ; p <= pdf.numPages ; ++p ) {
     const page     = await pdf.getPage(p)
@@ -114,7 +129,7 @@ async function run(){
     for ( let i = 0 ; i < res.systems.length ; ++i ) {
       const sys = res.systems[i]
       sys.number = ++number
-      sys.measures.forEach(m => m.number = ++measure)
+      sys.measures.forEach(m => m.number = numero())
       const image = `system-${String(number).padStart(3, '0')}.jpg`
       await saveJPG(extractSystem(img, res, i), path.join(opts.out, image))
       const {x0, y0, x1, y1} = sys.crop
@@ -125,7 +140,7 @@ async function run(){
     if ( opts.controle ) await saveDebug(img, res, path.join(debugFolder, pageName))
   }
   fs.writeFileSync(path.join(opts.out, 'mesures.yaml'), mesuresYAML(mesures))
-  log(T('done', {systems: number, measures: measure, out: opts.out}))
+  log(T('done', {systems: number, measures: numero.count, out: opts.out}))
 }
 
 async function loadImage(file){
@@ -139,7 +154,7 @@ async function loadImage(file){
 }
 
 async function runNumbering(){
-  let measure = 0
+  const numero = measureNumberer()
   const mesures = []
   for ( const image of opts.images ) {
     const img = await loadImage(path.join(opts.folder, image))
@@ -147,14 +162,14 @@ async function runNumbering(){
     res.warnings.forEach(w => log(T('image_warning', {image, warning: w})))
     if ( res.systems.length > 1 ) log(T('image_systems', {image, count: res.systems.length}))
     const measures = res.systems.flatMap(sys => sys.measures)
-    measures.forEach(m => m.number = ++measure)
+    measures.forEach(m => m.number = numero())
     // Fin de la dernière mesure : seulement pour une image d'un système
     const end = res.systems.length == 1 ? res.systems[0].lastBar : null
     mesures.push({image, width: img.width, height: img.height, measures, end, x0: 0})
     log(T('image_measures', {image, count: measures.length}))
   }
   fs.writeFileSync(path.join(opts.out, 'mesures.yaml'), mesuresYAML(mesures))
-  log(T('numbered', {measures: measure, systems: opts.images.length}))
+  log(T('numbered', {measures: numero.count, systems: opts.images.length}))
 }
 
 ;(opts.mode === 'numerotation' ? runNumbering() : run())

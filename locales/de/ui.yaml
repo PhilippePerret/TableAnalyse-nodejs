@@ -309,6 +309,10 @@ dialogs:
   pdf_filter:            "PDF-Partitur"
   replace_systems:       "Die Systeme der Analyse ersetzen?"
   replace_systems_detail: "Die %{count} aktuellen Systeme werden durch die des Zerschneidens ersetzt."
+  count_first:           "Den ersten Takt zählen und nummerieren?"
+  count_first_detail:    "„Nein“ wählen, wenn das Stück mit einem Auftakt beginnt: Der erste Takt wird weder gezählt noch nummeriert."
+  count_first_no:        "Nein (Auftakt)"
+  count_first_yes:       "Ja"
 
 # Einstellungen der Analyse (Beschriftung und Erläuterung)
 prefs:

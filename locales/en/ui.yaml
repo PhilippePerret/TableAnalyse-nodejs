@@ -309,6 +309,10 @@ dialogs:
   pdf_filter:            "PDF score"
   replace_systems:       "Replace the systems of the analysis?"
   replace_systems_detail: "The %{count} current systems will be replaced by those of the cut."
+  count_first:           "Count and number the first measure?"
+  count_first_detail:    "Choose “No” if the piece begins with an upbeat: the first measure will be neither counted nor numbered."
+  count_first_no:        "No (upbeat)"
+  count_first_yes:       "Yes"
 
 # Analysis preferences (label and precision)
 prefs:

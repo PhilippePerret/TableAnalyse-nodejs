@@ -309,6 +309,10 @@ dialogs:
   pdf_filter:            "Partitura PDF"
   replace_systems:       "¿Reemplazar los sistemas del análisis?"
   replace_systems_detail: "Los %{count} sistemas actuales se reemplazarán por los del recorte."
+  count_first:           "¿Contar y numerar el primer compás?"
+  count_first_detail:    "Elegir «No» si la pieza empieza con una anacrusa: el primer compás no se contará ni se numerará."
+  count_first_no:        "No (anacrusa)"
+  count_first_yes:       "Sí"
 
 # Preferencias del análisis (etiqueta y precisión)
 prefs:

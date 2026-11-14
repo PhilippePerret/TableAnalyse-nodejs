@@ -456,11 +456,25 @@ function registerIpc(){
     return res.filePaths[0]
   })
 
-  handle('analyse:cutScore', async ({pdf}) => {
+  // Compter et numéroter la première mesure (non : anacrouse) ?
+  // @return true, false ou null (annulation)
+  handle('dialog:countFirstMeasure', async () => {
+    const {response} = await dialog.showMessageBox(mainWindow, {
+        type:      'question'
+      , message:   t('ui.dialogs.count_first')
+      , detail:    t('ui.dialogs.count_first_detail')
+      , buttons:   [t('ui.buttons.cancel'), t('ui.dialogs.count_first_no'), t('ui.dialogs.count_first_yes')]
+      , defaultId: 2
+      , cancelId:  0
+    })
+    return response == 0 ? null : response == 2
+  })
+
+  handle('analyse:cutScore', async ({pdf, countFirst}) => {
     const analyse = requireCurrent()
     const out = fs.mkdtempSync(path.join(os.tmpdir(), 'decoupe-'))
     try {
-      await runCutter({pdf, out, dpi: 300, quality: 90})
+      await runCutter({pdf, out, dpi: 300, quality: 90, countFirst})
       analyse.replaceSystems(out)
       justCut = true
     } finally {
@@ -469,11 +483,11 @@ function registerIpc(){
     setTimeout(reloadWindow, 10)
   })
 
-  handle('analyse:numberScore', async () => {
+  handle('analyse:numberScore', async ({countFirst}) => {
     const analyse = requireCurrent()
     const images = analyse.systemsInFolder
     if ( !images.length ) throw new Error(t('errors.no_systems_to_number'))
-    await runCutter({mode: 'numerotation', folder: analyse.systemsFolder, images, out: analyse.systemsFolder})
+    await runCutter({mode: 'numerotation', folder: analyse.systemsFolder, images, out: analyse.systemsFolder, countFirst})
     setTimeout(reloadWindow, 10)
   })
 
