@@ -402,9 +402,15 @@ marks:
     re: "Retard"
     br: "Broderie"
     db: "Double-broderie"
+    bc: "Brod. chromatique"
+    dc: "Dbl-brod. chromatique"
     ec: "Échappée"
     in: "Note naturelle"
     an: "Anacrouse"
+  notes_full:
+    ac: "Appoggiature chromatique"
+    bc: "Broderie chromatique"
+    dc: "Double-broderie chromatique"
   cadences:
     par: "Cadence parfaite"
     imp: "Cadence imparfaite"

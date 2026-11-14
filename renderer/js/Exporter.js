@@ -386,7 +386,7 @@ class Stage {
       const subtype = Object.keys(TYPES_NOTES).find(st => mark.classList.contains(st))
       legend.appendChild(DCreate('DIV', {style: 'display:flex;align-items:center;gap:40px;margin:24px 0;', inner: [
           DCreate('DIV', {style: 'width:160px;display:flex;justify-content:center;', inner: [sign]})
-        , DCreate('SPAN', {text: TYPES_NOTES[subtype].name, style: 'font-size:40px;'})
+        , DCreate('SPAN', {text: TYPES_NOTES[subtype].full || TYPES_NOTES[subtype].name, style: 'font-size:40px;'})
       ]}))
     })
     this.content.appendChild(legend)

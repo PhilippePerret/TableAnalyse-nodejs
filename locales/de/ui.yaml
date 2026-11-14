@@ -402,9 +402,15 @@ marks:
     re: "Vorhalt"
     br: "Wechselnote"
     db: "Doppelte Wechselnote"
+    bc: "Chrom. Wechselnote"
+    dc: "Dopp. chrom. Wechselnote"
     ec: "Abspringende Note"
     in: "Akkordton"
     an: "Vorausnahme"
+  notes_full:
+    ac: "Chromatischer Vorhalt"
+    bc: "Chromatische Wechselnote"
+    dc: "Chromatische Doppelwechselnote"
   cadences:
     par: "Ganzschluss"
     imp: "Unvollkommener Ganzschluss"

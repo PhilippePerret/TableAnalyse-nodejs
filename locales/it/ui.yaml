@@ -402,9 +402,15 @@ marks:
     re: "Ritardo"
     br: "Nota di volta"
     db: "Doppia nota di volta"
+    bc: "Fior. cromatica"
+    dc: "Dopp. fior. cromatica"
     ec: "Sfuggita"
     in: "Nota reale"
     an: "Anticipazione"
+  notes_full:
+    ac: "Appoggiatura cromatica"
+    bc: "Fioritura cromatica"
+    dc: "Doppia fioritura cromatica"
   cadences:
     par: "Cadenza perfetta"
     imp: "Cadenza imperfetta"

@@ -402,9 +402,15 @@ marks:
     re: "Suspension"
     br: "Neighbor note"
     db: "Double neighbor"
+    bc: "Chrom. neighbor"
+    dc: "Dbl chrom. neighbor"
     ec: "Escape tone"
     in: "Chord tone"
     an: "Anticipation"
+  notes_full:
+    ac: "Chromatic appoggiatura"
+    bc: "Chromatic neighbor tone"
+    dc: "Chromatic double neighbor"
   cadences:
     par: "Perfect cadence"
     imp: "Imperfect cadence"

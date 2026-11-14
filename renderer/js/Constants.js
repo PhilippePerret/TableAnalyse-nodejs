@@ -28,13 +28,16 @@ export const TAILLES_TEXTE = {
   , 'idx'   : {name:t('ui.marks.texts.idx.name')  ,value:'idx'    ,shortcut:'i' ,default:t('ui.marks.texts.idx.default')}
 }
 
+// :full, nom entier (nomenclature de l'export) quand :name est abrégé
 export const TYPES_NOTES = {
   'np': {name:t('ui.marks.notes.np')   , value:'np', autocontent:'NP'  , shortcut:'p'}
   , 'ap': {name:t('ui.marks.notes.ap')      , value:'ap', autocontent:'AP'  , shortcut:'a'}
-  , 'ac': {name:t('ui.marks.notes.ac') , value:'ac', autocontent:'AC'  , shortcut:'c'}
+  , 'ac': {name:t('ui.marks.notes.ac') , value:'ac', autocontent:'AC'  , shortcut:'A', full:t('ui.marks.notes_full.ac')}
   , 're': {name:t('ui.marks.notes.re')            , value:'re', autocontent:'R'   , shortcut:'r'}
   , 'br': {name:t('ui.marks.notes.br')          , value:'br', autocontent:'BR'  , shortcut:'b'}
   , 'db': {name:t('ui.marks.notes.db')   , value:'db', autocontent:'DB'  , shortcut:'d'}
+  , 'bc': {name:t('ui.marks.notes.bc')   , value:'bc', autocontent:'BC'  , shortcut:'B', full:t('ui.marks.notes_full.bc')}
+  , 'dc': {name:t('ui.marks.notes.dc')   , value:'dc', autocontent:'DC'  , shortcut:'D', full:t('ui.marks.notes_full.dc')}
   , 'ec': {name:t('ui.marks.notes.ec')          , value:'ec', autocontent:'E'   , shortcut:'e'}
   , 'in': {name:t('ui.marks.notes.in')    , value:'in', autocontent:'NN'  , shortcut:'n'}
   , 'an': {name:t('ui.marks.notes.an')         , value:'an', autocontent:'AN'  , shortcut:'s'}

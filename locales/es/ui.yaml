@@ -402,9 +402,15 @@ marks:
     re: "Retardo"
     br: "Bordadura"
     db: "Doble bordadura"
+    bc: "Bord. cromática"
+    dc: "Dbl. bord. cromática"
     ec: "Escapada"
     in: "Nota real"
     an: "Anticipación"
+  notes_full:
+    ac: "Apoyatura cromática"
+    bc: "Bordadura cromática"
+    dc: "Doble bordadura cromática"
   cadences:
     par: "Cadencia perfecta"
     imp: "Cadencia imperfecta"
