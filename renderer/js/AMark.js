@@ -57,6 +57,9 @@ export class AMark extends AObjet {
       // console.info("CREATE: Marque d'analyse avec données : ", params)
       // Identifiant unique
       Object.assign(params, { id: Current.analyse.newId() })
+      // Marque de forme : endroit du clic (non enregistré)
+      const clickX = params.clickX
+      delete params.clickX
       // Numéro de mesure ajouté quand la ligne des numéros existe : il
       // y prend place et renumérote les suivants
       const onMeasureLine = params.subtype == 'mes' && Systeme.hasMeasureLine
@@ -66,7 +69,12 @@ export class AMark extends AObjet {
       newMark.build_and_observe()
       newMark.toggleFromSelection(/* keep_other = */ false)
       newMark.ajustePosition(newMark.left, newMark.top)
-      newMark.isForme && newMark.aimanteSurMesure()
+      // Marque de forme : à sa hauteur, au début (ou à la fin) de la
+      // mesure cliquée
+      if ( newMark.isForme && undefined !== clickX ) {
+        newMark.placeAtHeight()
+        Forme.placeOnMeasure(newMark, clickX - window.scrollX)
+      }
       if ( onMeasureLine ) {
         Systeme.placeMeasureNumbers()
         Systeme.renumberMeasures(newMark)
@@ -770,7 +778,7 @@ onContextMenu(e){
   ]
   this.type == 'acc' && items.push({label: T('align_harmony'), value: 'alignHarmony'})
   this.type == 'har' && items.push({label: T('align_chord'),   value: 'alignChord'})
-  this.isForme && items.push({label: T('align_measure'), value: 'alignMeasure'})
+  this.isForme && items.push({label: T('align_measure'), value: 'alignMeasure'}, {label: T('form_height'), value: 'formHeight'})
   items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
   invoke('menu:popup', {items})
     .then(choice => choice && this.onContextChoice(choice))
@@ -790,7 +798,8 @@ onContextChoice(choice){
     case 'align':         return targets.forEach(m => m.alignOnSameType())
     case 'alignHarmony':  return this.alignHorizontallyOn('har', 'no_harmony_mark')
     case 'alignChord':    return this.alignHorizontallyOn('acc', 'no_chord_mark')
-    case 'alignMeasure':  return targets.filter(m => m.isForme).forEach(m => m.aimanteSurMesure())
+    case 'alignMeasure':  return targets.filter(m => m.isForme).forEach(m => m.placeOnMeasure())
+    case 'formHeight':    return targets.filter(m => m.isForme).forEach(m => m.placeAtHeight())
     case 'delete':
       targets.forEach(m => AObjet.remove(m))
       AObjet.deselectAll()
@@ -808,18 +817,18 @@ toggleExpanded(expanded){
 }
 
 /**
- * Marque de forme : centre la borne sur le numéro de mesure le plus
- * proche horizontalement, dans le même système. Elle reste ensuite
- * déplaçable librement.
+ * Marque de forme : alignée sur sa mesure (cf. Forme.placeOnMeasure).
+ * Elle reste ensuite déplaçable librement.
  */
-aimanteSurMesure(){
-  const best = Forme.nearestMeasureMark(this)
-  if ( !best ) return
-  const a = DGet('span.borne', this.obj).getBoundingClientRect()
-  const b = best.textRect
-  const z = this.obj.currentCSSZoom || 1
-  this.left = Math.round(this.left + ((b.left + b.width / 2) - (a.left + a.width / 2)) / z)
-  setModified()
+placeOnMeasure(){
+  Forme.placeOnMeasure(this) && setModified()
+}
+
+/**
+ * Marque de forme : replacée à sa hauteur (préférence form_height_<niveau>)
+ */
+placeAtHeight(){
+  Forme.placeAtHeight(this) && setModified()
 }
 
 /**

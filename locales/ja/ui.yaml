@@ -90,6 +90,7 @@ align_menu:
   left:             "左"
   hcenter:          "左右中央"
   measure:          "小節に"
+  form_height:      "マークを既定の高さに戻す"
   cancel:           "整列を取り消す"
 
 adjust_menu:
@@ -123,6 +124,7 @@ mark_context:
   align_harmony:    "和声記号に揃える"
   align_chord:      "コードに揃える"
   align_measure:    "小節に揃える"
+  form_height:      "マークを既定の高さに戻す"
   delete:           "削除"
 
 system_menu:
@@ -297,6 +299,9 @@ dialogs:
 # 分析の環境設定（ラベルと説明）
 prefs:
   form_position:          {label: "形式を作成する位置"}
+  form_height_1:          {label: "部マークの高さ（段の上）"}
+  form_height_2:          {label: "セクションマークの高さ（段の上）"}
+  form_height_3:          {label: "セグメントマークの高さ（段の上）"}
   theme:                  {label: "分析のテーマ", precision: "適用するサイズと色を定義します（分析のカラーモード時）"}
   lock_systems:           {label: "段をロック"}
   grid_horizontal_space:  {label: "グリッドの横の間隔"}

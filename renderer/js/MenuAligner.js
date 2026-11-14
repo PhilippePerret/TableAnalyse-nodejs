@@ -12,12 +12,15 @@ import { on } from './events.js'
   cf. la classe MenusTool pour le fonctionnement général
 
 */
+// Menus propres aux marques de forme
+const FORM_MENUS = ['measure', 'form_height']
+
 export class AlignMenu extends MenusTool {
 
   static init(){
     super.init()
     this.setAllMenuAlignment(false)
-    this.measureMenu.disabled = true
+    this.formMenus.forEach(o => o.disabled = true)
     this.setStateCancelMenu(false)
     on('selection:changed', ({selection}) => this.setStateBySelection(selection))
   }
@@ -26,7 +29,7 @@ export class AlignMenu extends MenusTool {
    * Aligne les marques sélectionnées (sans changer leur taille) : bord
    * haut, bas, gauche ou droit de la sélection, ou son centre vertical
    * ou horizontal. 'measure' aligne les marques de forme sur leur
-   * mesure. 'cancel' remet les marques à leur position d'avant.
+   * mesure, 'form_height' les replace à leur hauteur. 'cancel' remet les marques à leur position d'avant.
    */
   static onActivate(e, align, option){
     const sel = AObjet.dupSelection()
@@ -38,11 +41,11 @@ export class AlignMenu extends MenusTool {
       // Pour ne pas pouvoir annuler deux fois
       return this.setStateCancelMenu(false)
     }
-    if ( align == 'measure' ) {
+    if ( align == 'measure' || align == 'form_height' ) {
       sel.filter(aob => aob.isForme).forEach(aob => {
         aob.old_align_left = aob.left
         aob.old_align_top  = aob.top
-        aob.aimanteSurMesure()
+        align == 'measure' ? aob.placeOnMeasure() : aob.placeAtHeight()
       })
       return this.setStateCancelMenu(true)
     }
@@ -70,15 +73,16 @@ export class AlignMenu extends MenusTool {
 
   static setStateBySelection(selection){
     this.setAllMenuAlignment(selection.length > 1)
-    // « À la mesure » : dès qu'une marque de forme est sélectionnée
-    this.measureMenu.disabled = !selection.some(aob => aob.isForme)
+    // Menus des marques de forme : dès qu'une est sélectionnée
+    const forme = selection.some(aob => aob.isForme)
+    this.formMenus.forEach(o => o.disabled = !forme)
   }
 
   /* --- Fonctional Methods --- */
 
   static setAllMenuAlignment(state){
     Array.from(this.menu.options).forEach((option, i) => {
-      if ( i == 0 || !option.value || ['cancel', 'measure'].includes(option.value) ) return
+      if ( i == 0 || !option.value || option.value == 'cancel' || FORM_MENUS.includes(option.value) ) return
       option.disabled = not(state)
     })
   }
@@ -89,8 +93,8 @@ export class AlignMenu extends MenusTool {
 
   /* --- HTML Elements  */
 
-  static get measureMenu(){
-    return this._measuremenu || (this._measuremenu = DGet('option[value="measure"]', this.menu))
+  static get formMenus(){
+    return this._formmenus || (this._formmenus = FORM_MENUS.map(v => DGet(`option[value="${v}"]`, this.menu)))
   }
   static get cancelMenu(){
     return this._cancelmenu || (this._cancelmenu = DGet('option[value="cancel"]', this.menu))

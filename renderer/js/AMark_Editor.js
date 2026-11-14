@@ -98,6 +98,9 @@ get amark_data(){
   }
   // Fin de portion de la forme : sa marque de début
   this.isFormEnd && (data.start = this._amark_start)
+  // Marque de forme : endroit du clic, pour la placer sur sa mesure
+  // (non enregistré, cf. AMark.createNew)
+  this.amark_type == 'frm' && (data.clickX = this.event.pageX)
   return data
 }
 

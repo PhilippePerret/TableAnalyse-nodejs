@@ -90,6 +90,7 @@ align_menu:
   left:             "左侧"
   hcenter:          "水平居中"
   measure:          "对齐到小节"
+  form_height:      "将标记放回其高度"
   cancel:           "撤销对齐"
 
 adjust_menu:
@@ -123,6 +124,7 @@ mark_context:
   align_harmony:    "与和声标记对齐"
   align_chord:      "与和弦标记对齐"
   align_measure:    "对齐到小节"
+  form_height:      "将标记放回其高度"
   delete:           "删除"
 
 system_menu:
@@ -297,6 +299,9 @@ dialogs:
 # 分析的偏好设置（标签与说明）
 prefs:
   form_position:          {label: "构建曲式的位置"}
+  form_height_1:          {label: "部标记的高度（系统上方）"}
+  form_height_2:          {label: "段标记的高度（系统上方）"}
+  form_height_3:          {label: "片段标记的高度（系统上方）"}
   theme:                  {label: "分析主题", precision: "定义要应用的尺寸和颜色（在分析的彩色模式中）"}
   lock_systems:           {label: "锁定声部组"}
   grid_horizontal_space:  {label: "网格水平步长"}

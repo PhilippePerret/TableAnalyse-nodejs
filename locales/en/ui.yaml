@@ -90,6 +90,7 @@ align_menu:
   left:             "Left"
   hcenter:          "Horizontal Center"
   measure:          "To the Measure"
+  form_height:      "Move the mark back to its height"
   cancel:           "Undo Alignment"
 
 adjust_menu:
@@ -123,6 +124,7 @@ mark_context:
   align_harmony:    "Align with the Harmony"
   align_chord:      "Align with the Chord"
   align_measure:    "Align to the measure"
+  form_height:      "Move the mark back to its height"
   delete:           "Delete"
 
 system_menu:
@@ -297,6 +299,9 @@ dialogs:
 # Analysis preferences (label and precision)
 prefs:
   form_position:          {label: "Location of the built form"}
+  form_height_1:          {label: "Height of part marks (above the system)"}
+  form_height_2:          {label: "Height of section marks (above the system)"}
+  form_height_3:          {label: "Height of segment marks (above the system)"}
   theme:                  {label: "Analysis theme", precision: "Defines the sizes to apply and the colors (in the color mode of the analysis)"}
   lock_systems:           {label: "Lock systems"}
   grid_horizontal_space:  {label: "Horizontal grid step"}

@@ -90,6 +90,7 @@ align_menu:
   left:             "Links"
   hcenter:          "Horizontal zentriert"
   measure:          "Am Takt"
+  form_height:      "Marke auf ihre Höhe zurücksetzen"
   cancel:           "Ausrichtung widerrufen"
 
 adjust_menu:
@@ -123,6 +124,7 @@ mark_context:
   align_harmony:    "An der Harmonie ausrichten"
   align_chord:      "Am Akkord ausrichten"
   align_measure:    "Am Takt ausrichten"
+  form_height:      "Marke auf ihre Höhe zurücksetzen"
   delete:           "Löschen"
 
 system_menu:
@@ -297,6 +299,9 @@ dialogs:
 # Einstellungen der Analyse (Beschriftung und Erläuterung)
 prefs:
   form_position:          {label: "Ort der erstellten Form"}
+  form_height_1:          {label: "Höhe der Teilmarken (über dem System)"}
+  form_height_2:          {label: "Höhe der Abschnittsmarken (über dem System)"}
+  form_height_3:          {label: "Höhe der Segmentmarken (über dem System)"}
   theme:                  {label: "Thema der Analyse", precision: "Legt die anzuwendenden Größen und die Farben fest (im Farbmodus der Analyse)"}
   lock_systems:           {label: "Systeme sperren"}
   grid_horizontal_space:  {label: "Horizontaler Rasterschritt"}

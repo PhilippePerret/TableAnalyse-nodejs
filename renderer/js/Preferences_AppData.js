@@ -63,6 +63,9 @@ export const PreferencesAppData = {
         {name: t('ui.form_position.before'), value: 'before'}
       , {name: t('ui.form_position.after'),  value: 'after'}
     ]}
+  , form_height_1           :{type:'inputtext'    ,typeV:'number'   ,default:160 ,unite:'px'}
+  , form_height_2           :{type:'inputtext'    ,typeV:'number'   ,default:120 ,unite:'px'}
+  , form_height_3           :{type:'inputtext'    ,typeV:'number'   ,default:80  ,unite:'px'}
 
   , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}

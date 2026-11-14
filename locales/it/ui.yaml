@@ -90,6 +90,7 @@ align_menu:
   left:             "A sinistra"
   hcenter:          "Al centro orizzontale"
   measure:          "Alla battuta"
+  form_height:      "Riporta la marca alla sua altezza"
   cancel:           "Annulla l'allineamento"
 
 adjust_menu:
@@ -123,6 +124,7 @@ mark_context:
   align_harmony:    "Allinea con l'armonia"
   align_chord:      "Allinea con l'accordo"
   align_measure:    "Allinea alla battuta"
+  form_height:      "Riporta la marca alla sua altezza"
   delete:           "Elimina"
 
 system_menu:
@@ -297,6 +299,9 @@ dialogs:
 # Preferenze dell'analisi (etichetta e precisazione)
 prefs:
   form_position:          {label: "Posizione della forma costruita"}
+  form_height_1:          {label: "Altezza delle marche di parte (sopra il sistema)"}
+  form_height_2:          {label: "Altezza delle marche di sezione (sopra il sistema)"}
+  form_height_3:          {label: "Altezza delle marche di segmento (sopra il sistema)"}
   theme:                  {label: "Tema dell'analisi", precision: "Definisce le dimensioni da applicare e i colori (nella modalità a colori dell'analisi)"}
   lock_systems:           {label: "Blocca i sistemi"}
   grid_horizontal_space:  {label: "Passo orizzontale della griglia"}

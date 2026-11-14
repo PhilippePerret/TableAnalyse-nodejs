@@ -53,6 +53,13 @@ export const TYPES_FORME = {
   , 'fsegz': {name:t('ui.marks.forms.fsegz.name'), value:'fsegz', shortcut:'G', startOf:'fseg'}
 }
 
+// Niveau (1 partie, 2 section, 3 segment) d'un sous-type de forme,
+// début ou fin
+export function formLevel(subtype){
+  const d = TYPES_FORME[subtype]
+  return d.level || TYPES_FORME[d.startOf].level
+}
+
 /**
  * Les types de marques (modulation, emprunt, pédale, etc.)
  * Ils déterminent la propriété 'type' de la marque.

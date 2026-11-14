@@ -5,7 +5,7 @@ import { pref } from './Preferences.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
-import { TYPES_FORME } from './Constants.js'
+import { TYPES_FORME, formLevel } from './Constants.js'
 import { t } from './i18n.js'
 /**
 
@@ -67,19 +67,69 @@ export class Forme {
       .map(o => o.m)
   }
 
+  // Numéros de mesure du système +sys+, de gauche à droite
+  static measureMarksOf(sys){
+    return AObjet.select(ao => ao.subtype == 'mes' && ao.obj && Systeme.getSystemeAssociated(ao) === sys)
+      .sort((a, b) => a.left - b.left)
+  }
+
   /**
    * Numéro de mesure le plus proche horizontalement de la marque, dans
    * le même système (marque de mesure, ou undefined)
    */
   static nearestMeasureMark(mark){
-    const sys = Systeme.getSystemeAssociated(mark)
     let best, ecart = Infinity
-    AObjet.items.forEach(ao => {
-      if ( ao.subtype != 'mes' || !ao.obj || Systeme.getSystemeAssociated(ao) !== sys ) return
+    this.measureMarksOf(Systeme.getSystemeAssociated(mark)).forEach(ao => {
       const d = Math.abs(ao.left - mark.left)
       if ( d < ecart ) { ecart = d ; best = ao }
     })
     return best
+  }
+
+  /**
+   * Place la marque de forme +mark+ sur sa mesure : borne alignée à
+   * gauche sur le début de la mesure (numéro de mesure) pour un début
+   * de portion, à droite sur sa fin (mesure suivante ou bout du
+   * système) pour une fin de portion.
+   * La mesure est celle qui contient +x+ (abscisse à l'écran, p.e. le
+   * clic) ou, par défaut, le milieu de la borne.
+   * @return true si la marque a été placée
+   */
+  static placeOnMeasure(mark, x){
+    const sys = Systeme.getSystemeAssociated(mark)
+    const mesures = this.measureMarksOf(sys)
+    if ( !sys || mesures.length == 0 ) return false
+    const rect  = m => (DGet('span.content', m.obj) || m.obj).getBoundingClientRect()
+    const borne = DGet('span.borne', mark.obj).getBoundingClientRect()
+    undefined === x && (x = borne.left + borne.width / 2)
+    let i = mesures.findLastIndex(m => rect(m).left <= x)
+    i < 0 && (i = 0)
+    let dx
+    if ( TYPES_FORME[mark.subtype].startOf ) {
+      const right = mesures[i + 1] ? rect(mesures[i + 1]).left : sys.obj.getBoundingClientRect().right
+      dx = right - borne.right
+    } else {
+      dx = rect(mesures[i]).left - borne.left
+    }
+    mark.left = Math.round(mark.left + dx / (mark.obj.currentCSSZoom || 1))
+    return true
+  }
+
+  /**
+   * Replace la marque de forme +mark+ à sa hauteur : bas de la borne à
+   * la distance (préférence form_height_<niveau>) au-dessus de son
+   * système
+   * @return true si la marque a été placée
+   */
+  static placeAtHeight(mark){
+    const sys = Systeme.getSystemeAssociated(mark)
+    if ( !sys ) return false
+    const h = Number(pref(`form_height_${formLevel(mark.subtype)}`))
+    const z = mark.obj.currentCSSZoom || 1
+    const dy = sys.obj.getBoundingClientRect().top - DGet('span.borne', mark.obj).getBoundingClientRect().bottom
+    mark.top = Math.round(mark.top + dy / z - h)
+    mark.associateWithSystem()
+    return true
   }
 
   // Libellé d'une marque de forme : nom et mesure (si trouvée)

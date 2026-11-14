@@ -90,6 +90,7 @@ align_menu:
   left:             "A la izquierda"
   hcenter:          "Al centro horizontal"
   measure:          "Al compás"
+  form_height:      "Devolver la marca a su altura"
   cancel:           "Deshacer la alineación"
 
 adjust_menu:
@@ -123,6 +124,7 @@ mark_context:
   align_harmony:    "Alinear con la armonía"
   align_chord:      "Alinear con el acorde"
   align_measure:    "Alinear al compás"
+  form_height:      "Devolver la marca a su altura"
   delete:           "Eliminar"
 
 system_menu:
@@ -297,6 +299,9 @@ dialogs:
 # Preferencias del análisis (etiqueta y precisión)
 prefs:
   form_position:          {label: "Ubicación de la forma construida"}
+  form_height_1:          {label: "Altura de las marcas de parte (encima del sistema)"}
+  form_height_2:          {label: "Altura de las marcas de sección (encima del sistema)"}
+  form_height_3:          {label: "Altura de las marcas de segmento (encima del sistema)"}
   theme:                  {label: "Tema del análisis", precision: "Define los tamaños que aplicar y los colores (en el modo color del análisis)"}
   lock_systems:           {label: "Bloquear los sistemas"}
   grid_horizontal_space:  {label: "Paso horizontal de la cuadrícula"}

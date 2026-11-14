@@ -90,6 +90,7 @@ align_menu:
   left:             "À gauche"
   hcenter:          "Au centre horizontal"
   measure:          "À la mesure"
+  form_height:      "Replacer la marque à sa hauteur"
   cancel:           "Annuler l’alignement"
 
 adjust_menu:
@@ -123,6 +124,7 @@ mark_context:
   align_harmony:    "Aligner avec l’harmonie"
   align_chord:      "Aligner sur l’accord"
   align_measure:    "Aligner à la mesure"
+  form_height:      "Replacer la marque à sa hauteur"
   delete:           "Supprimer"
 
 system_menu:
@@ -297,6 +299,9 @@ dialogs:
 # Préférences de l'analyse (label et précision)
 prefs:
   form_position:          {label: "Emplacement de la construction de la forme"}
+  form_height_1:          {label: "Hauteur des marques de partie (au-dessus du système)"}
+  form_height_2:          {label: "Hauteur des marques de section (au-dessus du système)"}
+  form_height_3:          {label: "Hauteur des marques de segment (au-dessus du système)"}
   theme:                  {label: "Thème analyse", precision: "Définit les tailles à appliquer ainsi que les couleurs (dans le mode couleur de l’analyse)"}
   lock_systems:           {label: "Verrouiller les systèmes"}
   grid_horizontal_space:  {label: "Pas horizontal de la grille"}
