@@ -1074,6 +1074,30 @@ applyWidth(v) {
   }
 }
 
+/**
+ * Changement du type (et du sous-type) d'une marque construite : elle
+ * est reconstruite pour prendre tout ce qui dépend du type (poignées de
+ * redimensionnement, ligne verticale, police…)
+ */
+changeType(type, subtype){
+  this.type    = type
+  this.subtype = subtype
+  this.obj && this.rebuild()
+}
+
+rebuild(){
+  const selected = this.isSelected
+  ;['_ishresize', '_isvresize', '_is2dimresize', '_isajust', '_hasformtxt', '_isgridadjust'].forEach(k => delete this[k])
+  delete this.prolongLine
+  this._vline = null
+  this.hasPoigneeCadence = false
+  this.obj.remove()
+  this.build()
+  this.observe()
+  this.isLocked && this.lock()
+  selected && this.setSelected()
+}
+
 get type(){return this._type}
 set type(t){
   const type_ini = `${this.data.type}`

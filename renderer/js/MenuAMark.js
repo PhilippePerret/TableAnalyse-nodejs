@@ -75,10 +75,7 @@ export class AmarkMenu extends MenusTool {
   }
 
   static onTypeChosen(data){
-    this.boucle(tag => {
-      tag.type    = data.type
-      tag.subtype = data.subtype
-    })
+    this.boucle(tag => tag.changeType && tag.changeType(data.type, data.subtype))
   }
 
   static applyStyleText(css) {
