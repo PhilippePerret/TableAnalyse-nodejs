@@ -604,7 +604,8 @@ export class Systeme extends AObjet {
    * 
    */
   toggleMoving(e){
-    if ( this.isLocked ) return stopEvent(e)
+    // Système verrouillé : le clic remonte jusqu'à la table (désélection)
+    if ( this.isLocked ) return
     if ( this.moving ) {
       // 
       // === FIN DU DÉPLACEMENT
