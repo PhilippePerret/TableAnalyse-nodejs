@@ -138,7 +138,6 @@ body.theme-A .panneau-ui button.btn-danger {
   color:            white;
   font-weight:      600;
 }
-body.theme-A div#panel_form > div.buttons { background-color: #ececec; border: none; border-top: 1px solid #d6d6d6; border-radius: 0 0 10px 10px; }
 
 
 /* ===================================================================
@@ -206,7 +205,6 @@ body.theme-B .panneau-ui > div.panneau-foot {
   border-top:       1px solid #cfe3d6;
   border-radius:    0 0 6px 6px;
 }
-body.theme-B div#panel_form > div.buttons { background-color: #eaf3ed; border: none; border-top: 1px solid #cfe3d6; }
 
 
 /* ===================================================================
@@ -274,4 +272,3 @@ body.theme-C .panneau-ui > div.panneau-foot {
   border-top:       1px solid #44474d;
   border-radius:    0 0 8px 8px;
 }
-body.theme-C div#panel_form > div.buttons { background-color: #1e1f22; border: none; border-top: 1px solid #44474d; border-radius: 0 0 8px 8px; }

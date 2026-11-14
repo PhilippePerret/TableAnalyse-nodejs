@@ -14,6 +14,7 @@ import { GetterInList } from './GetterInList.js'
 import { AMark_Editor } from './AMark_Editor.js'
 import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_PHILHARMONIEFONT } from './Constants.js'
 import { UI } from './UI.js'
+import { Forme } from './Forme.js'
 import { t } from './i18n.js'
 
 
@@ -461,6 +462,7 @@ build(){
   // Css suplémentaires
   this.applyCss()
   this.isForme && (o.title = this.content)
+  this.isForme && Forme.shown && this.toggleExpanded(true)
 
 }
 

@@ -51,6 +51,7 @@ let mainWindow  = null
 let current     = null    // {Analyse} analyse courante
 let closeAllowed = false
 let justCut     = false   // la partition vient d'être découpée (message au rechargement)
+let formShown   = false   // menu « Forme > Voir la forme » coché
 let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
 
 protocol.registerSchemesAsPrivileged([{
@@ -259,10 +260,21 @@ function buildMenu(){
       , submenu: [...dynamicItems(m), ...dynamicSubmenus(m.id)]
     })),
     {
+      label: t('ui.menu.form_menu'),
+      submenu: [
+          {label: t('ui.menu.goto_measure'),    click: () => sendMenuCommand('gotoMeasure')}
+        , {label: t('ui.menu.show_form'),       type: 'checkbox', checked: formShown, click: (item) => {
+              formShown = item.checked
+              sendMenuCommand(formShown ? 'showForm' : 'hideForm')
+          }}
+        , {type: 'separator'}
+        , {label: t('ui.menu.build_form'),      click: () => sendMenuCommand('buildForm')}
+      ]
+    },
+    {
       label: t('ui.menu.tools_menu'),
       submenu: [
           {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: () => sendMenuCommand('toolsPanel')}
-        , {label: t('ui.menu.form'),            click: () => sendMenuCommand('formPanel')}
         , {label: t('ui.menu.animate'),         click: () => sendMenuCommand('animate')}
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}

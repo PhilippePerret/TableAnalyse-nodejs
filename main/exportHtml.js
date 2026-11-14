@@ -9,7 +9,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
 
-const CSS_FILES = ['AMark', 'AObjet', 'Forme', 'main', 'Print']
+const CSS_FILES = ['AMark', 'AObjet', 'main', 'Print']
 
 function escapeHtml(str){
   return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')

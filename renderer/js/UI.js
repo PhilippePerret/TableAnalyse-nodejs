@@ -9,7 +9,6 @@ import { TableAnalyse } from './TableAnalyse.js'
 import { Analyse } from './Analyse.js'
 import { Preferences } from './Preferences.js'
 import { Tools } from './Tools.js'
-import { Form } from './Form.js'
 import { Mouse } from './Mouse.js'
 import { SelectionTool } from './MenuSelection.js'
 import { BordersTool } from './MenuBords.js'
@@ -87,7 +86,6 @@ export class UIClass {
     MenusBar.init()
 
     // Tout ce qui concerne la forme
-    Form.init()
         
     // Coordonnées de la souris
     Mouse.observe()

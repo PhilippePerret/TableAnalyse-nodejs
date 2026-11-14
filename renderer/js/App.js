@@ -6,7 +6,7 @@ import { Preferences } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
-import { Form } from './Form.js'
+import { Forme } from './Forme.js'
 import { Exporter } from './Exporter.js'
 import { Animation } from './Animation.js'
 import { t } from './i18n.js'
@@ -63,7 +63,10 @@ class AppClass {
       case 'infosAnalyse':  return Analyse.panneau_infos.toggle()
       case 'export':        return Exporter.ask()
       case 'toolsPanel':    return Tools.toggle()
-      case 'formPanel':     return Form.togglePanel()
+      case 'gotoMeasure':   return Forme.gotoMeasure()
+      case 'showForm':      return Forme.show(true)
+      case 'hideForm':      return Forme.show(false)
+      case 'buildForm':     return Forme.build()
       case 'animate':       return Animation.start()
       case 'prefs':         return PreferencesPanel.toggle()
       case 'manual':        return Manuel.toggle()

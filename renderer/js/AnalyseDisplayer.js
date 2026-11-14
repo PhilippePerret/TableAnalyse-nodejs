@@ -4,7 +4,6 @@
  * Pour écrire sur la table d'analyse une analyse
  */
 import { PreferencesAppData } from './Preferences_AppData.js'
-import { Form } from './Form.js'
 import { Analyse, setWindowTitle } from './Analyse.js'
 import { UI } from './UI.js'
 import { Systeme } from './Systeme.js'
@@ -56,7 +55,6 @@ static display(analyse){
   /*
   |  Données de forme
   */
-  Form.setData(analyse.infos.form)
 
   console.info("= AFFICHAGE OK =")
 

@@ -12,7 +12,6 @@ import { AObjet } from './AObjet.js'
 import { Current } from './Current.js'
 import { Preferences } from './Preferences.js'
 import { Systeme } from './Systeme.js'
-import { Form } from './Form.js'
 import { Analyse } from './Analyse.js'
 import { t } from './i18n.js'
 
@@ -68,8 +67,8 @@ export class AnalyseSaver {
     var newInfos = Object.assign({}, analyse.data.infos)
     Object.assign(newInfos, {
         systems:  Systeme.getData()
-      , form:     Form.getData()
     })
+    delete newInfos.form // ancien panneau de la forme
     analyse.data.infos = newInfos
     await invoke('analyse:saveInfos', {infos: newInfos})
     console.info("CONF: Infos de l'analyse enregistrées.")

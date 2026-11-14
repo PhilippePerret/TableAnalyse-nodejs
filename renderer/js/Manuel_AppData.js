@@ -144,8 +144,8 @@ Cercle      : un cercle autour d'une note par exemple
   ]
 }
 ,{
-  operation: "Définir la forme"
-, procedure: ["Cliquer sur le bouton 'Forme…'","Ajouter autant d'éléments que voulus","Cliquer sur les boutons ⍗ pour construire l'élément sur la table d'analyse (se mettre en grille magnétique pour assembler correctement les éléments)", "Cliquer sur les boutons ⎆ pour rejoindre les mesures de la partie"]
+  operation: "Aller à une mesure"
+, procedure: ["Menu « Forme > Aller à la mesure… »","Taper le numéro de la mesure puis Entrée"]
 }
 ,{
   operation: 'Enregistrement de l’analyse'
