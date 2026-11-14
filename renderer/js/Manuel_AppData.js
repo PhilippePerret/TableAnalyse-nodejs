@@ -149,6 +149,7 @@ Cercle      : un cercle autour d'une note par exemple
 }
 ,{
   operation: "Aller à une mesure"
+, shortcut: '⌘ g'
 , procedure: ["Menu « Forme > Aller à la mesure… »","Taper le numéro de la mesure puis Entrée"]
 }
 ,{
