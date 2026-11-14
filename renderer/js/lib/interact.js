@@ -8,7 +8,8 @@
  *    draggable(el, 'disable' | 'enable')
  *
  *    resizable(el, {handles:'e,s', aspectRatio, alsoResize, minWidth,
- *                   start, resize, stop})
+ *                   keys, start, resize, stop})
+ *    (keys : Maj tenue garde les proportions, Alt tenue garde le centre)
  *    resizable(el, 'disable' | 'enable')
  *    resizable(el, 'option', <nom>, <valeur>)
  *
@@ -179,8 +180,9 @@ function onResizeMouseDown(el, st, dir, e){
   const also   = asList(o.alsoResize).map(a => {
     return {el: a, w: cssNumber(a, 'width', a.offsetWidth), h: cssNumber(a, 'height', a.offsetHeight)}
   })
-  const doW = dir.includes('e') || dir.includes('w')
-  const doH = dir.includes('s') || dir.includes('n') || o.aspectRatio
+  const baseW = dir.includes('e') || dir.includes('w')
+  const baseH = dir.includes('s') || dir.includes('n')
+  let doW = baseW, doH = baseH || o.aspectRatio
   const ui = {
       element: [el], helper: [el]
     , originalSize: {width: startW, height: startH}
@@ -195,22 +197,34 @@ function onResizeMouseDown(el, st, dir, e){
   trackMouse(
     (ev) => {
       const dx = ev.pageX - startX, dy = ev.pageY - startY
-      let w = startW, h = startH, l = startL
-      if ( dir.includes('e') ) w = startW + dx
-      if ( dir.includes('w') ) w = startW - dx
-      if ( dir.includes('s') ) h = startH + dy
+      // Maj : proportions gardées ; Alt : centre gardé (option keys)
+      const keepRatio  = o.aspectRatio || (o.keys && ev.shiftKey)
+      const fromCenter = o.keys && ev.altKey
+      doW = baseW || keepRatio
+      doH = baseH || keepRatio
+      let w = startW, h = startH, l = startL, tp = startT
+      const k = fromCenter ? 2 : 1
+      if ( dir.includes('e') ) w = startW + k * dx
+      if ( dir.includes('w') ) w = startW - k * dx
+      if ( dir.includes('s') ) h = startH + k * dy
       w = Math.max(w, minW())
       h = Math.max(h, minH())
-      if ( o.aspectRatio ) {
-        if ( doW ) h = w / ratio
+      if ( keepRatio ) {
+        if ( baseW && baseH ) { if ( w / ratio > h ) h = w / ratio ; else w = h * ratio }
+        else if ( baseW ) h = w / ratio
         else w = h * ratio
       }
       if ( dir.includes('w') ) l = startL + startW - w
+      if ( fromCenter ) {
+        l  = startL - (w - startW) / 2
+        tp = startT - (h - startH) / 2
+      }
       ui.size = {width: w, height: h}
-      ui.position = {left: l, top: startT}
-      if ( doW ) el.style.width  = `${w}px`
-      if ( doH ) el.style.height = `${h}px`
-      if ( dir.includes('w') ) el.style.left = `${l}px`
+      ui.position = {left: l, top: tp}
+      el.style.width  = `${doW ? w : startW}px`
+      if ( doH || baseH ) el.style.height = `${doH ? h : startH}px`
+      if ( dir.includes('w') || fromCenter ) el.style.left = `${l}px`
+      if ( fromCenter ) el.style.top = `${tp}px`
       also.forEach(a => {
         if ( doW ) a.el.style.width  = `${a.w + w - startW}px`
         if ( doH ) a.el.style.height = `${a.h + h - startH}px`

@@ -604,6 +604,18 @@ observe(){
           my.ajustePosition.call(my)
       }
     })
+  } else if ( this.type == 'cir' ) {
+    // Cercle : Maj garde les proportions, Alt garde le centre
+    resizable(this.obj, {
+        handles: 'e,s,se'
+      , keys: true
+      , stop: function(e, ui){
+          my.width  = my.getWidth.call(my)
+          my.height = my.getHeight.call(my)
+          my.left   = Math.round(ui.position.left)
+          my.top    = Math.round(ui.position.top)
+      }
+    })
   } else if ( this.isVresizable && this.isHresizable ) {
     resizable(this.obj, {
         handles: 'e,s'
