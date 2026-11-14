@@ -131,9 +131,56 @@ export class Forme {
       const i = Math.max(0, starts.findLastIndex(v => v <= x))
       target = isEnd ? ends[i] : starts[i]
     }
+    // Fin de portion : bord droit de la borne sur la barre de mesure
+    // elle-même (le numéro de la mesure suivante est un peu après)
+    if ( isEnd ) target = this.barlineNear(sys, target, target == ends[ends.length - 1] ? 60 : 25) ?? target
     const dx = target - (isEnd ? borne.right : borne.left)
     mark.left = Math.round(mark.left + dx / (mark.obj.currentCSSZoom || 1))
     return true
+  }
+
+  /**
+   * Abscisse (écran) du bord gauche de la barre de mesure du système
+   * +sys+ la plus marquée entre +span+ px (écran) avant +x+ et +x+
+   * (cherchée dans l'image du système), ou null
+   */
+  static barlineNear(sys, x, span){
+    const img = sys.obj
+    const prof = this.darkProfile(sys)
+    if ( !prof ) return null
+    const r = img.getBoundingClientRect()
+    const k = img.naturalWidth / r.width
+    const to = Math.min(prof.length - 1, Math.round((x - r.left) * k) + 2)
+    const from = Math.max(0, to - Math.round(span * k))
+    let best = -1
+    for ( let i = from ; i <= to ; ++i ) if ( best < 0 || prof[i] > prof[best] ) best = i
+    if ( best < 0 || prof[best] < 0.3 * img.naturalHeight ) return null
+    while ( best > 0 && prof[best - 1] >= 0.8 * prof[best] ) --best
+    return r.left + best / k
+  }
+
+  // Nombre de pixels sombres de chaque colonne de l'image du système
+  // (calculé une fois par image)
+  static darkProfile(sys){
+    this._profiles || (this._profiles = new Map())
+    const img = sys.obj
+    const key = img.src
+    if ( this._profiles.has(key) ) return this._profiles.get(key)
+    if ( !img.complete || !img.naturalWidth ) return null
+    const w = img.naturalWidth, h = img.naturalHeight
+    const canvas = new OffscreenCanvas(w, h)
+    const ctx = canvas.getContext('2d', {willReadFrequently: true})
+    ctx.drawImage(img, 0, 0)
+    let data
+    try { data = ctx.getImageData(0, 0, w, h).data } catch(err) { console.error(err) ; return null }
+    const prof = new Uint32Array(w)
+    for ( let y = 0 ; y < h ; ++y ) {
+      for ( let x = 0, p = y * w * 4 ; x < w ; ++x, p += 4 ) {
+        if ( data[p] + data[p + 1] + data[p + 2] < 300 ) ++prof[x]
+      }
+    }
+    this._profiles.set(key, prof)
+    return prof
   }
 
   // Rectangle (écran) du numéro de mesure +m+
