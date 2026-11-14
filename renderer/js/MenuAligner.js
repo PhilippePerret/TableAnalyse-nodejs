@@ -17,14 +17,16 @@ export class AlignMenu extends MenusTool {
   static init(){
     super.init()
     this.setAllMenuAlignment(false)
+    this.measureMenu.disabled = true
     this.setStateCancelMenu(false)
-    on('selection:changed', ({selection}) => this.setStateBySelection(selection.length))
+    on('selection:changed', ({selection}) => this.setStateBySelection(selection))
   }
 
   /**
    * Aligne les marques sélectionnées (sans changer leur taille) : bord
    * haut, bas, gauche ou droit de la sélection, ou son centre vertical
-   * ou horizontal. 'cancel' remet les marques à leur position d'avant.
+   * ou horizontal. 'measure' aligne les marques de forme sur leur
+   * mesure. 'cancel' remet les marques à leur position d'avant.
    */
   static onActivate(e, align, option){
     const sel = AObjet.dupSelection()
@@ -35,6 +37,14 @@ export class AlignMenu extends MenusTool {
       })
       // Pour ne pas pouvoir annuler deux fois
       return this.setStateCancelMenu(false)
+    }
+    if ( align == 'measure' ) {
+      sel.filter(aob => aob.isForme).forEach(aob => {
+        aob.old_align_left = aob.left
+        aob.old_align_top  = aob.top
+        aob.aimanteSurMesure()
+      })
+      return this.setStateCancelMenu(true)
     }
     const box = sel.map(aob => ({aob, left: aob.left, top: aob.top, width: aob.width, height: aob.height}))
     const minLeft   = Math.min(...box.map(b => b.left))
@@ -58,15 +68,17 @@ export class AlignMenu extends MenusTool {
 
   /* --- Public Methods --- */
 
-  static setStateBySelection(count){
-    this.setAllMenuAlignment(count > 1)
+  static setStateBySelection(selection){
+    this.setAllMenuAlignment(selection.length > 1)
+    // « À la mesure » : dès qu'une marque de forme est sélectionnée
+    this.measureMenu.disabled = !selection.some(aob => aob.isForme)
   }
 
   /* --- Fonctional Methods --- */
 
   static setAllMenuAlignment(state){
     Array.from(this.menu.options).forEach((option, i) => {
-      if ( i == 0 || !option.value || option.value == 'cancel' ) return
+      if ( i == 0 || !option.value || ['cancel', 'measure'].includes(option.value) ) return
       option.disabled = not(state)
     })
   }
@@ -77,6 +89,9 @@ export class AlignMenu extends MenusTool {
 
   /* --- HTML Elements  */
 
+  static get measureMenu(){
+    return this._measuremenu || (this._measuremenu = DGet('option[value="measure"]', this.menu))
+  }
   static get cancelMenu(){
     return this._cancelmenu || (this._cancelmenu = DGet('option[value="cancel"]', this.menu))
   }

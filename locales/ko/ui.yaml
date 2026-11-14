@@ -89,6 +89,7 @@ align_menu:
   right:            "오른쪽"
   left:             "왼쪽"
   hcenter:          "가로 가운데"
+  measure:          "마디에"
   cancel:           "정렬 실행 취소"
 
 adjust_menu:
@@ -121,6 +122,7 @@ mark_context:
   align:            "같은 종류의 표시에 맞추기"
   align_harmony:    "화성 표시에 맞추기"
   align_chord:      "코드에 맞추기"
+  align_measure:    "마디에 맞추기"
   delete:           "삭제"
 
 system_menu:

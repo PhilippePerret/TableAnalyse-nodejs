@@ -89,6 +89,7 @@ align_menu:
   right:            "A destra"
   left:             "A sinistra"
   hcenter:          "Al centro orizzontale"
+  measure:          "Alla battuta"
   cancel:           "Annulla l'allineamento"
 
 adjust_menu:
@@ -121,6 +122,7 @@ mark_context:
   align:            "Allinea ai segni dello stesso tipo"
   align_harmony:    "Allinea con l'armonia"
   align_chord:      "Allinea con l'accordo"
+  align_measure:    "Allinea alla battuta"
   delete:           "Elimina"
 
 system_menu:

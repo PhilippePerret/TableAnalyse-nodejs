@@ -89,6 +89,7 @@ align_menu:
   right:            "Right"
   left:             "Left"
   hcenter:          "Horizontal Center"
+  measure:          "To the Measure"
   cancel:           "Undo Alignment"
 
 adjust_menu:
@@ -121,6 +122,7 @@ mark_context:
   align:            "Align with Marks of the Same Type"
   align_harmony:    "Align with the Harmony"
   align_chord:      "Align with the Chord"
+  align_measure:    "Align to the measure"
   delete:           "Delete"
 
 system_menu:

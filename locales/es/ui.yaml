@@ -89,6 +89,7 @@ align_menu:
   right:            "A la derecha"
   left:             "A la izquierda"
   hcenter:          "Al centro horizontal"
+  measure:          "Al compás"
   cancel:           "Deshacer la alineación"
 
 adjust_menu:
@@ -121,6 +122,7 @@ mark_context:
   align:            "Alinear con las marcas del mismo tipo"
   align_harmony:    "Alinear con la armonía"
   align_chord:      "Alinear con el acorde"
+  align_measure:    "Alinear al compás"
   delete:           "Eliminar"
 
 system_menu:

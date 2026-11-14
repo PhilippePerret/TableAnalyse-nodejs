@@ -770,6 +770,7 @@ onContextMenu(e){
   ]
   this.type == 'acc' && items.push({label: T('align_harmony'), value: 'alignHarmony'})
   this.type == 'har' && items.push({label: T('align_chord'),   value: 'alignChord'})
+  this.isForme && items.push({label: T('align_measure'), value: 'alignMeasure'})
   items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
   invoke('menu:popup', {items})
     .then(choice => choice && this.onContextChoice(choice))
@@ -789,6 +790,7 @@ onContextChoice(choice){
     case 'align':         return targets.forEach(m => m.alignOnSameType())
     case 'alignHarmony':  return this.alignHorizontallyOn('har', 'no_harmony_mark')
     case 'alignChord':    return this.alignHorizontallyOn('acc', 'no_chord_mark')
+    case 'alignMeasure':  return targets.filter(m => m.isForme).forEach(m => m.aimanteSurMesure())
     case 'delete':
       targets.forEach(m => AObjet.remove(m))
       AObjet.deselectAll()

@@ -89,6 +89,7 @@ align_menu:
   right:            "右"
   left:             "左"
   hcenter:          "左右中央"
+  measure:          "小節に"
   cancel:           "整列を取り消す"
 
 adjust_menu:
@@ -121,6 +122,7 @@ mark_context:
   align:            "同じ種類のマークに揃える"
   align_harmony:    "和声記号に揃える"
   align_chord:      "コードに揃える"
+  align_measure:    "小節に揃える"
   delete:           "削除"
 
 system_menu:

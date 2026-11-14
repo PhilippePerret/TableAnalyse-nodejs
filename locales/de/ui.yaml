@@ -89,6 +89,7 @@ align_menu:
   right:            "Rechts"
   left:             "Links"
   hcenter:          "Horizontal zentriert"
+  measure:          "Am Takt"
   cancel:           "Ausrichtung widerrufen"
 
 adjust_menu:
@@ -121,6 +122,7 @@ mark_context:
   align:            "An Markierungen gleichen Typs ausrichten"
   align_harmony:    "An der Harmonie ausrichten"
   align_chord:      "Am Akkord ausrichten"
+  align_measure:    "Am Takt ausrichten"
   delete:           "Löschen"
 
 system_menu:

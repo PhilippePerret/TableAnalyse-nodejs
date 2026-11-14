@@ -89,6 +89,7 @@ align_menu:
   right:            "右侧"
   left:             "左侧"
   hcenter:          "水平居中"
+  measure:          "对齐到小节"
   cancel:           "撤销对齐"
 
 adjust_menu:
@@ -121,6 +122,7 @@ mark_context:
   align:            "与同类标记对齐"
   align_harmony:    "与和声标记对齐"
   align_chord:      "与和弦标记对齐"
+  align_measure:    "对齐到小节"
   delete:           "删除"
 
 system_menu:
