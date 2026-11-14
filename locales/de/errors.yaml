@@ -37,6 +37,7 @@ tools:
 marks:
   no_autocontent: "Der automatische Inhalt des Typs '%{type}' kann nicht festgelegt werden…"
   no_subtype: "Der Typ '%{type}' legt seinen Untertyp nicht fest…"
+  no_form_start: "Keine Marke „%{name}“ auf der Tafel."
   already_associated: "Die beiden Markierungen sind bereits verknüpft."
   not_associated: "Die beiden Markierungen sind nicht verknüpft!"
   missing_tag: "Die Markierung %{id} existiert nicht mehr. Sie sollten diese Verknüpfung löschen."

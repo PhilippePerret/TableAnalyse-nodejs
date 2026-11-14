@@ -164,7 +164,14 @@ function createWindow(){
         }, 1500)
       })
     }
-    setTimeout(() => app.exit(0), Number(process.env.SA_SMOKE) * 1000 || 6000)
+    const duree = Number(process.env.SA_SMOKE) * 1000 || 6000
+    // Capture de la fenêtre (PNG) juste avant l'arrêt
+    process.env.SA_SMOKE_SHOT && setTimeout(() => {
+      mainWindow.webContents.capturePage()
+        .then(img => fs.writeFileSync(process.env.SA_SMOKE_SHOT, img.toPNG()))
+        .catch(err => console.log('[smoke] ERREUR capture', err.message))
+    }, duree - 800)
+    setTimeout(() => app.exit(0), duree)
   }
 }
 

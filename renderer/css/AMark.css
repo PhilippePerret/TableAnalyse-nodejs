@@ -530,7 +530,8 @@ div.amark.no_bottom_border {
 /*
     MARQUE DE FORME (frm) : une borne (comme au bord des routes), le
     nom de la portion n'apparaissant que lorsqu'elle est dépliée.
-    Partie : borne rouge, section : jaune, segment : verte.
+    Partie : borne rouge, section : jaune, segment : verte. Fin de
+    portion : la même borne, barrée.
 */
 div.amark.frm {
   display: flex;
@@ -541,8 +542,8 @@ div.amark.frm {
   --borne-w: 16px;
   --borne-h: 21px;
 }
-div.amark.frm.fsec { --borne-color: #e8c21a; --borne-w: 14px; --borne-h: 18px; }
-div.amark.frm.fseg { --borne-color: #3a925e; --borne-w: 12px; --borne-h: 16px; }
+div.amark.frm.fsec, div.amark.frm.fsecz { --borne-color: #e8c21a; --borne-w: 14px; --borne-h: 18px; }
+div.amark.frm.fseg, div.amark.frm.fsegz { --borne-color: #3a925e; --borne-w: 12px; --borne-h: 16px; }
 div.amark.frm span.borne {
   flex: none;
   position: relative;
@@ -560,6 +561,17 @@ div.amark.frm span.borne::before {
   top: 0; left: 0; right: 0;
   height: 42%;
   background-color: var(--borne-color);
+}
+/* Fin de portion : la même borne, barrée */
+div.amark.frm.fparz span.borne::after,
+div.amark.frm.fsecz span.borne::after,
+div.amark.frm.fsegz span.borne::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top right,
+    transparent calc(50% - 1.2px), #222 calc(50% - 1.2px),
+    #222 calc(50% + 1.2px), transparent calc(50% + 1.2px));
 }
 div.amark.frm span.content {
   display: none;

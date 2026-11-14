@@ -37,6 +37,7 @@ tools:
 marks:
   no_autocontent: "'%{type}' 종류의 자동 내용을 정의할 수 없습니다…"
   no_subtype: "'%{type}' 종류가 하위 종류를 정의하지 않습니다…"
+  no_form_start: "표에 “%{name}” 표시가 없습니다."
   already_associated: "두 표시는 이미 연결되어 있습니다."
   not_associated: "두 표시가 연결되어 있지 않습니다!"
   missing_tag: "표시 %{id}이(가) 더 이상 없습니다. 이 연결을 삭제하십시오."

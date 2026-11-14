@@ -412,6 +412,10 @@ marks:
     fpar: {name: "部", default: "提示部"}
     fsec: {name: "セクション", default: "セクション A"}
     fseg: {name: "セグメント", default: "セグメント a"}
+    fparz: {name: "部の終わり"}
+    fsecz: {name: "セクションの終わり"}
+    fsegz: {name: "セグメントの終わり"}
+    at_measure: "%{name}（%{num} 小節）"
   segments:
     h-up:    "水平、譜表の上"
     h-down:  "水平、譜表の下"
@@ -421,6 +425,7 @@ marks:
     type:         "マークの種類"
     cadence:      "終止の種類"
     segment:      "セグメントの配置"
+    form_start:   "「%{name}」の始まり"
 
 form_position:
   before: "楽譜の前"

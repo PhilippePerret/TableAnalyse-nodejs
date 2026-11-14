@@ -5,6 +5,7 @@ import { pref } from './Preferences.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
+import { TYPES_FORME } from './Constants.js'
 import { t } from './i18n.js'
 /**
 
@@ -52,6 +53,66 @@ export class Forme {
   }
 
   /**
+   * Marques de forme dans l'ordre de la partition (système, puis
+   * position horizontale)
+   */
+  static sorted(marks){
+    const key = m => {
+      const sys = Systeme.getSystemeAssociated(m)
+      return [sys ? sys.top : m.top, m.left]
+    }
+    return marks
+      .map(m => ({m, k: key(m)}))
+      .sort((a, b) => a.k[0] - b.k[0] || a.k[1] - b.k[1])
+      .map(o => o.m)
+  }
+
+  /**
+   * Numéro de mesure le plus proche horizontalement de la marque, dans
+   * le même système (marque de mesure, ou undefined)
+   */
+  static nearestMeasureMark(mark){
+    const sys = Systeme.getSystemeAssociated(mark)
+    let best, ecart = Infinity
+    AObjet.items.forEach(ao => {
+      if ( ao.subtype != 'mes' || !ao.obj || Systeme.getSystemeAssociated(ao) !== sys ) return
+      const d = Math.abs(ao.left - mark.left)
+      if ( d < ecart ) { ecart = d ; best = ao }
+    })
+    return best
+  }
+
+  // Libellé d'une marque de forme : nom et mesure (si trouvée)
+  static labelOf(mark){
+    const mes = this.nearestMeasureMark(mark)
+    const name = mark.content || TYPES_FORME[mark.subtype].name
+    return mes ? t('ui.marks.forms.at_measure', {name, num: String(mes.content).trim()}) : name
+  }
+
+  /**
+   * Fin de la portion qui commence à la marque +start+ (pour la
+   * construction de la forme) :
+   *  1. la marque de fin associée à ce début (data.start), si elle
+   *     existe ;
+   *  2. sinon le premier début de portion suivant, de même niveau ou
+   *     de niveau supérieur (une partie termine aussi une section) ;
+   *  3. sinon la fin de la pièce (retour null).
+   */
+  static endOf(start){
+    const forms = AObjet.select(ao => ao.isForme)
+    const end = forms.find(m => m.data.start == start.id)
+    if ( end ) return end
+    const level = TYPES_FORME[start.subtype].level
+    const starts = this.sorted(forms.filter(m => TYPES_FORME[m.subtype].level))
+    return starts.slice(starts.indexOf(start) + 1).find(m => TYPES_FORME[m.subtype].level <= level) || null
+  }
+
+  // Début de portion renommé : ses marques de fin prennent son nom
+  static updateEndsOf(start){
+    AObjet.items.forEach(ao => ao.isForme && ao.data.start == start.id && (ao.content = start.content))
+  }
+
+  /**
    * « Voir la forme » : déplie (+on+ true) ou replie les marques de
    * forme
    */
@@ -90,7 +151,9 @@ export class Forme {
 
   /**
    * Construira la forme sur une nouvelle page, avant ou après la
-   * partition (+position+ : 'before' ou 'after')
+   * partition (+position+ : 'before' ou 'after'), à partir des débuts
+   * de portion (numéros de mesure, tonalités et modulations). Fin de
+   * chaque portion : cf. endOf.
    */
   static build(position){
     this.panneau.hide()

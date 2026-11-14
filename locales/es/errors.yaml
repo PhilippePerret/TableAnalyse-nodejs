@@ -37,6 +37,7 @@ tools:
 marks:
   no_autocontent: "No se puede definir el contenido automático del tipo '%{type}'…"
   no_subtype: "El tipo '%{type}' no define su subtipo…"
+  no_form_start: "Ninguna marca « %{name} » en la tabla."
   already_associated: "Las dos marcas ya están asociadas."
   not_associated: "¡Las dos marcas no están asociadas!"
   missing_tag: "La marca %{id} ya no existe. Debería eliminar este vínculo."

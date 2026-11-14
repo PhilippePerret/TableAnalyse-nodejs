@@ -1,19 +1,14 @@
+/* Panneau commun (cf. addPanelHead) : à la taille de son contenu */
 div.container_getter_in_list {
   position: fixed;
   top: 6em;
   left: 12em;
-  width: 300px;
-  min-height: 300px;
-  max-height: 600px;
-  padding-bottom: 2em;
-  font-size: 0.85em;
-  border: 1px solid;
-  background-color: #EEE;
-  border-radius: 0.6em;
+  width: max-content;
+  min-width: 240px;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
   z-index: 100;
-}
-div.container_getter_in_list H3 {
-  padding: 0.3em 1em;
 }
 ul.getter_in_list {
   list-style:  none;
@@ -33,15 +28,19 @@ ul.getter_in_list li span.rem_btn {
 
 ul.getter_in_list li {
   margin: 0;
-  border: 1px solid #DDD;
-  padding: 3px 1em;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 5px 0.6em;
+  font-size: 16px;
+  cursor: pointer;
 }
+ul.getter_in_list li:last-child { border-bottom: none; }
 ul.getter_in_list li:hover {
   background-color: #25aeff;
   color: white;
 }
 ul.getter_in_list li span.shortcut {
   float:  right;
+  margin-left: 2em;
   color: #777;
 }
 
@@ -52,10 +51,4 @@ div.container_getter_in_list input.gil_new_item {
   margin-left: 8px;
   font-family: inherit;
   font-size: inherit;
-}
-
-/* Bouton « Type… » (panneau de sous-type d'une marque) */
-div.container_getter_in_list div.buttons {
-  padding: 0.6em 1em 0;
-  text-align: right;
 }

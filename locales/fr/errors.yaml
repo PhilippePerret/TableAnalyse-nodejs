@@ -37,6 +37,7 @@ tools:
 marks:
   no_autocontent: "Impossible de définir l'autocontent du type '%{type}'…"
   no_subtype: "Le type '%{type}' ne définit pas son sous-type…"
+  no_form_start: "Aucune marque « %{name} » n'est posée sur la table."
   already_associated: "Les deux tags sont déjà associés."
   not_associated: "Les deux tags ne sont pas associés !"
   missing_tag: "Le tag %{id} n'existe plus. Vous devriez supprimer ce lien."

@@ -412,6 +412,10 @@ marks:
     fpar: {name: "部", default: "呈示部"}
     fsec: {name: "段", default: "A 段"}
     fseg: {name: "片段", default: "片段 a"}
+    fparz: {name: "部结束"}
+    fsecz: {name: "段结束"}
+    fsegz: {name: "片段结束"}
+    at_measure: "%{name}（第 %{num} 小节）"
   segments:
     h-up:    "水平，位于谱表上方"
     h-down:  "水平，位于谱表下方"
@@ -421,6 +425,7 @@ marks:
     type:         "标记类型"
     cadence:      "终止式类型"
     segment:      "片段布局"
+    form_start:   "“%{name}”的开始"
 
 form_position:
   before: "乐谱之前"

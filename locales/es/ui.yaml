@@ -413,6 +413,10 @@ marks:
     fpar: {name: "Parte", default: "Exposición"}
     fsec: {name: "Sección", default: "Sección A"}
     fseg: {name: "Segmento", default: "Segmento a"}
+    fparz: {name: "Fin de parte"}
+    fsecz: {name: "Fin de sección"}
+    fsegz: {name: "Fin de segmento"}
+    at_measure: "%{name} (c. %{num})"
   segments:
     h-up:    "Horizontal sobre el pentagrama"
     h-down:  "Horizontal bajo el pentagrama"
@@ -422,6 +426,7 @@ marks:
     type:         "Tipo de la marca"
     cadence:      "Tipo de la cadencia"
     segment:      "Disposición del segmento"
+    form_start:   "Inicio de la porción « %{name} »"
 
 form_position:
   before: "Antes de la partitura"

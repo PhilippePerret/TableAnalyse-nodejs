@@ -1,6 +1,6 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
 import { px, uiZoom, keepInView } from './handies.js'
-import { draggable } from './lib/interact.js'
+import { addPanelHead } from './Panneau.js'
 import { t } from './i18n.js'
 /**
  * Class GetterInList
@@ -20,7 +20,8 @@ import { t } from './i18n.js'
  *      , message: "le titre message"
  *      , onChooseMethod: <methode à appeler>)
  *      , newEnable: false/true // pour en créer un 
- *      , cancelEnable: Ajout d'un menu 'Renoncer'
+ *      , cancelLabel: libellé du bouton d'annulation (« Renoncer » par
+ *          défaut)
  *      , onTypesMethod: <méthode> // bouton « Type… » (panneau de sous-type
  *          // d'une marque : retour au choix du type)
  *      , removeMethod: <methode à appeler pour détruire un élément>
@@ -32,6 +33,10 @@ import { t } from './i18n.js'
  *    gil.show({top:..., left:..., newEnable:...})
  * 
  * 
+
+  # 1.4.0
+    * Panneau commun (addPanelHead) : titre dans l'en-tête, taille du
+      contenu, boutons (« Renoncer », « Type… ») dans le pied de page.
 
   # 1.3.0
     * Possibilité de supprimer les items si la méthode removeMethod
@@ -74,8 +79,6 @@ export class GetterInList {
     var method = params.newEnable ? 'remove' : 'add'
     //console.log("method:", method)
     this.newItemField.classList[method]('hidden')
-    var methodVisu = params.cancelEnable ? 'remove' : 'add'
-    this.cancelItem.classList[methodVisu]('hidden')
     this.obj.classList.remove('hidden')
     keepInView(this.obj)
   }
@@ -158,7 +161,7 @@ export class GetterInList {
    */
   onKeyUpForCancel(e){
     if ( e.key == 'Escape' ) {
-      this.callChooseMethodWithValueAndHide(null)
+      this.cancel()
       return stopEvent(e)
     }
   }
@@ -184,8 +187,7 @@ export class GetterInList {
     menu.innerHTML = ''
     var imenu = 0
     this.shortcuts = {}
-    const fullchoix = this.data.items.concat([{name:t('ui.buttons.renounce'),shortcut:'Escape', value:null}])
-    fullchoix.forEach(di => {
+    this.data.items.forEach(di => {
       var lab = di.name
       /*
       |  Shortcut (keyboard)
@@ -207,10 +209,6 @@ export class GetterInList {
         let btn_rem = m.querySelector('span.rem_btn')
         listen(btn_rem, 'click', this.onWantRemoveItem.bind(this, m))
       }
-      // Pour pouvoir masquer l'item si cancelEnable n'est pas vrai
-      if ( di.name == 'Renoncer' ) {
-        this.cancelItem = m
-      }
       ++ imenu
     })
   }
@@ -226,7 +224,6 @@ export class GetterInList {
     this.buildItems(menu)
 
     const c = DCreate('DIV', {class:'container_getter_in_list hidden'})
-    c.appendChild(DCreate('H3', {text:this.data.message}))
     c.appendChild(menu)
 
     //
@@ -239,8 +236,13 @@ export class GetterInList {
     const n = DCreate('INPUT', {type:'text', class:'gil_new_item', placeholder:t('ui.panels.getter.new_item')})
     c.appendChild(n)
 
-    // Bouton « Type… » (retour au choix du type de la marque)
+    // Pied de page : « Renoncer » à gauche et, éventuellement, « Type… »
+    // (retour au choix du type de la marque)
+    const btnCancel = DCreate('BUTTON', {class:'btn-close', text:this.data.cancelLabel || t('ui.buttons.renounce')})
+    listen(btnCancel, 'click', e => { this.cancel() ; return stopEvent(e) })
+    const buttons = [btnCancel]
     if ( this.data.onTypesMethod ) {
+      btnCancel.style.float = 'left'
       const btn = DCreate('BUTTON', {class:'btn-types', text:t('ui.buttons.type')})
       listen(btn, 'click', e => {
         this.resetWindowObservers()
@@ -248,17 +250,23 @@ export class GetterInList {
         this.data.onTypesMethod.call(null)
         return stopEvent(e)
       })
-      c.appendChild(DCreate('DIV', {class:'buttons', inner:[btn]}))
+      buttons.push(btn)
     }
+    c.appendChild(DCreate('DIV', {class:'buttons', inner:buttons}))
 
     document.body.appendChild(c)
     this.obj = c
+    addPanelHead(c, {title: this.data.message, onClose: this.cancel.bind(this)})
+  }
+
+  // Annulation (« Renoncer », case de fermeture, touche Échap)
+  cancel(){
+    this.callChooseMethodWithValueAndHide(null)
   }
 
   observe(){
     const my = this
-    // Note : les menus sont déjà surveillés
-    draggable(this.obj)
+    // Note : les menus sont déjà surveillés (déplacement : en-tête)
     listen(this.newItemField,'keypress', e => {
       if ( e.key == 'Enter'){
         my.onSetNew.call(my)

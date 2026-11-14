@@ -50,7 +50,7 @@ Les classes de base (`AObjet`, `MenusTool`) ne doivent importer, même indirecte
 SA_SMOKE=8 SA_SMOKE_JS=/chemin/script.js npx electron . /chemin/analyse
 ~~~
 
-Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes.
+Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes. `SA_SMOKE_SHOT=/chemin/capture.png` : capture de la fenêtre juste avant l'arrêt.
 
 
 ### Localisation
@@ -113,6 +113,17 @@ Le fichier des préférences porte le nom `preferences.yaml`. Il définit :
 
 Ce fichier contient toutes les marques d'analyse à poser sur la table d'analyse.
 
+
+
+## Forme
+
+Marques de forme : type `frm`, sous-types (`TYPES_FORME`, `Constants.js`) `fpar`/`fsec`/`fseg` (début de partie, section, segment) et `fparz`/`fsecz`/`fsegz` (fins). Une fin est associée à sa marque de début par `data.start` (identifiant) et prend son nom. Menu « Forme » : `Forme.js`.
+
+Construction de la forme, fin d'une portion (`Forme.endOf`) :
+
+1. la marque de fin associée au début, si elle existe ;
+2. sinon le premier début de portion suivant, de même niveau ou de niveau supérieur (une partie termine aussi une section) ;
+3. sinon la fin de la pièce.
 
 
 ## Groupement des tags

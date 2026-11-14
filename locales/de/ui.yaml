@@ -413,6 +413,10 @@ marks:
     fpar: {name: "Teil", default: "Exposition"}
     fsec: {name: "Abschnitt", default: "Abschnitt A"}
     fseg: {name: "Segment", default: "Segment a"}
+    fparz: {name: "Ende des Teils"}
+    fsecz: {name: "Ende des Abschnitts"}
+    fsegz: {name: "Ende des Segments"}
+    at_measure: "%{name} (T. %{num})"
   segments:
     h-up:    "Waagerecht über dem System"
     h-down:  "Waagerecht unter dem System"
@@ -422,6 +426,7 @@ marks:
     type:         "Typ der Markierung"
     cadence:      "Typ der Kadenz"
     segment:      "Anordnung des Segments"
+    form_start:   "Beginn: %{name}"
 
 form_position:
   before: "Vor der Partitur"

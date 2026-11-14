@@ -40,11 +40,17 @@ export const TYPES_NOTES = {
   , 'an': {name:t('ui.marks.notes.an')         , value:'an', autocontent:'AN'  , shortcut:'s'}
 }
 
-// Les portions de la forme (marque « Forme »)
+// Les portions de la forme (marque « Forme »). Une fin de portion
+// (:startOf, sans contenu propre) est associée à sa marque de début
+// (data.start) ; :level sert à trouver la fin implicite d'une portion
+// (cf. Forme.endOf)
 export const TYPES_FORME = {
-    'fpar': {name:t('ui.marks.forms.fpar.name'), value:'fpar', shortcut:'p', default:t('ui.marks.forms.fpar.default')}
-  , 'fsec': {name:t('ui.marks.forms.fsec.name'), value:'fsec', shortcut:'s', default:t('ui.marks.forms.fsec.default')}
-  , 'fseg': {name:t('ui.marks.forms.fseg.name'), value:'fseg', shortcut:'g', default:t('ui.marks.forms.fseg.default')}
+    'fpar':  {name:t('ui.marks.forms.fpar.name'),  value:'fpar',  shortcut:'p', level:1, default:t('ui.marks.forms.fpar.default')}
+  , 'fsec':  {name:t('ui.marks.forms.fsec.name'),  value:'fsec',  shortcut:'s', level:2, default:t('ui.marks.forms.fsec.default')}
+  , 'fseg':  {name:t('ui.marks.forms.fseg.name'),  value:'fseg',  shortcut:'g', level:3, default:t('ui.marks.forms.fseg.default')}
+  , 'fparz': {name:t('ui.marks.forms.fparz.name'), value:'fparz', shortcut:'P', startOf:'fpar'}
+  , 'fsecz': {name:t('ui.marks.forms.fsecz.name'), value:'fsecz', shortcut:'S', startOf:'fsec'}
+  , 'fsegz': {name:t('ui.marks.forms.fsegz.name'), value:'fsegz', shortcut:'G', startOf:'fseg'}
 }
 
 /**

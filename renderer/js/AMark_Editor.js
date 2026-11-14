@@ -2,7 +2,9 @@ import { not } from './lib/common.js'
 import { erreur } from './lib/Message.js'
 import { GetterInList } from './GetterInList.js'
 import { Editeur } from './Editeur.js'
-import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT } from './Constants.js'
+import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT, TYPES_FORME } from './Constants.js'
+import { AObjet } from './AObjet.js'
+import { Forme } from './Forme.js'
 import { t } from './i18n.js'
 /**
  * AMark_Editor
@@ -64,6 +66,7 @@ proceed(){
   // console.log("-> proceed() / amark_data = ", this.amark_data)
   if ( !this.amark_type ) return this.getAMarkType()
   if ( this.isRequiringSubType && !this.amark_subtype) return this.getAMarkSubType()
+  if ( this.isFormEnd && !this._amark_start ) return this.getFormStart()
   if ( not(this.data.onlyType) && this.isRequiringContent && undefined == this.amark_content) return this.getAMarkContent()
   this.hasAutoContent && this.setAutoContent()
   this.finishWith(this.amark_data)
@@ -85,7 +88,7 @@ finishWith(data){
  * 
  */
 get amark_data(){
-  return {
+  const data = {
       type:     this.amark_type
     , prolong:  !!this.hasProlong
     , subtype:  this.amark_subtype
@@ -93,6 +96,9 @@ get amark_data(){
     , top:      this.position.top   + this.rectifTopPerType
     , left:     this.position.left  + this.rectifLeftPerType
   }
+  // Fin de portion de la forme : sa marque de début
+  this.isFormEnd && (data.start = this._amark_start)
+  return data
 }
 
 get amark_type()    {return this._amark_type}
@@ -119,7 +125,7 @@ get rectifTopPerType(){
  * Méthode pour obtenir le type de la marque
  */
 getAMarkType(){
-  var params = {cancelEnable: true}
+  var params = {}
   Object.assign(params, this.positionFixed)
   console.log("Paramètres envoyés à GetterInList (notamment pour le positionner)", params)
   this.getterOfAMarkType.show(params)
@@ -145,12 +151,52 @@ onChooseSubtype(subtype){
   this.proceed()
 }
 /**
+ * Fin de portion de la forme : choix de la marque de début (toujours
+ * proposé, même s'il n'y en a qu'une). Sans marque de début, ou en
+ * renonçant, retour au choix du sous-type.
+ */
+getFormStart(){
+  const startType = TYPES_FORME[this.amark_subtype].startOf
+  const starts = Forme.sorted(AObjet.select(ao => ao.isForme && ao.subtype == startType))
+  if ( starts.length == 0 ) {
+    erreur(t('errors.marks.no_form_start', {name: TYPES_FORME[startType].name}))
+    return this.backToSubtype()
+  }
+  this._getterstart && this._getterstart.obj.remove()
+  this._getterstart = new GetterInList({
+      items: starts.map((m, i) => ({
+          name:     Forme.labelOf(m)
+        , value:    m.id
+        , shortcut: i < 9 ? String(i + 1) : undefined
+      }))
+    , message:        t('ui.marks.getter.form_start', {name: TYPES_FORME[startType].name})
+    , onChooseMethod: this.onChooseFormStart.bind(this)
+  })
+  this._getterstart.show(this.positionFixed)
+}
+onChooseFormStart(id){
+  if ( null == id ) return this.backToSubtype()
+  this._amark_start   = id
+  this._amark_content = AObjet.get(id).content
+  this.proceed()
+}
+// Retour au choix du sous-type (getter reconstruit pour retrouver ses
+// raccourcis)
+backToSubtype(){
+  this._amark_subtype = null
+  this._gettersubtype && this._gettersubtype.obj.remove()
+  this._gettersubtype = null
+  this.getAMarkSubType()
+}
+
+/**
  * Bouton « Type… » du panneau de sous-type : retour au choix du type
  * (les getters sont reconstruits pour retrouver leurs raccourcis)
  */
 onWantTypes(){
   this._amark_type    = null
   this._amark_subtype = null
+  this._amark_start   = null
   ;[this._gettertype, this._gettersubtype].forEach(g => g && g.obj.remove())
   this._gettertype    = null
   this.getAMarkType()
@@ -226,6 +272,9 @@ get isRequiringContent(){
   } else {
     return undefined != this.dataOfType.default
   }
+}
+get isFormEnd(){
+  return this.amark_type == 'frm' && !!this.amark_subtype && !!TYPES_FORME[this.amark_subtype].startOf
 }
 get hasAutoContent(){
   return this.dataOfType.autocontent == true

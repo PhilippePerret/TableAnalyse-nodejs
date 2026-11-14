@@ -226,6 +226,9 @@ setValue(newvalue){
 
   this.isCadence && this.buildPoigneeCadence()
 
+  // Début de portion de la forme renommé : ses fins aussi
+  this.isForme && Forme.updateEndsOf(this)
+
   // Numéro de mesure modifié : il fait foi pour les suivants
   this.subtype == 'mes' && this.data.line && Systeme.renumberMeasures(this)
 
@@ -808,13 +811,7 @@ toggleExpanded(expanded){
  * déplaçable librement.
  */
 aimanteSurMesure(){
-  const sys = Systeme.getSystemeAssociated(this)
-  let best = null, ecart = Infinity
-  AObjet.items.forEach(ao => {
-    if ( ao.subtype != 'mes' || !ao.obj || Systeme.getSystemeAssociated(ao) !== sys ) return
-    const d = Math.abs(ao.left - this.left)
-    if ( d < ecart ) { ecart = d ; best = ao }
-  })
+  const best = Forme.nearestMeasureMark(this)
   if ( !best ) return
   const a = DGet('span.borne', this.obj).getBoundingClientRect()
   const b = best.textRect

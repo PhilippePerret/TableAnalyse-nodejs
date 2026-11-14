@@ -37,6 +37,7 @@ tools:
 marks:
   no_autocontent: "无法定义类型 '%{type}' 的自动内容…"
   no_subtype: "类型 '%{type}' 未定义其子类型…"
+  no_form_start: "表上没有“%{name}”标记。"
   already_associated: "这两个标记已关联。"
   not_associated: "这两个标记未关联！"
   missing_tag: "标记 %{id} 已不存在。应删除此链接。"

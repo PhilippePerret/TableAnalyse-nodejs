@@ -412,6 +412,10 @@ marks:
     fpar: {name: "부", default: "제시부"}
     fsec: {name: "섹션", default: "섹션 A"}
     fseg: {name: "세그먼트", default: "세그먼트 a"}
+    fparz: {name: "부의 끝"}
+    fsecz: {name: "섹션의 끝"}
+    fsegz: {name: "세그먼트의 끝"}
+    at_measure: "%{name} (%{num}마디)"
   segments:
     h-up:    "가로, 보표 위"
     h-down:  "가로, 보표 아래"
@@ -421,6 +425,7 @@ marks:
     type:         "표시 종류"
     cadence:      "종지 종류"
     segment:      "구간 배치"
+    form_start:   "“%{name}”의 시작"
 
 form_position:
   before: "악보 앞"

@@ -37,6 +37,7 @@ tools:
 marks:
   no_autocontent: "種類 '%{type}' の自動内容を定義できません…"
   no_subtype: "種類 '%{type}' はサブタイプを定義していません…"
+  no_form_start: "表に「%{name}」マークがありません。"
   already_associated: "2 つのマークはすでに関連付けられています。"
   not_associated: "2 つのマークは関連付けられていません！"
   missing_tag: "マーク %{id} はもう存在しません。このリンクを削除してください。"

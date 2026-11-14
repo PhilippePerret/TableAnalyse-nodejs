@@ -195,9 +195,12 @@ export class Editeur {
   }
   onTypeChosen(data){
     if ( data ) {
-      const value = this.getValue()
+      // Fin de portion de la forme : son texte est le nom du début
+      const value = data.start ? data.content : this.getValue()
       this.owner.type     = data.type
       this.owner.subtype  = data.subtype
+      if ( data.start ) { this.owner.data.start = data.start }
+      else { delete this.owner.data.start }
       const msg = AMARQUES_TYPES[data.type] && AMARQUES_TYPES[data.type].message
       msg && (this.titre = msg)
       this.btnType.textContent = this.typeButtonLabel
