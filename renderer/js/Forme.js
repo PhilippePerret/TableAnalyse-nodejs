@@ -103,25 +103,28 @@ export class Forme {
    * dernière, dernière barre relevée par la découpe, sinon bout du
    * système) pour une fin de portion.
    * La mesure est celle qui contient +x+ (abscisse à l'écran, p.e. le
-   * clic) ou, par défaut, le milieu de la borne.
+   * clic). Sans +x+ (« Aligner à la mesure »), le début de mesure le plus
+   * proche du bord gauche de la borne pour un début de portion, la fin
+   * de mesure la plus proche de son bord droit pour une fin.
    * @return true si la marque a été placée
    */
   static placeOnMeasure(mark, x){
     const sys = Systeme.getSystemeAssociated(mark)
     const mesures = this.measureMarksOf(sys)
     if ( !sys || mesures.length == 0 ) return false
-    const rect  = this.measureRect
-    const borne = DGet('span.borne', mark.obj).getBoundingClientRect()
-    undefined === x && (x = borne.left + borne.width / 2)
-    let i = mesures.findLastIndex(m => rect(m).left <= x)
-    i < 0 && (i = 0)
-    let dx
-    if ( TYPES_FORME[mark.subtype].startOf ) {
-      const right = mesures[i + 1] ? rect(mesures[i + 1]).left : this.systemEndX(sys)
-      dx = right - borne.right
+    const isEnd  = !!TYPES_FORME[mark.subtype].startOf
+    const borne  = DGet('span.borne', mark.obj).getBoundingClientRect()
+    const starts = mesures.map(m => this.measureRect(m).left)
+    const ends   = [...starts.slice(1), this.systemEndX(sys)]
+    let target
+    if ( undefined === x ) {
+      const from = isEnd ? borne.right : borne.left
+      target = (isEnd ? ends : starts).reduce((best, v) => Math.abs(v - from) < Math.abs(best - from) ? v : best)
     } else {
-      dx = rect(mesures[i]).left - borne.left
+      const i = Math.max(0, starts.findLastIndex(v => v <= x))
+      target = isEnd ? ends[i] : starts[i]
     }
+    const dx = target - (isEnd ? borne.right : borne.left)
     mark.left = Math.round(mark.left + dx / (mark.obj.currentCSSZoom || 1))
     return true
   }
