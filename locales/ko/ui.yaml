@@ -142,6 +142,7 @@ buttons:
   ok:               "확인"
   apply:            "적용"
   type:             "종류…"
+  subtype:          "하위 종류…"
 
 message_titles:
   notice:           "알림"

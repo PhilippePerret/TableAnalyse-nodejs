@@ -21,6 +21,8 @@ import { t } from './i18n.js'
  *      , onChooseMethod: <methode à appeler>)
  *      , newEnable: false/true // pour en créer un 
  *      , cancelEnable: Ajout d'un menu 'Renoncer'
+ *      , onTypesMethod: <méthode> // bouton « Type… » (panneau de sous-type
+ *          // d'une marque : retour au choix du type)
  *      , removeMethod: <methode à appeler pour détruire un élément>
  *          // Si elle est définie, un bouton "-" est ajouté à chaque
  *          // item
@@ -236,6 +238,18 @@ export class GetterInList {
     this.data.newEnable || ncss.push('hidden')
     const n = DCreate('INPUT', {type:'text', class:'gil_new_item', placeholder:t('ui.panels.getter.new_item')})
     c.appendChild(n)
+
+    // Bouton « Type… » (retour au choix du type de la marque)
+    if ( this.data.onTypesMethod ) {
+      const btn = DCreate('BUTTON', {class:'btn-types', text:t('ui.buttons.type')})
+      listen(btn, 'click', e => {
+        this.resetWindowObservers()
+        this.hide()
+        this.data.onTypesMethod.call(null)
+        return stopEvent(e)
+      })
+      c.appendChild(DCreate('DIV', {class:'buttons', inner:[btn]}))
+    }
 
     document.body.appendChild(c)
     this.obj = c

@@ -32,6 +32,7 @@ import { t } from './i18n.js'
  *    ---------
  *    - mettre 'onlyType' à true pour ne choisir que le type et
  *      sous-type de la marque
+ *    - 'type' : type déjà connu (on commence alors par le sous-type)
  */
 
 
@@ -40,6 +41,7 @@ export class AMark_Editor {
 constructor(data){
   this.data   = data
   this.event  = data.event
+  data.type && (this._amark_type = data.type)
 
   /* Pour écrire toutes les coordonnées
   var xy = {}
@@ -141,6 +143,17 @@ getAMarkSubType(){
 onChooseSubtype(subtype){
   this._amark_subtype = subtype
   this.proceed()
+}
+/**
+ * Bouton « Type… » du panneau de sous-type : retour au choix du type
+ * (les getters sont reconstruits pour retrouver leurs raccourcis)
+ */
+onWantTypes(){
+  this._amark_type    = null
+  this._amark_subtype = null
+  ;[this._gettertype, this._gettersubtype].forEach(g => g && g.obj.remove())
+  this._gettertype    = null
+  this.getAMarkType()
 }
 
 /**
@@ -322,7 +335,7 @@ get paramsGetterOfSubtype(){
         return null
     }
   }
-  return Object.assign(d, {onChooseMethod: this.onChooseSubtype.bind(this)})
+  return Object.assign(d, {onChooseMethod: this.onChooseSubtype.bind(this), onTypesMethod: this.onWantTypes.bind(this)})
 }
 
 } // AMark_Editor

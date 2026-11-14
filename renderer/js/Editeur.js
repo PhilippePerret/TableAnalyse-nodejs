@@ -4,7 +4,7 @@ import { UI } from './UI.js'
 import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
 import { AMark_Editor } from './AMark_Editor.js'
-import { AMARQUES_TYPES } from './Constants.js'
+import { AMARQUES_TYPES, typeHasSubtype } from './Constants.js'
 /**
  * Classe Editeur
  * --------------
@@ -144,9 +144,10 @@ export class Editeur {
     o.appendChild(this.textarea)
     const divBoutons = DCreate('DIV', {class:'buttons'})
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
-    // Marque d'analyse : changement de son type
+    // Marque d'analyse : changement de son type (de son sous-type
+    // d'abord quand elle en a un)
     if ( this.isAMark ) {
-      divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.type'), class:'type'}))
+      divBoutons.appendChild(DCreate('BUTTON', {text:this.typeButtonLabel, class:'type'}))
     }
     // Bouton OK toujours le dernier, à droite
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
@@ -168,6 +169,10 @@ export class Editeur {
     listen(this.textarea,   'blur',  this.onBlurTextField.bind(this))
   }
 
+  get typeButtonLabel(){
+    return t(typeHasSubtype(this.owner.type) ? 'ui.buttons.subtype' : 'ui.buttons.type')
+  }
+
   get isAMark(){
     return !!(this.owner && this.owner.data && this.owner.data.type && 'function' == typeof this.owner.setValue)
   }
@@ -183,6 +188,7 @@ export class Editeur {
         onReleaseMethod:  this.onTypeChosen.bind(this)
       , event:            {clientX: x, clientY: y, pageX: x + window.scrollX, pageY: y + window.scrollY}
       , onlyType:         true
+      , type:             typeHasSubtype(this.owner.type) ? this.owner.type : undefined
     })
     editor.proceed()
     return stopEvent(e)
@@ -194,6 +200,7 @@ export class Editeur {
       this.owner.subtype  = data.subtype
       const msg = AMARQUES_TYPES[data.type] && AMARQUES_TYPES[data.type].message
       msg && (this.titre = msg)
+      this.btnType.textContent = this.typeButtonLabel
       this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
       keepInView(this.obj)
       this.value = value

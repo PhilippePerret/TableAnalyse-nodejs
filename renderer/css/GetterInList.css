@@ -53,3 +53,9 @@ div.container_getter_in_list input.gil_new_item {
   font-family: inherit;
   font-size: inherit;
 }
+
+/* Bouton « Type… » (panneau de sous-type d'une marque) */
+div.container_getter_in_list div.buttons {
+  padding: 0.6em 1em 0;
+  text-align: right;
+}

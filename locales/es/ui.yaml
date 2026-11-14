@@ -142,6 +142,7 @@ buttons:
   ok:               "Aceptar"
   apply:            "Aplicar"
   type:             "Tipo…"
+  subtype:          "Subtipo…"
 
 message_titles:
   notice:           "Información"

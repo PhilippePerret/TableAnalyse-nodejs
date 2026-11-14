@@ -142,6 +142,7 @@ buttons:
   ok:               "OK"
   apply:            "Apply"
   type:             "Type…"
+  subtype:          "Subtype…"
 
 message_titles:
   notice:           "Information"

@@ -72,6 +72,12 @@ export const AMARQUES_TYPES = {
   , 'cir': {name:t('ui.marks.types.cir.name')       , shortcut:'r', value:'cir'}
 }
 
+// @return true si le type de marque +type+ a des sous-types
+export function typeHasSubtype(type){
+  const dtype = AMARQUES_TYPES[type]
+  return !!dtype && (!!dtype.subdata || undefined != dtype.subtype)
+}
+
 
 /**
 * Les types de marques qu'on doit toujours aligner si elle se trouve
