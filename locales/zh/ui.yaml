@@ -38,6 +38,7 @@ menu:
   options:          "选项"
   mark:             "标记"
   align:            "对齐"
+  align_text:       "文本对齐"
   adjust:           "调整"
   selection:        "选择"
   borders:          "边框"
@@ -78,9 +79,11 @@ mark_menu:
   unlock_many:      "解锁标记"
   change_type:      "将类型设为…"
   justify:          "两端对齐文本"
-  center:           "文本居中"
-  right:            "文本右对齐"
-  left:             "文本左对齐"
+
+text_align_menu:
+  center:           "居中"
+  right:            "右对齐"
+  left:             "左对齐"
 
 align_menu:
   top:              "顶部"

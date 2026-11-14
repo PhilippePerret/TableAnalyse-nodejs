@@ -38,6 +38,7 @@ menu:
   options:          "Optionen"
   mark:             "Markierung"
   align:            "Ausrichten"
+  align_text:       "Text ausrichten"
   adjust:           "Anpassen"
   selection:        "Auswahl"
   borders:          "Ränder"
@@ -78,9 +79,11 @@ mark_menu:
   unlock_many:      "Markierungen entsperren"
   change_type:      "Typ setzen auf…"
   justify:          "Text im Blocksatz"
-  center:           "Text zentrieren"
-  right:            "Text rechtsbündig"
-  left:             "Text linksbündig"
+
+text_align_menu:
+  center:           "Zentriert"
+  right:            "Rechtsbündig"
+  left:             "Linksbündig"
 
 align_menu:
   top:              "Oben"

@@ -38,6 +38,7 @@ menu:
   options:          "Options"
   mark:             "Mark"
   align:            "Align"
+  align_text:       "Align Text"
   adjust:           "Adjust"
   selection:        "Selection"
   borders:          "Borders"
@@ -78,9 +79,11 @@ mark_menu:
   unlock_many:      "Unlock Marks"
   change_type:      "Set Type to…"
   justify:          "Justify Text"
-  center:           "Center Text"
-  right:            "Align Text Right"
-  left:             "Align Text Left"
+
+text_align_menu:
+  center:           "Center"
+  right:            "Right"
+  left:             "Left"
 
 align_menu:
   top:              "Top"

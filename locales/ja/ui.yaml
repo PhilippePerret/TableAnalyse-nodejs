@@ -38,6 +38,7 @@ menu:
   options:          "オプション"
   mark:             "マーク"
   align:            "整列"
+  align_text:       "テキストの整列"
   adjust:           "調整"
   selection:        "選択"
   borders:          "枠線"
@@ -78,9 +79,11 @@ mark_menu:
   unlock_many:      "マークのロックを解除"
   change_type:      "種類を設定…"
   justify:          "テキストを両端揃え"
-  center:           "テキストを中央揃え"
-  right:            "テキストを右揃え"
-  left:             "テキストを左揃え"
+
+text_align_menu:
+  center:           "中央揃え"
+  right:            "右揃え"
+  left:             "左揃え"
 
 align_menu:
   top:              "上"

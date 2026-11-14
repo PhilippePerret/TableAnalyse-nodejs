@@ -65,9 +65,6 @@ export class AmarkMenu extends MenusTool {
   }
 
   static onActivate_justifyText()     { this.applyStyleText('justify')  }
-  static onActivate_alignTextLeft()   { this.applyStyleText('left')     }
-  static onActivate_alignTextRight()  { this.applyStyleText('right')    }
-  static onActivate_alignTextCenter() { this.applyStyleText('center')   }
 
 
   /* --- Functional Methods --- */
@@ -98,5 +95,26 @@ export class AmarkMenu extends MenusTool {
 
   static get menuLock(){
     return DGet('option[value="toogleLock"]', this.menu)
+  }
+}
+
+/**
+ * Sous-menu « Marque > Aligner le texte » : au centre, à droite, à
+ * gauche (texte des marques sélectionnées)
+ */
+export class TextAlignMenu extends MenusTool {
+
+  static init(){
+    super.init()
+    this.setState(false)
+    on('selection:changed', ({selection}) => this.setState(selection.length > 0))
+  }
+
+  static setState(state){
+    Array.from(this.menu.options).forEach((option, i) => i && (option.disabled = !state))
+  }
+
+  static onActivate(e, align){
+    AmarkMenu.applyStyleText(align)
   }
 }
