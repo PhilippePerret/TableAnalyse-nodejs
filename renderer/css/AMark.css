@@ -23,6 +23,9 @@ div.amark.locked:hover {
 @media screen {
   div.amark.locked {opacity: 0.45}
 }
+/* Marque verrouillée : sous toutes les autres marques (même sélectionnée),
+   pour atteindre ce qu'elle recouvre */
+div.amark.aobj.locked { z-index: 0 !important; }
 
 div.amark.selected {
   background-color: rgba(150,180,250, 0.4);
