@@ -643,6 +643,7 @@ function alignedCount(rows, sys, side, x){
  *  Mesures : chacune est fermée par une barre ; la première commence au
  *  début du système, les suivantes après chaque barre. Ce qui suit la
  *  dernière barre n'est pas une mesure (armure ou clé de précaution).
+ *  La dernière barre (lastBar) marque la fin de la dernière mesure.
  *  Les numéros sont posés par l'application, sous le système.
  * --------------------------------------------------------------------- */
 
@@ -674,6 +675,7 @@ function findMeasures(dark, w, systems, s){
       }
     }
     sys.barlines = bars
+    sys.lastBar = bars.length ? bars[bars.length - 1].x0 : null
     const starts = [left]
     bars.slice(0, -1).forEach(b => starts.push(b.x1 + 1))
     sys.measures = starts.map(x => ({x: Math.round(x + 0.3 * s)}))

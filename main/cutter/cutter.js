@@ -79,6 +79,8 @@ function mesuresYAML(mesures){
     out.push(`  height: ${m.height}`)
     out.push(`  measures:`)
     m.measures.forEach(me => out.push(`    - {number: ${me.number}, x: ${me.x - m.x0}}`))
+    // Fin de la dernière mesure (dernière barre)
+    null != m.end && out.push(`  end: ${m.end - m.x0}`)
   }
   return out.join('\n') + '\n'
 }
@@ -116,7 +118,7 @@ async function run(){
       const image = `system-${String(number).padStart(3, '0')}.jpg`
       await saveJPG(extractSystem(img, res, i), path.join(opts.out, image))
       const {x0, y0, x1, y1} = sys.crop
-      mesures.push({image, width: x1 - x0 + 1, height: y1 - y0 + 1, measures: sys.measures, x0})
+      mesures.push({image, width: x1 - x0 + 1, height: y1 - y0 + 1, measures: sys.measures, end: sys.lastBar, x0})
     }
     const detail = res.systems.map(sys => sys.staves.length).join('+')
     log(T('page', {page: p, pages: pdf.numPages, staves: res.staves.length, systems: res.systems.length, detail}))
@@ -146,7 +148,9 @@ async function runNumbering(){
     if ( res.systems.length > 1 ) log(T('image_systems', {image, count: res.systems.length}))
     const measures = res.systems.flatMap(sys => sys.measures)
     measures.forEach(m => m.number = ++measure)
-    mesures.push({image, width: img.width, height: img.height, measures, x0: 0})
+    // Fin de la dernière mesure : seulement pour une image d'un système
+    const end = res.systems.length == 1 ? res.systems[0].lastBar : null
+    mesures.push({image, width: img.width, height: img.height, measures, end, x0: 0})
     log(T('image_measures', {image, count: measures.length}))
   }
   fs.writeFileSync(path.join(opts.out, 'mesures.yaml'), mesuresYAML(mesures))

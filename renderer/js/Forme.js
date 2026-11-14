@@ -89,7 +89,8 @@ export class Forme {
   /**
    * Place la marque de forme +mark+ sur sa mesure : borne alignée à
    * gauche sur le début de la mesure (numéro de mesure) pour un début
-   * de portion, à droite sur sa fin (mesure suivante ou bout du
+   * de portion, à droite sur sa fin (mesure suivante ou, pour la
+   * dernière, dernière barre relevée par la découpe, sinon bout du
    * système) pour une fin de portion.
    * La mesure est celle qui contient +x+ (abscisse à l'écran, p.e. le
    * clic) ou, par défaut, le milieu de la borne.
@@ -106,13 +107,20 @@ export class Forme {
     i < 0 && (i = 0)
     let dx
     if ( TYPES_FORME[mark.subtype].startOf ) {
-      const right = mesures[i + 1] ? rect(mesures[i + 1]).left : sys.obj.getBoundingClientRect().right
+      const right = mesures[i + 1] ? rect(mesures[i + 1]).left : this.systemEndX(sys)
       dx = right - borne.right
     } else {
       dx = rect(mesures[i]).left - borne.left
     }
     mark.left = Math.round(mark.left + dx / (mark.obj.currentCSSZoom || 1))
     return true
+  }
+
+  // Abscisse (écran) de la fin de la dernière mesure du système
+  static systemEndX(sys){
+    const r = sys.obj.getBoundingClientRect()
+    const end = Number(sys.data.measures_end)
+    return end > 0 ? r.left + end * r.width : r.right
   }
 
   /**

@@ -174,7 +174,10 @@ export class Analyse {
    * Numéros de mesure détectés par la découpe (systems/mesures.yaml, en
    * pixels de chaque image) : transformés en marques texte « numéro de
    * mesure » posées sur la ligne des numéros, sous chaque système
-   * (`line: true`), à valider dans l'interface. Ils remplacent ceux d'une
+   * (`line: true`), à valider dans l'interface. La fin de la dernière
+   * mesure de chaque système (dernière barre) est consignée dans ses
+   * données (`measures_end`, proportion de la largeur de l'image). Les
+   * numéros remplacent ceux d'une
    * numérotation précédente. Fait une seule fois : le fichier est ensuite
    * renommé.
    * @return le nombre de marques créées
@@ -192,6 +195,7 @@ export class Analyse {
       const dsys = findSystem(e.image)
       if ( !dsys ) continue
       const scale = width / e.width
+      if ( null != e.end ) dsys.measures_end = Math.round(e.end / e.width * 10000) / 10000
       for ( const m of e.measures ) {
         newTags.push({
             id:       ++id
@@ -207,6 +211,7 @@ export class Analyse {
     const oldTags = this.tags.filter(tag => !(tag.subtype == 'mes' && tag.line))
     this.tags = [...oldTags, ...newTags]
     this.saveTags()
+    this.saveInfos()
     fs.renameSync(this.measuresPath, this.measuresPath.replace(/\.yaml$/, '.importe.yaml'))
     return newTags.length
   }

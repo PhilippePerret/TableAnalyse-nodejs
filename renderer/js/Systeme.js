@@ -420,6 +420,8 @@ export class Systeme extends AObjet {
         image_name: this.data.image_name
       , top:    this.data.top
       , left:   this.data.left
+      // Fin de la dernière mesure (proportion de la largeur, cf. découpe)
+      , measures_end: this.data.measures_end
     }
   }
 
