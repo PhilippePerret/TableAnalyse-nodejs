@@ -42,7 +42,7 @@ mkdir -p "$DEST"
 for EXT in dmg exe AppImage; do
   NEW=( "$TMP"/**/*.$EXT(N) )
   [[ -n "$NEW" ]] || continue
-  rm -f "$DEST"/Table-d-analyse-*.$EXT
+  rm -f "$DEST"/Table-d-analyse-*.$EXT(N)
   cp "$NEW[@]" "$DEST/"
 done
 rm -rf "$TMP"
