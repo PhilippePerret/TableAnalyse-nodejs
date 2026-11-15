@@ -1238,9 +1238,9 @@ export class AMExtrait extends AMark {
  * Morceaux de l'extrait des mesures +spec+ (« 12 », « 12-15 ») : un par
  * système traversé, de la barre de début de la première mesure (après
  * l'en-tête du système pour sa première mesure) à celle de fin de la
- * dernière ; en tête, la clé et l'armure du système de la première
- * mesure (du deuxième système si c'est le premier). Morceaux bout à
- * bout, portées alignées (cf. aligned).
+ * dernière ; en tête, en morceau séparé, l'en-tête (clé, armure ;
+ * métrique pour le premier système) du système de la première mesure.
+ * Morceaux bout à bout, portées alignées (cf. aligned).
  * @return {pieces, scale} ou null (message affiché)
  */
 static extractOf(spec){
@@ -1285,10 +1285,9 @@ static extractOf(spec){
     })
     if ( iTo + 1 < nums.length || nums[iTo] >= to ) break
   }
-  // En-tête (clé, armure) pris dans le système de la première mesure,
-  // jamais dans le premier (métrique, indication de mouvement)
-  const hsys = sys0 !== Systeme.first ? sys0 : (Systeme.all[1] || sys0)
-  pieces.unshift(Object.assign({image: hsys.image_name, y1: 0, y2: hsys.obj.naturalHeight}, this.headerOf(hsys)))
+  // En-tête (clé, armure ; métrique pour le premier système) du système
+  // de la première mesure, toujours en morceau séparé
+  pieces.unshift(Object.assign({image: sys0.image_name, y1: 0, y2: sys0.obj.naturalHeight}, this.headerOf(sys0)))
   return {pieces: this.aligned(pieces), scale: sys0.obj.offsetWidth / sys0.obj.naturalWidth}
 }
 
