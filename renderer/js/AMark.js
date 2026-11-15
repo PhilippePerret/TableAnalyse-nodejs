@@ -813,7 +813,7 @@ onContextMenu(e){
   this.type == 'acc' && items.push({label: T('align_harmony'), value: 'alignHarmony'})
   this.type == 'har' && items.push({label: T('align_chord'),   value: 'alignChord'})
   this.isForme && items.push({label: T('align_measure'), value: 'alignMeasure'}, {label: T('form_height'), value: 'formHeight'})
-  this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'})
+  this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'}, {label: T('reload_image'), value: 'reloadImage', enabled: !!this.data.file})
   items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
   invoke('menu:popup', {items})
     .then(choice => choice && this.onContextChoice(choice))
@@ -831,6 +831,7 @@ onContextChoice(choice){
       break
     case 'edit':          return this.edit()
     case 'openImage':     return this.openImage()
+    case 'reloadImage':   return this.showImage()
     case 'align':         return targets.forEach(m => m.alignOnSameType())
     case 'alignHarmony':  return this.alignHorizontallyOn('har', 'no_harmony_mark')
     case 'alignChord':    return this.alignHorizontallyOn('acc', 'no_chord_mark')
@@ -1431,6 +1432,7 @@ buildSpanContent(){
  * Affichage de l'image de l'extrait : son fichier (images/, modifiable
  * hors de l'application, cf. « Ouvrir l'image »), sinon les morceaux
  * assemblés. Taille de la marque : celle de l'image à l'échelle.
+ * Aussi « Recharger l'image » (menu contextuel).
  */
 showImage(){
   if ( !this.data.file ) return this.drawExtract()

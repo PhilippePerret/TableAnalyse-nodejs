@@ -131,6 +131,7 @@ borders_menu:
 
 # Menu contextuel d'une marque
 mark_context:
+  reload_image:     "Recharger l'image"
   lock:             "Verrouiller"
   unlock:           "Déverrouiller"
   edit:             "Éditer…"
@@ -282,8 +283,8 @@ panels:
   mark_editor:
     title:            "Édition de la marque"
   extract:
-    title:            "Extrait de partition"
-    help:             "Assemblez les morceaux : glissez-les pour les placer, tirez leurs bords pour les recadrer (flèches : déplacer le morceau choisi, Maj : 10 px). « Assembler » crée l'image."
+    title:            "Assembleur pour extrait"
+    help:             "Cet éditeur vous permet d'ajuster les parties de l'extrait à votre guise, en les déplaçant ou en modifiant leur longueur. Cliquez sur le bouton « Assembler » pour fabriquer l'image, que vous pourrez affiner dans votre logiciel d'image (menu contextuel « Ouvrir l'image » puis « Recharger l'image »)."
     measures:         "Mesures"
     assemble:         "Assembler"
   animation:

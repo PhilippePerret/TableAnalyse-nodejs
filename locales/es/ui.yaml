@@ -131,6 +131,7 @@ borders_menu:
 
 # Menú contextual de una marca
 mark_context:
+  reload_image:     "Recargar la imagen"
   lock:             "Bloquear"
   unlock:           "Desbloquear"
   edit:             "Editar…"
@@ -282,8 +283,8 @@ panels:
   mark_editor:
     title:            "Edición de la marca"
   extract:
-    title:            "Fragmento de partitura"
-    help:             "Ensambla los trozos: arrástralos para colocarlos y sus bordes para recortarlos (flechas: mover el trozo elegido, Mayús: 10 px). «Ensamblar» crea la imagen."
+    title:            "Ensamblador de fragmento"
+    help:             "Este editor le permite ajustar las partes del fragmento a su gusto, moviéndolas o cambiando su longitud. Pulse el botón «Ensamblar» para crear la imagen, que podrá afinar en su programa de imágenes (menú contextual «Abrir la imagen» y luego «Recargar la imagen»)."
     measures:         "Compases"
     assemble:         "Ensamblar"
   animation:

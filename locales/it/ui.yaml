@@ -131,6 +131,7 @@ borders_menu:
 
 # Menu contestuale di un segno
 mark_context:
+  reload_image:     "Ricarica l'immagine"
   lock:             "Blocca"
   unlock:           "Sblocca"
   edit:             "Modifica…"
@@ -282,8 +283,8 @@ panels:
   mark_editor:
     title:            "Modifica del segno"
   extract:
-    title:            "Estratto partitura"
-    help:             "Assembla i pezzi: trascinali per posizionarli, trascina i bordi per ritagliarli (frecce: sposta il pezzo scelto, Maiusc: 10 px). «Assembla» crea l'immagine."
+    title:            "Assemblatore di estratto"
+    help:             "Questo editor permette di regolare a piacere le parti dell'estratto, spostandole o modificandone la lunghezza. Fai clic su «Assembla» per creare l'immagine, che potrai rifinire nel tuo programma di immagini (menu contestuale «Apri l'immagine», poi «Ricarica l'immagine»)."
     measures:         "Battute"
     assemble:         "Assembla"
   animation:

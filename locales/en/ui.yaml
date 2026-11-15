@@ -131,6 +131,7 @@ borders_menu:
 
 # Context menu of a mark
 mark_context:
+  reload_image:     "Reload Image"
   lock:             "Lock"
   unlock:           "Unlock"
   edit:             "Edit…"
@@ -282,8 +283,8 @@ panels:
   mark_editor:
     title:            "Edit Mark"
   extract:
-    title:            "Score Excerpt"
-    help:             "Put the pieces together: drag them to place them, drag their edges to crop them (arrows: move the chosen piece, Shift: 10 px). “Assemble” creates the image."
+    title:            "Excerpt Assembler"
+    help:             "This editor lets you adjust the parts of the excerpt as you wish, by moving them or changing their length. Click the “Assemble” button to build the image, which you can then refine in your image software (context menu “Open Image”, then “Reload Image”)."
     measures:         "Bars"
     assemble:         "Assemble"
   animation:

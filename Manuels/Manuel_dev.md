@@ -136,7 +136,7 @@ Marque de type `ext` (`AMExtrait`, `AMark.js`) : image composée de morceaux d'i
 
 Morceaux proposés (`AMExtrait.extractOf`) : un par système traversé (barres de mesure lues dans l'image, cf. `Forme.barlineNear`), sans l'en-tête du système pour une mesure qui le commence (`HEADER_STAVES` hauteurs de portée, `HEADER_STAVES_FIRST` pour le premier système, métrique comprise) ; en tête, en morceau séparé, l'en-tête du système de la première mesure. Alignement (`AMExtrait.aligned`) sur les lignes de portée du premier morceau ; un morceau dont les portées sont espacées autrement est coupé entre ses portées (rangée la moins encrée).
 
-Assemblage : `ExtraitComposer.js` (à la création et au double-clic), boite `#ext_composer_panel` avec la zone d'assemblage (morceaux recadrables par les 4 bords, déplaçables à la souris et aux flèches) ; « Assembler » recompose et réécrit l'image ; mesures changées (sortie du champ) : morceaux de ces mesures. Menu contextuel « Ouvrir l'image » : son fichier, ouvert par l'application du système (canal `extract:open`).
+Assemblage : `ExtraitComposer.js` (à la création et au double-clic), boite `#ext_composer_panel` avec la zone d'assemblage (morceaux recadrables par les 4 bords, déplaçables à la souris et aux flèches) ; « Assembler » recompose et réécrit l'image ; mesures changées (sortie du champ) : morceaux de ces mesures. Menu contextuel « Ouvrir l'image » : son fichier, ouvert par l'application du système (canal `extract:open`) ; « Recharger l'image » : le fichier relu (`showImage`).
 
 
 ## Groupement des tags

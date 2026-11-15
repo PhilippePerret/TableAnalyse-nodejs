@@ -131,6 +131,7 @@ borders_menu:
 
 # Kontextmenü einer Markierung
 mark_context:
+  reload_image:     "Bild neu laden"
   lock:             "Sperren"
   unlock:           "Entsperren"
   edit:             "Bearbeiten…"
@@ -282,8 +283,8 @@ panels:
   mark_editor:
     title:            "Markierung bearbeiten"
   extract:
-    title:            "Partiturausschnitt"
-    help:             "Setzen Sie die Teile zusammen: ziehen, um sie zu platzieren, Ränder ziehen, um sie zuzuschneiden (Pfeiltasten: gewähltes Teil verschieben, Umschalt: 10 px). „Zusammensetzen“ erstellt das Bild."
+    title:            "Ausschnitt-Assembler"
+    help:             "Mit diesem Editor passen Sie die Teile des Ausschnitts nach Belieben an, indem Sie sie verschieben oder ihre Länge ändern. Klicken Sie auf „Zusammensetzen“, um das Bild zu erstellen, das Sie in Ihrem Bildprogramm verfeinern können (Kontextmenü „Bild öffnen“, dann „Bild neu laden“)."
     measures:         "Takte"
     assemble:         "Zusammensetzen"
   animation:
