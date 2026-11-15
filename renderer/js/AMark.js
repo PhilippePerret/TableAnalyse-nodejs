@@ -19,6 +19,15 @@ import { ExtraitComposer } from './ExtraitComposer.js'
 import { t } from './i18n.js'
 
 
+/**
+ * Déplacement avec Maj : la position +ui.position+ ne garde que le
+ * déplacement (depuis +left+, +top+) sur l'axe où il est le plus grand
+ */
+function keepOneAxis(ui, left, top){
+  if ( Math.abs(ui.position.left - left) >= Math.abs(ui.position.top - top) ) ui.position.top = top
+  else ui.position.left = left
+}
+
 export class AMark extends AObjet {
 
   /**
@@ -693,7 +702,8 @@ observe(){
         return copie
       }
     , drag:function(e,ui){
-        // if ( e.shiftKey ){ ui.position.top = my.top }
+        // Maj : un seul axe, celui du plus grand déplacement
+        e.shiftKey && keepOneAxis(ui, this.debLeft, this.debTop)
         // Les autres marques sélectionnées suivent la marque déplacée
         if ( !this.forDuplication && my.isSelected ) {
           const diffTop   = this.debTop - ui.position.top
@@ -739,6 +749,9 @@ observe(){
         //   ui_left: ui.position.left
         // })
         // console.log("-> stop")
+        // Maj au relâchement : un seul axe, celui du plus grand
+        // déplacement (Maj pouvant être pressée en cours de route)
+        e.shiftKey && keepOneAxis(ui, this.debLeft, this.debTop)
         const diffTop   = this.debTop - ui.position.top
         const diffLeft  = this.debLeft - ui.position.left
         // console.log("diffLeft = %i / diffTop = %i", diffLeft, diffTop)
