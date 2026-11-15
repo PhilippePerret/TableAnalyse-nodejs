@@ -1,6 +1,6 @@
 {
   "name": "score-analyse",
-  "productName": "Table d'analyse",
+  "productName": "Table-d-analyse",
   "version": "3.0.0",
   "description": "Table d'analyse musicale (ScoreSuite) — application Electron",
   "type": "module",
@@ -51,7 +51,10 @@
       ],
       "identity": null,
       "artifactName": "Table-d-analyse-${version}-mac.${ext}",
-      "x64ArchFiles": "**/node_modules/@napi-rs/canvas-darwin-*/**"
+      "x64ArchFiles": "**/node_modules/@napi-rs/canvas-darwin-*/**",
+      "extendInfo": {
+        "CFBundleDisplayName": "Table d'analyse"
+      }
     },
     "win": {
       "target": [
