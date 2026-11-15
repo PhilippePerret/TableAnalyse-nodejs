@@ -620,6 +620,13 @@ observe(){
           my.ajustePosition.call(my)
       }
     })
+  } else if ( this.type == 'ext' ) {
+    // Extrait de partition : taille proportionnelle, gardée comme
+    // échelle de son image
+    resizable(this.obj, {
+        aspectRatio: true
+      , stop: function(e, ui){ my.onResized() }
+    })
   } else if ( this.type == 'cir' ) {
     // Cercle : Maj garde les proportions, Alt garde le centre
     resizable(this.obj, {
@@ -1232,6 +1239,8 @@ get srcPath(){
 // pour le premier système, métrique comprise
 const HEADER_STAVES = 2
 const HEADER_STAVES_FIRST = 3
+// Marge (px des images) laissée autour de ce qui est imprimé
+const INK_MARGIN = 6
 
 export class AMExtrait extends AMark {
 
@@ -1289,6 +1298,15 @@ static extractOf(spec){
   // En-tête (clé, armure ; métrique pour le premier système) du système
   // de la première mesure, toujours en morceau séparé
   pieces.unshift(Object.assign({image: sys0.image_name, y1: 0, y2: sys0.obj.naturalHeight}, this.headerOf(sys0)))
+  // Hauteur limitée à ce qui est imprimé (pas les marges des systèmes)
+  pieces.forEach(p => {
+    const sys  = Systeme.all.find(s => s.image_name == p.image)
+    const prof = this.rowProfile(sys.obj, p.x1, p.x2)
+    const first = prof.findIndex(n => n > 0), last = prof.findLastIndex(n => n > 0)
+    if ( first < 0 ) return
+    p.y1 = Math.max(0, first - INK_MARGIN)
+    p.y2 = Math.min(prof.length, last + 1 + INK_MARGIN)
+  })
   return {pieces: this.aligned(pieces), scale: sys0.obj.offsetWidth / sys0.obj.naturalWidth}
 }
 
@@ -1487,7 +1505,35 @@ async composeImage(){
     const w = p.x2 - p.x1, h = p.y2 - p.y1
     ctx.drawImage(sources[i], p.x1, p.y1, w, h, Math.round(p.dx), Math.round(p.dy), w, h)
   })
-  return canvas.toDataURL('image/png')
+  return AMExtrait.trimmed(canvas).toDataURL('image/png')
+}
+
+// Canevas +canvas+ réduit à ce qui est imprimé (marge INK_MARGIN)
+static trimmed(canvas){
+  const W = canvas.width, H = canvas.height
+  const data = canvas.getContext('2d').getImageData(0, 0, W, H).data
+  let x1 = W, y1 = H, x2 = -1, y2 = -1
+  for ( let y = 0 ; y < H ; ++y ) {
+    for ( let x = 0, q = y * W * 4 ; x < W ; ++x, q += 4 ) {
+      if ( data[q] + data[q + 1] + data[q + 2] >= 300 ) continue
+      x < x1 && (x1 = x) ; x > x2 && (x2 = x)
+      y < y1 && (y1 = y) ; y > y2 && (y2 = y)
+    }
+  }
+  if ( x2 < 0 ) return canvas
+  x1 = Math.max(0, x1 - INK_MARGIN) ; y1 = Math.max(0, y1 - INK_MARGIN)
+  x2 = Math.min(W, x2 + 1 + INK_MARGIN) ; y2 = Math.min(H, y2 + 1 + INK_MARGIN)
+  const out = DCreate('CANVAS', {width: x2 - x1, height: y2 - y1})
+  out.getContext('2d').drawImage(canvas, x1, y1, x2 - x1, y2 - y1, 0, 0, x2 - x1, y2 - y1)
+  return out
+}
+
+// Redimensionnement sur la table (cf. observe) : nouvelle échelle
+onResized(){
+  if ( !this.img.naturalWidth ) return
+  this.data.scale = this.getWidth() / this.img.naturalWidth
+  this.obj.style.height = px(this.img.naturalHeight * this.data.scale)
+  setModified()
 }
 
 // Le contenu (numéros des mesures) n'est pas affiché
