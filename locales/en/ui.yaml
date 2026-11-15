@@ -16,6 +16,7 @@ menu:
   save:             "Save"
   cut_score:        "Cut the Score…"
   number_score:     "Number the Score"
+  remove_blanks:    "Remove Blank Space"
   infos:            "Information…"
   export:           "Export…"
   show_in_finder:
@@ -339,6 +340,7 @@ prefs:
   systeme_width:          {label: "Width of the systems"}
   top_first_system:       {label: "Top offset of the first system"}
   distance_systemes:      {label: "Default space between systems"}
+  max_table_blank:        {label: "Maximum vertical blank space (on the table)"}
   adjust_same_mark:       {label: "Align marks of the same type vertically"}
   snap_for_adjust_pos:    {label: "Mark alignment snap distance", precision: "Affects marks of the same type, and only if the “Align vertically” preference above is checked."}
   marque_accords_size:    {label: "Size of chord marks"}

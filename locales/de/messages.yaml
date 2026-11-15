@@ -41,4 +41,5 @@ cutter:
 goto_measure_prompt: "Gehe zu Takt (1 bis %{last})"
 no_measure_number: "Keine Taktnummer auf der Tafel."
 measure_not_found: "Takt %{num} nicht gefunden."
+no_blank_to_remove: "Kein Leerraum zu entfernen."
 no_form_mark: "Keine Formmarke auf der Tafel."

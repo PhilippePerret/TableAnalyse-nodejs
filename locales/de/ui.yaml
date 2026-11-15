@@ -16,6 +16,7 @@ menu:
   save:             "Sichern"
   cut_score:        "Partitur zerschneiden…"
   number_score:     "Partitur nummerieren"
+  remove_blanks:    "Leerräume entfernen"
   infos:            "Informationen…"
   export:           "Exportieren…"
   show_in_finder:
@@ -339,6 +340,7 @@ prefs:
   systeme_width:          {label: "Breite der Systeme"}
   top_first_system:       {label: "Oberer Abstand des ersten Systems"}
   distance_systemes:      {label: "Standardabstand der Systeme"}
+  max_table_blank:        {label: "Maximaler vertikaler Leerraum (auf der Tafel)"}
   adjust_same_mark:       {label: "Markierungen gleichen Typs in der Höhe angleichen"}
   snap_for_adjust_pos:    {label: "Einrastabstand für die Ausrichtung", precision: "Betrifft Markierungen gleichen Typs, und nur wenn die Einstellung „in der Höhe angleichen“ oben aktiviert ist."}
   marque_accords_size:    {label: "Größe der Akkordmarkierungen"}

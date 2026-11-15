@@ -286,6 +286,8 @@ function buildMenu(){
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
         , {label: t('ui.menu.number_score'),    id: 'numberScore', click: () => sendMenuCommand('numberScore')}
+        , {type: 'separator'}
+        , {label: t('ui.menu.remove_blanks'),   id: 'removeBlanks', click: () => sendMenuCommand('removeBlanks')}
       ]
     },
     {
@@ -333,7 +335,7 @@ function dynamicSubmenus(parent){
 function updateMenu(){
   const menu = Menu.getApplicationMenu()
   if ( !menu ) return
-  ;['cutScore', 'numberScore'].forEach(id => {
+  ;['cutScore', 'numberScore', 'removeBlanks'].forEach(id => {
     const item = menu.getMenuItemById(id)
     if ( item ) item.enabled = !!current
   })

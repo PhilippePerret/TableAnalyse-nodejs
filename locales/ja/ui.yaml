@@ -16,6 +16,7 @@ menu:
   save:             "保存"
   cut_score:        "楽譜を切り分ける…"
   number_score:     "楽譜に番号を付ける"
+  remove_blanks:    "余白を削除"
   infos:            "情報…"
   export:           "書き出し…"
   show_in_finder:
@@ -339,6 +340,7 @@ prefs:
   systeme_width:          {label: "段の幅"}
   top_first_system:       {label: "最初の段の上の位置"}
   distance_systemes:      {label: "段の既定の間隔"}
+  max_table_blank:        {label: "垂直方向の最大余白（テーブル上）"}
   adjust_same_mark:       {label: "同じ種類のマークの高さを揃える"}
   snap_for_adjust_pos:    {label: "マーク整列のスナップ距離", precision: "同じ種類のマークに作用し、上の「高さを揃える」が有効な場合のみ働きます。"}
   marque_accords_size:    {label: "コードマークのサイズ"}

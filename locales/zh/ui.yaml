@@ -16,6 +16,7 @@ menu:
   save:             "保存"
   cut_score:        "切分乐谱…"
   number_score:     "为乐谱编号"
+  remove_blanks:    "删除空白"
   infos:            "信息…"
   export:           "导出…"
   show_in_finder:
@@ -339,6 +340,7 @@ prefs:
   systeme_width:          {label: "声部组宽度"}
   top_first_system:       {label: "第一个声部组的顶部偏移"}
   distance_systemes:      {label: "声部组默认间距"}
+  max_table_blank:        {label: "最大垂直空白（分析表上）"}
   adjust_same_mark:       {label: "同类标记高度对齐"}
   snap_for_adjust_pos:    {label: "标记对齐的吸附距离", precision: "作用于同类标记，且仅当上方的“高度对齐”偏好已勾选时有效。"}
   marque_accords_size:    {label: "和弦标记大小"}

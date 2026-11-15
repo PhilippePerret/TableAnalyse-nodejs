@@ -41,4 +41,5 @@ cutter:
 goto_measure_prompt: "小節へ移動（1〜%{last}）"
 no_measure_number: "表に小節番号がありません。"
 measure_not_found: "小節 %{num} が見つかりません。"
+no_blank_to_remove: "削除する余白はありません。"
 no_form_mark: "表に形式マークがありません。"

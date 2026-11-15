@@ -13,6 +13,7 @@ export const PreferencesAppData = {
   , systeme_width           :{type:'inputtext'    ,typeV:'number'   ,default:1860, selector:'img.systeme', selector_value:"width:__VALUE__px;" ,unite:'px' ,apply:true}
   , top_first_system        :{type:'inputtext'    ,typeV:'number'   ,default:100, apply:true ,unite:'px'}
   , distance_systemes       :{type:'inputtext'    ,typeV:'number'   ,default:50, apply:true ,unite:'px'}
+  , max_table_blank         :{type:'inputtext'    ,typeV:'number'   ,default:80 ,unite:'px'}
   , adjust_same_mark        :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
   , snap_for_adjust_pos     :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px'}
   , marque_accords_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.aobj.acc span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}

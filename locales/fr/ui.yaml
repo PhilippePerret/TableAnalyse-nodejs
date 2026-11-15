@@ -16,6 +16,7 @@ menu:
   save:             "Enregistrer"
   cut_score:        "Découper la partition…"
   number_score:     "Numéroter la partition"
+  remove_blanks:    "Supprimer les blancs"
   infos:            "Informations…"
   export:           "Exporter…"
   show_in_finder:
@@ -339,6 +340,7 @@ prefs:
   systeme_width:          {label: "Largeur des systèmes"}
   top_first_system:       {label: "Décalage haut du premier système"}
   distance_systemes:      {label: "Distance par défaut des systèmes"}
+  max_table_blank:        {label: "Espace blanc vertical maximal (sur la table)"}
   adjust_same_mark:       {label: "Ajuster en hauteur les marques de même type"}
   snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
   marque_accords_size:    {label: "Taille des marques d'accord"}

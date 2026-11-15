@@ -9,6 +9,7 @@ import { Tools } from './Tools.js'
 import { Forme } from './Forme.js'
 import { Exporter } from './Exporter.js'
 import { Animation } from './Animation.js'
+import { TableAnalyse } from './TableAnalyse.js'
 import { t } from './i18n.js'
 
 class AppClass {
@@ -68,6 +69,7 @@ class AppClass {
       case 'hideForm':      return Forme.show(false)
       case 'buildForm':     return Forme.openBuildPanel()
       case 'animate':       return Animation.start()
+      case 'removeBlanks':  return TableAnalyse.removeBlanks()
       case 'prefs':         return PreferencesPanel.toggle()
       case 'manual':        return Manuel.toggle()
       default: console.error("Commande de menu inconnue : %s", command)

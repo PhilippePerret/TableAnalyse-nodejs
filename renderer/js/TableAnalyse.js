@@ -5,6 +5,11 @@ import { Systeme } from './Systeme.js'
 import { AMark } from './AMark.js'
 import { on } from './events.js'
 import { UI } from './UI.js'
+import { pref } from './Preferences.js'
+import { setModified } from './Current.js'
+import { message } from './lib/Message.js'
+import { FormeBuilder } from './FormeBuilder.js'
+import { t } from './i18n.js'
 
 export class TableAnalyse {
 
@@ -19,6 +24,45 @@ export class TableAnalyse {
     const btLastSystem   = Systeme.last ? Systeme.last.bottom : 200
     const btPlusBasObjet = Systeme.last ? AObjet.bottomestPoint : 200
     this.obj.style.height = px(Math.max(btLastSystem, btPlusBasObjet))
+  }
+
+  /**
+   * « Outils > Supprimer les blancs » : tout espace vertical vide entre
+   * les éléments de la table (systèmes, marques, lignes des numéros de
+   * mesure) plus grand que la préférence max_table_blank est ramené à
+   * cette taille ; ce qui est en dessous remonte d'autant.
+   */
+  static removeBlanks(){
+    const max = Number(pref('max_table_blank'))
+    if ( !(max >= 0) || !Systeme.all.length ) return
+    // Un système va avec sa ligne des numéros de mesure et ses numéros
+    // (placés par rapport à lui, cf. Systeme#positionne)
+    const lineMarks = AObjet.items.filter(ao => ao instanceof AMark && ao.data.line && ao.obj)
+    const items = []
+    Systeme.all.forEach(sys => {
+      if ( !sys.obj ) return
+      let bottom = sys.top + sys.obj.offsetHeight
+      sys.measureLine && (bottom = Math.max(bottom, parseFloat(sys.measureLine.style.top) + 1))
+      lineMarks.forEach(m => Systeme.getSystemeAssociated(m) === sys && (bottom = Math.max(bottom, m.top + m.obj.offsetHeight)))
+      items.push({sys, top: sys.top, bottom})
+    })
+    AObjet.items.forEach(ao => {
+      if ( !(ao instanceof AMark) || !ao.obj || !ao.obj.offsetParent || ao.data.line ) return
+      items.push({mark: ao, top: ao.top, bottom: ao.top + ao.obj.offsetHeight})
+    })
+    items.sort((a, b) => a.top - b.top)
+    let cursor = null, shift = 0
+    items.forEach(it => {
+      if ( cursor !== null && it.top - cursor > max ) shift += it.top - cursor - max
+      it.shift = shift
+      cursor = cursor === null ? it.bottom : Math.max(cursor, it.bottom)
+    })
+    if ( shift == 0 ) return message(t('messages.no_blank_to_remove'))
+    items.forEach(it => it.shift && it.mark && (it.mark.top = it.mark.top - it.shift))
+    items.forEach(it => it.shift && it.sys && it.sys.positionne(it.sys.top - it.shift, true))
+    pref('form_built') && FormeBuilder.build()
+    this.setHeight()
+    setModified()
   }
 
   /**
