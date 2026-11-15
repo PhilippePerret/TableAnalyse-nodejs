@@ -19,8 +19,10 @@ jobs:
           - os: windows-latest
             target: --win
             files: dist/*.exe
+          # AppImage : pas d'apostrophe dans le nom du produit (chemins) ;
+          # le nom affiché garde la sienne (desktop.entry.Name)
           - os: ubuntu-latest
-            target: --linux
+            target: --linux -c.productName="Table d analyse"
             files: dist/*.AppImage
     runs-on: ${{ matrix.os }}
     steps:

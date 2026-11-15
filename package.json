@@ -50,7 +50,8 @@
         }
       ],
       "identity": null,
-      "artifactName": "Table-d-analyse-${version}-mac.${ext}"
+      "artifactName": "Table-d-analyse-${version}-mac.${ext}",
+      "x64ArchFiles": "**/node_modules/@napi-rs/canvas-darwin-*/**"
     },
     "win": {
       "target": [
@@ -62,7 +63,12 @@
       "target": [
         "AppImage"
       ],
-      "artifactName": "Table-d-analyse-${version}.${ext}"
+      "artifactName": "Table-d-analyse-${version}.${ext}",
+      "desktop": {
+        "entry": {
+          "Name": "Table d'analyse"
+        }
+      }
     }
   }
 }

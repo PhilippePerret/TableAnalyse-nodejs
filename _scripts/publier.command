@@ -30,15 +30,21 @@ gh workflow run "$WORKFLOW" --ref main || fin "Lancement du workflow impossible.
 sleep 5
 RUN_ID=$(gh run list --workflow "$WORKFLOW" --limit 1 --json databaseId -q '.[0].databaseId')
 [[ -n "$RUN_ID" ]] || fin "Workflow introuvable."
-gh run watch "$RUN_ID" --exit-status || fin "La fabrication a échoué (voir : gh run view $RUN_ID --log-failed)."
+gh run watch "$RUN_ID" >/dev/null
+# Versions fabriquées (une fabrication ratée n'empêche pas les autres)
+ECHECS=$(gh run view "$RUN_ID" --json jobs -q '.jobs[] | select(.conclusion != "success") | .name')
 
 TMP=$(mktemp -d)
-gh run download "$RUN_ID" -D "$TMP" || fin "Téléchargement des fichiers impossible."
+gh run download "$RUN_ID" -D "$TMP" || fin "Aucune version fabriquée (voir : gh run view $RUN_ID --log-failed)."
 DEST="$SITE/public/telechargements"
 mkdir -p "$DEST"
-# Anciennes versions retirées
-rm -f "$DEST"/Table-d-analyse-*
-find "$TMP" -type f \( -name '*.dmg' -o -name '*.exe' -o -name '*.AppImage' \) -exec cp {} "$DEST/" \;
+# Remplace l'ancienne version de chaque système fabriqué
+for EXT in dmg exe AppImage; do
+  NEW=( "$TMP"/**/*.$EXT(N) )
+  [[ -n "$NEW" ]] || continue
+  rm -f "$DEST"/Table-d-analyse-*.$EXT
+  cp "$NEW[@]" "$DEST/"
+done
 rm -rf "$TMP"
 
 # Version proposée par la page de téléchargement
@@ -46,4 +52,5 @@ sed -i '' "s/^export const TABLE_ANALYSE_VERSION = .*/export const TABLE_ANALYSE
 
 echo "\nFichiers placés dans $DEST :"
 ls -1 "$DEST"
+[[ -n "$ECHECS" ]] && fin "Fabrications ratées (voir : gh run view $RUN_ID --log-failed) :\n$ECHECS"
 fin "Terminé (version $VERSION)." 0
