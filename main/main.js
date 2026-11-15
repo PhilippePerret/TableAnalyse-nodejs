@@ -434,7 +434,6 @@ function registerIpc(){
   handle('analyse:create', (data) => {
     const analyse = createAnalyse(data, APP_VERSION)
     setCurrent(analyse.path)
-    showInFinder(analyse.path)
     setTimeout(reloadWindow, 10)
     return analyse.path
   })
