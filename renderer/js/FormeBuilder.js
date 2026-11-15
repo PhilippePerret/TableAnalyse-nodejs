@@ -100,10 +100,14 @@ export class FormeBuilder {
     // rangée (et avant la première, après la dernière)
     items = [...items, ...levels.flatMap(level => this.gapsOf(items.filter(p => p.level == level), level, from, to))]
     levels.forEach(level => {
-      b.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: items.filter(p => p.level == level).sort((a, b) => a.from - b.from).map(p => {
+      const row = items.filter(p => p.level == level).sort((a, b) => a.from - b.from)
+      b.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: row.map((p, i) => {
         const box = DCreate('DIV', {class: `portion ${p.subtype}${p.empty ? ' empty' : ''}`, title: p.name, inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
+        // Portion chevauchée par la suivante (fin marquée plus loin) :
+        // dessinée jusqu'à celle-ci, nom centré dans ce qui est visible
+        const end = Math.min(p.to, to, row[i + 1] ? row[i + 1].from : Infinity)
         box.style.left  = px((p.from - from) * unit)
-        box.style.width = px((Math.min(p.to, to) - p.from) * unit)
+        box.style.width = px((end - p.from) * unit)
         return box
       })}))
     })
