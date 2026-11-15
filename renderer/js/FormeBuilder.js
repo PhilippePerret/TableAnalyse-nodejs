@@ -95,9 +95,13 @@ export class FormeBuilder {
     const b = DCreate('DIV', {class: 'fblock'})
     b.style.width = px((to - from) * unit)
     pref('form_build_keys') && b.appendChild(this.keysRow(from, to, unit, keyAtStarts ? items.map(p => p.from) : []))
-    ;[...new Set(items.map(p => p.level))].sort().forEach(level => {
-      b.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: items.filter(p => p.level == level).map(p => {
-        const box = DCreate('DIV', {class: `portion ${p.subtype}`, title: p.name, inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
+    const levels = [...new Set(items.map(p => p.level))].sort()
+    // Portions non définies : blocs vides entre les portions de chaque
+    // rangée (et avant la première, après la dernière)
+    items = [...items, ...levels.flatMap(level => this.gapsOf(items.filter(p => p.level == level), level, from, to))]
+    levels.forEach(level => {
+      b.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: items.filter(p => p.level == level).sort((a, b) => a.from - b.from).map(p => {
+        const box = DCreate('DIV', {class: `portion ${p.subtype}${p.empty ? ' empty' : ''}`, title: p.name, inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
         box.style.left  = px((p.from - from) * unit)
         box.style.width = px((Math.min(p.to, to) - p.from) * unit)
         return box
@@ -105,6 +109,22 @@ export class FormeBuilder {
     })
     pref('form_build_measures') && b.appendChild(this.measuresRow(items, from, to, unit))
     return b
+  }
+
+  /**
+   * Blocs vides (portions non définies) d'une rangée de niveau +level+,
+   * des mesures +from+ à +to+, entre ses portions +items+
+   */
+  static gapsOf(items, level, from, to){
+    const subtype = Object.keys(TYPES_FORME).find(k => TYPES_FORME[k].level == level)
+    const gaps = []
+    let cursor = from
+    items.slice().sort((a, b) => a.from - b.from).forEach(p => {
+      p.from > cursor && gaps.push({name: '', subtype, level, from: cursor, to: p.from, empty: true})
+      cursor = Math.max(cursor, p.to)
+    })
+    cursor < to && gaps.push({name: '', subtype, level, from: cursor, to, empty: true})
+    return gaps
   }
 
   // Tonalités qui se chevauchent : décalées vers la droite
@@ -155,7 +175,7 @@ export class FormeBuilder {
         if ( null !== m ) to = end.data.start == start.id ? m : m - 1
       }
       return {
-          name:     start.content || TYPES_FORME[start.subtype].name
+          name:     String(start.content || TYPES_FORME[start.subtype].name).trim()
         , subtype:  start.subtype
         , level:    TYPES_FORME[start.subtype].level
         , from

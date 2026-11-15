@@ -66,6 +66,8 @@ div.form-diagram div.portion {
 div.form-diagram div.portion + div.portion { margin-left: -2px; }
 /* Une taille par niveau ; nom trop long : passage à la ligne */
 div.form-diagram div.portion span {
+  flex: 0 1 auto;
+  margin: 0 auto;
   max-width: 100%;
   max-height: 100%;
   box-sizing: border-box;
@@ -100,11 +102,13 @@ div.form-diagram span.fnum::before {
   height: 8px;
   border-left: 1px solid #000;
 }
-/* Tonalités (modulations), au début de leur mesure */
-div.form-diagram div.frow.fkeys { height: 32px; }
+/* Tonalités (modulations), au début de leur mesure, juste au-dessus
+   des blocs */
+div.form-diagram div.frow.fkeys { height: 32px; margin-bottom: 3px; }
 div.form-diagram span.fkey {
   position: absolute;
-  bottom: 4px;
+  bottom: 0;
+  line-height: 1;
   font-family: PhilNote;
   font-size: 22px;
   white-space: nowrap;
