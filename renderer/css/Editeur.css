@@ -38,7 +38,7 @@ div.mini_editeur select.suggest-menu {
   width: 100%;
   margin-bottom: 8px;
 }
-body div.mini_editeur.with-suggestions {
+body div.mini_editeur.with-suggestions:not(.hidden) {
   display: grid;
   /* Partie droite à la taille des valeurs (cf. suggest-pane) */
   grid-template-columns: 322px auto;
