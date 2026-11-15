@@ -281,6 +281,11 @@ panels:
     fonts_notice:     "Die Schriften der Analyse (PhilNote…) müssen auf dem Computer installiert sein, der die SVG-Dateien öffnet."
   mark_editor:
     title:            "Markierung bearbeiten"
+  extract:
+    title:            "Partiturausschnitt"
+    help:             "Teile ziehen, um sie zu platzieren, ihre Ränder ziehen, um sie zuzuschneiden. Pfeiltasten: gewähltes Teil verschieben (Umschalt: 10 px)."
+    measures:         "Takte"
+    apply:            "Anwenden"
   animation:
     title:            "Animation"
     play:             "Abspielen"

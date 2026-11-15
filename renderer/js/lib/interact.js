@@ -207,6 +207,7 @@ function onResizeMouseDown(el, st, dir, e){
       if ( dir.includes('e') ) w = startW + k * dx
       if ( dir.includes('w') ) w = startW - k * dx
       if ( dir.includes('s') ) h = startH + k * dy
+      if ( dir.includes('n') ) h = startH - k * dy
       w = Math.max(w, minW())
       h = Math.max(h, minH())
       if ( keepRatio ) {
@@ -215,6 +216,7 @@ function onResizeMouseDown(el, st, dir, e){
         else w = h * ratio
       }
       if ( dir.includes('w') ) l = startL + startW - w
+      if ( dir.includes('n') ) tp = startT + startH - h
       if ( fromCenter ) {
         l  = startL - (w - startW) / 2
         tp = startT - (h - startH) / 2
@@ -224,7 +226,7 @@ function onResizeMouseDown(el, st, dir, e){
       el.style.width  = `${doW ? w : startW}px`
       if ( doH || baseH ) el.style.height = `${doH ? h : startH}px`
       if ( dir.includes('w') || fromCenter ) el.style.left = `${l}px`
-      if ( fromCenter ) el.style.top = `${tp}px`
+      if ( fromCenter || dir.includes('n') ) el.style.top = `${tp}px`
       also.forEach(a => {
         if ( doW ) a.el.style.width  = `${a.w + w - startW}px`
         if ( doH ) a.el.style.height = `${a.h + h - startH}px`

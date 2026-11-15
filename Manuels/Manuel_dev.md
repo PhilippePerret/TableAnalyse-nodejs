@@ -130,6 +130,15 @@ Construction (`FormeBuilder.js`, styles `css/Forme.css`) : `div#form-diagram` su
 Type de la forme (liste modifiable `form_types` de `locales/<langue>/ui.yaml`, « other » en dernier), précision et description : panneau « Construire la forme », enregistrés dans `infos.form` ({type, other, precision, description}), affichés en tête de la forme.
 
 
+## Extrait de partition
+
+Marque de type `ext` (`AMExtrait`, `AMark.js`) : image composée de morceaux d'images de systèmes, `data.pieces` = [{image, x1, x2, y1, y2, dx, dy}] (bornes dans l'image du système, position dans l'extrait, en px des images), `data.scale` (px de la table par px des images), contenu = mesures (« 12 », « 12-15 »). Image recomposée (canevas, fond blanc, `multiply`) à chaque construction : un `<img>` en data URL, exporté comme les autres images.
+
+Morceaux proposés (`AMExtrait.extractOf`) : un par système traversé (barres de mesure lues dans l'image, cf. `Forme.barlineNear`) ; dans les systèmes suivants, sans clé ni armure (`HEADER_STAVES_NEXT` hauteurs de portée) ; en tête, l'en-tête du premier système (`HEADER_STAVES`) si la première mesure ne commence pas son système. Alignement (`AMExtrait.aligned`) sur les lignes de portée du premier morceau ; un morceau dont les portées sont espacées autrement est coupé entre ses portées (rangée la moins encrée).
+
+Réglage : `ExtraitComposer.js` (à la création et au double-clic), morceaux sur la table (`div.ext-composer`), recadrables par les 4 bords, déplaçables (souris, flèches) ; « OK » recompose l'image.
+
+
 ## Groupement des tags
 
 Depuis la version de novembre 2022, on peut grouper les tags, ce qui permet notamment de les déplacer ou de les supprimer ensemble.

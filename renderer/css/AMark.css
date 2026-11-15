@@ -493,7 +493,7 @@ div.amark.img svg {
   height: inherit;
 }
 
-/* Extrait de partition (bout de l'image d'un système, cf. AMExtrait) */
+/* Extrait de partition (morceaux d'images de systèmes, cf. AMExtrait) */
 div.amark.ext img.content {
   display: block;
   width: 100%;
@@ -599,4 +599,53 @@ div.amark.frm.fsegz span.content {
 }
 div.amark.frm.expanded span.content {
   display: inline-block;
+}
+
+/* Compositeur d'extrait de partition (cf. ExtraitComposer.js) */
+div.ext-composer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 40;
+}
+div.ext-composer div.ext-piece {
+  position: absolute;
+  overflow: hidden;
+  mix-blend-mode: multiply;
+  outline: 1px dashed #888;
+  cursor: move;
+}
+div.ext-composer div.ext-piece.current {
+  outline: 2px solid #3a925e;
+  z-index: 1;
+}
+div.ext-composer div.ext-piece img {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+}
+/* Poignées dans le morceau (bords recadrés) */
+div.ext-composer div.ext-piece .ui-resizable-n { top: 0; }
+div.ext-composer div.ext-piece .ui-resizable-s { bottom: 0; }
+div.ext-composer div.ext-piece .ui-resizable-e { right: 0; }
+div.ext-composer div.ext-piece .ui-resizable-w { left: 0; }
+div#ext_composer_panel {
+  position: fixed;
+  top: 80px;
+  right: 30px;
+  width: 380px;
+  z-index: 100;
+}
+div#ext_composer_panel p.help {
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+div#ext_composer_panel div.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+div#ext_composer_panel div.row input {
+  flex: 1;
+  min-width: 0;
 }

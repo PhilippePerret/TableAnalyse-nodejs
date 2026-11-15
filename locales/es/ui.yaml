@@ -281,6 +281,11 @@ panels:
     fonts_notice:     "Las fuentes del análisis (PhilNote…) deben estar instaladas en el ordenador que abra los archivos SVG."
   mark_editor:
     title:            "Edición de la marca"
+  extract:
+    title:            "Fragmento de partitura"
+    help:             "Arrastra los trozos para colocarlos y sus bordes para recortarlos. Flechas: mover el trozo elegido (Mayús: 10 px)."
+    measures:         "Compases"
+    apply:            "Aplicar"
   animation:
     title:            "Animación"
     play:             "Reproducir"

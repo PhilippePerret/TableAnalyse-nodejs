@@ -15,6 +15,7 @@ import { AMark_Editor } from './AMark_Editor.js'
 import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_PHILHARMONIEFONT } from './Constants.js'
 import { UI } from './UI.js'
 import { Forme } from './Forme.js'
+import { ExtraitComposer } from './ExtraitComposer.js'
 import { t } from './i18n.js'
 
 
@@ -60,10 +61,12 @@ export class AMark extends AObjet {
       // Marque de forme : endroit du clic (non enregistré)
       const clickX = params.clickX
       delete params.clickX
-      // Extrait de partition : bout de l'image du système des mesures
-      // demandées (abandon si elles sont introuvables) ; une copie garde
-      // celui de l'original
-      if ( params.type == 'ext' && !params.image ) {
+      // Extrait de partition : morceaux des images des systèmes des
+      // mesures demandées (abandon si elles sont introuvables), réglés
+      // ensuite dans le compositeur ; une copie garde ceux de l'original
+      const newExtract = params.type == 'ext' && !params.pieces && !params.image
+      params.pieces && (params.pieces = params.pieces.map(p => Object.assign({}, p)))
+      if ( newExtract ) {
         const extract = AMExtrait.extractOf(params.content)
         if ( !extract ) return
         Object.assign(params, extract)
@@ -87,6 +90,7 @@ export class AMark extends AObjet {
         Systeme.placeMeasureNumbers()
         Systeme.renumberMeasures(newMark)
       }
+      newExtract && new ExtraitComposer(newMark, {isNew: true}).open()
       UI.allumeRedLight()
 
       return newMark
@@ -615,14 +619,6 @@ observe(){
           my.height = my.getHeight.call(my)
           my.ajustePosition.call(my)
       }
-    })
-  } else if ( this.type == 'ext' ) {
-    // Extrait de partition : recadré par ses bords gauche et droit
-    resizable(this.obj, {
-        handles: 'e,w'
-      , start:  function(e, ui){ my.onCropStart() }
-      , resize: function(e, ui){ my.onCrop(ui) }
-      , stop:   function(e, ui){ my.onCropStop() }
     })
   } else if ( this.type == 'cir' ) {
     // Cercle : Maj garde les proportions, Alt garde le centre
@@ -1217,23 +1213,36 @@ get srcPath(){
 }// class AMIage
 
 
+
 /**
- * Marque « Extrait partition » : bout de l'image d'un système (la ou
- * les mesures demandées, sans les marques), recadrable par ses bords
- * gauche et droit.
- * Données propres : image (image du système), x1 et x2 (bornes de
- * l'extrait, en px de l'image), scale (px de la table par px de
- * l'image). Le contenu est le numéro des mesures demandées (« 12 »,
- * « 12-13 »).
+ * Marque « Extrait partition » : image composée de morceaux d'images de
+ * systèmes (sans les marques), réglés dans le compositeur (cf.
+ * ExtraitComposer.js) : mesures demandées, précédées de l'en-tête (clé,
+ * armure, métrique) du premier système quand elles ne commencent pas
+ * leur système.
+ * Données propres : pieces, liste de {image, x1, x2, y1, y2, dx, dy}
+ * (bornes du morceau dans l'image du système et position dans
+ * l'extrait, en px des images) ; scale (px de la table par px des
+ * images). Le contenu est le numéro des mesures (« 12 », « 12-15 »).
  */
+// Largeur de l'en-tête (clé, armure, métrique) du premier système, en
+// hauteurs de portée après sa barre de début (réglée ensuite dans le
+// compositeur)
+const HEADER_STAVES = 3
+// Idem pour l'en-tête des systèmes suivants (clé, armure), retiré des
+// morceaux qui continuent l'extrait dans un autre système
+const HEADER_STAVES_NEXT = 2
+
 export class AMExtrait extends AMark {
 
 /**
- * Données de l'extrait des mesures +spec+ (« 12 », « 12-13 ») : de la
- * barre de début de la première (bord gauche du système pour sa
- * première mesure) à celle de fin de la dernière (fin du système si
- * elle est dans un autre système).
- * @return {image, x1, x2, scale} ou null (message affiché)
+ * Morceaux de l'extrait des mesures +spec+ (« 12 », « 12-15 ») : un par
+ * système traversé, de la barre de début de la première mesure (bord
+ * gauche du système pour sa première mesure ; après la clé et l'armure
+ * dans les systèmes suivants) à celle de fin de la dernière ; en tête, l'en-tête du premier système si la première
+ * mesure ne commence pas le sien. Morceaux bout à bout, portées
+ * alignées (cf. aligned).
+ * @return {pieces, scale} ou null (message affiché)
  */
 static extractOf(spec){
   const m = String(spec || '').trim().match(/^(\d+)\s*(?:[-–à]\s*(\d+))?$/)
@@ -1244,25 +1253,148 @@ static extractOf(spec){
   if ( mesures.length == 0 ) return message(t('messages.no_measure_number')), null
   const found = mesures.find(x => x.number == from)
   if ( !found ) return message(t('messages.measure_not_found', {num: from})), null
-  const sys = Systeme.getSystemeAssociated(found.mark)
-  const img = sys && sys.obj
-  if ( !img || !img.naturalWidth ) return message(t('messages.measure_not_found', {num: from})), null
-  const r = img.getBoundingClientRect()
-  const k = img.naturalWidth / r.width
-  const marks  = Forme.measureMarksOf(sys)
-  const starts = marks.map((mk, i) => {
-    const x = Forme.measureRect(mk).left
-    return i == 0 ? r.left : (Forme.barlineNear(sys, x, 25) ?? x)
+  const sys0 = Systeme.getSystemeAssociated(found.mark)
+  if ( !sys0 || !sys0.obj.naturalWidth ) return message(t('messages.measure_not_found', {num: from})), null
+  const pieces = []
+  const systems = Systeme.all
+  for ( let i = systems.indexOf(sys0) ; i < systems.length ; ++i ) {
+    const sys = systems[i], img = sys.obj
+    if ( !img.naturalWidth ) break
+    const r = img.getBoundingClientRect(), k = img.naturalWidth / r.width
+    const marks = Forme.measureMarksOf(sys)
+    if ( !marks.length ) break
+    const nums   = marks.map(mk => Number(String(mk.content).trim()))
+    const starts = marks.map((mk, j) => {
+      const x = Forme.measureRect(mk).left
+      return j == 0 ? r.left : (Forme.barlineNear(sys, x, 25) ?? x)
+    })
+    const iFrom = sys === sys0 ? nums.indexOf(from) : 0
+    if ( nums[iFrom] > to ) break
+    let iTo = nums.findLastIndex(n => n <= to)
+    // Barre de fin comprise
+    const end = iTo + 1 < starts.length ? starts[iTo + 1] + 3 : Forme.systemEndX(sys)
+    // Suite dans un autre système : sans son en-tête (clé, armure)
+    const x1 = sys === sys0
+      ? Math.max(0, Math.round((starts[iFrom] - r.left) * k))
+      : this.headerOf(sys, HEADER_STAVES_NEXT).x2
+    pieces.push({
+        image: sys.image_name
+      , x1
+      , x2: Math.min(img.naturalWidth, Math.round((end - r.left) * k))
+      , y1: 0, y2: img.naturalHeight
+    })
+    if ( iTo + 1 < nums.length || nums[iTo] >= to ) break
+  }
+  // En-tête du premier système (clé, armure, métrique)
+  if ( pieces[0].x1 > 0 && Systeme.first ) {
+    const img = Systeme.first.obj
+    pieces.unshift(Object.assign({image: Systeme.first.image_name, y1: 0, y2: img.naturalHeight}, this.headerOf(Systeme.first)))
+  }
+  return {pieces: this.aligned(pieces), scale: sys0.obj.offsetWidth / sys0.obj.naturalWidth}
+}
+
+/**
+ * Bornes {x1, x2} (px de l'image) de l'en-tête du système +sys+ : de
+ * l'accolade (une demi-hauteur de portée avant la barre de début du
+ * système) à la métrique (environ HEADER_STAVES hauteurs de portée
+ * après cette barre). À régler dans le compositeur.
+ */
+static headerOf(sys, staves = HEADER_STAVES){
+  const img = sys.obj, w = img.naturalWidth, h = img.naturalHeight
+  const prof = Forme.darkProfile(sys)
+  let start = prof ? prof.findIndex(n => n > h / 2) : -1
+  if ( start < 0 ) start = 0
+  const lines = this.staffLines(img, 0, w)
+  const span = lines.length >= 5 ? lines[4] - lines[0] : h / 6
+  return {x1: Math.max(0, Math.round(start - span / 2)), x2: Math.min(w, Math.round(start + staves * span))}
+}
+
+/**
+ * Morceaux +pieces+ mis bout à bout, portées alignées sur celles du
+ * premier. L'écart entre les portées pouvant changer d'un système à
+ * l'autre, un morceau dont les portées ne sont pas espacées comme
+ * celles du premier est coupé entre ses portées (un morceau par
+ * portée, chacun aligné).
+ */
+static aligned(pieces){
+  const staves = pieces.map(p => this.stavesOf(p))
+  const ref = staves[0]
+  const res = []
+  let x = 0
+  pieces.forEach((p, i) => {
+    const st = staves[i]
+    const same = st.tops.length == ref.tops.length
+    const split = same && st.tops.length > 1 && st.tops.some((y, k) => Math.abs((y - st.tops[0]) - (ref.tops[k] - ref.tops[0])) > 2)
+    if ( split ) {
+      st.tops.forEach((top, k) => {
+        const y1 = k == 0 ? p.y1 : st.cuts[k - 1]
+        const y2 = k == st.tops.length - 1 ? p.y2 : st.cuts[k]
+        res.push(Object.assign({}, p, {y1, y2, dx: x, dy: ref.tops[k] - top + y1}))
+      })
+    } else {
+      res.push(Object.assign({}, p, {dx: x, dy: (ref.tops[0] || 0) - (st.tops[0] || 0) + p.y1}))
+    }
+    x += p.x2 - p.x1
   })
-  const iFrom = marks.indexOf(found.mark)
-  let iTo = marks.findIndex(mk => Number(String(mk.content).trim()) == to)
-  if ( iTo < iFrom ) iTo = marks.length - 1
-  const start = starts[iFrom]
-  // Barre de fin comprise
-  const end = iTo + 1 < starts.length ? starts[iTo + 1] + 3 : Forme.systemEndX(sys)
-  const x1 = Math.max(0, Math.round((start - r.left) * k))
-  const x2 = Math.min(img.naturalWidth, Math.round((end - r.left) * k))
-  return {image: sys.image_name, x1, x2, scale: img.offsetWidth / img.naturalWidth}
+  const minY = Math.min(...res.map(p => p.dy))
+  res.forEach(p => p.dy -= minY)
+  return res
+}
+
+/**
+ * Portées du morceau +p+ (px de l'image) : {tops, bottoms, cuts},
+ * premières et dernières lignes de chaque portée, et rangées où couper
+ * entre deux portées (la moins encrée, p.e. pour ne pas couper une
+ * nuance)
+ */
+static stavesOf(p){
+  const sys = Systeme.all.find(s => s.image_name == p.image)
+  const prof = sys && sys.obj.naturalWidth ? this.rowProfile(sys.obj, p.x1, p.x2) : []
+  const w = p.x2 - p.x1
+  const lines = []
+  prof.forEach((n, y) => n > w / 2 && !(prof[y - 1] > w / 2) && lines.push(y))
+  if ( lines.length < 5 || lines.length % 5 ) return {tops: lines.length ? [lines[0]] : [], bottoms: [], cuts: []}
+  const tops = [], bottoms = [], cuts = []
+  for ( let i = 0 ; i < lines.length ; i += 5 ) { tops.push(lines[i]) ; bottoms.push(lines[i + 4]) }
+  for ( let k = 0 ; k < tops.length - 1 ; ++k ) {
+    const from = bottoms[k] + 4, to = tops[k + 1] - 4, mid = (from + to) / 2
+    let best = Math.round(mid)
+    for ( let y = from ; y <= to ; ++y ) {
+      if ( prof[y] < prof[best] || (prof[y] == prof[best] && Math.abs(y - mid) < Math.abs(best - mid)) ) best = y
+    }
+    cuts.push(best)
+  }
+  return {tops, bottoms, cuts}
+}
+
+/**
+ * Nombre de pixels sombres de chaque rangée de l'image +img+ entre les
+ * abscisses +x1+ et +x2+ (px de l'image). Les lignes de portée sont les
+ * rangées sombres sur plus de la moitié de la largeur.
+ */
+static rowProfile(img, x1, x2){
+  const w = x2 - x1, h = img.naturalHeight
+  if ( w <= 0 ) return []
+  const canvas = new OffscreenCanvas(w, h)
+  const ctx = canvas.getContext('2d', {willReadFrequently: true})
+  ctx.drawImage(img, x1, 0, w, h, 0, 0, w, h)
+  let data
+  try { data = ctx.getImageData(0, 0, w, h).data } catch(err) { return [] }
+  const prof = new Array(h).fill(0)
+  for ( let y = 0 ; y < h ; ++y ) {
+    for ( let x = 0, q = y * w * 4 ; x < w ; ++x, q += 4 ) {
+      if ( data[q] + data[q + 1] + data[q + 2] < 300 ) ++prof[y]
+    }
+  }
+  return prof
+}
+
+// Lignes de portée de l'image +img+ entre +x1+ et +x2+ (cf. rowProfile)
+static staffLines(img, x1, x2){
+  const prof = this.rowProfile(img, x1, x2), w = x2 - x1
+  const lines = []
+  prof.forEach((n, y) => n > w / 2 && !(prof[y - 1] > w / 2) && lines.push(y))
+  return lines
 }
 
 // Images des systèmes (sources des extraits), chargées une fois
@@ -1277,30 +1409,48 @@ static sourceOf(name){
   return this.sources.get(name)
 }
 
+// Morceaux (données d'un seul morceau : image, x1, x2 des premières
+// versions)
+get pieces(){
+  const d = this.data
+  if ( !d.pieces && d.image ) {
+    d.pieces = [{image: d.image, x1: d.x1, x2: d.x2, y1: 0, y2: null, dx: 0, dy: 0}]
+    delete d.image ; delete d.x1 ; delete d.x2
+  }
+  return d.pieces || []
+}
+
 buildSpanContent(){
   this.img = DCreate('IMG', {class:'content'})
   this.img.draggable = false
-  AMExtrait.sourceOf(this.data.image).then(src => {
-    this.source = src
-    this.drawExtract()
-  })
+  this.drawExtract()
   return this.img
 }
 
 /**
- * Dessin de l'extrait (bout de l'image du système) et taille de la
- * marque
+ * Dessin de l'extrait (morceaux assemblés) et taille de la marque
  */
-drawExtract(){
-  const src = this.source
-  if ( !src || !this.img ) return
-  const {x1, x2, scale} = this.data
-  const w = Math.max(1, x2 - x1), h = src.naturalHeight
-  const canvas = DCreate('CANVAS', {width: w, height: h})
-  canvas.getContext('2d').drawImage(src, x1, 0, w, h, 0, 0, w, h)
+async drawExtract(){
+  const pieces = this.pieces
+  const sources = await Promise.all(pieces.map(p => AMExtrait.sourceOf(p.image)))
+  if ( !this.img || sources.some(s => !s) ) return
+  pieces.forEach((p, i) => null == p.y2 && (p.y2 = sources[i].naturalHeight))
+  const W = Math.max(1, ...pieces.map(p => Math.round(p.dx + p.x2 - p.x1)))
+  const H = Math.max(1, ...pieces.map(p => Math.round(p.dy + p.y2 - p.y1)))
+  const canvas = DCreate('CANVAS', {width: W, height: H})
+  const ctx = canvas.getContext('2d')
+  // Fond blanc, morceaux superposés sans que l'un efface l'encre de
+  // l'autre
+  ctx.fillStyle = 'white'
+  ctx.fillRect(0, 0, W, H)
+  ctx.globalCompositeOperation = 'multiply'
+  pieces.forEach((p, i) => {
+    const w = p.x2 - p.x1, h = p.y2 - p.y1
+    ctx.drawImage(sources[i], p.x1, p.y1, w, h, Math.round(p.dx), Math.round(p.dy), w, h)
+  })
   this.img.src = canvas.toDataURL('image/png')
-  this.obj.style.width  = px(w * scale)
-  this.obj.style.height = px(h * scale)
+  this.obj.style.width  = px(W * this.data.scale)
+  this.obj.style.height = px(H * this.data.scale)
 }
 
 // Le contenu (numéros des mesures) n'est pas affiché
@@ -1312,46 +1462,9 @@ get content(){
   return super.content
 }
 
-// Recadrage par les bords (cf. observe)
-onCropStart(){
-  this.cropStart = {x1: this.data.x1, x2: this.data.x2, left: this.left}
-}
-onCrop(ui){
-  if ( !this.source ) return
-  const s = this.cropStart, scale = this.data.scale
-  const max = this.source.naturalWidth, min = Math.round(10 / scale)
-  let x1 = Math.round(s.x1 + (ui.position.left - s.left) / scale)
-  let x2 = Math.round(x1 + ui.size.width / scale)
-  if ( ui.position.left != s.left ) x2 = s.x2 // bord gauche
-  else x1 = s.x1                              // bord droit
-  x1 = Math.max(0, Math.min(x1, x2 - min))
-  x2 = Math.min(max, Math.max(x2, x1 + min))
-  this.data.x1 = x1
-  this.data.x2 = x2
-  this.obj.style.left = px(s.left + (x1 - s.x1) * scale)
-  this.drawExtract()
-}
-onCropStop(){
-  const s = this.cropStart
-  if ( s.x1 == this.data.x1 && s.x2 == this.data.x2 ) return
-  this.left = Math.round(s.left + (this.data.x1 - s.x1) * this.data.scale)
-  setModified()
-}
-
-/**
- * Nouvelles mesures (édition) : nouvel extrait, à la même place
- */
-setValue(newvalue){
-  if ( null == newvalue || newvalue.trim() == String(this.content).trim() ) return
-  const extract = AMExtrait.extractOf(newvalue)
-  if ( !extract ) return
-  this.content = newvalue.trim()
-  Object.assign(this.data, extract)
-  AMExtrait.sourceOf(this.data.image).then(src => {
-    this.source = src
-    this.drawExtract()
-  })
-  setModified()
+// Édition (double-clic) : le compositeur
+edit(){
+  new ExtraitComposer(this).open()
 }
 
 }// class AMExtrait

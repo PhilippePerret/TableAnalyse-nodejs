@@ -281,6 +281,11 @@ panels:
     fonts_notice:     "Les polices de l'analyse (PhilNote…) doivent être installées sur l'ordinateur qui ouvrira les fichiers SVG."
   mark_editor:
     title:            "Édition de la marque"
+  extract:
+    title:            "Extrait de partition"
+    help:             "Glisser les morceaux pour les placer, tirer leurs bords pour les recadrer. Flèches : déplacer le morceau choisi (Maj : 10 px)."
+    measures:         "Mesures"
+    apply:            "Appliquer"
   animation:
     title:            "Animation"
     play:             "Lancer"

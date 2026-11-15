@@ -281,6 +281,11 @@ panels:
     fonts_notice:     "SVG ファイルを開くコンピュータに、分析のフォント（PhilNote…）がインストールされている必要があります。"
   mark_editor:
     title:            "マークの編集"
+  extract:
+    title:            "楽譜の抜粋"
+    help:             "断片をドラッグして配置し、端をドラッグしてトリミングします。矢印キー：選択した断片を移動（Shift：10 px）。"
+    measures:         "小節"
+    apply:            "適用"
   animation:
     title:            "アニメーション"
     play:             "再生"

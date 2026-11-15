@@ -281,6 +281,11 @@ panels:
     fonts_notice:     "打开 SVG 文件的电脑必须安装分析所用的字体（PhilNote…）。"
   mark_editor:
     title:            "编辑标记"
+  extract:
+    title:            "乐谱片段"
+    help:             "拖动片段以放置，拖动其边缘以裁剪。方向键：移动所选片段（Shift：10 像素）。"
+    measures:         "小节"
+    apply:            "应用"
   animation:
     title:            "动画"
     play:             "播放"

@@ -281,6 +281,11 @@ panels:
     fonts_notice:     "The analysis fonts (PhilNote…) must be installed on the computer that opens the SVG files."
   mark_editor:
     title:            "Edit Mark"
+  extract:
+    title:            "Score Excerpt"
+    help:             "Drag the pieces to place them, drag their edges to crop them. Arrows: move the chosen piece (Shift: 10 px)."
+    measures:         "Bars"
+    apply:            "Apply"
   animation:
     title:            "Animation"
     play:             "Play"

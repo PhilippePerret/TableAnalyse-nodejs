@@ -281,6 +281,11 @@ panels:
     fonts_notice:     "I caratteri dell'analisi (PhilNote…) devono essere installati sul computer che aprirà i file SVG."
   mark_editor:
     title:            "Modifica del segno"
+  extract:
+    title:            "Estratto partitura"
+    help:             "Trascina i pezzi per posizionarli, i loro bordi per ritagliarli. Frecce: sposta il pezzo scelto (Maiusc: 10 px)."
+    measures:         "Battute"
+    apply:            "Applica"
   animation:
     title:            "Animazione"
     play:             "Avvia"

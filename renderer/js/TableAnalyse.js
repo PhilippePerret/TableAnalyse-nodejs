@@ -35,7 +35,7 @@ export class TableAnalyse {
     if ( e.button !== 0 || document.documentElement.classList.contains('animation-running') ) return
     const target = e.target
     if ( !(target instanceof Element) || !this.obj.contains(target) && target !== document.body && target !== document.documentElement ) return
-    if ( target.closest('.panneau-ui, button, input, select, textarea') ) return
+    if ( target.closest('.panneau-ui, .ext-composer, button, input, select, textarea') ) return
     // Une marque verrouillée peut servir de départ, pas une marque libre
     const mark = target.closest('.amark')
     if ( mark && !mark.classList.contains('locked') ) return
