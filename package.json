@@ -9,7 +9,7 @@
     "start": "electron .",
     "dist": "electron-builder",
     "decoupe": "electron main/cutter/cli.js",
-    "dist:mac": "electron-builder --mac --dir"
+    "dist:mac": "electron-builder --mac --dir --arm64"
   },
   "author": "Philippe Perret",
   "license": "UNLICENSED",
@@ -42,19 +42,27 @@
     "mac": {
       "category": "public.app-category.music",
       "target": [
-        "dir"
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
       ],
-      "identity": null
+      "identity": null,
+      "artifactName": "Table-d-analyse-${version}-mac.${ext}"
     },
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "artifactName": "Table-d-analyse-Setup-${version}.${ext}"
     },
     "linux": {
       "target": [
         "AppImage"
-      ]
+      ],
+      "artifactName": "Table-d-analyse-${version}.${ext}"
     }
   }
 }

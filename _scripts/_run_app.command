@@ -2,7 +2,7 @@
 # Compile (si les sources sont plus récentes) puis ouvre l'app
 # « Table d'analyse » compilée (dist/).
 
-APP_FOLDER="${0:A:h}"
+APP_FOLDER="${0:A:h:h}"
 cd "$APP_FOLDER" || exit 1
 
 [[ -d node_modules ]] || npm install || exit 1

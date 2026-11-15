@@ -17,7 +17,7 @@ npm start                         # dernière analyse ouverte
 npm start -- /chemin/vers/analyse # une analyse précise
 ~~~
 
-ou double-clic sur `_run.command` (ouvre l'analyse `./analyses/analyse`).
+ou double-clic sur `_scripts/_run.command` (ouvre l'analyse `./analyses/analyse`).
 
 ## Procédure
 

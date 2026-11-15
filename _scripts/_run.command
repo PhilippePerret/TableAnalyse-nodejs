@@ -2,7 +2,7 @@
 # Lance ScoreAnalyse (Electron) sur l'analyse de ./analyses/analyse
 # (ou sur la dernière analyse ouverte si elle n'existe pas).
 
-APP_FOLDER="${0:A:h}"
+APP_FOLDER="${0:A:h:h}"
 cd "$APP_FOLDER" || exit 1
 
 [[ -d node_modules ]] || npm install || exit 1
