@@ -6,7 +6,7 @@ import { AMark } from './AMark.js'
 import { on } from './events.js'
 import { UI } from './UI.js'
 import { pref } from './Preferences.js'
-import { setModified } from './Current.js'
+import { Current, setModified } from './Current.js'
 import { message } from './lib/Message.js'
 import { FormeBuilder } from './FormeBuilder.js'
 import { t } from './i18n.js'
@@ -76,6 +76,8 @@ export class TableAnalyse {
     // Position de l'appui : un clic relâché plus loin n'est pas un clic
     // (cf. onClick)
     this.downAt = {x: e.clientX, y: e.clientY}
+    // Aucune analyse ouverte : la table ne réagit pas
+    if ( !Current.analyse ) return
     if ( e.button !== 0 || document.documentElement.classList.contains('animation-running') ) return
     const target = e.target
     if ( !(target instanceof Element) || !this.obj.contains(target) && target !== document.body && target !== document.documentElement ) return
@@ -130,6 +132,7 @@ export class TableAnalyse {
    */
   static onClick(e){
     if ( this.justSelected ) { this.justSelected = false ; return }
+    if ( !Current.analyse ) return
     if ( e.button !== 0 || e.ctrlKey || e.detail > 1 ) return
     if ( UI.hasOpenPanel || document.documentElement.classList.contains('animation-running') ) return
     const down = this.downAt
