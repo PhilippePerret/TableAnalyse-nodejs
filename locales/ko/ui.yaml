@@ -398,6 +398,7 @@ marks:
     txt: {name: "텍스트",        message: "표시할 텍스트"}
     ped: {name: "지속음",        message: "지속음의 도수"}
     cir: {name: "원"}
+    ext: {name: "악보 발췌", message: "발췌할 마디 (예: 12 또는 12-13)"}
     frm: {name: "형식…", message: "형식의 부분"}
   frames:
     prt:  {name: "부분(시작)",       default: "제시부"}

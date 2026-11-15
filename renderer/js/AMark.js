@@ -60,6 +60,14 @@ export class AMark extends AObjet {
       // Marque de forme : endroit du clic (non enregistré)
       const clickX = params.clickX
       delete params.clickX
+      // Extrait de partition : bout de l'image du système des mesures
+      // demandées (abandon si elles sont introuvables) ; une copie garde
+      // celui de l'original
+      if ( params.type == 'ext' && !params.image ) {
+        const extract = AMExtrait.extractOf(params.content)
+        if ( !extract ) return
+        Object.assign(params, extract)
+      }
       // Numéro de mesure ajouté quand la ligne des numéros existe : il
       // y prend place et renumérote les suivants
       const onMeasureLine = params.subtype == 'mes' && Systeme.hasMeasureLine
@@ -90,7 +98,11 @@ export class AMark extends AObjet {
  * +data+
  */
 static instanciate(analyse, data){
-  return data.type == 'img' ? new AMImage(analyse, data) : new AMark(analyse, data)
+  switch(data.type){
+    case 'img': return new AMImage(analyse, data)
+    case 'ext': return new AMExtrait(analyse, data)
+    default:    return new AMark(analyse, data)
+  }
 }
 
 /**
@@ -604,6 +616,14 @@ observe(){
           my.ajustePosition.call(my)
       }
     })
+  } else if ( this.type == 'ext' ) {
+    // Extrait de partition : recadré par ses bords gauche et droit
+    resizable(this.obj, {
+        handles: 'e,w'
+      , start:  function(e, ui){ my.onCropStart() }
+      , resize: function(e, ui){ my.onCrop(ui) }
+      , stop:   function(e, ui){ my.onCropStop() }
+    })
   } else if ( this.type == 'cir' ) {
     // Cercle : Maj garde les proportions, Alt garde le centre
     resizable(this.obj, {
@@ -1098,6 +1118,9 @@ applyWidth(v) {
  * autres : ajustée sur les marques de même type)
  */
 changeType(type, subtype){
+  // Extrait de partition : pas de changement de type (ses données ne
+  // concernent que lui)
+  if ( type != this.type && [type, this.type].includes('ext') ) return erreur(t('errors.marks.extract_type'))
   this.type    = type
   this.subtype = subtype
   if ( !this.obj ) return
@@ -1192,3 +1215,143 @@ get srcPath(){
 }
 
 }// class AMIage
+
+
+/**
+ * Marque « Extrait partition » : bout de l'image d'un système (la ou
+ * les mesures demandées, sans les marques), recadrable par ses bords
+ * gauche et droit.
+ * Données propres : image (image du système), x1 et x2 (bornes de
+ * l'extrait, en px de l'image), scale (px de la table par px de
+ * l'image). Le contenu est le numéro des mesures demandées (« 12 »,
+ * « 12-13 »).
+ */
+export class AMExtrait extends AMark {
+
+/**
+ * Données de l'extrait des mesures +spec+ (« 12 », « 12-13 ») : de la
+ * barre de début de la première (bord gauche du système pour sa
+ * première mesure) à celle de fin de la dernière (fin du système si
+ * elle est dans un autre système).
+ * @return {image, x1, x2, scale} ou null (message affiché)
+ */
+static extractOf(spec){
+  const m = String(spec || '').trim().match(/^(\d+)\s*(?:[-–à]\s*(\d+))?$/)
+  if ( !m ) return erreur(t('errors.marks.extract_bad_measures', {spec: escapeLt(String(spec || ''))})), null
+  let [from, to] = [Number(m[1]), Number(m[2] || m[1])]
+  if ( to < from ) [from, to] = [to, from]
+  const mesures = Forme.measureMarks
+  if ( mesures.length == 0 ) return message(t('messages.no_measure_number')), null
+  const found = mesures.find(x => x.number == from)
+  if ( !found ) return message(t('messages.measure_not_found', {num: from})), null
+  const sys = Systeme.getSystemeAssociated(found.mark)
+  const img = sys && sys.obj
+  if ( !img || !img.naturalWidth ) return message(t('messages.measure_not_found', {num: from})), null
+  const r = img.getBoundingClientRect()
+  const k = img.naturalWidth / r.width
+  const marks  = Forme.measureMarksOf(sys)
+  const starts = marks.map((mk, i) => {
+    const x = Forme.measureRect(mk).left
+    return i == 0 ? r.left : (Forme.barlineNear(sys, x, 25) ?? x)
+  })
+  const iFrom = marks.indexOf(found.mark)
+  let iTo = marks.findIndex(mk => Number(String(mk.content).trim()) == to)
+  if ( iTo < iFrom ) iTo = marks.length - 1
+  const start = starts[iFrom]
+  // Barre de fin comprise
+  const end = iTo + 1 < starts.length ? starts[iTo + 1] + 3 : Forme.systemEndX(sys)
+  const x1 = Math.max(0, Math.round((start - r.left) * k))
+  const x2 = Math.min(img.naturalWidth, Math.round((end - r.left) * k))
+  return {image: sys.image_name, x1, x2, scale: img.offsetWidth / img.naturalWidth}
+}
+
+// Images des systèmes (sources des extraits), chargées une fois
+static sourceOf(name){
+  this.sources || (this.sources = new Map())
+  if ( !this.sources.has(name) ) {
+    const img = new Image()
+    const loaded = new Promise(ok => { img.onload = () => ok(img) ; img.onerror = () => ok(null) })
+    img.src = analyseUrl(`systems/${name}`)
+    this.sources.set(name, loaded)
+  }
+  return this.sources.get(name)
+}
+
+buildSpanContent(){
+  this.img = DCreate('IMG', {class:'content'})
+  this.img.draggable = false
+  AMExtrait.sourceOf(this.data.image).then(src => {
+    this.source = src
+    this.drawExtract()
+  })
+  return this.img
+}
+
+/**
+ * Dessin de l'extrait (bout de l'image du système) et taille de la
+ * marque
+ */
+drawExtract(){
+  const src = this.source
+  if ( !src || !this.img ) return
+  const {x1, x2, scale} = this.data
+  const w = Math.max(1, x2 - x1), h = src.naturalHeight
+  const canvas = DCreate('CANVAS', {width: w, height: h})
+  canvas.getContext('2d').drawImage(src, x1, 0, w, h, 0, 0, w, h)
+  this.img.src = canvas.toDataURL('image/png')
+  this.obj.style.width  = px(w * scale)
+  this.obj.style.height = px(h * scale)
+}
+
+// Le contenu (numéros des mesures) n'est pas affiché
+set content(v){
+  this._content = v
+  this.data.content = v
+}
+get content(){
+  return super.content
+}
+
+// Recadrage par les bords (cf. observe)
+onCropStart(){
+  this.cropStart = {x1: this.data.x1, x2: this.data.x2, left: this.left}
+}
+onCrop(ui){
+  if ( !this.source ) return
+  const s = this.cropStart, scale = this.data.scale
+  const max = this.source.naturalWidth, min = Math.round(10 / scale)
+  let x1 = Math.round(s.x1 + (ui.position.left - s.left) / scale)
+  let x2 = Math.round(x1 + ui.size.width / scale)
+  if ( ui.position.left != s.left ) x2 = s.x2 // bord gauche
+  else x1 = s.x1                              // bord droit
+  x1 = Math.max(0, Math.min(x1, x2 - min))
+  x2 = Math.min(max, Math.max(x2, x1 + min))
+  this.data.x1 = x1
+  this.data.x2 = x2
+  this.obj.style.left = px(s.left + (x1 - s.x1) * scale)
+  this.drawExtract()
+}
+onCropStop(){
+  const s = this.cropStart
+  if ( s.x1 == this.data.x1 && s.x2 == this.data.x2 ) return
+  this.left = Math.round(s.left + (this.data.x1 - s.x1) * this.data.scale)
+  setModified()
+}
+
+/**
+ * Nouvelles mesures (édition) : nouvel extrait, à la même place
+ */
+setValue(newvalue){
+  if ( null == newvalue || newvalue.trim() == String(this.content).trim() ) return
+  const extract = AMExtrait.extractOf(newvalue)
+  if ( !extract ) return
+  this.content = newvalue.trim()
+  Object.assign(this.data, extract)
+  AMExtrait.sourceOf(this.data.image).then(src => {
+    this.source = src
+    this.drawExtract()
+  })
+  setModified()
+}
+
+}// class AMExtrait

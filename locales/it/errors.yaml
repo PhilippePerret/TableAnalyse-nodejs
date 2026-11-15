@@ -35,6 +35,8 @@ tools:
   code_required: "Occorre inserire il codice nel campo."
 
 marks:
+  extract_bad_measures: "Battute non valide: «%{spec}» (es. 12 o 12-13)."
+  extract_type: "Un estratto di partitura non può cambiare tipo, né un altro segno diventare un estratto."
   no_autocontent: "Impossibile definire il contenuto automatico del tipo '%{type}'…"
   no_subtype: "Il tipo '%{type}' non definisce il suo sottotipo…"
   no_form_start: "Nessuna marca « %{name} » sulla tavola."

@@ -35,6 +35,8 @@ tools:
   code_required: "Der Code muss im Feld angegeben werden."
 
 marks:
+  extract_bad_measures: "Ungültige Takte: „%{spec}“ (z. B. 12 oder 12-13)."
+  extract_type: "Ein Partiturausschnitt kann seinen Typ nicht ändern, und keine andere Markierung kann zu einem Ausschnitt werden."
   no_autocontent: "Der automatische Inhalt des Typs '%{type}' kann nicht festgelegt werden…"
   no_subtype: "Der Typ '%{type}' legt seinen Untertyp nicht fest…"
   no_form_start: "Keine Marke „%{name}“ auf der Tafel."

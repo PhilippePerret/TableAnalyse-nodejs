@@ -35,6 +35,8 @@ tools:
   code_required: "必须在字段中填写代码。"
 
 marks:
+  extract_bad_measures: "无效的小节：“%{spec}”（例如 12 或 12-13）。"
+  extract_type: "乐谱片段不能更改类型，其他标记也不能变为片段。"
   no_autocontent: "无法定义类型 '%{type}' 的自动内容…"
   no_subtype: "类型 '%{type}' 未定义其子类型…"
   no_form_start: "表上没有“%{name}”标记。"

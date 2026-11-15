@@ -35,6 +35,8 @@ tools:
   code_required: "입력란에 코드를 입력해야 합니다."
 
 marks:
+  extract_bad_measures: "잘못된 마디: “%{spec}” (예: 12 또는 12-13)."
+  extract_type: "악보 발췌는 종류를 바꿀 수 없으며, 다른 표시도 발췌로 바꿀 수 없습니다."
   no_autocontent: "'%{type}' 종류의 자동 내용을 정의할 수 없습니다…"
   no_subtype: "'%{type}' 종류가 하위 종류를 정의하지 않습니다…"
   no_form_start: "표에 “%{name}” 표시가 없습니다."

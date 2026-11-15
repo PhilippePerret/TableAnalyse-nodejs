@@ -35,6 +35,8 @@ tools:
   code_required: "Hay que escribir el código en el campo."
 
 marks:
+  extract_bad_measures: "Compases no válidos: «%{spec}» (p. ej. 12 o 12-13)."
+  extract_type: "Un fragmento de partitura no puede cambiar de tipo, ni otra marca convertirse en fragmento."
   no_autocontent: "No se puede definir el contenido automático del tipo '%{type}'…"
   no_subtype: "El tipo '%{type}' no define su subtipo…"
   no_form_start: "Ninguna marca « %{name} » en la tabla."

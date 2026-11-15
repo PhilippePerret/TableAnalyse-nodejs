@@ -493,6 +493,13 @@ div.amark.img svg {
   height: inherit;
 }
 
+/* Extrait de partition (bout de l'image d'un système, cf. AMExtrait) */
+div.amark.ext img.content {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /*
   
     GESTION DES BORDS

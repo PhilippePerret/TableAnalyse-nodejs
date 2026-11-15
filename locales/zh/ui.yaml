@@ -398,6 +398,7 @@ marks:
     txt: {name: "文本",          message: "要显示的文本"}
     ped: {name: "持续音",        message: "持续音的级数"}
     cir: {name: "圆圈"}
+    ext: {name: "乐谱片段", message: "要提取的小节（例如 12 或 12-13）"}
     frm: {name: "曲式…", message: "曲式部分"}
   frames:
     prt:  {name: "部分（开始）",     default: "呈示部"}

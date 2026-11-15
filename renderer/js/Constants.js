@@ -86,6 +86,7 @@ export const AMARQUES_TYPES = {
   , 'txt': {name:t('ui.marks.types.txt.name')        , shortcut:'t', ajustX:0,   ajustY:23       ,value:'txt', subdata:TAILLES_TEXTE,  message:t('ui.marks.types.txt.message')}
   , 'ped': {name:t('ui.marks.types.ped.name')       , shortcut:'p', ajustX:20,  ajustY:10,    value:'ped', default:'5', message:t('ui.marks.types.ped.message')}
   , 'cir': {name:t('ui.marks.types.cir.name')       , shortcut:'r', value:'cir'}
+  , 'ext': {name:t('ui.marks.types.ext.name')       , shortcut:'E', value:'ext', default:'1', message:t('ui.marks.types.ext.message')}
 }
 
 // @return true si le type de marque +type+ a des sous-types

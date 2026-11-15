@@ -399,6 +399,7 @@ marks:
     txt: {name: "Text",          message: "Text to display"}
     ped: {name: "Pedal",         message: "Degree of the pedal"}
     cir: {name: "Circle"}
+    ext: {name: "Score Excerpt", message: "Bar(s) to extract (e.g. 12 or 12-13)"}
     frm: {name: "Form…", message: "Portion of the form"}
   frames:
     prt:  {name: "Part (start)",     default: "EXPO"}

@@ -399,6 +399,7 @@ marks:
     txt: {name: "Testo",         message: "Testo da mostrare"}
     ped: {name: "Pedale",        message: "Grado del pedale"}
     cir: {name: "Cerchio"}
+    ext: {name: "Estratto partitura", message: "Battuta/e da estrarre (es. 12 o 12-13)"}
     frm: {name: "Forma…", message: "Porzione della forma"}
   frames:
     prt:  {name: "Parte (inizio)",   default: "ESPO"}

@@ -399,6 +399,7 @@ marks:
     txt: {name: "Texto",         message: "Texto que mostrar"}
     ped: {name: "Pedal",         message: "Grado del pedal"}
     cir: {name: "Círculo"}
+    ext: {name: "Fragmento de partitura", message: "Compás(es) a extraer (p. ej. 12 o 12-13)"}
     frm: {name: "Forma…", message: "Porción de la forma"}
   frames:
     prt:  {name: "Parte (inicio)",   default: "EXPO"}

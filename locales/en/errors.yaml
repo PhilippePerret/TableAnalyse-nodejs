@@ -35,6 +35,8 @@ tools:
   code_required: "You must give the code in the field."
 
 marks:
+  extract_bad_measures: "Invalid bars: “%{spec}” (e.g. 12 or 12-13)."
+  extract_type: "A score excerpt cannot change type, nor can another mark become an excerpt."
   no_autocontent: "Cannot define the autocontent of the type '%{type}'…"
   no_subtype: "The type '%{type}' does not define its subtype…"
   no_form_start: "No « %{name} » mark on the table."

@@ -399,6 +399,7 @@ marks:
     txt: {name: "Texte",         message: "Texte à afficher"}
     ped: {name: "Pédale",        message: "Degré de la pédale"}
     cir: {name: "Cercle"}
+    ext: {name: "Extrait partition", message: "Mesure(s) à extraire (p.e. 12 ou 12-13)"}
     frm: {name: "Forme…", message: "Portion de la forme"}
   frames:
     prt:  {name: "Partie (début)",   default: "EXPO"}
