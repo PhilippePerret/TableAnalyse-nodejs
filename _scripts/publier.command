@@ -5,6 +5,10 @@
 # version proposée par la page de téléchargement du site (src/lib/site.ts),
 # qui pointe vers ces fichiers.
 #
+# Le numéro de version est d'abord incrémenté (patch, mineure ou majeure,
+# au choix) dans VERSION, package.json et package-lock.json, commité et
+# poussé.
+#
 # Requis : gh connecté (gh auth login), code poussé sur GitHub (la
 # fabrication se fait à partir de la branche main du dépôt distant).
 
@@ -24,7 +28,24 @@ if [[ $(git rev-parse HEAD) != $(git rev-parse origin/main) ]]; then
   fin "Le code local n'est pas celui de GitHub (main). Pousser d'abord les commits."
 fi
 
+# Nouveau numéro de version
+OLD=$(node -p "require('./package.json').version")
+echo "Version actuelle : $OLD"
+echo -n "Incrémenter : p = patch (défaut), m = mineure, M = majeure ? "
+read KIND
+case "$KIND" in
+  M) KIND=major ;;
+  m) KIND=minor ;;
+  ""|p) KIND=patch ;;
+  *) fin "Choix inconnu : $KIND" ;;
+esac
+npm version "$KIND" --no-git-tag-version >/dev/null || fin "Incrémentation de la version impossible."
 VERSION=$(node -p "require('./package.json').version")
+echo "$VERSION" > VERSION
+git add VERSION package.json package-lock.json \
+  && git commit -q -m "Version $VERSION" VERSION package.json package-lock.json \
+  && git push -q origin main || fin "Commit ou envoi de la version $VERSION impossible."
+
 echo "Fabrication et publication de la version $VERSION sur GitHub…"
 gh workflow run "$WORKFLOW" --ref main || fin "Lancement du workflow impossible."
 sleep 5
