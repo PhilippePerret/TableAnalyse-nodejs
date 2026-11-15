@@ -21,10 +21,68 @@ div.mini_editeur.longtext {
 div.mini_editeur.longtext input[type="text"] {
   display:none;
 }
+div.mini_editeur.longtext div.body {
+  height: 80%;
+}
 div.mini_editeur.longtext textarea {
   width: 100%;
-  height: calc(80%);
+  height: 100%;
+  box-sizing: border-box;
   resize: none;
+}
+
+/* Valeurs déjà utilisées (cf. Editeur#setSuggestions) : menu au-dessus
+  du champ, ou liste à droite des champs (panneau élargi) */
+div.mini_editeur div.body {
+  display: flex;
+  gap: 12px;
+}
+div.mini_editeur div.fields {
+  flex: 1;
+  min-width: 0;
+}
+div.mini_editeur select.suggest-menu {
+  width: 100%;
+  margin-bottom: 8px;
+}
+div.mini_editeur.with-suggestions {
+  width: 560px;
+}
+div.mini_editeur.with-suggestions:not(.longtext) div.body {
+  height: 200px;
+}
+div.mini_editeur.longtext.with-suggestions {
+  width: 960px;
+}
+div.mini_editeur div.suggest-list {
+  flex: none;
+  width: 200px;
+  overflow-y: auto;
+  font-size: 14px;
+  background-color: white;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  padding: 4px 0;
+  box-sizing: border-box;
+}
+div.mini_editeur div.suggest-list:focus {
+  outline: 2px solid #3a925e;
+}
+div.mini_editeur div.suggestion {
+  padding: 2px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+div.mini_editeur div.suggestion:hover {
+  background-color: #e6f2ea;
+}
+div.mini_editeur div.suggestion span.letter {
+  display: inline-block;
+  width: 1.4em;
+  color: #888;
+  font-family: monospace;
 }
 
 

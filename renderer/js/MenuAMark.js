@@ -122,6 +122,28 @@ export class LockTypeMenu extends MenusTool {
 }
 
 /**
+ * Sous-menu « Marque > Suggestions » : présentation des valeurs déjà
+ * utilisées à la création d'une marque (cf. AMark_Editor.suggestMode).
+ * Un seul choix coché.
+ */
+export class SuggestMenu extends MenusTool {
+
+  static init(){
+    super.init()
+    this.check(AMark_Editor.suggestMode)
+  }
+
+  static onActivate(e, value){
+    AMark_Editor.suggestMode = value
+    this.check(value)
+  }
+
+  static check(value){
+    Array.from(this.menu.options).forEach((o, i) => i && (o.dataset.checked = o.value == value ? 'true' : 'false'))
+  }
+}
+
+/**
  * Sous-menu « Marque > Aligner le texte » : au centre, à droite, à
  * gauche, justifié (texte des marques sélectionnées)
  */

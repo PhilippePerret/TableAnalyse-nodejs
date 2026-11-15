@@ -40,6 +40,7 @@ menu:
   align:            "整列"
   align_text:       "テキストの整列"
   lock_type:        "種類を固定…"
+  suggestions:      "候補"
   adjust:           "調整"
   selection:        "選択"
   borders:          "枠線"
@@ -80,6 +81,11 @@ mark_menu:
   unlock_one:       "マークのロックを解除"
   unlock_many:      "マークのロックを解除"
   change_type:      "種類を設定…"
+
+suggest_menu:
+  none:             "なし"
+  menu:             "メニュー"
+  panel:            "サイドパネル"
 
 lock_type_menu:
   none:             "なし"
@@ -376,6 +382,8 @@ prefs_groups:
 
 # 分析マーク：名前（選択リスト内）、メッセージ（エディタの案内）、既定の内容
 marks:
+  suggestions:
+    menu_title: "使用済みの値…"
   types:
     acc: {name: "コード",        message: "コードネーム"}
     har: {name: "和声",          message: "和声記号"}

@@ -40,6 +40,7 @@ menu:
   align:            "Aligner"
   align_text:       "Aligner le texte"
   lock_type:        "Bloquer le type à…"
+  suggestions:      "Suggestions"
   adjust:           "Ajuster"
   selection:        "Sélection"
   borders:          "Bords"
@@ -80,6 +81,11 @@ mark_menu:
   unlock_one:       "Déverrouiller la marque"
   unlock_many:      "Déverrouiller les marques"
   change_type:      "Mettre le type à…"
+
+suggest_menu:
+  none:             "Aucune"
+  menu:             "Menu"
+  panel:            "Panneau latéral"
 
 lock_type_menu:
   none:             "Aucun"
@@ -377,6 +383,8 @@ prefs_groups:
 # Marques d'analyse : nom (dans les listes de choix), message (invite
 # de l'éditeur) et contenu par défaut
 marks:
+  suggestions:
+    menu_title: "Valeurs déjà utilisées…"
   types:
     acc: {name: "Accord",        message: "Nom de l'accord"}
     har: {name: "Harmonie",      message: "Chiffrage"}

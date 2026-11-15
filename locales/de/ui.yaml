@@ -40,6 +40,7 @@ menu:
   align:            "Ausrichten"
   align_text:       "Text ausrichten"
   lock_type:        "Typ festlegen auf…"
+  suggestions:      "Vorschläge"
   adjust:           "Anpassen"
   selection:        "Auswahl"
   borders:          "Ränder"
@@ -80,6 +81,11 @@ mark_menu:
   unlock_one:       "Markierung entsperren"
   unlock_many:      "Markierungen entsperren"
   change_type:      "Typ setzen auf…"
+
+suggest_menu:
+  none:             "Keine"
+  menu:             "Menü"
+  panel:            "Seitenleiste"
 
 lock_type_menu:
   none:             "Keiner"
@@ -377,6 +383,8 @@ prefs_groups:
 # Analysemarkierungen: Name (in den Auswahllisten), Hinweis (Eingabe im
 # Editor) und Standardinhalt
 marks:
+  suggestions:
+    menu_title: "Bereits verwendete Werte…"
   types:
     acc: {name: "Akkord",        message: "Name des Akkords"}
     har: {name: "Harmonie",      message: "Bezifferung"}

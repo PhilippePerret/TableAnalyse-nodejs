@@ -43,6 +43,14 @@ import { t } from './i18n.js'
  */
 
 
+const SUGGEST_MODE_KEY = 'marks_suggestions'
+export const SUGGEST_MODES = ['none', 'menu', 'panel']
+// Types/sous-types sans suggestions
+const NO_SUGGESTIONS = ['mes']
+// Types/sous-types dont les valeurs sont classées dans l'ordre de la
+// partition (motifs, marques de forme), et non alphabétiquement
+const SUGGESTIONS_IN_SCORE_ORDER = ['cel', 'frm']
+
 export class AMark_Editor {
 
 /**
@@ -51,6 +59,23 @@ export class AMark_Editor {
  * choisir un autre ponctuellement)
  */
 static lockedType = null
+
+/**
+ * Présentation des valeurs déjà utilisées à la création d'une marque
+ * (menu « Marque > Suggestions ») : 'none', 'menu' ou 'panel' (panneau
+ * latéral, par défaut). Choix mémorisé.
+ */
+static get suggestMode(){
+  if ( !this._suggestmode ) {
+    try { this._suggestmode = localStorage.getItem(SUGGEST_MODE_KEY) } catch(err) {}
+    SUGGEST_MODES.includes(this._suggestmode) || (this._suggestmode = 'panel')
+  }
+  return this._suggestmode
+}
+static set suggestMode(mode){
+  this._suggestmode = mode
+  try { localStorage.setItem(SUGGEST_MODE_KEY, mode) } catch(err) {}
+}
 
 constructor(data){
   this.data   = data
@@ -394,11 +419,29 @@ get editorOfAMarkContent(){
       , setMethod:        this.onSetContent.bind(this)
       , onTypeButton:     sub ? this.backToSubtype.bind(this) : this.onWantTypes.bind(this)
       , typeButtonLabel:  t(sub ? 'ui.buttons.subtype' : 'ui.buttons.type')
+      , suggestions:      () => this.suggestions
     })
   }
   return this._editorcontent
 }
 
+
+/**
+ * Valeurs déjà utilisées pour le type (et le sous-type) de la marque
+ * créée, uniques, pour l'éditeur du contenu : {mode, values} ou null
+ */
+get suggestions(){
+  const mode = AMark_Editor.suggestMode
+  if ( mode == 'none' || this.data.markId ) return null
+  const type = this.amark_type, subtype = this.isRequiringSubType ? this.amark_subtype : undefined
+  if ( [type, subtype].some(v => NO_SUGGESTIONS.includes(v)) ) return null
+  let marks = AObjet.select(ao => ao.type == type && (undefined === subtype || ao.subtype == subtype))
+  const inScoreOrder = [type, subtype].some(v => SUGGESTIONS_IN_SCORE_ORDER.includes(v))
+  inScoreOrder && (marks = Forme.sorted(marks))
+  const values = [...new Set(marks.map(m => String(m.content ?? '').trim()).filter(v => v))]
+  inScoreOrder || values.sort((a, b) => a.localeCompare(b, undefined, {numeric: true}))
+  return {mode, values}
+}
 
 /**
  * 

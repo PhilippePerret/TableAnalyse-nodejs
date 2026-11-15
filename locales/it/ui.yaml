@@ -40,6 +40,7 @@ menu:
   align:            "Allinea"
   align_text:       "Allinea il testo"
   lock_type:        "Blocca il tipo su…"
+  suggestions:      "Suggerimenti"
   adjust:           "Adatta"
   selection:        "Selezione"
   borders:          "Bordi"
@@ -80,6 +81,11 @@ mark_menu:
   unlock_one:       "Sblocca il segno"
   unlock_many:      "Sblocca i segni"
   change_type:      "Imposta il tipo a…"
+
+suggest_menu:
+  none:             "Nessuno"
+  menu:             "Menu"
+  panel:            "Pannello laterale"
 
 lock_type_menu:
   none:             "Nessuno"
@@ -377,6 +383,8 @@ prefs_groups:
 # Segni d'analisi: nome (negli elenchi di scelta), messaggio (invito
 # dell'editor) e contenuto predefinito
 marks:
+  suggestions:
+    menu_title: "Valori già usati…"
   types:
     acc: {name: "Accordo",       message: "Nome dell'accordo"}
     har: {name: "Armonia",       message: "Cifratura"}

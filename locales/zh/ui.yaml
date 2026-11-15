@@ -40,6 +40,7 @@ menu:
   align:            "对齐"
   align_text:       "文本对齐"
   lock_type:        "锁定类型为…"
+  suggestions:      "建议"
   adjust:           "调整"
   selection:        "选择"
   borders:          "边框"
@@ -80,6 +81,11 @@ mark_menu:
   unlock_one:       "解锁标记"
   unlock_many:      "解锁标记"
   change_type:      "将类型设为…"
+
+suggest_menu:
+  none:             "无"
+  menu:             "菜单"
+  panel:            "侧边面板"
 
 lock_type_menu:
   none:             "无"
@@ -376,6 +382,8 @@ prefs_groups:
 
 # 分析标记：名称（选择列表中）、提示（编辑器中）及默认内容
 marks:
+  suggestions:
+    menu_title: "已使用的值…"
   types:
     acc: {name: "和弦",          message: "和弦名称"}
     har: {name: "和声",          message: "级数标记"}

@@ -1,5 +1,5 @@
 import { DCreate, DGet, listen, stopEvent, cmdKey } from './dom.js'
-import { px, uiZoom, keepInView } from './handies.js'
+import { px, uiZoom, keepInView, escapeLt } from './handies.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
@@ -27,6 +27,11 @@ import { AMARQUES_TYPES, typeHasSubtype } from './Constants.js'
  */
 
 
+// Lettres des valeurs de la liste des suggestions
+const LETTERS = 'abcdefghijklmnopqrstuvwxyz'
+// Valeur affichée (texte long : retours chariot)
+const displayedValue = v => String(v).replace(/__RET__/g, ' ')
+
 export class Editeur {
   constructor(owner, data){
     this.owner  = owner
@@ -53,6 +58,7 @@ export class Editeur {
     this.init()
     position && this.positionne(position)
     message  && (this.titre = message)
+    this.data.suggestions && this.setSuggestions(this.data.suggestions())
     this.obj.classList.remove('hidden')
     console.debug("editeur", this)
     this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
@@ -141,7 +147,12 @@ export class Editeur {
     this.textField = DCreate('INPUT',{type:'text', value:this.value})
     o.appendChild(this.textField)
     this.textarea = DCreate('TEXTAREA',{})
-    o.appendChild(this.textarea)
+    // Valeurs déjà utilisées (data.suggestions, cf. AMark_Editor) : menu
+    // au-dessus du champ ou liste à droite des champs
+    this.suggestMenu = DCreate('SELECT', {class:'suggest-menu hidden'})
+    this.suggestList = DCreate('DIV', {class:'suggest-list hidden', tabindex:'0'})
+    const fields = DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea]})
+    o.appendChild(DCreate('DIV', {class:'body', inner:[fields, this.suggestList]}))
     const divBoutons = DCreate('DIV', {class:'buttons'})
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
     // Marque d'analyse : changement de son type (de son sous-type
@@ -169,9 +180,83 @@ export class Editeur {
     listen(this.textField,  'blur',  this.onBlurTextField.bind(this))
     listen(this.textarea,   'focus', this.onFocusTextField.bind(this))
     listen(this.textarea,   'blur',  this.onBlurTextField.bind(this))
+    listen(this.suggestMenu, 'change', this.onSuggestMenu.bind(this))
+    listen(this.suggestList, 'click', this.onClickSuggestion.bind(this))
+    listen(this.suggestList, 'dblclick', this.onDblClickSuggestion.bind(this))
+    listen(this.suggestList, 'keydown', this.onKeyDownSuggestions.bind(this))
+    listen(this.suggestList, 'keypress', this.onKeyPressSuggestions.bind(this))
+    listen(this.suggestList, 'focus', this.onFocusTextField.bind(this))
+    listen(this.suggestList, 'blur',  this.onBlurTextField.bind(this))
     listen(this.obj,        'keypress', this.onKeyPress.bind(this))
     listen(this.obj,        'keydown',  this.onKeyDown.bind(this))
     listen(this.obj,        'keyup',    this.onKeyUp.bind(this))
+  }
+
+  /**
+   * Valeurs déjà utilisées proposées : +sug+ = {mode: 'menu'|'panel',
+   * values: [...]}, ou null (aucune)
+   */
+  setSuggestions(sug){
+    const values = (sug && sug.values) || []
+    const mode   = values.length ? sug.mode : null
+    this.suggestValues = values
+    this.suggestMenu.innerHTML = ''
+    this.suggestList.innerHTML = ''
+    if ( mode == 'menu' ) {
+      this.suggestMenu.appendChild(DCreate('OPTION', {value:'', text:t('ui.marks.suggestions.menu_title')}))
+      values.forEach((v, i) => this.suggestMenu.appendChild(DCreate('OPTION', {value:String(i), text:escapeLt(displayedValue(v))})))
+      this.suggestMenu.selectedIndex = 0
+    } else if ( mode == 'panel' ) {
+      values.forEach((v, i) => {
+        const letter = i < LETTERS.length ? LETTERS[i] : ''
+        this.suggestList.appendChild(DCreate('DIV', {class:'suggestion', 'data-index':String(i), inner:[
+            DCreate('SPAN', {class:'letter', text:letter})
+          , DCreate('SPAN', {class:'value',  text:escapeLt(displayedValue(v))})
+        ]}))
+      })
+      this.suggestList.scrollTop = 0
+    }
+    this.suggestMenu.classList[mode == 'menu' ? 'remove' : 'add']('hidden')
+    this.suggestList.classList[mode == 'panel' ? 'remove' : 'add']('hidden')
+    this.obj.classList[mode == 'panel' ? 'add' : 'remove']('with-suggestions')
+  }
+
+  // Choix d'une valeur : mise dans le champ, qui reprend le focus
+  chooseSuggestion(index){
+    const v = this.suggestValues && this.suggestValues[index]
+    if ( undefined === v ) return
+    this.value = v
+    const field = this.isLongText ? this.textarea : this.textField
+    field.focus()
+    field.select()
+  }
+  onSuggestMenu(e){
+    const index = this.suggestMenu.value
+    this.suggestMenu.selectedIndex = 0
+    index !== '' && this.chooseSuggestion(Number(index))
+  }
+  onClickSuggestion(e){
+    const div = e.target.closest('div.suggestion')
+    div && this.chooseSuggestion(Number(div.dataset.index))
+  }
+  // Double-clic : choix et validation
+  onDblClickSuggestion(e){
+    const div = e.target.closest('div.suggestion')
+    if ( !div ) return
+    this.chooseSuggestion(Number(div.dataset.index))
+    this.onClickOK()
+  }
+  // Liste active : une lettre choisit la valeur
+  onKeyDownSuggestions(e){
+    if ( e.metaKey || e.ctrlKey || e.altKey || e.key.length != 1 ) return
+    e.stopPropagation()
+    const index = LETTERS.indexOf(e.key)
+    if ( index < 0 ) return
+    e.preventDefault()
+    this.chooseSuggestion(index)
+  }
+  onKeyPressSuggestions(e){
+    if ( e.key.length == 1 ) e.stopPropagation()
   }
 
   get typeButtonLabel(){

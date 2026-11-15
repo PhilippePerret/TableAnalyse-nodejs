@@ -40,6 +40,7 @@ menu:
   align:            "정렬"
   align_text:       "텍스트 정렬"
   lock_type:        "종류 고정…"
+  suggestions:      "제안"
   adjust:           "조정"
   selection:        "선택"
   borders:          "테두리"
@@ -80,6 +81,11 @@ mark_menu:
   unlock_one:       "표시 잠금 해제"
   unlock_many:      "표시 잠금 해제"
   change_type:      "종류 설정…"
+
+suggest_menu:
+  none:             "없음"
+  menu:             "메뉴"
+  panel:            "측면 패널"
 
 lock_type_menu:
   none:             "없음"
@@ -376,6 +382,8 @@ prefs_groups:
 
 # 분석 표시: 이름(선택 목록), 메시지(편집기 안내), 기본 내용
 marks:
+  suggestions:
+    menu_title: "이미 사용한 값…"
   types:
     acc: {name: "코드",          message: "코드 이름"}
     har: {name: "화성",          message: "화성 기호"}

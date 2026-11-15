@@ -40,6 +40,7 @@ menu:
   align:            "Align"
   align_text:       "Align Text"
   lock_type:        "Lock Type To…"
+  suggestions:      "Suggestions"
   adjust:           "Adjust"
   selection:        "Selection"
   borders:          "Borders"
@@ -80,6 +81,11 @@ mark_menu:
   unlock_one:       "Unlock Mark"
   unlock_many:      "Unlock Marks"
   change_type:      "Set Type to…"
+
+suggest_menu:
+  none:             "None"
+  menu:             "Menu"
+  panel:            "Side Panel"
 
 lock_type_menu:
   none:             "None"
@@ -377,6 +383,8 @@ prefs_groups:
 # Analysis marks: name (in choice lists), message (editor prompt) and
 # default content
 marks:
+  suggestions:
+    menu_title: "Values already used…"
   types:
     acc: {name: "Chord",         message: "Chord name"}
     har: {name: "Harmony",       message: "Figure"}
