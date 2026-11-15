@@ -126,10 +126,10 @@ function createWindow(){
     , height: 1000
     , show:   !SMOKE
     , title:  ''
-    // Bande supérieure dessinée par la page (#titlebar), avec les
-    // boutons de la fenêtre du système
-    , titleBarStyle:   process.platform == 'darwin' ? 'hiddenInset' : 'hidden'
-    , titleBarOverlay: process.platform == 'darwin' ? false : {color: '#ececec', symbolColor: '#333333', height: 28}
+    // macOS : bande supérieure dessinée par la page (#titlebar), avec les
+    // boutons de la fenêtre du système. Windows, Linux : barre de titre
+    // du système, sans laquelle la barre des menus n'est pas affichée
+    , ...(process.platform == 'darwin' ? {titleBarStyle: 'hiddenInset'} : {})
     , icon:   path.join(ASSETS_FOLDER, 'icons', 'icon.png')
     , webPreferences: {
           preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
