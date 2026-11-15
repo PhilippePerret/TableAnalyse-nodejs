@@ -286,7 +286,6 @@ panels:
     help:             "断片を組み立てます：ドラッグして配置し、端をドラッグしてトリミングします（矢印キー：選択した断片を移動、Shift：10 px）。「組み立て」で画像を作成します。"
     measures:         "小節"
     assemble:         "組み立て"
-    reset_measures:   "この小節からやり直す"
   animation:
     title:            "アニメーション"
     play:             "再生"

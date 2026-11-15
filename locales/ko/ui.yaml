@@ -286,7 +286,6 @@ panels:
     help:             "조각을 조립하세요: 끌어서 배치하고, 가장자리를 끌어 자릅니다 (화살표: 선택한 조각 이동, Shift: 10 px). “조립”으로 이미지를 만듭니다."
     measures:         "마디"
     assemble:         "조립"
-    reset_measures:   "이 마디로 다시 시작"
   animation:
     title:            "애니메이션"
     play:             "재생"

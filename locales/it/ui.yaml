@@ -286,7 +286,6 @@ panels:
     help:             "Assembla i pezzi: trascinali per posizionarli, trascina i bordi per ritagliarli (frecce: sposta il pezzo scelto, Maiusc: 10 px). «Assembla» crea l'immagine."
     measures:         "Battute"
     assemble:         "Assembla"
-    reset_measures:   "Ricomincia da queste battute"
   animation:
     title:            "Animazione"
     play:             "Avvia"

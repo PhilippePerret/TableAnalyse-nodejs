@@ -1424,17 +1424,54 @@ get pieces(){
 buildSpanContent(){
   this.img = DCreate('IMG', {class:'content'})
   this.img.draggable = false
-  this.drawExtract()
+  this.showImage()
   return this.img
+}
+
+/**
+ * Affichage de l'image de l'extrait : son fichier (images/, modifiable
+ * hors de l'application, cf. « Ouvrir l'image »), sinon les morceaux
+ * assemblés. Taille de la marque : celle de l'image à l'échelle.
+ */
+showImage(){
+  if ( !this.data.file ) return this.drawExtract()
+  this.img.onload = () => {
+    this.obj.style.width  = px(this.img.naturalWidth  * this.data.scale)
+    this.obj.style.height = px(this.img.naturalHeight * this.data.scale)
+  }
+  this.img.src = `${analyseUrl(`images/${this.data.file}`)}?v=${Date.now()}`
+}
+
+/**
+ * Assemblage : image des morceaux enregistrée dans le dossier images de
+ * l'analyse (images/extrait-<id>.png), puis affichée
+ */
+async assemble(){
+  const data = await this.composeImage()
+  if ( !data ) return
+  this.data.file = await invoke('extract:save', {id: this.id, data})
+  this.showImage()
+  setModified()
 }
 
 /**
  * Dessin de l'extrait (morceaux assemblés) et taille de la marque
  */
 async drawExtract(){
+  const data = await this.composeImage()
+  if ( !data || !this.img ) return
+  this.img.onload = () => {
+    this.obj.style.width  = px(this.img.naturalWidth  * this.data.scale)
+    this.obj.style.height = px(this.img.naturalHeight * this.data.scale)
+  }
+  this.img.src = data
+}
+
+// Image (data URL PNG) des morceaux assemblés, ou null
+async composeImage(){
   const pieces = this.pieces
   const sources = await Promise.all(pieces.map(p => AMExtrait.sourceOf(p.image)))
-  if ( !this.img || sources.some(s => !s) ) return
+  if ( sources.some(s => !s) ) return null
   pieces.forEach((p, i) => null == p.y2 && (p.y2 = sources[i].naturalHeight))
   const W = Math.max(1, ...pieces.map(p => Math.round(p.dx + p.x2 - p.x1)))
   const H = Math.max(1, ...pieces.map(p => Math.round(p.dy + p.y2 - p.y1)))
@@ -1449,9 +1486,7 @@ async drawExtract(){
     const w = p.x2 - p.x1, h = p.y2 - p.y1
     ctx.drawImage(sources[i], p.x1, p.y1, w, h, Math.round(p.dx), Math.round(p.dy), w, h)
   })
-  this.img.src = canvas.toDataURL('image/png')
-  this.obj.style.width  = px(W * this.data.scale)
-  this.obj.style.height = px(H * this.data.scale)
+  return canvas.toDataURL('image/png')
 }
 
 // Le contenu (numéros des mesures) n'est pas affiché
@@ -1463,11 +1498,13 @@ get content(){
   return super.content
 }
 
-// « Ouvrir l'image » (menu contextuel) : l'extrait enregistré dans le
-// dossier images de l'analyse et ouvert par l'application du système
-openImage(){
-  this.img && this.img.src.startsWith('data:') && invoke('extract:open', {id: this.id, data: this.img.src})
-    .catch(err => erreur(err.message))
+// « Ouvrir l'image » (menu contextuel) : son fichier (assemblé d'abord
+// s'il n'existe pas), ouvert par l'application du système
+async openImage(){
+  try {
+    this.data.file || await this.assemble()
+    this.data.file && await invoke('extract:open', {file: this.data.file})
+  } catch(err) { erreur(err.message) }
 }
 
 // Édition (double-clic) : le compositeur

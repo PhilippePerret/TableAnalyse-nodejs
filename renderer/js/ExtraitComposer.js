@@ -7,6 +7,7 @@ import { AObjet } from './AObjet.js'
 import { setModified } from './Current.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
+import { erreur } from './lib/Message.js'
 
 // Marge (px) autour des morceaux dans la zone d'assemblage
 const PAD = 40
@@ -20,7 +21,7 @@ const PAD = 40
  * déplaçable (souris, flèches pour le morceau choisi, Maj : 10 px).
  * « Assembler » crée l'image ; « Renoncer » laisse l'extrait tel quel
  * (le supprime s'il vient d'être créé). Les mesures peuvent être
- * changées (on repart des morceaux proposés pour elles).
+ * changées (morceaux proposés pour elles, dès la sortie du champ).
  */
 export class ExtraitComposer {
 
@@ -166,32 +167,31 @@ export class ExtraitComposer {
   buildPanel(){
     const T = k => t(`ui.panels.extract.${k}`)
     this.field = DCreate('INPUT', {type: 'text', value: this.mark.content || ''})
-    const btnMeasures = DCreate('BUTTON', {text: T('reset_measures')})
     const btnCancel   = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;', tabindex: '-1'})
     const btnOK       = DCreate('BUTTON', {class: 'btn-default', text: T('assemble')})
     this.layer     = DCreate('DIV', {class: 'ext-layer'})
     this.workspace = DCreate('DIV', {class: 'ext-workspace', inner: [this.layer]})
     const panel = DCreate('DIV', {id: 'ext_composer_panel', inner: [
         DCreate('P', {class: 'help', text: T('help')})
-      , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('measures')}), this.field, btnMeasures]})
+      , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('measures')}), this.field]})
       , this.workspace
       , DCreate('DIV', {class: 'buttons', inner: [btnOK, btnCancel]})
     ]})
     document.body.appendChild(panel)
     this.panel = panel
     addPanelHead(panel, {title: T('title'), onClose: this.cancel.bind(this)})
-    listen(btnMeasures, 'click', e => { e.stopPropagation() ; this.resetMeasures() })
     listen(btnCancel,   'click', e => { e.stopPropagation() ; this.cancel() })
     listen(btnOK,       'click', e => { e.stopPropagation() ; this.assemble() })
-    // Entrée dans le champ des mesures : on repart de ces mesures
+    // Mesures changées (sortie du champ, Entrée) : morceaux de ces mesures
+    listen(this.field, 'change', () => this.resetMeasures())
     listen(this.field, 'keydown', e => {
       if ( e.key != 'Enter' ) return
       e.preventDefault() ; e.stopPropagation()
-      this.resetMeasures()
+      this.field.blur()
     })
   }
 
-  // Nouvelles mesures : on repart des morceaux proposés pour elles
+  // Nouvelles mesures : morceaux proposés pour elles
   async resetMeasures(){
     const extract = this.mark.constructor.extractOf(this.field.value)
     if ( !extract ) return
@@ -200,7 +200,8 @@ export class ExtraitComposer {
     await this.setPieces(extract.pieces)
   }
 
-  // « Assembler » : l'image de l'extrait est composée des morceaux
+  // « Assembler » : l'image de l'extrait est composée des morceaux et
+  // enregistrée (cf. AMExtrait#assemble)
   assemble(){
     const mark = this.mark
     const minX = Math.min(...this.pieces.map(p => p.dx))
@@ -209,7 +210,7 @@ export class ExtraitComposer {
     mark.data.pieces = this.pieces
     mark.data.scale  = this.markScale
     this.measures && (mark.content = this.measures)
-    mark.drawExtract()
+    mark.assemble().catch(err => erreur(err.message))
     setModified()
     this.close()
   }

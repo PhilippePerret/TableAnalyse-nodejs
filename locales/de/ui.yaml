@@ -286,7 +286,6 @@ panels:
     help:             "Setzen Sie die Teile zusammen: ziehen, um sie zu platzieren, Ränder ziehen, um sie zuzuschneiden (Pfeiltasten: gewähltes Teil verschieben, Umschalt: 10 px). „Zusammensetzen“ erstellt das Bild."
     measures:         "Takte"
     assemble:         "Zusammensetzen"
-    reset_measures:   "Mit diesen Takten neu beginnen"
   animation:
     title:            "Animation"
     play:             "Abspielen"

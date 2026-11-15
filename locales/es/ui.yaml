@@ -286,7 +286,6 @@ panels:
     help:             "Ensambla los trozos: arrástralos para colocarlos y sus bordes para recortarlos (flechas: mover el trozo elegido, Mayús: 10 px). «Ensamblar» crea la imagen."
     measures:         "Compases"
     assemble:         "Ensamblar"
-    reset_measures:   "Empezar de nuevo con estos compases"
   animation:
     title:            "Animación"
     play:             "Reproducir"

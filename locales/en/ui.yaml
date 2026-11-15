@@ -286,7 +286,6 @@ panels:
     help:             "Put the pieces together: drag them to place them, drag their edges to crop them (arrows: move the chosen piece, Shift: 10 px). “Assemble” creates the image."
     measures:         "Bars"
     assemble:         "Assemble"
-    reset_measures:   "Start Over from These Bars"
   animation:
     title:            "Animation"
     play:             "Play"

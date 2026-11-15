@@ -286,7 +286,6 @@ panels:
     help:             "拼接片段：拖动以放置，拖动边缘以裁剪（方向键：移动所选片段，Shift：10 像素）。“拼接”生成图像。"
     measures:         "小节"
     assemble:         "拼接"
-    reset_measures:   "按这些小节重新开始"
   animation:
     title:            "动画"
     play:             "播放"

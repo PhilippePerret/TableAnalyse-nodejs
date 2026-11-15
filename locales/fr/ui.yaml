@@ -286,7 +286,6 @@ panels:
     help:             "Assemblez les morceaux : glissez-les pour les placer, tirez leurs bords pour les recadrer (flèches : déplacer le morceau choisi, Maj : 10 px). « Assembler » crée l'image."
     measures:         "Mesures"
     assemble:         "Assembler"
-    reset_measures:   "Repartir de ces mesures"
   animation:
     title:            "Animation"
     play:             "Lancer"
