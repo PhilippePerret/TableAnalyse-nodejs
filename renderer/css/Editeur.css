@@ -40,14 +40,16 @@ div.mini_editeur select.suggest-menu {
 }
 body div.mini_editeur.with-suggestions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 240px;
+  /* Partie droite à la taille des valeurs (cf. suggest-pane) */
+  grid-template-columns: 322px auto;
   grid-template-rows: auto auto 1fr auto;
-  width: 620px;
+  width: auto;
   height: 340px;
   padding-right: 0;
 }
-div.mini_editeur.longtext.with-suggestions {
-  width: 980px;
+body div.mini_editeur.longtext.with-suggestions {
+  grid-template-columns: 722px auto;
+  width: auto;
   height: 620px;
 }
 body div.mini_editeur.with-suggestions > div.panneau-head {
@@ -69,6 +71,8 @@ div.mini_editeur.with-suggestions > div.suggest-pane {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 100px;
+  max-width: 320px;
   margin: -12px 0 -16px;
   padding: 8px 8px 12px;
   background-color: white;
@@ -113,8 +117,8 @@ div.mini_editeur div.suggestion span.value {
 }
 div.mini_editeur div.suggest-list.philnote span.value {
   font-family: PhilNote;
-  font-size: 24pt;
-  line-height: 1.3;
+  font-size: 19px;
+  line-height: 1.5;
 }
 
 div.mini_editeur input[type="text"] {

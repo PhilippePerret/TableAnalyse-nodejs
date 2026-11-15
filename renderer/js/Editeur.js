@@ -156,7 +156,6 @@ export class Editeur {
     o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea]})]}))
     o.appendChild(this.suggestPane)
     const divBoutons = DCreate('DIV', {class:'buttons'})
-    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
     // Marque d'analyse : changement de son type (de son sous-type
     // d'abord quand elle en a un). En création : retour au choix du type
     if ( this.isAMark ) {
@@ -166,6 +165,8 @@ export class Editeur {
     }
     // Bouton OK toujours le dernier, à droite
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
+    // « Renoncer » à gauche, mais le dernier dans l'ordre des tabulations
+    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
     o.appendChild(divBoutons)
     this.obj = o
     this.data.titre && (this.titre = this.data.titre)

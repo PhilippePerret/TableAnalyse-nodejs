@@ -6,7 +6,7 @@ import { px, uiZoom, keepInView, escapeLt } from './handies.js'
 import { addPanelHead } from './Panneau.js'
 import { UI } from './UI.js'
 import { Editeur } from './Editeur.js'
-import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT, TYPES_FORME } from './Constants.js'
+import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT, TYPES_FORME, TYPES_PHILHARMONIEFONT } from './Constants.js'
 import { AObjet } from './AObjet.js'
 import { Forme } from './Forme.js'
 import { t } from './i18n.js'
@@ -51,7 +51,7 @@ const NO_SUGGESTIONS = ['mes']
 // partition (motifs, marques de forme), et non alphabétiquement
 const SUGGESTIONS_IN_SCORE_ORDER = ['cel', 'frm']
 // Types dont les valeurs sont classées par fréquence d'utilisation (les
-// plus utilisées en premier) et affichées comme sur la table (PhilNote)
+// plus utilisées en premier)
 const SUGGESTIONS_BY_FREQUENCY = ['acc', 'har']
 
 export class AMark_Editor {
@@ -450,7 +450,8 @@ get suggestions(){
     contents.forEach(v => count[v] = (count[v] || 0) + 1)
     values.sort((a, b) => count[b] - count[a] || alpha(a, b))
   } else if ( !inScoreOrder ) values.sort(alpha)
-  return {mode, values, philnote: byFrequency}
+  // Valeurs affichées comme sur la table (police PhilNote)
+  return {mode, values, philnote: TYPES_PHILHARMONIEFONT.includes(type)}
 }
 
 /**
