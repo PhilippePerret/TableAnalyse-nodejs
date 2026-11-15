@@ -7,18 +7,23 @@ import { Analyse, MEASURES_FILE, isSystemImage } from './Analyse.js'
 import { APP_FOLDER, ASSETS_FOLDER } from './paths.js'
 import { t } from './i18n.js'
 
+/**
+ * Erreur (message) du dossier +folder+ et du nom +id+ du dossier d'une
+ * nouvelle analyse, ou null s'ils conviennent
+ */
+export function newAnalyseError(folder, id){
+  if ( !folder ) return t('errors.creation.folder_required')
+  if ( path.resolve(folder) == APP_FOLDER ) return t('errors.creation.folder_is_app')
+  if ( !fs.existsSync(folder) ) return t('errors.creation.folder_not_found', {folder})
+  id = id || ''
+  if ( id == '' || id.replace(/[a-zA-Z0-9_\-]/g, '') != '' ) return t('errors.creation.invalid_id', {id})
+  if ( fs.existsSync(path.join(folder, id)) ) return t('errors.creation.already_exists', {id, folder})
+  return null
+}
+
 function checkData(data){
-  const folder = data.folder
-  if ( !folder ) throw new Error(t('errors.creation.folder_required'))
-  if ( path.resolve(folder) == APP_FOLDER ) throw new Error(t('errors.creation.folder_is_app'))
-  if ( !fs.existsSync(folder) ) throw new Error(t('errors.creation.folder_not_found', {folder}))
-  const id = data.analyse_id || ''
-  if ( id == '' || id.replace(/[a-zA-Z0-9_\-]/g, '') != '' ) {
-    throw new Error(t('errors.creation.invalid_id', {id}))
-  }
-  if ( fs.existsSync(path.join(folder, id)) ) {
-    throw new Error(t('errors.creation.already_exists', {id, folder}))
-  }
+  const error = newAnalyseError(data.folder, data.analyse_id)
+  if ( error ) throw new Error(error)
 }
 
 /**
@@ -62,6 +67,9 @@ export function createAnalyse(data, appVersion){
 
   analyse.tags = []
   analyse.saveTags()
+
+  // Partition du morceau (PDF), gardée dans le dossier de l'analyse
+  data.score && fs.copyFileSync(data.score, path.join(analysePath, path.basename(data.score)))
 
   return analyse
 }

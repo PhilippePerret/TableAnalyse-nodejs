@@ -22,6 +22,7 @@ import { AnalyseDisplayer } from './AnalyseDisplayer.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
 import { PanneauInfos } from './PanneauInfos.js'
 import { TableAnalyse } from './TableAnalyse.js'
+import { Editeur } from './Editeur.js'
 import { t } from './i18n.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
@@ -559,11 +560,47 @@ checkSystems(){
   }
 
   /**
-   * Ouvre le panneau des informations pour créer une nouvelle
-   * analyse.
+   * Nouvelle analyse : dossier où la placer, nom de son dossier,
+   * partition (ou plus tard) et sa découpe éventuelle, puis création. La
+   * fenêtre est ensuite rechargée avec la nouvelle analyse.
    */
-  static newAnalyse(){
-    this.panneau_infos.showForCreation()
+  static async newAnalyse(){
+    if ( !(await this.saveIfModified()) ) return
+    try {
+      const folder = await invoke('dialog:chooseFolder', {title: t('ui.dialogs.new_analyse_folder')})
+      if ( !folder ) return
+      const id = await this.askNewAnalyseId(folder)
+      if ( !id ) return
+      const score = await invoke('dialog:newAnalyseScore')
+      const data = {folder, analyse_id: id}
+      score && Object.assign(data, {score: score.pdf, cut: score.cut, countFirst: score.countFirst})
+      data.cut && Sablier.show(t('messages.cutting_score'))
+      await invoke('analyse:create', data)
+    } catch(err) {
+      Sablier.hide()
+      erreur(err.message)
+    }
+  }
+
+  /**
+   * Nom du dossier de la nouvelle analyse (dans +folder+), redemandé
+   * tant qu'il n'est pas valide
+   * @return le nom, ou null (renoncement)
+   */
+  static askNewAnalyseId(folder){
+    return new Promise(resolve => {
+      const editor = new Editeur({data: {}}, {setMethod: async (value) => {
+        if ( null == value ) return resolve(null)
+        const id = value.trim()
+        const error = await invoke('analyse:checkNew', {folder, id})
+        if ( !error ) return resolve(id)
+        erreur(error)
+        editor.value = id
+        editor.show(null, t('ui.dialogs.new_analyse_id'))
+      }})
+      editor.value = ''
+      editor.show({top: 120, left: Math.round(window.innerWidth / 2) - 170, fixed: true}, t('ui.dialogs.new_analyse_id'))
+    })
   }
 
   /**

@@ -14,7 +14,7 @@ import path from 'node:path'
 import { app, BrowserWindow, dialog, ipcMain, Menu, protocol, screen, shell } from 'electron'
 import { Analyse } from './Analyse.js'
 import { AppPrefs } from './AppPrefs.js'
-import { createAnalyse } from './createAnalyse.js'
+import { createAnalyse, newAnalyseError } from './createAnalyse.js'
 import { exportToHtml } from './exportHtml.js'
 import { exportToPdf, exportToSvg } from './exportPdfSvg.js'
 import { buildImageFromCode } from './scoreImage.js'
@@ -433,9 +433,60 @@ function registerIpc(){
     setTimeout(reloadWindow, 10)
   })
 
-  handle('analyse:create', (data) => {
+  // Nom du dossier d'une nouvelle analyse : message d'erreur ou null
+  handle('analyse:checkNew', ({folder, id}) => newAnalyseError(folder, id))
+
+  /*
+   * Partition d'une nouvelle analyse : null (donnée plus tard) ou {pdf,
+   * cut, countFirst} (découpe tout de suite ou non ; première mesure
+   * comptée)
+   */
+  handle('dialog:newAnalyseScore', async () => {
+    const ask = await dialog.showMessageBox(mainWindow, {
+        type:      'question'
+      , message:   t('ui.dialogs.new_score')
+      , detail:    t('ui.dialogs.new_score_detail')
+      , buttons:   [t('ui.dialogs.later'), t('ui.dialogs.new_score_choose')]
+      , defaultId: 1
+      , cancelId:  0
+    })
+    if ( ask.response !== 1 ) return null
+    const res = await showOpenDialog({
+        title:      t('ui.dialogs.choose_pdf')
+      , properties: ['openFile']
+      , filters:    [{name: t('ui.dialogs.pdf_filter'), extensions: ['pdf']}]
+    })
+    if ( res.canceled || !res.filePaths.length ) return null
+    const cut = await dialog.showMessageBox(mainWindow, {
+        type:      'question'
+      , message:   t('ui.dialogs.cut_now')
+      , detail:    t('ui.dialogs.cut_now_detail')
+      , buttons:   [t('ui.dialogs.later'), t('ui.dialogs.cut_now_yes')]
+      , defaultId: 1
+      , cancelId:  0
+    })
+    if ( cut.response !== 1 ) return {pdf: res.filePaths[0], cut: false}
+    const countFirst = await askCountFirstMeasure()
+    return {pdf: res.filePaths[0], cut: null !== countFirst, countFirst: !!countFirst}
+  })
+
+  /*
+   * Création d'une analyse : dossier, partition (copiée dans le dossier
+   * de l'analyse) et, si demandé, découpe de la partition
+   */
+  handle('analyse:create', async (data) => {
     const analyse = createAnalyse(data, APP_VERSION)
     setCurrent(analyse.path)
+    if ( data.score && data.cut ) {
+      const out = fs.mkdtempSync(path.join(os.tmpdir(), 'decoupe-'))
+      try {
+        await runCutter({pdf: data.score, out, dpi: 300, quality: 90, countFirst: data.countFirst})
+        analyse.replaceSystems(out)
+        justCut = true
+      } finally {
+        fs.rmSync(out, {recursive: true, force: true})
+      }
+    }
     setTimeout(reloadWindow, 10)
     return analyse.path
   })
@@ -469,17 +520,7 @@ function registerIpc(){
 
   // Compter et numéroter la première mesure (non : anacrouse) ?
   // @return true, false ou null (annulation)
-  handle('dialog:countFirstMeasure', async () => {
-    const {response} = await dialog.showMessageBox(mainWindow, {
-        type:      'question'
-      , message:   t('ui.dialogs.count_first')
-      , detail:    t('ui.dialogs.count_first_detail')
-      , buttons:   [t('ui.buttons.cancel'), t('ui.dialogs.count_first_no'), t('ui.dialogs.count_first_yes')]
-      , defaultId: 2
-      , cancelId:  0
-    })
-    return response == 0 ? null : response == 2
-  })
+  handle('dialog:countFirstMeasure', askCountFirstMeasure)
 
   handle('analyse:cutScore', async ({pdf, countFirst}) => {
     const analyse = requireCurrent()
@@ -643,6 +684,20 @@ function registerIpc(){
     closeAllowed = true
     setTimeout(() => mainWindow && mainWindow.close(), 10)
   })
+}
+
+// Compter et numéroter la première mesure (non : anacrouse) ?
+// @return true, false ou null (annulation)
+async function askCountFirstMeasure(){
+  const {response} = await dialog.showMessageBox(mainWindow, {
+      type:      'question'
+    , message:   t('ui.dialogs.count_first')
+    , detail:    t('ui.dialogs.count_first_detail')
+    , buttons:   [t('ui.buttons.cancel'), t('ui.dialogs.count_first_no'), t('ui.dialogs.count_first_yes')]
+    , defaultId: 2
+    , cancelId:  0
+  })
+  return response == 0 ? null : response == 2
 }
 
 /* --- Démarrage --- */
