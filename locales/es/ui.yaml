@@ -326,6 +326,10 @@ dialogs:
   count_first_detail:    "Elegir «No» si la pieza empieza con una anacrusa: el primer compás no se contará ni se numerará."
   count_first_no:        "No (anacrusa)"
   count_first_yes:       "Sí"
+  unsaved:               "El análisis no está guardado."
+  unsaved_detail:        "Los últimos cambios se perderán si sale sin guardar."
+  unsaved_save:          "Guardar"
+  unsaved_discard:       "No guardar"
 
 # Preferencias del análisis (etiqueta y precisión)
 prefs:

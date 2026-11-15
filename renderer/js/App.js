@@ -77,15 +77,21 @@ class AppClass {
   }
 
   /**
-   * Avant la fermeture de la fenêtre : on enregistre l'analyse si
-   * elle a été modifiée.
+   * Avant la fermeture de la fenêtre : analyse modifiée non enregistrée
+   * → confirmation (enregistrer, quitter sans enregistrer, annuler). Un
+   * enregistrement raté laisse la fenêtre ouverte.
    */
   async onWillClose(){
-    try {
-      await Analyse.saveIfModified()
-    } finally {
-      invoke('app:closeReady')
+    if ( Analyse.current && Analyse.current.modified ) {
+      const choice = await invoke('app:confirmClose')
+      if ( choice == 'cancel' ) return
+      if ( choice == 'save' ) {
+        try {
+          if ( !(await Analyse.saveIfModified()) ) return
+        } catch(err) { return erreur(err.message) }
+      }
     }
+    invoke('app:closeReady')
   }
 
   observe(){

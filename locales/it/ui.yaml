@@ -326,6 +326,10 @@ dialogs:
   count_first_detail:    "Scegliere «No» se il brano inizia con un'anacrusi: la prima battuta non sarà né contata né numerata."
   count_first_no:        "No (anacrusi)"
   count_first_yes:       "Sì"
+  unsaved:               "L'analisi non è salvata."
+  unsaved_detail:        "Le ultime modifiche andranno perse se esci senza salvare."
+  unsaved_save:          "Salva"
+  unsaved_discard:       "Non salvare"
 
 # Preferenze dell'analisi (etichetta e precisazione)
 prefs:

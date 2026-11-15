@@ -326,6 +326,10 @@ dialogs:
   count_first_detail:    "Choose “No” if the piece begins with an upbeat: the first measure will be neither counted nor numbered."
   count_first_no:        "No (upbeat)"
   count_first_yes:       "Yes"
+  unsaved:               "The analysis is not saved."
+  unsaved_detail:        "The latest changes will be lost if you quit without saving."
+  unsaved_save:          "Save"
+  unsaved_discard:       "Don't Save"
 
 # Analysis preferences (label and precision)
 prefs:

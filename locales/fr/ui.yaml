@@ -326,6 +326,10 @@ dialogs:
   count_first_detail:    "Choisir « Non » si la pièce commence par une anacrouse : la première mesure ne sera ni comptée ni numérotée."
   count_first_no:        "Non (anacrouse)"
   count_first_yes:       "Oui"
+  unsaved:               "L'analyse n'est pas enregistrée."
+  unsaved_detail:        "Les dernières modifications seront perdues si vous quittez sans enregistrer."
+  unsaved_save:          "Enregistrer"
+  unsaved_discard:       "Ne pas enregistrer"
 
 # Préférences de l'analyse (label et précision)
 prefs:

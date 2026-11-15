@@ -50,6 +50,7 @@ app.setAboutPanelOptions({applicationName: t('ui.app.name'), applicationVersion:
 let mainWindow  = null
 let current     = null    // {Analyse} analyse courante
 let closeAllowed = false
+let closeTimer = null
 let justCut     = false   // la partition vient d'être découpée (message au rechargement)
 let formShown   = false   // menu « Forme > Voir la forme » coché
 let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
@@ -147,7 +148,8 @@ function createWindow(){
     e.preventDefault()
     mainWindow.webContents.send('app:will-close')
     // Sécurité : si le renderer ne répond pas, on ferme quand même
-    setTimeout(() => { closeAllowed = true ; mainWindow && mainWindow.close() }, 5000)
+    clearTimeout(closeTimer)
+    closeTimer = setTimeout(() => { closeAllowed = true ; mainWindow && mainWindow.close() }, 5000)
   })
   mainWindow.on('closed', () => { mainWindow = null })
 
@@ -620,6 +622,21 @@ function registerIpc(){
     }
     mainWindow.webContents.setZoomFactor(zoom)
     return zoom
+  })
+
+  // Fermeture avec une analyse non enregistrée : 'save', 'discard' ou
+  // 'cancel' (la fermeture est alors abandonnée)
+  handle('app:confirmClose', async () => {
+    clearTimeout(closeTimer)
+    const {response} = await dialog.showMessageBox(mainWindow, {
+        type:      'warning'
+      , message:   t('ui.dialogs.unsaved')
+      , detail:    t('ui.dialogs.unsaved_detail')
+      , buttons:   [t('ui.dialogs.unsaved_save'), t('ui.dialogs.unsaved_discard'), t('ui.buttons.cancel')]
+      , defaultId: 0
+      , cancelId:  2
+    })
+    return ['save', 'discard', 'cancel'][response]
   })
 
   handle('app:closeReady', () => {

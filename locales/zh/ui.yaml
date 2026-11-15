@@ -326,6 +326,10 @@ dialogs:
   count_first_detail:    "如果乐曲以弱起开始，请选择“否”：第一小节将不计数也不编号。"
   count_first_no:        "否（弱起）"
   count_first_yes:       "是"
+  unsaved:               "分析尚未保存。"
+  unsaved_detail:        "如果不保存就退出，最近的修改将会丢失。"
+  unsaved_save:          "保存"
+  unsaved_discard:       "不保存"
 
 # 分析的偏好设置（标签与说明）
 prefs:

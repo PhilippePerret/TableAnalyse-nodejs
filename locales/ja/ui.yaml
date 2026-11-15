@@ -326,6 +326,10 @@ dialogs:
   count_first_detail:    "アウフタクトで始まる場合は「いいえ」を選びます。最初の小節は数えず、番号も付けません。"
   count_first_no:        "いいえ（アウフタクト）"
   count_first_yes:       "はい"
+  unsaved:               "分析は保存されていません。"
+  unsaved_detail:        "保存せずに終了すると、最近の変更は失われます。"
+  unsaved_save:          "保存"
+  unsaved_discard:       "保存しない"
 
 # 分析の環境設定（ラベルと説明）
 prefs:

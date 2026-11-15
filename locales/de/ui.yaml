@@ -326,6 +326,10 @@ dialogs:
   count_first_detail:    "„Nein“ wählen, wenn das Stück mit einem Auftakt beginnt: Der erste Takt wird weder gezählt noch nummeriert."
   count_first_no:        "Nein (Auftakt)"
   count_first_yes:       "Ja"
+  unsaved:               "Die Analyse ist nicht gespeichert."
+  unsaved_detail:        "Die letzten Änderungen gehen verloren, wenn Sie ohne Speichern beenden."
+  unsaved_save:          "Speichern"
+  unsaved_discard:       "Nicht speichern"
 
 # Einstellungen der Analyse (Beschriftung und Erläuterung)
 prefs:
