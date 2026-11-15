@@ -50,6 +50,9 @@ const NO_SUGGESTIONS = ['mes']
 // Types/sous-types dont les valeurs sont classées dans l'ordre de la
 // partition (motifs, marques de forme), et non alphabétiquement
 const SUGGESTIONS_IN_SCORE_ORDER = ['cel', 'frm']
+// Types dont les valeurs sont classées par fréquence d'utilisation (les
+// plus utilisées en premier) et affichées comme sur la table (PhilNote)
+const SUGGESTIONS_BY_FREQUENCY = ['acc', 'har']
 
 export class AMark_Editor {
 
@@ -438,9 +441,16 @@ get suggestions(){
   let marks = AObjet.select(ao => ao.type == type && (undefined === subtype || ao.subtype == subtype))
   const inScoreOrder = [type, subtype].some(v => SUGGESTIONS_IN_SCORE_ORDER.includes(v))
   inScoreOrder && (marks = Forme.sorted(marks))
-  const values = [...new Set(marks.map(m => String(m.content ?? '').trim()).filter(v => v))]
-  inScoreOrder || values.sort((a, b) => a.localeCompare(b, undefined, {numeric: true}))
-  return {mode, values}
+  const contents = marks.map(m => String(m.content ?? '').trim()).filter(v => v)
+  const values   = [...new Set(contents)]
+  const alpha    = (a, b) => a.localeCompare(b, undefined, {numeric: true})
+  const byFrequency = SUGGESTIONS_BY_FREQUENCY.includes(type)
+  if ( byFrequency ) {
+    const count = {}
+    contents.forEach(v => count[v] = (count[v] || 0) + 1)
+    values.sort((a, b) => count[b] - count[a] || alpha(a, b))
+  } else if ( !inScoreOrder ) values.sort(alpha)
+  return {mode, values, philnote: byFrequency}
 }
 
 /**

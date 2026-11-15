@@ -148,11 +148,13 @@ export class Editeur {
     o.appendChild(this.textField)
     this.textarea = DCreate('TEXTAREA',{})
     // Valeurs déjà utilisées (data.suggestions, cf. AMark_Editor) : menu
-    // au-dessus du champ ou liste à droite des champs
+    // au-dessus du champ, ou liste seule dans la partie droite du panneau
+    // (le reste à gauche)
     this.suggestMenu = DCreate('SELECT', {class:'suggest-menu hidden'})
-    this.suggestList = DCreate('DIV', {class:'suggest-list hidden', tabindex:'0'})
-    const fields = DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea]})
-    o.appendChild(DCreate('DIV', {class:'body', inner:[fields, this.suggestList]}))
+    this.suggestList = DCreate('DIV', {class:'suggest-list', tabindex:'0'})
+    this.suggestPane = DCreate('DIV', {class:'suggest-pane hidden', inner:[this.suggestList]})
+    o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea]})]}))
+    o.appendChild(this.suggestPane)
     const divBoutons = DCreate('DIV', {class:'buttons'})
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
     // Marque d'analyse : changement de son type (de son sous-type
@@ -217,8 +219,9 @@ export class Editeur {
       this.suggestList.scrollTop = 0
     }
     this.suggestMenu.classList[mode == 'menu' ? 'remove' : 'add']('hidden')
-    this.suggestList.classList[mode == 'panel' ? 'remove' : 'add']('hidden')
+    this.suggestPane.classList[mode == 'panel' ? 'remove' : 'add']('hidden')
     this.obj.classList[mode == 'panel' ? 'add' : 'remove']('with-suggestions')
+    this.suggestList.classList[sug && sug.philnote ? 'add' : 'remove']('philnote')
   }
 
   // Choix d'une valeur : mise dans le champ, qui reprend le focus
