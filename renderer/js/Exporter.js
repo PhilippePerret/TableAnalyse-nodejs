@@ -123,7 +123,7 @@ class ExporterClass {
     })
     const selOrient = DCreate('SELECT', {id: 'export_orientation', inner: ['portrait', 'landscape'].map(o => DCreate('OPTION', {value: o, text: T(o)}))})
     selOrient.value = pref('export_page_orientation') || 'portrait'
-    // Marge (préférence en mm) et distance entre systèmes (préférence en pt)
+    // Marge (préférence en mm) et espace blanc vertical maximal (préférence en pt)
     const margin = DCreate('INPUT', {type: 'text', id: 'export_margin', value: decimal(fromMm(Number(pref('export_page_margin')), unit)), style: 'width:60px;'})
     const gap = DCreate('INPUT', {type: 'text', id: 'export_gap', value: decimal(fromMm(Number(pref('export_systems_gap')) * UNITS.pt, unit)), style: 'width:60px;'})
     listen(selUnit, 'change', () => {
@@ -319,10 +319,12 @@ class Stage {
   }
 
   /**
-   * Distance +opts.gap+ (pt, à l'échelle de l'export) entre l'élément le
-   * plus bas d'un système et l'élément le plus haut du système suivant :
-   * chaque système est déplacé avec ses éléments (marques associées,
-   * ligne des numéros). Fait sur la copie, avant le découpage en pages.
+   * Espace blanc vertical maximal +opts.gap+ (pt, à l'échelle de
+   * l'export) entre l'élément le plus bas d'un système et l'élément le
+   * plus haut du système suivant : un espace plus grand est réduit à
+   * cette taille, chaque système étant déplacé avec ses éléments
+   * (marques associées, ligne des numéros). Fait sur la copie, avant le
+   * découpage en pages.
    */
   respace(opts){
     if ( !(opts.gap >= 0) || !this.items.length ) return
@@ -355,7 +357,7 @@ class Stage {
     Array.from(blocks.keys()).sort((a, b) => a - b).forEach(index => {
       const items = blocks.get(index)
       const top = Math.min(...items.map(i => i.top)), bottom = Math.max(...items.map(i => i.bottom))
-      const diff = cursor === null ? 0 : cursor + gapPx - top
+      const diff = cursor === null ? 0 : Math.min(0, cursor + gapPx - top)
       if ( diff ) items.forEach(i => { i.el.style.top = `${parseFloat(getComputedStyle(i.el).top) + diff}px` })
       cursor = bottom + diff
     })

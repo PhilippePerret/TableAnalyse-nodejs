@@ -237,9 +237,9 @@ panels:
       html:           "HTML"
     svg_desc:         "Eine SVG-Datei pro Seite."
     legend_title:     "Verwendete Zeichen"
-    gap:              "Abstand zwischen Systemen"
-    gap_desc:         "Abstand zwischen dem tiefsten Objekt des vorigen Systems und dem höchsten Objekt des nächsten. Alle Elemente werden im exportierten Dokument entsprechend verschoben."
-    bad_gap:          "Ungültiger Abstand zwischen Systemen."
+    gap:              "Maximaler vertikaler Leerraum"
+    gap_desc:         "Größter Abstand zwischen dem tiefsten Objekt eines Systems und dem höchsten Objekt des nächsten. Größere Abstände werden im exportierten Dokument verkleinert."
+    bad_gap:          "Ungültiger maximaler vertikaler Leerraum."
     mode_page:        "Einzelne Seite (Lesen am Bildschirm)"
     mode_book:        "Seiten fester Größe (Buch)"
     size:             "Größe"
@@ -341,6 +341,7 @@ prefs:
   top_first_system:       {label: "Oberer Abstand des ersten Systems"}
   distance_systemes:      {label: "Standardabstand der Systeme"}
   max_table_blank:        {label: "Maximaler vertikaler Leerraum (auf der Tafel)"}
+  export_systems_gap:     {label: "Maximaler vertikaler Leerraum (Export)"}
   adjust_same_mark:       {label: "Markierungen gleichen Typs in der Höhe angleichen"}
   snap_for_adjust_pos:    {label: "Einrastabstand für die Ausrichtung", precision: "Betrifft Markierungen gleichen Typs, und nur wenn die Einstellung „in der Höhe angleichen“ oben aktiviert ist."}
   marque_accords_size:    {label: "Größe der Akkordmarkierungen"}

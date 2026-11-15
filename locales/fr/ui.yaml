@@ -237,9 +237,9 @@ panels:
       html:           "HTML"
     svg_desc:         "Un fichier SVG par page."
     legend_title:     "Signes utilisés"
-    gap:              "Distance entre systèmes"
-    gap_desc:         "Distance entre l'objet le plus bas du système précédent et l'objet le plus haut du système suivant. Tous les éléments sont replacés en conséquence dans le document exporté."
-    bad_gap:          "Distance entre systèmes invalide."
+    gap:              "Espace blanc vertical maximal"
+    gap_desc:         "Plus grand espace laissé entre l'objet le plus bas d'un système et l'objet le plus haut du suivant. Les espaces plus grands sont réduits dans le document exporté."
+    bad_gap:          "Espace blanc vertical maximal invalide."
     mode_page:        "Page unique (lecture à l'écran)"
     mode_book:        "Pages de taille fixe (livre)"
     size:             "Taille"
@@ -341,6 +341,7 @@ prefs:
   top_first_system:       {label: "Décalage haut du premier système"}
   distance_systemes:      {label: "Distance par défaut des systèmes"}
   max_table_blank:        {label: "Espace blanc vertical maximal (sur la table)"}
+  export_systems_gap:     {label: "Espace blanc vertical maximal (export)"}
   adjust_same_mark:       {label: "Ajuster en hauteur les marques de même type"}
   snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
   marque_accords_size:    {label: "Taille des marques d'accord"}

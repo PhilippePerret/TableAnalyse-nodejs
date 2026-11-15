@@ -42,7 +42,7 @@ export const PreferencesAppData = {
   , export_page_unit        :{type:'inputtext'    ,typeV:'string'   ,default:'mm'       ,hidden:true}
   , export_page_orientation :{type:'inputtext'    ,typeV:'string'   ,default:'portrait' ,hidden:true}
   , export_page_margin      :{type:'inputtext'    ,typeV:'number'   ,default:10         ,hidden:true}
-  , export_systems_gap      :{type:'inputtext'    ,typeV:'number'   ,default:20         ,hidden:true}
+  , export_systems_gap      :{type:'inputtext'    ,typeV:'number'   ,default:20         ,unite:'pt'}
   , export_type             :{type:'inputtext'    ,typeV:'string'   ,default:'pdf'      ,hidden:true}
 
   // --- Window ---

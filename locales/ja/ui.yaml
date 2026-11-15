@@ -237,9 +237,9 @@ panels:
       html:           "HTML"
     svg_desc:         "1 ページにつき 1 つの SVG ファイル。"
     legend_title:     "使用した記号"
-    gap:              "段の間隔"
-    gap_desc:         "前の段のいちばん下のオブジェクトと次の段のいちばん上のオブジェクトの距離。書き出した文書では、すべての要素がそれに合わせて移動します。"
-    bad_gap:          "段の間隔が無効です。"
+    gap:              "垂直方向の最大余白"
+    gap_desc:         "ある段の最も低いオブジェクトと次の段の最も高いオブジェクトの間に残す最大の間隔。これより大きい間隔は書き出した文書で縮められます。"
+    bad_gap:          "垂直方向の最大余白が無効です。"
     mode_page:        "単一ページ（画面で読む）"
     mode_book:        "固定サイズのページ（本）"
     size:             "サイズ"
@@ -341,6 +341,7 @@ prefs:
   top_first_system:       {label: "最初の段の上の位置"}
   distance_systemes:      {label: "段の既定の間隔"}
   max_table_blank:        {label: "垂直方向の最大余白（テーブル上）"}
+  export_systems_gap:     {label: "垂直方向の最大余白（書き出し）"}
   adjust_same_mark:       {label: "同じ種類のマークの高さを揃える"}
   snap_for_adjust_pos:    {label: "マーク整列のスナップ距離", precision: "同じ種類のマークに作用し、上の「高さを揃える」が有効な場合のみ働きます。"}
   marque_accords_size:    {label: "コードマークのサイズ"}

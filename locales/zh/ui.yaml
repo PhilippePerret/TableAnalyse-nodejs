@@ -237,9 +237,9 @@ panels:
       html:           "HTML"
     svg_desc:         "每页一个 SVG 文件。"
     legend_title:     "所用符号"
-    gap:              "声部组间距"
-    gap_desc:         "前一声部组最低对象与后一声部组最高对象之间的距离。导出文档中的所有元素都会相应移动。"
-    bad_gap:          "声部组间距无效。"
+    gap:              "最大垂直空白"
+    gap_desc:         "一个系统最低的对象与下一个系统最高的对象之间保留的最大距离。导出文档中更大的空白会被缩小。"
+    bad_gap:          "最大垂直空白无效。"
     mode_page:        "单页（屏幕阅读）"
     mode_book:        "固定尺寸页面（书籍）"
     size:             "尺寸"
@@ -341,6 +341,7 @@ prefs:
   top_first_system:       {label: "第一个声部组的顶部偏移"}
   distance_systemes:      {label: "声部组默认间距"}
   max_table_blank:        {label: "最大垂直空白（分析表上）"}
+  export_systems_gap:     {label: "最大垂直空白（导出）"}
   adjust_same_mark:       {label: "同类标记高度对齐"}
   snap_for_adjust_pos:    {label: "标记对齐的吸附距离", precision: "作用于同类标记，且仅当上方的“高度对齐”偏好已勾选时有效。"}
   marque_accords_size:    {label: "和弦标记大小"}

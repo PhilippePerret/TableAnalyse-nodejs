@@ -237,9 +237,9 @@ panels:
       html:           "HTML"
     svg_desc:         "One SVG file per page."
     legend_title:     "Signs Used"
-    gap:              "Space between systems"
-    gap_desc:         "Space between the lowest object of the previous system and the highest object of the next one. All elements are moved accordingly in the exported document."
-    bad_gap:          "Invalid space between systems."
+    gap:              "Maximum vertical blank space"
+    gap_desc:         "Largest space left between the lowest object of a system and the highest object of the next one. Larger spaces are reduced in the exported document."
+    bad_gap:          "Invalid maximum vertical blank space."
     mode_page:        "Single page (screen reading)"
     mode_book:        "Fixed-size pages (book)"
     size:             "Size"
@@ -341,6 +341,7 @@ prefs:
   top_first_system:       {label: "Top offset of the first system"}
   distance_systemes:      {label: "Default space between systems"}
   max_table_blank:        {label: "Maximum vertical blank space (on the table)"}
+  export_systems_gap:     {label: "Maximum vertical blank space (export)"}
   adjust_same_mark:       {label: "Align marks of the same type vertically"}
   snap_for_adjust_pos:    {label: "Mark alignment snap distance", precision: "Affects marks of the same type, and only if the “Align vertically” preference above is checked."}
   marque_accords_size:    {label: "Size of chord marks"}

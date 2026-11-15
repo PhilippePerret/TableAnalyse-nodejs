@@ -237,9 +237,9 @@ panels:
       html:           "HTML"
     svg_desc:         "Un file SVG per pagina."
     legend_title:     "Segni utilizzati"
-    gap:              "Distanza tra i sistemi"
-    gap_desc:         "Distanza tra l'oggetto più basso del sistema precedente e l'oggetto più alto del sistema seguente. Tutti gli elementi vengono spostati di conseguenza nel documento esportato."
-    bad_gap:          "Distanza tra i sistemi non valida."
+    gap:              "Spazio vuoto verticale massimo"
+    gap_desc:         "Spazio più grande lasciato tra l'oggetto più basso di un sistema e l'oggetto più alto del successivo. Gli spazi più grandi vengono ridotti nel documento esportato."
+    bad_gap:          "Spazio vuoto verticale massimo non valido."
     mode_page:        "Pagina unica (lettura a schermo)"
     mode_book:        "Pagine di dimensione fissa (libro)"
     size:             "Dimensione"
@@ -341,6 +341,7 @@ prefs:
   top_first_system:       {label: "Scostamento superiore del primo sistema"}
   distance_systemes:      {label: "Distanza predefinita dei sistemi"}
   max_table_blank:        {label: "Spazio vuoto verticale massimo (sul tavolo)"}
+  export_systems_gap:     {label: "Spazio vuoto verticale massimo (esportazione)"}
   adjust_same_mark:       {label: "Allinea in altezza i segni dello stesso tipo"}
   snap_for_adjust_pos:    {label: "Distanza di aggancio per l'allineamento", precision: "Riguarda i segni dello stesso tipo e solo se la preferenza “Allinea in altezza” qui sopra è attiva."}
   marque_accords_size:    {label: "Dimensione dei segni d'accordo"}

@@ -237,9 +237,9 @@ panels:
       html:           "HTML"
     svg_desc:         "페이지마다 SVG 파일 하나."
     legend_title:     "사용한 기호"
-    gap:              "단 사이 거리"
-    gap_desc:         "앞 단의 가장 낮은 개체와 다음 단의 가장 높은 개체 사이의 거리. 내보낸 문서에서 모든 요소가 이에 맞게 이동합니다."
-    bad_gap:          "단 사이 거리가 올바르지 않습니다."
+    gap:              "최대 세로 빈 공간"
+    gap_desc:         "한 단의 가장 낮은 객체와 다음 단의 가장 높은 객체 사이에 남기는 최대 간격. 더 큰 간격은 내보낸 문서에서 줄어듭니다."
+    bad_gap:          "최대 세로 빈 공간이 올바르지 않습니다."
     mode_page:        "단일 페이지(화면 읽기)"
     mode_book:        "고정 크기 페이지(책)"
     size:             "크기"
@@ -341,6 +341,7 @@ prefs:
   top_first_system:       {label: "첫 단의 위쪽 위치"}
   distance_systemes:      {label: "단 기본 간격"}
   max_table_blank:        {label: "최대 세로 빈 공간 (테이블 위)"}
+  export_systems_gap:     {label: "최대 세로 빈 공간 (내보내기)"}
   adjust_same_mark:       {label: "같은 종류의 표시 높이 맞추기"}
   snap_for_adjust_pos:    {label: "표시 정렬 맞춤 거리", precision: "같은 종류의 표시에 적용되며, 위의 “높이 맞추기”가 켜져 있을 때만 작동합니다."}
   marque_accords_size:    {label: "코드 표시 크기"}
