@@ -9,6 +9,7 @@ import { Analyse } from './Analyse.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
+import { MarksClipboard } from './MarksClipboard.js'
 
 // Saisie en cours dans un champ (panneaux) : touches laissées au champ
 export function inTextField(e){
@@ -45,6 +46,12 @@ export function onKeyDownOnAnalyse(e){
   }
 
   if ( inTextField(e) ) return
+
+  // Copier, couper, coller des marques (cf. MarksClipboard)
+  if ( cmdKey(e) && !e.shiftKey && !e.altKey ) {
+    const ope = {c: 'copy', x: 'cut', v: 'paste'}[e.key.toLowerCase()]
+    if ( ope && MarksClipboard[ope]() ) return stopEvent(e)
+  }
 
   switch(e.key){
   case 'ArrowRight':
