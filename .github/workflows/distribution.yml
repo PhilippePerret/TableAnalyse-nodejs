@@ -1,7 +1,7 @@
 # Versions téléchargeables de l'application (macOS : .dmg, Windows :
 # installateur .exe, Linux : .AppImage), fabriquées chacune sur son
-# système. Lancé à la demande par _scripts/publier.command (ou depuis
-# l'onglet Actions de GitHub) ; les fichiers sont dans les artefacts.
+# système, puis publiées dans la Release v<version> du dépôt. Lancé à la
+# demande par _scripts/publier.command (ou depuis l'onglet Actions).
 name: Distribution
 
 on:
@@ -38,3 +38,27 @@ jobs:
           name: table-analyse-${{ runner.os }}
           path: ${{ matrix.files }}
           if-no-files-found: error
+
+  # Versions publiées dans la « Release » v<version> du dépôt (public) :
+  # la page de téléchargement du site pointe vers ces fichiers
+  release:
+    needs: build
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: fichiers
+          merge-multiple: true
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          ls -l fichiers
+          gh release view "v$VERSION" >/dev/null 2>&1 \
+            || gh release create "v$VERSION" --title "Table d'analyse $VERSION" --notes "Table d'analyse $VERSION (macOS, Windows, Linux)"
+          gh release upload "v$VERSION" fichiers/* --clobber
