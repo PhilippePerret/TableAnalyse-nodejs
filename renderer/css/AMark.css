@@ -601,40 +601,16 @@ div.amark.frm.expanded span.content {
   display: inline-block;
 }
 
-/* Compositeur d'extrait de partition (cf. ExtraitComposer.js) */
-div.ext-composer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 40;
-}
-div.ext-composer div.ext-piece {
-  position: absolute;
-  overflow: hidden;
-  mix-blend-mode: multiply;
-  outline: 1px dashed #888;
-  cursor: move;
-}
-div.ext-composer div.ext-piece.current {
-  outline: 2px solid #3a925e;
-  z-index: 1;
-}
-div.ext-composer div.ext-piece img {
-  position: absolute;
-  max-width: none;
-  pointer-events: none;
-}
-/* Poignées dans le morceau (bords recadrés) */
-div.ext-composer div.ext-piece .ui-resizable-n { top: 0; }
-div.ext-composer div.ext-piece .ui-resizable-s { bottom: 0; }
-div.ext-composer div.ext-piece .ui-resizable-e { right: 0; }
-div.ext-composer div.ext-piece .ui-resizable-w { left: 0; }
+/* Boite d'assemblage d'un extrait de partition (cf. ExtraitComposer.js) */
 div#ext_composer_panel {
   position: fixed;
-  top: 80px;
-  right: 30px;
-  width: 380px;
+  top: 5vh;
+  left: 4vw;
+  width: 92vw;
+  height: 88vh;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 div#ext_composer_panel p.help {
   font-size: 14px;
@@ -644,8 +620,40 @@ div#ext_composer_panel div.row {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 12px;
 }
 div#ext_composer_panel div.row input {
-  flex: 1;
-  min-width: 0;
+  width: 10em;
 }
+div#ext_composer_panel div.ext-workspace {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background-color: white;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+}
+div#ext_composer_panel div.ext-layer {
+  position: relative;
+}
+div#ext_composer_panel div.ext-piece {
+  position: absolute;
+  overflow: hidden;
+  mix-blend-mode: multiply;
+  outline: 1px dashed #888;
+  cursor: move;
+}
+div#ext_composer_panel div.ext-piece.current {
+  outline: 2px solid #3a925e;
+  z-index: 1;
+}
+div#ext_composer_panel div.ext-piece img {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+}
+/* Poignées dans le morceau (bords recadrés) */
+div#ext_composer_panel div.ext-piece .ui-resizable-n { top: 0; }
+div#ext_composer_panel div.ext-piece .ui-resizable-s { bottom: 0; }
+div#ext_composer_panel div.ext-piece .ui-resizable-e { right: 0; }
+div#ext_composer_panel div.ext-piece .ui-resizable-w { left: 0; }

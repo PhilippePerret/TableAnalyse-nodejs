@@ -813,6 +813,7 @@ onContextMenu(e){
   this.type == 'acc' && items.push({label: T('align_harmony'), value: 'alignHarmony'})
   this.type == 'har' && items.push({label: T('align_chord'),   value: 'alignChord'})
   this.isForme && items.push({label: T('align_measure'), value: 'alignMeasure'}, {label: T('form_height'), value: 'formHeight'})
+  this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'})
   items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
   invoke('menu:popup', {items})
     .then(choice => choice && this.onContextChoice(choice))
@@ -829,6 +830,7 @@ onContextChoice(choice){
       setModified()
       break
     case 'edit':          return this.edit()
+    case 'openImage':     return this.openImage()
     case 'align':         return targets.forEach(m => m.alignOnSameType())
     case 'alignHarmony':  return this.alignHorizontallyOn('har', 'no_harmony_mark')
     case 'alignChord':    return this.alignHorizontallyOn('acc', 'no_chord_mark')
@@ -1216,32 +1218,29 @@ get srcPath(){
 
 /**
  * Marque « Extrait partition » : image composée de morceaux d'images de
- * systèmes (sans les marques), réglés dans le compositeur (cf.
- * ExtraitComposer.js) : mesures demandées, précédées de l'en-tête (clé,
- * armure, métrique) du premier système quand elles ne commencent pas
- * leur système.
+ * systèmes (sans les marques), assemblés dans le compositeur (cf.
+ * ExtraitComposer.js) : mesures demandées, précédées de la clé et de
+ * l'armure.
  * Données propres : pieces, liste de {image, x1, x2, y1, y2, dx, dy}
  * (bornes du morceau dans l'image du système et position dans
  * l'extrait, en px des images) ; scale (px de la table par px des
  * images). Le contenu est le numéro des mesures (« 12 », « 12-15 »).
  */
-// Largeur de l'en-tête (clé, armure, métrique) du premier système, en
-// hauteurs de portée après sa barre de début (réglée ensuite dans le
-// compositeur)
-const HEADER_STAVES = 3
-// Idem pour l'en-tête des systèmes suivants (clé, armure), retiré des
-// morceaux qui continuent l'extrait dans un autre système
-const HEADER_STAVES_NEXT = 2
+// Largeur de l'en-tête (clé, armure) d'un système, en hauteurs de
+// portée après sa barre de début (réglée ensuite dans le compositeur) ;
+// pour le premier système, métrique comprise
+const HEADER_STAVES = 2
+const HEADER_STAVES_FIRST = 3
 
 export class AMExtrait extends AMark {
 
 /**
  * Morceaux de l'extrait des mesures +spec+ (« 12 », « 12-15 ») : un par
- * système traversé, de la barre de début de la première mesure (bord
- * gauche du système pour sa première mesure ; après la clé et l'armure
- * dans les systèmes suivants) à celle de fin de la dernière ; en tête, l'en-tête du premier système si la première
- * mesure ne commence pas le sien. Morceaux bout à bout, portées
- * alignées (cf. aligned).
+ * système traversé, de la barre de début de la première mesure (après
+ * l'en-tête du système pour sa première mesure) à celle de fin de la
+ * dernière ; en tête, la clé et l'armure du système de la première
+ * mesure (du deuxième système si c'est le premier). Morceaux bout à
+ * bout, portées alignées (cf. aligned).
  * @return {pieces, scale} ou null (message affiché)
  */
 static extractOf(spec){
@@ -1274,9 +1273,10 @@ static extractOf(spec){
     // Barre de fin comprise
     const end = iTo + 1 < starts.length ? starts[iTo + 1] + 3 : Forme.systemEndX(sys)
     // Suite dans un autre système : sans son en-tête (clé, armure)
-    const x1 = sys === sys0
+    // Mesure qui commence son système : sans l'en-tête de celui-ci
+    const x1 = iFrom > 0
       ? Math.max(0, Math.round((starts[iFrom] - r.left) * k))
-      : this.headerOf(sys, HEADER_STAVES_NEXT).x2
+      : this.headerOf(sys).x2
     pieces.push({
         image: sys.image_name
       , x1
@@ -1285,21 +1285,22 @@ static extractOf(spec){
     })
     if ( iTo + 1 < nums.length || nums[iTo] >= to ) break
   }
-  // En-tête du premier système (clé, armure, métrique)
-  if ( pieces[0].x1 > 0 && Systeme.first ) {
-    const img = Systeme.first.obj
-    pieces.unshift(Object.assign({image: Systeme.first.image_name, y1: 0, y2: img.naturalHeight}, this.headerOf(Systeme.first)))
-  }
+  // En-tête (clé, armure) pris dans le système de la première mesure,
+  // jamais dans le premier (métrique, indication de mouvement)
+  const hsys = sys0 !== Systeme.first ? sys0 : (Systeme.all[1] || sys0)
+  pieces.unshift(Object.assign({image: hsys.image_name, y1: 0, y2: hsys.obj.naturalHeight}, this.headerOf(hsys)))
   return {pieces: this.aligned(pieces), scale: sys0.obj.offsetWidth / sys0.obj.naturalWidth}
 }
 
 /**
  * Bornes {x1, x2} (px de l'image) de l'en-tête du système +sys+ : de
  * l'accolade (une demi-hauteur de portée avant la barre de début du
- * système) à la métrique (environ HEADER_STAVES hauteurs de portée
- * après cette barre). À régler dans le compositeur.
+ * système) à l'armure (HEADER_STAVES hauteurs de portée après cette
+ * barre ; HEADER_STAVES_FIRST, métrique comprise, pour le premier
+ * système). À régler dans le compositeur.
  */
-static headerOf(sys, staves = HEADER_STAVES){
+static headerOf(sys){
+  const staves = sys === Systeme.first ? HEADER_STAVES_FIRST : HEADER_STAVES
   const img = sys.obj, w = img.naturalWidth, h = img.naturalHeight
   const prof = Forme.darkProfile(sys)
   let start = prof ? prof.findIndex(n => n > h / 2) : -1
@@ -1460,6 +1461,13 @@ set content(v){
 }
 get content(){
   return super.content
+}
+
+// « Ouvrir l'image » (menu contextuel) : l'extrait enregistré dans le
+// dossier images de l'analyse et ouvert par l'application du système
+openImage(){
+  this.img && this.img.src.startsWith('data:') && invoke('extract:open', {id: this.id, data: this.img.src})
+    .catch(err => erreur(err.message))
 }
 
 // Édition (double-clic) : le compositeur

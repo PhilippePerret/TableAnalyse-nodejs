@@ -283,9 +283,10 @@ panels:
     title:            "Édition de la marque"
   extract:
     title:            "Extrait de partition"
-    help:             "Glisser les morceaux pour les placer, tirer leurs bords pour les recadrer. Flèches : déplacer le morceau choisi (Maj : 10 px)."
+    help:             "Assemblez les morceaux : glissez-les pour les placer, tirez leurs bords pour les recadrer (flèches : déplacer le morceau choisi, Maj : 10 px). « Assembler » crée l'image."
     measures:         "Mesures"
-    apply:            "Appliquer"
+    assemble:         "Assembler"
+    reset_measures:   "Repartir de ces mesures"
   animation:
     title:            "Animation"
     play:             "Lancer"

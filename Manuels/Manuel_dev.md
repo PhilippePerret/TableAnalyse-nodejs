@@ -134,9 +134,9 @@ Type de la forme (liste modifiable `form_types` de `locales/<langue>/ui.yaml`, �
 
 Marque de type `ext` (`AMExtrait`, `AMark.js`) : image composée de morceaux d'images de systèmes, `data.pieces` = [{image, x1, x2, y1, y2, dx, dy}] (bornes dans l'image du système, position dans l'extrait, en px des images), `data.scale` (px de la table par px des images), contenu = mesures (« 12 », « 12-15 »). Image recomposée (canevas, fond blanc, `multiply`) à chaque construction : un `<img>` en data URL, exporté comme les autres images.
 
-Morceaux proposés (`AMExtrait.extractOf`) : un par système traversé (barres de mesure lues dans l'image, cf. `Forme.barlineNear`) ; dans les systèmes suivants, sans clé ni armure (`HEADER_STAVES_NEXT` hauteurs de portée) ; en tête, l'en-tête du premier système (`HEADER_STAVES`) si la première mesure ne commence pas son système. Alignement (`AMExtrait.aligned`) sur les lignes de portée du premier morceau ; un morceau dont les portées sont espacées autrement est coupé entre ses portées (rangée la moins encrée).
+Morceaux proposés (`AMExtrait.extractOf`) : un par système traversé (barres de mesure lues dans l'image, cf. `Forme.barlineNear`), sans l'en-tête du système pour une mesure qui le commence (`HEADER_STAVES` hauteurs de portée, `HEADER_STAVES_FIRST` pour le premier système, métrique comprise) ; en tête, la clé et l'armure du système de la première mesure (du deuxième système si c'est le premier : jamais de métrique ni d'indication de mouvement). Alignement (`AMExtrait.aligned`) sur les lignes de portée du premier morceau ; un morceau dont les portées sont espacées autrement est coupé entre ses portées (rangée la moins encrée).
 
-Réglage : `ExtraitComposer.js` (à la création et au double-clic), morceaux sur la table (`div.ext-composer`), recadrables par les 4 bords, déplaçables (souris, flèches) ; « OK » recompose l'image.
+Assemblage : `ExtraitComposer.js` (à la création et au double-clic), boite `#ext_composer_panel` avec la zone d'assemblage (morceaux recadrables par les 4 bords, déplaçables à la souris et aux flèches) ; « Assembler » recompose l'image ; « Repartir de ces mesures » remplace les morceaux par ceux des mesures saisies. Menu contextuel « Ouvrir l'image » : PNG `images/extrait-<id>.png` de l'analyse (canal `extract:open`).
 
 
 ## Groupement des tags

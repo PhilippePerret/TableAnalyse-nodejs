@@ -283,9 +283,10 @@ panels:
     title:            "Modifica del segno"
   extract:
     title:            "Estratto partitura"
-    help:             "Trascina i pezzi per posizionarli, i loro bordi per ritagliarli. Frecce: sposta il pezzo scelto (Maiusc: 10 px)."
+    help:             "Assembla i pezzi: trascinali per posizionarli, trascina i bordi per ritagliarli (frecce: sposta il pezzo scelto, Maiusc: 10 px). «Assembla» crea l'immagine."
     measures:         "Battute"
-    apply:            "Applica"
+    assemble:         "Assembla"
+    reset_measures:   "Ricomincia da queste battute"
   animation:
     title:            "Animazione"
     play:             "Avvia"

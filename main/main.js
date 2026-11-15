@@ -555,6 +555,17 @@ function registerIpc(){
     })
   })
 
+  // « Ouvrir l'image » d'un extrait de partition : PNG enregistré dans
+  // le dossier images de l'analyse, ouvert par l'application du système
+  handle('extract:open', ({id, data}) => {
+    const analyse = requireCurrent()
+    fs.mkdirSync(analyse.imagesFolder, {recursive: true})
+    const file = path.join(analyse.imagesFolder, `extrait-${Number(id)}.png`)
+    fs.writeFileSync(file, Buffer.from(String(data).replace(/^data:image\/png;base64,/, ''), 'base64'))
+    showInFinder(file)
+    return file
+  })
+
   // Menu contextuel natif décrit par le renderer : +items+ = [{label,
   // value, enabled}] ou {type: 'separator'} ; retourne la valeur choisie
   handle('menu:popup', ({items}) => {
