@@ -3,7 +3,7 @@
 # Systemabhängiger Text: Tabelle {darwin:, win32:, linux:}
 
 no_analyse_open: "Keine Analyse geöffnet.<br><br>Über das Menü „Analyse“ eine vorhandene Analyse öffnen (%{cmd}O) oder eine neue erstellen (%{cmd}N)."
-no_systems: "Diese Analyse enthält kein System.<br><br>Für die Analyse werden die Systeme der Partitur benötigt: Menü „Analyse“ > „Partitur zerschneiden…“."
+no_systems: "Diese Analyse enthält kein System.<br><br>Für die Analyse werden die Systeme der Partitur benötigt: Menü „Werkzeuge“ > „Partitur zerschneiden…“."
 cutting_score: "Partitur wird zerschnitten und nummeriert…"
 after_cut:
   darwin: "Gehen Sie jedes System durch, um zu sehen, ob Teile „wegradiert“ werden müssen (Seitenzahlen, Noten oder Angaben eines anderen Systems usw.), und entfernen Sie sie mit einem Grafikprogramm (zum Beispiel Vorschau). Sie können sie auch entfernen, indem Sie die Systeme von Hand neu zuschneiden."

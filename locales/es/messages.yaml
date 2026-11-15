@@ -3,7 +3,7 @@
 # Texto propio de un sistema: tabla {darwin:, win32:, linux:}
 
 no_analyse_open: "No hay ningún análisis abierto.<br><br>Use el menú «Análisis» para abrir un análisis existente (%{cmd}O) o crear uno nuevo (%{cmd}N)."
-no_systems: "Este análisis no contiene ningún sistema.<br><br>Se necesitan los sistemas de la partitura para empezar el análisis: menú «Análisis» > «Recortar la partitura…»."
+no_systems: "Este análisis no contiene ningún sistema.<br><br>Se necesitan los sistemas de la partitura para empezar el análisis: menú «Herramientas» > «Recortar la partitura…»."
 cutting_score: "Recorte y numeración de la partitura…"
 after_cut:
   darwin: "Revise cada sistema para ver si hay partes que «borrar» (números de página, notas o indicaciones de otro sistema, etc.) y bórrelas con una herramienta gráfica (por ejemplo Vista Previa). También puede eliminarlas recortando los sistemas a mano."
