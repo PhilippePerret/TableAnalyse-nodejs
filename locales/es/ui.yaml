@@ -354,6 +354,18 @@ prefs:
   top_first_system:       {label: "Desplazamiento superior del primer sistema"}
   distance_systemes:      {label: "Distancia por defecto de los sistemas"}
   max_table_blank:        {label: "Espacio en blanco vertical máximo (en la mesa)"}
+  layout_title_1_font: {label: "Fuente de los títulos de nivel 1"}
+  layout_title_1_size: {label: "Tamaño de los títulos de nivel 1"}
+  layout_title_1_before: {label: "Espacio antes de los títulos de nivel 1"}
+  layout_title_1_after: {label: "Espacio después de los títulos de nivel 1"}
+  layout_title_2_font: {label: "Fuente de los títulos de nivel 2"}
+  layout_title_2_size: {label: "Tamaño de los títulos de nivel 2"}
+  layout_title_2_before: {label: "Espacio antes de los títulos de nivel 2"}
+  layout_title_2_after: {label: "Espacio después de los títulos de nivel 2"}
+  layout_title_3_font: {label: "Fuente de los títulos de nivel 3"}
+  layout_title_3_size: {label: "Tamaño de los títulos de nivel 3"}
+  layout_title_3_before: {label: "Espacio antes de los títulos de nivel 3"}
+  layout_title_3_after: {label: "Espacio después de los títulos de nivel 3"}
   export_systems_gap:     {label: "Espacio en blanco vertical máximo (exportación)"}
   adjust_same_mark:       {label: "Igualar en altura las marcas del mismo tipo"}
   snap_for_adjust_pos:    {label: "Distancia de imantación de la alineación", precision: "Afecta a las marcas del mismo tipo y solo si la preferencia «Igualar en altura» de arriba está activada."}
@@ -392,6 +404,7 @@ prefs:
   animate:                {label: "Animar el análisis", precision: "Las marcas se mostrarán progresivamente"}
 
 prefs_groups:
+  layout:                 "Maquetación"
   general:                "General"
   systems:                "Sistemas"
   measures:               "Números de compás"
@@ -406,6 +419,15 @@ prefs_groups:
 # Marcas de análisis: nombre (en las listas de elección), mensaje
 # (indicación del editor) y contenido por defecto
 marks:
+  layout:
+    pag: "Salto de página"
+    del: "Separación"
+    del_message: "Altura entre lo anterior y lo siguiente (p. ej. 10 mm, 1 cm, 20 pt)"
+    tit: "Título"
+    tit_default: "Título"
+    tit_message: "Texto del título"
+    level: "Título de nivel %{n}"
+    level_message: "Nivel del título"
   suggestions:
     menu_title: "Valores ya usados…"
   types:
@@ -425,6 +447,7 @@ marks:
     ext: {name: "Fragmento de partitura", message: "Compás(es) a extraer (p. ej. 12 o 12-13)"}
     frm: {name: "Forma…", message: "Porción de la forma"}
     mot: {name: "Motivo", default: "Motivo", message: "Nombre del motivo"}
+    lay: {name: "Maquetación", message: "Maquetación"}
   frames:
     prt:  {name: "Parte (inicio)",   default: "EXPO"}
     prtz: {name: "Fin de parte",     default: "EXPO"}

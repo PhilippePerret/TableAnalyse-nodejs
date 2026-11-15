@@ -354,6 +354,18 @@ prefs:
   top_first_system:       {label: "第一个声部组的顶部偏移"}
   distance_systemes:      {label: "声部组默认间距"}
   max_table_blank:        {label: "最大垂直空白（分析表上）"}
+  layout_title_1_font: {label: "1 级标题字体"}
+  layout_title_1_size: {label: "1 级标题大小"}
+  layout_title_1_before: {label: "1 级标题前的间距"}
+  layout_title_1_after: {label: "1 级标题后的间距"}
+  layout_title_2_font: {label: "2 级标题字体"}
+  layout_title_2_size: {label: "2 级标题大小"}
+  layout_title_2_before: {label: "2 级标题前的间距"}
+  layout_title_2_after: {label: "2 级标题后的间距"}
+  layout_title_3_font: {label: "3 级标题字体"}
+  layout_title_3_size: {label: "3 级标题大小"}
+  layout_title_3_before: {label: "3 级标题前的间距"}
+  layout_title_3_after: {label: "3 级标题后的间距"}
   export_systems_gap:     {label: "最大垂直空白（导出）"}
   adjust_same_mark:       {label: "同类标记高度对齐"}
   snap_for_adjust_pos:    {label: "标记对齐的吸附距离", precision: "作用于同类标记，且仅当上方的“高度对齐”偏好已勾选时有效。"}
@@ -392,6 +404,7 @@ prefs:
   animate:                {label: "动画显示分析", precision: "标记将逐步显示"}
 
 prefs_groups:
+  layout:                 "版面"
   general:                "常规"
   systems:                "声部组"
   measures:               "小节号"
@@ -405,6 +418,15 @@ prefs_groups:
 
 # 分析标记：名称（选择列表中）、提示（编辑器中）及默认内容
 marks:
+  layout:
+    pag: "分页"
+    del: "间隔"
+    del_message: "前后内容之间的高度（例如 10 mm、1 cm、20 pt）"
+    tit: "标题"
+    tit_default: "标题"
+    tit_message: "标题文字"
+    level: "%{n} 级标题"
+    level_message: "标题级别"
   suggestions:
     menu_title: "已使用的值…"
   types:
@@ -424,6 +446,7 @@ marks:
     ext: {name: "乐谱片段", message: "要提取的小节（例如 12 或 12-13）"}
     frm: {name: "曲式…", message: "曲式部分"}
     mot: {name: "动机", default: "动机", message: "动机名称"}
+    lay: {name: "版面", message: "版面"}
   frames:
     prt:  {name: "部分（开始）",     default: "呈示部"}
     prtz: {name: "部分结束",         default: "呈示部"}

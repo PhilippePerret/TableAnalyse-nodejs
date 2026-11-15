@@ -109,6 +109,7 @@ proceed(){
   if ( !this.amark_type ) return this.getAMarkType()
   if ( this.isRequiringSubType && !this.amark_subtype) return this.getAMarkSubType()
   if ( this.isFormEnd && !this._amark_start ) return this.getFormStart()
+  if ( this.isLayoutTitle && !this._amark_level ) return this.getTitleLevel()
   if ( not(this.data.onlyType) && this.isRequiringContent && undefined == this.amark_content) return this.getAMarkContent()
   this.hasAutoContent && this.setAutoContent()
   this.finishWith(this.amark_data)
@@ -140,6 +141,8 @@ get amark_data(){
   }
   // Fin de portion de la forme : sa marque de début
   this.isFormEnd && (data.start = this._amark_start)
+  // Titre de mise en page : son niveau (1 à 3)
+  this.isLayoutTitle && (data.level = this._amark_level)
   // Marque de forme : endroit du clic, pour la placer sur sa mesure
   // (non enregistré, cf. AMark.createNew)
   this.amark_type == 'frm' && (data.clickX = this.event.pageX)
@@ -254,7 +257,27 @@ backToSubtype(){
   this._amark_subtype = null
   this._gettersubtype && this._gettersubtype.obj.remove()
   this._gettersubtype = null
+  this._amark_level = null
   this.getAMarkSubType()
+}
+
+/**
+ * Titre de mise en page : choix de son niveau (1 à 3) ; en renonçant,
+ * retour au choix du sous-type
+ */
+getTitleLevel(){
+  this._getterlevel && this._getterlevel.obj && this._getterlevel.obj.remove()
+  this._getterlevel = new GetterInList({
+      values:         [1, 2, 3].map(n => ({name: t('ui.marks.layout.level', {n}), value: n, shortcut: String(n)}))
+    , message:        t('ui.marks.layout.level_message')
+    , onChooseMethod: this.onChooseTitleLevel.bind(this)
+  })
+  this._getterlevel.show(this.positionFixed)
+}
+onChooseTitleLevel(level){
+  if ( !level ) return this.backToSubtype()
+  this._amark_level = Number(level)
+  this.proceed()
 }
 
 /**
@@ -345,6 +368,9 @@ get isRequiringContent(){
     return undefined != this.dataOfType.default
   }
 }
+get isLayoutTitle(){
+  return this.amark_type == 'lay' && this.amark_subtype == 'tit'
+}
 get isFormEnd(){
   return this.amark_type == 'frm' && !!this.amark_subtype && !!TYPES_FORME[this.amark_subtype].startOf
 }
@@ -418,7 +444,7 @@ get editorOfAMarkContent(){
   if ( !this._editorcontent ) {
     const sub = this.isRequiringSubType
     this._editorcontent = new Editeur(this, {
-        message:          this.dataOfType.message
+        message:          (this.dataOfType.subdata && this.dataOfSubType.message) || this.dataOfType.message
       , setMethod:        this.onSetContent.bind(this)
       , onTypeButton:     sub ? this.backToSubtype.bind(this) : this.onWantTypes.bind(this)
       , typeButtonLabel:  t(sub ? 'ui.buttons.subtype' : 'ui.buttons.type')

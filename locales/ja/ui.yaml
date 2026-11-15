@@ -354,6 +354,18 @@ prefs:
   top_first_system:       {label: "最初の段の上の位置"}
   distance_systemes:      {label: "段の既定の間隔"}
   max_table_blank:        {label: "垂直方向の最大余白（テーブル上）"}
+  layout_title_1_font: {label: "レベル 1 の見出しのフォント"}
+  layout_title_1_size: {label: "レベル 1 の見出しのサイズ"}
+  layout_title_1_before: {label: "レベル 1 の見出しの前の間隔"}
+  layout_title_1_after: {label: "レベル 1 の見出しの後の間隔"}
+  layout_title_2_font: {label: "レベル 2 の見出しのフォント"}
+  layout_title_2_size: {label: "レベル 2 の見出しのサイズ"}
+  layout_title_2_before: {label: "レベル 2 の見出しの前の間隔"}
+  layout_title_2_after: {label: "レベル 2 の見出しの後の間隔"}
+  layout_title_3_font: {label: "レベル 3 の見出しのフォント"}
+  layout_title_3_size: {label: "レベル 3 の見出しのサイズ"}
+  layout_title_3_before: {label: "レベル 3 の見出しの前の間隔"}
+  layout_title_3_after: {label: "レベル 3 の見出しの後の間隔"}
   export_systems_gap:     {label: "垂直方向の最大余白（書き出し）"}
   adjust_same_mark:       {label: "同じ種類のマークの高さを揃える"}
   snap_for_adjust_pos:    {label: "マーク整列のスナップ距離", precision: "同じ種類のマークに作用し、上の「高さを揃える」が有効な場合のみ働きます。"}
@@ -392,6 +404,7 @@ prefs:
   animate:                {label: "分析をアニメーション表示", precision: "マークが順に表示されます"}
 
 prefs_groups:
+  layout:                 "レイアウト"
   general:                "一般"
   systems:                "段"
   measures:               "小節番号"
@@ -405,6 +418,15 @@ prefs_groups:
 
 # 分析マーク：名前（選択リスト内）、メッセージ（エディタの案内）、既定の内容
 marks:
+  layout:
+    pag: "改ページ"
+    del: "区切り"
+    del_message: "前後の間の高さ（例：10 mm、1 cm、20 pt）"
+    tit: "見出し"
+    tit_default: "見出し"
+    tit_message: "見出しの文字"
+    level: "レベル %{n} の見出し"
+    level_message: "見出しのレベル"
   suggestions:
     menu_title: "使用済みの値…"
   types:
@@ -424,6 +446,7 @@ marks:
     ext: {name: "楽譜の抜粋", message: "抜粋する小節（例：12 または 12-13）"}
     frm: {name: "形式…", message: "形式の部分"}
     mot: {name: "動機", default: "動機", message: "動機の名前"}
+    lay: {name: "レイアウト", message: "レイアウト"}
   frames:
     prt:  {name: "部分（開始）",     default: "提示部"}
     prtz: {name: "部分の終わり",     default: "提示部"}

@@ -58,6 +58,17 @@ export const TYPES_FORME = {
 
 // Niveau (1 partie, 2 section, 3 segment) d'un sous-type de forme,
 // début ou fin
+/**
+ * Marques de mise en page (pour l'export) : saut de page, délimitation
+ * (hauteur entre ce qui précède et ce qui suit), titre (niveau 1 à 3,
+ * cf. AMark_Editor)
+ */
+export const TYPES_MISE_EN_PAGE = {
+    'pag': {name: t('ui.marks.layout.pag'), value: 'pag', shortcut: 'p'}
+  , 'del': {name: t('ui.marks.layout.del'), value: 'del', shortcut: 'd', default: '10 mm', message: t('ui.marks.layout.del_message')}
+  , 'tit': {name: t('ui.marks.layout.tit'), value: 'tit', shortcut: 't', default: t('ui.marks.layout.tit_default'), message: t('ui.marks.layout.tit_message')}
+}
+
 export function formLevel(subtype){
   const d = TYPES_FORME[subtype]
   return d.level || TYPES_FORME[d.startOf].level
@@ -87,6 +98,7 @@ export const AMARQUES_TYPES = {
   , 'txt': {name:t('ui.marks.types.txt.name')        , shortcut:'t', ajustX:0,   ajustY:23       ,value:'txt', subdata:TAILLES_TEXTE,  message:t('ui.marks.types.txt.message')}
   , 'ped': {name:t('ui.marks.types.ped.name')       , shortcut:'p', ajustX:20,  ajustY:10,    value:'ped', default:'5', message:t('ui.marks.types.ped.message')}
   , 'cir': {name:t('ui.marks.types.cir.name')       , shortcut:'r', value:'cir'}
+  , 'lay': {name:t('ui.marks.types.lay.name')       , shortcut:'P', value:'lay', subdata:TYPES_MISE_EN_PAGE, message:t('ui.marks.types.lay.message')}
   , 'ext': {name:t('ui.marks.types.ext.name')       , shortcut:'E', value:'ext', default:'1', message:t('ui.marks.types.ext.message')}
 }
 

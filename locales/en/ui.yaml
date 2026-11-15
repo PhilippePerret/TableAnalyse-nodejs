@@ -354,6 +354,18 @@ prefs:
   top_first_system:       {label: "Top offset of the first system"}
   distance_systemes:      {label: "Default space between systems"}
   max_table_blank:        {label: "Maximum vertical blank space (on the table)"}
+  layout_title_1_font: {label: "Font of level 1 titles"}
+  layout_title_1_size: {label: "Size of level 1 titles"}
+  layout_title_1_before: {label: "Space before level 1 titles"}
+  layout_title_1_after: {label: "Space after level 1 titles"}
+  layout_title_2_font: {label: "Font of level 2 titles"}
+  layout_title_2_size: {label: "Size of level 2 titles"}
+  layout_title_2_before: {label: "Space before level 2 titles"}
+  layout_title_2_after: {label: "Space after level 2 titles"}
+  layout_title_3_font: {label: "Font of level 3 titles"}
+  layout_title_3_size: {label: "Size of level 3 titles"}
+  layout_title_3_before: {label: "Space before level 3 titles"}
+  layout_title_3_after: {label: "Space after level 3 titles"}
   export_systems_gap:     {label: "Maximum vertical blank space (export)"}
   adjust_same_mark:       {label: "Align marks of the same type vertically"}
   snap_for_adjust_pos:    {label: "Mark alignment snap distance", precision: "Affects marks of the same type, and only if the “Align vertically” preference above is checked."}
@@ -392,6 +404,7 @@ prefs:
   animate:                {label: "Animate the analysis", precision: "Marks will be displayed progressively"}
 
 prefs_groups:
+  layout:                 "Layout"
   general:                "General"
   systems:                "Systems"
   measures:               "Measure numbers"
@@ -406,6 +419,15 @@ prefs_groups:
 # Analysis marks: name (in choice lists), message (editor prompt) and
 # default content
 marks:
+  layout:
+    pag: "Page break"
+    del: "Spacing"
+    del_message: "Height between what precedes and what follows (e.g. 10 mm, 1 cm, 20 pt)"
+    tit: "Title"
+    tit_default: "Title"
+    tit_message: "Title text"
+    level: "Level %{n} title"
+    level_message: "Title level"
   suggestions:
     menu_title: "Values already used…"
   types:
@@ -425,6 +447,7 @@ marks:
     ext: {name: "Score Excerpt", message: "Bar(s) to extract (e.g. 12 or 12-13)"}
     frm: {name: "Form…", message: "Portion of the form"}
     mot: {name: "Motif", default: "Motif", message: "Motif name"}
+    lay: {name: "Layout", message: "Layout"}
   frames:
     prt:  {name: "Part (start)",     default: "EXPO"}
     prtz: {name: "End of part",      default: "EXPO"}

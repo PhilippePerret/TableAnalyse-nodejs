@@ -354,6 +354,18 @@ prefs:
   top_first_system:       {label: "Décalage haut du premier système"}
   distance_systemes:      {label: "Distance par défaut des systèmes"}
   max_table_blank:        {label: "Espace blanc vertical maximal (sur la table)"}
+  layout_title_1_font: {label: "Police des titres de niveau 1"}
+  layout_title_1_size: {label: "Taille des titres de niveau 1"}
+  layout_title_1_before: {label: "Espace avant les titres de niveau 1"}
+  layout_title_1_after: {label: "Espace après les titres de niveau 1"}
+  layout_title_2_font: {label: "Police des titres de niveau 2"}
+  layout_title_2_size: {label: "Taille des titres de niveau 2"}
+  layout_title_2_before: {label: "Espace avant les titres de niveau 2"}
+  layout_title_2_after: {label: "Espace après les titres de niveau 2"}
+  layout_title_3_font: {label: "Police des titres de niveau 3"}
+  layout_title_3_size: {label: "Taille des titres de niveau 3"}
+  layout_title_3_before: {label: "Espace avant les titres de niveau 3"}
+  layout_title_3_after: {label: "Espace après les titres de niveau 3"}
   export_systems_gap:     {label: "Espace blanc vertical maximal (export)"}
   adjust_same_mark:       {label: "Ajuster en hauteur les marques de même type"}
   snap_for_adjust_pos:    {label: "Distance magnétisme alignement marques", precision: "Affecte les marques de même type et seulement si la préférence “Ajuster en hauteur” ci-dessus est activée."}
@@ -392,6 +404,7 @@ prefs:
   animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
 
 prefs_groups:
+  layout:                 "Mise en page"
   general:                "Général"
   systems:                "Systèmes"
   measures:               "Numéros de mesure"
@@ -406,6 +419,15 @@ prefs_groups:
 # Marques d'analyse : nom (dans les listes de choix), message (invite
 # de l'éditeur) et contenu par défaut
 marks:
+  layout:
+    pag: "Saut de page"
+    del: "Délimitation"
+    del_message: "Hauteur entre ce qui précède et ce qui suit (p.e. 10 mm, 1 cm, 20 pt)"
+    tit: "Titre"
+    tit_default: "Titre"
+    tit_message: "Texte du titre"
+    level: "Titre niveau %{n}"
+    level_message: "Niveau du titre"
   suggestions:
     menu_title: "Valeurs déjà utilisées…"
   types:
@@ -425,6 +447,7 @@ marks:
     ext: {name: "Extrait partition", message: "Mesure(s) à extraire (p.e. 12 ou 12-13)"}
     frm: {name: "Forme…", message: "Portion de la forme"}
     mot: {name: "Motif", default: "Motif", message: "Nom du motif"}
+    lay: {name: "Mise en page", message: "Mise en page"}
   frames:
     prt:  {name: "Partie (début)",   default: "EXPO"}
     prtz: {name: "Fin de partie",    default: "EXPO"}

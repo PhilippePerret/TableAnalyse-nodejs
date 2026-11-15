@@ -60,6 +60,12 @@ const UNITS = {mm: 1, cm: 10, in: 25.4, pt: 25.4 / 72, pc: 25.4 / 6}
 const toMm   = (v, unit) => v * UNITS[unit]
 const fromMm = (v, unit) => Math.round(v / UNITS[unit] * 100) / 100
 const decimal = (n) => String(n).replace('.', t('ui.decimal_separator'))
+// Hauteur d'une délimitation (« 10 mm », « 1,5 cm », « 20 pt »…, mm par
+// défaut) en mm, ou null
+const heightMm = (text) => {
+  const m = String(text || '').trim().replace(',', '.').match(/^(\d+(?:\.\d+)?)\s*(mm|cm|in|pt|pc)?$/)
+  return m ? Number(m[1]) * UNITS[m[2] || 'mm'] : null
+}
 
 class ExporterClass {
 
@@ -319,20 +325,25 @@ class Stage {
   }
 
   /**
-   * Espace blanc vertical maximal +opts.gap+ (pt, à l'échelle de
-   * l'export) entre l'élément le plus bas d'un système et l'élément le
-   * plus haut du système suivant : un espace plus grand est réduit à
-   * cette taille, chaque système étant déplacé avec ses éléments
-   * (marques associées, ligne des numéros). Fait sur la copie, avant le
-   * découpage en pages.
+   * Espaces verticaux de la copie, avant le découpage en pages. Blocs :
+   * chaque système avec ses éléments (marques associées, ligne des
+   * numéros), chaque titre de mise en page. Espace avant un bloc :
+   *  - après une délimitation (marque de mise en page) : sa hauteur ;
+   *  - avant ou après un titre : l'espace avant/après de son niveau
+   *    (préférences layout_title_<n>_before/after) ;
+   *  - sinon, au plus +opts.gap+ (pt, à l'échelle de l'export, espace
+   *    blanc vertical maximal) : un espace plus grand est réduit.
+   * Sauts de page : positions retenues pour le découpage (cf. paginate).
+   * Délimitations et sauts de page ne sont pas exportés.
    */
   respace(opts){
-    if ( !(opts.gap >= 0) || !this.items.length ) return
+    this.breaks = []
+    if ( !this.items.length ) return
     const x0 = Math.min(...this.items.map(i => i.left)), x1 = Math.max(...this.items.map(i => i.right))
     const scale = opts.mode == 'book'
       ? (opts.width - 2 * opts.margin) / (x1 - x0)
       : Math.min(1 / PX_PER_MM, (MAX_PDF_MM - 2 * (opts.margin || 0)) / (x1 - x0))
-    const gapPx = opts.gap * 25.4 / 72 / scale
+    const gapPx = opts.gap >= 0 ? opts.gap * 25.4 / 72 / scale : null
     // Système (index) de chaque élément
     const systemOf = (el) => {
       if ( el.id.startsWith('systeme-') ) return Number(el.id.split('-')[1])
@@ -346,23 +357,48 @@ class Stage {
       }
       return null
     }
-    const blocks = new Map()
+    // Marque de mise en page de l'élément : {kind, level, content}, ou null
+    const layoutOf = (el) => {
+      if ( !el.classList.contains('lay') || !el.id.startsWith('amark-') ) return null
+      const ao = AObjet.get(Number(el.id.split('-')[1]))
+      return ao ? {kind: ao.subtype, level: ao.data.level || 1, content: ao.content} : null
+    }
+    const blocks = new Map(), seps = []
     this.items.forEach(item => {
-      const index = systemOf(item.el)
-      if ( index === null ) return
-      blocks.has(index) || blocks.set(index, [])
-      blocks.get(index).push(item)
+      const lay = layoutOf(item.el)
+      if ( lay && lay.kind != 'tit' ) return seps.push(Object.assign({item}, lay))
+      const key = lay ? `title-${item.index}` : systemOf(item.el)
+      if ( key === null ) return
+      blocks.has(key) || blocks.set(key, {items: [], title: lay})
+      blocks.get(key).items.push(item)
     })
-    let cursor = null
-    Array.from(blocks.keys()).sort((a, b) => a - b).forEach(index => {
-      const items = blocks.get(index)
-      const top = Math.min(...items.map(i => i.top)), bottom = Math.max(...items.map(i => i.bottom))
-      const diff = cursor === null ? 0 : Math.min(0, cursor + gapPx - top)
-      if ( diff ) items.forEach(i => { i.el.style.top = `${parseFloat(getComputedStyle(i.el).top) + diff}px` })
-      cursor = bottom + diff
+    const list = Array.from(blocks.values()).map(b => Object.assign(b, {
+        top:    Math.min(...b.items.map(i => i.top))
+      , bottom: Math.max(...b.items.map(i => i.bottom))
+    })).sort((a, b) => a.top - b.top)
+    const titlePx = (b, where) => Number(pref(`layout_title_${b.title.level}_${where}`)) || 0
+    let cursor = null, prev = null
+    list.forEach(b => {
+      // Délimitations et sauts de page entre le bloc précédent et celui-ci
+      const between = seps.filter(s => s.item.top >= (prev ? prev.top : -Infinity) && s.item.top < b.top)
+      const del = between.filter(s => s.kind == 'del').pop()
+      let gap = null
+      if ( del && heightMm(del.content) !== null ) gap = heightMm(del.content) / scale
+      else if ( b.title ) gap = titlePx(b, 'before')
+      else if ( prev && prev.title ) gap = titlePx(prev, 'after')
+      let diff = 0
+      if ( cursor !== null ) {
+        if ( gap !== null ) diff = cursor + gap - b.top
+        else if ( gapPx !== null ) diff = Math.min(0, cursor + gapPx - b.top)
+      }
+      if ( diff ) b.items.forEach(i => { i.el.style.top = `${parseFloat(getComputedStyle(i.el).top) + diff}px` })
+      between.some(s => s.kind == 'pag') && this.breaks.push(cursor === null ? b.top + diff : (cursor + b.top + diff) / 2)
+      cursor = b.bottom + diff
+      prev = b
     })
+    seps.forEach(s => { s.item.el.style.display = 'none' })
     this.items = this.measureItems()
-    this.replaceForm(gapPx)
+    this.replaceForm(gapPx || 0)
   }
 
   /**
@@ -497,10 +533,14 @@ class Stage {
       else merged.push(iv.slice())
     })
     const cuts = merged.slice(1).map((iv, i) => (merged[i][1] + iv[0]) / 2)
+    // Sauts de page (marques de mise en page, cf. respace)
+    const breaks = (this.breaks || []).filter(b => b > top && b < bottom).sort((a, b) => a - b)
     const slices = []
     let y = top
     while ( bottom - y > 0.5 ) {
       const limit = y + pageH
+      const forced = breaks.find(b => b > y + 1 && b <= limit)
+      if ( forced ) { slices.push([y, forced]) ; y = forced ; continue }
       if ( limit >= bottom ) { slices.push([y, bottom]) ; break }
       const fit = cuts.filter(c => c > y + 1 && c <= limit)
       const cut = fit.length ? fit[fit.length - 1] : limit

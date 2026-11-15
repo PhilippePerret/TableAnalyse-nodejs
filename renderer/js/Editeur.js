@@ -299,6 +299,8 @@ export class Editeur {
       const value = data.start ? data.content : this.getValue()
       if ( data.start ) { this.owner.data.start = data.start }
       else { delete this.owner.data.start }
+      // Titre de mise en page : son niveau
+      if ( data.level ) { this.owner.data.level = data.level }
       this.owner.changeType(data.type, data.subtype)
       const msg = AMARQUES_TYPES[data.type] && AMARQUES_TYPES[data.type].message
       msg && (this.titre = msg)

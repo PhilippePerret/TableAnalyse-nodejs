@@ -139,6 +139,13 @@ Morceaux proposés (`AMExtrait.extractOf`) : un par système traversé (barres d
 Assemblage : `ExtraitComposer.js` (à la création et au double-clic), boite `#ext_composer_panel` avec la zone d'assemblage (morceaux recadrables par les 4 bords, déplaçables à la souris et aux flèches) ; « Assembler » recompose et réécrit l'image ; mesures changées (sortie du champ) : morceaux de ces mesures. Menu contextuel « Ouvrir l'image » : son fichier, ouvert par l'application du système (canal `extract:open`) ; « Recharger l'image » : le fichier relu (`showImage`).
 
 
+## Mise en page
+
+Marque de type `lay` (`TYPES_MISE_EN_PAGE`, `Constants.js`) : `pag` (saut de page), `del` (délimitation, contenu = hauteur « 10 mm », « 1 cm », « 20 pt »…), `tit` (titre, `data.level` 1 à 3, choisi après le sous-type dans `AMark_Editor`). Saut de page et délimitation : ligne sur la largeur des systèmes, non exportée. Titres : police et taille en préférences (`layout_title_<n>_font/size`), espaces avant/après à l'export (`layout_title_<n>_before/after`).
+
+Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; espace avant un bloc = hauteur de la délimitation qui le précède, sinon espace avant/après du titre, sinon au plus l'espace blanc vertical maximal. Sauts de page : `Stage.breaks`, coupures imposées dans `paginate` (mode « pages de taille fixe » seulement).
+
+
 ## Groupement des tags
 
 Depuis la version de novembre 2022, on peut grouper les tags, ce qui permet notamment de les déplacer ou de les supprimer ensemble.

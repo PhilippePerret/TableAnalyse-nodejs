@@ -354,6 +354,18 @@ prefs:
   top_first_system:       {label: "첫 단의 위쪽 위치"}
   distance_systemes:      {label: "단 기본 간격"}
   max_table_blank:        {label: "최대 세로 빈 공간 (테이블 위)"}
+  layout_title_1_font: {label: "1단계 제목 글꼴"}
+  layout_title_1_size: {label: "1단계 제목 크기"}
+  layout_title_1_before: {label: "1단계 제목 앞 간격"}
+  layout_title_1_after: {label: "1단계 제목 뒤 간격"}
+  layout_title_2_font: {label: "2단계 제목 글꼴"}
+  layout_title_2_size: {label: "2단계 제목 크기"}
+  layout_title_2_before: {label: "2단계 제목 앞 간격"}
+  layout_title_2_after: {label: "2단계 제목 뒤 간격"}
+  layout_title_3_font: {label: "3단계 제목 글꼴"}
+  layout_title_3_size: {label: "3단계 제목 크기"}
+  layout_title_3_before: {label: "3단계 제목 앞 간격"}
+  layout_title_3_after: {label: "3단계 제목 뒤 간격"}
   export_systems_gap:     {label: "최대 세로 빈 공간 (내보내기)"}
   adjust_same_mark:       {label: "같은 종류의 표시 높이 맞추기"}
   snap_for_adjust_pos:    {label: "표시 정렬 맞춤 거리", precision: "같은 종류의 표시에 적용되며, 위의 “높이 맞추기”가 켜져 있을 때만 작동합니다."}
@@ -392,6 +404,7 @@ prefs:
   animate:                {label: "분석 애니메이션", precision: "표시가 차례로 나타납니다"}
 
 prefs_groups:
+  layout:                 "페이지 구성"
   general:                "일반"
   systems:                "단"
   measures:               "마디 번호"
@@ -405,6 +418,15 @@ prefs_groups:
 
 # 분석 표시: 이름(선택 목록), 메시지(편집기 안내), 기본 내용
 marks:
+  layout:
+    pag: "페이지 나누기"
+    del: "간격"
+    del_message: "앞뒤 사이의 높이 (예: 10 mm, 1 cm, 20 pt)"
+    tit: "제목"
+    tit_default: "제목"
+    tit_message: "제목 텍스트"
+    level: "%{n}단계 제목"
+    level_message: "제목 단계"
   suggestions:
     menu_title: "이미 사용한 값…"
   types:
@@ -424,6 +446,7 @@ marks:
     ext: {name: "악보 발췌", message: "발췌할 마디 (예: 12 또는 12-13)"}
     frm: {name: "형식…", message: "형식의 부분"}
     mot: {name: "동기", default: "동기", message: "동기 이름"}
+    lay: {name: "페이지 구성", message: "페이지 구성"}
   frames:
     prt:  {name: "부분(시작)",       default: "제시부"}
     prtz: {name: "부분 끝",          default: "제시부"}

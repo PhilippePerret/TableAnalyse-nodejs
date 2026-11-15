@@ -12,7 +12,7 @@ import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
 import { GetterInList } from './GetterInList.js'
 import { AMark_Editor } from './AMark_Editor.js'
-import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_PHILHARMONIEFONT } from './Constants.js'
+import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_PHILHARMONIEFONT, TYPES_MISE_EN_PAGE } from './Constants.js'
 import { UI } from './UI.js'
 import { Forme } from './Forme.js'
 import { ExtraitComposer } from './ExtraitComposer.js'
@@ -80,6 +80,8 @@ export class AMark extends AObjet {
         if ( !extract ) return
         Object.assign(params, extract)
       }
+      // Saut de page, délimitation : ligne alignée sur les systèmes
+      if ( params.type == 'lay' && params.subtype != 'tit' ) params.left = Systeme.first ? Systeme.first.left : 0
       // Numéro de mesure ajouté quand la ligne des numéros existe : il
       // y prend place et renumérote les suivants
       const onMeasureLine = params.subtype == 'mes' && Systeme.hasMeasureLine
@@ -481,7 +483,11 @@ build(){
   css.push(this.type)
   if ( TYPES_PHILHARMONIEFONT.includes(this.type) ) css.push('philnote')
   this.subtype && css.push(this.subtype)
+  // Titre de mise en page : son niveau
+  this.isLayoutTitle && css.push(`t${this.data.level || 1}`)
   o.className = css.join(' ')
+  // Saut de page, délimitation : ligne sur toute la largeur des systèmes
+  this.isLayoutLine && (o.style.width = px(Number(pref('systeme_width'))))
 
   // Ligne supplémentaire et bouton "+"
   this.hasVerticalLine && this.buildVerticalLine()
@@ -534,6 +540,10 @@ changeTextAlignement(css){
 }
 
 get formated_content(){
+  // Saut de page, délimitation : leur nom (et la hauteur)
+  if ( this.isLayoutLine ) {
+    return escapeLt(TYPES_MISE_EN_PAGE[this.subtype].name + (this.content ? ` : ${this.content}` : ''))
+  }
   if ( this.hasFormatedText && this.content ) {
     return this.markdownize(this.tunize(escapeLt(this.content)))
   } else {
@@ -560,6 +570,8 @@ get isMark(){ return true }
 
 get isCadence(){ return this.type == 'cad'}
 get isForme(){ return this.type == 'frm'}
+get isLayoutTitle(){ return this.type == 'lay' && this.subtype == 'tit' }
+get isLayoutLine(){ return this.type == 'lay' && this.subtype != 'tit' }
 get isPartie(){ return this.type == 'bbx' && this.subtype.startsWith('prt')}
 get isSection(){ return this.type == 'bbx' && this.subtype.startsWith('sec')}
 get isModulation(){return this.type == 'mod'}

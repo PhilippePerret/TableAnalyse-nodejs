@@ -354,6 +354,18 @@ prefs:
   top_first_system:       {label: "Oberer Abstand des ersten Systems"}
   distance_systemes:      {label: "Standardabstand der Systeme"}
   max_table_blank:        {label: "Maximaler vertikaler Leerraum (auf der Tafel)"}
+  layout_title_1_font: {label: "Schrift der Titel Ebene 1"}
+  layout_title_1_size: {label: "Größe der Titel Ebene 1"}
+  layout_title_1_before: {label: "Abstand vor Titeln Ebene 1"}
+  layout_title_1_after: {label: "Abstand nach Titeln Ebene 1"}
+  layout_title_2_font: {label: "Schrift der Titel Ebene 2"}
+  layout_title_2_size: {label: "Größe der Titel Ebene 2"}
+  layout_title_2_before: {label: "Abstand vor Titeln Ebene 2"}
+  layout_title_2_after: {label: "Abstand nach Titeln Ebene 2"}
+  layout_title_3_font: {label: "Schrift der Titel Ebene 3"}
+  layout_title_3_size: {label: "Größe der Titel Ebene 3"}
+  layout_title_3_before: {label: "Abstand vor Titeln Ebene 3"}
+  layout_title_3_after: {label: "Abstand nach Titeln Ebene 3"}
   export_systems_gap:     {label: "Maximaler vertikaler Leerraum (Export)"}
   adjust_same_mark:       {label: "Markierungen gleichen Typs in der Höhe angleichen"}
   snap_for_adjust_pos:    {label: "Einrastabstand für die Ausrichtung", precision: "Betrifft Markierungen gleichen Typs, und nur wenn die Einstellung „in der Höhe angleichen“ oben aktiviert ist."}
@@ -392,6 +404,7 @@ prefs:
   animate:                {label: "Analyse animieren", precision: "Die Markierungen werden nach und nach angezeigt"}
 
 prefs_groups:
+  layout:                 "Seitenlayout"
   general:                "Allgemein"
   systems:                "Systeme"
   measures:               "Taktnummern"
@@ -406,6 +419,15 @@ prefs_groups:
 # Analysemarkierungen: Name (in den Auswahllisten), Hinweis (Eingabe im
 # Editor) und Standardinhalt
 marks:
+  layout:
+    pag: "Seitenumbruch"
+    del: "Abstand"
+    del_message: "Höhe zwischen Vorangehendem und Folgendem (z. B. 10 mm, 1 cm, 20 pt)"
+    tit: "Titel"
+    tit_default: "Titel"
+    tit_message: "Text des Titels"
+    level: "Titel Ebene %{n}"
+    level_message: "Ebene des Titels"
   suggestions:
     menu_title: "Bereits verwendete Werte…"
   types:
@@ -425,6 +447,7 @@ marks:
     ext: {name: "Partiturausschnitt", message: "Zu extrahierende Takt(e) (z. B. 12 oder 12-13)"}
     frm: {name: "Form…", message: "Formteil"}
     mot: {name: "Motiv", default: "Motiv", message: "Name des Motivs"}
+    lay: {name: "Seitenlayout", message: "Seitenlayout"}
   frames:
     prt:  {name: "Teil (Beginn)",    default: "EXPO"}
     prtz: {name: "Ende des Teils",   default: "EXPO"}

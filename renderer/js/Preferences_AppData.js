@@ -35,6 +35,20 @@ export const PreferencesAppData = {
   , marque_texte_size_3     :{type:'inputtext'    ,typeV:'number'   ,default:24         ,unite:'px' ,selector:'div.amark.txt.size3 span.content'  ,selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_texte_size_4     :{type:'inputtext'    ,typeV:'number'   ,default:16     ,unite:'px' ,selector:'div.amark.txt.size4 span.content'  ,selector_value:'font-size:__VALUE__px;' ,apply:true}
   
+  // --- Mise en page : titres (espaces avant et après : à l'export) ---
+  , layout_title_1_font    :{type:'inputtext'    ,typeV:'string'   ,default:'Arial Narrow' ,selector:'div.amark.lay.tit.t1 span.content', selector_value:'font-family:"__VALUE__";' ,apply:true}
+  , layout_title_1_size    :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'px' ,selector:'div.amark.lay.tit.t1 span.content', selector_value:'font-size:__VALUE__px;' ,apply:true}
+  , layout_title_1_before  :{type:'inputtext'    ,typeV:'number'   ,default:80 ,unite:'px'}
+  , layout_title_1_after   :{type:'inputtext'    ,typeV:'number'   ,default:40 ,unite:'px'}
+  , layout_title_2_font    :{type:'inputtext'    ,typeV:'string'   ,default:'Arial Narrow' ,selector:'div.amark.lay.tit.t2 span.content', selector_value:'font-family:"__VALUE__";' ,apply:true}
+  , layout_title_2_size    :{type:'inputtext'    ,typeV:'number'   ,default:44 ,unite:'px' ,selector:'div.amark.lay.tit.t2 span.content', selector_value:'font-size:__VALUE__px;' ,apply:true}
+  , layout_title_2_before  :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'px'}
+  , layout_title_2_after   :{type:'inputtext'    ,typeV:'number'   ,default:30 ,unite:'px'}
+  , layout_title_3_font    :{type:'inputtext'    ,typeV:'string'   ,default:'Arial Narrow' ,selector:'div.amark.lay.tit.t3 span.content', selector_value:'font-family:"__VALUE__";' ,apply:true}
+  , layout_title_3_size    :{type:'inputtext'    ,typeV:'number'   ,default:32 ,unite:'px' ,selector:'div.amark.lay.tit.t3 span.content', selector_value:'font-size:__VALUE__px;' ,apply:true}
+  , layout_title_3_before  :{type:'inputtext'    ,typeV:'number'   ,default:40 ,unite:'px'}
+  , layout_title_3_after   :{type:'inputtext'    ,typeV:'number'   ,default:20 ,unite:'px'}
+
   // --- Export PDF/SVG (mm), réglés dans le panneau d'export ---
   , export_page_format      :{type:'inputtext'    ,typeV:'string'   ,default:'A4'       ,hidden:true}
   , export_page_width       :{type:'inputtext'    ,typeV:'number'   ,default:210        ,hidden:true}

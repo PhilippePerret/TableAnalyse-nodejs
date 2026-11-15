@@ -676,3 +676,29 @@ div#ext_composer_panel div.ext-piece .ui-resizable-n { top: 0; }
 div#ext_composer_panel div.ext-piece .ui-resizable-s { bottom: 0; }
 div#ext_composer_panel div.ext-piece .ui-resizable-e { right: 0; }
 div#ext_composer_panel div.ext-piece .ui-resizable-w { left: 0; }
+
+/* Mise en page (cf. TYPES_MISE_EN_PAGE) : saut de page et délimitation,
+   ligne sur toute la largeur des systèmes avec leur nom (absents de
+   l'export) ; titres (police, taille : préférences layout_title_*) */
+div.amark.lay.pag,
+div.amark.lay.del {
+  height: 14px;
+  border-top: 2px dashed #888;
+}
+div.amark.lay.del { border-top-style: dotted; }
+div.amark.lay.pag span.content,
+div.amark.lay.del span.content {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  padding: 0 4px 2px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #666;
+  white-space: nowrap;
+}
+div.amark.lay.tit span.content {
+  padding: 0;
+  white-space: nowrap;
+  color: #000;
+}
