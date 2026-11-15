@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "전조 표시 크기"}
   marque_emprunt_size:    {label: "차용 표시 크기"}
   marque_cellule_size:    {label: "동기 셀 이름 크기"}
+  marque_motif_size:      {label: "동기 이름 크기"}
   thiness_segment_line:   {label: "구간 선 두께"}
   thiness_cellule_line:   {label: "셀 선 두께"}
   thiness_border:         {label: "상자 선 두께"}
@@ -408,6 +409,7 @@ marks:
     cir: {name: "원"}
     ext: {name: "악보 발췌", message: "발췌할 마디 (예: 12 또는 12-13)"}
     frm: {name: "형식…", message: "형식의 부분"}
+    mot: {name: "동기", default: "동기", message: "동기 이름"}
   frames:
     prt:  {name: "부분(시작)",       default: "제시부"}
     prtz: {name: "부분 끝",          default: "제시부"}

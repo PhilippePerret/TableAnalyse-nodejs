@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "転調マークのサイズ"}
   marque_emprunt_size:    {label: "借用マークのサイズ"}
   marque_cellule_size:    {label: "動機セル名のサイズ"}
+  marque_motif_size:      {label: "動機名のサイズ"}
   thiness_segment_line:   {label: "セグメントの線の太さ"}
   thiness_cellule_line:   {label: "セルの線の太さ"}
   thiness_border:         {label: "枠の線の太さ"}
@@ -408,6 +409,7 @@ marks:
     cir: {name: "円"}
     ext: {name: "楽譜の抜粋", message: "抜粋する小節（例：12 または 12-13）"}
     frm: {name: "形式…", message: "形式の部分"}
+    mot: {name: "動機", default: "動機", message: "動機の名前"}
   frames:
     prt:  {name: "部分（開始）",     default: "提示部"}
     prtz: {name: "部分の終わり",     default: "提示部"}

@@ -49,7 +49,7 @@ export const SUGGEST_MODES = ['none', 'menu', 'panel']
 const NO_SUGGESTIONS = ['mes', 'ext']
 // Types/sous-types dont les valeurs sont classées dans l'ordre de la
 // partition (motifs, marques de forme), et non alphabétiquement
-const SUGGESTIONS_IN_SCORE_ORDER = ['cel', 'frm']
+const SUGGESTIONS_IN_SCORE_ORDER = ['cel', 'mot', 'frm']
 // Types dont les valeurs sont classées par fréquence d'utilisation (les
 // plus utilisées en premier)
 const SUGGESTIONS_BY_FREQUENCY = ['acc', 'har']

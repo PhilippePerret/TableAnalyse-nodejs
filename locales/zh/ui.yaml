@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "转调标记大小"}
   marque_emprunt_size:    {label: "借用标记大小"}
   marque_cellule_size:    {label: "动机单元名称大小"}
+  marque_motif_size:      {label: "动机名称的大小"}
   thiness_segment_line:   {label: "片段线条粗细"}
   thiness_cellule_line:   {label: "动机单元线条粗细"}
   thiness_border:         {label: "方框线条粗细"}
@@ -408,6 +409,7 @@ marks:
     cir: {name: "圆圈"}
     ext: {name: "乐谱片段", message: "要提取的小节（例如 12 或 12-13）"}
     frm: {name: "曲式…", message: "曲式部分"}
+    mot: {name: "动机", default: "动机", message: "动机名称"}
   frames:
     prt:  {name: "部分（开始）",     default: "呈示部"}
     prtz: {name: "部分结束",         default: "呈示部"}

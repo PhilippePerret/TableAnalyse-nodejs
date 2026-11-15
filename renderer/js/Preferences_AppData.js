@@ -21,6 +21,7 @@ export const PreferencesAppData = {
   , marque_cadence_type_size:{type:'inputtext'    ,typeV:'number'   ,default:20    ,unite:'px' ,selector:'div.amark.cad div.mtype', selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_modulation_size  :{type:'inputtext'    ,typeV:'number'   ,default:26    ,unite:'pt' ,selector:'div.aobj.mod span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_emprunt_size     :{type:'inputtext'    ,typeV:'number'   ,default:24     ,unite:'pt' ,selector:'div.aobj.emp span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
+  , marque_motif_size       :{type:'inputtext'    ,typeV:'number'   ,default:24      ,unite:'px' ,selector:'div.amark.mot span.content', selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_cellule_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.amark.cel span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , thiness_segment_line    :{type:'inputtext'    ,typeV:'number'   ,default:4         ,unite:'px' ,selector:'div.amark.seg'   ,selector_value:'border-width:__VALUE__px;' ,apply:true}
   , thiness_cellule_line    :{type:'inputtext'    ,typeV:'number'   ,default:5         ,unite:'px' ,selector:'div.amark.cel'   ,selector_value:'border-width:__VALUE__px;' ,apply:true}

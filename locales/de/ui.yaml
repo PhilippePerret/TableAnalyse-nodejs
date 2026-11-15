@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "Größe der Modulationsmarkierungen"}
   marque_emprunt_size:    {label: "Größe der Ausweichungsmarkierungen"}
   marque_cellule_size:    {label: "Größe der Zellennamen"}
+  marque_motif_size:      {label: "Größe der Motivnamen"}
   thiness_segment_line:   {label: "Linienstärke der Segmente"}
   thiness_cellule_line:   {label: "Linienstärke der Zellen"}
   thiness_border:         {label: "Linienstärke der Rahmen"}
@@ -409,6 +410,7 @@ marks:
     cir: {name: "Kreis"}
     ext: {name: "Partiturausschnitt", message: "Zu extrahierende Takt(e) (z. B. 12 oder 12-13)"}
     frm: {name: "Form…", message: "Formteil"}
+    mot: {name: "Motiv", default: "Motiv", message: "Name des Motivs"}
   frames:
     prt:  {name: "Teil (Beginn)",    default: "EXPO"}
     prtz: {name: "Ende des Teils",   default: "EXPO"}

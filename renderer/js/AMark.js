@@ -576,10 +576,10 @@ get isGridAjustable(){
   return this._isgridadjust ||= (this._isgridadjust = ['bbx'].includes(this.type))
 }
 get isHresizable(){
-  return this._ishresize || (this._ishresize = ['bbx','cir','seg','emp','txt'].includes(this.type))
+  return this._ishresize || (this._ishresize = ['bbx','cir','seg','emp','txt','mot'].includes(this.type))
 }
 get isVresizable(){
-  return this._isvresize || (this._isvresize = (['bbx','emp'].includes(this.type) || this.isSegmentVertical))
+  return this._isvresize || (this._isvresize = (['bbx','emp','mot'].includes(this.type) || this.isSegmentVertical))
 }
 get isSegmentVertical(){
   return this.type == 'seg' && ['v-left','v-right'].includes(this.subtype)

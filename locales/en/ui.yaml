@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "Size of modulation marks"}
   marque_emprunt_size:    {label: "Size of borrowing marks"}
   marque_cellule_size:    {label: "Size of cell names"}
+  marque_motif_size:      {label: "Motif name size"}
   thiness_segment_line:   {label: "Segment line thickness"}
   thiness_cellule_line:   {label: "Cell line thickness"}
   thiness_border:         {label: "Box line thickness"}
@@ -409,6 +410,7 @@ marks:
     cir: {name: "Circle"}
     ext: {name: "Score Excerpt", message: "Bar(s) to extract (e.g. 12 or 12-13)"}
     frm: {name: "Form…", message: "Portion of the form"}
+    mot: {name: "Motif", default: "Motif", message: "Motif name"}
   frames:
     prt:  {name: "Part (start)",     default: "EXPO"}
     prtz: {name: "End of part",      default: "EXPO"}

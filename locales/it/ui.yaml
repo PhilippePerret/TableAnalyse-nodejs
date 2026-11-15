@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "Dimensione dei segni di modulazione"}
   marque_emprunt_size:    {label: "Dimensione dei segni di prestito"}
   marque_cellule_size:    {label: "Dimensione dei nomi delle cellule"}
+  marque_motif_size:      {label: "Dimensione dei nomi dei motivi"}
   thiness_segment_line:   {label: "Spessore linea dei segmenti"}
   thiness_cellule_line:   {label: "Spessore linea delle cellule"}
   thiness_border:         {label: "Spessore delle linee dei riquadri"}
@@ -409,6 +410,7 @@ marks:
     cir: {name: "Cerchio"}
     ext: {name: "Estratto partitura", message: "Battuta/e da estrarre (es. 12 o 12-13)"}
     frm: {name: "Forma…", message: "Porzione della forma"}
+    mot: {name: "Motivo", default: "Motivo", message: "Nome del motivo"}
   frames:
     prt:  {name: "Parte (inizio)",   default: "ESPO"}
     prtz: {name: "Fine della parte", default: "ESPO"}

@@ -402,6 +402,25 @@ div.amark.cel {
   height:200px;
 }
 
+/* Motif : cadre fin surmonté de son nom (taille : préférence
+   marque_motif_size) */
+div.amark.mot {
+  border: 1px solid #333;
+  box-sizing: border-box;
+  min-width: 40px;
+  min-height: 20px;
+  width: 220px;
+  height: 100px;
+}
+div.amark.mot span.content {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  padding: 0 0 2px;
+  width: max-content;
+  font-size: 24px;
+}
+
 /* Texte dans une boite */
 div.amark.bbx.bxt {
   display: flex;

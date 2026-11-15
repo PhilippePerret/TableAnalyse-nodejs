@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "Taille des marques de modulation"}
   marque_emprunt_size:    {label: "Taille des marques d'emprunt"}
   marque_cellule_size:    {label: "Taille des noms de cellules"}
+  marque_motif_size:      {label: "Taille des noms de motifs"}
   thiness_segment_line:   {label: "Épaisseur trait segments"}
   thiness_cellule_line:   {label: "Épaisseur trait cellules"}
   thiness_border:         {label: "Épaisseur des traits de boites"}
@@ -409,6 +410,7 @@ marks:
     cir: {name: "Cercle"}
     ext: {name: "Extrait partition", message: "Mesure(s) à extraire (p.e. 12 ou 12-13)"}
     frm: {name: "Forme…", message: "Portion de la forme"}
+    mot: {name: "Motif", default: "Motif", message: "Nom du motif"}
   frames:
     prt:  {name: "Partie (début)",   default: "EXPO"}
     prtz: {name: "Fin de partie",    default: "EXPO"}

@@ -349,6 +349,7 @@ prefs:
   marque_modulation_size: {label: "Tamaño de las marcas de modulación"}
   marque_emprunt_size:    {label: "Tamaño de las marcas de préstamo"}
   marque_cellule_size:    {label: "Tamaño de los nombres de células"}
+  marque_motif_size:      {label: "Tamaño de los nombres de motivos"}
   thiness_segment_line:   {label: "Grosor del trazo de segmentos"}
   thiness_cellule_line:   {label: "Grosor del trazo de células"}
   thiness_border:         {label: "Grosor de los trazos de recuadros"}
@@ -409,6 +410,7 @@ marks:
     cir: {name: "Círculo"}
     ext: {name: "Fragmento de partitura", message: "Compás(es) a extraer (p. ej. 12 o 12-13)"}
     frm: {name: "Forma…", message: "Porción de la forma"}
+    mot: {name: "Motivo", default: "Motivo", message: "Nombre del motivo"}
   frames:
     prt:  {name: "Parte (inicio)",   default: "EXPO"}
     prtz: {name: "Fin de parte",     default: "EXPO"}

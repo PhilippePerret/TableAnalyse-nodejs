@@ -74,12 +74,13 @@ export function formLevel(subtype){
 export const AMARQUES_TYPES = {
   'acc': {name:t('ui.marks.types.acc.name')       , shortcut:'a', ajustX:12,  ajustY:8,     value:'acc', default:'C', message:t('ui.marks.types.acc.message')}
   , 'har': {name:t('ui.marks.types.har.name')     , shortcut:'h', ajustX:16,  ajustY:8,     value:'har', default:'I', message:t('ui.marks.types.har.message')}
-  , 'mod': {name:t('ui.marks.types.mod.name')   , shortcut:'m', ajustX:24,  ajustY:-80,   value:'mod', default:'C', message:t('ui.marks.types.mod.message')}
+  , 'mod': {name:t('ui.marks.types.mod.name')   , shortcut:'M', ajustX:24,  ajustY:-80,   value:'mod', default:'C', message:t('ui.marks.types.mod.message')}
   , 'emp': {name:t('ui.marks.types.emp.name')      , shortcut:'e', ajustX:4,   ajustY:-60,   value:'emp', default:'C', message:t('ui.marks.types.emp.message')}
   , 'cad': {name:t('ui.marks.types.cad.name')     , shortcut:'c', ajustX:-70, ajustY:14,    value:'cad', subtype:true, autocontent:true}
   , 'bbx': {name:t('ui.marks.types.bbx.name')        , shortcut:'b', value:'bbx', subdata:TYPES_CADRE, message:t('ui.marks.types.bbx.message')}
   , 'not': {name:t('ui.marks.types.not.name'), shortcut:'n', value:'not', subdata:TYPES_NOTES, autocontent:true, message:t('ui.marks.types.not.message')}
   , 'frm': {name:t('ui.marks.types.frm.name')      , shortcut:'f', value:'frm', subdata:TYPES_FORME, message:t('ui.marks.types.frm.message')}
+  , 'mot': {name:t('ui.marks.types.mot.name')      , shortcut:'m', value:'mot', default:t('ui.marks.types.mot.default'), message:t('ui.marks.types.mot.message')}
   , 'deg': {name:t('ui.marks.types.deg.name')   , shortcut:'d', ajustX:26,  ajustY:24,  value:'deg', default:'1', message:t('ui.marks.types.deg.message')}
   , 'seg': {name:t('ui.marks.types.seg.name')      , shortcut:'s', value:'seg', subtype:true   , emptyOk:true, default:t('ui.marks.types.seg.default'), message:t('ui.marks.types.seg.message')}
   , 'img': {name:t('ui.marks.types.img.name')        , shortcut:'i', value:'img' , default:'image.jpg'  , message:t('ui.marks.types.img.message')}
