@@ -304,19 +304,27 @@ function buildMenu(){
 
 // Éléments d'un menu décrit par le renderer (cf. MenusBar.js)
 function dynamicItems(m){
-  return m.items.map(item => item.type ? item : {
-      label:   item.label
-    , enabled: item.enabled
-    // Raccourci affiché à droite, géré par le renderer
-    , ...(item.accelerator ? {accelerator: item.accelerator, registerAccelerator: false} : {})
-    , ...(item.checkbox ? {type: 'checkbox', checked: item.checked} : {})
-    , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
-  })
+  return m.items.map(item => {
+    // Sous-menu placé à cet endroit (et non à la fin, cf. dynamicSubmenus)
+    if ( item.submenu ) {
+      const sub = dynamicMenus.find(d => d.id == item.submenu)
+      return sub && {label: sub.label, submenu: dynamicItems(sub)}
+    }
+    return item.type ? item : {
+        label:   item.label
+      , enabled: item.enabled
+      // Raccourci affiché à droite, géré par le renderer
+      , ...(item.accelerator ? {accelerator: item.accelerator, registerAccelerator: false} : {})
+      , ...(item.checkbox ? {type: 'checkbox', checked: item.checked} : {})
+      , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
+      }
+  }).filter(item => item)
 }
 
 // Menus du renderer placés en sous-menus de +parent+ (après un séparateur)
 function dynamicSubmenus(parent){
-  const subs = dynamicMenus.filter(m => m.parent == parent)
+  const placed = new Set(dynamicMenus.flatMap(m => m.items.filter(i => i.submenu).map(i => i.submenu)))
+  const subs = dynamicMenus.filter(m => m.parent == parent && !placed.has(m.id))
   if ( !subs.length ) return []
   return [{type: 'separator'}, ...subs.map(m => ({label: m.label, submenu: dynamicItems(m)}))]
 }

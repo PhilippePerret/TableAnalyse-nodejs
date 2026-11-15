@@ -57,6 +57,8 @@ class MenusBarClass {
       const items = []
       Array.from(select.options).forEach((option, index) => {
         if ( index == 0 ) return // titre du menu
+        // Emplacement d'un sous-menu (menu de MENUS dont le parent est ce menu)
+        if ( option.dataset.submenu ) return items.push({submenu: option.dataset.submenu})
         const label = option.textContent.trim()
         if ( label == '' ) {
           // Option vide sans valeur = séparateur ; avec valeur = menu

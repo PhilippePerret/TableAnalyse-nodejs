@@ -27,8 +27,8 @@ import { AMARQUES_TYPES, typeHasSubtype } from './Constants.js'
  */
 
 
-// Lettres des valeurs de la liste des suggestions
-const LETTERS = 'abcdefghijklmnopqrstuvwxyz'
+// Touches des valeurs de la liste des suggestions (chiffres puis lettres)
+const LETTERS = '123456789abcdefghijklmnopqrstuvwxyz'
 // Valeur affichée (texte long : retours chariot)
 const displayedValue = v => String(v).replace(/__RET__/g, ' ')
 
@@ -165,8 +165,8 @@ export class Editeur {
     }
     // Bouton OK toujours le dernier, à droite
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
-    // « Renoncer » à gauche, mais le dernier dans l'ordre des tabulations
-    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;'}))
+    // « Renoncer » à gauche, hors de l'ordre des tabulations
+    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;', tabindex:'-1'}))
     o.appendChild(divBoutons)
     this.obj = o
     this.data.titre && (this.titre = this.data.titre)
