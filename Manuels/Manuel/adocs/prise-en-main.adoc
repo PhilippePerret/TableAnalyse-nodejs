@@ -1,0 +1,41 @@
+[[prise-en-main]]
+== Prise en main de l'app ==
+
+=== Prérequis ====
+
+À l'ouverture de l'application **__Table d’Analyse__**, aucune analyse n'est ouverte, il faut donc la créer.
+
+// Note-lien vers la vidéo de prise en main si on préfère "voir"
+
+Pour ce faire, vous avez juste besoin d'une partition au format PDF, c'est tout.
+
+NOTE: Vous pouvez télécharger rapidement une partition depuis la pages des https://www.analyse-musicale.fr/jeudis-analyse/[**Jeudis de l'analyse**^], en cliquant sur une session et en suivant le lien vers la partition étudiée.
+
+=== Création de l'analyse ===
+
+Ensuite, **créez l'analyse** en choisissant le menu « Analyse > Nouvelle analyse… » ou en jouant le raccourci traditionnel Cmd+n (Ctrl+n sous Windows).
+
+L'application vous demande alors de **choisir le dossier** dans lequel vous voulez placer cette analyse (son dossier). Choisissez une emplacement judicieux, dans `Documents` ou dans `Musique/Analyses` par exemple.
+
+Vous devez ensuite définir **l'identifiant de cette analyse**, c'est-à-dire le nom du dossier qui sera créé dans le dossier/répertoire choisi précédemment. Ce nom ne doit comporter aucune espace et seulement des lettres a à z, des tirets et des traits plats.
+
+Vous pouvez ensuite choisir dès à présent **la partition de la pièce**, si vous l'avez chargée, afin qu'elle soit préparée pour l'application. La __préparation__ consiste 1) à la découper en systèmes, pour les écarter afin de permettre l'écriture de l'analyse et 2) à numéroter les mesures.
+
+NOTE: Pour un bon numérotage des mesures, assurez-vous de faire le bon choix, de distinguer une partition qui commence par une __anacrouse__ (une ou quelques notes avant la première mesure) ou par une vraie mesure entière (si vous avez un doute, regardez comment cette partition est numérotée).
+
+=== Préparation de l'analyse ===
+
+Une fois ces informations acquises, l'application se charge de **découper la partition** et de **numéroter ses mesures**. C'est une opération qui, manuellement, vous aurez pris de une demi-heure à une heure pour une pièce longue…
+
+Vous êtes prêt ou prête, à présent, à **procéder à l'analyse de la pièce**.
+
+Cette analyse consiste principalement à **poser des « <<tags, marques>>** au-dessus et au-dessous des systèmes qui ont été répartis, à <<prefs-systems-distance, distance suffisante>> sur la table d'analyse.
+
+////
+À développer
+- les marques les plus courantes
+////
+
+//// 
+Achever avec des liens pour en savoir plus
+////

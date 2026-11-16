@@ -13,3 +13,9 @@
   font-family: PhilNote;
   font-size: 32px;  
 }
+
+/* Filigrane de la table vide (Gillius ADF, GPL + exception de police, cf. fonts/Gillius/COPYING) */
+@font-face {
+  font-family:  Filigrane;
+  src: url("fonts/Gillius/GilliusADF-Regular.otf");
+}

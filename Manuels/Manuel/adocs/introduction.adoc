@@ -1,3 +1,4 @@
 == Introduction ==
 
-Introduction à la documentation.
+**__Table d'analyse__** est une application de bureau qui permet de procéder à des analyses musicales de façon très confortable. Elle a été conçue par Philippe Perret (Prix d'Analyse Musicale à l'unanimité et Prix SACEM pour son travail d'analyse) et codée par Claude (Opus 5.5).
+

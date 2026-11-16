@@ -1,5 +1,38 @@
+[[analyse-create]]
 == Création d'une analyse ==
 
-* Préparer le dossier
-** créer un dossier avec le nom `systems`
-** mettre dedans les systèmes de la partition (voir <<systems-preparation, comment les préparer>>)
+Pour créer une nouvelle analyse, il vous suffit de posséder sa partition en PDF. 
+
+NOTE: Vous pouvez l'obtenir facilement sur le site https://imslp.org[].
+
+Ensuite : 
+
+* lancer l'application **__Table d'analyse__**,
+* activer le menu « Analyse > Nouvelle analyse… »,
+* définissez les <<analyse-infos, informations demandées>>, en tout cas celles requises,
+* cliquer sur le bouton « Créer la nouvelle analyse »,
+
+L'opération suivante va consister à définir les systèmes de la pièce (c'est-à-dire les groupes de portées, deux ou exceptionnement trois pour le piano). Dans l'application, en effet, la partition est découpée en ses systèmes pour permettre d'indiquer confortablement toutes les données de l'analyse. Pour ce faire, il existe un outil puissant : la découpe de partition.
+
+* Activer « Outils > Découper la partition… »,
+* choisissez la partition PDF à découper,
+* cliquer « OK » (ou autre nom suivant votre système).
+
+**__Table d'analyse__** procède alors au <<score-preparation,découpage de la partition>> que vous pouvez affiner au besoin (suivre le lien précédent) et à la répartition des systèmes sur la table (vous pouvez bien sûr <<systems-position,ajuster la position des systèmes>>).
+
+
+[[analyse-infos]]
+=== Informations concernant l'analyse ===
+
+Lors de la <<analyse-create, création de l'analyse>>, ces informations sont demandées :
+
+[cols="1,3"]
+|====
+| Titre               | Le titre complet de l'œuvre, avec opus ou numéro de catalogue.
+| Compositeur         | Le nom complet du compositeur.
+| Titre analyse       | Le titre optionnel de l'analyse.
+| Identifiant/Affixe  | Nom simple qui permettra de préfixer les fichiers à produire.
+| Conteneur           | Le dossier qui contient l'analyse
+| Analyste            | Si nécessaire, le patronyme de l'analyste qui a procédé à l'analyse
+| Systèmes            | Dossier optionnel contenant les systèmes (seulement s'il doit se trouver ailleurs qu'à sa place « naturelle »)
+|====

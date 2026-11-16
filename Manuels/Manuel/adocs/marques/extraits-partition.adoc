@@ -1,0 +1,5 @@
+[[tags-extrait]]
+=== Extrait de partition ===
+
+- assemblage des parties
+- pose d'un masque blanc sur scories

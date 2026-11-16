@@ -4,10 +4,57 @@
 [[systems-preparation]]
 === Préparation des systèmes ===
 
-Pour travailler, l'app a besoin des systèmes séparés de la partition. Pour se faire, il faut : 
 
-* partir du fichier PDF de la partition,
-* enregistrer les pages en JPG,
-* découper chaque page en ses systèmes.
+[[systems-position]]
+=== Positionnement des systèmes ===
 
-L'application **ScoreCutting** de la **SuiteScore** permet de faire cette opération très facilement. Se référer à son utilisation.
+Vous pouvez définir des <<systems-default-positions, valeurs par défaut>> concernant les systèmes, afin de les répartir comme vous le voulez dans la partition.
+
+Vous pouvez aussi, individuellement, les <<systems-move-manu, déplacement manuellement>>.
+
+[[systems-default-positions]]
+=== Positions par défaut des systèmes ===
+
+Les valeurs par défaut des systèmes se règlent dans les préférences.
+
+* Ouvrir le panneau des préférences (menu « Analyse > Préfences… », ou Cmd+,),
+* régler les préférences décrites ci-dessous,
+* cliquer sur les boutons « Appliquer » pour voir le réglage immédiatement pris en compte.
+* cliquer sur le bouton « Enregistrer » pour prendre en compte les définitions (ou « Fermer » pour les abandonner)
+
+**Paramètres réglables**
+
+[cols="1,3,2",options="label:true"]
+|====
+| Paramètre | Définition | Note
+
+| __Décalage haut du premier système__
+| L'intervalle entre le haut de la fenêtre (i.e. haut de la première page) et le premier système affiché.
+| Le haut du système correspond à peu près à sa note ou son indication la plus haute.
+
+| __Distance par défaut des systèmes__
+| Distance en pixels entre chaque système posé sur la table d'analyse.
+| Cette distance peut être <<systems-move-manu, ajuster manuellement>> système par système.
+|====
+
+[[systems-move-manu]]
+=== Déplacement manuel des systèmes ===
+
+* Control-cliquez (ou clic-droit) sur le système,
+* choisissez "Déverrouiller" dans le menu contextuel,
+* cliquez sur le système pour le mettre en mouvement,
+* déplacez le système à l'endroit voulu,
+* cliquer sur le système lorsqu'il est à la position voulue.
+
+Note : le déplacement d'un système entraine le déplacement de tous ses éléments (toutes ses marques) et le déplacement de tous les autres éléments de la partition qui le suit. Sauf si vous utilisez une des options suivantes.
+
+**Options**
+
+[cols="2,1"]
+|====
+| Pour ne déplacer que le système et ses éléments, sans bouger aucun autre élément dessous
+| Tenir la touche Alt en déplaçant le système
+
+| Pour ne déplacer que le système, sans ses éléments (donc seulement les portées), sans bouger les autres éléments dessous
+| Tenir la touche Alt et la touche Maj appuyées.
+|====

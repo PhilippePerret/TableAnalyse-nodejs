@@ -1,0 +1,13 @@
+[[best-practices]]
+== Meilleures pratiques ==
+
+Vous trouverez dans cette partie la description des meilleures pratiques pour optimiser la création d'analyse avec **__Table d'Analyse__**.
+
+
+
+...
+
+**Bloquez le type de marque « Accord » et entrez tous les accords de la partition d'un coup.**
+
+**Bloquez le type de marque « Harmonie » et entrez tous les chiffrages des accords. Vous pouvez ponctuellement changer le type pour ajouter une modulation ou un emprunt en créant la marque et en cliquant sur le bouton « Type… » pour changer ponctuellement le type.
+

@@ -6,8 +6,8 @@
 # qui pointe vers ces fichiers.
 #
 # Le numéro de version est d'abord incrémenté (patch, mineure ou majeure,
-# au choix) dans VERSION, package.json et package-lock.json, commité et
-# poussé.
+# au choix, ou aucune incrémentation) dans VERSION, package.json et
+# package-lock.json, commité et poussé.
 #
 # Requis : gh connecté (gh auth login), code poussé sur GitHub (la
 # fabrication se fait à partir de la branche main du dépôt distant).
@@ -31,20 +31,25 @@ fi
 # Nouveau numéro de version
 OLD=$(node -p "require('./package.json').version")
 echo "Version actuelle : $OLD"
-echo -n "Incrémenter : p = patch (défaut), m = mineure, M = majeure ? "
+echo -n "Incrémenter : p = patch, m = mineure, M = majeure, rien = garder $OLD ? "
 read KIND
 case "$KIND" in
   M) KIND=major ;;
   m) KIND=minor ;;
-  ""|p) KIND=patch ;;
+  p) KIND=patch ;;
+  "") KIND="" ;;
   *) fin "Choix inconnu : $KIND" ;;
 esac
-npm version "$KIND" --no-git-tag-version >/dev/null || fin "Incrémentation de la version impossible."
-VERSION=$(node -p "require('./package.json').version")
-echo "$VERSION" > VERSION
-git add VERSION package.json package-lock.json \
-  && git commit -q -m "Version $VERSION" VERSION package.json package-lock.json \
-  && git push -q origin main || fin "Commit ou envoi de la version $VERSION impossible."
+if [[ -n "$KIND" ]]; then
+  npm version "$KIND" --no-git-tag-version >/dev/null || fin "Incrémentation de la version impossible."
+  VERSION=$(node -p "require('./package.json').version")
+  echo "$VERSION" > VERSION
+  git add VERSION package.json package-lock.json \
+    && git commit -q -m "Version $VERSION" VERSION package.json package-lock.json \
+    && git push -q origin main || fin "Commit ou envoi de la version $VERSION impossible."
+else
+  VERSION="$OLD"
+fi
 
 echo "Fabrication et publication de la version $VERSION sur GitHub…"
 gh workflow run "$WORKFLOW" --ref main || fin "Lancement du workflow impossible."

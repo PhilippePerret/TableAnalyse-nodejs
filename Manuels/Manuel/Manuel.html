@@ -441,18 +441,50 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a></li>
-<li><a href="#_création_dune_analyse">Création d&#8217;une analyse</a></li>
+<li><a href="#prise-en-main">Prise en main de l&#8217;app</a>
+<ul class="sectlevel2">
+<li><a href="#_prérequis">Prérequis ====</a></li>
+<li><a href="#_création_de_lanalyse">Création de l&#8217;analyse</a></li>
+<li><a href="#_préparation_de_lanalyse">Préparation de l&#8217;analyse</a></li>
+</ul>
+</li>
+<li><a href="#analyse-create">Création d&#8217;une analyse</a>
+<ul class="sectlevel2">
+<li><a href="#analyse-infos">Informations concernant l&#8217;analyse</a></li>
+</ul>
+</li>
+<li><a href="#score-preparation">Découpage de la partition</a>
+<ul class="sectlevel2">
+<li><a href="#systems-cleaning">Nettoyage des systèmes</a></li>
+</ul>
+</li>
 <li><a href="#systems">Les systèmes</a>
 <ul class="sectlevel2">
 <li><a href="#systems-preparation">Préparation des systèmes</a></li>
+<li><a href="#systems-position">Positionnement des systèmes</a></li>
+<li><a href="#systems-default-positions">Positions par défaut des systèmes</a></li>
+<li><a href="#systems-move-manu">Déplacement manuel des systèmes</a></li>
 </ul>
 </li>
 <li><a href="#tags">Marques</a>
 <ul class="sectlevel2">
 <li><a href="#tags-types">Types de marques</a></li>
+<li><a href="#tags-move">Déplacement des marques</a></li>
+<li><a href="#tags-extrait">Extrait de partition</a></li>
 </ul>
 </li>
-<li><a href="#prefs">Préférences</a></li>
+<li><a href="#prefs">Préférences</a>
+<ul class="sectlevel2">
+<li><a href="#prefs-systems">Les préférences pour les systèmes</a></li>
+</ul>
+</li>
+<li><a href="#form">Forme de la pièce</a></li>
+<li><a href="#form-definition">Définition de la forme</a>
+<ul class="sectlevel2">
+<li><a href="#form-building">Construction de la forme</a></li>
+</ul>
+</li>
+<li><a href="#best-practices">Meilleures pratiques</a></li>
 </ul>
 </div>
 </div>
@@ -461,29 +493,203 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Introduction à la documentation.</p>
+<p><strong><em>Table d&#8217;analyse</em></strong> est une application de bureau qui permet de procéder à des analyses musicales de façon très confortable. Elle a été conçue par Philippe Perret (Prix d&#8217;Analyse Musicale à l&#8217;unanimité et Prix SACEM pour son travail d&#8217;analyse) et codée par Claude (Opus 5.5).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_création_dune_analyse">Création d&#8217;une analyse</h2>
+<h2 id="prise-en-main">Prise en main de l&#8217;app</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_prérequis">Prérequis ====</h3>
+<div class="paragraph">
+<p>À l&#8217;ouverture de l&#8217;application <strong><em>Table d’Analyse</em></strong>, aucune analyse n&#8217;est ouverte, il faut donc la créer.</p>
+</div>
+<div class="paragraph">
+<p>Pour ce faire, vous avez juste besoin d&#8217;une partition au format PDF, c&#8217;est tout.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Vous pouvez télécharger rapidement une partition depuis la pages des <a href="https://www.analyse-musicale.fr/jeudis-analyse/" target="_blank" rel="noopener"><strong>Jeudis de l&#8217;analyse</strong></a>, en cliquant sur une session et en suivant le lien vers la partition étudiée.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_lanalyse">Création de l&#8217;analyse</h3>
+<div class="paragraph">
+<p>Ensuite, <strong>créez l&#8217;analyse</strong> en choisissant le menu « Analyse &gt; Nouvelle analyse… » ou en jouant le raccourci traditionnel Cmd+n (Ctrl+n sous Windows).</p>
+</div>
+<div class="paragraph">
+<p>L&#8217;application vous demande alors de <strong>choisir le dossier</strong> dans lequel vous voulez placer cette analyse (son dossier). Choisissez une emplacement judicieux, dans <code>Documents</code> ou dans <code>Musique/Analyses</code> par exemple.</p>
+</div>
+<div class="paragraph">
+<p>Vous devez ensuite définir <strong>l&#8217;identifiant de cette analyse</strong>, c&#8217;est-à-dire le nom du dossier qui sera créé dans le dossier/répertoire choisi précédemment. Ce nom ne doit comporter aucune espace et seulement des lettres a à z, des tirets et des traits plats.</p>
+</div>
+<div class="paragraph">
+<p>Vous pouvez ensuite choisir dès à présent <strong>la partition de la pièce</strong>, si vous l&#8217;avez chargée, afin qu&#8217;elle soit préparée pour l&#8217;application. La <em>préparation</em> consiste 1) à la découper en systèmes, pour les écarter afin de permettre l&#8217;écriture de l&#8217;analyse et 2) à numéroter les mesures.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Pour un bon numérotage des mesures, assurez-vous de faire le bon choix, de distinguer une partition qui commence par une <em>anacrouse</em> (une ou quelques notes avant la première mesure) ou par une vraie mesure entière (si vous avez un doute, regardez comment cette partition est numérotée).
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_préparation_de_lanalyse">Préparation de l&#8217;analyse</h3>
+<div class="paragraph">
+<p>Une fois ces informations acquises, l&#8217;application se charge de <strong>découper la partition</strong> et de <strong>numéroter ses mesures</strong>. C&#8217;est une opération qui, manuellement, vous aurez pris de une demi-heure à une heure pour une pièce longue…</p>
+</div>
+<div class="paragraph">
+<p>Vous êtes prêt ou prête, à présent, à <strong>procéder à l&#8217;analyse de la pièce</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Cette analyse consiste principalement à <strong>poser des « <a href="#tags">marques</a></strong> au-dessus et au-dessous des systèmes qui ont été répartis, à <a href="#prefs-systems-distance">distance suffisante</a> sur la table d&#8217;analyse.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="analyse-create">Création d&#8217;une analyse</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour créer une nouvelle analyse, il vous suffit de posséder sa partition en PDF.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" class="bare">https://imslp.org</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Ensuite :</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Préparer le dossier</p>
-<div class="ulist">
-<ul>
-<li>
-<p>créer un dossier avec le nom <code>systems</code></p>
+<p>lancer l&#8217;application <strong><em>Table d&#8217;analyse</em></strong>,</p>
 </li>
 <li>
-<p>mettre dedans les systèmes de la partition (voir <a href="#systems-preparation">comment les préparer</a>)</p>
+<p>activer le menu « Analyse &gt; Nouvelle analyse… »,</p>
+</li>
+<li>
+<p>définissez les <a href="#analyse-infos">informations demandées</a>, en tout cas celles requises,</p>
+</li>
+<li>
+<p>cliquer sur le bouton « Créer la nouvelle analyse »,</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>L&#8217;opération suivante va consister à définir les systèmes de la pièce (c&#8217;est-à-dire les groupes de portées, deux ou exceptionnement trois pour le piano). Dans l&#8217;application, en effet, la partition est découpée en ses systèmes pour permettre d&#8217;indiquer confortablement toutes les données de l&#8217;analyse. Pour ce faire, il existe un outil puissant : la découpe de partition.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Activer « Outils &gt; Découper la partition… »,</p>
+</li>
+<li>
+<p>choisissez la partition PDF à découper,</p>
+</li>
+<li>
+<p>cliquer « OK » (ou autre nom suivant votre système).</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong><em>Table d&#8217;analyse</em></strong> procède alors au <a href="#score-preparation">découpage de la partition</a> que vous pouvez affiner au besoin (suivre le lien précédent) et à la répartition des systèmes sur la table (vous pouvez bien sûr <a href="#systems-position">ajuster la position des systèmes</a>).</p>
+</div>
+<div class="sect2">
+<h3 id="analyse-infos">Informations concernant l&#8217;analyse</h3>
+<div class="paragraph">
+<p>Lors de la <a href="#analyse-create">création de l&#8217;analyse</a>, ces informations sont demandées :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Titre</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Le titre complet de l&#8217;œuvre, avec opus ou numéro de catalogue.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compositeur</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Le nom complet du compositeur.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Titre analyse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Le titre optionnel de l&#8217;analyse.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identifiant/Affixe</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom simple qui permettra de préfixer les fichiers à produire.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conteneur</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Le dossier qui contient l&#8217;analyse</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Analyste</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Si nécessaire, le patronyme de l&#8217;analyste qui a procédé à l&#8217;analyse</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Systèmes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dossier optionnel contenant les systèmes (seulement s&#8217;il doit se trouver ailleurs qu&#8217;à sa place « naturelle »)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="score-preparation">Découpage de la partition</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Parmi les outils puissant de <strong><em>Table d&#8217;analyse</em></strong> d&#8217;analyse, il y a la découpe automatique de la partition en systèmes et la numérotation des mesures.</p>
+</div>
+<div class="paragraph">
+<p>Une fois les systèmes découpé (et affichés), vous pouvez <a href="#systems-cleaning">les nettoyer</a> pour retirer toutes les marques inutiles ou les taches.</p>
+</div>
+<div class="paragraph">
+<p>Vous pouvez également <a href="#systems-position">ajuster la position des systèmes</a> pour qu&#8217;ils soient exactement comme vous le désirez.</p>
+</div>
+<div class="sect2">
+<h3 id="systems-cleaning">Nettoyage des systèmes</h3>
+<div class="paragraph">
+<p>Si vous êtes sur macOS, l&#8217;image du système s&#8217;ouvrira dans Aperçu. Les raccourcis à connaitre sont alors les suivants :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ctrl+cmd+r pour poser un rectangle (la première fois, lui donner des bords et un intérieur blanc) qui permettra de masquer les défauts (en le déplaçant sur les "taches" et en le redimensionnant).</p>
+</li>
+<li>
+<p>cmd+k pour découper l&#8217;image après avoir défini ses dimensions avec la sélection de souris
+Attention : ne découper qu&#8217;en hauteur. Si vous changer la largeur de l&#8217;image du système, le système sera grossi à l&#8217;affichage.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -492,25 +698,111 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="systems-preparation">Préparation des systèmes</h3>
+
+</div>
+<div class="sect2">
+<h3 id="systems-position">Positionnement des systèmes</h3>
 <div class="paragraph">
-<p>Pour travailler, l&#8217;app a besoin des systèmes séparés de la partition. Pour se faire, il faut :</p>
+<p>Vous pouvez définir des <a href="#systems-default-positions">valeurs par défaut</a> concernant les systèmes, afin de les répartir comme vous le voulez dans la partition.</p>
+</div>
+<div class="paragraph">
+<p>Vous pouvez aussi, individuellement, les <a href="#systems-move-manu">déplacement manuellement</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="systems-default-positions">Positions par défaut des systèmes</h3>
+<div class="paragraph">
+<p>Les valeurs par défaut des systèmes se règlent dans les préférences.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>partir du fichier PDF de la partition,</p>
+<p>Ouvrir le panneau des préférences (menu « Analyse &gt; Préfences… », ou Cmd+,),</p>
 </li>
 <li>
-<p>enregistrer les pages en JPG,</p>
+<p>régler les préférences décrites ci-dessous,</p>
 </li>
 <li>
-<p>découper chaque page en ses systèmes.</p>
+<p>cliquer sur les boutons « Appliquer » pour voir le réglage immédiatement pris en compte.</p>
+</li>
+<li>
+<p>cliquer sur le bouton « Enregistrer » pour prendre en compte les définitions (ou « Fermer » pour les abandonner)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>L&#8217;application <strong>ScoreCutting</strong> de la <strong>SuiteScore</strong> permet de faire cette opération très facilement. Se référer à son utilisation.</p>
+<p><strong>Paramètres réglables</strong></p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Paramètre</th>
+<th class="tableblock halign-left valign-top">Définition</th>
+<th class="tableblock halign-left valign-top">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Décalage haut du premier système</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L&#8217;intervalle entre le haut de la fenêtre (i.e. haut de la première page) et le premier système affiché.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Le haut du système correspond à peu près à sa note ou son indication la plus haute.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Distance par défaut des systèmes</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Distance en pixels entre chaque système posé sur la table d&#8217;analyse.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cette distance peut être <a href="#systems-move-manu">ajuster manuellement</a> système par système.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="systems-move-manu">Déplacement manuel des systèmes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Control-cliquez (ou clic-droit) sur le système,</p>
+</li>
+<li>
+<p>choisissez "Déverrouiller" dans le menu contextuel,</p>
+</li>
+<li>
+<p>cliquez sur le système pour le mettre en mouvement,</p>
+</li>
+<li>
+<p>déplacez le système à l&#8217;endroit voulu,</p>
+</li>
+<li>
+<p>cliquer sur le système lorsqu&#8217;il est à la position voulue.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note : le déplacement d&#8217;un système entraine le déplacement de tous ses éléments (toutes ses marques) et le déplacement de tous les autres éléments de la partition qui le suit. Sauf si vous utilisez une des options suivantes.</p>
+</div>
+<div class="paragraph">
+<p><strong>Options</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 66.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pour ne déplacer que le système et ses éléments, sans bouger aucun autre élément dessous</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenir la touche Alt en déplaçant le système</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pour ne déplacer que le système, sans ses éléments (donc seulement les portées), sans bouger les autres éléments dessous</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenir la touche Alt et la touche Maj appuyées.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -573,6 +865,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-note">voir</a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Forme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marque permettant de définir la forme de la pièce</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-form">voir</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Degré de note</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l&#8217;accord.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
@@ -608,15 +906,106 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-circle">voir</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extrait partition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pour extraire des mesures de la partition (en faire une image).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-extrait">voir</a></p></td>
+</tr>
 </tbody>
 </table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu « Marques &gt; Bloquer le type à … &gt; &#8230;&#8203; ») et poser toutes les marques de ce type d&#8217;un coup. Par exemple, on peut poser toutes les marques d&#8217;accord d&#8217;un coup par ce biais, ce qui accélère considérablement l&#8217;analyse. Voir la description dans les <a href="#best-practices">bonnes pratiques</a>.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
 <h4 id="tags-chord">Marque Accord</h4>
-
+<div class="paragraph">
+<p>Tous les accords se mettent en notation batave (de A à G). Tous les accords, même les mineurs, se mettent en capital.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 50%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nature</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord bémol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « - » après la note de l&#8217;accord</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B-</code> pour Si bémol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord dièse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « + » après la note de l&#8217;accord</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C+</code> pour Do dièse</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord mineur</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « m » après la note de l&#8217;accord</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B-m</code> pour Si bémol mineur</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord de quinte diminuée</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « 5- »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B5-</code> pour Si quinte diminué (Si Ré Fa)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord (de) septième diminuée</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AJouter « 7- »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B7-</code> pour Si septième diminuée (Si Ré Fa La bémol)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord demi-diminué</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « m75- »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Dm75+</code> pour D demi-diminué (Ré Fa La bémol Do)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="tags-chiffrage">Marque d&#8217;Harmonie (chiffrage)</h4>
-
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nature</th>
+<th class="tableblock halign-left valign-top">Écriture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dominante de dominante</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>V/V</code> ou <code>VII/V</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord de sixte augmentée</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>VI6+</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> Accord pivot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;IV–IV&gt;</code> (le trait s&#8217;obtient par Alt-Maj-tiret)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="tags-modulation">Marque de Modulation</h4>
@@ -634,6 +1023,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="tags-cadre">Cadre</h4>
 <div class="paragraph">
 <p>Pour entourer une partie de la partition par un cadre.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="tags-form">Marque de forme</h4>
+<div class="paragraph">
+<p>Permet d&#8217;indiquer les parties, les sections et les segments de la partition pour révéler la forme de la pièce.</p>
 </div>
 </div>
 <div class="sect3">
@@ -714,6 +1109,60 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>Pour définir la taille du cercle, bouger ses bords. La touche MAJ permet d&#8217;augmenter la taille en conservant la forme (le cercle, par défaut, ou l&#8217;ovale si la dimension horizontale a été modifiéee).</p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" colspan="2">Ajout de touches modificatrice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Majuscule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conserve la forme (le cercle par exemple) en agrandissant homothétiquement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maitient le centre du cercle (ou de l&#8217;ovale) en place</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maj+Alt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accomplit les deux en même temps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tags-move">Déplacement des marques</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>aux flèches</p>
+</li>
+<li>
+<p>à la souris</p>
+</li>
+<li>
+<p>avec Maj &#8658; garde même axe horizontal ou vertical</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tags-extrait">Extrait de partition</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>assemblage des parties</p>
+</li>
+<li>
+<p>pose d&#8217;un masque blanc sur scories</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -722,14 +1171,141 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="prefs">Préférences</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pour ouvrir le panneau des préférences, jouer Maj-P ou choisir le menu « Préférences » dans le menu « Fichier » en pied de page.</p>
+<p>Pour ouvrir le panneau des préférences, jouer ⌘, (Ctrl+, sous Windows et Linux) ou choisir « Préférences… » dans le menu « Analyse ».</p>
+</div>
+<div class="sect2">
+<h3 id="prefs-systems">Les préférences pour les systèmes</h3>
+<div class="sect3">
+<h4 id="prefs-systems-distance">Distances entre les systèmes</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="form">Forme de la pièce</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La <strong><em>Table d&#8217;Analyse</em></strong> permet aussi de « dessiner » la forme de la pièce. Cette forme pourra être ajoutée au début de l&#8217;analyse ou à la fin, sur une page séparée (ou plusieurs page si nécessaire).</p>
+</div>
+<div class="paragraph">
+<p>La forme est principalement définie par des numéros de mesure de départ et de fin ainsi que par les marques de tonalité et de modulation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+C&#8217;est la raison pour laquelle il est intéressant d&#8217;ajouter au début de la partition une marque de modulation (qui ici sera une marque de tonalité) avec la tonalité du morceau.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="form-definition">Définition de la forme</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La forme se définit à l&#8217;aide de portion (parties, sections et segments) en ajoutant des « marque de forme ». Pour ajouter une marque de forme :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>double-cliquer sur la table d&#8217;analyse à l&#8217;endroit voulu (près d&#8217;une barre de mesure par exemple),</p>
+</li>
+<li>
+<p>choisir le type de marque "Forme" (ou cliquer « f »),</p>
+</li>
+<li>
+<p>choisissez le type de portion : <em>Partie</em>, <em>Section</em> ou <em>Segment</em>,</p>
+</li>
+<li>
+<p>donnez un titre à la portion,</p>
+</li>
+<li>
+<p>cliquez sur le bouton pour créer la marque.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Par défaut, la marque est fermée. Cliquez dessus pour voir son nom.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>On peut ajouter des marques de début de portion et de fin de portion, mais la marque de fin n&#8217;est pas obligatoire. En cas d&#8217;absence, la fin de la portion est considérée être la prochaine marque de même type ou la fin de la pièce.</p>
+</div>
+<div class="paragraph">
+<p>Vous pouvez régler la hauteur par défaut de chaque type de marque dans les <a href="#prefs">préférences</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="form-building">Construction de la forme</h3>
+<div class="paragraph">
+<p>Pour construire la forme, activez le menu « Forme &gt; Construire… ». Choisissez l&#8217;emplacement (cet emplacement peut être choisi par défaut), effectuez les autres réglages et cliquez le bouton « Construire ».</p>
+</div>
+<div class="paragraph">
+<p>Les réglages permettent de définir ce qui doit être affiché dans la forme dessinée.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 42.8571%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Paramètres</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Numéros de mesure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Si coché, la forme indique les numéros de mesure correspondant aux parties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Si vous cliquez sur ce numéro, vous pouvez rejoindre directement la mesure en question.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tonalités</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Si coché, les tonalités et les modulations sont indiquées dans la forme.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Par défaut, elles ne sont pas affichées</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="best-practices">Meilleures pratiques</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vous trouverez dans cette partie la description des meilleures pratiques pour optimiser la création d&#8217;analyse avec <strong><em>Table d&#8217;Analyse</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p><strong>Bloquez le type de marque « Accord » et entrez tous les accords de la partition d&#8217;un coup.</strong></p>
+</div>
+<div class="paragraph">
+<p>**Bloquez le type de marque « Harmonie » et entrez tous les chiffrages des accords. Vous pouvez ponctuellement changer le type pour ajouter une modulation ou un emprunt en créant la marque et en cliquant sur le bouton « Type… » pour changer ponctuellement le type.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-11-11 06:03:00 +0100
+Last updated 2026-11-16 05:39:13 +0100
 </div>
 </div>
 </body>

@@ -1,0 +1,133 @@
+---
+piece_title: Sonate 1
+composer: Beethoven
+analyse_title: Pour essai de la table
+analyse_id: bee-sonate-1 copie
+folder: /Users/philippeperret/Music/Analyses
+analyst: Phil
+systems:
+  - image_name: system-001.jpg
+    top: 400
+    left: 0
+    measures_end: 0.9881
+  - image_name: system-002.jpg
+    top: 1195
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-003.jpg
+    top: 1959
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-004.jpg
+    top: 2696
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-005.jpg
+    top: 3459
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-006.jpg
+    top: 4221
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-007.jpg
+    top: 4983
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-008.jpg
+    top: 5798
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-009.jpg
+    top: 6629
+    left: 0
+    measures_end: 0.9809
+  - image_name: system-010.jpg
+    top: 7404
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-011.jpg
+    top: 8151
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-012.jpg
+    top: 8959
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-013.jpg
+    top: 9732
+    left: 0
+    measures_end: 0.797
+  - image_name: system-014.jpg
+    top: 10519
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-015.jpg
+    top: 11338
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-016.jpg
+    top: 12163
+    left: 0
+    measures_end: 0.9891
+  - image_name: system-017.jpg
+    top: 13000
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-018.jpg
+    top: 13801
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-019.jpg
+    top: 14574
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-020.jpg
+    top: 15380
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-021.jpg
+    top: 16140
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-022.jpg
+    top: 16904
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-023.jpg
+    top: 17685
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-024.jpg
+    top: 18460
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-025.jpg
+    top: 19265
+    left: 0
+    measures_end: 0.9883
+  - image_name: system-026.jpg
+    top: 20049
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-027.jpg
+    top: 20837
+    left: 0
+    measures_end: 0.9891
+  - image_name: system-028.jpg
+    top: 21639
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-029.jpg
+    top: 22450
+    left: 0
+    measures_end: 0.9887
+  - image_name: system-030.jpg
+    top: 23231
+    left: 0
+    measures_end: 0.9813
+form:
+  type: sonata
+  precision: ''
+  description: ''
+updated_at: 1794674422

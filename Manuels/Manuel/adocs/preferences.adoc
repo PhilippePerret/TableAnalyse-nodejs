@@ -2,3 +2,5 @@
 == Préférences ==
 
 Pour ouvrir le panneau des préférences, jouer ⌘, (Ctrl+, sous Windows et Linux) ou choisir « Préférences… » dans le menu « Analyse ».
+
+include::prefs/systemes.adoc[]
