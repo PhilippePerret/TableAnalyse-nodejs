@@ -2,7 +2,6 @@
 # Variablen: %{name}; %{cmd} = Befehlstaste des Systems (⌘ oder Strg+)
 # Systemabhängiger Text: Tabelle {darwin:, win32:, linux:}
 
-no_analyse_open: "Keine Analyse geöffnet.<br><br>Über das Menü „Analyse“ eine vorhandene Analyse öffnen (%{cmd}O) oder eine neue erstellen (%{cmd}N)."
 no_systems: "Diese Analyse enthält kein System.<br><br>Für die Analyse werden die Systeme der Partitur benötigt: Menü „Werkzeuge“ > „Partitur zerschneiden…“."
 cutting_score: "Partitur wird zerschnitten und nummeriert…"
 after_cut:

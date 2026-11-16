@@ -2,7 +2,6 @@
 # Variables: %{nombre}; %{cmd} = tecla de comando del sistema (⌘ o Ctrl+)
 # Texto propio de un sistema: tabla {darwin:, win32:, linux:}
 
-no_analyse_open: "No hay ningún análisis abierto.<br><br>Use el menú «Análisis» para abrir un análisis existente (%{cmd}O) o crear uno nuevo (%{cmd}N)."
 no_systems: "Este análisis no contiene ningún sistema.<br><br>Se necesitan los sistemas de la partitura para empezar el análisis: menú «Herramientas» > «Recortar la partitura…»."
 cutting_score: "Recorte y numeración de la partitura…"
 after_cut:

@@ -11,6 +11,7 @@ import { Exporter } from './Exporter.js'
 import { Animation } from './Animation.js'
 import { TableAnalyse } from './TableAnalyse.js'
 import { t } from './i18n.js'
+import { DCreate } from './dom.js'
 
 class AppClass {
 
@@ -46,8 +47,20 @@ class AppClass {
         message(t('messages.no_systems'), {keep: true})
       }
     } else {
-      message(t('messages.no_analyse_open'), {keep: true})
+      this.showWatermark()
     }
+  }
+
+  /**
+   * Table vide : nom de l'application en filigrane (fondu), puis lien
+   * vers la prise en main du manuel
+   */
+  showWatermark(){
+    const titre = DCreate('SPAN', {class: 'filigrane-titre', text: t('ui.app.name')})
+    const lien  = DCreate('A', {class: 'filigrane-lien', text: t('ui.app.getting_started')})
+    titre.addEventListener('animationend', () => lien.classList.add('visible'))
+    lien.addEventListener('click', () => invoke('app:openManual', {anchor: 'prise-en-main'}).catch(err => erreur(err.message)))
+    document.body.appendChild(DCreate('DIV', {id: 'filigrane', inner: [titre, lien]}))
   }
 
   /**
@@ -58,6 +71,7 @@ class AppClass {
       case 'newAnalyse':    return Analyse.newAnalyse()
       case 'openAnalyse':   return Analyse.openAnalyse()
       case 'reloadAnalyse': return Analyse.reloadAnalyse()
+      case 'closeAnalyse':  return Analyse.closeAnalyse()
       case 'save':          return AnalyseSaver.save()
       case 'cutScore':      return Analyse.cutScore()
       case 'numberScore':   return Analyse.numberScore()

@@ -347,3 +347,70 @@ div#sablier .sablier-icon {
   50%, 90%  { transform: rotate(180deg); }
   100%      { transform: rotate(360deg); }
 }
+
+/* Filigrane de la table quand aucune analyse n'est ouverte (cf. App.showWatermark) */
+div#filigrane {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+}
+div#filigrane span.filigrane-titre {
+  font-family: Filigrane, sans-serif;
+  font-size: 10vw;
+  line-height: 1;
+  white-space: nowrap;
+  color: #000;
+  opacity: 0;
+  animation: filigrane-fondu 1.2s ease-out forwards;
+}
+@keyframes filigrane-fondu { to { opacity: .10; } }
+div#filigrane a.filigrane-lien {
+  position: fixed;
+  left: 24px;
+  bottom: 20px;
+  font-size: 22px;
+  color: #3a925e;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity .5s;
+}
+div#filigrane a.filigrane-lien.visible { opacity: 1; }
+
+/* Nom du dossier de la nouvelle analyse (cf. Analyse.askNewAnalyseId) */
+div#new_analyse_box {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 680px;
+  z-index: 60;
+}
+div#new_analyse_box span.panneau-close { visibility: hidden; }
+div#new_analyse_box label {
+  display: block;
+  margin: 18px 6px 10px;
+}
+div#new_analyse_box input[type="text"] {
+  display: block;
+  box-sizing: border-box;
+  width: calc(100% - 12px);
+  margin: 0 6px;
+  font-size: 1.1em;
+  padding: 8px 12px;
+}
+div#new_analyse_box div.hint {
+  margin: 8px 6px 0;
+  font-size: .75em;
+  opacity: .6;
+}
+div#new_analyse_box div.error {
+  min-height: 1.4em;
+  margin: 10px 6px 8px;
+  font-size: .8em;
+  color: #cc4870;
+}

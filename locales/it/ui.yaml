@@ -5,6 +5,7 @@
 app:
   name: "Tavolo d'analisi"
   title: "TAVOLO D'ANALISI"
+  getting_started: "Primi passi"
 
 decimal_separator: ","
 
@@ -13,6 +14,7 @@ menu:
   new_analyse:      "Nuova analisi…"
   open_analyse:     "Apri analisi…"
   reload_analyse:   "Ricarica l'analisi"
+  close_analyse:    "Chiudi l'analisi"
   save:             "Salva"
   cut_score:        "Taglia la partitura…"
   number_score:     "Numera la partitura"
@@ -158,6 +160,7 @@ buttons:
   choose:           "Scegli…"
   cancel:           "Annulla"
   renounce:         "Rinuncia"
+  create_analyse:   "Crea l'analisi"
   replace:          "Sostituisci"
   ok:               "OK"
   apply:            "Applica"
@@ -327,7 +330,9 @@ dialogs:
   count_first_no:        "No (anacrusi)"
   count_first_yes:       "Sì"
   new_analyse_folder:    "Cartella in cui mettere la nuova analisi"
-  new_analyse_id:        "Nome della cartella dell'analisi (lettere, cifre, «-» e «_»)"
+  new_analyse_title:     "Nuova analisi"
+  new_analyse_id:        "Nome della cartella e identificatore dell'analisi"
+  new_analyse_id_hint:   "(solo lettere, cifre, trattino o trattino basso)"
   new_score:             "Partitura del brano"
   new_score_detail:      "Scegli il file PDF della partitura. Potrai anche fornirla più tardi («Strumenti > Taglia la partitura…»)."
   new_score_choose:      "Scegli la partitura…"

@@ -194,6 +194,14 @@ function openManual(ext){
   showInFinder(file)
 }
 
+// Manuel HTML ouvert dans une fenêtre de l'application, à la section +anchor+
+function openManualAt(anchor){
+  const file = path.join(APP_FOLDER, 'Manuels', 'Manuel', 'Manuel.html')
+  if ( !fs.existsSync(file) ) throw new Error(t('errors.manual_not_found', {path: file}))
+  const win = new BrowserWindow({width: 1000, height: 900, title: t('ui.menu.help'), icon: path.join(ASSETS_FOLDER, 'icons', 'icon.png')})
+  win.loadFile(file, {hash: anchor})
+}
+
 function reloadWindow(){
   mainWindow && mainWindow.webContents.reload()
 }
@@ -233,6 +241,7 @@ function buildMenu(){
           {label: t('ui.menu.new_analyse'),     accelerator: 'CmdOrCtrl+N', click: () => sendMenuCommand('newAnalyse')}
         , {label: t('ui.menu.open_analyse'),    accelerator: 'CmdOrCtrl+O', click: () => sendMenuCommand('openAnalyse')}
         , {label: t('ui.menu.reload_analyse'),  accelerator: 'CmdOrCtrl+R', click: () => sendMenuCommand('reloadAnalyse')}
+        , {label: t('ui.menu.close_analyse'),   id: 'closeAnalyse', click: () => sendMenuCommand('closeAnalyse')}
         , {type: 'separator'}
         , {label: t('ui.menu.save'),            accelerator: 'CmdOrCtrl+S', click: () => sendMenuCommand('save')}
         , {type: 'separator'}
@@ -337,7 +346,7 @@ function dynamicSubmenus(parent){
 function updateMenu(){
   const menu = Menu.getApplicationMenu()
   if ( !menu ) return
-  ;['cutScore', 'numberScore', 'removeBlanks'].forEach(id => {
+  ;['closeAnalyse', 'cutScore', 'numberScore', 'removeBlanks'].forEach(id => {
     const item = menu.getMenuItemById(id)
     if ( item ) item.enabled = !!current
   })
@@ -427,6 +436,15 @@ function registerIpc(){
     setCurrent(folder)
     setTimeout(reloadWindow, 10)
     return true
+  })
+
+  // Fermeture de l'analyse courante dans l'application (aucun fichier
+  // touché) : retour à la table vide
+  handle('analyse:close', () => {
+    setCurrent(null)
+    // Pas de réouverture au prochain lancement
+    AppPrefs.set({last_analyse_path: null})
+    setTimeout(reloadWindow, 10)
   })
 
   handle('analyse:reload', () => {
@@ -667,6 +685,8 @@ function registerIpc(){
 
   // Fermeture avec une analyse non enregistrée : 'save', 'discard' ou
   // 'cancel' (la fermeture est alors abandonnée)
+  handle('app:openManual', ({anchor}) => openManualAt(anchor))
+
   handle('app:confirmClose', async () => {
     clearTimeout(closeTimer)
     const {response} = await dialog.showMessageBox(mainWindow, {

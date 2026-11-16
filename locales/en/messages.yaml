@@ -2,7 +2,6 @@
 # Variables: %{name}; %{cmd} = system command key (⌘ or Ctrl+)
 # System-specific text: table {darwin:, win32:, linux:}
 
-no_analyse_open: "No analysis is open.<br><br>Use the “Analysis” menu to open an existing analysis (%{cmd}O) or create a new one (%{cmd}N)."
 no_systems: "This analysis contains no system.<br><br>The systems of the score are needed to start the analysis: “Tools” menu > “Cut the Score…”."
 cutting_score: "Cutting and numbering the score…"
 after_cut:

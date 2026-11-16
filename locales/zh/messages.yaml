@@ -2,7 +2,6 @@
 # 变量：%{名称}；%{cmd} = 系统命令键（⌘ 或 Ctrl+）
 # 系统专用文本：表 {darwin:, win32:, linux:}
 
-no_analyse_open: "没有打开的分析。<br><br>请使用“分析”菜单打开已有分析（%{cmd}O）或新建分析（%{cmd}N）。"
 no_systems: "此分析不包含任何声部组。<br><br>开始分析需要乐谱的声部组：“工具”菜单 > “切分乐谱…”。"
 cutting_score: "正在切分乐谱并编号…"
 after_cut:

@@ -5,6 +5,7 @@
 app:
   name: "Mesa de análisis"
   title: "MESA DE ANÁLISIS"
+  getting_started: "Primeros pasos"
 
 decimal_separator: ","
 
@@ -13,6 +14,7 @@ menu:
   new_analyse:      "Nuevo análisis…"
   open_analyse:     "Abrir análisis…"
   reload_analyse:   "Recargar el análisis"
+  close_analyse:    "Cerrar el análisis"
   save:             "Guardar"
   cut_score:        "Recortar la partitura…"
   number_score:     "Numerar la partitura"
@@ -158,6 +160,7 @@ buttons:
   choose:           "Elegir…"
   cancel:           "Cancelar"
   renounce:         "Renunciar"
+  create_analyse:   "Crear el análisis"
   replace:          "Reemplazar"
   ok:               "Aceptar"
   apply:            "Aplicar"
@@ -327,7 +330,9 @@ dialogs:
   count_first_no:        "No (anacrusa)"
   count_first_yes:       "Sí"
   new_analyse_folder:    "Carpeta donde colocar el nuevo análisis"
-  new_analyse_id:        "Nombre de la carpeta del análisis (letras, cifras, «-» y «_»)"
+  new_analyse_title:     "Nuevo análisis"
+  new_analyse_id:        "Nombre de la carpeta e identificador del análisis"
+  new_analyse_id_hint:   "(solo letras, cifras, guion o guion bajo)"
   new_score:             "Partitura de la pieza"
   new_score_detail:      "Elija el archivo PDF de la partitura. También puede darla más tarde («Herramientas > Recortar la partitura…»)."
   new_score_choose:      "Elegir la partitura…"

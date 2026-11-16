@@ -5,6 +5,7 @@
 app:
   name: "分析テーブル"
   title: "分析テーブル"
+  getting_started: "はじめに"
 
 decimal_separator: "."
 
@@ -13,6 +14,7 @@ menu:
   new_analyse:      "新規分析…"
   open_analyse:     "分析を開く…"
   reload_analyse:   "分析を再読み込み"
+  close_analyse:    "分析を閉じる"
   save:             "保存"
   cut_score:        "楽譜を切り分ける…"
   number_score:     "楽譜に番号を付ける"
@@ -158,6 +160,7 @@ buttons:
   choose:           "選択…"
   cancel:           "キャンセル"
   renounce:         "やめる"
+  create_analyse:   "分析を作成"
   replace:          "置き換える"
   ok:               "OK"
   apply:            "適用"
@@ -327,7 +330,9 @@ dialogs:
   count_first_no:        "いいえ（アウフタクト）"
   count_first_yes:       "はい"
   new_analyse_folder:    "新しい分析を置くフォルダー"
-  new_analyse_id:        "分析フォルダーの名前（英字、数字、「-」と「_」）"
+  new_analyse_title:     "新しい分析"
+  new_analyse_id:        "分析のフォルダー名と識別子"
+  new_analyse_id_hint:   "（英字、数字、ハイフン、アンダースコアのみ）"
   new_score:             "曲の楽譜"
   new_score_detail:      "楽譜の PDF ファイルを選んでください。後で指定することもできます（「ツール > 楽譜を切り分ける…」）。"
   new_score_choose:      "楽譜を選ぶ…"

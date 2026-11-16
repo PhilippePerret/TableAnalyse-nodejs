@@ -5,6 +5,7 @@
 app:
   name: "Table d'analyse"
   title: "TABLE D'ANALYSE"
+  getting_started: "Prise en main"
 
 decimal_separator: ","
 
@@ -13,6 +14,7 @@ menu:
   new_analyse:      "Nouvelle analyse…"
   open_analyse:     "Ouvrir analyse…"
   reload_analyse:   "Recharger l'analyse"
+  close_analyse:    "Fermer l'analyse"
   save:             "Enregistrer"
   cut_score:        "Découper la partition…"
   number_score:     "Numéroter la partition"
@@ -158,6 +160,7 @@ buttons:
   choose:           "Choisir…"
   cancel:           "Annuler"
   renounce:         "Renoncer"
+  create_analyse:   "Créer l'analyse"
   replace:          "Remplacer"
   ok:               "OK"
   apply:            "Appliquer"
@@ -327,7 +330,9 @@ dialogs:
   count_first_no:        "Non (anacrouse)"
   count_first_yes:       "Oui"
   new_analyse_folder:    "Dossier où placer la nouvelle analyse"
-  new_analyse_id:        "Nom du dossier de l'analyse (lettres, chiffres, « - » et « _ »)"
+  new_analyse_title:     "Nouvelle analyse"
+  new_analyse_id:        "Nom du dossier et identifiant de l'analyse"
+  new_analyse_id_hint:   "(lettres, chiffres, tiret ou trait plat seulement)"
   new_score:             "Partition du morceau"
   new_score_detail:      "Choisissez le fichier PDF de la partition. Vous pourrez aussi la donner plus tard (« Outils > Découper la partition… »)."
   new_score_choose:      "Choisir la partition…"

@@ -5,6 +5,7 @@
 app:
   name: "分析台"
   title: "分析台"
+  getting_started: "入门"
 
 decimal_separator: "."
 
@@ -13,6 +14,7 @@ menu:
   new_analyse:      "新建分析…"
   open_analyse:     "打开分析…"
   reload_analyse:   "重新载入分析"
+  close_analyse:    "关闭分析"
   save:             "保存"
   cut_score:        "切分乐谱…"
   number_score:     "为乐谱编号"
@@ -158,6 +160,7 @@ buttons:
   choose:           "选择…"
   cancel:           "取消"
   renounce:         "放弃"
+  create_analyse:   "创建分析"
   replace:          "替换"
   ok:               "好"
   apply:            "应用"
@@ -327,7 +330,9 @@ dialogs:
   count_first_no:        "否（弱起）"
   count_first_yes:       "是"
   new_analyse_folder:    "放置新分析的文件夹"
-  new_analyse_id:        "分析文件夹的名称（字母、数字、“-”和“_”）"
+  new_analyse_title:     "新建分析"
+  new_analyse_id:        "分析的文件夹名称和标识符"
+  new_analyse_id_hint:   "（仅限字母、数字、连字符或下划线）"
   new_score:             "作品的乐谱"
   new_score_detail:      "选择乐谱的 PDF 文件。也可以稍后提供（“工具 > 切分乐谱…”）。"
   new_score_choose:      "选择乐谱…"

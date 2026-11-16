@@ -7,7 +7,7 @@
  */
 import { DCreate, DGet } from './dom.js'
 import { not, isNil } from './lib/common.js'
-import { message, erreur } from './lib/Message.js'
+import { message, erreur, Message } from './lib/Message.js'
 import { raise } from './handies.js'
 import { invoke } from './api.js'
 import { Sablier } from './Sablier.js'
@@ -22,8 +22,8 @@ import { AnalyseDisplayer } from './AnalyseDisplayer.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
 import { PanneauInfos } from './PanneauInfos.js'
 import { TableAnalyse } from './TableAnalyse.js'
-import { Editeur } from './Editeur.js'
 import { t } from './i18n.js'
+import { addPanelHead } from './Panneau.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
 const SYSTEMS_MARGIN = 40
@@ -522,6 +522,15 @@ checkSystems(){
   }
 
   /**
+   * Fermer l'analyse courante : l'application revient à son état de
+   * départ (table vide). Les fichiers de l'analyse ne sont pas touchés.
+   */
+  static async closeAnalyse(){
+    if ( !(await this.saveIfModified()) ) return
+    invoke('analyse:close').catch(err => erreur(err.message))
+  }
+
+  /**
    * Découpe la partition PDF en systèmes, numérotés. La fenêtre est
    * ensuite rechargée.
    */
@@ -584,22 +593,37 @@ checkSystems(){
 
   /**
    * Nom du dossier de la nouvelle analyse (dans +folder+), redemandé
-   * tant qu'il n'est pas valide
+   * tant qu'il n'est pas valide (erreur affichée sous le champ)
    * @return le nom, ou null (renoncement)
    */
   static askNewAnalyseId(folder){
     return new Promise(resolve => {
-      const editor = new Editeur({data: {}}, {setMethod: async (value) => {
-        if ( null == value ) return resolve(null)
-        const id = value.trim()
-        const error = await invoke('analyse:checkNew', {folder, id})
-        if ( !error ) return resolve(id)
-        erreur(error)
-        editor.value = id
-        editor.show(null, t('ui.dialogs.new_analyse_id'))
-      }})
-      editor.value = ''
-      editor.show({top: 120, left: Math.round(window.innerWidth / 2) - 170, fixed: true}, t('ui.dialogs.new_analyse_id'))
+      const field  = DCreate('INPUT', {type: 'text', id: 'new_analyse_id'})
+      const error  = DCreate('DIV', {class: 'error'})
+      const btnOK  = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.create_analyse')})
+      const btnNo  = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
+      const box = DCreate('DIV', {id: 'new_analyse_box', inner: [
+          DCreate('LABEL', {for: 'new_analyse_id', text: t('ui.dialogs.new_analyse_id')})
+        , field
+        , DCreate('DIV', {class: 'hint', text: t('ui.dialogs.new_analyse_id_hint')})
+        , error
+        , DCreate('DIV', {class: 'buttons', inner: [btnNo, btnOK]})
+      ]})
+      Message.hideMessage()
+      document.body.appendChild(box)
+      const close = (value) => { box.remove() ; resolve(value) }
+      addPanelHead(box, {title: t('ui.dialogs.new_analyse_title'), onClose: () => close(null)})
+      btnNo.addEventListener('click', () => close(null))
+      btnOK.addEventListener('click', async () => {
+        const id = field.value.trim()
+        const err = await invoke('analyse:checkNew', {folder, id})
+        if ( !err ) return close(id)
+        error.textContent = err
+        field.focus()
+        field.select()
+      })
+      field.addEventListener('input', () => error.textContent = '')
+      field.focus()
     })
   }
 

@@ -2,7 +2,6 @@
 # Variabili: %{nome}; %{cmd} = tasto comando del sistema (⌘ o Ctrl+)
 # Testo specifico di un sistema: tabella {darwin:, win32:, linux:}
 
-no_analyse_open: "Nessuna analisi aperta.<br><br>Usare il menu «Analisi» per aprire un'analisi esistente (%{cmd}O) o crearne una nuova (%{cmd}N)."
 no_systems: "Questa analisi non contiene alcun sistema.<br><br>Servono i sistemi della partitura per iniziare l'analisi: menu «Strumenti» > «Taglia la partitura…»."
 cutting_score: "Taglio e numerazione della partitura…"
 after_cut:

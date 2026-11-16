@@ -5,6 +5,7 @@
 app:
   name: "Analysis Table"
   title: "ANALYSIS TABLE"
+  getting_started: "Getting started"
 
 decimal_separator: "."
 
@@ -13,6 +14,7 @@ menu:
   new_analyse:      "New Analysis…"
   open_analyse:     "Open Analysis…"
   reload_analyse:   "Reload Analysis"
+  close_analyse:    "Close Analysis"
   save:             "Save"
   cut_score:        "Cut the Score…"
   number_score:     "Number the Score"
@@ -158,6 +160,7 @@ buttons:
   choose:           "Choose…"
   cancel:           "Cancel"
   renounce:         "Cancel"
+  create_analyse:   "Create Analysis"
   replace:          "Replace"
   ok:               "OK"
   apply:            "Apply"
@@ -327,7 +330,9 @@ dialogs:
   count_first_no:        "No (upbeat)"
   count_first_yes:       "Yes"
   new_analyse_folder:    "Folder in which to place the new analysis"
-  new_analyse_id:        "Name of the analysis folder (letters, digits, “-” and “_”)"
+  new_analyse_title:     "New Analysis"
+  new_analyse_id:        "Folder name and identifier of the analysis"
+  new_analyse_id_hint:   "(letters, digits, hyphen or underscore only)"
   new_score:             "Score of the piece"
   new_score_detail:      "Choose the PDF file of the score. You can also provide it later (“Tools > Cut the Score…”)."
   new_score_choose:      "Choose the Score…"
