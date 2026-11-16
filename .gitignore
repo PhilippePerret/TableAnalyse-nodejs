@@ -11,3 +11,15 @@ temp/
 dist/
 
 node_modules/
+
+# Backups des analyses
+backups/
+
+# Images des systèmes
+**/systems/**/*.jpg
+**/systems/**/*.jpeg
+**/systems/**/*.png
+**/systems/**/*.svg
+
+# Gems de génération du manuel
+_scripts/manuel/vendor/

@@ -1,0 +1,5 @@
+# Outils de génération du manuel (HTML et EPUB), propres au projet.
+# Installés dans _scripts/manuel/vendor/ par _scripts/manuel/generer.sh.
+source 'https://rubygems.org'
+gem 'asciidoctor', '2.0.26'
+gem 'asciidoctor-epub3', '2.3.0'
