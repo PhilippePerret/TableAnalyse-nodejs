@@ -3,15 +3,6 @@
 
 Parmi les outils puissant de **__Table d'analyse__** d'analyse, il y a la découpe automatique de la partition en systèmes et la numérotation des mesures.
 
-Une fois les systèmes découpé (et affichés), vous pouvez <<systems-cleaning, les nettoyer>> pour retirer toutes les marques inutiles ou les taches.
+Une fois les systèmes découpé (et affichés), vous pouvez <<systems-preparation, les nettoyer>> pour retirer toutes les marques inutiles ou les taches.
 
 Vous pouvez également <<systems-position,ajuster la position des systèmes>> pour qu'ils soient exactement comme vous le désirez.
-
-[[systems-cleaning]]
-=== Nettoyage des systèmes ===
-
-Si vous êtes sur macOS, l'image du système s'ouvrira dans Aperçu. Les raccourcis à connaitre sont alors les suivants :
-
-- ctrl+cmd+r pour poser un rectangle (la première fois, lui donner des bords et un intérieur blanc) qui permettra de masquer les défauts (en le déplaçant sur les "taches" et en le redimensionnant).
-- cmd+k pour découper l'image après avoir défini ses dimensions avec la sélection de souris
-Attention : ne découper qu'en hauteur. Si vous changer la largeur de l'image du système, le système sera grossi à l'affichage.

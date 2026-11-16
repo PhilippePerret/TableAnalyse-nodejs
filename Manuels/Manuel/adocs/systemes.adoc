@@ -4,6 +4,22 @@
 [[systems-preparation]]
 === Préparation des systèmes ===
 
+La __préparation des systèmes__ consiste surtout, après le découpage de la partition, à les « nettoyer » :
+
+* suppression des numéros de mesures,
+* suppression des taches éventuelles dues au scan de la partition,
+* suppression des notes ou indications d'un autre système, quand ils se chevauchent,
+* indication de mouvement au début de la partition,
+* etc.
+
+Ce nettoyage, pour le moment, se fait dans une application tierce, en control-cliquant sur le système (ou clic-droit) et en choisissant dans le menu contextuel « Ouvrir l'image ».
+
+Si vous êtes sur macOS, l'image du système s'ouvrira dans Aperçu. Les raccourcis à connaitre sont alors les suivants :
+
+* Ctrl + Cmd + r pour poser un rectangle (la première fois, lui donner des bords et un intérieur blanc) qui permettra de masquer les défauts (en le déplaçant sur les "taches" et en le redimensionnant).
+* Cmd + k pour découper l'image après avoir défini ses dimensions avec la sélection de souris^*^
+
+^*^ Attention : ne découper l'image du système qu'en hauteur. Si vous changer la largeur de l'image du système, le système sera grossi à l'affichage par rapport aux autres.
 
 [[systems-position]]
 === Positionnement des systèmes ===

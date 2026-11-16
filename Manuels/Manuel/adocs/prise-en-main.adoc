@@ -27,15 +27,30 @@ NOTE: Pour un bon numérotage des mesures, assurez-vous de faire le bon choix, d
 
 Une fois ces informations acquises, l'application se charge de **découper la partition** et de **numéroter ses mesures**. C'est une opération qui, manuellement, vous aurez pris de une demi-heure à une heure pour une pièce longue…
 
+Un petit __nettoyage__ peut être requis parfois, pour supprimer des systèmes des marques ou des « taches » intempestives. Nous vous conseillons de <<systems-preparation, le faire>> avant de commencer l'analyse, car une réduction des systèmes en hauteur pourrait poser problème plus tard (aucun problème si vous ne modifer pas cette hauteur).
+
 Vous êtes prêt ou prête, à présent, à **procéder à l'analyse de la pièce**.
 
 Cette analyse consiste principalement à **poser des « <<tags, marques>>** au-dessus et au-dessous des systèmes qui ont été répartis, à <<prefs-systems-distance, distance suffisante>> sur la table d'analyse.
 
-////
-À développer
-- les marques les plus courantes
-////
+=== Pose des premières marques ===
 
-//// 
-Achever avec des liens pour en savoir plus
-////
+Vous pouvez essayer de poser vos premières marques :
+
+* cliquez à l'endroit voulu, au-dessus de la partition => le panneau du type de marque s'ouvre,
+* taper « a » ou choisissez le menu « Accord » => un panneau pour donner le nom de l'accord s'ouvre,
+* taper l'accord en majuscule et sa nature, par exemple « Am75- »,
+* taper Entrée.
+
+La marque d'accord se place à l'endroit voulu. Vous pouvez la déplacer à l'aide de la souris.
+
+* Cliquez sous la partition,
+* tapez « h » ou cliquez sur le menu « Harmonie »,
+* indiquez l'harmonie, par exemple « II** » (2^e^ renversement de l'accord de 2^e^ degré),
+* cliquez sur Entrée ou pressez le bouton « OK » (ou équivalent).
+
+La marque d'harmonie se pose sous le système. Vous pouvez presser tout de suite la touche Entrée pour modifier la valeur de l'harmonie, par exemple « VII** ».
+
+N'hésitez pas à essayer toutes les marques de cette façon pour vous en faire une idée. Et trouvez dans la section de ce manuel <<tags, tout ce qui concerne les marques>>.
+
+Bonne découverte et bonnes analyses !
