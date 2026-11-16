@@ -28,6 +28,40 @@ if [[ $(git rev-parse HEAD) != $(git rev-parse origin/main) ]]; then
   fin "Le code local n'est pas celui de GitHub (main). Pousser d'abord les commits."
 fi
 
+# Manuel : régénéré si ses sources sont plus récentes, puis commité et poussé
+MANUEL="Manuels/Manuel"
+BOARD="/Users/philippeperret/Programmes/Board"
+BOARD_RUBY="$BOARD/Board.app/Contents/Resources/ruby/bin/ruby"
+BOARD_DOC_SCRIPT="$BOARD/Board.app/Contents/Resources/backend/scripts/UpdateDocumentation.rb"
+manuel_perime(){
+  local src out
+  for src in "$MANUEL/Manuel.adoc" "$MANUEL"/adocs/**/*(.N); do
+    for out in "$MANUEL/Manuel.html" "$MANUEL/Manuel.epub"; do
+      [[ ! -f "$out" || "$src" -nt "$out" ]] && return 0
+    done
+  done
+  return 1
+}
+while manuel_perime; do
+  echo "Le manuel (HTML/EPUB) est plus ancien que ses sources."
+  echo -n "g = le générer ici, Entrée = c'est fait (bouton), i = ignorer ? "
+  read REP
+  case "$REP" in
+    g)
+      # Générateur de Board (son Ruby embarqué), le même que son bouton
+      [[ -x "$BOARD_RUBY" && -f "$BOARD_DOC_SCRIPT" ]] || fin "Board introuvable ($BOARD)."
+      RES=$("$BOARD_RUBY" "$BOARD_DOC_SCRIPT" "$APP_FOLDER/$MANUEL/Manuel.adoc")
+      [[ "$RES" == *'"ok":true'* ]] || fin "Génération du manuel impossible :\n$RES" ;;
+    i) break ;;
+  esac
+done
+if [[ -n $(git status --porcelain -- "$MANUEL") ]]; then
+  git add -A -- "$MANUEL" \
+    && git commit -q -m "Actualisation du manuel" -- "$MANUEL" \
+    && git push -q origin main || fin "Commit ou envoi du manuel impossible."
+  echo "Manuel actualisé sur GitHub."
+fi
+
 # Nouveau numéro de version
 OLD=$(node -p "require('./package.json').version")
 echo "Version actuelle : $OLD"
