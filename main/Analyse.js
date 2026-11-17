@@ -10,6 +10,7 @@ import { t } from './i18n.js'
 
 const SYSTEM_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.svg']
 const MAX_BACKUPS = 100
+const BACKUP_MAX_AGE = 7 * 24 * 3600 * 1000 // backups de plus de 7 jours détruits
 export const MEASURES_FILE = 'mesures.yaml' // numéros de mesure produits par la découpe
 
 export function imageHeight(imgPath){
@@ -225,7 +226,14 @@ export class Analyse {
     ;[this.tagsPath, this.infosPath, this.preferencesPath].forEach(src => {
       if ( fs.existsSync(src) ) fs.copyFileSync(src, path.join(folder, path.basename(src)))
     })
+    const limit = Date.now() - BACKUP_MAX_AGE
     const backups = fs.readdirSync(this.backupsFolder).filter(n => !n.startsWith('.')).sort()
+      .filter(n => {
+        const p = path.join(this.backupsFolder, n)
+        if ( n === name || fs.statSync(p).mtimeMs >= limit ) return true
+        fs.rmSync(p, {recursive: true, force: true})
+        return false
+      })
     while ( backups.length > MAX_BACKUPS ) {
       fs.rmSync(path.join(this.backupsFolder, backups.shift()), {recursive: true, force: true})
     }
