@@ -291,6 +291,8 @@ panels:
     help:             "Este editor le permite ajustar las partes del fragmento a su gusto, moviéndolas o cambiando su longitud. Pulse el botón «Ensamblar» para crear la imagen, que podrá afinar en su programa de imágenes (menú contextual «Abrir la imagen» y luego «Recargar la imagen»)."
     measures:         "Compases"
     assemble:         "Ensamblar"
+    mask: "Máscara blanca"
+    mask_title: "Rectángulo blanco para cubrir impurezas (tecla Suprimir: elimina la máscara elegida)"
   animation:
     title:            "Animación"
     play:             "Reproducir"

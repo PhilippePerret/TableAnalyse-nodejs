@@ -671,6 +671,24 @@ div#ext_composer_panel div.ext-piece img {
   max-width: none;
   pointer-events: none;
 }
+/* Masques blancs : pointillés dans l'assembleur seulement */
+div#ext_composer_panel div.tools {
+  margin-bottom: 10px;
+}
+div#ext_composer_panel div.ext-mask {
+  position: absolute;
+  z-index: 2;
+  background-color: white;
+  outline: 1px dashed #555;
+  cursor: move;
+}
+div#ext_composer_panel div.ext-mask.current {
+  outline: 2px dashed #3a925e;
+}
+div#ext_composer_panel div.ext-mask .ui-resizable-n { top: 0; }
+div#ext_composer_panel div.ext-mask .ui-resizable-s { bottom: 0; }
+div#ext_composer_panel div.ext-mask .ui-resizable-e { right: 0; }
+div#ext_composer_panel div.ext-mask .ui-resizable-w { left: 0; }
 /* Poignées dans le morceau (bords recadrés) */
 div#ext_composer_panel div.ext-piece .ui-resizable-n { top: 0; }
 div#ext_composer_panel div.ext-piece .ui-resizable-s { bottom: 0; }

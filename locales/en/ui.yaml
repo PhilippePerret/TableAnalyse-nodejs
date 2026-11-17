@@ -291,6 +291,8 @@ panels:
     help:             "This editor lets you adjust the parts of the excerpt as you wish, by moving them or changing their length. Click the “Assemble” button to build the image, which you can then refine in your image software (context menu “Open Image”, then “Reload Image”)."
     measures:         "Bars"
     assemble:         "Assemble"
+    mask: "White mask"
+    mask_title: "White rectangle to cover blemishes (Delete key: remove the chosen mask)"
   animation:
     title:            "Animation"
     play:             "Play"

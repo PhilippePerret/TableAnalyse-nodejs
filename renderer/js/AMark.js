@@ -1560,6 +1560,9 @@ async composeImage(){
     const w = p.x2 - p.x1, h = p.y2 - p.y1
     ctx.drawImage(sources[i], p.x1, p.y1, w, h, Math.round(p.dx), Math.round(p.dy), w, h)
   })
+  // Masques blancs (cf. ExtraitComposer) : scories couvertes
+  ctx.globalCompositeOperation = 'source-over'
+  ;(this.data.masks || []).forEach(m => ctx.fillRect(Math.round(m.x), Math.round(m.y), Math.round(m.w), Math.round(m.h)))
   return AMExtrait.trimmed(canvas).toDataURL('image/png')
 }
 

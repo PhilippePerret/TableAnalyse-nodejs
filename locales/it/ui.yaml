@@ -291,6 +291,8 @@ panels:
     help:             "Questo editor permette di regolare a piacere le parti dell'estratto, spostandole o modificandone la lunghezza. Fai clic su «Assembla» per creare l'immagine, che potrai rifinire nel tuo programma di immagini (menu contestuale «Apri l'immagine», poi «Ricarica l'immagine»)."
     measures:         "Battute"
     assemble:         "Assembla"
+    mask: "Maschera bianca"
+    mask_title: "Rettangolo bianco per coprire le impurità (tasto Canc: elimina la maschera scelta)"
   animation:
     title:            "Animazione"
     play:             "Avvia"

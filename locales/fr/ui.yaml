@@ -291,6 +291,8 @@ panels:
     help:             "Cet éditeur vous permet d'ajuster les parties de l'extrait à votre guise, en les déplaçant ou en modifiant leur longueur. Cliquez sur le bouton « Assembler » pour fabriquer l'image, que vous pourrez affiner dans votre logiciel d'image (menu contextuel « Ouvrir l'image » puis « Recharger l'image »)."
     measures:         "Mesures"
     assemble:         "Assembler"
+    mask: "Masque blanc"
+    mask_title: "Rectangle blanc pour couvrir les scories (touche Effacer : suppression du masque choisi)"
   animation:
     title:            "Animation"
     play:             "Lancer"

@@ -291,6 +291,8 @@ panels:
     help:             "Mit diesem Editor passen Sie die Teile des Ausschnitts nach Belieben an, indem Sie sie verschieben oder ihre Länge ändern. Klicken Sie auf „Zusammensetzen“, um das Bild zu erstellen, das Sie in Ihrem Bildprogramm verfeinern können (Kontextmenü „Bild öffnen“, dann „Bild neu laden“)."
     measures:         "Takte"
     assemble:         "Zusammensetzen"
+    mask: "Weiße Maske"
+    mask_title: "Weißes Rechteck zum Abdecken von Störstellen (Löschtaste: gewählte Maske entfernen)"
   animation:
     title:            "Animation"
     play:             "Abspielen"
