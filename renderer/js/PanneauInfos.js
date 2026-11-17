@@ -7,6 +7,7 @@ import { Analyse, setWindowTitle } from './Analyse.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { Variables } from './Variables.js'
 import { t } from './i18n.js'
+import { History } from './History.js'
 
 export class PanneauInfos {
 
@@ -40,6 +41,7 @@ export class PanneauInfos {
     setWindowTitle(Analyse.current.data.infos)
     // Textes utilisant les variables des infos ({title}…)
     Variables.refresh()
+    History.schedule()
     Analyse.current.saveInfos()
     this.panneau.isOpened && this.toggle()
   }

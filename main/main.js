@@ -246,6 +246,7 @@ function buildMenu(){
         , {label: t('ui.menu.save'),            accelerator: 'CmdOrCtrl+S', click: () => sendMenuCommand('save')}
         , {type: 'separator'}
         , {label: t('ui.menu.infos'),           accelerator: 'CmdOrCtrl+Shift+I', click: () => sendMenuCommand('infosAnalyse')}
+        , {label: t('ui.menu.history'),         click: () => sendMenuCommand('history')}
         , {type: 'separator'}
         , {label: t('ui.menu.export'),          accelerator: 'CmdOrCtrl+E', click: () => sendMenuCommand('export')}
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path, true)}
@@ -418,6 +419,9 @@ function registerIpc(){
     analyse.tags = tags
     analyse.saveTags()
   })
+
+  handle('history:load',   () => requireCurrent().loadHistory())
+  handle('history:append', ({step}) => requireCurrent().appendHistory(step))
 
   handle('analyse:refresh', () => {
     return requireCurrent().updateSystems()

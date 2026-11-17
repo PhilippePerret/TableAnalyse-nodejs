@@ -20,6 +20,7 @@ menu:
   number_score:     "为乐谱编号"
   remove_blanks:    "删除空白"
   infos:            "信息…"
+  history:          "分析历史…"
   export:           "导出…"
   show_in_finder:
     darwin:         "在访达中显示"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "正在进行"
 
 panels:
+  analysis_history:
+    title: "分析历史"
+    restore_hover: "点击返回分析的此状态"
+    initial: "初始状态"
+    restore: "返回第 %{n} 步"
+    outside: "在应用程序之外进行的更改（或未保存）"
+    added_one: "创建：%{name}"
+    added_many: "创建了 %{n} 个标记"
+    changed_one: "修改：%{name}"
+    changed_many: "修改了 %{n} 个标记"
+    removed_one: "删除：%{name}"
+    removed_many: "删除了 %{n} 个标记"
+    systems: "移动的系统：%{n}"
+    infos: "分析信息已修改"
   form_build:
     type:             "曲式类型"
     other_name:       "曲式名称"

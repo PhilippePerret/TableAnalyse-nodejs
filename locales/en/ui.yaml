@@ -20,6 +20,7 @@ menu:
   number_score:     "Number the Score"
   remove_blanks:    "Remove Blank Space"
   infos:            "Information…"
+  history:          "Analysis history…"
   export:           "Export…"
   show_in_finder:
     darwin:         "Show in Finder"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "In Progress"
 
 panels:
+  analysis_history:
+    title: "Analysis history"
+    restore_hover: "Click to return to this state of the analysis"
+    initial: "Initial state"
+    restore: "Back to step %{n}"
+    outside: "Changes made outside the application (or not saved)"
+    added_one: "Created: %{name}"
+    added_many: "%{n} marks created"
+    changed_one: "Modified: %{name}"
+    changed_many: "%{n} marks modified"
+    removed_one: "Deleted: %{name}"
+    removed_many: "%{n} marks deleted"
+    systems: "Systems moved: %{n}"
+    infos: "Analysis information modified"
   form_build:
     type:             "Form type"
     other_name:       "Name of the form"

@@ -25,6 +25,7 @@ import { TableAnalyse } from './TableAnalyse.js'
 import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
 import { Variables } from './Variables.js'
+import { History } from './History.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
 const SYSTEMS_MARGIN = 40
@@ -50,7 +51,11 @@ export class Analyse {
     setRedLight(v)
     v && this.programAutosave()
   }
-  setModified(){this.modified = true}
+  setModified(){
+    this.modified = true
+    // Étape de la construction de l'analyse (cf. History.js)
+    this.loading || History.schedule()
+  }
 
   // Sauvegarde automatique, quelques secondes après la dernière
   // modification, si la préférence est activée.
@@ -133,6 +138,7 @@ export class Analyse {
     } else {
       Systeme.setLockSystemsOnLoad()
       TableAnalyse.setHeight()
+      History.init()
     }
     this.loading = false
     return this; // chainage
@@ -324,6 +330,7 @@ checkSystems(){
    */
   updateInfos(data){
     Object.assign(this.data.infos, data)
+    History.schedule()
     // Textes utilisant les variables des infos ({title}…)
     Variables.refresh()
   }

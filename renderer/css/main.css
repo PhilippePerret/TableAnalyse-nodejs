@@ -284,6 +284,51 @@ div#marks_selector div.marks-count { margin-top: .8em; font-weight: 600; color: 
 /*
   --- ANNULATIONS ---
 */
+/* Historique de la construction de l'analyse (cf. History.js) */
+div#analysis_history {
+  position: fixed;
+  top: 60px;
+  right: 16px;
+  z-index: 100;
+  width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+div#analysis_history div.history-list {
+  overflow-y: auto;
+  min-height: 0;
+}
+div#analysis_history div.history-step {
+  display: flex;
+  gap: 14px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+div#analysis_history div.history-step:hover {
+  background-color: rgba(58,146,94,.12);
+}
+div#analysis_history div.history-step.current {
+  cursor: default;
+  font-weight: 600;
+}
+div#analysis_history div.history-step.current:hover {
+  background-color: transparent;
+}
+div#analysis_history div.history-step span.num {
+  flex: none;
+  width: 2.5em;
+  text-align: right;
+  color: #888;
+  font-variant-numeric: tabular-nums;
+}
+div#analysis_history div.history-step span.time {
+  flex: none;
+  color: #888;
+  font-variant-numeric: tabular-nums;
+}
+
 div#historique_annulations {
   position:fixed;
   bottom: 48px;

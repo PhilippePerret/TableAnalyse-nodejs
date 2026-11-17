@@ -55,6 +55,21 @@ export class Analyse {
   get backupsFolder()   { return path.join(this.path, 'backups') }
   get exportFolder()    { return path.join(this.path, 'export') }
   get measuresPath()    { return path.join(this.systemsFolder, MEASURES_FILE) }
+  get historyPath()     { return path.join(this.path, 'history.jsonl') }
+
+  /**
+   * Historique de la construction de l'analyse (cf. renderer
+   * History.js) : une étape JSON par ligne
+   */
+  loadHistory(){
+    if ( !fs.existsSync(this.historyPath) ) return []
+    return fs.readFileSync(this.historyPath, 'utf8').split('\n').filter(l => l.trim()).map(l => {
+      try { return JSON.parse(l) } catch(err) { return null }
+    }).filter(Boolean)
+  }
+  appendHistory(step){
+    fs.appendFileSync(this.historyPath, JSON.stringify(step) + '\n')
+  }
 
   get infos(){
     if ( undefined === this._infos ) {

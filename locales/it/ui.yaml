@@ -20,6 +20,7 @@ menu:
   number_score:     "Numera la partitura"
   remove_blanks:    "Rimuovi gli spazi vuoti"
   infos:            "Informazioni…"
+  history:          "Cronologia dell'analisi…"
   export:           "Esporta…"
   show_in_finder:
     darwin:         "Mostra nel Finder"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "Operazione in corso"
 
 panels:
+  analysis_history:
+    title: "Cronologia dell'analisi"
+    restore_hover: "Clicca per tornare a questo stato dell'analisi"
+    initial: "Stato iniziale"
+    restore: "Ritorno al passo %{n}"
+    outside: "Modifiche fuori dall'applicazione (o non salvate)"
+    added_one: "Creazione: %{name}"
+    added_many: "%{n} marche create"
+    changed_one: "Modifica: %{name}"
+    changed_many: "%{n} marche modificate"
+    removed_one: "Eliminazione: %{name}"
+    removed_many: "%{n} marche eliminate"
+    systems: "Sistemi spostati: %{n}"
+    infos: "Informazioni dell'analisi modificate"
   form_build:
     type:             "Tipo di forma"
     other_name:       "Nome della forma"

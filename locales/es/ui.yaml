@@ -20,6 +20,7 @@ menu:
   number_score:     "Numerar la partitura"
   remove_blanks:    "Suprimir los blancos"
   infos:            "Información…"
+  history:          "Historial del análisis…"
   export:           "Exportar…"
   show_in_finder:
     darwin:         "Mostrar en el Finder"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "Operación en curso"
 
 panels:
+  analysis_history:
+    title: "Historial del análisis"
+    restore_hover: "Haz clic para volver a este estado del análisis"
+    initial: "Estado inicial"
+    restore: "Vuelta al paso %{n}"
+    outside: "Cambios fuera de la aplicación (o no guardados)"
+    added_one: "Creación: %{name}"
+    added_many: "%{n} marcas creadas"
+    changed_one: "Modificación: %{name}"
+    changed_many: "%{n} marcas modificadas"
+    removed_one: "Eliminación: %{name}"
+    removed_many: "%{n} marcas eliminadas"
+    systems: "Sistemas desplazados: %{n}"
+    infos: "Información del análisis modificada"
   form_build:
     type:             "Tipo de forma"
     other_name:       "Nombre de la forma"

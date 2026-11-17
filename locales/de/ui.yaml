@@ -20,6 +20,7 @@ menu:
   number_score:     "Partitur nummerieren"
   remove_blanks:    "Leerräume entfernen"
   infos:            "Informationen…"
+  history:          "Verlauf der Analyse…"
   export:           "Exportieren…"
   show_in_finder:
     darwin:         "Im Finder zeigen"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "Vorgang läuft"
 
 panels:
+  analysis_history:
+    title: "Verlauf der Analyse"
+    restore_hover: "Klicken, um zu diesem Stand der Analyse zurückzukehren"
+    initial: "Ausgangszustand"
+    restore: "Zurück zu Schritt %{n}"
+    outside: "Änderungen außerhalb der Anwendung (oder nicht gespeichert)"
+    added_one: "Erstellt: %{name}"
+    added_many: "%{n} Marken erstellt"
+    changed_one: "Geändert: %{name}"
+    changed_many: "%{n} Marken geändert"
+    removed_one: "Gelöscht: %{name}"
+    removed_many: "%{n} Marken gelöscht"
+    systems: "Systeme verschoben: %{n}"
+    infos: "Informationen der Analyse geändert"
   form_build:
     type:             "Formtyp"
     other_name:       "Name der Form"

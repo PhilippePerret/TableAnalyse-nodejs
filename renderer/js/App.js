@@ -12,6 +12,7 @@ import { Animation } from './Animation.js'
 import { TableAnalyse } from './TableAnalyse.js'
 import { t } from './i18n.js'
 import { DCreate } from './dom.js'
+import { History } from './History.js'
 
 class AppClass {
 
@@ -76,6 +77,7 @@ class AppClass {
       case 'cutScore':      return Analyse.cutScore()
       case 'numberScore':   return Analyse.numberScore()
       case 'infosAnalyse':  return Analyse.panneau_infos.toggle()
+      case 'history':       return History.show()
       case 'export':        return Exporter.ask()
       case 'toolsPanel':    return Tools.toggle()
       case 'gotoMeasure':   return Forme.gotoMeasure()

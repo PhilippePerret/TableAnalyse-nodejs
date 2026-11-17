@@ -20,6 +20,7 @@ menu:
   number_score:     "악보에 번호 매기기"
   remove_blanks:    "빈 공간 제거"
   infos:            "정보…"
+  history:          "분석 기록…"
   export:           "내보내기…"
   show_in_finder:
     darwin:         "Finder에서 보기"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "작업 중"
 
 panels:
+  analysis_history:
+    title: "분석 기록"
+    restore_hover: "클릭하여 분석의 이 상태로 돌아가기"
+    initial: "초기 상태"
+    restore: "%{n}단계로 돌아가기"
+    outside: "앱 밖에서 한 변경 (또는 저장되지 않음)"
+    added_one: "생성: %{name}"
+    added_many: "표시 %{n}개 생성"
+    changed_one: "수정: %{name}"
+    changed_many: "표시 %{n}개 수정"
+    removed_one: "삭제: %{name}"
+    removed_many: "표시 %{n}개 삭제"
+    systems: "이동한 단: %{n}"
+    infos: "분석 정보 수정"
   form_build:
     type:             "형식 종류"
     other_name:       "형식 이름"

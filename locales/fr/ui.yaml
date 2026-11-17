@@ -20,6 +20,7 @@ menu:
   number_score:     "Numéroter la partition"
   remove_blanks:    "Supprimer les blancs"
   infos:            "Informations…"
+  history:          "Historique de l'analyse…"
   export:           "Exporter…"
   show_in_finder:
     darwin:         "Afficher dans le Finder"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "Opération en cours"
 
 panels:
+  analysis_history:
+    title: "Historique de l'analyse"
+    restore_hover: "Cliquer pour revenir à cet état de l'analyse"
+    initial: "État initial"
+    restore: "Retour à l'étape %{n}"
+    outside: "Modifications hors de l'application (ou non enregistrées)"
+    added_one: "Création : %{name}"
+    added_many: "%{n} marques créées"
+    changed_one: "Modification : %{name}"
+    changed_many: "%{n} marques modifiées"
+    removed_one: "Suppression : %{name}"
+    removed_many: "%{n} marques supprimées"
+    systems: "Systèmes déplacés : %{n}"
+    infos: "Informations de l'analyse modifiées"
   form_build:
     type:             "Type de forme"
     other_name:       "Nom de la forme"

@@ -20,6 +20,7 @@ menu:
   number_score:     "楽譜に番号を付ける"
   remove_blanks:    "余白を削除"
   infos:            "情報…"
+  history:          "分析の履歴…"
   export:           "書き出し…"
   show_in_finder:
     darwin:         "Finder に表示"
@@ -177,6 +178,20 @@ message_titles:
   doaction:         "処理中"
 
 panels:
+  analysis_history:
+    title: "分析の履歴"
+    restore_hover: "クリックして分析のこの状態に戻る"
+    initial: "初期状態"
+    restore: "ステップ %{n} に戻る"
+    outside: "アプリ外での変更（または未保存）"
+    added_one: "作成：%{name}"
+    added_many: "%{n} 個のマークを作成"
+    changed_one: "変更：%{name}"
+    changed_many: "%{n} 個のマークを変更"
+    removed_one: "削除：%{name}"
+    removed_many: "%{n} 個のマークを削除"
+    systems: "移動した段：%{n}"
+    infos: "分析の情報を変更"
   form_build:
     type:             "形式の種類"
     other_name:       "形式の名前"
