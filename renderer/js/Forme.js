@@ -57,9 +57,10 @@ export class Forme {
   }
 
   /**
-   * Fait défiler la table jusqu'à la mesure +num+ : les numéros de
-   * mesure du système précédent juste sous la bande du haut (haut de la
-   * page pour le premier système). Son numéro clignote.
+   * Fait défiler la table jusqu'à la mesure +num+ : la ligne des
+   * numéros de mesure du système précédent (ou, sans numéros, son
+   * image) juste au-dessus de la bande du haut, donc invisible (haut de
+   * la page pour le premier système). Son numéro clignote.
    * @return false si la mesure n'existe pas
    */
   static gotoMeasureNumber(num){
@@ -70,12 +71,11 @@ export class Forme {
     const prev = sys && Systeme.all[Systeme.all.indexOf(sys) - 1]
     let top = 0
     if ( prev ) {
-      const nums = this.measureMarksOf(prev)
       const band = DGet('#titlebar')
-      const y = nums.length
-        ? Math.min(...nums.map(m => this.measureRect(m).top))
-        : prev.obj.getBoundingClientRect().bottom
-      top = y + window.scrollY - (band ? band.getBoundingClientRect().bottom : 0) - 4
+      const bottoms = [prev.obj.getBoundingClientRect().bottom]
+        .concat(this.measureMarksOf(prev).map(m => m.obj.getBoundingClientRect().bottom))
+      prev.measureLine && bottoms.push(prev.measureLine.getBoundingClientRect().bottom)
+      top = Math.max(...bottoms) + window.scrollY - (band ? band.getBoundingClientRect().bottom : 0) + 2
     }
     window.scrollTo({top: Math.max(0, top)})
     mark.clignote()
