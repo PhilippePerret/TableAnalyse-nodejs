@@ -24,6 +24,7 @@ import { PanneauInfos } from './PanneauInfos.js'
 import { TableAnalyse } from './TableAnalyse.js'
 import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
+import { Variables } from './Variables.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
 const SYSTEMS_MARGIN = 40
@@ -323,6 +324,8 @@ checkSystems(){
    */
   updateInfos(data){
     Object.assign(this.data.infos, data)
+    // Textes utilisant les variables des infos ({title}…)
+    Variables.refresh()
   }
 
 

@@ -10,6 +10,7 @@ import { emit } from './events.js'
 import { TYPES_OU_SOUSTYPES_AU_DESSUS, TYPES_OU_SOUSTYPES_EN_DESSOUS } from './Constants.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
+import { Variables } from './Variables.js'
 /**
   * Class Systeme
   * 
@@ -690,8 +691,10 @@ export class Systeme extends AObjet {
 /*
 |  Suppression d'un numéro de mesure de la ligne : les suivants sont
 |  renumérotés (crochet appelé par AObjet.remove, qui ne peut pas
-|  importer Systeme).
+|  importer Systeme). Suppression d'un motif à variable : les textes
+|  qui l'utilisent sont actualisés.
 */
 AObjet.afterRemove = (aobjet) => {
   if ( aobjet.subtype == 'mes' && aobjet.data && aobjet.data.line ) Systeme.renumberMeasures()
+  if ( aobjet.type == 'mot' && aobjet.data && aobjet.data.variable ) Variables.refresh()
 }

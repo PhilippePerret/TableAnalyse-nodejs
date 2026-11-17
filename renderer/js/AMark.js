@@ -1179,10 +1179,13 @@ changeType(type, subtype){
   // Extrait de partition : pas de changement de type (ses données ne
   // concernent que lui)
   if ( type != this.type && [type, this.type].includes('ext') ) return erreur(t('errors.marks.extract_type'))
+  const wasMotif = this.type == 'mot'
   this.type    = type
   this.subtype = subtype
   if ( !this.obj ) return
   this.rebuild()
+  // Motif à variable devenu autre chose (ou l'inverse) : textes actualisés
+  this.data.variable && wasMotif != (type == 'mot') && Variables.refresh()
   if ( this.isForme ) {
     this.placeAtHeight()
     this.placeOnMeasure()
