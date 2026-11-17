@@ -648,7 +648,9 @@ export class Systeme extends AObjet {
       Systeme.placeMeasureNumbers()
       // Un seul déplacement de système à la fois
       this.moving = false
-      return Systeme.toggleLock(null, true)
+      Systeme.toggleLock(null, true)
+      // Le clic ne fait rien d'autre (pas de création de marque)
+      return stopEvent(e)
 
     } else {
       
@@ -662,6 +664,7 @@ export class Systeme extends AObjet {
       this.obj.classList.add('selected')    
     }
     this.moving = !this.moving
+    return stopEvent(e)
   }
 
   onMove(e){
