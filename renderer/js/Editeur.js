@@ -185,7 +185,6 @@ export class Editeur {
     listen(this.textarea,   'blur',  this.onBlurTextField.bind(this))
     listen(this.suggestMenu, 'change', this.onSuggestMenu.bind(this))
     listen(this.suggestList, 'click', this.onClickSuggestion.bind(this))
-    listen(this.suggestList, 'dblclick', this.onDblClickSuggestion.bind(this))
     listen(this.suggestList, 'keydown', this.onKeyDownSuggestions.bind(this))
     listen(this.suggestList, 'keypress', this.onKeyPressSuggestions.bind(this))
     listen(this.suggestList, 'focus', this.onFocusTextField.bind(this))
@@ -225,14 +224,12 @@ export class Editeur {
     this.suggestList.classList[sug && sug.philnote ? 'add' : 'remove']('philnote')
   }
 
-  // Choix d'une valeur : mise dans le champ, qui reprend le focus
+  // Choix d'une valeur : appliquée tout de suite (sans passer par OK)
   chooseSuggestion(index){
     const v = this.suggestValues && this.suggestValues[index]
     if ( undefined === v ) return
     this.value = v
-    const field = this.isLongText ? this.textarea : this.textField
-    field.focus()
-    field.select()
+    this.onClickOK()
   }
   onSuggestMenu(e){
     const index = this.suggestMenu.value
@@ -242,13 +239,6 @@ export class Editeur {
   onClickSuggestion(e){
     const div = e.target.closest('div.suggestion')
     div && this.chooseSuggestion(Number(div.dataset.index))
-  }
-  // Double-clic : choix et validation
-  onDblClickSuggestion(e){
-    const div = e.target.closest('div.suggestion')
-    if ( !div ) return
-    this.chooseSuggestion(Number(div.dataset.index))
-    this.onClickOK()
   }
   // Liste active : une lettre choisit la valeur
   onKeyDownSuggestions(e){
