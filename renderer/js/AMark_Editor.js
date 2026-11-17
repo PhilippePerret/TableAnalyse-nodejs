@@ -54,6 +54,9 @@ const SUGGESTIONS_IN_SCORE_ORDER = ['cel', 'mot', 'frm']
 // Types dont les valeurs sont classées par fréquence d'utilisation (les
 // plus utilisées en premier)
 const SUGGESTIONS_BY_FREQUENCY = ['acc', 'har']
+// Types dont le texte peut commencer par un chiffre : un chiffre tapé
+// en tête du champ n'y choisit pas la valeur déjà utilisée de ce numéro
+const NO_DIGIT_CHOICE = ['mot', 'deg', 'ped', 'txt', 'ext']
 
 export class AMark_Editor {
 
@@ -494,7 +497,7 @@ get suggestions(){
     values.sort((a, b) => count[b] - count[a] || alpha(a, b))
   } else if ( !inScoreOrder ) values.sort(alpha)
   // Valeurs affichées comme sur la table (police PhilNote)
-  return {mode, values, philnote: TYPES_PHILHARMONIEFONT.includes(type)}
+  return {mode, values, philnote: TYPES_PHILHARMONIEFONT.includes(type), digits: !NO_DIGIT_CHOICE.includes(type)}
 }
 
 /**

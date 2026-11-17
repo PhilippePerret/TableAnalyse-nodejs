@@ -208,6 +208,7 @@ export class Editeur {
     listen(this.obj,        'dblclick', e => {return stopEvent(e)})
     listen(this.textField,  'focus', this.onFocusTextField.bind(this))
     listen(this.textField,  'blur',  this.onBlurTextField.bind(this))
+    listen(this.textField,  'keydown', this.onKeyDownTextField.bind(this))
     listen(this.textarea,   'focus', this.onFocusTextField.bind(this))
     listen(this.textarea,   'blur',  this.onBlurTextField.bind(this))
     listen(this.variableField, 'focus', this.onFocusTextField.bind(this))
@@ -231,6 +232,8 @@ export class Editeur {
     const values = (sug && sug.values) || []
     const mode   = values.length ? sug.mode : null
     this.suggestValues = values
+    // Chiffre tapé en tête du champ : valeur de ce numéro (panneau)
+    this.digitChoice = mode == 'panel' && !!sug.digits
     this.suggestMenu.innerHTML = ''
     this.suggestList.innerHTML = ''
     if ( mode == 'menu' ) {
@@ -277,6 +280,18 @@ export class Editeur {
     if ( index < 0 ) return
     e.preventDefault()
     this.chooseSuggestion(index)
+  }
+  // Chiffre (1 à 9) tapé en tête du champ, vide ou entièrement
+  // sélectionné : valeur déjà utilisée de ce numéro, appliquée
+  onKeyDownTextField(e){
+    if ( !this.digitChoice || e.metaKey || e.ctrlKey || e.altKey ) return
+    if ( !/^[1-9]$/.test(e.key) ) return
+    const f = this.textField
+    const whole = f.value == '' || (f.selectionStart == 0 && f.selectionEnd == f.value.length)
+    if ( !whole || undefined === this.suggestValues[LETTERS.indexOf(e.key)] ) return
+    e.preventDefault()
+    e.stopPropagation()
+    this.chooseSuggestion(LETTERS.indexOf(e.key))
   }
   onKeyPressSuggestions(e){
     if ( e.key.length == 1 ) e.stopPropagation()
