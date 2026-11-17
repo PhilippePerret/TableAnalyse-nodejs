@@ -435,6 +435,8 @@ marks:
     level_message: "Livello del titolo"
   suggestions:
     menu_title: "Valori già usati…"
+  variable:
+    label: "Variabile"
   types:
     acc: {name: "Accordo",       message: "Nome dell'accordo"}
     har: {name: "Armonia",       message: "Cifratura"}

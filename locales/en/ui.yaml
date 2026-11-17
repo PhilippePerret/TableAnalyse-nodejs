@@ -435,6 +435,8 @@ marks:
     level_message: "Title level"
   suggestions:
     menu_title: "Values already used…"
+  variable:
+    label: "Variable"
   types:
     acc: {name: "Chord",         message: "Chord name"}
     har: {name: "Harmony",       message: "Figure"}

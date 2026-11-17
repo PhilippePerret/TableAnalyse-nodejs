@@ -40,6 +40,7 @@ marks:
   no_autocontent: "Impossibile definire il contenuto automatico del tipo '%{type}'…"
   no_subtype: "Il tipo '%{type}' non definisce il suo sottotipo…"
   no_form_start: "Nessuna marca « %{name} » sulla tavola."
+  variable_used: "La variabile « %{name} » è già usata."
   already_associated: "I due segni sono già associati."
   not_associated: "I due segni non sono associati!"
   missing_tag: "Il segno %{id} non esiste più. Dovreste eliminare questo collegamento."

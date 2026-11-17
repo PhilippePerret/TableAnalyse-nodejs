@@ -435,6 +435,8 @@ marks:
     level_message: "Ebene des Titels"
   suggestions:
     menu_title: "Bereits verwendete Werte…"
+  variable:
+    label: "Variable"
   types:
     acc: {name: "Akkord",        message: "Name des Akkords"}
     har: {name: "Harmonie",      message: "Bezifferung"}

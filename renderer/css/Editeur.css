@@ -135,3 +135,19 @@ div.mini_editeur div.buttons {
 div.mini_editeur div.buttons button {
   margin-left: 8px;
 }
+
+/* Motif : nom de sa variable */
+div.mini_editeur div.variable-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+div.mini_editeur div.variable-row.hidden {
+  display: none;
+}
+div.mini_editeur div.variable-row input[type="text"] {
+  flex: 1;
+  font-size: inherit;
+  font-family: monospace;
+}

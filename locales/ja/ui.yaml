@@ -434,6 +434,8 @@ marks:
     level_message: "見出しのレベル"
   suggestions:
     menu_title: "使用済みの値…"
+  variable:
+    label: "変数"
   types:
     acc: {name: "コード",        message: "コードネーム"}
     har: {name: "和声",          message: "和声記号"}

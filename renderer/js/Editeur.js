@@ -59,6 +59,7 @@ export class Editeur {
     position && this.positionne(position)
     message  && (this.titre = message)
     this.data.suggestions && this.setSuggestions(this.data.suggestions())
+    this.setVariableField()
     this.obj.classList.remove('hidden')
     console.debug("editeur", this)
     this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
@@ -108,8 +109,28 @@ export class Editeur {
   }
 
   onClickOK(){
+    // Motif : sa variable (refusée → l'éditeur reste ouvert)
+    if ( this.isMotif && false === this.owner.setVariable(this.variableField.value) ) {
+      this.variableField.focus()
+      return
+    }
     this.data.setMethod(this.getValue())
     this.hide()
+  }
+
+  // Type de la marque éditée (ou créée, cf. AMark_Editor)
+  get markType(){
+    return this.isAMark ? this.owner.type : this.owner._amark_type
+  }
+  get isMotif(){ return this.markType == 'mot' }
+
+  /**
+   * Champ « Variable » du motif : affiché pour un motif seulement,
+   * avec la variable actuelle
+   */
+  setVariableField(){
+    this.variableRow.classList[this.isMotif ? 'remove' : 'add']('hidden')
+    this.variableField.value = (this.isAMark ? this.owner.data.variable : this.owner._amark_variable) || ''
   }
 
   onClickCancel(){
@@ -153,7 +174,13 @@ export class Editeur {
     this.suggestMenu = DCreate('SELECT', {class:'suggest-menu hidden'})
     this.suggestList = DCreate('DIV', {class:'suggest-list', tabindex:'0'})
     this.suggestPane = DCreate('DIV', {class:'suggest-pane hidden', inner:[this.suggestList]})
-    o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea]})]}))
+    // Motif : nom de sa variable (`{<variable>}` dans les textes)
+    this.variableField = DCreate('INPUT', {type:'text', class:'variable'})
+    this.variableRow   = DCreate('DIV', {class:'variable-row hidden', inner:[
+        DCreate('LABEL', {text:t('ui.marks.variable.label')})
+      , this.variableField
+    ]})
+    o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea, this.variableRow]})]}))
     o.appendChild(this.suggestPane)
     const divBoutons = DCreate('DIV', {class:'buttons'})
     // Marque d'analyse : changement de son type (de son sous-type
@@ -183,6 +210,8 @@ export class Editeur {
     listen(this.textField,  'blur',  this.onBlurTextField.bind(this))
     listen(this.textarea,   'focus', this.onFocusTextField.bind(this))
     listen(this.textarea,   'blur',  this.onBlurTextField.bind(this))
+    listen(this.variableField, 'focus', this.onFocusTextField.bind(this))
+    listen(this.variableField, 'blur',  this.onBlurTextField.bind(this))
     listen(this.suggestMenu, 'change', this.onSuggestMenu.bind(this))
     listen(this.suggestList, 'click', this.onClickSuggestion.bind(this))
     listen(this.suggestList, 'keydown', this.onKeyDownSuggestions.bind(this))
@@ -296,6 +325,7 @@ export class Editeur {
       msg && (this.titre = msg)
       this.btnType.textContent = this.typeButtonLabel
       this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
+      this.setVariableField()
       keepInView(this.obj)
       this.value = value
     }

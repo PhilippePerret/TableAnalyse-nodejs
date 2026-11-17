@@ -90,6 +90,8 @@ export class AMark extends AObjet {
       const newMark = AMark.instanciate(Current.analyse, params)
       newMark.setValues(params)
       newMark.build_and_observe()
+      // Motif avec variable : les textes qui l'utilisent
+      params.variable && Variables.refresh()
       newMark.toggleFromSelection(/* keep_other = */ false)
       newMark.ajustePosition(newMark.left, newMark.top)
       // Marque de forme : à sa hauteur, au début (ou à la fin) de la
@@ -268,8 +270,30 @@ setValue(newvalue){
   // Numéro de mesure modifié : il fait foi pour les suivants
   this.subtype == 'mes' && this.data.line && Systeme.renumberMeasures(this)
 
+  // Motif renommé : les textes qui utilisent sa variable
+  this.data.variable && Variables.refresh()
+
   setModified()
 
+}
+
+/**
+ * Variable du motif (champ « Variable » de l'éditeur) : `{<variable>}`
+ * dans un texte est remplacé par le nom du motif. +v+ vide la retire.
+ * 
+ * @return false si la variable est refusée (déjà utilisée)
+ */
+setVariable(v){
+  v = Variables.clean(v)
+  if ( v == (this.data.variable || '') ) return true
+  if ( v && (Variables.isReserved(v) || Variables.motifOf(v, this)) ) {
+    erreur(t('errors.marks.variable_used', {name: v}))
+    return false
+  }
+  if ( v ) { this.data.variable = v } else { delete this.data.variable }
+  Variables.refresh()
+  setModified()
+  return true
 }
 
 lock(){

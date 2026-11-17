@@ -10,6 +10,7 @@ import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT, TYPE
 import { AObjet } from './AObjet.js'
 import { Forme } from './Forme.js'
 import { t } from './i18n.js'
+import { Variables } from './Variables.js'
 /**
  * AMark_Editor
  * ------------
@@ -143,6 +144,8 @@ get amark_data(){
   this.isFormEnd && (data.start = this._amark_start)
   // Titre de mise en page : son niveau (1 à 3)
   this.isLayoutTitle && (data.level = this._amark_level)
+  // Motif : sa variable
+  this.amark_type == 'mot' && this._amark_variable && (data.variable = this._amark_variable)
   // Marque de forme : endroit du clic, pour la placer sur sa mesure
   // (non enregistré, cf. AMark.createNew)
   this.amark_type == 'frm' && (data.clickX = this.event.pageX)
@@ -150,6 +153,20 @@ get amark_data(){
 }
 
 get amark_type()    {return this._amark_type}
+
+/**
+ * Variable du motif créé (champ « Variable » de l'éditeur)
+ * @return false si elle est refusée (déjà utilisée)
+ */
+setVariable(v){
+  v = Variables.clean(v)
+  if ( v && (Variables.isReserved(v) || Variables.motifOf(v)) ) {
+    erreur(t('errors.marks.variable_used', {name: v}))
+    return false
+  }
+  this._amark_variable = v
+  return true
+}
 get amark_subtype() {return this._amark_subtype}
 get amark_content() {return this._amark_content}
 

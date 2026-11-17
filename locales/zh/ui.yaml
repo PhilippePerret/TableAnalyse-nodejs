@@ -434,6 +434,8 @@ marks:
     level_message: "标题级别"
   suggestions:
     menu_title: "已使用的值…"
+  variable:
+    label: "变量"
   types:
     acc: {name: "和弦",          message: "和弦名称"}
     har: {name: "和声",          message: "级数标记"}

@@ -434,6 +434,8 @@ marks:
     level_message: "제목 단계"
   suggestions:
     menu_title: "이미 사용한 값…"
+  variable:
+    label: "변수"
   types:
     acc: {name: "코드",          message: "코드 이름"}
     har: {name: "화성",          message: "화성 기호"}
