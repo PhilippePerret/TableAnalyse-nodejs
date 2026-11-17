@@ -272,3 +272,28 @@ body.theme-C .panneau-ui > div.panneau-foot {
   border-top:       1px solid #44474d;
   border-radius:    0 0 8px 8px;
 }
+
+
+/* ===================================================================
+    BOUTONS CLIQUÉS (#171) : aucun mouvement. Boutons ordinaires
+    légèrement assombris (éclaircis dans le thème sombre) ; bouton par
+    défaut et bouton dangereux en couleurs inversées, bord épaissi
+   =================================================================== */
+button:not(:disabled):active { filter: brightness(.9); }
+body.theme-C button:not(:disabled):active { filter: brightness(1.25); }
+body.theme-A .panneau-ui button.btn-default:not(:disabled):active {
+  filter:           none;
+  background-color: white;
+  color:            #3a925e;
+  border-color:     #3a925e;
+  box-shadow:       inset 0 0 0 1px #3a925e;
+  font-weight:      600;
+}
+body.theme-A .panneau-ui button.btn-danger:not(:disabled):active {
+  filter:           none;
+  background-color: white;
+  color:            #d0342c;
+  border-color:     #d0342c;
+  box-shadow:       inset 0 0 0 1px #d0342c;
+  font-weight:      600;
+}
