@@ -143,14 +143,20 @@ export class AObjet {
     } else if ( this.selectionTbl[aobjet.id] ) {
       return // Ne pas enregistrer deux fois un objet
     }
-    if ( aobjet.isGrouped ) {
-      aobjet.grp.forEach( tid => {
-        this.insertUniqObjectInSelection(AObjet.get(tid))
-      })
-    } else {
-      this.insertUniqObjectInSelection(aobjet)
-    }
+    // Marque groupée : tout son groupe (le plus extérieur, cf. Groups.js)
+    this.groupOf(aobjet).forEach(ao => this.insertUniqObjectInSelection(ao))
     this.setMenusState()
+  }
+
+  /**
+   * @return les objets du groupe le plus extérieur de +aobjet+ (cf.
+   * Groups.js), ou [aobjet] s'il n'est pas groupé
+   */
+  static groupOf(aobjet){
+    const g = aobjet.data && aobjet.data.groups
+    const outer = g && g.length && g[g.length - 1]
+    if ( !outer ) return [aobjet]
+    return this.select(ao => !!(ao.data && ao.data.groups && ao.data.groups[ao.data.groups.length - 1] == outer))
   }
 
   // Méthode fonctionnelle privée (cf. ci-dessus)
@@ -163,11 +169,15 @@ export class AObjet {
   }
 
   static removeFromSelection(aobjet){
-    const dec = this.selectionIds.indexOf(aobjet.id)
-    this.selection.splice(dec, 1)
-    this.selectionIds.splice(dec, 1)
-    delete this.selectionTbl[aobjet.id]
-    aobjet.unsetSelected()
+    // Marque groupée : tout son groupe
+    this.groupOf(aobjet).forEach(ao => {
+      const dec = this.selectionIds.indexOf(ao.id)
+      if ( dec < 0 ) return
+      this.selection.splice(dec, 1)
+      this.selectionIds.splice(dec, 1)
+      delete this.selectionTbl[ao.id]
+      ao.unsetSelected()
+    })
     this.setMenusState()
   }
 

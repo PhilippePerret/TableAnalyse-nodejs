@@ -10,6 +10,7 @@ import { AnalyseSaver } from './AnalyseSaver.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 import { MarksClipboard } from './MarksClipboard.js'
+import { Groups } from './Groups.js'
 
 // Saisie en cours dans un champ (panneaux) : touches laissées au champ
 export function inTextField(e){
@@ -123,6 +124,12 @@ export function onKeyDownUniversel(e){
         } else {
           return Cancel.zLast(e)
         }
+      case 'g':
+        // Grouper (Maj : dégrouper) les marques sélectionnées
+        if ( inTextField(e) || !AObjet.selection ) return null
+        e.shiftKey ? Groups.ungroup(AObjet.selection) : Groups.group(AObjet.selection)
+        AObjet.setMenusState()
+        return stopEvent(e)
     }
   }
 

@@ -79,6 +79,9 @@ options_menu:
   theme_C:          "テーマ C — ダーク"
 
 mark_menu:
+  group:            "グループ化"
+  ungroup:          "グループ解除"
+  add_to_group:     "グループに追加"
   lock_one:         "マークをロック"
   lock_many:        "マークをロック"
   unlock_one:       "マークのロックを解除"

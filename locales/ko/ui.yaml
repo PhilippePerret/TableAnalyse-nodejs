@@ -79,6 +79,9 @@ options_menu:
   theme_C:          "테마 C — 어두움"
 
 mark_menu:
+  group:            "그룹으로 묶기"
+  ungroup:          "그룹 해제"
+  add_to_group:     "그룹에 추가"
   lock_one:         "표시 잠그기"
   lock_many:        "표시 잠그기"
   unlock_one:       "표시 잠금 해제"

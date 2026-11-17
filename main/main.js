@@ -280,7 +280,7 @@ function buildMenu(){
     {
       label: t('ui.menu.form_menu'),
       submenu: [
-          {label: t('ui.menu.goto_measure'),    accelerator: 'CmdOrCtrl+G', click: () => sendMenuCommand('gotoMeasure')}
+          {label: t('ui.menu.goto_measure'),    accelerator: 'Alt+G', click: () => sendMenuCommand('gotoMeasure')}
         , {label: t('ui.menu.show_form'),       type: 'checkbox', checked: formShown, click: (item) => {
               formShown = item.checked
               sendMenuCommand(formShown ? 'showForm' : 'hideForm')

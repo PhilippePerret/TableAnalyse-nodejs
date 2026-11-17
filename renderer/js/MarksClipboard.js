@@ -3,6 +3,7 @@ import { AObjet } from './AObjet.js'
 import { AMark } from './AMark.js'
 import { UI } from './UI.js'
 import { setModified } from './Current.js'
+import { Groups } from './Groups.js'
 
 // Marge (px) entre les marques collées et le haut et la droite de la
 // fenêtre
@@ -49,10 +50,12 @@ class MarksClipboardClass {
     const bandBottom = band ? band.getBoundingClientRect().bottom : 0
     const dx = Math.round(Math.min(window.innerWidth, document.documentElement.clientWidth) - MARGIN - table.left - right)
     const dy = Math.round(bandBottom + MARGIN - table.top - top)
+    // Groupes des originaux : nouveaux groupes pour les copies
+    const newGroups = {}
     const news = this.items.map(i => {
       const data = JSON.parse(JSON.stringify(i.data))
-      // Groupe de l'original : pas celui de la copie
       delete data.grp
+      data.groups && (data.groups = data.groups.map(g => newGroups[g] || (newGroups[g] = Groups.newId(Object.values(newGroups)))))
       Object.assign(data, {left: data.left + dx, top: data.top + dy})
       return AMark.createNew(null, data)
     }).filter(Boolean)

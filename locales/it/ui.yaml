@@ -79,6 +79,9 @@ options_menu:
   theme_C:          "Tema C — Scuro"
 
 mark_menu:
+  group:            "Raggruppa"
+  ungroup:          "Separa"
+  add_to_group:     "Aggiungi al gruppo"
   lock_one:         "Blocca il segno"
   lock_many:        "Blocca i segni"
   unlock_one:       "Sblocca il segno"

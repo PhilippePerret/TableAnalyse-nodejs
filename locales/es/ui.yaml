@@ -79,6 +79,9 @@ options_menu:
   theme_C:          "Tema C — Oscuro"
 
 mark_menu:
+  group:            "Agrupar"
+  ungroup:          "Desagrupar"
+  add_to_group:     "Añadir al grupo"
   lock_one:         "Bloquear la marca"
   lock_many:        "Bloquear las marcas"
   unlock_one:       "Desbloquear la marca"

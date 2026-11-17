@@ -310,86 +310,7 @@ get isLocked(){
   return this.data.locked == true
 }
 
-/* --- Méthodes de GROUPE --- */
-
-get grp(){ return this._grp || (this._grp = this.data.grp) }
-set grp(v){
-  this._grp = v
-  this.data.grp = v
-}
-
-get isGrouped(){
-  return this.grp && this.grp.length > 0
-}
-isGroupedWith(tag){
-  return this.grp && this.grp.includes(tag.id)
-}
-
-groupWith(tag){
-  // Permet de grouper le tag courant avec la tag +tag+
-  const moi = this
-
-  if ( moi.isGrouped && moi.isGroupedWith(tag) ){
-    return erreur(t('errors.marks.already_associated'))
-  }
-
-  const tagIsGrouped = true && tag.isGrouped
-  const moiIsGrouped = true && moi.isGrouped
-
-  /*
-  |  Les deux tags peuvent être déjà groupés avec d'autres
-  |  tags.
-  */
-  var tagAsso = tag.isGrouped ? tag.grp : [tag.id]
-  var moiAsso = moi.isGrouped ? moi.grp : [moi.id]
-
-  /*
-  |  On regroupe tous les tags associés.
-  */
-  const allTagsGrouped = moiAsso.concat(tagAsso)
-  moi.setGroup(allTagsGrouped)
-  tag.setGroup(allTagsGrouped)
-
-  setModified()
-
-}
-
-degroupFrom(tag){
-  /*
-  |  Dégroupe le tag courant et +tag+ ({AMark})
-  */
-  const moi = this
-
-  if ( not(this.isGroupedWith(tag)) ) {
-    return erreur(t('errors.marks.not_associated'))
-  }
-
-  if ( moi.grp.length == 2 ) { // <= une seule association
-    delete moi.grp
-    delete tag.grp
-  } else {
-    const idx = moi.grp.indexOf(tag.id)
-    moi.grp.splice(idx, 1)
-    this.setGroup(moi.grp)
-  }
-
-  setModified()
-}
-
-setGroup(grp) {
-  /*
-  |  Définit les associations de ce tag.
-  |  Attention, il ne faut appeler cette méthode que sur un seul tag
-  |  sinon elle tournera en boucle.
-  */
-  if ( this.isGrouped ) {
-    this.grp.forEach(tid => AObjet.get(tid).grp = grp)
-  } else {
-    this.grp = grp
-  }
-}
-
-/* ---/fin des méthodes de groupe */
+/* --- Groupes : cf. Groups.js --- */
 
 /* --- Classes CSS Methods --- */
 
@@ -753,19 +674,6 @@ observe(){
             ao.obj.style.left  = px(ao.left - diffLeft)
           })
         }
-        if ( my.isGrouped && e.shiftKey) {
-          /*
-          |  Pour voir les associés (groupe) se déplacer en même
-          |  temps.
-          */
-          this.movedGrp || (this.movedGrp = my.grp.map(tid => {return AObjet.get(tid)}))
-          var diffTop   = this.debTop - ui.offset.top
-          var diffLeft  = this.debLeft - ui.offset.left
-          this.movedGrp.forEach(tag => {
-            tag.obj.style.top   = px(tag.top - diffTop)
-            tag.obj.style.left  = px(tag.left - diffLeft)
-          })
-        }
       }
     , start:function(e,ui){
         // console.log("Départ : ", {
@@ -774,11 +682,12 @@ observe(){
         //   ui_top: ui.position.top,
         //   ui_left: ui.position.left
         // })
-        this.movedGrp = undefined // pour les associés
         this.debTop  = 0 + parseInt(ui.position.top, 10)
         this.debLeft = 0 + parseInt(ui.position.left,10)
         this.forDuplication = ui.helper[0] !== my.obj
         this.initData = Object.assign({}, my.data)
+        // La copie (Alt) n'entre pas dans le groupe de l'original
+        delete this.initData.groups
       }
     , stop:function(e,ui){
         // console.log("Fin : ", {

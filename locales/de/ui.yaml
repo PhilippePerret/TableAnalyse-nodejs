@@ -79,6 +79,9 @@ options_menu:
   theme_C:          "Thema C — Dunkel"
 
 mark_menu:
+  group:            "Gruppieren"
+  ungroup:          "Gruppierung aufheben"
+  add_to_group:     "Zur Gruppe hinzufügen"
   lock_one:         "Markierung sperren"
   lock_many:        "Markierungen sperren"
   unlock_one:       "Markierung entsperren"

@@ -9,6 +9,7 @@ import { t } from './i18n.js'
 import { toggleCoordinates } from './handies.js'
 import { DCreate } from './dom.js'
 import { AMARQUES_TYPES } from './Constants.js'
+import { Groups } from './Groups.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -36,6 +37,27 @@ export class AmarkMenu extends MenusTool {
     const many = this.selection.length > 1
     this.menuLock.innerHTML = t(`ui.mark_menu.${enableLock ? 'lock' : 'unlock'}_${many ? 'many' : 'one'}`)
     this.menuLock.dataset.ope = enableLock ? 'lock' : 'unlock'
+    // Groupes (cf. Groups.js)
+    const sel = this.selection
+    DGet('option[value="group"]', this.menu).disabled      = !Groups.canGroup(sel)
+    DGet('option[value="ungroup"]', this.menu).disabled    = !Groups.canUngroup(sel)
+    DGet('option[value="addToGroup"]', this.menu).disabled = !Groups.canAddToGroup(sel)
+  }
+
+  static onActivate_group(){
+    Groups.group(this.selection)
+    this.setAllMenus(this.selection.length > 0)
+  }
+  static onActivate_ungroup(){
+    Groups.ungroup(this.selection)
+    this.setAllMenus(this.selection.length > 0)
+  }
+  static onActivate_addToGroup(){
+    Groups.addToGroup(this.selection)
+    // La sélection devient le groupe entier
+    const first = this.selection[0]
+    first && AObjet.addToSelection(first)
+    this.setAllMenus(this.selection.length > 0)
   }
 
   static get selection(){ return AObjet.selection || []}

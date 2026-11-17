@@ -8,6 +8,7 @@ import { Analyse, setWindowTitle } from './Analyse.js'
 import { UI } from './UI.js'
 import { Variables } from './Variables.js'
 import { Systeme } from './Systeme.js'
+import { Groups } from './Groups.js'
 
 export class AnalyseDisplayer {
 
@@ -53,6 +54,8 @@ static display(analyse){
   this.displayAnalyseTags(analyse.tags)
   // Variables des textes (motifs construits après les textes)
   Variables.refresh()
+  // Anciens groupes de marques (cf. Groups.js)
+  Groups.migrate()
   Systeme.placeMeasureNumbers() // si les images sont déjà chargées
 
   /*

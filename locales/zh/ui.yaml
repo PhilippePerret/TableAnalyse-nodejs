@@ -79,6 +79,9 @@ options_menu:
   theme_C:          "主题 C — 深色"
 
 mark_menu:
+  group:            "编组"
+  ungroup:          "取消编组"
+  add_to_group:     "加入编组"
   lock_one:         "锁定标记"
   lock_many:        "锁定标记"
   unlock_one:       "解锁标记"

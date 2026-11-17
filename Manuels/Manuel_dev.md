@@ -146,35 +146,9 @@ Marque de type `lay` (`TYPES_MISE_EN_PAGE`, `Constants.js`) : `pag` (saut de pag
 Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; espace avant un bloc = hauteur de la délimitation qui le précède, sinon espace avant/après du titre, sinon au plus l'espace blanc vertical maximal. Sauts de page : `Stage.breaks`, coupures imposées dans `paginate` (mode « pages de taille fixe » seulement).
 
 
-## Groupement des tags
+## Groupement des marques
 
-Depuis la version de novembre 2022, on peut grouper les tags, ce qui permet notamment de les déplacer ou de les supprimer ensemble.
+`renderer/js/Groups.js` (menus « Marque > Grouper » Cmd/Ctrl+G, « Dégrouper » Cmd/Ctrl+Maj+G, « Ajouter au groupe »).
 
-QUESTION : comment les tags sont-ils groupés.
-
-C’est une propriété ‘grp’ qui signifie “groupe” qui liste tous les tags associés
-
-Pour le moment, je considère que cette liste doit contenir tous les ID de tags, même celui qui possède la propriété. Cela permet d’actualiser les listes très facilement, sans avoir à enlever l’ID du tag 
-
-Par exemple :
-
-~~~javascript
-T1 et T5 sont associés :
-T1.grp = [1, 5]
-T5.grp = [1, 5]
-~~~
-
-Les méthodes à créer
-
-~~~javascript
-groupWith(tag) // regroupe (attention 
-
-degroupFrom(tag) // dégroupe
-
-isGrouped // => true si le tag est associé
-
-isGroupedWith(tag) // => true si associé au tag +tag+
-~~~
-
-
+`data.groups` d'une marque : identifiants (`g1`, `g2`…) de ses groupes, du plus intérieur au plus extérieur (groupes imbriqués). Sélectionner une marque sélectionne toutes celles de même groupe extérieur (`AObjet.groupOf`, dans `addToSelection` et `removeFromSelection`) : déplacement, suppression, etc. ensemble. « Dégrouper » retire le groupe extérieur ; « Ajouter au groupe » met les autres unités sélectionnées dans le groupe extérieur de la première marque groupée. Ancienne propriété `grp` (groupes plats) convertie au chargement (`Groups.migrate`).
 

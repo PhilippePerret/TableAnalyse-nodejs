@@ -79,6 +79,9 @@ options_menu:
   theme_C:          "Theme C — Dark"
 
 mark_menu:
+  group:            "Group"
+  ungroup:          "Ungroup"
+  add_to_group:     "Add to group"
   lock_one:         "Lock Mark"
   lock_many:        "Lock Marks"
   unlock_one:       "Unlock Mark"
