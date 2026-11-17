@@ -263,11 +263,12 @@ export class ExtraitComposer {
     const btnMask     = DCreate('BUTTON', {class: 'btn-mask', text: T('mask'), title: T('mask_title')})
     this.layer     = DCreate('DIV', {class: 'ext-layer'})
     this.workspace = DCreate('DIV', {class: 'ext-workspace', inner: [this.layer]})
+    // « Masque blanc » dans le cadre de l'assemblage, en bas à gauche
+    const frame = DCreate('DIV', {class: 'ext-frame', inner: [this.workspace, btnMask]})
     const panel = DCreate('DIV', {id: 'ext_composer_panel', inner: [
-        DCreate('DIV', {class: 'tools', inner: [btnMask]})
-      , DCreate('P', {class: 'help', text: T('help')})
+        DCreate('P', {class: 'help', text: T('help')})
       , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('measures')}), this.field]})
-      , this.workspace
+      , frame
       , DCreate('DIV', {class: 'buttons', inner: [btnOK, btnCancel]})
     ]})
     document.body.appendChild(panel)
