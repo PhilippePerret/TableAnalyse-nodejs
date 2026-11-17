@@ -17,6 +17,7 @@ import { UI } from './UI.js'
 import { Forme } from './Forme.js'
 import { ExtraitComposer } from './ExtraitComposer.js'
 import { t } from './i18n.js'
+import { Variables } from './Variables.js'
 
 
 /**
@@ -544,10 +545,12 @@ get formated_content(){
   if ( this.isLayoutLine ) {
     return escapeLt(TYPES_MISE_EN_PAGE[this.subtype].name + (this.content ? ` : ${this.content}` : ''))
   }
-  if ( this.hasFormatedText && this.content ) {
-    return this.markdownize(this.tunize(escapeLt(this.content)))
+  // Variables (`{title}`, motif…) remplacées par leur valeur
+  const content = Variables.replaceIn(this.content)
+  if ( this.hasFormatedText && content ) {
+    return this.markdownize(this.tunize(escapeLt(content)))
   } else {
-    return this.content && escapeLt(this.content)
+    return content && escapeLt(content)
   }
 }
 markdownize(str){

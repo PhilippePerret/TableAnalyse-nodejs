@@ -6,6 +6,7 @@
 import { PreferencesAppData } from './Preferences_AppData.js'
 import { Analyse, setWindowTitle } from './Analyse.js'
 import { UI } from './UI.js'
+import { Variables } from './Variables.js'
 import { Systeme } from './Systeme.js'
 
 export class AnalyseDisplayer {
@@ -50,6 +51,8 @@ static display(analyse){
   |  Affichage des marques d'analyse
   */
   this.displayAnalyseTags(analyse.tags)
+  // Variables des textes (motifs construits après les textes)
+  Variables.refresh()
   Systeme.placeMeasureNumbers() // si les images sont déjà chargées
 
   /*

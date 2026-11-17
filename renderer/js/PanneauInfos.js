@@ -5,6 +5,7 @@ import { invoke } from './api.js'
 import { Panneau } from './Panneau.js'
 import { Analyse, setWindowTitle } from './Analyse.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
+import { Variables } from './Variables.js'
 import { t } from './i18n.js'
 
 export class PanneauInfos {
@@ -37,6 +38,8 @@ export class PanneauInfos {
     if ( !Analyse.current ) return erreur(t('errors.no_analyse_open'))
     Object.assign(Analyse.current.data.infos, this.getData())
     setWindowTitle(Analyse.current.data.infos)
+    // Textes utilisant les variables des infos ({title}…)
+    Variables.refresh()
     Analyse.current.saveInfos()
     this.panneau.isOpened && this.toggle()
   }
