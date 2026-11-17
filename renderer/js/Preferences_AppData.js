@@ -11,7 +11,7 @@ export const PreferencesAppData = {
   , grid_horizontal_space   :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px' ,apply:true}
   , grid_vertical_space     :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px' ,apply:true}
   , systeme_width           :{type:'inputtext'    ,typeV:'number'   ,default:1860, selector:'img.systeme', selector_value:"width:__VALUE__px;" ,unite:'px' ,apply:true}
-  , top_first_system        :{type:'inputtext'    ,typeV:'number'   ,default:100, apply:true ,unite:'px'}
+  , top_first_system        :{type:'inputtext'    ,typeV:'number'   ,default:300, apply:true ,unite:'px'}
   , distance_systemes       :{type:'inputtext'    ,typeV:'number'   ,default:50, apply:true ,unite:'px'}
   , max_table_blank         :{type:'inputtext'    ,typeV:'number'   ,default:80 ,unite:'px'}
   , adjust_same_mark        :{type:'checkbox'     ,typeV:'boolean'  ,default:true}

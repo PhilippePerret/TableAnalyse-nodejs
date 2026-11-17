@@ -269,7 +269,7 @@ export class FormeBuilder {
   static place(o){
     const {top, bottom} = this.tableExtent(o)
     if ( o.dataset.position == 'before' ) {
-      const y = Number(pref('top_first_system')) || 100
+      const y = Number(pref('top_first_system')) || 300
       o.style.top = px(y)
       const delta = y + o.offsetHeight + GAP - top
       if ( delta > 0 ) {
