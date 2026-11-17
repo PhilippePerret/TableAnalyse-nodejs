@@ -152,3 +152,8 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 
 `data.groups` d'une marque : identifiants (`g1`, `g2`…) de ses groupes, du plus intérieur au plus extérieur (groupes imbriqués). Sélectionner une marque sélectionne toutes celles de même groupe extérieur (`AObjet.groupOf`, dans `addToSelection` et `removeFromSelection`) : déplacement, suppression, etc. ensemble. « Dégrouper » retire le groupe extérieur ; « Ajouter au groupe » met les autres unités sélectionnées dans le groupe extérieur de la première marque groupée. Ancienne propriété `grp` (groupes plats) convertie au chargement (`Groups.migrate`).
 
+
+## Historique de l'analyse
+
+`renderer/js/History.js` : étapes de la construction (infos, marques, positions des systèmes ; ni préférences, ni options, ni sélections, ni verrouillages) dans `history.jsonl` du dossier de l'analyse (une étape JSON par ligne : état initial complet, puis changements). Étape mémorisée 0,8 s après la dernière modification (`Analyse#setModified`). Menu « Fichier > Historique de l'analyse… » : retour à une étape = nouvelle étape `restore`, enregistrement puis rechargement.
+
