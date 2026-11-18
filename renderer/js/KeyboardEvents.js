@@ -11,6 +11,7 @@ import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 import { MarksClipboard } from './MarksClipboard.js'
 import { Groups } from './Groups.js'
+import { Split } from './Split.js'
 
 // Saisie en cours dans un champ (panneaux) : touches laissées au champ
 export function inTextField(e){
@@ -110,6 +111,14 @@ export function onKeyUpOnAnalyse(e){
 * false dans l'autre cas, pour retourner cette valeur.
 */
 export function onKeyDownUniversel(e){
+
+  // Scinder la fenêtre : caractère « / », soit ⌘ + Maj + « : » sur le
+  // clavier français (avec ⌘, la touche peut arriver sans l'effet de
+  // Maj : « : »). Le raccourci du menu, lui, répondait à ⌘ + « : ».
+  if ( cmdKey(e) && (e.key == '/' || e.shiftKey && e.key == ':') ) {
+    Analyse.current && Split.toggle()
+    return stopEvent(e)
+  }
 
   if ( cmdKey(e) ) {
     switch(e.key.toLowerCase()) {
