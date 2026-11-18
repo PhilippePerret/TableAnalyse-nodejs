@@ -640,8 +640,8 @@ function alignedCount(rows, sys, side, x){
  *  toute leur hauteur (une hampe, elle, porte une tête de note). Les
  *  barres proches (double barre, reprise) n'en font qu'une.
  *
- *  Mesures : chacune est fermée par une barre ; la première commence au
- *  début du système, les suivantes après chaque barre. Ce qui suit la
+ *  Mesures : chacune est fermée par une barre ; la première commence
+ *  après l'en-tête du système, les suivantes après chaque barre. Ce qui suit la
  *  dernière barre n'est pas une mesure (armure ou clé de précaution).
  *  La dernière barre (lastBar) marque la fin de la dernière mesure.
  *  Les numéros sont posés par l'application, sous le système.
@@ -676,10 +676,65 @@ function findMeasures(dark, w, systems, s){
     }
     sys.barlines = bars
     sys.lastBar = bars.length ? bars[bars.length - 1].x0 : null
-    const starts = [left]
+    const starts = [headerEnd(dark, w, sys, left, bars.length ? bars[0].x0 : right, s)]
     bars.slice(0, -1).forEach(b => starts.push(b.x1 + 1))
     sys.measures = starts.map(x => ({x: Math.round(x + 0.3 * s)}))
   }
+}
+
+/**
+ * Fin de l'en-tête du système (clé, armure, chiffrage), pour poser le
+ * premier numéro de mesure sous les premières notes : premier espace
+ * vide d'un demi-interligne au moins après la clé (dans les 13 premiers
+ * interlignes : armure de sept altérations et chiffrage). Le bloc qui suit est un
+ * chiffrage (sauté aussi) s'il est étroit, dans la hauteur des portées
+ * et présent sur chacune. Sans espace trouvé : début de la portée.
+ */
+function headerEnd(dark, w, sys, left, end, s){
+  // Colonnes vides (lignes de portée exclues), portées et leurs abords
+  const empty = (x) => {
+    for ( const st of sys.staves ) {
+      const ls = st.lines
+      const y0 = Math.round(ls[0].yAt(x) - s), y1 = Math.round(ls[ls.length - 1].yAt(x) + s)
+      for ( let y = y0 ; y <= y1 ; ++y ) {
+        if ( ls.some(l => Math.abs(y - l.yAt(x)) <= l.thickness + 1) ) continue
+        if ( dark[y * w + x] ) return false
+      }
+    }
+    return true
+  }
+  const gaps = []
+  let gap = null
+  const x0 = Math.round(left + 4.2 * s)
+  for ( let x = x0 ; x < Math.min(end, left + 13 * s) ; ++x ) {
+    if ( !empty(x) ) { gap = null ; continue }
+    if ( gap ) gap.x1 = x
+    else gaps.push(gap = {x0: x, x1: x})
+  }
+  // (espace commencé avant : celui qui suit la clé)
+  const wide = gaps.filter(g => g.x0 > x0 && g.x1 - g.x0 + 1 >= 0.45 * s)
+  if ( !wide.length ) return left
+  let g = wide[0]
+  const next = wide[1]
+  if ( next && next.x0 - g.x1 <= 2.5 * s && isTimeSignature(dark, w, sys, g.x1 + 1, next.x0 - 1, s) ) g = next
+  return Math.max(g.x0, g.x1 - Math.round(s))
+}
+
+// Le bloc [x0, x1] remplit chaque portée (chiffres superposés) sans en
+// déborder ?
+function isTimeSignature(dark, w, sys, x0, x1, s){
+  return sys.staves.every(st => {
+    const ls = st.lines
+    let top = Infinity, bottom = -Infinity
+    for ( let x = x0 ; x <= x1 ; ++x ) {
+      const y0 = Math.round(ls[0].yAt(x) - s), y1 = Math.round(ls[ls.length - 1].yAt(x) + s)
+      for ( let y = y0 ; y <= y1 ; ++y ) {
+        if ( ls.some(l => Math.abs(y - l.yAt(x)) <= l.thickness + 1) ) continue
+        if ( dark[y * w + x] ) { top = Math.min(top, y - ls[0].yAt(x)) ; bottom = Math.max(bottom, y - ls[ls.length - 1].yAt(x)) }
+      }
+    }
+    return top >= -0.3 * s && top <= 0.6 * s && bottom <= 0.3 * s && bottom >= -0.6 * s
+  })
 }
 
 /**
