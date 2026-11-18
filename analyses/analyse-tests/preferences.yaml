@@ -47,8 +47,8 @@ export_page_orientation: portrait
 export_page_margin: 10
 export_systems_gap: 20
 export_type: pdf
-window_width: 1922
-window_height: 1344
+window_width: 1920
+window_height: 1135
 last_scroll: 0
 color_mesure: CCCCCC
 color_accords: 777777

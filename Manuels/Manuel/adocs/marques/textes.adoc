@@ -1,0 +1,7 @@
+[[tags-text]]
+=== Textes ===
+
+Pour insérer un texte quelconque dans l'analyse de la partition.
+
+- documenter : utilisation des variables `{title}`, `{composer}`, `{analysis-title}`, `{analyst}`
+// + {<variable-motif>}

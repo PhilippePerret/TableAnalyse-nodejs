@@ -23,3 +23,5 @@ backups/
 
 # Gems de génération du manuel
 _scripts/manuel/vendor/
+
+_Tutoriel/

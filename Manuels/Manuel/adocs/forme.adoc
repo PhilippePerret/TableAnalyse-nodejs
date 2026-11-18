@@ -3,7 +3,7 @@
 
 La **__Table d'Analyse__** permet aussi de « dessiner » la forme de la pièce. Cette forme pourra être ajoutée au début de l'analyse ou à la fin, sur une page séparée (ou plusieurs page si nécessaire).
 
-La forme est principalement définie par des numéros de mesure de départ et de fin ainsi que par les marques de tonalité et de modulation.
+La forme est principalement définie par des sections (appelées « portions » ici), des numéros de mesure de départ et de fin ainsi que par les marques de tonalité et de modulation.
 
 NOTE: C'est la raison pour laquelle il est intéressant d'ajouter au début de la partition une marque de modulation (qui ici sera une marque de tonalité) avec la tonalité du morceau.
 
@@ -12,17 +12,23 @@ NOTE: C'est la raison pour laquelle il est intéressant d'ajouter au début de l
 
 La forme se définit à l'aide de portion (parties, sections et segments) en ajoutant des « marque de forme ». Pour ajouter une marque de forme :
 
-* double-cliquer sur la table d'analyse à l'endroit voulu (près d'une barre de mesure par exemple),
-* choisir le type de marque "Forme" (ou cliquer « f »),
-* choisissez le type de portion : __Partie__, __Section__ ou __Segment__,
+* cliquer sur la table d'analyse à l'endroit voulu (près d'une barre de mesure par exemple),
+* choisir le type de marque "Forme" (raccourci « f »),
+* choisissez le type de portion : __Partie__, __Section__ ou __Segment__, en choisissant l'aspect « borne » ou l'aspect « cadre » (aspect que vous pourrez changer à n'importe quel moment grâce au menu contextuel de la marque),
 * donnez un titre à la portion,
-* cliquez sur le bouton pour créer la marque.
+* cliquez sur le bouton pour créer la marque (ou touche Entrée).
 
-NOTE: Par défaut, la marque est fermée. Cliquez dessus pour voir son nom.
+NOTE: Par défaut, pour le style « borne », la marque est fermée (elle est pensée pour être discrète, pour ne pas se voir sur la partition). Cliquez dessus pour voir son nom.
 
 On peut ajouter des marques de début de portion et de fin de portion, mais la marque de fin n'est pas obligatoire. En cas d'absence, la fin de la portion est considérée être la prochaine marque de même type ou la fin de la pièce.
 
 Vous pouvez régler la hauteur par défaut de chaque type de marque dans les <<prefs, préférences>>.
+
+=== Aspect Borne ou Cadre ===
+
+Il est bien à noter que les deux styles de marque, « borne » et « cadre » sont extrêment différents : le style « borne » ne sert qu'à __borner__ la partition de façon discrète sans qu'aucune marque ne soit poser sur l'analyse. En revanche, l'aspet « Cadre » serait visible dans l'analyse, exporté ou imprimé.
+
+NOTE: Il est possible que cette distinction change avec le temps pour permettre de donner l'aspect que l'on veut à ces marques de partie.
 
 [[form-building]]
 === Construction de la forme ===

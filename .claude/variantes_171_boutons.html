@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>#171 — Réaction des boutons au clic</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Helvetica Neue", sans-serif; background: #f4f4f4; color: #222; padding: 24px 40px; }
+  h1 { font-size: 20px; }
+  .variante { border: 1px solid #ddd; border-radius: 10px; padding: 14px 18px; margin: 14px 0; max-width: 640px; background-color: #fafafa; }
+  .variante h2 { font-size: 16px; margin: 0 0 4px; }
+  .variante p { margin: 0 0 12px; font-size: 13px; color: #666; }
+  button {
+    font-family: inherit; font-size: 14px; cursor: pointer;
+    padding: 5px 14px; border: 1px solid #c8c8c8; border-radius: 6px; background-color: white; margin-right: 8px;
+  }
+  button.btn-default { background-color: #3a925e; border-color: #2f7a4e; color: white; font-weight: 600; }
+
+  /* Boutons ordinaires : assombrissement léger (variante 1) */
+  .v button:not(.btn-default):active { filter: brightness(.9); }
+
+  /* A. OK inversé : fond blanc, texte et bord verts, gras */
+  .vA button.btn-default:active { background-color: white; color: #3a925e; border-color: #3a925e; font-weight: 600; }
+  /* B. OK inversé, fond vert très pâle */
+  .vB button.btn-default:active { background-color: #e6f2ea; color: #2f7a4e; border-color: #3a925e; font-weight: 600; }
+  /* C. OK inversé, bord épaissi (sans changer la taille) */
+  .vC button.btn-default:active { background-color: white; color: #3a925e; border-color: #3a925e; box-shadow: inset 0 0 0 1px #3a925e; font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>#171 — Réaction visuelle des boutons au clic</h1>
+<p>Bouton « Appliquer » : assombrissement léger (variante 1) partout. Garder le bouton de la souris enfoncé sur « OK » pour comparer.</p>
+
+<div class="variante v vA"><h2>A. OK inversé</h2><p>Fond blanc, texte et bord verts, gras.</p>
+  <button>Appliquer</button><button class="btn-default">OK</button></div>
+
+<div class="variante v vB"><h2>B. OK inversé, fond vert très pâle</h2><p>Fond vert pâle, texte vert foncé, gras.</p>
+  <button>Appliquer</button><button class="btn-default">OK</button></div>
+
+<div class="variante v vC"><h2>C. OK inversé, bord épaissi</h2><p>Comme A, avec un bord vert plus marqué.</p>
+  <button>Appliquer</button><button class="btn-default">OK</button></div>
+</body>
+</html>

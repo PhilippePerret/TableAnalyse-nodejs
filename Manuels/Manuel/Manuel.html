@@ -466,6 +466,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#tags">Marques</a>
 <ul class="sectlevel2">
 <li><a href="#tags-types">Types de marques</a></li>
+<li><a href="#tags-motifs">Motifs</a></li>
+<li><a href="#tags-text">Textes</a></li>
 <li><a href="#tags-move">Déplacement des marques</a></li>
 <li><a href="#tags-extrait">Extrait de partition</a></li>
 </ul>
@@ -478,6 +480,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#form">Forme de la pièce</a></li>
 <li><a href="#form-definition">Définition de la forme</a>
 <ul class="sectlevel2">
+<li><a href="#_aspect_borne_ou_cadre">Aspect Borne ou Cadre</a></li>
 <li><a href="#form-building">Construction de la forme</a></li>
 </ul>
 </li>
@@ -944,6 +947,12 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-form">voir</a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Motif</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marque mettant en exergue un motif, une dispositif, etc. en le nommant.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Motif GBc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-motifs">voir</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Degré de note</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l&#8217;accord.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
@@ -1110,6 +1119,15 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 <p>Marque permettant d&#8217;indiquer la nature mélodique d&#8217;une note sur la partition. Le choix de cette marque ouvre un autre panneau qui permet de préciser la nature de la note.</p>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="tags-motifs">Motifs</h3>
+<div class="paragraph">
+<p>Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l&#8217;accord.</p>
+</div>
+<div class="paragraph">
+<p>En définissant un nom de variable pour le motif (plus simple que son nom), on peut l&#8217;utiliser dans les textes avec <code>{&lt;variable}</code>. Cela permet de simplifier le nom à utiliser mais, plus profondément, ça permet surtout d&#8217;avoir un nom « stable » (la variable, paradoxalement) et de motifier le nom du motif en le changeant partout dans les textes.</p>
+</div>
 <div class="sect3">
 <h4 id="tags-note-degree">Marque de degré de note</h4>
 <div class="paragraph">
@@ -1155,11 +1173,18 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 <p>Pour insérer une image quelconque dans l&#8217;analyse de la partition.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="tags-text">Texte</h4>
+</div>
+<div class="sect2">
+<h3 id="tags-text">Textes</h3>
 <div class="paragraph">
 <p>Pour insérer un texte quelconque dans l&#8217;analyse de la partition.</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>documenter : utilisation des variables <code>{title}</code>, <code>{composer}</code>, <code>{analysis-title}</code>, <code>{analyst}</code></p>
+</li>
+</ul>
 </div>
 <div class="sect3">
 <h4 id="tags-pedal">Marque de pédale</h4>
@@ -1262,7 +1287,7 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 <p>La <strong><em>Table d&#8217;Analyse</em></strong> permet aussi de « dessiner » la forme de la pièce. Cette forme pourra être ajoutée au début de l&#8217;analyse ou à la fin, sur une page séparée (ou plusieurs page si nécessaire).</p>
 </div>
 <div class="paragraph">
-<p>La forme est principalement définie par des numéros de mesure de départ et de fin ainsi que par les marques de tonalité et de modulation.</p>
+<p>La forme est principalement définie par des sections (appelées « portions » ici), des numéros de mesure de départ et de fin ainsi que par les marques de tonalité et de modulation.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1287,19 +1312,19 @@ C&#8217;est la raison pour laquelle il est intéressant d&#8217;ajouter au débu
 <div class="ulist">
 <ul>
 <li>
-<p>double-cliquer sur la table d&#8217;analyse à l&#8217;endroit voulu (près d&#8217;une barre de mesure par exemple),</p>
+<p>cliquer sur la table d&#8217;analyse à l&#8217;endroit voulu (près d&#8217;une barre de mesure par exemple),</p>
 </li>
 <li>
-<p>choisir le type de marque "Forme" (ou cliquer « f »),</p>
+<p>choisir le type de marque "Forme" (raccourci « f »),</p>
 </li>
 <li>
-<p>choisissez le type de portion : <em>Partie</em>, <em>Section</em> ou <em>Segment</em>,</p>
+<p>choisissez le type de portion : <em>Partie</em>, <em>Section</em> ou <em>Segment</em>, en choisissant l&#8217;aspect « borne » ou l&#8217;aspect « cadre » (aspect que vous pourrez changer à n&#8217;importe quel moment grâce au menu contextuel de la marque),</p>
 </li>
 <li>
 <p>donnez un titre à la portion,</p>
 </li>
 <li>
-<p>cliquez sur le bouton pour créer la marque.</p>
+<p>cliquez sur le bouton pour créer la marque (ou touche Entrée).</p>
 </li>
 </ul>
 </div>
@@ -1310,7 +1335,7 @@ C&#8217;est la raison pour laquelle il est intéressant d&#8217;ajouter au débu
 <div class="title">Note</div>
 </td>
 <td class="content">
-Par défaut, la marque est fermée. Cliquez dessus pour voir son nom.
+Par défaut, pour le style « borne », la marque est fermée (elle est pensée pour être discrète, pour ne pas se voir sur la partition). Cliquez dessus pour voir son nom.
 </td>
 </tr>
 </table>
@@ -1320,6 +1345,24 @@ Par défaut, la marque est fermée. Cliquez dessus pour voir son nom.
 </div>
 <div class="paragraph">
 <p>Vous pouvez régler la hauteur par défaut de chaque type de marque dans les <a href="#prefs">préférences</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_aspect_borne_ou_cadre">Aspect Borne ou Cadre</h3>
+<div class="paragraph">
+<p>Il est bien à noter que les deux styles de marque, « borne » et « cadre » sont extrêment différents : le style « borne » ne sert qu&#8217;à <em>borner</em> la partition de façon discrète sans qu&#8217;aucune marque ne soit poser sur l&#8217;analyse. En revanche, l&#8217;aspet « Cadre » serait visible dans l&#8217;analyse, exporté ou imprimé.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Il est possible que cette distinction change avec le temps pour permettre de donner l&#8217;aspect que l&#8217;on veut à ces marques de partie.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="form-building">Construction de la forme</h3>

@@ -22,6 +22,7 @@
 - Réponses : « Fait. » + strict minimum. Aucune explication non demandée.
 - TOUJOURS numéroter TOUS les points d'un message qui en a plusieurs, sans exception (Phil furieux 2026-11-15 : point essentiel laissé hors numérotation).
 - Git : interdit en écriture sans autorisation expresse de Phil, SAUF commit obligatoire après chaque correction d'issue (un commit par issue, message contenant « Fixed #N » pour fermer l'issue au push).
+  Modification hors issue : commit aussi, sans « Fixed » (2026-11-17).
   Gestion des issues = job de Claude, sans demander (2026-11-14) : jamais de commit d'issue sans « Fixed #N » ; issue corrigée restée ouverte → la fermer (`gh issue close N -c "Fixed by <sha>"`). Phil est le concepteur, ne touche pas au code.
 - Commande lancée par Phil lui-même (`!…`) : aucune réponse, aucun commentaire.
 - Après une correction : « Fait. » SEUL. Même pour une grosse issue, même pour plusieurs issues (2026-11-14 : compte rendu de #115 jugé baratin).
@@ -31,7 +32,12 @@
 - Point laissé sans réponse par Phil = sujet clos : ne jamais le relancer.
 - Jamais expliquer à Phil ce qu'il sait déjà (p.e. licences de polices, 2026-11-16 : « tu me prends pour un crétin »). Question de Phil = répondre seulement à ce qu'elle demande en pratique.
 - Aucune négation (« je n'ai pas fait… ») sauf si utile à la demande. JAMAIS signaler que ce n'est « pas poussé » : c'est Phil qui pousse (2026-11-13).
+- JAMAIS de dépendance à une autre app de Phil (p.e. Board), même pour un script de dev (Phil furieux 2026-11-16). Outils propres au projet. Manuel : `_scripts/manuel/generer.sh` (Gemfile, Ruby 3.4.10 rbenv).
+- Phil DÉTESTE quand ça bouge (effets d'enfoncement, rétrécissement, translations…) : jamais de mouvement dans les effets visuels (2026-11-17).
 - Retouche visuelle (couleur, forme…) : proposer des variantes dans un fichier HTML avant d'appliquer.
+- « Traite les (nouvelles) issues » = TOUTES les issues ouvertes non traitées, pas seulement celles du jour (Phil furieux 2026-11-17).
+- Issues d'étiquette « todo » : notes personnelles de Phil, NE PAS en tenir compte (ni traiter, ni mentionner) (2026-11-17).
+- Fichier de variantes HTML : l'ouvrir soi-même dans le navigateur (`open -a Safari <fichier>`), jamais un simple lien (s'ouvre dans VS Code) (2026-11-17).
 - Issues : relever CHAQUE point de l'issue (liste), les traiter tous et les vérifier un à un avant le commit. Phil reproche des points oubliés (2026-11-14).
 - Tout panneau : fabricant commun (`addPanelHead`, Panneau.js) — taille du contenu, boutons dans le pied de page. Ne JAMAIS réinventer (2026-11-14). Vérifier le rendu par capture : `SA_SMOKE_SHOT=<png>` (cf. Manuel_dev).
 - Logo : source `assets/icons/icon.svg` (+ `icon.png` via inkscape), favicon `renderer/img/favicon.svg`. Vert `#3a925e`, bordeau `#cc4870`.
