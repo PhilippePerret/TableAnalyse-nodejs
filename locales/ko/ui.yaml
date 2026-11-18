@@ -31,6 +31,8 @@ menu:
   show_form:        "형식 보기"
   build_form:       "형식 만들기"
   tools_menu:       "도구"
+  variable:         "변수"
+  no_variable:      "변수 없음"
   tools:            "도구 상자…"
   animate:          "애니메이션 시작"
   help:             "도움말"
@@ -459,6 +461,7 @@ marks:
     menu_title: "이미 사용한 값…"
   variable:
     label: "변수"
+    menu: "변수(클립보드에 복사)…"
   types:
     acc: {name: "코드",          message: "코드 이름"}
     har: {name: "화성",          message: "화성 기호"}

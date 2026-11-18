@@ -31,6 +31,8 @@ menu:
   show_form:        "Ver la forma"
   build_form:       "Construir la forma"
   tools_menu:       "Herramientas"
+  variable:         "Variable"
+  no_variable:      "Ninguna variable"
   tools:            "Caja de herramientas…"
   animate:          "Iniciar la animación"
   help:             "Ayuda"
@@ -460,6 +462,7 @@ marks:
     menu_title: "Valores ya usados…"
   variable:
     label: "Variable"
+    menu: "Variables (copiar al portapapeles)…"
   types:
     acc: {name: "Acorde",        message: "Nombre del acorde"}
     har: {name: "Armonía",       message: "Cifrado"}

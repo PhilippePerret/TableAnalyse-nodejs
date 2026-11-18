@@ -11,7 +11,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { app, BrowserWindow, dialog, ipcMain, Menu, protocol, screen, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, protocol, screen, shell } from 'electron'
 import { Analyse } from './Analyse.js'
 import { AppPrefs } from './AppPrefs.js'
 import { createAnalyse, newAnalyseError } from './createAnalyse.js'
@@ -53,6 +53,7 @@ let closeAllowed = false
 let closeTimer = null
 let justCut     = false   // la partition vient d'être découpée (message au rechargement)
 let formShown   = false   // menu « Forme > Voir la forme » coché
+let variableNames = {general: [], motifs: []} // menu « Outils > Variable »
 let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
 
 protocol.registerSchemesAsPrivileged([{
@@ -295,6 +296,7 @@ function buildMenu(){
       submenu: [
           {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: () => sendMenuCommand('toolsPanel')}
         , {label: t('ui.menu.animate'),         click: () => sendMenuCommand('animate')}
+        , {label: t('ui.menu.variable'),        submenu: variablesSubmenu()}
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
         , {label: t('ui.menu.number_score'),    id: 'numberScore', click: () => sendMenuCommand('numberScore')}
@@ -314,6 +316,18 @@ function buildMenu(){
   ]
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
   updateMenu()
+}
+
+/**
+ * Sous-menu « Outils > Variable » : variables des infos de l'analyse,
+ * puis celles des motifs. Choisie : `{<variable>}` copié dans le
+ * presse-papier (par le renderer, cf. Variables.copy)
+ */
+function variablesSubmenu(){
+  const item = name => ({label: name, click: () => mainWindow && mainWindow.webContents.send('menu:variable', name)})
+  const {general, motifs} = variableNames
+  if ( !general.length && !motifs.length ) return [{label: t('ui.menu.no_variable'), enabled: false}]
+  return [...general.map(item), ...(motifs.length ? [{type: 'separator'}, ...motifs.map(item)] : [])]
 }
 
 // Éléments d'un menu décrit par le renderer (cf. MenusBar.js)
@@ -654,6 +668,14 @@ function registerIpc(){
     formShown = !!shown
     buildMenu()
   })
+
+  // Variables des textes (cf. renderer Variables.updateMenus)
+  handle('menu:variables', ({general, motifs}) => {
+    variableNames = {general: general || [], motifs: motifs || []}
+    buildMenu()
+  })
+
+  handle('clipboard:write', ({text}) => clipboard.writeText(String(text)))
 
   handle('menu:setDynamic', ({menus}) => {
     dynamicMenus = menus || []

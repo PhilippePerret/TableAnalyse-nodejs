@@ -31,6 +31,8 @@ menu:
   show_form:        "显示曲式"
   build_form:       "构建曲式"
   tools_menu:       "工具"
+  variable:         "变量"
+  no_variable:      "没有变量"
   tools:            "工具箱…"
   animate:          "开始动画"
   help:             "帮助"
@@ -459,6 +461,7 @@ marks:
     menu_title: "已使用的值…"
   variable:
     label: "变量"
+    menu: "变量（复制到剪贴板）…"
   types:
     acc: {name: "和弦",          message: "和弦名称"}
     har: {name: "和声",          message: "级数标记"}

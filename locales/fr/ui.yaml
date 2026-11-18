@@ -31,6 +31,8 @@ menu:
   show_form:        "Voir la forme"
   build_form:       "Construire la forme"
   tools_menu:       "Outils"
+  variable:         "Variable"
+  no_variable:      "Aucune variable"
   tools:            "Boite à outils…"
   animate:          "Lancer l’animation"
   help:             "Aide"
@@ -460,6 +462,7 @@ marks:
     menu_title: "Valeurs déjà utilisées…"
   variable:
     label: "Variable"
+    menu: "Variables (copie dans le presse-papier)…"
   types:
     acc: {name: "Accord",        message: "Nom de l'accord"}
     har: {name: "Harmonie",      message: "Chiffrage"}

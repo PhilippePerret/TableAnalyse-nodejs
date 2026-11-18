@@ -31,6 +31,8 @@ menu:
   show_form:        "形式を表示"
   build_form:       "形式を作成"
   tools_menu:       "ツール"
+  variable:         "変数"
+  no_variable:      "変数なし"
   tools:            "ツールボックス…"
   animate:          "アニメーションを開始"
   help:             "ヘルプ"
@@ -459,6 +461,7 @@ marks:
     menu_title: "使用済みの値…"
   variable:
     label: "変数"
+    menu: "変数（クリップボードにコピー）…"
   types:
     acc: {name: "コード",        message: "コードネーム"}
     har: {name: "和声",          message: "和声記号"}

@@ -5,6 +5,8 @@ import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
 import { AMark_Editor } from './AMark_Editor.js'
 import { AMARQUES_TYPES, typeHasSubtype } from './Constants.js'
+import { Variables } from './Variables.js'
+import { on } from './events.js'
 /**
  * Classe Editeur
  * --------------
@@ -60,6 +62,7 @@ export class Editeur {
     message  && (this.titre = message)
     this.data.suggestions && this.setSuggestions(this.data.suggestions())
     this.setVariableField()
+    this.fillVariablesMenu(Variables.names)
     this.obj.classList.remove('hidden')
     console.debug("editeur", this)
     this.obj.classList[this.isLongText ? 'add' : 'remove']('longtext')
@@ -72,6 +75,15 @@ export class Editeur {
     }
     fieldText.focus()
     fieldText.select()
+  }
+
+  // Menu des variables (texte long) : infos de l'analyse, puis motifs
+  fillVariablesMenu({general, motifs}){
+    if ( !this.variablesMenu ) return
+    const option = (name) => DCreate('OPTION', {value: name, text: `{${name}}`})
+    const sep = () => { const o = DCreate('OPTION', {text: '──────────'}) ; o.disabled = true ; return o }
+    const head = DCreate('OPTION', {value: '', text: t('ui.marks.variable.menu')})
+    this.variablesMenu.replaceChildren(head, ...general.map(option), ...(motifs.length ? [sep(), ...motifs.map(option)] : []))
   }
 
   // Fermer l'éditeur
@@ -168,6 +180,15 @@ export class Editeur {
     this.textField = DCreate('INPUT',{type:'text', value:this.value})
     o.appendChild(this.textField)
     this.textarea = DCreate('TEXTAREA',{})
+    // Texte long : menu des variables (choisie : `{<variable>}` copié
+    // dans le presse-papier)
+    this.variablesMenu = DCreate('SELECT', {class:'variables-menu'})
+    listen(this.variablesMenu, 'change', () => {
+      const name = this.variablesMenu.value
+      this.variablesMenu.selectedIndex = 0
+      name && Variables.copy(name)
+    })
+    on('variables:changed', names => this.fillVariablesMenu(names))
     // Valeurs déjà utilisées (data.suggestions, cf. AMark_Editor) : menu
     // au-dessus du champ, ou liste seule dans la partie droite du panneau
     // (le reste à gauche)
@@ -180,7 +201,7 @@ export class Editeur {
         DCreate('LABEL', {text:t('ui.marks.variable.label')})
       , this.variableField
     ]})
-    o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea, this.variableRow]})]}))
+    o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea, this.variablesMenu, this.variableRow]})]}))
     o.appendChild(this.suggestPane)
     const divBoutons = DCreate('DIV', {class:'buttons'})
     // Marque d'analyse : changement de son type (de son sous-type

@@ -31,6 +31,8 @@ menu:
   show_form:        "Show Form"
   build_form:       "Build Form"
   tools_menu:       "Tools"
+  variable:         "Variable"
+  no_variable:      "No variable"
   tools:            "Toolbox…"
   animate:          "Start Animation"
   help:             "Help"
@@ -460,6 +462,7 @@ marks:
     menu_title: "Values already used…"
   variable:
     label: "Variable"
+    menu: "Variables (copy to clipboard)…"
   types:
     acc: {name: "Chord",         message: "Chord name"}
     har: {name: "Harmony",       message: "Figure"}

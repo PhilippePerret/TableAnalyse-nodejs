@@ -1,5 +1,9 @@
 import { AObjet } from './AObjet.js'
 import { Current } from './Current.js'
+import { invoke } from './api.js'
+import { emit } from './events.js'
+import { message, erreur } from './lib/Message.js'
+import { t } from './i18n.js'
 /**
  * Variables des textes
  * --------------------
@@ -72,5 +76,37 @@ export class Variables {
         ao.contentSpan.innerHTML = ao.formated_content
       }
     })
+    this.updateMenus()
+  }
+
+  /**
+   * Noms des variables : {general} (infos de l'analyse), {motifs}
+   * (variables des motifs, par ordre alphabétique)
+   */
+  static get names(){
+    const motifs = new Set()
+    AObjet.each(ao => ao.type == 'mot' && ao.data.variable && motifs.add(ao.data.variable))
+    return {general: Object.keys(INFOS_VARIABLES), motifs: [...motifs].sort((a, b) => a.localeCompare(b))}
+  }
+
+  // `{<name>}` copié dans le presse-papier (message temporaire)
+  static copy(name){
+    const text = `{${name}}`
+    invoke('clipboard:write', {text})
+      .then(() => message(t('messages.variable_copied', {text}), {duration: 3000}))
+      .catch(err => erreur(err.message))
+  }
+
+  /**
+   * Listes des variables actualisées (menu « Outils > Variable », menu
+   * de l'éditeur de texte long) quand elles changent
+   */
+  static updateMenus(){
+    const names = this.names
+    const key = JSON.stringify(names)
+    if ( key == this._menusKey ) return
+    this._menusKey = key
+    invoke('menu:variables', names).catch(err => console.error(err))
+    emit('variables:changed', names)
   }
 }

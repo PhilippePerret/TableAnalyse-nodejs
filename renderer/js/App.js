@@ -13,6 +13,7 @@ import { TableAnalyse } from './TableAnalyse.js'
 import { t } from './i18n.js'
 import { DCreate } from './dom.js'
 import { History } from './History.js'
+import { Variables } from './Variables.js'
 
 class AppClass {
 
@@ -112,6 +113,7 @@ class AppClass {
 
   observe(){
     onMain('menu', this.onMenuCommand.bind(this))
+    onMain('menu:variable', name => Variables.copy(name))
     onMain('app:will-close', this.onWillClose.bind(this))
     window.onresize = function(){
       if ( Analyse.current ) {

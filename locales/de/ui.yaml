@@ -31,6 +31,8 @@ menu:
   show_form:        "Form anzeigen"
   build_form:       "Form erstellen"
   tools_menu:       "Werkzeuge"
+  variable:         "Variable"
+  no_variable:      "Keine Variable"
   tools:            "Werkzeugkasten…"
   animate:          "Animation starten"
   help:             "Hilfe"
@@ -460,6 +462,7 @@ marks:
     menu_title: "Bereits verwendete Werte…"
   variable:
     label: "Variable"
+    menu: "Variablen (in die Zwischenablage kopieren)…"
   types:
     acc: {name: "Akkord",        message: "Name des Akkords"}
     har: {name: "Harmonie",      message: "Bezifferung"}
