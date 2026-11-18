@@ -17,6 +17,7 @@ menu:
   close_analyse:    "Close Analysis"
   save:             "Save"
   cut_score:        "Cut the Score…"
+  renumber_measures: "Renumber the Measures"
   number_score:     "Number the Score"
   remove_blanks:    "Remove Blank Space"
   infos:            "Information…"

@@ -17,6 +17,7 @@ menu:
   close_analyse:    "关闭分析"
   save:             "保存"
   cut_score:        "切分乐谱…"
+  renumber_measures: "重新编号小节"
   number_score:     "为乐谱编号"
   remove_blanks:    "删除空白"
   infos:            "信息…"

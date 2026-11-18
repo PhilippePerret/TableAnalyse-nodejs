@@ -17,6 +17,7 @@ menu:
   close_analyse:    "分析を閉じる"
   save:             "保存"
   cut_score:        "楽譜を切り分ける…"
+  renumber_measures: "小節番号を振り直す"
   number_score:     "楽譜に番号を付ける"
   remove_blanks:    "余白を削除"
   infos:            "情報…"

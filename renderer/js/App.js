@@ -15,6 +15,7 @@ import { DCreate } from './dom.js'
 import { History } from './History.js'
 import { Variables } from './Variables.js'
 import { Split } from './Split.js'
+import { Systeme } from './Systeme.js'
 import { keepPanelsInView } from './Panneau.js'
 
 class AppClass {
@@ -79,6 +80,7 @@ class AppClass {
       case 'save':          return AnalyseSaver.save()
       case 'cutScore':      return Analyse.cutScore()
       case 'numberScore':   return Analyse.numberScore()
+      case 'renumberMeasures': return Systeme.renumberAllMeasures()
       case 'infosAnalyse':  return Analyse.panneau_infos.toggle()
       case 'history':       return History.show()
       case 'export':        return Exporter.ask()

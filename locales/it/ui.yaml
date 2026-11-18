@@ -17,6 +17,7 @@ menu:
   close_analyse:    "Chiudi l'analisi"
   save:             "Salva"
   cut_score:        "Taglia la partitura…"
+  renumber_measures: "Rinumera le battute"
   number_score:     "Numera la partitura"
   remove_blanks:    "Rimuovi gli spazi vuoti"
   infos:            "Informazioni…"

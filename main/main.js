@@ -425,6 +425,7 @@ function buildMenu(){
         , {label: t('ui.menu.variable'),        submenu: variablesSubmenu()}
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
+        , {label: t('ui.menu.renumber_measures'), id: 'renumberMeasures', click: () => sendMenuCommand('renumberMeasures')}
         , {label: t('ui.menu.number_score'),    id: 'numberScore', click: () => sendMenuCommand('numberScore')}
         , {type: 'separator'}
         , {label: t('ui.menu.remove_blanks'),   id: 'removeBlanks', click: () => sendMenuCommand('removeBlanks')}
@@ -498,7 +499,7 @@ function dynamicSubmenus(parent){
 function updateMenu(){
   const menu = Menu.getApplicationMenu()
   if ( !menu ) return
-  ;['closeAnalyse', 'cutScore', 'numberScore', 'removeBlanks', 'splitWindow', 'zoomIn', 'zoomOut', 'zoomIn2'].forEach(id => {
+  ;['closeAnalyse', 'cutScore', 'renumberMeasures', 'numberScore', 'removeBlanks', 'splitWindow', 'zoomIn', 'zoomOut', 'zoomIn2'].forEach(id => {
     const item = menu.getMenuItemById(id)
     if ( item ) item.enabled = !!current
   })

@@ -17,6 +17,7 @@ menu:
   close_analyse:    "Cerrar el análisis"
   save:             "Guardar"
   cut_score:        "Recortar la partitura…"
+  renumber_measures: "Renumerar los compases"
   number_score:     "Numerar la partitura"
   remove_blanks:    "Suprimir los blancos"
   infos:            "Información…"

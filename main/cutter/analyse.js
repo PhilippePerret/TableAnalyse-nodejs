@@ -720,14 +720,16 @@ function barQuality(dark, w, sys, x, s){
   const xAt = (y) => Math.round(x - slope * (y - yRef))
   const blackAt = (y) => { const p = y * w + xAt(y) ; return dark[p] || dark[p-1] || dark[p+1] }
   // Une barre s'arrête net à la première et à la dernière ligne ; une
-  // hampe déborde en général (ligature, tête de note)
+  // hampe déborde en général (ligature, tête de note). Une barre qui
+  // relie les portées peut déborder (note collée).
   const first = sys.staves[0].lines[0], last = sys.staves[sys.staves.length - 1].lines.slice(-1)[0]
   const beyond = (yFrom, dir) => {
     let n = 0, k = 0
     for ( let d = Math.round(0.25 * s) ; d <= Math.round(0.8 * s) ; ++d, ++k ) if ( blackAt(Math.round(yFrom + dir * d)) ) ++n
     return n / k
   }
-  if ( beyond(first.yAt(x), -1) > 0.4 || beyond(last.yAt(x), 1) > 0.4 ) return null
+  const overflows = beyond(first.yAt(x), -1) > 0.4 || beyond(last.yAt(x), 1) > 0.4
+  if ( overflows && sys.staves.length < 2 ) return null
   const thins = []
   for ( const st of sys.staves ) {
     const lines = st.lines
@@ -761,8 +763,10 @@ function barQuality(dark, w, sys, x, s){
       for ( let y = y0 ; y <= y1 ; ++y ) if ( !blackAt(y) ) ++missing
       joined = missing <= 0.03 * (y1 - y0 + 1)
     }
+    // (une note collée au-dessus ou au-dessous ne l'annule pas)
     if ( joined ) return Math.min(...thins)
   }
+  if ( overflows ) return null
   return Math.max(...thins) >= 0.85 && Math.min(...thins) >= 0.5 ? Math.min(...thins) : null
 }
 

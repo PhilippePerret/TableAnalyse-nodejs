@@ -17,6 +17,7 @@ menu:
   close_analyse:    "분석 닫기"
   save:             "저장"
   cut_score:        "악보 자르기…"
+  renumber_measures: "마디 번호 다시 매기기"
   number_score:     "악보에 번호 매기기"
   remove_blanks:    "빈 공간 제거"
   infos:            "정보…"

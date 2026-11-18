@@ -17,6 +17,7 @@ menu:
   close_analyse:    "Fermer l'analyse"
   save:             "Enregistrer"
   cut_score:        "Découper la partition…"
+  renumber_measures: "Renuméroter les mesures"
   number_score:     "Numéroter la partition"
   remove_blanks:    "Supprimer les blancs"
   infos:            "Informations…"

@@ -17,6 +17,7 @@ menu:
   close_analyse:    "Analyse schließen"
   save:             "Sichern"
   cut_score:        "Partitur zerschneiden…"
+  renumber_measures: "Takte neu nummerieren"
   number_score:     "Partitur nummerieren"
   remove_blanks:    "Leerräume entfernen"
   infos:            "Informationen…"

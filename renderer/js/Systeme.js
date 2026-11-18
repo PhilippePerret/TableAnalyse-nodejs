@@ -272,6 +272,17 @@ export class Systeme extends AObjet {
   }
 
   /**
+   * Menu « Outils > Renuméroter les mesures » : numéros posés sur la
+   * ligne de leur système (selon leur place actuelle, p.e. un numéro
+   * dupliqué et déplacé), puis renumérotés à partir du premier
+   */
+  static renumberAllMeasures(){
+    this.measureMarks.forEach(ao => delete ao._msys)
+    this.placeMeasureNumbers()
+    this.renumberMeasures()
+  }
+
+  /**
    * Cherche et retourne [système avant, système après] les valeurs
    * pour +top+ et +bottom+
    */
