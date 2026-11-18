@@ -72,7 +72,8 @@ html.split-focused::after {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 2px;
+  /* (indépendant du zoom de l'affichage, cf. --ui-zoom) */
+  width: calc(2.5px * var(--ui-zoom));
   background-color: #007aff;
   z-index: 6000;
   pointer-events: none;

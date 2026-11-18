@@ -434,7 +434,7 @@ function buildMenu(){
           , {role: 'zoom',     label: t('ui.menu.zoom')}
           , {role: 'togglefullscreen', label: t('ui.menu.fullscreen')}
           , {type: 'separator'}
-          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+/', click: toggleSplit}
+          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+Shift+/', click: toggleSplit}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
         ]
     }

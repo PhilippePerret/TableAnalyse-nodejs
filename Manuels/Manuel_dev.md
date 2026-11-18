@@ -162,7 +162,7 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 
 Menus « Options > Scinder la fenêtre » et « Fenêtre > Scinder la fenêtre » (`main/main.js`, `openSplit`) : sous la page de l'application (vue du haut), une `WebContentsView` charge `index.html?mirror=1` (vue du bas, même analyse), séparée par une barre (`renderer/splitter.html`, agrandie à toute la fenêtre pendant son déplacement). La page du haut réserve en bas la place cachée (`--split-inset`). Refermée au rechargement de la page.
 
-Vue active (focus) : reçoit les commandes des menus (sauf celles de l'analyse elle-même : fichier, préférences…, `TOP_ONLY_COMMANDS`), ses propres menus « Options », « Marque »… sont affichés (`dynamicMenusOf`) ; liseré bleu à gauche et à droite (`html.split-focused`). Raccourci ⌘/Ctrl + / (Maj + : en AZERTY).
+Vue active (focus) : reçoit les commandes des menus (sauf celles de l'analyse elle-même : fichier, préférences…, `TOP_ONLY_COMMANDS`), ses propres menus « Options », « Marque »… sont affichés (`dynamicMenusOf`) ; liseré bleu à gauche et à droite (`html.split-focused`). Raccourci ⌘/Ctrl + Maj + / (« / » obtenu par Maj sur le clavier français).
 
 Vue du bas (`IS_MIRROR`, `renderer/js/api.js`) : ni menus, ni taille de fenêtre, ni historique, ni enregistrement (⌘S est joué par la vue du haut) ; données lues sans les opérations de l'ouverture (`split:getCurrent`).
 
