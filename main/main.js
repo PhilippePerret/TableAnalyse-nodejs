@@ -255,8 +255,10 @@ function openSplit(measure){
   bar.setBackgroundColor('#00000000')
   mainWindow.contentView.addChildView(view)
   mainWindow.contentView.addChildView(bar)
-  // Le focus reste à la vue d'édition
-  view.webContents.on('focus', () => mainWindow && mainWindow.webContents.focus())
+  // Le focus reste à la vue d'édition (p.e. pour refermer aussitôt
+  // avec le même raccourci)
+  const keepFocus = () => mainWindow && mainWindow.webContents.focus()
+  ;[view, bar].forEach(v => ['focus', 'did-finish-load'].forEach(ev => v.webContents.on(ev, keepFocus)))
   SMOKE && view.webContents.on('console-message', (e) => console.log(`[mirror:${e.level}] ${e.message}  (${e.sourceId}:${e.lineNumber})`))
   // Lancement de contrôle : script joué dans la vue de visualisation
   SMOKE && process.env.SA_SMOKE_MIRROR_JS && view.webContents.on('did-finish-load', () => {
@@ -270,6 +272,7 @@ function openSplit(measure){
   split = {view, bar, ratio: 0.48, dragging: false}
   layoutSplit()
   sendSplitState()
+  keepFocus()
 }
 function closeSplit(){
   if ( !split ) return

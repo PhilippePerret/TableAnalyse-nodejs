@@ -104,6 +104,13 @@ export function onKeyUpOnAnalyse(e){
   }
 }
 
+// Scinder la fenêtre : caractère « / », soit ⌘ + Maj + « : » sur le
+// clavier français (avec ⌘, la touche peut arriver sans l'effet de
+// Maj : « : »). Le raccourci du menu, lui, répondait à ⌘ + « : ».
+export function isSplitShortcut(e){
+  return cmdKey(e) && (e.key == '/' || e.shiftKey && e.key == ':')
+}
+
 /**
 * Quelle que soit la situation, ce gestionnaire de Key-down est
 * appelé.
@@ -112,10 +119,7 @@ export function onKeyUpOnAnalyse(e){
 */
 export function onKeyDownUniversel(e){
 
-  // Scinder la fenêtre : caractère « / », soit ⌘ + Maj + « : » sur le
-  // clavier français (avec ⌘, la touche peut arriver sans l'effet de
-  // Maj : « : »). Le raccourci du menu, lui, répondait à ⌘ + « : ».
-  if ( cmdKey(e) && (e.key == '/' || e.shiftKey && e.key == ':') ) {
+  if ( isSplitShortcut(e) ) {
     Analyse.current && Split.toggle()
     return stopEvent(e)
   }

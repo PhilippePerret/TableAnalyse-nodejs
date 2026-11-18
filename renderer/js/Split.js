@@ -8,6 +8,7 @@ import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
 import { Forme } from './Forme.js'
 import { keepPanelsInView } from './Panneau.js'
+import { isSplitShortcut } from './KeyboardEvents.js'
 /**
  * Split
  * -----
@@ -125,6 +126,8 @@ export class Split {
     ;['keydown', 'keypress', 'keyup'].forEach(type => {
       window.addEventListener(type, (e) => {
         e.stopImmediatePropagation()
+        // Raccourci de la fenêtre scindée : fermeture
+        if ( type == 'keydown' && isSplitShortcut(e) ) return this.open()
         SCROLL_KEYS.includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey || e.preventDefault()
       }, true)
     })
