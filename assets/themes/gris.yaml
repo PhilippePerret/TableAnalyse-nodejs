@@ -13,6 +13,7 @@ marque_measure:         24
 # --- Épaisseur des traits ---
 thiness_segment_line:   3
 thiness_cellule_line:   3
+thiness_motif_line:     1
 thiness_border:         4
 # --- Couleurs ---
 color_mesure:           CCCCCC

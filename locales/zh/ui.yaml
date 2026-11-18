@@ -405,6 +405,7 @@ prefs:
   marque_motif_size:      {label: "动机名称的大小"}
   thiness_segment_line:   {label: "片段线条粗细"}
   thiness_cellule_line:   {label: "动机单元线条粗细"}
+  thiness_motif_line:     {label: "动机框线粗细"}
   thiness_border:         {label: "方框线条粗细"}
   marque_pedale_size:     {label: "持续音大小"}
   marque_texte_size_1:    {label: "大号文本大小"}

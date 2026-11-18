@@ -405,6 +405,7 @@ prefs:
   marque_motif_size:      {label: "Motif name size"}
   thiness_segment_line:   {label: "Segment line thickness"}
   thiness_cellule_line:   {label: "Cell line thickness"}
+  thiness_motif_line:     {label: "Motif frame thickness"}
   thiness_border:         {label: "Box line thickness"}
   marque_pedale_size:     {label: "Size of pedals"}
   marque_texte_size_1:    {label: "Size of large texts"}

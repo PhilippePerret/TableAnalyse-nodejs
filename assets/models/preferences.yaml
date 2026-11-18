@@ -15,6 +15,7 @@ marque_emprunt_size: 24
 marque_cellule_size: 26
 thiness_segment_line: 3
 thiness_cellule_line: 3
+thiness_motif_line: 1
 thiness_border: 4
 marque_pedale_size: 40
 marque_texte_size_1: 60

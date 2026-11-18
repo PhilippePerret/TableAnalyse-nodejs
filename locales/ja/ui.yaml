@@ -405,6 +405,7 @@ prefs:
   marque_motif_size:      {label: "動機名のサイズ"}
   thiness_segment_line:   {label: "セグメントの線の太さ"}
   thiness_cellule_line:   {label: "セルの線の太さ"}
+  thiness_motif_line:     {label: "動機の枠の太さ"}
   thiness_border:         {label: "枠の線の太さ"}
   marque_pedale_size:     {label: "保続音のサイズ"}
   marque_texte_size_1:    {label: "大きいテキストのサイズ"}

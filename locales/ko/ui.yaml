@@ -405,6 +405,7 @@ prefs:
   marque_motif_size:      {label: "동기 이름 크기"}
   thiness_segment_line:   {label: "구간 선 두께"}
   thiness_cellule_line:   {label: "셀 선 두께"}
+  thiness_motif_line:     {label: "동기 틀 두께"}
   thiness_border:         {label: "상자 선 두께"}
   marque_pedale_size:     {label: "지속음 크기"}
   marque_texte_size_1:    {label: "큰 텍스트 크기"}
