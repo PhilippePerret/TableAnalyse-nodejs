@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "Alinear con el acorde"
   align_measure:    "Alinear al compás"
   form_height:      "Devolver la marca a su altura"
+  to_frame:         "Versión marco"
+  to_marker:        "Versión mojón"
   delete:           "Eliminar"
 
 system_menu:
@@ -476,10 +478,6 @@ marks:
     mot: {name: "Motivo", default: "Motivo", message: "Nombre del motivo"}
     lay: {name: "Maquetación", message: "Maquetación"}
   frames:
-    prt:  {name: "Parte (inicio)",   default: "EXPO"}
-    prtz: {name: "Fin de parte",     default: "EXPO"}
-    sec:  {name: "Inicio de sección", default: "SECCIÓN"}
-    secz: {name: "Fin de sección",   default: "SECCIÓN"}
     cel:  {name: "Célula"}
     bxt:  {name: "Texto en recuadro", default: "Texto **con estilo** y _con estilo_."}
     box:  {name: "Recuadro simple"}
@@ -524,11 +522,15 @@ marks:
     pla: "C.Pl."
     fau: "C.F."
   forms:
-    fpar: {name: "Parte", default: "Exposición"}
-    fsec: {name: "Sección", default: "Sección A"}
+    fpar: {name: "Parte (mojón)", default: "Exposición"}
+    prt: {name: "Parte (marco)", default: "EXPO"}
+    fsec: {name: "Sección (mojón)", default: "Sección A"}
+    sec: {name: "Sección (marco)", default: "SECCIÓN"}
     fseg: {name: "Segmento", default: "Segmento a"}
-    fparz: {name: "Fin de parte"}
-    fsecz: {name: "Fin de sección"}
+    fparz: {name: "Fin de parte (mojón)"}
+    prtz: {name: "Fin de parte (marco)"}
+    fsecz: {name: "Fin de sección (mojón)"}
+    secz: {name: "Fin de sección (marco)"}
     fsegz: {name: "Fin de segmento"}
     at_measure: "%{name} (c. %{num})"
     end_of: "Esta marca indica el fin de la porción:"

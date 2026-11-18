@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "Aligner sur l’accord"
   align_measure:    "Aligner à la mesure"
   form_height:      "Replacer la marque à sa hauteur"
+  to_frame:         "Version cadre"
+  to_marker:        "Version borne"
   delete:           "Supprimer"
 
 system_menu:
@@ -476,10 +478,6 @@ marks:
     mot: {name: "Motif", default: "Motif", message: "Nom du motif"}
     lay: {name: "Mise en page", message: "Mise en page"}
   frames:
-    prt:  {name: "Partie (début)",   default: "EXPO"}
-    prtz: {name: "Fin de partie",    default: "EXPO"}
-    sec:  {name: "Début section",    default: "SECTION"}
-    secz: {name: "Fin de section",   default: "SECTION"}
     cel:  {name: "Cellule"}
     bxt:  {name: "Texte dans cadre", default: "Texte **stylé** et _stylé_."}
     box:  {name: "Cadre simple"}
@@ -524,12 +522,16 @@ marks:
     pla: "C.Pg."
     fau: "C.F."
   forms:
-    fpar: {name: "Partie", default: "Exposition"}
-    fsec: {name: "Section", default: "Section A"}
+    fpar: {name: "Partie (borne)", default: "Exposition"}
+    prt: {name: "Partie (cadre)", default: "EXPO"}
+    fsec: {name: "Section (borne)", default: "Section A"}
+    sec: {name: "Section (cadre)", default: "SECTION"}
     fseg: {name: "Segment", default: "Segment a"}
-    fparz: {name: "Fin de partie"}
-    fsecz: {name: "Fin de section"}
-    fsegz: {name: "Fin de segment"}
+    fparz: {name: "Fin de Partie (borne)"}
+    prtz: {name: "Fin de Partie (cadre)"}
+    fsecz: {name: "Fin de Section (borne)"}
+    secz: {name: "Fin de Section (cadre)"}
+    fsegz: {name: "Fin de Segment"}
     at_measure: "%{name} (mes. %{num})"
     end_of: "Cette marque indique la fin de la portion :"
   segments:

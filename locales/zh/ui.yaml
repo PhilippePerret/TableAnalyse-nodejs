@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "与和弦标记对齐"
   align_measure:    "对齐到小节"
   form_height:      "将标记放回其高度"
+  to_frame:         "框版本"
+  to_marker:        "界碑版本"
   delete:           "删除"
 
 system_menu:
@@ -475,10 +477,6 @@ marks:
     mot: {name: "动机", default: "动机", message: "动机名称"}
     lay: {name: "版面", message: "版面"}
   frames:
-    prt:  {name: "部分（开始）",     default: "呈示部"}
-    prtz: {name: "部分结束",         default: "呈示部"}
-    sec:  {name: "段落开始",         default: "段落"}
-    secz: {name: "段落结束",         default: "段落"}
     cel:  {name: "动机单元"}
     bxt:  {name: "方框内文本",       default: "**带格式**和_带格式_的文本。"}
     box:  {name: "简单方框"}
@@ -523,11 +521,15 @@ marks:
     pla: "变止"
     fau: "福止"
   forms:
-    fpar: {name: "部", default: "呈示部"}
-    fsec: {name: "段", default: "A 段"}
+    fpar: {name: "部（界碑）", default: "呈示部"}
+    prt: {name: "部（框）", default: "呈示部"}
+    fsec: {name: "段（界碑）", default: "A 段"}
+    sec: {name: "段（框）", default: "段落"}
     fseg: {name: "片段", default: "片段 a"}
-    fparz: {name: "部结束"}
-    fsecz: {name: "段结束"}
+    fparz: {name: "部结束（界碑）"}
+    prtz: {name: "部结束（框）"}
+    fsecz: {name: "段结束（界碑）"}
+    secz: {name: "段结束（框）"}
     fsegz: {name: "片段结束"}
     at_measure: "%{name}（第 %{num} 小节）"
     end_of: "此标记表示以下部分的结束："

@@ -300,7 +300,7 @@ export class Forme {
    */
   static show(on){
     on != this.shown && Preferences.saveData('show_form_names', on)
-    AObjet.items.forEach(ao => ao.isForme && ao.obj && ao.toggleExpanded(on))
+    AObjet.items.forEach(ao => ao.isBorne && ao.obj && ao.toggleExpanded(on))
     this.syncMenus()
   }
 

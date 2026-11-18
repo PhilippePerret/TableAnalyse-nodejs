@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "Align with the Chord"
   align_measure:    "Align to the measure"
   form_height:      "Move the mark back to its height"
+  to_frame:         "Frame version"
+  to_marker:        "Marker version"
   delete:           "Delete"
 
 system_menu:
@@ -476,10 +478,6 @@ marks:
     mot: {name: "Motif", default: "Motif", message: "Motif name"}
     lay: {name: "Layout", message: "Layout"}
   frames:
-    prt:  {name: "Part (start)",     default: "EXPO"}
-    prtz: {name: "End of part",      default: "EXPO"}
-    sec:  {name: "Section start",    default: "SECTION"}
-    secz: {name: "End of section",   default: "SECTION"}
     cel:  {name: "Cell"}
     bxt:  {name: "Text in box",      default: "**Styled** and _styled_ text."}
     box:  {name: "Simple box"}
@@ -524,11 +522,15 @@ marks:
     pla: "Pl.C."
     fau: "F.C."
   forms:
-    fpar: {name: "Part", default: "Exposition"}
-    fsec: {name: "Section", default: "Section A"}
+    fpar: {name: "Part (marker)", default: "Exposition"}
+    prt: {name: "Part (frame)", default: "EXPO"}
+    fsec: {name: "Section (marker)", default: "Section A"}
+    sec: {name: "Section (frame)", default: "SECTION"}
     fseg: {name: "Segment", default: "Segment a"}
-    fparz: {name: "End of part"}
-    fsecz: {name: "End of section"}
+    fparz: {name: "End of part (marker)"}
+    prtz: {name: "End of part (frame)"}
+    fsecz: {name: "End of section (marker)"}
+    secz: {name: "End of section (frame)"}
     fsegz: {name: "End of segment"}
     at_measure: "%{name} (m. %{num})"
     end_of: "This mark ends the portion:"

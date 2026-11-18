@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "코드에 맞추기"
   align_measure:    "마디에 맞추기"
   form_height:      "표시를 정해진 높이로 되돌리기"
+  to_frame:         "틀 버전"
+  to_marker:        "경계석 버전"
   delete:           "삭제"
 
 system_menu:
@@ -475,10 +477,6 @@ marks:
     mot: {name: "동기", default: "동기", message: "동기 이름"}
     lay: {name: "페이지 구성", message: "페이지 구성"}
   frames:
-    prt:  {name: "부분(시작)",       default: "제시부"}
-    prtz: {name: "부분 끝",          default: "제시부"}
-    sec:  {name: "섹션 시작",        default: "섹션"}
-    secz: {name: "섹션 끝",          default: "섹션"}
     cel:  {name: "셀"}
     bxt:  {name: "상자 안 텍스트",   default: "**서식** 있는 _서식_ 텍스트."}
     box:  {name: "단순 상자"}
@@ -523,11 +521,15 @@ marks:
     pla: "변종"
     fau: "포종"
   forms:
-    fpar: {name: "부", default: "제시부"}
-    fsec: {name: "섹션", default: "섹션 A"}
+    fpar: {name: "부 (경계석)", default: "제시부"}
+    prt: {name: "부 (틀)", default: "제시부"}
+    fsec: {name: "섹션 (경계석)", default: "섹션 A"}
+    sec: {name: "섹션 (틀)", default: "섹션"}
     fseg: {name: "세그먼트", default: "세그먼트 a"}
-    fparz: {name: "부의 끝"}
-    fsecz: {name: "섹션의 끝"}
+    fparz: {name: "부의 끝 (경계석)"}
+    prtz: {name: "부의 끝 (틀)"}
+    fsecz: {name: "섹션의 끝 (경계석)"}
+    secz: {name: "섹션의 끝 (틀)"}
     fsegz: {name: "세그먼트의 끝"}
     at_measure: "%{name} (%{num}마디)"
     end_of: "이 표시는 다음 부분의 끝을 나타냅니다:"

@@ -84,7 +84,10 @@ Modulation  : marque de modulation
 Emprunt     : marque d'emprunt à un tonalité passagère
 Cadence     : marque de cadence
 Pédale      : une pédale (souvent le degré ou la note)
-Forme       : borne de partie, section ou segment, alignée sur le numéro de mesure (clic : déplier/replier)
+Forme       : début ou fin de partie, section ou segment, en borne
+              (alignée sur le numéro de mesure, clic : déplier/replier)
+              ou en cadre (partie, section). Menu contextuel : « Version
+              cadre » / « Version borne »
 Types de notes :
     Note de passage
     Appoggiature
@@ -97,8 +100,6 @@ Types de notes :
     Anacrouse
 Degré de la note : son degré absolu (tonalité) ou relatif (accord)
 Cadre (types de cadres) - b comme "border"
-    Une partie    : marque de partie/section dans la pièce
-    Fin de partie : marque de fin de partie 
     Cellule       : une cellule (cadre avec nom au-dessus)
     Un texte dans un cadre : b + t
 Texte       : 

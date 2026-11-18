@@ -227,7 +227,8 @@ onChooseSubtype(subtype){
 getFormStart(){
   const startType = TYPES_FORME[this.amark_subtype].startOf
   const forms  = AObjet.select(ao => ao.isForme)
-  const starts = Forme.sorted(forms.filter(ao => ao.subtype == startType))
+  // Débuts de même niveau, version borne ou cadre
+  const starts = Forme.sorted(forms.filter(ao => TYPES_FORME[ao.subtype].level == TYPES_FORME[startType].level))
   if ( starts.length == 0 ) {
     erreur(t('errors.marks.no_form_start', {name: TYPES_FORME[startType].name}))
     return this.backToSubtype()

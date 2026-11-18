@@ -42,7 +42,7 @@ export class AlignMenu extends MenusTool {
       return this.setStateCancelMenu(false)
     }
     if ( align == 'measure' || align == 'form_height' ) {
-      sel.filter(aob => aob.isForme).forEach(aob => {
+      sel.filter(aob => aob.isBorne).forEach(aob => {
         aob.old_align_left = aob.left
         aob.old_align_top  = aob.top
         align == 'measure' ? aob.placeOnMeasure() : aob.placeAtHeight()
@@ -74,7 +74,7 @@ export class AlignMenu extends MenusTool {
   static setStateBySelection(selection){
     this.setAllMenuAlignment(selection.length > 1)
     // Menus des marques de forme : dès qu'une est sélectionnée
-    const forme = selection.some(aob => aob.isForme)
+    const forme = selection.some(aob => aob.isBorne)
     this.formMenus.forEach(o => o.disabled = !forme)
   }
 

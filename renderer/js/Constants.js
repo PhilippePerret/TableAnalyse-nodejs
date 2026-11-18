@@ -9,11 +9,7 @@ export const TYPES_OU_SOUSTYPES_EN_DESSOUS = [
 ]
 
 export const TYPES_CADRE = {
-  'prt' : {name:t('ui.marks.frames.prt.name')  , shortcut:'a'  , value:'prt'   , default:t('ui.marks.frames.prt.default')}
-  , 'prtz': {name:t('ui.marks.frames.prtz.name')   , shortcut:'z'  , value:'prtz'  , default:t('ui.marks.frames.prtz.default')}
-  , 'sec' : {name:t('ui.marks.frames.sec.name')   , shortcut:'s'  , value:'sec'   , default:t('ui.marks.frames.sec.default')}
-  , 'secz': {name:t('ui.marks.frames.secz.name')  , shortcut:'f'  , value:'secz'  , default:t('ui.marks.frames.secz.default')}
-  , 'cel' : {name:t('ui.marks.frames.cel.name')         , shortcut:'c'  , value:'cel'   , default:'C1'}
+    'cel' : {name:t('ui.marks.frames.cel.name')         , shortcut:'c'  , value:'cel'   , default:'C1'}
   , 'bxt' : {name:t('ui.marks.frames.bxt.name'), shortcut:'t'  , value:'bxt'   , default:t('ui.marks.frames.bxt.default')}
   , 'box' : {name:t('ui.marks.frames.box.name')    , shortcut:'x'  , value:'box'} // pas de default: => pas de texte
 }
@@ -46,15 +42,24 @@ export const TYPES_NOTES = {
 // Les portions de la forme (marque « Forme »). Une fin de portion
 // (:startOf, sans contenu propre) est associée à sa marque de début
 // (data.start) ; :level sert à trouver la fin implicite d'une portion
-// (cf. Forme.endOf)
+// (cf. Forme.endOf). :frame, version cadre (dessinée comme une boite),
+// sinon version borne
 export const TYPES_FORME = {
     'fpar':  {name:t('ui.marks.forms.fpar.name'),  value:'fpar',  shortcut:'p', level:1, default:t('ui.marks.forms.fpar.default')}
+  , 'prt':   {name:t('ui.marks.forms.prt.name'),   value:'prt',   shortcut:'a', level:1, default:t('ui.marks.forms.prt.default'),  frame:true}
   , 'fsec':  {name:t('ui.marks.forms.fsec.name'),  value:'fsec',  shortcut:'s', level:2, default:t('ui.marks.forms.fsec.default')}
+  , 'sec':   {name:t('ui.marks.forms.sec.name'),   value:'sec',   shortcut:'c', level:2, default:t('ui.marks.forms.sec.default'),  frame:true}
   , 'fseg':  {name:t('ui.marks.forms.fseg.name'),  value:'fseg',  shortcut:'g', level:3, default:t('ui.marks.forms.fseg.default')}
   , 'fparz': {name:t('ui.marks.forms.fparz.name'), value:'fparz', shortcut:'P', startOf:'fpar'}
+  , 'prtz':  {name:t('ui.marks.forms.prtz.name'),  value:'prtz',  shortcut:'A', startOf:'prt',  frame:true}
   , 'fsecz': {name:t('ui.marks.forms.fsecz.name'), value:'fsecz', shortcut:'S', startOf:'fsec'}
+  , 'secz':  {name:t('ui.marks.forms.secz.name'),  value:'secz',  shortcut:'C', startOf:'sec',  frame:true}
   , 'fsegz': {name:t('ui.marks.forms.fsegz.name'), value:'fsegz', shortcut:'G', startOf:'fseg'}
 }
+
+// Version cadre (:frame) d'un sous-type de forme borne, et inversement
+export const FORME_CADRE_BORNE = {fpar:'prt', fsec:'sec', fparz:'prtz', fsecz:'secz'}
+Object.entries(FORME_CADRE_BORNE).forEach(([b, c]) => FORME_CADRE_BORNE[c] = b)
 
 // Niveau (1 partie, 2 section, 3 segment) d'un sous-type de forme,
 // début ou fin

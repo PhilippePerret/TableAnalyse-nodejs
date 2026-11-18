@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "コードに揃える"
   align_measure:    "小節に揃える"
   form_height:      "マークを既定の高さに戻す"
+  to_frame:         "枠版"
+  to_marker:        "境界石版"
   delete:           "削除"
 
 system_menu:
@@ -475,10 +477,6 @@ marks:
     mot: {name: "動機", default: "動機", message: "動機の名前"}
     lay: {name: "レイアウト", message: "レイアウト"}
   frames:
-    prt:  {name: "部分（開始）",     default: "提示部"}
-    prtz: {name: "部分の終わり",     default: "提示部"}
-    sec:  {name: "セクションの開始", default: "セクション"}
-    secz: {name: "セクションの終わり", default: "セクション"}
     cel:  {name: "セル"}
     bxt:  {name: "枠内のテキスト",   default: "**装飾付き**と_装飾付き_のテキスト。"}
     box:  {name: "シンプルな枠"}
@@ -523,11 +521,15 @@ marks:
     pla: "変終"
     fau: "フ終"
   forms:
-    fpar: {name: "部", default: "提示部"}
-    fsec: {name: "セクション", default: "セクション A"}
+    fpar: {name: "部（境界石）", default: "提示部"}
+    prt: {name: "部（枠）", default: "提示部"}
+    fsec: {name: "セクション（境界石）", default: "セクション A"}
+    sec: {name: "セクション（枠）", default: "セクション"}
     fseg: {name: "セグメント", default: "セグメント a"}
-    fparz: {name: "部の終わり"}
-    fsecz: {name: "セクションの終わり"}
+    fparz: {name: "部の終わり（境界石）"}
+    prtz: {name: "部の終わり（枠）"}
+    fsecz: {name: "セクションの終わり（境界石）"}
+    secz: {name: "セクションの終わり（枠）"}
     fsegz: {name: "セグメントの終わり"}
     at_measure: "%{name}（%{num} 小節）"
     end_of: "このマークは次の部分の終わりを示します："

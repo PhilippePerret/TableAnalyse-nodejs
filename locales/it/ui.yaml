@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "Allinea con l'accordo"
   align_measure:    "Allinea alla battuta"
   form_height:      "Riporta la marca alla sua altezza"
+  to_frame:         "Versione cornice"
+  to_marker:        "Versione cippo"
   delete:           "Elimina"
 
 system_menu:
@@ -476,10 +478,6 @@ marks:
     mot: {name: "Motivo", default: "Motivo", message: "Nome del motivo"}
     lay: {name: "Impaginazione", message: "Impaginazione"}
   frames:
-    prt:  {name: "Parte (inizio)",   default: "ESPO"}
-    prtz: {name: "Fine della parte", default: "ESPO"}
-    sec:  {name: "Inizio sezione",   default: "SEZIONE"}
-    secz: {name: "Fine sezione",     default: "SEZIONE"}
     cel:  {name: "Cellula"}
     bxt:  {name: "Testo in riquadro", default: "Testo **formattato** e _formattato_."}
     box:  {name: "Riquadro semplice"}
@@ -524,11 +522,15 @@ marks:
     pla: "C.Pl."
     fau: "C.F."
   forms:
-    fpar: {name: "Parte", default: "Esposizione"}
-    fsec: {name: "Sezione", default: "Sezione A"}
+    fpar: {name: "Parte (cippo)", default: "Esposizione"}
+    prt: {name: "Parte (cornice)", default: "ESPO"}
+    fsec: {name: "Sezione (cippo)", default: "Sezione A"}
+    sec: {name: "Sezione (cornice)", default: "SEZIONE"}
     fseg: {name: "Segmento", default: "Segmento a"}
-    fparz: {name: "Fine della parte"}
-    fsecz: {name: "Fine della sezione"}
+    fparz: {name: "Fine della parte (cippo)"}
+    prtz: {name: "Fine della parte (cornice)"}
+    fsecz: {name: "Fine della sezione (cippo)"}
+    secz: {name: "Fine della sezione (cornice)"}
     fsegz: {name: "Fine del segmento"}
     at_measure: "%{name} (b. %{num})"
     end_of: "Questa marca indica la fine della porzione:"

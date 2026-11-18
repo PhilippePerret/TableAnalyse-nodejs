@@ -12,7 +12,7 @@ import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
 import { GetterInList } from './GetterInList.js'
 import { AMark_Editor } from './AMark_Editor.js'
-import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_PHILHARMONIEFONT, TYPES_MISE_EN_PAGE } from './Constants.js'
+import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_PHILHARMONIEFONT, TYPES_MISE_EN_PAGE, TYPES_FORME, FORME_CADRE_BORNE } from './Constants.js'
 import { UI } from './UI.js'
 import { Forme } from './Forme.js'
 import { ExtraitComposer } from './ExtraitComposer.js'
@@ -96,7 +96,7 @@ export class AMark extends AObjet {
       newMark.ajustePosition(newMark.left, newMark.top)
       // Marque de forme : à sa hauteur, au début (ou à la fin) de la
       // mesure cliquée
-      if ( newMark.isForme && undefined !== clickX ) {
+      if ( newMark.isBorne && undefined !== clickX ) {
         newMark.placeAtHeight()
         Forme.placeOnMeasure(newMark, clickX - window.scrollX)
       }
@@ -116,6 +116,9 @@ export class AMark extends AObjet {
  * +data+
  */
 static instanciate(analyse, data){
+  // Ancienne partie/section du type « Cadre » : marque de forme (version
+  // cadre)
+  if ( data.type == 'bbx' && TYPES_FORME[data.subtype] ) data.type = 'frm'
   switch(data.type){
     case 'img': return new AMImage(analyse, data)
     case 'ext': return new AMExtrait(analyse, data)
@@ -418,7 +421,7 @@ build(){
   UI.TableAnalyse.appendChild(o)
 
   // Borne de la marque de forme (avant le nom de la portion)
-  this.isForme && o.appendChild(DCreate('SPAN', {class:'borne'}))
+  this.isBorne && o.appendChild(DCreate('SPAN', {class:'borne'}))
 
   // Content
   this.contentSpan = this.buildSpanContent()
@@ -426,7 +429,8 @@ build(){
   
   // Style de la marque
   var css = ['amark', 'aobj']
-  css.push(this.type)
+  // Marque de forme version cadre : dessinée comme une boite
+  css.push(this.isFormeCadre ? 'bbx' : this.type)
   if ( TYPES_PHILHARMONIEFONT.includes(this.type) ) css.push('philnote')
   this.subtype && css.push(this.subtype)
   // Titre de mise en page : son niveau
@@ -449,8 +453,8 @@ build(){
 
   // Css suplémentaires
   this.applyCss()
-  this.isForme && (o.title = this.content)
-  this.isForme && Forme.shown && this.toggleExpanded(true)
+  this.isBorne && (o.title = this.content)
+  this.isBorne && Forme.shown && this.toggleExpanded(true)
 
 }
 
@@ -518,28 +522,33 @@ get isMark(){ return true }
 
 get isCadence(){ return this.type == 'cad'}
 get isForme(){ return this.type == 'frm'}
+// Marque de forme : version cadre (boite) ou borne
+get isFormeCadre(){ return this.isForme && !!(TYPES_FORME[this.subtype] || {}).frame }
+get isBorne(){ return this.isForme && !this.isFormeCadre }
+// Boite (type « Cadre » ou marque de forme version cadre)
+get isBox(){ return this.type == 'bbx' || this.isFormeCadre }
 get isLayoutTitle(){ return this.type == 'lay' && this.subtype == 'tit' }
 get isLayoutLine(){ return this.type == 'lay' && this.subtype != 'tit' }
-get isPartie(){ return this.type == 'bbx' && this.subtype.startsWith('prt')}
-get isSection(){ return this.type == 'bbx' && this.subtype.startsWith('sec')}
+get isPartie(){ return this.isFormeCadre && this.subtype.startsWith('prt')}
+get isSection(){ return this.isFormeCadre && this.subtype.startsWith('sec')}
 get isModulation(){return this.type == 'mod'}
 get isEmprunt()   {return this.type == 'emp'}
 get isText(){return this.type == 'txt'}
 get isImage(){return this.type == 'img'}
 get isSVGImage(){return this.isImage && this.content.endsWith('.svg')}
 get hasFormatedText(){
-  return this._hasformtxt || (this._hasformtxt = ['txt','bbx'].includes(this.type))
+  return this._hasformtxt || (this._hasformtxt = this.isBox || this.type == 'txt')
 }
 
 get isGridAjustable(){
   /** @return true si le type est ajustable sur la grille **/
-  return this._isgridadjust ||= (this._isgridadjust = ['bbx'].includes(this.type))
+  return this._isgridadjust ||= (this._isgridadjust = this.isBox)
 }
 get isHresizable(){
-  return this._ishresize || (this._ishresize = ['bbx','cir','seg','emp','txt','mot'].includes(this.type))
+  return this._ishresize || (this._ishresize = this.isBox || ['cir','seg','emp','txt','mot'].includes(this.type))
 }
 get isVresizable(){
-  return this._isvresize || (this._isvresize = (['bbx','emp','mot'].includes(this.type) || this.isSegmentVertical))
+  return this._isvresize || (this._isvresize = (this.isBox || ['emp','mot'].includes(this.type) || this.isSegmentVertical))
 }
 get isSegmentVertical(){
   return this.type == 'seg' && ['v-left','v-right'].includes(this.subtype)
@@ -709,12 +718,12 @@ observe(){
           var newMark = AMark.createNew(e, this.initData)
           newMark.ajustePosition(ui.position.left, ui.position.top)
           // Marque de forme : toujours à sa hauteur
-          newMark.isForme && newMark.placeAtHeight()
+          newMark.isBorne && newMark.placeAtHeight()
           saufId = newMark.id
         } else {
           my.ajustePosition(ui.position.left, ui.position.top)
           // Marque de forme : toujours à sa hauteur
-          my.isForme && my.placeAtHeight()
+          my.isBorne && my.placeAtHeight()
           my.justMoved = true // pour empêcher le re-select
           saufId = my.id
         }
@@ -759,7 +768,7 @@ onClick(e){
     AObjet.deselectAll()
     AObjet.addToSelection(this)
     // Marque de forme : déplie/replie le nom de la portion
-    this.isForme && this.toggleExpanded()
+    this.isBorne && this.toggleExpanded()
   }
   return stopEvent(e)
 }
@@ -780,7 +789,10 @@ onContextMenu(e){
   ]
   this.type == 'acc' && items.push({label: T('align_harmony'), value: 'alignHarmony'})
   this.type == 'har' && items.push({label: T('align_chord'),   value: 'alignChord'})
-  this.isForme && items.push({label: T('align_measure'), value: 'alignMeasure'}, {label: T('form_height'), value: 'formHeight'})
+  this.isBorne && items.push({label: T('align_measure'), value: 'alignMeasure'}, {label: T('form_height'), value: 'formHeight'})
+  // Marque de forme : passage de la version borne à la version cadre et
+  // inversement
+  FORME_CADRE_BORNE[this.subtype] && this.isForme && items.push({label: T(this.isBorne ? 'to_frame' : 'to_marker'), value: 'toggleFrame'})
   this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'}, {label: T('reload_image'), value: 'reloadImage', enabled: !!this.data.file})
   items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
   invoke('menu:popup', {items})
@@ -803,8 +815,14 @@ onContextChoice(choice){
     case 'align':         return targets.forEach(m => m.alignOnSameType())
     case 'alignHarmony':  return this.alignHorizontallyOn('har', 'no_harmony_mark')
     case 'alignChord':    return this.alignHorizontallyOn('acc', 'no_chord_mark')
-    case 'alignMeasure':  return targets.filter(m => m.isForme).forEach(m => m.placeOnMeasure())
-    case 'formHeight':    return targets.filter(m => m.isForme).forEach(m => m.placeAtHeight())
+    case 'alignMeasure':  return targets.filter(m => m.isBorne).forEach(m => m.placeOnMeasure())
+    case 'formHeight':    return targets.filter(m => m.isBorne).forEach(m => m.placeAtHeight())
+    case 'toggleFrame':
+      // Toutes les marques de forme de la sélection prennent la version
+      // de la marque cliquée
+      const toFrame = this.isBorne
+      targets.filter(m => m.isForme && FORME_CADRE_BORNE[m.subtype] && m.isBorne == toFrame).forEach(m => m.changeType('frm', FORME_CADRE_BORNE[m.subtype]))
+      break
     case 'delete':
       targets.forEach(m => AObjet.remove(m))
       AObjet.deselectAll()
@@ -1095,7 +1113,7 @@ changeType(type, subtype){
   this.rebuild()
   // Motif à variable devenu autre chose (ou l'inverse) : textes actualisés
   this.data.variable && wasMotif != (type == 'mot') && Variables.refresh()
-  if ( this.isForme ) {
+  if ( this.isBorne ) {
     this.placeAtHeight()
     this.placeOnMeasure()
   } else {
@@ -1148,7 +1166,7 @@ set content(v){
   this._content = v
   this.data.content = v
   this.contentSpan && (this.contentSpan.innerHTML = this.formated_content )
-  this.obj && this.isForme && (this.obj.title = v)
+  this.obj && this.isBorne && (this.obj.title = v)
 }
 
   get domId(){return this._domid || (this._domid = `amark-${this.id}`)}

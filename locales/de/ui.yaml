@@ -147,6 +147,8 @@ mark_context:
   align_chord:      "Am Akkord ausrichten"
   align_measure:    "Am Takt ausrichten"
   form_height:      "Marke auf ihre Höhe zurücksetzen"
+  to_frame:         "Rahmen-Version"
+  to_marker:        "Grenzstein-Version"
   delete:           "Löschen"
 
 system_menu:
@@ -476,10 +478,6 @@ marks:
     mot: {name: "Motiv", default: "Motiv", message: "Name des Motivs"}
     lay: {name: "Seitenlayout", message: "Seitenlayout"}
   frames:
-    prt:  {name: "Teil (Beginn)",    default: "EXPO"}
-    prtz: {name: "Ende des Teils",   default: "EXPO"}
-    sec:  {name: "Abschnittsbeginn", default: "ABSCHNITT"}
-    secz: {name: "Abschnittsende",   default: "ABSCHNITT"}
     cel:  {name: "Zelle"}
     bxt:  {name: "Text im Rahmen",   default: "**Formatierter** und _formatierter_ Text."}
     box:  {name: "Einfacher Rahmen"}
@@ -524,11 +522,15 @@ marks:
     pla: "PS"
     fau: "F.K."
   forms:
-    fpar: {name: "Teil", default: "Exposition"}
-    fsec: {name: "Abschnitt", default: "Abschnitt A"}
+    fpar: {name: "Teil (Grenzstein)", default: "Exposition"}
+    prt: {name: "Teil (Rahmen)", default: "EXPO"}
+    fsec: {name: "Abschnitt (Grenzstein)", default: "Abschnitt A"}
+    sec: {name: "Abschnitt (Rahmen)", default: "ABSCHNITT"}
     fseg: {name: "Segment", default: "Segment a"}
-    fparz: {name: "Ende des Teils"}
-    fsecz: {name: "Ende des Abschnitts"}
+    fparz: {name: "Ende des Teils (Grenzstein)"}
+    prtz: {name: "Ende des Teils (Rahmen)"}
+    fsecz: {name: "Ende des Abschnitts (Grenzstein)"}
+    secz: {name: "Ende des Abschnitts (Rahmen)"}
     fsegz: {name: "Ende des Segments"}
     at_measure: "%{name} (T. %{num})"
     end_of: "Diese Marke beendet den Formteil:"
