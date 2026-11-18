@@ -1,4 +1,4 @@
-# 3.0.0
+# 2.0.0
 
   - Portage en application Electron (Node.js), autonome (plus de
     dépendance à la librairie commune ScoreSuite ni à Ruby/Selenium).

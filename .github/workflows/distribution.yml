@@ -60,5 +60,5 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           ls -l fichiers
           gh release view "v$VERSION" >/dev/null 2>&1 \
-            || gh release create "v$VERSION" --title "Table d'analyse $VERSION" --notes "Table d'analyse $VERSION (macOS, Windows, Linux)"
+            || gh release create "v$VERSION" --latest --title "Table d'analyse $VERSION" --notes "Table d'analyse $VERSION (macOS, Windows, Linux)"
           gh release upload "v$VERSION" fichiers/* --clobber
