@@ -952,7 +952,11 @@ get textRect(){
 // Marque déjà sélectionnée : la sélection est gardée (déplacement,
 // redimensionnement de toutes les marques sélectionnées)
 onMouseDown(e){
-  e.shiftKey || this.isSelected || AObjet.deselectAll()
+  if ( e.shiftKey || this.isSelected ) return
+  AObjet.deselectAll()
+  // Marque groupée : tout son groupe est sélectionné, donc déplacé avec
+  // elle (cf. Groups.js)
+  this.data.groups && this.data.groups.length && AObjet.addToSelection(this)
 }
 
 toggleFromSelection(keep_other){
