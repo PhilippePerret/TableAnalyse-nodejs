@@ -1,7 +1,7 @@
 {
   "name": "score-analyse",
   "productName": "Table-d-analyse",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Table d'analyse musicale (ScoreSuite) — application Electron",
   "type": "module",
   "main": "main/main.js",
