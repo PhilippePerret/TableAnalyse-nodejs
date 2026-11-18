@@ -47,7 +47,7 @@ import { Variables } from './Variables.js'
 const SUGGEST_MODE_KEY = 'marks_suggestions'
 export const SUGGEST_MODES = ['none', 'menu', 'panel']
 // Types/sous-types sans suggestions
-const NO_SUGGESTIONS = ['mes', 'ext']
+const NO_SUGGESTIONS = ['mes', 'ext', 'long']
 // Types/sous-types dont les valeurs sont classées dans l'ordre de la
 // partition (motifs, marques de forme), et non alphabétiquement
 const SUGGESTIONS_IN_SCORE_ORDER = ['cel', 'mot', 'frm']

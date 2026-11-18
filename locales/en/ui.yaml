@@ -462,7 +462,7 @@ marks:
     menu_title: "Values already used…"
   variable:
     label: "Variable"
-    menu: "Variables (copy to clipboard)…"
+    hint: "Variables are available from the “%{menu}” menu."
   types:
     acc: {name: "Chord",         message: "Chord name"}
     har: {name: "Harmony",       message: "Figure"}

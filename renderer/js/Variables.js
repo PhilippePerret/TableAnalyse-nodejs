@@ -1,7 +1,6 @@
 import { AObjet } from './AObjet.js'
 import { Current } from './Current.js'
 import { invoke } from './api.js'
-import { emit } from './events.js'
 import { message, erreur } from './lib/Message.js'
 import { t } from './i18n.js'
 /**
@@ -97,16 +96,12 @@ export class Variables {
       .catch(err => erreur(err.message))
   }
 
-  /**
-   * Listes des variables actualisées (menu « Outils > Variable », menu
-   * de l'éditeur de texte long) quand elles changent
-   */
+  // Menu « Outils > Variable » actualisé quand les variables changent
   static updateMenus(){
     const names = this.names
     const key = JSON.stringify(names)
     if ( key == this._menusKey ) return
     this._menusKey = key
     invoke('menu:variables', names).catch(err => console.error(err))
-    emit('variables:changed', names)
   }
 }

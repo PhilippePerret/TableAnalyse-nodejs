@@ -461,7 +461,7 @@ marks:
     menu_title: "使用済みの値…"
   variable:
     label: "変数"
-    menu: "変数（クリップボードにコピー）…"
+    hint: "変数はメニュー「%{menu}」から取得できます。"
   types:
     acc: {name: "コード",        message: "コードネーム"}
     har: {name: "和声",          message: "和声記号"}

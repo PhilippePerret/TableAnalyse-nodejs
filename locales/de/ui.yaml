@@ -462,7 +462,7 @@ marks:
     menu_title: "Bereits verwendete Werte…"
   variable:
     label: "Variable"
-    menu: "Variablen (in die Zwischenablage kopieren)…"
+    hint: "Die Variablen erhalten Sie über das Menü „%{menu}“."
   types:
     acc: {name: "Akkord",        message: "Name des Akkords"}
     har: {name: "Harmonie",      message: "Bezifferung"}

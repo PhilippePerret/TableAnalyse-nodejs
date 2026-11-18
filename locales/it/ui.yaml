@@ -462,7 +462,7 @@ marks:
     menu_title: "Valori già usati…"
   variable:
     label: "Variabile"
-    menu: "Variabili (copia negli appunti)…"
+    hint: "Le variabili si ottengono dal menu «%{menu}»."
   types:
     acc: {name: "Accordo",       message: "Nome dell'accordo"}
     har: {name: "Armonia",       message: "Cifratura"}

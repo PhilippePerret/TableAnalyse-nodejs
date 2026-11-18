@@ -462,7 +462,7 @@ marks:
     menu_title: "Valores ya usados…"
   variable:
     label: "Variable"
-    menu: "Variables (copiar al portapapeles)…"
+    hint: "Puede obtener las variables en el menú «%{menu}»."
   types:
     acc: {name: "Acorde",        message: "Nombre del acorde"}
     har: {name: "Armonía",       message: "Cifrado"}

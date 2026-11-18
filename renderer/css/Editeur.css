@@ -18,17 +18,19 @@ div.mini_editeur.longtext {
   width:  740px;
   height: 620px;
 }
-/* Texte long : le champ occupe toute la hauteur libre, menu des
+/* Texte long : le champ occupe toute la hauteur libre, où trouver les
    variables en dessous */
 div.mini_editeur.longtext:not(.hidden) {
   display: flex;
   flex-direction: column;
 }
-div.mini_editeur:not(.longtext) select.variables-menu {
+div.mini_editeur:not(.longtext) div.variables-hint {
   display: none;
 }
-div.mini_editeur.longtext select.variables-menu {
+div.mini_editeur.longtext div.variables-hint {
   margin-top: 8px;
+  font-size: 12px;
+  color: #666;
 }
 div.mini_editeur.longtext div.fields {
   display: flex;
