@@ -93,7 +93,9 @@ export class Split {
     if ( !this.state || !Current.analyse ) return
     if ( state ) diff = History.diff(History.snapshot(), state)
     if ( !diff ) return
-    clearTimeout(this.timer)
+    // Modification de cette vue pas encore envoyée : envoyée d'abord
+    // (sinon perdue pour l'autre vue)
+    this.send()
     this.applying = true
     try {
       this.applyInfos(diff.infos)

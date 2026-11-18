@@ -25,10 +25,13 @@ window.addEventListener('mousemove', (e) => {
   window.api.invoke('split:drag', {y})
 })
 
-window.addEventListener('mouseup', () => {
+// Bouton relâché hors de la fenêtre : déplacement terminé quand même
+window.addEventListener('mouseup', endDrag)
+window.addEventListener('blur', endDrag)
+function endDrag(){
   if ( !dragging ) return
   dragging = false
   bar.style.top = '0px'
   bar.style.visibility = 'visible'
   window.api.invoke('split:dragEnd')
-})
+}

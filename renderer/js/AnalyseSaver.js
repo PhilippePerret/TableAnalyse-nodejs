@@ -8,6 +8,7 @@
  */
 import { erreur } from './lib/Message.js'
 import { invoke, IS_MIRROR } from './api.js'
+import { Split } from './Split.js'
 import { AObjet } from './AObjet.js'
 import { Current } from './Current.js'
 import { Preferences } from './Preferences.js'
@@ -25,7 +26,8 @@ export class AnalyseSaver {
    */
   static async save(){
     // Vue du bas de la fenêtre scindée : enregistrement par la vue du haut
-    if ( IS_MIRROR ) return invoke('split:command', {command: 'save'})
+    // (après envoi de la dernière modification de cette vue)
+    if ( IS_MIRROR ) { Split.send() ; return invoke('split:command', {command: 'save'}) }
     const analyse = Current.analyse
     if ( !analyse ) {
       erreur(t('errors.need_analyse_to_save'))
