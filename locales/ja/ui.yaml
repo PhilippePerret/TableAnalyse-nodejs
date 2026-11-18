@@ -178,6 +178,7 @@ buttons:
   type:             "種類…"
   subtype:          "サブ種類…"
   defaults:         "既定の設定"
+  refresh_view:     "更新（保存済みの分析）"
 
 message_titles:
   notice:           "お知らせ"

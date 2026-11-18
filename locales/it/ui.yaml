@@ -178,6 +178,7 @@ buttons:
   type:             "Tipo…"
   subtype:          "Sottotipo…"
   defaults:         "Impostazioni predefinite"
+  refresh_view:     "Aggiorna (analisi salvata)"
 
 message_titles:
   notice:           "Informazione"

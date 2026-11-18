@@ -16,14 +16,16 @@ export function keepInView(el, margin = 8){
   if ( !r.width && !r.height ) return // boite fermée
   const z = el.currentCSSZoom || 1
   const W = window.innerWidth, H = window.innerHeight
-  if ( r.height > H - 2 * margin ) { el.style.maxHeight = px((H - 2 * margin) / z) ; el.style.overflowY = 'auto' }
+  // Fenêtre scindée : jamais sous la vue de visualisation
+  const T = margin + splitInset()
+  if ( r.height > H - T - margin ) { el.style.maxHeight = px((H - T - margin) / z) ; el.style.overflowY = 'auto' }
   if ( r.width  > W - 2 * margin ) { el.style.maxWidth  = px((W - 2 * margin) / z) ; el.style.overflowX = 'auto' }
   r = el.getBoundingClientRect()
   let dx = 0, dy = 0
   if ( r.right  > W - margin ) dx = W - margin - r.right
   if ( r.left + dx < margin ) dx = margin - r.left
   if ( r.bottom > H - margin ) dy = H - margin - r.bottom
-  if ( r.top + dy < margin ) dy = margin - r.top
+  if ( r.top + dy < T ) dy = T - r.top
   if ( !dx && !dy ) return
   const cs = getComputedStyle(el)
   if ( cs.position == 'fixed' ) {
@@ -33,6 +35,14 @@ export function keepInView(el, margin = 8){
     el.style.left = px(parseFloat(cs.left) + dx / z)
     el.style.top  = px(parseFloat(cs.top)  + dy / z)
   }
+}
+
+/**
+ * Fenêtre scindée : hauteur (px de la page) cachée en haut par la vue de
+ * visualisation et la barre (0 sinon, cf. Split.js)
+ */
+export function splitInset(){
+  return parseFloat(document.documentElement.style.getPropertyValue('--split-inset')) || 0
 }
 
 export function px(nombre){

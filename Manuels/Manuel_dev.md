@@ -50,7 +50,7 @@ Les classes de base (`AObjet`, `MenusTool`) ne doivent importer, même indirecte
 SA_SMOKE=8 SA_SMOKE_JS=/chemin/script.js npx electron . /chemin/analyse
 ~~~
 
-Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes. `SA_SMOKE_SHOT=/chemin/capture.png` : capture de la fenêtre juste avant l'arrêt. `SA_SMOKE_SHOW=1` : fenêtre visible (nécessaire pour capturer la vue du bas d'une fenêtre scindée, dans `<capture>-bas.png`). `SA_SMOKE_MIRROR_JS=/chemin/script.js` : script joué dans la vue du bas de la fenêtre scindée.
+Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes. `SA_SMOKE_SHOT=/chemin/capture.png` : capture de la fenêtre juste avant l'arrêt. `SA_SMOKE_SHOW=1` : fenêtre visible (nécessaire pour capturer la vue de visualisation d'une fenêtre scindée, dans `<capture>-bas.png`). `SA_SMOKE_MIRROR_JS=/chemin/script.js` : script joué dans la vue de visualisation de la fenêtre scindée.
 
 
 ### Localisation
@@ -160,10 +160,6 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 
 ## Fenêtre scindée
 
-Menus « Options > Scinder la fenêtre » et « Fenêtre > Scinder la fenêtre » (`main/main.js`, `openSplit`) : sous la page de l'application (vue du haut), une `WebContentsView` charge `index.html?mirror=1` (vue du bas, même analyse), séparée par une barre (`renderer/splitter.html`, agrandie à toute la fenêtre pendant son déplacement). La page du haut réserve en bas la place cachée (`--split-inset`). Refermée au rechargement de la page.
+Menus « Options > Scinder la fenêtre » et « Fenêtre > Scinder la fenêtre » (raccourci ⌘/Ctrl + Maj + /) : la page demande le numéro de la mesure à afficher en haut (par défaut 6 mesures avant la première mesure visible, `Split.defaultMeasure`), puis `main/main.js` (`openSplit`) place au-dessus de la page de l'application (vue d'édition, en bas, plus grande) une `WebContentsView` qui charge `index.html?mirror=1&measure=N` (vue de visualisation), séparée par une barre (`renderer/splitter.html`, agrandie à toute la fenêtre pendant son déplacement). La page réserve en haut la place cachée (`--split-inset`, aussi pris en compte par `keepInView` pour les panneaux et par « Aller à la mesure »). Refermée au rechargement de la page.
 
-Vue active (focus) : reçoit les commandes des menus (sauf celles de l'analyse elle-même : fichier, préférences…, `TOP_ONLY_COMMANDS`), ses propres menus « Options », « Marque »… sont affichés (`dynamicMenusOf`) ; liseré bleu à gauche et à droite (`html.split-focused`). Raccourci ⌘/Ctrl + Maj + / (« / » obtenu par Maj sur le clavier français).
-
-Vue du bas (`IS_MIRROR`, `renderer/js/api.js`) : ni menus, ni taille de fenêtre, ni historique, ni enregistrement (⌘S est joué par la vue du haut) ; données lues sans les opérations de l'ouverture (`split:getCurrent`).
-
-Synchronisation (`renderer/js/Split.js`) : 0,15 s après une modification (`Analyse#setModified`), les changements depuis le dernier état commun (forme de l'historique : infos, marques, positions des systèmes) sont envoyés à l'autre vue, qui reconstruit les marques concernées. Chargée, la vue du bas reçoit l'état complet de la vue du haut. Les préférences ne sont pas synchronisées.
+Vue de visualisation (`IS_MIRROR`, `renderer/js/api.js`, `renderer/js/Split.js`) : analyse ENREGISTRÉE (`split:getCurrent`, sans les opérations de l'ouverture) ; ni menus, ni taille de fenêtre, ni historique, ni enregistrement. Aucune action : voile (`div#split-veil`), souris et clavier arrêtés, focus rendu à la vue d'édition ; seul le défilement passe. Bouton « Actualiser » (en haut à droite) : rechargement de la page, position gardée (`sessionStorage`). Aucune synchronisation entre les deux vues.

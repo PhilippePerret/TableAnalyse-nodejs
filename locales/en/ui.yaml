@@ -178,6 +178,7 @@ buttons:
   type:             "Type…"
   subtype:          "Subtype…"
   defaults:         "Default settings"
+  refresh_view:     "Refresh (saved analysis)"
 
 message_titles:
   notice:           "Information"

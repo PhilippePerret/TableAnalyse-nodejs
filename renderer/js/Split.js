@@ -1,53 +1,57 @@
-import { DGet } from './dom.js'
+import { DCreate, DGet, listen } from './dom.js'
 import { px } from './handies.js'
 import { invoke, onMain, IS_MIRROR } from './api.js'
 import { erreur } from './lib/Message.js'
 import { on } from './events.js'
-import { Current } from './Current.js'
-import { AObjet } from './AObjet.js'
-import { AMark } from './AMark.js'
+import { t } from './i18n.js'
 import { Systeme } from './Systeme.js'
-import { History } from './History.js'
-import { Variables } from './Variables.js'
-import { setWindowTitle } from './Analyse.js'
+import { Editeur } from './Editeur.js'
+import { Forme } from './Forme.js'
+import { keepPanelsInView } from './Panneau.js'
 /**
  * Split
  * -----
  * Fenêtre scindée (menus « Options > Scinder la fenêtre » et « Fenêtre >
- * Scinder la fenêtre », cf. main.js openSplit) : deux vues de la même
- * analyse, l'une au-dessus de l'autre, chacune avec son propre défilement.
+ * Scinder la fenêtre », cf. main.js openSplit) : en haut, une vue de
+ * visualisation de l'analyse ENREGISTRÉE ; en bas, la page de
+ * l'application (vue d'édition). Chacune a son propre défilement.
  *
- * La vue du haut est la page de l'application ; celle du bas une seconde
- * page (IS_MIRROR) qui n'enregistre rien elle-même. Chaque modification
- * de l'une (cf. Analyse.setModified) est envoyée à l'autre sous forme de
- * changements depuis le dernier état commun (même forme que l'historique,
- * cf. History.snapshot/diff) : infos, marques, systèmes.
+ * La vue de visualisation (IS_MIRROR) n'enregistre rien et n'accepte
+ * aucune action (voile, touches arrêtées), sauf le défilement et son
+ * bouton « Actualiser », qui la recharge en gardant sa position. Aucune
+ * synchronisation entre les deux vues.
  */
-// Délai (ms) après la dernière modification pour l'envoyer
-const DELAY = 150
+// Mesures affichées avant la première mesure visible de la vue
+// d'édition (numéro proposé à l'ouverture)
+const MEASURES_BEFORE = 6
+// Clé (sessionStorage) de la position gardée au rechargement
+const SCROLL_KEY = 'split-scroll'
+// Touches de défilement laissées à la vue de visualisation
+const SCROLL_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' ']
 
 export class Split {
 
   static init(){
     this.on = IS_MIRROR
     document.documentElement.classList.toggle('mirror', IS_MIRROR)
+    if ( IS_MIRROR ) return this.initViewer()
     onMain('split:state', ({on}) => this.setState(on))
-    IS_MIRROR && this.setState(true)
-    // Vue active (qui reçoit les commandes des menus) : marquée
-    onMain('split:focus', ({split, focused}) => {
-      document.documentElement.classList.toggle('split-focused', split && focused)
-      document.documentElement.classList.toggle('split-unfocused', split && !focused)
-    })
+    // Place cachée en haut par la vue de visualisation et la barre
     onMain('split:inset', ({inset, zoom}) => {
       document.documentElement.style.setProperty('--split-inset', px(inset / (zoom || 1)))
+      keepPanelsInView()
     })
-    onMain('split:sync', this.receive.bind(this))
-    // Vue du haut : la vue du bas, chargée, reçoit l'état actuel
-    onMain('split:ready', () => this.sendState())
-    on('systems:loaded', () => {
-      this.state = History.snapshot()
-      IS_MIRROR && invoke('split:ready').catch(err => console.error(err))
-    })
+    this.sendTitlebarHeight()
+    window.addEventListener('resize', this.sendTitlebarHeight.bind(this))
+  }
+
+  // Hauteur de la bande supérieure (place de la vue de visualisation,
+  // cf. main.js layoutSplit)
+  static sendTitlebarHeight(){
+    const band = DGet('#titlebar')
+    const height = band && band.getBoundingClientRect().bottom
+    height && height != this.titlebarHeight && invoke('split:titlebar', {height}).catch(err => console.error(err))
+    this.titlebarHeight = height
   }
 
   // Fenêtre scindée (+on+) ou non : coche du menu « Options »
@@ -57,100 +61,91 @@ export class Split {
     option && (option.dataset.checked = on ? 'true' : 'false')
   }
 
+  /**
+   * Fermeture, ou ouverture après demande du numéro de la mesure à
+   * afficher en haut (sans numéros de mesure : début de la partition)
+   */
   static toggle(){
-    invoke('split:toggle').catch(err => erreur(err.message))
+    if ( this.on ) return this.open()
+    const mesures = Forme.measureMarks
+    if ( !mesures.length ) return this.open()
+    const last = Math.max(...mesures.map(m => m.number))
+    this.editor = this.editor || new Editeur({data: {}}, {setMethod: this.onMeasure.bind(this)})
+    this.editor.value = String(this.defaultMeasure(mesures))
+    this.editor.show({top: 120, left: Math.round(window.innerWidth / 2) - 100, fixed: true}, t('messages.split_measure_prompt', {last}))
   }
-
-  // Modification de l'analyse : envoyée un peu plus tard
-  static schedule(){
-    if ( !this.on || this.applying || !this.state ) return
-    clearTimeout(this.timer)
-    this.timer = setTimeout(this.send.bind(this), DELAY)
+  static onMeasure(value){
+    if ( null == value || String(value).trim() == '' ) return
+    const num = Number(String(value).trim())
+    if ( isNaN(num) ) return
+    this.open(num)
   }
-
-  static send(){
-    clearTimeout(this.timer)
-    if ( !this.state ) return
-    const current = History.snapshot()
-    const diff = History.diff(this.state, current)
-    if ( !diff ) return
-    this.state = current
-    invoke('split:sync', {diff}).catch(err => console.error(err))
-  }
-
-  // État complet (vue du bas qui vient de se charger)
-  static sendState(){
-    this.send()
-    this.state && invoke('split:sync', {state: this.state}).catch(err => console.error(err))
+  static open(measure){
+    invoke('split:toggle', {measure}).catch(err => erreur(err.message))
   }
 
   /**
-   * Changements reçus de l'autre vue (+diff+, ou +state+ complet) :
-   * appliqués ici. La vue du haut marque l'analyse modifiée (à
-   * enregistrer, étape de l'historique).
+   * Numéro proposé : MEASURES_BEFORE mesures avant la première mesure
+   * visible de la vue d'édition (ou la première mesure)
    */
-  static receive({diff, state}){
-    if ( !this.state || !Current.analyse ) return
-    if ( state ) diff = History.diff(History.snapshot(), state)
-    if ( !diff ) return
-    // Modification de cette vue pas encore envoyée : envoyée d'abord
-    // (sinon perdue pour l'autre vue)
-    this.send()
-    this.applying = true
-    try {
-      this.applyInfos(diff.infos)
-      this.applySystems(diff.systems)
-      this.applyMarks(diff.marks)
-    } catch(err) {
-      console.error(err)
-    } finally {
-      this.applying = false
+  static defaultMeasure(mesures){
+    const first = Math.min(...mesures.map(m => m.number))
+    const band = DGet('#titlebar')
+    const top = band ? band.getBoundingClientRect().bottom : 0
+    const systems = [...(Systeme.all || [])].filter(sys => sys.obj).sort((a, b) => a.top - b.top)
+    for ( const sys of systems ) {
+      if ( sys.obj.getBoundingClientRect().bottom <= top ) continue
+      const nums = Forme.measureMarksOf(sys).map(m => Number(String(m.content).trim())).filter(n => !isNaN(n))
+      if ( nums.length ) return Math.max(first, Math.min(...nums) - MEASURES_BEFORE)
     }
-    this.state = History.snapshot()
-    IS_MIRROR || Current.analyse.setModified()
+    return first
   }
 
-  static applyInfos(infos){
-    if ( !infos ) return
-    const all = Current.analyse.infos
-    Object.entries(infos).forEach(([k, v]) => null === v ? delete all[k] : (all[k] = v))
-    setWindowTitle(all)
-    Variables.refresh()
-  }
+  /* --- Vue de visualisation --- */
 
-  static applySystems(systems){
-    if ( !systems ) return
-    Object.entries(systems).forEach(([name, data]) => {
-      const sys = data && Systeme.all.find(s => s.image_name == name)
-      if ( !sys ) return
-      undefined !== data.top  && sys.positionne(data.top, /* onlySystem = */ true)
-      undefined !== data.left && data.left != sys.left && (sys.left = data.left)
-      sys.data.measures_end = data.measures_end
+  static initViewer(){
+    // Voile : aucun clic n'atteint l'analyse (le défilement passe)
+    document.body.appendChild(DCreate('DIV', {id: 'split-veil'}))
+    const button = DCreate('BUTTON', {id: 'split-refresh', text: '↻'})
+    button.title = t('ui.buttons.refresh_view')
+    listen(button, 'click', this.refresh.bind(this))
+    document.body.appendChild(button)
+    // Souris et clavier arrêtés avant tout autre gestionnaire (touches
+    // de défilement : défilement seul)
+    ;['mousedown', 'mouseup', 'click', 'dblclick', 'contextmenu'].forEach(type => {
+      window.addEventListener(type, (e) => {
+        if ( e.target instanceof Element && e.target.closest('#split-refresh') ) return
+        e.stopImmediatePropagation()
+        type == 'contextmenu' && e.preventDefault()
+      }, true)
     })
-  }
-
-  // Marques modifiées ou supprimées retirées, nouvelles versions
-  // construites
-  static applyMarks(marks){
-    if ( !marks ) return
-    const analyse = Current.analyse
-    Object.entries(marks).forEach(([id, data]) => {
-      const old = AObjet.get(id)
-      old && this.removeMark(old)
-      if ( !data ) return
-      const mark = AMark.instanciate(analyse, data)
-      mark.build_and_observe()
-      analyse._lastId = Math.max(analyse._lastId || 0, Number(id))
+    ;['keydown', 'keypress', 'keyup'].forEach(type => {
+      window.addEventListener(type, (e) => {
+        e.stopImmediatePropagation()
+        SCROLL_KEYS.includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey || e.preventDefault()
+      }, true)
     })
-    Variables.refresh()
+    on('systems:loaded', () => requestAnimationFrame(this.placeViewer.bind(this)))
   }
 
-  static removeMark(ao){
-    ao.isSelected && AObjet.removeFromSelection(ao)
-    AObjet.items = AObjet.items.filter(o => o !== ao)
-    delete AObjet.table[ao.id]
-    Systeme.all.forEach(sys => sys._objets && (sys._objets = sys._objets.filter(o => o !== ao)))
-    ao.obj && ao.obj.remove()
-    ao.destroyed = true
+  // Position gardée au rechargement, sinon mesure demandée à l'ouverture
+  static placeViewer(){
+    let pos = null
+    try {
+      pos = JSON.parse(sessionStorage.getItem(SCROLL_KEY) || 'null')
+      sessionStorage.removeItem(SCROLL_KEY)
+    } catch(err) { pos = null }
+    if ( pos ) return window.scrollTo(pos.x, pos.y)
+    const measure = Number(new URLSearchParams(location.search).get('measure'))
+    measure && Forme.gotoMeasureNumber(measure)
+  }
+
+  // « Actualiser » : rechargement de l'analyse enregistrée, à la même
+  // position
+  static refresh(){
+    try {
+      sessionStorage.setItem(SCROLL_KEY, JSON.stringify({x: window.scrollX, y: window.scrollY}))
+    } catch(err) { /* position perdue */ }
+    location.reload()
   }
 }

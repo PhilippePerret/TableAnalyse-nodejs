@@ -38,6 +38,7 @@ cutter:
   measures_header: "# 切分时检测到的小节号（各图像中的像素坐标）。\n# 打开分析时作为小节号导入，放在每个声部组下方。"
 
 goto_measure_prompt: "转到小节（1 至 %{last}）"
+split_measure_prompt: "在上方显示的小节（1 至 %{last}）"
 no_measure_number: "表上没有小节号。"
 measure_not_found: "找不到第 %{num} 小节。"
 no_blank_to_remove: "没有需要删除的空白。"

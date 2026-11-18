@@ -1,11 +1,11 @@
 /**
- * Vue du bas de la fenêtre scindée (index.html?mirror=1, cf. Split.js) :
- * ni menus, ni taille de fenêtre, ni historique, ni enregistrement (fait
- * par la vue du haut), ni opérations de l'ouverture de l'analyse
+ * Vue de visualisation de la fenêtre scindée (index.html?mirror=1, cf.
+ * Split.js) : ni menus, ni taille de fenêtre, ni historique, ni
+ * enregistrement, ni opérations de l'ouverture de l'analyse
  */
 export const IS_MIRROR = new URLSearchParams(location.search).has('mirror')
 const MIRROR_IGNORED = [
-    'menu:formShown', 'menu:variables'
+    'menu:setDynamic', 'menu:formShown', 'menu:variables', 'split:titlebar'
   , 'window:setSize', 'analyse:saveWindowSize'
   , 'history:load', 'history:append'
   , 'analyse:saveTags', 'analyse:saveInfos', 'analyse:savePreferences'

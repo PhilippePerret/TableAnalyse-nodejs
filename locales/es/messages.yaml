@@ -38,6 +38,7 @@ cutter:
   measures_header: "# Números de compás detectados por el recorte (coordenadas en píxeles de cada imagen).\n# Importados al abrir el análisis como números de compás, colocados bajo cada sistema."
 
 goto_measure_prompt: "Ir al compás (1 a %{last})"
+split_measure_prompt: "Compás que mostrar arriba (1 a %{last})"
 no_measure_number: "Ningún número de compás en la tabla."
 measure_not_found: "Compás %{num} no encontrado."
 no_blank_to_remove: "No hay blancos que suprimir."

@@ -38,6 +38,7 @@ cutter:
   measures_header: "# Numeri di battuta rilevati dal taglio (coordinate in pixel di ogni immagine).\n# Importati all'apertura dell'analisi come numeri di battuta, posti sotto ogni sistema."
 
 goto_measure_prompt: "Vai alla battuta (da 1 a %{last})"
+split_measure_prompt: "Battuta da mostrare in alto (da 1 a %{last})"
 no_measure_number: "Nessun numero di battuta sulla tavola."
 measure_not_found: "Battuta %{num} non trovata."
 no_blank_to_remove: "Nessuno spazio vuoto da rimuovere."

@@ -38,6 +38,7 @@ cutter:
   measures_header: "# Numéros de mesure détectés par la découpe (coordonnées en pixels de chaque image).\n# Importés à l'ouverture de l'analyse comme numéros de mesure, posés sous chaque système."
 
 goto_measure_prompt: "Aller à la mesure (1 à %{last})"
+split_measure_prompt: "Mesure à afficher en haut (1 à %{last})"
 no_measure_number: "Aucun numéro de mesure sur la table."
 measure_not_found: "Mesure %{num} introuvable."
 no_blank_to_remove: "Aucun blanc à supprimer."

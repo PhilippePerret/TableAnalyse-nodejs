@@ -38,6 +38,7 @@ cutter:
   measures_header: "# 切り分けで検出した小節番号（各画像のピクセル座標）。\n# 分析を開くときに小節番号として読み込まれ、各段の下に配置されます。"
 
 goto_measure_prompt: "小節へ移動（1〜%{last}）"
+split_measure_prompt: "上部に表示する小節（1〜%{last}）"
 no_measure_number: "表に小節番号がありません。"
 measure_not_found: "小節 %{num} が見つかりません。"
 no_blank_to_remove: "削除する余白はありません。"

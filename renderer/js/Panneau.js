@@ -132,4 +132,8 @@ function keepPanelInView(obj){
   new ResizeObserver(() => obj.classList.contains('anim-hidden') || keepInView(obj)).observe(obj)
   requestAnimationFrame(() => keepInView(obj))
 }
-window.addEventListener('resize', () => panelsInView.forEach(obj => obj.isConnected ? keepInView(obj) : panelsInView.delete(obj)))
+// (aussi quand la place disponible change : fenêtre scindée, cf. Split.js)
+export function keepPanelsInView(){
+  panelsInView.forEach(obj => obj.isConnected ? keepInView(obj) : panelsInView.delete(obj))
+}
+window.addEventListener('resize', keepPanelsInView)

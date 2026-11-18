@@ -178,6 +178,7 @@ buttons:
   type:             "Typ…"
   subtype:          "Untertyp…"
   defaults:         "Standardeinstellungen"
+  refresh_view:     "Aktualisieren (gespeicherte Analyse)"
 
 message_titles:
   notice:           "Information"

@@ -178,6 +178,7 @@ buttons:
   type:             "Type…"
   subtype:          "Sous-type…"
   defaults:         "Réglages par défaut"
+  refresh_view:     "Actualiser (analyse enregistrée)"
 
 message_titles:
   notice:           "Information"

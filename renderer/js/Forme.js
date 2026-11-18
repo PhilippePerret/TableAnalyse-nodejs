@@ -11,6 +11,7 @@ import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
 import { TYPES_FORME, formLevel } from './Constants.js'
 import { t } from './i18n.js'
+import { splitInset } from './handies.js'
 /**
 
   Forme
@@ -75,7 +76,7 @@ export class Forme {
       const bottoms = [prev.obj.getBoundingClientRect().bottom]
         .concat(this.measureMarksOf(prev).map(m => m.obj.getBoundingClientRect().bottom))
       prev.measureLine && bottoms.push(prev.measureLine.getBoundingClientRect().bottom)
-      top = Math.max(...bottoms) + window.scrollY - (band ? band.getBoundingClientRect().bottom : 0) + 2
+      top = Math.max(...bottoms) + window.scrollY - (band ? band.getBoundingClientRect().bottom : 0) - splitInset() + 2
     }
     window.scrollTo({top: Math.max(0, top)})
     mark.clignote()

@@ -90,6 +90,7 @@ class AppClass {
       case 'removeBlanks':  return TableAnalyse.removeBlanks()
       case 'prefs':         return PreferencesPanel.toggle()
       case 'manual':        return Manuel.toggle()
+      case 'toggleSplit':   return Split.toggle()
       default: console.error("Commande de menu inconnue : %s", command)
     }
   }

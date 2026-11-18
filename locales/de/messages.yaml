@@ -38,6 +38,7 @@ cutter:
   measures_header: "# Beim Zerschneiden erkannte Taktnummern (Pixelkoordinaten jedes Bildes).\n# Beim Öffnen der Analyse als Taktnummern importiert, unter jedes System gesetzt."
 
 goto_measure_prompt: "Gehe zu Takt (1 bis %{last})"
+split_measure_prompt: "Oben anzuzeigender Takt (1 bis %{last})"
 no_measure_number: "Keine Taktnummer auf der Tafel."
 measure_not_found: "Takt %{num} nicht gefunden."
 no_blank_to_remove: "Kein Leerraum zu entfernen."
