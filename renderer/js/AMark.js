@@ -534,6 +534,13 @@ get isBox(){ return this.type == 'bbx' || this.isFormeCadre }
 get isLayoutTitle(){ return this.type == 'lay' && this.subtype == 'tit' }
 get isLayoutLine(){ return this.type == 'lay' && this.subtype != 'tit' }
 get isDelimiter(){ return this.type == 'lay' && this.subtype == 'del' }
+// Saut de page, délimitation : position horizontale fixe (alignée sur
+// les systèmes) une fois construits
+get left(){ return super.left }
+set left(v){
+  if ( this.isLayoutLine && this.obj ) return
+  super.left = v
+}
 get isPartie(){ return this.isFormeCadre && this.subtype.startsWith('prt')}
 get isSection(){ return this.isFormeCadre && this.subtype.startsWith('sec')}
 get isModulation(){return this.type == 'mod'}
@@ -686,6 +693,8 @@ observe(){
     , drag:function(e,ui){
         // Maj : un seul axe, celui du plus grand déplacement
         e.shiftKey && keepOneAxis(ui, this.debLeft, this.debTop)
+        // Saut de page, délimitation : déplacement vertical seulement
+        my.isLayoutLine && (ui.position.left = this.debLeft)
         // Les autres marques sélectionnées suivent la marque déplacée
         if ( !this.forDuplication && my.isSelected ) {
           const diffTop   = this.debTop - ui.position.top
@@ -693,7 +702,7 @@ observe(){
           AObjet.eachSelection(ao => {
             if ( ao === my || !ao.obj ) return
             ao.obj.style.top   = px(ao.top - diffTop)
-            ao.obj.style.left  = px(ao.left - diffLeft)
+            ao.obj.style.left  = px(ao.isLayoutLine ? ao.left : ao.left - diffLeft)
           })
         }
       }
@@ -722,6 +731,7 @@ observe(){
         // Maj au relâchement : un seul axe, celui du plus grand
         // déplacement (Maj pouvant être pressée en cours de route)
         e.shiftKey && keepOneAxis(ui, this.debLeft, this.debTop)
+        my.isLayoutLine && (ui.position.left = this.debLeft)
         const diffTop   = this.debTop - ui.position.top
         const diffLeft  = this.debLeft - ui.position.left
         // console.log("diffLeft = %i / diffTop = %i", diffLeft, diffTop)
