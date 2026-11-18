@@ -25,3 +25,6 @@ backups/
 _scripts/manuel/vendor/
 
 _Tutoriel/
+
+# Analyse non suivie
+analyses/Bee-Sonate-2/
