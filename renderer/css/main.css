@@ -74,6 +74,8 @@ div#split-veil {
   inset: 0;
   z-index: 9000;
   cursor: not-allowed;
+  /* Vue à peine grisée */
+  background-color: rgba(0,0,0,.05);
 }
 button#split-refresh {
   position: fixed;
