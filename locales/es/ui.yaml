@@ -31,6 +31,8 @@ menu:
   show_form:        "Ver la forma"
   build_form:       "Construir la forma"
   tools_menu:       "Herramientas"
+  split_window:     "Dividir la ventana"
+  fullscreen:       "Activar pantalla completa"
   variable:         "Variable"
   no_variable:      "Ninguna variable"
   tools:            "Caja de herramientas…"
@@ -69,6 +71,7 @@ menu:
   quit:             "Salir de %{name}"
 
 options_menu:
+  split_window:     "Dividir la ventana"
   cancel_last:      "Deshacer: %{name}"
   cancel_history:   "Historial de deshacer"
   grid_v:           "Imantar verticalmente"

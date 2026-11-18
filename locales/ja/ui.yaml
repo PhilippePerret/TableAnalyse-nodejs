@@ -31,6 +31,8 @@ menu:
   show_form:        "形式を表示"
   build_form:       "形式を作成"
   tools_menu:       "ツール"
+  split_window:     "ウインドウを分割"
+  fullscreen:       "フルスクリーンにする"
   variable:         "変数"
   no_variable:      "変数なし"
   tools:            "ツールボックス…"
@@ -69,6 +71,7 @@ menu:
   quit:             "%{name} を終了"
 
 options_menu:
+  split_window:     "ウインドウを分割"
   cancel_last:      "取り消す：%{name}"
   cancel_history:   "取り消しの履歴"
   grid_v:           "縦方向にスナップ"

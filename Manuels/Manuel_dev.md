@@ -50,7 +50,7 @@ Les classes de base (`AObjet`, `MenusTool`) ne doivent importer, même indirecte
 SA_SMOKE=8 SA_SMOKE_JS=/chemin/script.js npx electron . /chemin/analyse
 ~~~
 
-Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes. `SA_SMOKE_SHOT=/chemin/capture.png` : capture de la fenêtre juste avant l'arrêt.
+Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes. `SA_SMOKE_SHOT=/chemin/capture.png` : capture de la fenêtre juste avant l'arrêt. `SA_SMOKE_SHOW=1` : fenêtre visible (nécessaire pour capturer la vue du bas d'une fenêtre scindée, dans `<capture>-bas.png`). `SA_SMOKE_MIRROR_JS=/chemin/script.js` : script joué dans la vue du bas de la fenêtre scindée.
 
 
 ### Localisation
@@ -157,3 +157,11 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 
 `renderer/js/History.js` : étapes de la construction (infos, marques, positions des systèmes ; ni préférences, ni options, ni sélections, ni verrouillages) dans `history.jsonl` du dossier de l'analyse (une étape JSON par ligne : état initial complet, puis changements). Étape mémorisée 0,8 s après la dernière modification (`Analyse#setModified`). Menu « Fichier > Historique de l'analyse… » : retour à une étape = nouvelle étape `restore`, enregistrement puis rechargement.
 
+
+## Fenêtre scindée
+
+Menus « Options > Scinder la fenêtre » et « Fenêtre > Scinder la fenêtre » (`main/main.js`, `openSplit`) : sous la page de l'application (vue du haut), une `WebContentsView` charge `index.html?mirror=1` (vue du bas, même analyse), séparée par une barre (`renderer/splitter.html`, agrandie à toute la fenêtre pendant son déplacement). La page du haut réserve en bas la place cachée (`--split-inset`). Refermée au rechargement de la page.
+
+Vue du bas (`IS_MIRROR`, `renderer/js/api.js`) : ni menus, ni taille de fenêtre, ni historique, ni enregistrement (⌘S est joué par la vue du haut) ; données lues sans les opérations de l'ouverture (`split:getCurrent`).
+
+Synchronisation (`renderer/js/Split.js`) : 0,15 s après une modification (`Analyse#setModified`), les changements depuis le dernier état commun (forme de l'historique : infos, marques, positions des systèmes) sont envoyés à l'autre vue, qui reconstruit les marques concernées. Chargée, la vue du bas reçoit l'état complet de la vue du haut. Les préférences ne sont pas synchronisées.

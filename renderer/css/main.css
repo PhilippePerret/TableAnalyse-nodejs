@@ -59,6 +59,12 @@ html::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,.35); border-radius
 html::-webkit-scrollbar-thumb:hover { background-color: rgba(0,0,0,.5); }
 html::-webkit-scrollbar-corner { background: transparent; }
 
+/* Fenêtre scindée (cf. Split.js) : la vue du haut garde en bas la place
+   cachée par la vue du bas ; la vue du bas n'a pas de bande supérieure */
+:root { --split-inset: 0px; }
+body { padding-bottom: var(--split-inset); }
+html.mirror div#titlebar { display: none; }
+
 /* Bande supérieure de la fenêtre (barre de titre masquée, cf. main.js) */
 div#titlebar {
   position: fixed;

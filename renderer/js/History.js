@@ -1,5 +1,5 @@
 import { DCreate, listen } from './dom.js'
-import { invoke } from './api.js'
+import { invoke, IS_MIRROR } from './api.js'
 import { erreur } from './lib/Message.js'
 import { AObjet } from './AObjet.js'
 import { Current } from './Current.js'
@@ -46,6 +46,8 @@ export class History {
   static async init(){
     this.ready = false
     this.steps = []
+    // Vue du bas de la fenêtre scindée : historique tenu par celle du haut
+    if ( IS_MIRROR ) return
     const analyse = Current.analyse
     await new Promise(ok => {
       on('systems:loaded', ok)

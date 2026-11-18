@@ -31,6 +31,8 @@ menu:
   show_form:        "Voir la forme"
   build_form:       "Construire la forme"
   tools_menu:       "Outils"
+  split_window:     "Scinder la fenêtre"
+  fullscreen:       "Activer le mode plein écran"
   variable:         "Variable"
   no_variable:      "Aucune variable"
   tools:            "Boite à outils…"
@@ -69,6 +71,7 @@ menu:
   quit:             "Quitter %{name}"
 
 options_menu:
+  split_window:     "Scinder la fenêtre"
   cancel_last:      "Annuler : %{name}"
   cancel_history:   "Historique des annulations"
   grid_v:           "Magnétiser verticalement"

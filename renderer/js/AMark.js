@@ -106,7 +106,7 @@ export class AMark extends AObjet {
         Systeme.renumberMeasures(newMark)
       }
       newExtract && new ExtraitComposer(newMark, {isNew: true}).open()
-      UI.allumeRedLight()
+      setModified()
 
       return newMark
     }

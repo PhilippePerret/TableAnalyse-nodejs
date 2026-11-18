@@ -11,7 +11,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, protocol, screen, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, protocol, screen, shell, WebContentsView } from 'electron'
 import { Analyse } from './Analyse.js'
 import { AppPrefs } from './AppPrefs.js'
 import { createAnalyse, newAnalyseError } from './createAnalyse.js'
@@ -55,6 +55,7 @@ let justCut     = false   // la partition vient d'être découpée (message au r
 let formShown   = false   // menu « Forme > Voir la forme » coché
 let variableNames = {general: [], motifs: []} // menu « Outils > Variable »
 let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
+let split       = null    // fenêtre scindée : {view, bar, ratio, dragging} (cf. openSplit)
 
 protocol.registerSchemesAsPrivileged([{
   scheme: 'sa',
@@ -126,7 +127,7 @@ function createWindow(){
   mainWindow = new BrowserWindow({
       width:  1400
     , height: 1000
-    , show:   !SMOKE
+    , show:   !SMOKE || !!process.env.SA_SMOKE_SHOW
     , title:  ''
     // macOS : bande supérieure dessinée par la page (#titlebar), avec les
     // boutons de la fenêtre du système. Windows, Linux : barre de titre
@@ -152,7 +153,11 @@ function createWindow(){
     clearTimeout(closeTimer)
     closeTimer = setTimeout(() => { closeAllowed = true ; mainWindow && mainWindow.close() }, 5000)
   })
-  mainWindow.on('closed', () => { mainWindow = null })
+  mainWindow.on('closed', () => { mainWindow = null ; split = null })
+  // Fenêtre scindée : vues replacées ; refermée au rechargement de la
+  // page (autre analyse, rechargement…)
+  mainWindow.on('resize', layoutSplit)
+  mainWindow.webContents.on('did-start-loading', () => split && closeSplit())
 
   if ( SMOKE ) {
     mainWindow.webContents.on('console-message', (e) => {
@@ -173,9 +178,83 @@ function createWindow(){
       mainWindow.webContents.capturePage()
         .then(img => fs.writeFileSync(process.env.SA_SMOKE_SHOT, img.toPNG()))
         .catch(err => console.log('[smoke] ERREUR capture', err.message))
+      // Fenêtre scindée : vue du bas dans <capture>-bas.png
+      split && split.view.webContents.capturePage()
+        .then(img => fs.writeFileSync(process.env.SA_SMOKE_SHOT.replace(/(\.png)?$/, '-bas.png'), img.toPNG()))
+        .catch(err => console.log('[smoke] ERREUR capture', err.message))
     }, duree - 800)
     setTimeout(() => app.exit(0), duree)
   }
+}
+
+/* --- Fenêtre scindée --- */
+
+/**
+ * « Scinder la fenêtre » : sous la page de l'application (vue du haut),
+ * une seconde vue de la même analyse (index.html?mirror=1, cf. renderer
+ * Split.js), séparée par une barre que l'on déplace (splitter.html).
+ * Les modifications faites dans une vue sont reportées dans l'autre.
+ */
+const SPLIT_BAR = 6
+function toggleSplit(){
+  split ? closeSplit() : openSplit()
+}
+function openSplit(){
+  if ( !current || !mainWindow ) return
+  const webPreferences = {
+      preload:          path.join(APP_FOLDER, 'main', 'preload.cjs')
+    , contextIsolation: true
+    , nodeIntegration:  false
+    , sandbox:          true
+  }
+  const view = new WebContentsView({webPreferences})
+  const bar  = new WebContentsView({webPreferences})
+  bar.setBackgroundColor('#00000000')
+  mainWindow.contentView.addChildView(view)
+  mainWindow.contentView.addChildView(bar)
+  SMOKE && view.webContents.on('console-message', (e) => console.log(`[mirror:${e.level}] ${e.message}  (${e.sourceId}:${e.lineNumber})`))
+  // Lancement de contrôle : script joué dans la vue du bas
+  SMOKE && process.env.SA_SMOKE_MIRROR_JS && view.webContents.on('did-finish-load', () => {
+    setTimeout(() => view.webContents.executeJavaScript(fs.readFileSync(process.env.SA_SMOKE_MIRROR_JS, 'utf8')).catch(err => console.log('[smoke] ERREUR', err.message)), 1500)
+  })
+  view.webContents.setZoomFactor(mainWindow.webContents.getZoomFactor())
+  view.webContents.loadURL('sa://app/index.html?mirror=1')
+  bar.webContents.loadURL('sa://app/splitter.html')
+  split = {view, bar, ratio: 0.5, dragging: false}
+  layoutSplit()
+  sendSplitState()
+}
+function closeSplit(){
+  if ( !split ) return
+  const {view, bar} = split
+  split = null
+  if ( mainWindow ) {
+    mainWindow.contentView.removeChildView(view)
+    mainWindow.contentView.removeChildView(bar)
+  }
+  view.webContents.close()
+  bar.webContents.close()
+  mainWindow && mainWindow.webContents.send('split:inset', {inset: 0, zoom: 1})
+  sendSplitState()
+}
+// Vue du bas et barre placées selon split.ratio (hauteur de la vue du
+// haut) ; la page du haut réserve en bas la place cachée par la vue
+function layoutSplit(){
+  if ( !split || !mainWindow ) return
+  const {width, height} = mainWindow.getContentBounds()
+  const top = Math.round(Math.min(height - 80, Math.max(80, height * split.ratio)))
+  split.view.setBounds({x: 0, y: top + SPLIT_BAR, width, height: Math.max(0, height - top - SPLIT_BAR)})
+  split.bar.setBounds(split.dragging ? {x: 0, y: 0, width, height} : {x: 0, y: top, width, height: SPLIT_BAR})
+  mainWindow.webContents.send('split:inset', {inset: height - top, zoom: mainWindow.webContents.getZoomFactor()})
+}
+function sendSplitState(){
+  mainWindow && mainWindow.webContents.send('split:state', {on: !!split})
+  buildMenu()
+}
+// L'autre vue que celle de +wc+ (null hors fenêtre scindée)
+function otherContents(wc){
+  if ( !split || !mainWindow ) return null
+  return wc === mainWindow.webContents ? split.view.webContents : mainWindow.webContents
 }
 
 function sendMenuCommand(command){
@@ -310,6 +389,9 @@ function buildMenu(){
       , submenu: [
             {role: 'minimize', label: t('ui.menu.minimize')}
           , {role: 'zoom',     label: t('ui.menu.zoom')}
+          , {role: 'togglefullscreen', label: t('ui.menu.fullscreen')}
+          , {type: 'separator'}
+          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, click: toggleSplit}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
         ]
     }
@@ -361,7 +443,7 @@ function dynamicSubmenus(parent){
 function updateMenu(){
   const menu = Menu.getApplicationMenu()
   if ( !menu ) return
-  ;['closeAnalyse', 'cutScore', 'numberScore', 'removeBlanks'].forEach(id => {
+  ;['closeAnalyse', 'cutScore', 'numberScore', 'removeBlanks', 'splitWindow'].forEach(id => {
     const item = menu.getMenuItemById(id)
     if ( item ) item.enabled = !!current
   })
@@ -400,6 +482,35 @@ function registerIpc(){
 
   // Textes localisés, demandés de façon synchrone par preload.cjs
   ipcMain.on('app:locale', (e) => { e.returnValue = locale() })
+
+  /*
+   * Fenêtre scindée (cf. openSplit). Ces canaux ont besoin de la vue
+   * émettrice.
+   */
+  const splitHandle = (channel, method) => ipcMain.handle(channel, (e, args) => {
+    try { return {ok: true, data: method(e.sender, args || {})} }
+    catch(err) { return {ok: false, error: err.message} }
+  })
+  splitHandle('split:toggle', () => toggleSplit())
+  // Vue du bas : zoom de la vue du haut (cf. window:fitWidth)
+  splitHandle('split:zoom', (wc) => { const z = mainWindow ? mainWindow.webContents.getZoomFactor() : 1 ; wc.setZoomFactor(z) ; return z })
+  // Vue du bas : données de l'analyse, sans les opérations de
+  // l'ouverture (copie de sauvegarde, numéros de mesure importés)
+  splitHandle('split:getCurrent', () => current ? new Analyse(current.path).allDataForClient() : null)
+  // Changements de l'analyse (diff ou état complet) pour l'autre vue
+  splitHandle('split:sync', (wc, data) => { const o = otherContents(wc) ; o && o.send('split:sync', data) })
+  // Vue du bas prête : la vue du haut lui envoie son état
+  splitHandle('split:ready', () => mainWindow && mainWindow.webContents.send('split:ready'))
+  // Commande de la vue du bas jouée par la vue du haut (p.e. 'save')
+  splitHandle('split:command', (wc, {command}) => sendMenuCommand(command))
+  // Barre de séparation déplacée (y : position dans la fenêtre)
+  splitHandle('split:dragStart', () => { if ( split ) { split.dragging = true ; layoutSplit() } })
+  splitHandle('split:drag', (wc, {y}) => {
+    if ( !split || !mainWindow ) return
+    split.ratio = y / mainWindow.getContentBounds().height
+    layoutSplit()
+  })
+  splitHandle('split:dragEnd', () => { if ( split ) { split.dragging = false ; layoutSplit() } })
 
   handle('analyse:getCurrent', () => {
     if ( !current ) return null
@@ -706,6 +817,7 @@ function registerIpc(){
       if ( outer - chrome < width ) zoom = (outer - chrome) / width
     }
     mainWindow.webContents.setZoomFactor(zoom)
+    split && split.view.webContents.setZoomFactor(zoom)
     return zoom
   })
 

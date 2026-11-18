@@ -14,6 +14,7 @@ import { t } from './i18n.js'
 import { DCreate } from './dom.js'
 import { History } from './History.js'
 import { Variables } from './Variables.js'
+import { Split } from './Split.js'
 
 class AppClass {
 
@@ -112,6 +113,7 @@ class AppClass {
   }
 
   observe(){
+    Split.init()
     onMain('menu', this.onMenuCommand.bind(this))
     onMain('menu:variable', name => Variables.copy(name))
     onMain('app:will-close', this.onWillClose.bind(this))

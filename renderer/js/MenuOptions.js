@@ -11,6 +11,7 @@ import { on } from './events.js'
 import { t } from './i18n.js'
 import { toggleCoordinates } from './handies.js'
 import { Forme } from './Forme.js'
+import { Split } from './Split.js'
 /**
 
   Class OptionsTool
@@ -57,6 +58,10 @@ export class OptionsTool extends MenusTool {
 
   static onActivate_toggleCoordinates(){
     toggleCoordinates()
+  }
+
+  static onActivate_toggleSplit(){
+    Split.toggle()
   }
 
   static onActivate_toggleFormNames(e, option){

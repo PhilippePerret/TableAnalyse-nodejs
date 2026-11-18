@@ -31,6 +31,8 @@ menu:
   show_form:        "Show Form"
   build_form:       "Build Form"
   tools_menu:       "Tools"
+  split_window:     "Split window"
+  fullscreen:       "Enter Full Screen"
   variable:         "Variable"
   no_variable:      "No variable"
   tools:            "Toolbox…"
@@ -69,6 +71,7 @@ menu:
   quit:             "Quit %{name}"
 
 options_menu:
+  split_window:     "Split window"
   cancel_last:      "Undo: %{name}"
   cancel_history:   "Undo History"
   grid_v:           "Snap Vertically"

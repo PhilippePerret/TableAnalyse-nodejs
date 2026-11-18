@@ -26,6 +26,7 @@ import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
 import { Variables } from './Variables.js'
 import { History } from './History.js'
+import { Split } from './Split.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
 const SYSTEMS_MARGIN = 40
@@ -55,6 +56,8 @@ export class Analyse {
     this.modified = true
     // Étape de la construction de l'analyse (cf. History.js)
     this.loading || History.schedule()
+    // Fenêtre scindée : modification reportée dans l'autre vue
+    this.loading || Split.schedule()
   }
 
   // Sauvegarde automatique, quelques secondes après la dernière
