@@ -40,5 +40,5 @@ export function onMain(channel, callback){
  * (+rel+ est le chemin relatif, par exemple 'systems/system-1.jpg')
  */
 export function analyseUrl(rel){
-  return 'sa://app/analyse/' + String(rel).split('/').map(encodeURIComponent).join('/')
+  return `sa://${location.host}/analyse/` + String(rel).split('/').map(encodeURIComponent).join('/')
 }

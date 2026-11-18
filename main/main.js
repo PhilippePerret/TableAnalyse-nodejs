@@ -198,6 +198,8 @@ function createWindow(){
  * la vue de visualisation se recharge par son bouton « Actualiser ».
  */
 const SPLIT_BAR = 6
+// Zoom de la vue de visualisation par rapport à la vue d'édition (dézoomée)
+const VIEWER_ZOOM = 0.75
 // Ouverture (+measure+ : numéro de la mesure à afficher en haut) ou
 // fermeture
 function toggleSplit(measure){
@@ -228,11 +230,12 @@ function openSplit(measure){
   SMOKE && process.env.SA_SMOKE_MIRROR_JS && view.webContents.on('did-finish-load', () => {
     setTimeout(() => view.webContents.executeJavaScript(fs.readFileSync(process.env.SA_SMOKE_MIRROR_JS, 'utf8')).catch(err => console.log('[smoke] ERREUR', err.message)), 1500)
   })
-  view.webContents.setZoomFactor(mainWindow.webContents.getZoomFactor())
-  view.webContents.loadURL('sa://app/index.html?mirror=1' + (measure ? `&measure=${Number(measure)}` : ''))
+  view.webContents.setZoomFactor(mainWindow.webContents.getZoomFactor() * VIEWER_ZOOM)
+  // (autre hôte que la vue d'édition : zoom propre, cf. VIEWER_ZOOM)
+  view.webContents.loadURL('sa://viewer/index.html?mirror=1' + (measure ? `&measure=${Number(measure)}` : ''))
   bar.webContents.loadURL('sa://app/splitter.html')
   // Vue d'édition plus grande
-  split = {view, bar, ratio: 0.42, dragging: false}
+  split = {view, bar, ratio: 0.48, dragging: false}
   layoutSplit()
   sendSplitState()
 }
@@ -503,7 +506,7 @@ function registerIpc(){
   })
   splitHandle('split:toggle', (wc, {measure}) => toggleSplit(measure))
   // Vue de visualisation : zoom de la vue d'édition (cf. window:fitWidth)
-  splitHandle('split:zoom', (wc) => { const z = mainWindow ? mainWindow.webContents.getZoomFactor() : 1 ; wc.setZoomFactor(z) ; return z })
+  splitHandle('split:zoom', (wc) => { const z = (mainWindow ? mainWindow.webContents.getZoomFactor() : 1) * VIEWER_ZOOM ; wc.setZoomFactor(z) ; return z })
   // Vue de visualisation : données enregistrées de l'analyse, sans les
   // opérations de l'ouverture (copie de sauvegarde, numéros de mesure
   // importés)
@@ -823,7 +826,7 @@ function registerIpc(){
       if ( outer - chrome < width ) zoom = (outer - chrome) / width
     }
     mainWindow.webContents.setZoomFactor(zoom)
-    split && split.view.webContents.setZoomFactor(zoom)
+    split && split.view.webContents.setZoomFactor(zoom * VIEWER_ZOOM)
     return zoom
   })
 
