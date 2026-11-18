@@ -513,6 +513,7 @@ marks:
     ec: "逸音"
     in: "和声音"
     an: "先取音"
+    df: "相違"
   notes_full:
     ac: "半音倚音"
     bc: "半音刺繍音"

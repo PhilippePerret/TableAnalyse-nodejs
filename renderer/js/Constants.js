@@ -37,6 +37,7 @@ export const TYPES_NOTES = {
   , 'ec': {name:t('ui.marks.notes.ec')          , value:'ec', autocontent:'E'   , shortcut:'e'}
   , 'in': {name:t('ui.marks.notes.in')    , value:'in', autocontent:'NN'  , shortcut:'n'}
   , 'an': {name:t('ui.marks.notes.an')         , value:'an', autocontent:'AN'  , shortcut:'s'}
+  , 'df': {name:t('ui.marks.notes.df')         , value:'df', autocontent:'≠'   , shortcut:'≠'}
 }
 
 // Les portions de la forme (marque « Forme »). Une fin de portion

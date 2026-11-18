@@ -513,6 +513,7 @@ marks:
     ec: "逸音"
     in: "和弦音"
     an: "先现音"
+    df: "差异"
   notes_full:
     ac: "半音倚音"
     bc: "半音辅助音"

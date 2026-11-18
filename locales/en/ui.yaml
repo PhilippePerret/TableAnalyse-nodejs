@@ -514,6 +514,7 @@ marks:
     ec: "Escape tone"
     in: "Chord tone"
     an: "Anticipation"
+    df: "Difference"
   notes_full:
     ac: "Chromatic appoggiatura"
     bc: "Chromatic neighbor tone"

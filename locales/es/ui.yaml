@@ -514,6 +514,7 @@ marks:
     ec: "Escapada"
     in: "Nota real"
     an: "Anticipación"
+    df: "Diferencia"
   notes_full:
     ac: "Apoyatura cromática"
     bc: "Bordadura cromática"

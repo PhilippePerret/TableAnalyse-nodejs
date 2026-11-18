@@ -514,6 +514,7 @@ marks:
     ec: "Sfuggita"
     in: "Nota reale"
     an: "Anticipazione"
+    df: "Differenza"
   notes_full:
     ac: "Appoggiatura cromatica"
     bc: "Fioritura cromatica"

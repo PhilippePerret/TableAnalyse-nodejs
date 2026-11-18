@@ -514,6 +514,7 @@ marks:
     ec: "Échappée"
     in: "Note naturelle"
     an: "Anacrouse"
+    df: "Différence"
   notes_full:
     ac: "Appoggiature chromatique"
     bc: "Broderie chromatique"

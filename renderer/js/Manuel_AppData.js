@@ -98,6 +98,7 @@ Types de notes :
     Échappée
     Note naturelle
     Anacrouse
+    Différence (≠, ⌥ + « = » sur Mac)
 Degré de la note : son degré absolu (tonalité) ou relatif (accord)
 Cadre (types de cadres) - b comme "border"
     Cellule       : une cellule (cadre avec nom au-dessus)
