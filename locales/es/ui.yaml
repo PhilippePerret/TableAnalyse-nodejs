@@ -32,6 +32,7 @@ menu:
   build_form:       "Construir la forma"
   tools_menu:       "Herramientas"
   split_window:     "Dividir la ventana"
+  refresh_view:     "Actualizar la visualización"
   fullscreen:       "Activar pantalla completa"
   variable:         "Variable"
   no_variable:      "Ninguna variable"
@@ -178,6 +179,7 @@ buttons:
   type:             "Tipo…"
   subtype:          "Subtipo…"
   defaults:         "Ajustes por defecto"
+  refresh:          "Actualizar"
   refresh_view:     "Actualizar (análisis guardado)"
 
 message_titles:

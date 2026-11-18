@@ -32,6 +32,7 @@ menu:
   build_form:       "Build Form"
   tools_menu:       "Tools"
   split_window:     "Split window"
+  refresh_view:     "Refresh the view"
   fullscreen:       "Enter Full Screen"
   variable:         "Variable"
   no_variable:      "No variable"
@@ -178,6 +179,7 @@ buttons:
   type:             "Type…"
   subtype:          "Subtype…"
   defaults:         "Default settings"
+  refresh:          "Refresh"
   refresh_view:     "Refresh (saved analysis)"
 
 message_titles:

@@ -232,7 +232,7 @@ function openSplit(measure){
   view.webContents.loadURL('sa://app/index.html?mirror=1' + (measure ? `&measure=${Number(measure)}` : ''))
   bar.webContents.loadURL('sa://app/splitter.html')
   // Vue d'édition plus grande
-  split = {view, bar, ratio: 0.35, dragging: false}
+  split = {view, bar, ratio: 0.42, dragging: false}
   layoutSplit()
   sendSplitState()
 }
@@ -401,6 +401,7 @@ function buildMenu(){
           , {role: 'togglefullscreen', label: t('ui.menu.fullscreen')}
           , {type: 'separator'}
           , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+Shift+/', click: menuToggleSplit}
+          , {label: t('ui.menu.refresh_view'), enabled: !!split, click: () => split && split.view.webContents.send('split:refresh')}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
         ]
     }

@@ -106,7 +106,10 @@ export class Split {
   static initViewer(){
     // Voile : aucun clic n'atteint l'analyse (le défilement passe)
     document.body.appendChild(DCreate('DIV', {id: 'split-veil'}))
-    const button = DCreate('BUTTON', {id: 'split-refresh', text: '↻'})
+    const button = DCreate('BUTTON', {id: 'split-refresh', inner: [
+        DCreate('SPAN', {class: 'picto', text: '↻'})
+      , DCreate('SPAN', {text: t('ui.buttons.refresh')})
+    ]})
     button.title = t('ui.buttons.refresh_view')
     listen(button, 'click', this.refresh.bind(this))
     document.body.appendChild(button)
@@ -125,6 +128,8 @@ export class Split {
         SCROLL_KEYS.includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey || e.preventDefault()
       }, true)
     })
+    // Menu « Fenêtre > Actualiser la visualisation »
+    onMain('split:refresh', this.refresh.bind(this))
     on('systems:loaded', () => requestAnimationFrame(this.placeViewer.bind(this)))
   }
 
@@ -137,7 +142,7 @@ export class Split {
     } catch(err) { pos = null }
     if ( pos ) return window.scrollTo(pos.x, pos.y)
     const measure = Number(new URLSearchParams(location.search).get('measure'))
-    measure && Forme.gotoMeasureNumber(measure)
+    measure && Forme.gotoMeasureNumber(measure, /* afterGap = */ true)
   }
 
   // « Actualiser » : rechargement de l'analyse enregistrée, à la même

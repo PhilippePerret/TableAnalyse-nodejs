@@ -32,6 +32,7 @@ menu:
   build_form:       "형식 만들기"
   tools_menu:       "도구"
   split_window:     "윈도우 분할"
+  refresh_view:     "보기 새로 고침"
   fullscreen:       "전체 화면 시작"
   variable:         "변수"
   no_variable:      "변수 없음"
@@ -178,6 +179,7 @@ buttons:
   type:             "종류…"
   subtype:          "하위 종류…"
   defaults:         "기본 설정"
+  refresh:          "새로 고침"
   refresh_view:     "새로 고침 (저장된 분석)"
 
 message_titles:

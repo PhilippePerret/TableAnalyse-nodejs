@@ -62,9 +62,12 @@ export class Forme {
    * numéros de mesure du système précédent (ou, sans numéros, son
    * image) juste au-dessus de la bande du haut, donc invisible (haut de
    * la page pour le premier système). Son numéro clignote.
+   * +afterGap+ (vue de visualisation de la fenêtre scindée) : calée sur
+   * la ligne des numéros plus la distance qui la suit (préférence
+   * distance_after_measure_line), sans le blanc qui suit la ligne.
    * @return false si la mesure n'existe pas
    */
-  static gotoMeasureNumber(num){
+  static gotoMeasureNumber(num, afterGap = false){
     const found = this.measureMarks.find(m => m.number == num)
     if ( !found ) return false
     const mark = found.mark
@@ -77,6 +80,10 @@ export class Forme {
         .concat(this.measureMarksOf(prev).map(m => m.obj.getBoundingClientRect().bottom))
       prev.measureLine && bottoms.push(prev.measureLine.getBoundingClientRect().bottom)
       top = Math.max(...bottoms) + window.scrollY - (band ? band.getBoundingClientRect().bottom : 0) - splitInset() + 2
+      if ( afterGap && prev.measureLine ) {
+        const line = prev.measureLine
+        top = line.getBoundingClientRect().top + window.scrollY + Number(pref('distance_after_measure_line')) * (line.currentCSSZoom || 1)
+      }
     }
     window.scrollTo({top: Math.max(0, top)})
     mark.clignote()

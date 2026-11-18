@@ -32,6 +32,7 @@ menu:
   build_form:       "构建曲式"
   tools_menu:       "工具"
   split_window:     "拆分窗口"
+  refresh_view:     "刷新查看视图"
   fullscreen:       "进入全屏幕"
   variable:         "变量"
   no_variable:      "没有变量"
@@ -178,6 +179,7 @@ buttons:
   type:             "类型…"
   subtype:          "子类型…"
   defaults:         "默认设置"
+  refresh:          "刷新"
   refresh_view:     "刷新（已保存的分析）"
 
 message_titles:

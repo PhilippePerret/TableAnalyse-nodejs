@@ -32,6 +32,7 @@ menu:
   build_form:       "Construire la forme"
   tools_menu:       "Outils"
   split_window:     "Scinder la fenêtre"
+  refresh_view:     "Actualiser la visualisation"
   fullscreen:       "Activer le mode plein écran"
   variable:         "Variable"
   no_variable:      "Aucune variable"
@@ -178,6 +179,7 @@ buttons:
   type:             "Type…"
   subtype:          "Sous-type…"
   defaults:         "Réglages par défaut"
+  refresh:          "Actualiser"
   refresh_view:     "Actualiser (analyse enregistrée)"
 
 message_titles:

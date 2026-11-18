@@ -32,6 +32,7 @@ menu:
   build_form:       "形式を作成"
   tools_menu:       "ツール"
   split_window:     "ウインドウを分割"
+  refresh_view:     "表示ビューを更新"
   fullscreen:       "フルスクリーンにする"
   variable:         "変数"
   no_variable:      "変数なし"
@@ -178,6 +179,7 @@ buttons:
   type:             "種類…"
   subtype:          "サブ種類…"
   defaults:         "既定の設定"
+  refresh:          "更新"
   refresh_view:     "更新（保存済みの分析）"
 
 message_titles:

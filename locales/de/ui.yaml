@@ -32,6 +32,7 @@ menu:
   build_form:       "Form erstellen"
   tools_menu:       "Werkzeuge"
   split_window:     "Fenster teilen"
+  refresh_view:     "Ansicht aktualisieren"
   fullscreen:       "Vollbildmodus aktivieren"
   variable:         "Variable"
   no_variable:      "Keine Variable"
@@ -178,6 +179,7 @@ buttons:
   type:             "Typ…"
   subtype:          "Untertyp…"
   defaults:         "Standardeinstellungen"
+  refresh:          "Aktualisieren"
   refresh_view:     "Aktualisieren (gespeicherte Analyse)"
 
 message_titles:
