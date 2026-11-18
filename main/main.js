@@ -57,6 +57,8 @@ let variableNames = {general: [], motifs: []} // menu « Outils > Variable »
 let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
 let split       = null    // fenêtre scindée : {view, bar, ratio, dragging} (cf. openSplit)
 let titlebarHeight = 29   // hauteur (px de la page) de la bande supérieure de la page (cf. layoutSplit)
+let fitZoom     = 1       // zoom qui fait tenir les systèmes dans la fenêtre (cf. window:fitWidth)
+let userZoom    = 1       // zoom choisi (menu « Fenêtre > Zoom », cf. changeZoom)
 
 protocol.registerSchemesAsPrivileged([{
   scheme: 'sa',
@@ -188,6 +190,34 @@ function createWindow(){
   }
 }
 
+/* --- Zoom --- */
+
+/**
+ * Zoom de l'affichage de l'analyse (vue d'édition) : zoom qui fait
+ * tenir les systèmes dans la fenêtre × zoom choisi (menu « Fenêtre >
+ * Zoom »). La page garde la taille de ses éléments d'interface
+ * (--ui-zoom, cf. renderer App.js). La vue de visualisation de la
+ * fenêtre scindée garde son propre zoom (VIEWER_ZOOM).
+ */
+const ZOOM_STEPS = [0.5, 0.67, 0.75, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2]
+function applyZoom(){
+  if ( !mainWindow ) return 1
+  const zoom = fitZoom * userZoom
+  mainWindow.webContents.setZoomFactor(zoom)
+  split && split.view.webContents.setZoomFactor(fitZoom * VIEWER_ZOOM)
+  mainWindow.webContents.send('window:zoom', {zoom})
+  layoutSplit()
+  return zoom
+}
+// +sens+ : 1 (augmenter) ou -1 (diminuer)
+function changeZoom(sens){
+  const i = ZOOM_STEPS.findIndex(z => Math.abs(z - userZoom) < 0.001)
+  const next = ZOOM_STEPS[Math.max(0, Math.min(ZOOM_STEPS.length - 1, (i < 0 ? ZOOM_STEPS.indexOf(1) : i) + sens))]
+  if ( next == userZoom ) return
+  userZoom = next
+  applyZoom()
+}
+
 /* --- Fenêtre scindée --- */
 
 /**
@@ -230,7 +260,7 @@ function openSplit(measure){
   SMOKE && process.env.SA_SMOKE_MIRROR_JS && view.webContents.on('did-finish-load', () => {
     setTimeout(() => view.webContents.executeJavaScript(fs.readFileSync(process.env.SA_SMOKE_MIRROR_JS, 'utf8')).catch(err => console.log('[smoke] ERREUR', err.message)), 1500)
   })
-  view.webContents.setZoomFactor(mainWindow.webContents.getZoomFactor() * VIEWER_ZOOM)
+  view.webContents.setZoomFactor(fitZoom * VIEWER_ZOOM)
   // (autre hôte que la vue d'édition : zoom propre, cf. VIEWER_ZOOM)
   view.webContents.loadURL('sa://viewer/index.html?mirror=1' + (measure ? `&measure=${Number(measure)}` : ''))
   bar.webContents.loadURL('sa://app/splitter.html')
@@ -403,6 +433,13 @@ function buildMenu(){
           , {role: 'zoom',     label: t('ui.menu.zoom')}
           , {role: 'togglefullscreen', label: t('ui.menu.fullscreen')}
           , {type: 'separator'}
+          , {label: t('ui.menu.zoom_menu'), submenu: [
+                {label: t('ui.menu.zoom_in'),  id: 'zoomIn', enabled: !!current, accelerator: 'CmdOrCtrl+Plus', click: () => changeZoom(1)}
+              , {label: t('ui.menu.zoom_out'), id: 'zoomOut', enabled: !!current, accelerator: 'CmdOrCtrl+-',    click: () => changeZoom(-1)}
+                // (claviers où « + » demande Maj)
+              , {label: t('ui.menu.zoom_in'),  id: 'zoomIn2', enabled: !!current, accelerator: 'CmdOrCtrl+=', visible: false, click: () => changeZoom(1)}
+            ]}
+          , {type: 'separator'}
           , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+/', click: menuToggleSplit}
           , {label: t('ui.menu.refresh_view'), enabled: !!split, click: () => split && split.view.webContents.send('split:refresh')}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
@@ -456,7 +493,7 @@ function dynamicSubmenus(parent){
 function updateMenu(){
   const menu = Menu.getApplicationMenu()
   if ( !menu ) return
-  ;['closeAnalyse', 'cutScore', 'numberScore', 'removeBlanks', 'splitWindow'].forEach(id => {
+  ;['closeAnalyse', 'cutScore', 'numberScore', 'removeBlanks', 'splitWindow', 'zoomIn', 'zoomOut', 'zoomIn2'].forEach(id => {
     const item = menu.getMenuItemById(id)
     if ( item ) item.enabled = !!current
   })
@@ -506,7 +543,7 @@ function registerIpc(){
   })
   splitHandle('split:toggle', (wc, {measure}) => toggleSplit(measure))
   // Vue de visualisation : zoom de la vue d'édition (cf. window:fitWidth)
-  splitHandle('split:zoom', (wc) => { const z = (mainWindow ? mainWindow.webContents.getZoomFactor() : 1) * VIEWER_ZOOM ; wc.setZoomFactor(z) ; return z })
+  splitHandle('split:zoom', (wc) => { const z = fitZoom * VIEWER_ZOOM ; wc.setZoomFactor(z) ; return z })
   // Vue de visualisation : données enregistrées de l'analyse, sans les
   // opérations de l'ouverture (copie de sauvegarde, numéros de mesure
   // importés)
@@ -825,9 +862,8 @@ function registerIpc(){
       mainWindow.setBounds({x, y: bounds.y, width: outer, height: bounds.height})
       if ( outer - chrome < width ) zoom = (outer - chrome) / width
     }
-    mainWindow.webContents.setZoomFactor(zoom)
-    split && split.view.webContents.setZoomFactor(zoom * VIEWER_ZOOM)
-    return zoom
+    fitZoom = zoom
+    return applyZoom()
   })
 
   // Fermeture avec une analyse non enregistrée : 'save', 'discard' ou

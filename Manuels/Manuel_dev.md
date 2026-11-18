@@ -158,6 +158,10 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 `renderer/js/History.js` : étapes de la construction (infos, marques, positions des systèmes ; ni préférences, ni options, ni sélections, ni verrouillages) dans `history.jsonl` du dossier de l'analyse (une étape JSON par ligne : état initial complet, puis changements). Étape mémorisée 0,8 s après la dernière modification (`Analyse#setModified`). Menu « Fichier > Historique de l'analyse… » : retour à une étape = nouvelle étape `restore`, enregistrement puis rechargement.
 
 
+## Zoom
+
+Menu « Fenêtre > Zoom > Augmenter / Diminuer » (⌘/Ctrl + « + » / « - », `main/main.js`, `changeZoom`) : zoom de la vue d'édition = zoom qui fait tenir les systèmes dans la fenêtre (`fitZoom`, `window:fitWidth`) × zoom choisi (`userZoom`, paliers `ZOOM_STEPS`). Les éléments d'interface gardent leur taille (`--ui-zoom`, message `window:zoom`). La vue de visualisation de la fenêtre scindée garde son propre zoom.
+
 ## Fenêtre scindée
 
 Menus « Options > Scinder la fenêtre » et « Fenêtre > Scinder la fenêtre » (raccourci ⌘/Ctrl + /, soit ⌘/Ctrl + Maj + : sur le clavier français) : la page demande le numéro de la mesure à afficher en haut (par défaut 6 mesures avant la première mesure visible, `Split.defaultMeasure`), puis `main/main.js` (`openSplit`) place au-dessus de la page de l'application (vue d'édition, en bas, plus grande) une `WebContentsView` qui charge `sa://viewer/index.html?mirror=1&measure=N` (vue de visualisation ; autre hôte que `sa://app` pour que son zoom, `VIEWER_ZOOM`, ne s'applique pas à la vue d'édition), séparée par une barre (`renderer/splitter.html`, agrandie à toute la fenêtre pendant son déplacement). La page réserve en haut la place cachée (`--split-inset`, aussi pris en compte par `keepInView` pour les panneaux et par « Aller à la mesure »). Refermée au rechargement de la page.

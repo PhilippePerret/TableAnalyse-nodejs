@@ -15,6 +15,7 @@ import { DCreate } from './dom.js'
 import { History } from './History.js'
 import { Variables } from './Variables.js'
 import { Split } from './Split.js'
+import { keepPanelsInView } from './Panneau.js'
 
 class AppClass {
 
@@ -117,6 +118,14 @@ class AppClass {
     Split.init()
     onMain('menu', this.onMenuCommand.bind(this))
     onMain('menu:variable', name => Variables.copy(name))
+    // Zoom de l'affichage (cf. main.js applyZoom) : les éléments
+    // d'interface gardent leur taille
+    onMain('window:zoom', ({zoom}) => {
+      document.documentElement.style.setProperty('--ui-zoom', String(1 / zoom))
+      keepPanelsInView()
+      // (place de la vue de visualisation de la fenêtre scindée)
+      Split.sendTitlebarHeight()
+    })
     onMain('app:will-close', this.onWillClose.bind(this))
     window.onresize = function(){
       if ( Analyse.current ) {
