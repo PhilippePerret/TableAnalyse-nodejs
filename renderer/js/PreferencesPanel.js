@@ -408,8 +408,10 @@ buildInputText(params){
   params.unite && cell.appendChild(DCreate('SPAN', {class:'pref-unit', text: params.unite}))
   div.appendChild(cell)
   // Bouton « Appliquer » (méthode onApply_<id>) pour régler tout de
-  // suite l'analyse ouverte
-  if ( params.apply ) {
+  // suite l'analyse ouverte. Inutile pour les styles (taille,
+  // épaisseur…), appliqués à chaque frappe (cf. prepareOnChangeMethods)
+  const live = params.selector && 'function' != typeof this[`onApply_${params.id}`]
+  if ( params.apply && !live ) {
     const btn = DCreate('BUTTON', {class:'btn-apply', text: t('ui.buttons.apply')})
     listen(btn, 'click', (e) => {
       stopEvent(e)
