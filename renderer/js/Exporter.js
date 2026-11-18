@@ -9,6 +9,7 @@ import { Analyse } from './Analyse.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { TYPES_NOTES } from './Constants.js'
+import { Forme } from './Forme.js'
 /**
 
   Exporter
@@ -85,6 +86,56 @@ export const mmPerTablePx = () => {
   return (w - 2 * Number(pref('export_page_margin'))) / Number(pref('systeme_width'))
 }
 
+// Système (index) d'un élément de la table (ou null)
+function systemIndexOf(el){
+  if ( el.id.startsWith('systeme-') ) return Number(el.id.split('-')[1])
+  if ( el.dataset.sys ) return Number(el.dataset.sys)
+  if ( el.id.startsWith('amark-') ) {
+    // Système recalculé : celui mémorisé par la marque peut dater
+    // d'avant le chargement des images des systèmes
+    const ao = AObjet.get(Number(el.id.split('-')[1]))
+    const sys = ao && Systeme.getSystemeAssociated(ao)
+    return sys ? sys.index : null
+  }
+  return null
+}
+
+/**
+ * Mesures exportées : « N-M », « N- » (de N à la fin), « -M » (de 1 à
+ * M) ou « N ». Retourne [N, M] (M : Infinity pour la fin) ou null.
+ */
+function parseMeasures(str){
+  const m = String(str).trim().match(/^(\d*)\s*(-?)\s*(\d*)$/)
+  if ( !m || (m[1] == '' && m[3] == '') ) return null
+  const from = m[1] == '' ? 1 : Number(m[1])
+  const to   = m[3] == '' ? (m[2] ? Infinity : from) : Number(m[3])
+  return from <= to ? [from, to] : null
+}
+
+/**
+ * Index des systèmes (Set) qui contiennent les mesures +from+ à +to+ :
+ * du système de la mesure +from+ (même si elle n'est pas au début du
+ * système) à celui de la mesure +to+. Une mesure sans numéro est dans
+ * le système du plus grand numéro qui la précède. null si aucun.
+ */
+function systemsOfMeasures([from, to]){
+  const systems = Systeme.all
+  const marks = Forme.measureMarks
+    .map(m => ({number: m.number, sys: (m.mark.data && m.mark.data.line) ? Systeme.systemOfMeasure(m.mark) : Systeme.getSystemeAssociated(m.mark)}))
+    .filter(m => m.sys)
+  // Système de la mesure +n+ (position dans Systeme.all), ou -1
+  const posOf = (n) => {
+    const before = marks.filter(m => m.number <= n)
+    if ( !before.length ) return -1
+    const max = Math.max(...before.map(m => m.number))
+    return Math.max(...before.filter(m => m.number == max).map(m => systems.indexOf(m.sys)))
+  }
+  const i0 = Math.max(0, posOf(from))
+  const i1 = to == Infinity ? systems.length - 1 : posOf(to)
+  if ( i1 < 0 || i1 < i0 || from > Math.max(...marks.map(m => m.number), -Infinity) ) return null
+  return new Set(systems.slice(i0, i1 + 1).map(sys => sys.index))
+}
+
 class ExporterClass {
 
   /**
@@ -158,6 +209,15 @@ class ExporterClass {
       updateFormatLabels()
     })
 
+    // Mesures exportées : toutes, ou « N-M », « N- », « -M »
+    const measuresRadio = (value, checked) => {
+      const input = DCreate('INPUT', {type: 'radio', name: 'export_measures', id: `export_measures_${value}`, value})
+      input.checked = checked
+      return [input, DCreate('LABEL', {for: input.id, text: ' ' + T(`measures_${value}`) + ' '})]
+    }
+    const measuresField = DCreate('INPUT', {type: 'text', id: 'export_measures_range', style: 'width:80px;'})
+    ;['focus', 'input'].forEach(ev => listen(measuresField, ev, () => DGet('#export_measures_some', panel).checked = true))
+
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.cancel'), style: 'float:left;'})
     const btnExport = DCreate('BUTTON', {class: 'btn-default', text: T('export')})
     const inner = [
@@ -165,6 +225,11 @@ class ExporterClass {
             row(T('type'), selType)
           , DCreate('DIV', {class: 'row svg-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields explication', text: T('svg_desc')})]})
           , DCreate('DIV', {class: 'row pdf-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields column', inner: [radio('page', false), radio('book', true)]})]})
+          , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('measures')}), DCreate('DIV', {class: 'fields column', inner: [
+                DCreate('DIV', {inner: measuresRadio('all', true)})
+              , DCreate('DIV', {inner: [...measuresRadio('some', false), measuresField]})
+            ]})]})
+          , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields explication', text: T('measures_desc')})]})
           , row(T('unit'), selUnit)
           , row(T('size'), selFormat)
           , row(T('orientation'), selOrient)
@@ -213,6 +278,12 @@ class ExporterClass {
         , gap:    toMm(num(gap), unit) / UNITS.pt
       }
       if ( gap.value == '' || !(opts.gap >= 0) ) return erreur(T('bad_gap'))
+      if ( DGet('#export_measures_some', panel).checked ) {
+        const range = parseMeasures(measuresField.value)
+        if ( !range ) return erreur(T('bad_measures'))
+        opts.systems = systemsOfMeasures(range)
+        if ( !opts.systems ) return erreur(T('no_measures'))
+      }
       if ( margin.value == '' || !(opts.margin >= 0) || (opts.mode == 'book' && !(width > 0 && height > 0 && 2 * opts.margin < Math.min(width, height))) ) {
         return erreur(T('bad_size'))
       }
@@ -285,6 +356,7 @@ class ExporterClass {
     const stage = new Stage()
     try {
       await stage.build()
+      opts.systems && stage.keepSystems(opts.systems)
       stage.respace(opts)
       stage.addLegend()
       const layout = stage.layout(opts)
@@ -320,6 +392,18 @@ class Stage {
   }
 
   remove(){ this.holder && this.holder.remove() }
+
+  /**
+   * Seuls les systèmes d'index +indexes+ (Set) sont exportés, avec leurs
+   * éléments (les éléments sans système sont gardés)
+   */
+  keepSystems(indexes){
+    this.items.forEach(item => {
+      const index = systemIndexOf(item.el)
+      null !== index && !indexes.has(index) && item.el.remove()
+    })
+    this.items = this.measureItems()
+  }
 
   /**
    * Éléments de premier niveau de la table, avec leur étendue (y compris
@@ -362,19 +446,7 @@ class Stage {
       ? (opts.width - 2 * opts.margin) / (x1 - x0)
       : Math.min(1 / PX_PER_MM, (MAX_PDF_MM - 2 * (opts.margin || 0)) / (x1 - x0))
     const gapPx = opts.gap >= 0 ? opts.gap * 25.4 / 72 / scale : null
-    // Système (index) de chaque élément
-    const systemOf = (el) => {
-      if ( el.id.startsWith('systeme-') ) return Number(el.id.split('-')[1])
-      if ( el.dataset.sys ) return Number(el.dataset.sys)
-      if ( el.id.startsWith('amark-') ) {
-        // Système recalculé : celui mémorisé par la marque peut dater
-        // d'avant le chargement des images des systèmes
-        const ao = AObjet.get(Number(el.id.split('-')[1]))
-        const sys = ao && Systeme.getSystemeAssociated(ao)
-        return sys ? sys.index : null
-      }
-      return null
-    }
+    const systemOf = systemIndexOf
     // Marque de mise en page de l'élément : {kind, level, content}, ou null
     const layoutOf = (el) => {
       if ( !el.classList.contains('lay') || !el.id.startsWith('amark-') ) return null
