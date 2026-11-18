@@ -32,6 +32,12 @@ export class Split {
     this.on = IS_MIRROR
     document.documentElement.classList.toggle('mirror', IS_MIRROR)
     onMain('split:state', ({on}) => this.setState(on))
+    IS_MIRROR && this.setState(true)
+    // Vue active (qui reçoit les commandes des menus) : marquée
+    onMain('split:focus', ({split, focused}) => {
+      document.documentElement.classList.toggle('split-focused', split && focused)
+      document.documentElement.classList.toggle('split-unfocused', split && !focused)
+    })
     onMain('split:inset', ({inset, zoom}) => {
       document.documentElement.style.setProperty('--split-inset', px(inset / (zoom || 1)))
     })

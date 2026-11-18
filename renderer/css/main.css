@@ -64,6 +64,21 @@ html::-webkit-scrollbar-corner { background: transparent; }
 :root { --split-inset: 0px; }
 body { padding-bottom: var(--split-inset); }
 html.mirror div#titlebar { display: none; }
+/* Vue active (qui reçoit les commandes des menus) : fin liseré bleu à
+   gauche et à droite */
+html.split-focused::before,
+html.split-focused::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #007aff;
+  z-index: 6000;
+  pointer-events: none;
+}
+html.split-focused::before { left: 0; }
+html.split-focused::after  { right: 0; }
 
 /* Bande supérieure de la fenêtre (barre de titre masquée, cf. main.js) */
 div#titlebar {

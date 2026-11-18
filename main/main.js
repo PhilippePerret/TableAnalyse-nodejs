@@ -54,8 +54,10 @@ let closeTimer = null
 let justCut     = false   // la partition vient d'être découpée (message au rechargement)
 let formShown   = false   // menu « Forme > Voir la forme » coché
 let variableNames = {general: [], motifs: []} // menu « Outils > Variable »
-let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
+let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js) de la vue active
+const dynamicMenusOf = new Map() // id du webContents → ses menus (fenêtre scindée : une description par vue)
 let split       = null    // fenêtre scindée : {view, bar, ratio, dragging} (cf. openSplit)
+let focusedContents = null // fenêtre scindée : vue qui a le focus
 
 protocol.registerSchemesAsPrivileged([{
   scheme: 'sa',
@@ -158,6 +160,7 @@ function createWindow(){
   // page (autre analyse, rechargement…)
   mainWindow.on('resize', layoutSplit)
   mainWindow.webContents.on('did-start-loading', () => split && closeSplit())
+  mainWindow.webContents.on('focus', () => setFocusedContents(mainWindow.webContents))
 
   if ( SMOKE ) {
     mainWindow.webContents.on('console-message', (e) => {
@@ -212,6 +215,9 @@ function openSplit(){
   bar.setBackgroundColor('#00000000')
   mainWindow.contentView.addChildView(view)
   mainWindow.contentView.addChildView(bar)
+  view.webContents.on('focus', () => setFocusedContents(view.webContents))
+  // Le focus reste à la vue du haut à l'ouverture
+  view.webContents.once('did-finish-load', () => mainWindow && mainWindow.webContents.focus())
   SMOKE && view.webContents.on('console-message', (e) => console.log(`[mirror:${e.level}] ${e.message}  (${e.sourceId}:${e.lineNumber})`))
   // Lancement de contrôle : script joué dans la vue du bas
   SMOKE && process.env.SA_SMOKE_MIRROR_JS && view.webContents.on('did-finish-load', () => {
@@ -232,8 +238,11 @@ function closeSplit(){
     mainWindow.contentView.removeChildView(view)
     mainWindow.contentView.removeChildView(bar)
   }
+  dynamicMenusOf.delete(view.webContents.id)
+  focusedContents = null
   view.webContents.close()
   bar.webContents.close()
+  updateDynamicMenus()
   mainWindow && mainWindow.webContents.send('split:inset', {inset: 0, zoom: 1})
   sendSplitState()
 }
@@ -249,6 +258,39 @@ function layoutSplit(){
 }
 function sendSplitState(){
   mainWindow && mainWindow.webContents.send('split:state', {on: !!split})
+  sendFocusState()
+  buildMenu()
+}
+/**
+ * Vue qui reçoit les commandes des menus : celle qui a le focus (vue du
+ * haut hors fenêtre scindée). Les commandes de l'analyse elle-même
+ * (fichier, préférences…) vont toujours à la vue du haut.
+ */
+const TOP_ONLY_COMMANDS = ['newAnalyse', 'openAnalyse', 'reloadAnalyse', 'closeAnalyse', 'save', 'cutScore', 'numberScore', 'infosAnalyse', 'history', 'export', 'prefs', 'manual', 'animate']
+function targetContents(command){
+  if ( !mainWindow ) return null
+  if ( !split || !focusedContents || focusedContents.isDestroyed() || TOP_ONLY_COMMANDS.includes(command) ) return mainWindow.webContents
+  return focusedContents
+}
+function setFocusedContents(wc){
+  if ( !split || wc === focusedContents ) return
+  focusedContents = wc
+  sendFocusState()
+  updateDynamicMenus()
+}
+// Fenêtre scindée : chaque vue sait si elle a le focus (cf. Split.js)
+function sendFocusState(){
+  if ( !mainWindow ) return
+  const top = mainWindow.webContents
+  const active = split ? (focusedContents || top) : null
+  top.send('split:focus', {split: !!split, focused: active === top})
+  split && split.view.webContents.send('split:focus', {split: true, focused: active === split.view.webContents})
+}
+// Menus « Options », « Marque »… de la vue active
+function updateDynamicMenus(){
+  const wc = targetContents()
+  if ( !wc ) return
+  dynamicMenus = dynamicMenusOf.get(wc.id) || dynamicMenusOf.get(mainWindow.webContents.id) || []
   buildMenu()
 }
 // L'autre vue que celle de +wc+ (null hors fenêtre scindée)
@@ -258,7 +300,8 @@ function otherContents(wc){
 }
 
 function sendMenuCommand(command){
-  mainWindow && mainWindow.webContents.send('menu', command)
+  const wc = targetContents(command)
+  wc && wc.send('menu', command)
 }
 
 // Pas d'ouverture du Finder en lancement de contrôle
@@ -391,7 +434,7 @@ function buildMenu(){
           , {role: 'zoom',     label: t('ui.menu.zoom')}
           , {role: 'togglefullscreen', label: t('ui.menu.fullscreen')}
           , {type: 'separator'}
-          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, click: toggleSplit}
+          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+/', click: toggleSplit}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
         ]
     }
@@ -406,7 +449,7 @@ function buildMenu(){
  * presse-papier (par le renderer, cf. Variables.copy)
  */
 function variablesSubmenu(){
-  const item = name => ({label: name, click: () => mainWindow && mainWindow.webContents.send('menu:variable', name)})
+  const item = name => ({label: name, click: () => { const wc = targetContents() ; wc && wc.send('menu:variable', name) }})
   const {general, motifs} = variableNames
   if ( !general.length && !motifs.length ) return [{label: t('ui.menu.no_variable'), enabled: false}]
   return [...general.map(item), ...(motifs.length ? [{type: 'separator'}, ...motifs.map(item)] : [])]
@@ -426,7 +469,7 @@ function dynamicItems(m){
       // Raccourci affiché à droite, géré par le renderer
       , ...(item.accelerator ? {accelerator: item.accelerator, registerAccelerator: false} : {})
       , ...(item.checkbox ? {type: 'checkbox', checked: item.checked} : {})
-      , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
+      , click:   () => { const wc = targetContents() ; wc && wc.send('menu:dynamic', {id: m.id, index: item.index}) }
       }
   }).filter(item => item)
 }
@@ -788,9 +831,11 @@ function registerIpc(){
 
   handle('clipboard:write', ({text}) => clipboard.writeText(String(text)))
 
-  handle('menu:setDynamic', ({menus}) => {
-    dynamicMenus = menus || []
-    buildMenu()
+  // Menus décrits par chaque vue (fenêtre scindée) ; ceux de la vue
+  // active sont affichés
+  splitHandle('menu:setDynamic', (wc, {menus}) => {
+    dynamicMenusOf.set(wc.id, menus || [])
+    wc === targetContents() && updateDynamicMenus()
   })
 
   handle('window:setSize', ({width, height}) => {
