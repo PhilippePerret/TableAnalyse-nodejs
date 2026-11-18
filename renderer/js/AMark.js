@@ -301,10 +301,17 @@ setVariable(v){
   return true
 }
 
+/**
+ * Verrouillage : la marque sort de ses groupes et de la sélection ;
+ * elle ne peut plus être sélectionnée (cf. AObjet.addToSelection),
+ * seulement déverrouillée par son menu contextuel
+ */
 lock(){
   this.data.locked = true
+  delete this.data.groups
   this.obj.classList.add('locked')
   draggable(this.obj, "disable")
+  this.isSelected && AObjet.removeFromSelection(this)
 }
 unlock(){
   delete this.data.locked

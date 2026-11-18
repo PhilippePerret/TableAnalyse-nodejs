@@ -51,6 +51,8 @@ export class Groups {
    * Grouper : nouveau groupe, extérieur à ceux des marques sélectionnées
    */
   static group(selection){
+    // Marque verrouillée : jamais dans un groupe (cf. AMark#lock)
+    selection = selection.filter(ao => !ao.isLocked)
     if ( !this.canGroup(selection) ) return
     const id = this.newId()
     selection.forEach(ao => ao.data.groups = [...(ao.data.groups || []), id])
@@ -78,6 +80,7 @@ export class Groups {
    * entrent dans le premier groupe de la sélection
    */
   static addToGroup(selection){
+    selection = selection.filter(ao => !ao.isLocked)
     if ( !this.canAddToGroup(selection) ) return
     const units  = this.unitsOf(selection)
     const target = units.find(u => 'string' == typeof u)

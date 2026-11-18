@@ -77,7 +77,8 @@ export class AObjet {
    */
   static eachSelection(method){
     if ( this.selection.length == 0 ) return 
-    this.selection.forEach(method)
+    // (copie : +method+ peut retirer l'objet de la sélection)
+    ;[...this.selection].forEach(method)
   }
 
   static dupSelection(){
@@ -143,8 +144,10 @@ export class AObjet {
     } else if ( this.selectionTbl[aobjet.id] ) {
       return // Ne pas enregistrer deux fois un objet
     }
+    // Marque verrouillée : jamais sélectionnée (cf. AMark#lock)
+    if ( aobjet.isLocked ) return
     // Marque groupée : tout son groupe (le plus extérieur, cf. Groups.js)
-    this.groupOf(aobjet).forEach(ao => this.insertUniqObjectInSelection(ao))
+    this.groupOf(aobjet).forEach(ao => ao.isLocked || this.insertUniqObjectInSelection(ao))
     this.setMenusState()
   }
 
