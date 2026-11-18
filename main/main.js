@@ -400,7 +400,7 @@ function buildMenu(){
           , {role: 'zoom',     label: t('ui.menu.zoom')}
           , {role: 'togglefullscreen', label: t('ui.menu.fullscreen')}
           , {type: 'separator'}
-          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+Shift+/', click: menuToggleSplit}
+          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+/', click: menuToggleSplit}
           , {label: t('ui.menu.refresh_view'), enabled: !!split, click: () => split && split.view.webContents.send('split:refresh')}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
         ]
