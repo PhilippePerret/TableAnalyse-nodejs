@@ -1,0 +1,16 @@
+[[display]]
+== Affichage ==
+
+Par défaut, la fenêtre affiche la partition sur la table d'analyse.
+
+On peut modifier le zoom pour obtenir un affichage plus petit ou plus gros. Pour le modifier : utiliser les raccourcis Cmd+"+" ou Cmd+"-" (avec la touche Control sous Windows)
+
+=== Vue scindée ===
+
+L'application offre une fonction extrêmement pratique pour l'analyse musicale car cette dernière oblige constamment de faire référence à des parties différentes de la pièce. Par exemple, lors de la réexposition d'un thème, il est très pratique d'affiche l'exposition pour la comparer.
+
+On peut passer en vue scindée grâce au menu « Options > Scinder la fenêtre » (ou équivalent) ou jouez le raccourcis . Pour sortir de cet affichage, décochez le menu.
+
+NOTE: On trouve aussi ce menu dans le menu principal « Fenêtre ».
+
+Utilisez la barre séparant les deux vues pour définir leur taille.

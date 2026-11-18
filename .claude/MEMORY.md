@@ -2,7 +2,7 @@
 
 ## Projet
 
-- Portage Electron (v3.0.0) de l'app « Table d'analyse » (original Ruby/WAA : `../ScoreAnalyse`).
+- Portage Electron (v2.x, ramené de 3 à 2 le 2026-11-18, #196) de l'app « Table d'analyse » (original Ruby/WAA : `../ScoreAnalyse`).
 - APP PORTABLE (macOS, Windows, Linux) : aucune solution propre à un seul système.
 - APP ABSOLUMENT AUTONOME : aucune dépendance à `../lib` (lib commune ScoreSuite) ni à Ruby.
 - Dépôt git propre au projet. Issues GitHub : `PhilippePerret/TableAnalyse-nodejs` (pas `ScoreSuite`).

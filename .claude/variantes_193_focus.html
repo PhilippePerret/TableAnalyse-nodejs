@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Variantes #193 — vue active</title>
+<style>
+  body { font-family: -apple-system, Helvetica, sans-serif; background: #f4f4f4; margin: 24px; color: #222; }
+  h1 { font-size: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 460px); gap: 32px; }
+  .variant h2 { font-size: 15px; margin: 0 0 4px; }
+  .variant p { font-size: 12px; color: #666; margin: 0 0 8px; }
+  .win { width: 460px; height: 300px; border: 1px solid #aaa; display: flex; flex-direction: column; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  .pane { flex: 1; position: relative; overflow: hidden; background: #fff; }
+  .bar { height: 6px; background: #d0d0d0; border-top: 1px solid #b0b0b0; border-bottom: 1px solid #b0b0b0; box-sizing: border-box; }
+  /* faux contenu : portées */
+  .pane .staff { position: absolute; left: 16px; right: 16px; height: 24px; background: repeating-linear-gradient(#000 0 1px, transparent 1px 6px); opacity: .7; }
+  .pane .mark { position: absolute; font-size: 14px; }
+
+  /* A : fine ligne verte en haut de la vue active */
+  .A .active::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: #3a925e; z-index: 2; }
+  /* B : vue inactive légèrement voilée */
+  .B .inactive::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,.3); }
+  /* C : petit point vert dans le coin de la vue active */
+  .C .active::before { content: ''; position: absolute; right: 8px; top: 8px; width: 7px; height: 7px; border-radius: 50%; background: #3a925e; z-index: 2; }
+  /* D : liseré vert à gauche de la vue active */
+  .D .active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #3a925e; z-index: 2; }
+</style>
+</head>
+<body>
+<h1>#193 — Indication de la vue active (vue du haut active dans chaque exemple)</h1>
+<div class="grid">
+  <div class="variant A"><h2>A — Fine ligne verte en haut</h2><p>2 px, couleur du logo, en haut de la vue active.</p>
+    <div class="win"><div class="pane active"></div><div class="bar"></div><div class="pane inactive"></div></div></div>
+  <div class="variant B"><h2>B — Vue inactive légèrement voilée</h2><p>Voile blanc à 30 % sur la vue qui n'a pas le focus.</p>
+    <div class="win"><div class="pane active"></div><div class="bar"></div><div class="pane inactive"></div></div></div>
+  <div class="variant C"><h2>C — Petit point vert</h2><p>Point de 7 px dans le coin haut droit de la vue active.</p>
+    <div class="win"><div class="pane active"></div><div class="bar"></div><div class="pane inactive"></div></div></div>
+  <div class="variant D"><h2>D — Liseré vert à gauche</h2><p>3 px sur le bord gauche de la vue active.</p>
+    <div class="win"><div class="pane active"></div><div class="bar"></div><div class="pane inactive"></div></div></div>
+</div>
+<script>
+  // Faux contenu identique dans chaque vue
+  document.querySelectorAll('.pane').forEach(p => {
+    ;[30, 110, 190].forEach((top, i) => {
+      const s = document.createElement('div') ; s.className = 'staff' ; s.style.top = top + 'px' ; p.appendChild(s)
+      const m = document.createElement('div') ; m.className = 'mark' ; m.style.top = (top - 20) + 'px' ; m.style.left = (40 + i * 90) + 'px' ; m.textContent = ['C', 'G7', 'Am'][i] ; p.appendChild(m)
+    })
+  })
+</script>
+</body>
+</html>

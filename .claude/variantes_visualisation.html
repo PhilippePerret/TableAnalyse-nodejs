@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Variantes — vue de visualisation</title>
+<style>
+  body { font-family: -apple-system, Helvetica, sans-serif; background: #f4f4f4; margin: 24px; color: #222; }
+  h1 { font-size: 18px; } h2 { font-size: 15px; margin: 28px 0 8px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 420px); gap: 28px; }
+  .variant h3 { font-size: 14px; margin: 0 0 6px; }
+  .win { width: 420px; height: 280px; border: 1px solid #aaa; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  .titlebar { height: 22px; background: #ececec; border-bottom: 1px solid #d0d0d0; }
+  .pane { position: relative; overflow: hidden; background: #fff; }
+  .viewer { flex: 4; } .editor { flex: 5; }
+  .bar { height: 6px; background: #d0d0d0; border-top: 1px solid #b0b0b0; border-bottom: 1px solid #b0b0b0; box-sizing: border-box; }
+  .staff { position: absolute; left: 14px; right: 14px; height: 24px; background: repeating-linear-gradient(#000 0 1px, transparent 1px 6px); opacity: .75; }
+  .num { position: absolute; font-size: 11px; border: 1px solid #000; padding: 0 3px; }
+  .viewer::after { content: ''; position: absolute; inset: 0; pointer-events: none; }
+  .g1 .viewer::after { background: rgba(0,0,0,.03); }
+  .g2 .viewer::after { background: rgba(0,0,0,.05); }
+  .g3 .viewer::after { background: rgba(0,0,0,.08); }
+  .refresh { position: absolute; top: 6px; right: 10px; z-index: 2; cursor: pointer; font-family: -apple-system, Helvetica, sans-serif; }
+  .b1 { width: 36px; height: 36px; font-size: 24px; line-height: 34px; text-align: center; border: 1px solid #a0a0a0; border-radius: 8px; background: #f4f4f4; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .b2 { height: 30px; padding: 0 12px; font-size: 14px; line-height: 28px; border: 1px solid #a0a0a0; border-radius: 6px; background: #f4f4f4; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .b2 span { font-size: 18px; vertical-align: -2px; margin-right: 6px; }
+  .b3 { width: 38px; height: 38px; font-size: 24px; line-height: 38px; text-align: center; border-radius: 50%; background: #3a925e; color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+</style>
+</head>
+<body>
+<h1>Vue de visualisation (en haut) — variantes</h1>
+
+<h2>Grisé de la vue de visualisation</h2>
+<div class="grid">
+  <div class="variant g1"><h3>G1 — très léger (3 %)</h3><div class="win"><div class="titlebar"></div><div class="pane viewer"><span class="num" style="left:14px;top:14px">10</span><div class="staff" style="top:40px"></div><div class="staff" style="top:72px"></div></div><div class="bar"></div><div class="pane editor"><span class="num" style="left:14px;top:14px">22</span><div class="staff" style="top:40px"></div><div class="staff" style="top:72px"></div></div></div></div>
+  <div class="variant g2"><h3>G2 — léger (5 %)</h3><div class="win"><div class="titlebar"></div><div class="pane viewer"><span class="num" style="left:14px;top:14px">10</span><div class="staff" style="top:40px"></div><div class="staff" style="top:72px"></div></div><div class="bar"></div><div class="pane editor"><span class="num" style="left:14px;top:14px">22</span><div class="staff" style="top:40px"></div><div class="staff" style="top:72px"></div></div></div></div>
+  <div class="variant g3"><h3>G3 — un peu plus (8 %)</h3><div class="win"><div class="titlebar"></div><div class="pane viewer"><span class="num" style="left:14px;top:14px">10</span><div class="staff" style="top:40px"></div><div class="staff" style="top:72px"></div></div><div class="bar"></div><div class="pane editor"><span class="num" style="left:14px;top:14px">22</span><div class="staff" style="top:40px"></div><div class="staff" style="top:72px"></div></div></div></div>
+</div>
+
+<h2>Bouton « Actualiser » (en haut à droite de la visualisation)</h2>
+<div class="grid">
+  <div class="variant g2"><h3>B1 — picto seul, plus gros</h3><div class="win"><div class="titlebar"></div><div class="pane viewer"><div class="refresh b1" title="Actualiser (analyse enregistrée)">↻</div><span class="num" style="left:14px;top:14px">10</span><div class="staff" style="top:50px"></div></div><div class="bar"></div><div class="pane editor"></div></div></div>
+  <div class="variant g2"><h3>B2 — picto + « Actualiser »</h3><div class="win"><div class="titlebar"></div><div class="pane viewer"><div class="refresh b2"><span>↻</span>Actualiser</div><span class="num" style="left:14px;top:14px">10</span><div class="staff" style="top:50px"></div></div><div class="bar"></div><div class="pane editor"></div></div></div>
+  <div class="variant g2"><h3>B3 — rond vert (couleur du logo)</h3><div class="win"><div class="titlebar"></div><div class="pane viewer"><div class="refresh b3" title="Actualiser (analyse enregistrée)">↻</div><span class="num" style="left:14px;top:14px">10</span><div class="staff" style="top:50px"></div></div><div class="bar"></div><div class="pane editor"></div></div></div>
+</div>
+</body>
+</html>
