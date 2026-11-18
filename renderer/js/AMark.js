@@ -976,7 +976,7 @@ unsetSelected(){
  * la position de ces marques.
  * 
  */
-ajustePosition(left, top){
+ajustePosition(left = this.left, top = this.top){
   const initTop = 0 + this.data.top
   this.left = left
   this.top  = top
