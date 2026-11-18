@@ -75,3 +75,13 @@
 {"kind":"change","diff":{"marks":{"765":{"type":"lay","prolong":false,"subtype":"del","content":"100","top":8953,"left":0,"id":765}}},"time":1794973594387}
 {"kind":"change","diff":{"marks":{"765":null}},"time":1794973616878}
 {"kind":"outside","diff":{"marks":{"745":{"type":"frm","prolong":false,"subtype":"prtz","content":"EXPOSITION","top":3828,"left":1187,"id":745,"height":294}}},"time":1794974035794}
+{"kind":"change","diff":{"marks":{"765":{"type":"frm","prolong":false,"subtype":"prt","content":"EXPOSITION","top":8928,"left":503,"id":765,"height":288}}},"time":1794974650535}
+{"kind":"change","diff":{"marks":{"765":{"type":"frm","prolong":false,"subtype":"prt","content":"EXPOSITION","top":8928,"left":503,"id":765,"height":547,"width":208.406}}},"time":1794974657596}
+{"kind":"change","diff":{"marks":{"765":{"type":"frm","prolong":false,"subtype":"fpar","content":"EXPOSITION","top":8922,"left":512,"id":765,"height":547,"width":208.406}}},"time":1794974665842}
+{"kind":"change","diff":{"marks":{"765":{"type":"frm","prolong":false,"subtype":"prt","content":"EXPOSITION","top":8922,"left":512,"id":765,"height":547,"width":208.406}}},"time":1794974670294}
+{"kind":"change","diff":{"marks":{"766":{"type":"frm","prolong":false,"subtype":"prtz","content":"EXPOSITION","top":9007,"left":1635,"start":765,"id":766,"height":200}}},"time":1794974687671}
+{"kind":"change","diff":{"marks":{"766":{"type":"frm","prolong":false,"subtype":"prtz","content":"EXPOSITION","top":8916,"left":1633,"start":765,"id":766,"height":200}}},"time":1794974691046}
+{"kind":"change","diff":{"marks":{"766":{"type":"frm","prolong":false,"subtype":"prtz","content":"EXPOSITION","top":8916,"left":1633,"start":765,"id":766,"height":288,"width":208.406}}},"time":1794974693050}
+{"kind":"change","diff":{"marks":{"766":{"type":"frm","prolong":false,"subtype":"prtz","content":"EXPOSITION","top":8915,"left":1634,"start":765,"id":766,"height":288,"width":208.406}}},"time":1794974696139}
+{"kind":"change","diff":{"marks":{"767":{"type":"txt","prolong":false,"subtype":"size1","content":"MERCI DE VOTRE ATTENTION !","top":9743,"left":560,"id":767}}},"time":1794974728744}
+{"kind":"change","diff":{"marks":{"768":{"type":"bbx","prolong":false,"subtype":"cel","content":"C1","top":9930,"left":982,"id":768}}},"time":1794974785868}

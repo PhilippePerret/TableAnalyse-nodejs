@@ -5098,7 +5098,7 @@
   left: 1151
   id: 744
   width: 201
-- type: bbx
+- type: frm
   prolong: false
   subtype: prtz
   content: EXPOSITION
@@ -5237,3 +5237,36 @@
   top: 8049
   left: 18
   id: 764
+- type: frm
+  prolong: false
+  subtype: prt
+  content: EXPOSITION
+  top: 8922
+  left: 512
+  id: 765
+  height: 547
+  width: 208.406
+- type: frm
+  prolong: false
+  subtype: prtz
+  content: EXPOSITION
+  top: 8915
+  left: 1634
+  start: 765
+  id: 766
+  height: 288
+  width: 208.406
+- type: txt
+  prolong: false
+  subtype: size1
+  content: MERCI DE VOTRE ATTENTION !
+  top: 9743
+  left: 560
+  id: 767
+- type: bbx
+  prolong: false
+  subtype: cel
+  content: C1
+  top: 9930
+  left: 982
+  id: 768

@@ -18,6 +18,7 @@ marque_motif_size: 18
 marque_cellule_size: 26
 thiness_segment_line: 3
 thiness_cellule_line: 3
+thiness_motif_line: 1
 thiness_border: 4
 marque_pedale_size: 40
 marque_texte_size_1: 50
@@ -49,7 +50,7 @@ export_systems_gap: 20
 export_type: pdf
 window_width: 1922
 window_height: 1213
-last_scroll: 8338
+last_scroll: 9258
 color_mesure: CCCCCC
 color_accords: 777777
 color_harmonie: 777777

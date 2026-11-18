@@ -92,33 +92,8 @@ Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'
 
 NOTE: Pour accélérer la pose des marques, on peut __bloquer__ un type (menu « Marques > Bloquer le type à … > ... ») et poser toutes les marques de ce type d'un coup. Par exemple, on peut poser toutes les marques d'accord d'un coup par ce biais, ce qui accélère considérablement l'analyse. Voir la description dans les <<best-practices, bonnes pratiques>>.
 
-[[tags-chord]]
-==== Marque Accord ====
-
-Tous les accords se mettent en notation batave (de A à G). Tous les accords, même les mineurs, se mettent en capital.
-
-
-[cols="1,2,1", options="header"]
-|====
-| Nature | Description | exemple
-| Accord bémol    | Ajouter un « - » après la note de l'accord    | `B-` pour Si bémol
-| Accord dièse    | Ajouter un « + » après la note de l'accord    | `C+` pour Do dièse
-| Accord mineur   | Ajouter un « m » après la note de l'accord    |  `B-m` pour Si bémol mineur
-| Accord de quinte diminuée | Ajouter « 5- » | `B5-` pour Si quinte diminué (Si Ré Fa)
-| Accord (de) septième diminuée | AJouter « 7- » | `B7-` pour Si septième diminuée (Si Ré Fa La bémol)
-| Accord demi-diminué | Ajouter « m75- » | `Dm75+` pour D demi-diminué (Ré Fa La bémol Do)
-|====
-
-[[tags-chiffrage]]
-==== Marque d'Harmonie (chiffrage) ====
-
-[cols="1,1", options="header"]
-|====
-| Nature                    | Écriture
-| Dominante de dominante    | `V/V` ou `VII/V`
-| Accord de sixte augmentée | `VI6+`
-| Accord pivot              | `<IV–IV>` (le trait s'obtient par Alt-Maj-tiret)
-|====
+include::marques/accords.adoc[]
+include::marques/chiffrages.adoc[]
 
 [[tags-modulation]]
 ==== Marque de Modulation ====

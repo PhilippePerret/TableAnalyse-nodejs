@@ -1,0 +1,10 @@
+[[tags-chiffrage]]
+==== Marque d'Harmonie (chiffrage) ====
+
+[cols="1,1", options="header"]
+|====
+| Nature                    | Écriture
+| Dominante de dominante    | `V/V` ou `VII/V`
+| Accord de sixte augmentée | `VI6+`
+| Accord pivot              | `<IV–IV>` (le trait s'obtient par Alt-Maj-tiret)
+|====

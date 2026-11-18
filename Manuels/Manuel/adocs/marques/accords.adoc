@@ -1,0 +1,16 @@
+[[tags-chord]]
+==== Marque Accord ====
+
+Tous les accords se mettent en notation batave (de A à G). Tous les accords, même les mineurs, se mettent en capital.
+
+
+[cols="1,2,1", options="header"]
+|====
+| Nature | Description | exemple
+| Accord bémol    | Ajouter un « - » après la note de l'accord    | `B-` pour Si bémol
+| Accord dièse    | Ajouter un « + » après la note de l'accord    | `C+` pour Do dièse
+| Accord mineur   | Ajouter un « m » après la note de l'accord    |  `B-m` pour Si bémol mineur
+| Accord de quinte diminuée | Ajouter « 5- » | `B5-` pour Si quinte diminué (Si Ré Fa)
+| Accord (de) septième diminuée | AJouter « 7- » | `B7-` pour Si septième diminuée (Si Ré Fa La bémol)
+| Accord demi-diminué | Ajouter « m75- » | `Dm75+` pour D demi-diminué (Ré Fa La bémol Do)
+|====

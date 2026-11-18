@@ -5,3 +5,4 @@ Pour insérer un texte quelconque dans l'analyse de la partition.
 
 - documenter : utilisation des variables `{title}`, `{composer}`, `{analysis-title}`, `{analyst}`
 // + {<variable-motif>}
+- obtenir le code grâce au menu "Outils > Variables" qui met dans le presse-papier
