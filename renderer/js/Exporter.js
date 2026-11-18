@@ -62,9 +62,27 @@ const fromMm = (v, unit) => Math.round(v / UNITS[unit] * 100) / 100
 const decimal = (n) => String(n).replace('.', t('ui.decimal_separator'))
 // Hauteur d'une délimitation (« 10 mm », « 1,5 cm », « 20 pt »…, mm par
 // défaut) en mm, ou null
-const heightMm = (text) => {
+export const heightMm = (text) => {
   const m = String(text || '').trim().replace(',', '.').match(/^(\d+(?:\.\d+)?)\s*(mm|cm|in|pt|pc)?$/)
   return m ? Number(m[1]) * UNITS[m[2] || 'mm'] : null
+}
+// Texte de la hauteur +mm+ d'une délimitation, dans l'unité du texte
+// +text+ (mm par défaut)
+export const heightText = (mm, text) => {
+  const m = String(text || '').trim().match(/(mm|cm|in|pt|pc)$/)
+  const unit = m ? m[1] : 'mm'
+  const v = mm / UNITS[unit]
+  return `${decimal(Math.round(v * (unit == 'mm' || unit == 'pt' ? 1 : 10)) / (unit == 'mm' || unit == 'pt' ? 1 : 10))} ${unit}`
+}
+/**
+ * Mm (à l'export) par px de la table : taille de page enregistrée
+ * (export_page_*, mode livre), largeur des systèmes sur la largeur
+ * utile de la page
+ */
+export const mmPerTablePx = () => {
+  let [w, h] = PAGE_FORMATS[pref('export_page_format')] || [Number(pref('export_page_width')), Number(pref('export_page_height'))]
+  if ( (pref('export_page_orientation') == 'landscape') != (w > h) ) [w, h] = [h, w]
+  return (w - 2 * Number(pref('export_page_margin'))) / Number(pref('systeme_width'))
 }
 
 class ExporterClass {

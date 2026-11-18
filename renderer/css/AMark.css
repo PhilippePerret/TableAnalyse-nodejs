@@ -713,7 +713,11 @@ div.amark.lay.del {
   height: 14px;
   border-top: 2px dashed #888;
 }
-div.amark.lay.del { border-top-style: dotted; }
+div.amark.lay.del {
+  box-sizing: border-box;
+  border-top-style: dotted;
+  border-bottom: 2px dotted #888;
+}
 div.amark.lay.pag span.content,
 div.amark.lay.del span.content {
   position: absolute;

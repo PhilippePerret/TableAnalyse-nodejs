@@ -18,6 +18,7 @@ import { Forme } from './Forme.js'
 import { ExtraitComposer } from './ExtraitComposer.js'
 import { t } from './i18n.js'
 import { Variables } from './Variables.js'
+import { heightMm, heightText, mmPerTablePx } from './Exporter.js'
 
 
 /**
@@ -249,6 +250,7 @@ setValue(newvalue){
    * Re-définition du contenu et de la prolongation
    */
   this.content = newvalue
+  this.isDelimiter && this.obj && this.applyDelimiterHeight()
 
   /**
    * 
@@ -438,6 +440,8 @@ build(){
   o.className = css.join(' ')
   // Saut de page, délimitation : ligne sur toute la largeur des systèmes
   this.isLayoutLine && (o.style.width = px(Number(pref('systeme_width'))))
+  // Délimitation : hauteur à l'échelle de l'export
+  this.isDelimiter && this.applyDelimiterHeight()
 
   // Ligne supplémentaire et bouton "+"
   this.hasVerticalLine && this.buildVerticalLine()
@@ -529,6 +533,7 @@ get isBorne(){ return this.isForme && !this.isFormeCadre }
 get isBox(){ return this.type == 'bbx' || this.isFormeCadre }
 get isLayoutTitle(){ return this.type == 'lay' && this.subtype == 'tit' }
 get isLayoutLine(){ return this.type == 'lay' && this.subtype != 'tit' }
+get isDelimiter(){ return this.type == 'lay' && this.subtype == 'del' }
 get isPartie(){ return this.isFormeCadre && this.subtype.startsWith('prt')}
 get isSection(){ return this.isFormeCadre && this.subtype.startsWith('sec')}
 get isModulation(){return this.type == 'mod'}
@@ -641,6 +646,14 @@ observe(){
         // Avant :
         // my.width = my.getWidth.call(my)
       }
+    })
+  }
+  if ( this.isDelimiter ) {
+    // Délimitation : poignée du bas, hauteur (texte) modifiée en direct
+    resizable(this.obj, {
+        handles: 's'
+      , resize: function(e, ui){ my.content = heightText(ui.size.height * mmPerTablePx(), my.content) }
+      , stop: function(e, ui){ setModified() }
     })
   }
   if ( this.hasVerticalLine ) { 
@@ -829,6 +842,15 @@ onContextChoice(choice){
       setModified()
       break
   }
+}
+
+/**
+ * Délimitation : hauteur (px de la table) de sa hauteur à l'export (son
+ * texte, p.e. « 10 mm »)
+ */
+applyDelimiterHeight(){
+  const mm = heightMm(this.content)
+  null === mm || (this.obj.style.height = px(Math.max(10, mm / mmPerTablePx())))
 }
 
 /**
