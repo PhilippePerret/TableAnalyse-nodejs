@@ -1,4 +1,5 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
+import { inTextField } from './KeyboardEvents.js'
 import { px, uiZoom, keepInView } from './handies.js'
 import { addPanelHead } from './Panneau.js'
 import { t } from './i18n.js'
@@ -81,22 +82,33 @@ export class GetterInList {
     this.newItemField.classList[method]('hidden')
     this.obj.classList.remove('hidden')
     keepInView(this.obj)
+    this.listenKeys(true)
+  }
+
+  // Fermer le getter
+  hide(){
+    // console.log("-> GetterInList #hide")
+    this.listenKeys(false)
+    this.obj.classList.add('hidden')
   }
 
   /**
-   * Fermer le getter
-   * 
-   * Une des erreurs ici avait été de remettre les observeurs de 
-   * touche sur la fenêtre (window.onkeypress et window.onkeyup). Le
-   * problème est que cette méthode hide() peut arriver APRÈS qu'une
-   * autre méthode a été appelée et a défini ses propres observeurs.
-   * Ils seraient alors détruits et remplacés ici.
-   * Donc il faut absolument remettre les anciens observeurs avant
-   * l'appel de cette autre méthode.
+   * Touches (raccourcis, Échap) écoutées tant que la liste est
+   * affichée, avant tout autre gestionnaire (ceux de window ne sont
+   * ni remplacés ni restaurés : la liste peut être réaffichée)
    */
-  hide(){
-    // console.log("-> GetterInList #hide")
-    this.obj.classList.add('hidden')
+  listenKeys(on){
+    if ( !this.keyListeners ) {
+      this.keyListeners = {
+          keypress: this.onKeyPressForShortcuts.bind(this)
+        , keyup:    this.onKeyUpForCancel.bind(this)
+      }
+    }
+    if ( on == !!this.listening ) return
+    this.listening = on
+    for ( const type in this.keyListeners ) {
+      window[on ? 'addEventListener' : 'removeEventListener'](type, this.keyListeners[type], true)
+    }
   }
 
   /**
@@ -107,14 +119,8 @@ export class GetterInList {
    * et ferme la liste
    */
   callChooseMethodWithValueAndHide(value){
-    this.resetWindowObservers()
-    this.data.onChooseMethod.call(null, value)
     this.hide()
-  }
-
-  resetWindowObservers(){
-    window.onkeypress = this.curOnKeyPress
-    window.onkeyup    = this.curOnKeyUp
+    this.data.onChooseMethod.call(null, value)
   }
 
 
@@ -149,6 +155,7 @@ export class GetterInList {
    * de saisie d'un nouvel item)
    */
   onKeyPressForShortcuts(e){
+    if ( inTextField(e) ) return
     //console.log("-> onKeyPressForShortcuts('%s')", e.key)
     //console.log("this.shortcuts", this.shortcuts)
     if ( this.shortcuts[e.key] ){
@@ -166,6 +173,8 @@ export class GetterInList {
       this.cancel()
       return stopEvent(e)
     }
+    // (p.e. Retour arrière : pas de suppression des marques sélectionnées)
+    inTextField(e) || e.stopPropagation()
   }
 
   /**
@@ -247,7 +256,6 @@ export class GetterInList {
       btnCancel.style.float = 'left'
       const btn = DCreate('BUTTON', {class:'btn-types', text:t('ui.buttons.type')})
       listen(btn, 'click', e => {
-        this.resetWindowObservers()
         this.hide()
         this.data.onTypesMethod.call(null)
         return stopEvent(e)
@@ -276,12 +284,6 @@ export class GetterInList {
       }
       e.stopPropagation()
     })
-    //console.log("Placement de l'observer de touches")
-    // listen(this.obj, 'keypress', this.onKeyPressForShortcuts.bind(this))
-    this.curOnKeyPress = window.onkeypress
-    this.curOnKeyUp    = window.onkeyup
-    window.onkeypress = this.onKeyPressForShortcuts.bind(this)
-    window.onkeyup    = this.onKeyUpForCancel.bind(this)
   }
 
   get newItemField(){
