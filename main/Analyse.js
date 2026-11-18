@@ -106,6 +106,15 @@ export class Analyse {
     if ( this._prefs ) Object.assign(this._prefs, {window_width: width, window_height: height})
   }
 
+  // Zoom choisi de l'affichage (cf. main.js changeZoom), enregistré
+  // tout de suite, comme la taille de la fenêtre
+  saveZoom(zoom){
+    const prefs = loadYAML(this.preferencesPath, {}) || {}
+    prefs.zoom = zoom
+    writeYAML(this.preferencesPath, prefs)
+    if ( this._prefs ) this._prefs.zoom = zoom
+  }
+
   get dataSystems(){
     return this.infos.systems || []
   }

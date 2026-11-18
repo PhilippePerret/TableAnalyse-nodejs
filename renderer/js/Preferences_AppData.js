@@ -63,6 +63,8 @@ export const PreferencesAppData = {
   // --- Window ---
   , window_width            :{type:'inputtext'    ,typeV:'number'   ,default:null}
   , window_height           :{type:'inputtext'    ,typeV:'number'   ,default:null}
+    // Zoom choisi de l'affichage (menu « Fenêtre > Zoom », cf. main.js)
+  , zoom                    :{type:'inputtext'    ,typeV:'number'   ,default:1      ,hidden:true}
   , last_scroll             :{type:'inputtext'    ,typeV:'number'   ,default:0}
   
   // --- Couleurs ---

@@ -120,7 +120,8 @@ class AppClass {
     onMain('menu:variable', name => Variables.copy(name))
     // Zoom de l'affichage (cf. main.js applyZoom) : les éléments
     // d'interface gardent leur taille
-    onMain('window:zoom', ({zoom}) => {
+    onMain('window:zoom', ({zoom, userZoom}) => {
+      Preferences.set('zoom', userZoom)
       document.documentElement.style.setProperty('--ui-zoom', String(1 / zoom))
       keepPanelsInView()
       // (place de la vue de visualisation de la fenêtre scindée)

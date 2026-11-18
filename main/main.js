@@ -205,7 +205,7 @@ function applyZoom(){
   const zoom = fitZoom * userZoom
   mainWindow.webContents.setZoomFactor(zoom)
   split && split.view.webContents.setZoomFactor(fitZoom * VIEWER_ZOOM)
-  mainWindow.webContents.send('window:zoom', {zoom})
+  mainWindow.webContents.send('window:zoom', {zoom, userZoom})
   layoutSplit()
   return zoom
 }
@@ -216,6 +216,8 @@ function changeZoom(sens){
   if ( next == userZoom ) return
   userZoom = next
   applyZoom()
+  // Gardé avec l'analyse
+  current && current.saveZoom(userZoom)
 }
 
 /* --- Fenêtre scindée --- */
@@ -849,8 +851,10 @@ function registerIpc(){
    * étroit, la fenêtre prend toute sa largeur et l'affichage est réduit.
    * @return le zoom de l'affichage
    */
-  handle('window:fitWidth', ({width}) => {
+  handle('window:fitWidth', ({width, zoom: chosen}) => {
     if ( !mainWindow ) return 1
+    // Zoom choisi enregistré avec l'analyse
+    if ( chosen ) userZoom = Number(chosen) || 1
     const bounds = mainWindow.getBounds()
     const [contentW] = mainWindow.getContentSize()
     const chrome = bounds.width - contentW

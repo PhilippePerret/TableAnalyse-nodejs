@@ -160,7 +160,7 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 
 ## Zoom
 
-Menu « Fenêtre > Zoom > Augmenter / Diminuer » (⌘/Ctrl + « + » / « - », `main/main.js`, `changeZoom`) : zoom de la vue d'édition = zoom qui fait tenir les systèmes dans la fenêtre (`fitZoom`, `window:fitWidth`) × zoom choisi (`userZoom`, paliers `ZOOM_STEPS`). Les éléments d'interface gardent leur taille (`--ui-zoom`, message `window:zoom`). La vue de visualisation de la fenêtre scindée garde son propre zoom.
+Menu « Fenêtre > Zoom > Augmenter / Diminuer » (⌘/Ctrl + « + » / « - », `main/main.js`, `changeZoom`) : zoom de la vue d'édition = zoom qui fait tenir les systèmes dans la fenêtre (`fitZoom`, `window:fitWidth`) × zoom choisi (`userZoom`, paliers `ZOOM_STEPS`), gardé avec l'analyse (préférence cachée `zoom`, écrite tout de suite dans `preferences.yaml`, `Analyse#saveZoom`). Les éléments d'interface gardent leur taille (`--ui-zoom`, message `window:zoom`). La vue de visualisation de la fenêtre scindée garde son propre zoom.
 
 ## Fenêtre scindée
 
