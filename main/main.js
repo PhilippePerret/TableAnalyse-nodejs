@@ -304,6 +304,13 @@ function sendSplitState(){
   buildMenu()
 }
 
+// Raccourci géré par le renderer (registerAccelerator: false) : sur
+// macOS, le menu y répond quand même, y compris dans un champ de saisie
+// (Maj + O tapé dans un champ ouvrait la boite à outils). Clic seul.
+function byClick(fn){
+  return (item, win, event) => (event && event.triggeredByAccelerator) || fn()
+}
+
 function sendMenuCommand(command){
   mainWindow && mainWindow.webContents.send('menu', command)
 }
@@ -420,7 +427,7 @@ function buildMenu(){
     {
       label: t('ui.menu.tools_menu'),
       submenu: [
-          {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: () => sendMenuCommand('toolsPanel')}
+          {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: byClick(() => sendMenuCommand('toolsPanel'))}
         , {label: t('ui.menu.animate'),         click: () => sendMenuCommand('animate')}
         , {label: t('ui.menu.variable'),        submenu: variablesSubmenu()}
         , {type: 'separator'}
@@ -446,7 +453,7 @@ function buildMenu(){
               , {label: t('ui.menu.zoom_in'),  id: 'zoomIn2', enabled: !!current, accelerator: 'CmdOrCtrl+=', visible: false, click: () => changeZoom(1)}
             ]}
           , {type: 'separator'}
-          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+/', registerAccelerator: false, click: menuToggleSplit}
+          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+/', registerAccelerator: false, click: byClick(menuToggleSplit)}
           , {label: t('ui.menu.refresh_view'), enabled: !!split, click: () => split && split.view.webContents.send('split:refresh')}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
         ]
@@ -482,7 +489,7 @@ function dynamicItems(m){
       // Raccourci affiché à droite, géré par le renderer
       , ...(item.accelerator ? {accelerator: item.accelerator, registerAccelerator: false} : {})
       , ...(item.checkbox ? {type: 'checkbox', checked: item.checked} : {})
-      , click:   () => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index})
+      , click:   byClick(() => mainWindow && mainWindow.webContents.send('menu:dynamic', {id: m.id, index: item.index}))
       }
   }).filter(item => item)
 }
