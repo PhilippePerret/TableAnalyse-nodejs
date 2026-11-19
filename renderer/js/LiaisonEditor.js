@@ -3,6 +3,7 @@ import { invoke } from './api.js'
 import { addPanelHead } from './Panneau.js'
 import { erreur, message } from './lib/Message.js'
 import { t } from './i18n.js'
+import { gapOf } from './Liaison.js'
 /**
  * LiaisonEditor
  * -------------
@@ -38,14 +39,13 @@ class LiaisonEditorClass {
       , color: DCreate('INPUT', {type: 'color', value: st.color})
       , start: select('start', ARROW_TYPES, arrows)
       , end:   select('end', ARROW_TYPES, arrows)
-      , gap:   DCreate('INPUT', {type: 'checkbox', id: 'liaison_gap'})
+      , gap:   DCreate('INPUT', {type: 'range', min: '0', max: '30', step: '1', value: String(gapOf(st))})
     }
     const F = this.fields
-    F.gap.checked = !!st.gap
     listen(F.width, 'input', () => liaison.previewStyle({width: Number(F.width.value)}))
     listen(F.curve, 'input', () => liaison.previewStyle({curve: Number(F.curve.value)}))
     listen(F.color, 'input', () => liaison.previewStyle({color: F.color.value}))
-    listen(F.gap, 'change', () => liaison.previewStyle({gap: F.gap.checked}))
+    listen(F.gap, 'input', () => liaison.previewStyle({gap: Number(F.gap.value)}))
     // Liaisons mémorisées (types de liaison)
     this.types = await this.loadTypes()
     this.typesMenu = DCreate('SELECT')
@@ -57,7 +57,10 @@ class LiaisonEditorClass {
     })
     const typeName = DCreate('INPUT', {type: 'text', placeholder: T('type_name_ph'), style: 'width:12em;'})
     const btnSave  = DCreate('BUTTON', {text: T('save_type')})
-    listen(btnSave, 'click', () => this.saveType(typeName.value.trim()) && (typeName.value = ''))
+    listen(btnSave, 'click', async () => {
+      if ( await this.saveType(typeName.value.trim()) ) typeName.value = ''
+      else { typeName.focus() ; typeName.select() }
+    })
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
     const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
     listen(btnCancel, 'click', this.close.bind(this))
@@ -71,7 +74,7 @@ class LiaisonEditorClass {
           , field(T('color'), F.color)
           , field(T('start'), F.start)
           , field(T('end'),   F.end)
-          , field('',         [F.gap, DCreate('LABEL', {for: 'liaison_gap', text: T('gap')})])
+          , field(T('gap'),   F.gap)
         ]})
       , DCreate('DIV', {class: 'rows', inner: [field(T('new_type'), [typeName, btnSave])]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
@@ -94,7 +97,7 @@ class LiaisonEditorClass {
     this.liaison.previewStyle(style)
     const st = this.liaison.style, F = this.fields
     ;['line', 'width', 'color', 'start', 'end', 'curve'].forEach(k => F[k].value = String(st[k]))
-    F.gap.checked = !!st.gap
+    F.gap.value = String(gapOf(st))
   }
 
   fillTypesMenu(){
@@ -110,14 +113,17 @@ class LiaisonEditorClass {
     catch(err) { console.error(err) ; return {} }
   }
 
-  // Style courant enregistré sous le nom +name+ (remplace un type de
-  // même nom)
-  saveType(name){
+  // Style courant mémorisé sous le nom +name+ (même nom : remplacement
+  // après confirmation)
+  // @return true s'il est mémorisé
+  async saveType(name){
     if ( !name ) return erreur(t('errors.liaison_type_name')), false
+    if ( this.types[name] && !await invoke('liaisons:confirmReplace', {name}) ) return false
     this.types[name] = this.liaison.style
-    invoke('liaisons:saveTypes', {types: this.types})
-      .then(() => message(t('messages.liaison_type_saved', {name}), {duration: 3000}))
-      .catch(err => erreur(err.message || String(err)))
+    try {
+      await invoke('liaisons:saveTypes', {types: this.types})
+      message(t('messages.liaison_type_saved', {name}), {duration: 3000})
+    } catch(err) { erreur(err.message || String(err)) }
     this.fillTypesMenu()
     return true
   }

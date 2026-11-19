@@ -31,9 +31,9 @@ const SVG_NS = 'http://www.w3.org/2000/svg'
 export const TYPES_RELIABLES = ['cir', 'bbx', 'frm', 'txt', 'mot', 'not']
 
 // Style par défaut. line : 'solid' ou 'dashed' ; start, end : flèche
-// ('none', 'full', 'hollow', 'open') ; gap : flèches écartées du bord ;
+// ('none', 'full', 'hollow', 'open') ; gap : éloignement (px) des bords ;
 // curve : courbure (% de la distance, négative : de l'autre côté)
-export const DEFAULT_STYLE = {line: 'solid', width: 3, color: '#222222', start: 'none', end: 'none', gap: false, curve: 30}
+export const DEFAULT_STYLE = {line: 'solid', width: 3, color: '#222222', start: 'none', end: 'none', gap: 0, curve: 30}
 export const ARROWS = ['none', 'full', 'hollow', 'open']
 
 export class Liaison extends AObjet {
@@ -274,6 +274,12 @@ function arrowPath(type, tip, u, w){
 
 const f = (n) => String(Math.round(n * 100) / 100)
 
+// Éloignement (px) des bords (true des premières versions : flèches
+// écartées, selon l'épaisseur)
+export function gapOf(st){
+  return st.gap === true ? 2 * (Number(st.width) || 1) + 4 : Number(st.gap) || 0
+}
+
 /**
  * Dessin de la courbe (Bézier quadratique) entre les boites +b1+ et
  * +b2+ dans l'élément <svg> +svg+, avec le style +st+
@@ -289,12 +295,13 @@ function render(svg, b1, b2, st){
   if ( ny > 0 || (ny == 0 && nx < 0) ) { nx = -nx ; ny = -ny }
   const k = d * (Number(st.curve) || 0) / 100
   const ctrl = {x: (c1.x + c2.x) / 2 + nx * k, y: (c1.y + c2.y) / 2 + ny * k}
-  // Extrémités sur les bords, flèches (écartées du bord si demandé)
+  // Extrémités sur les bords (éloignées de +gap+), flèches
+  const gap = gapOf(st)
   const ends = [[b1, c1, st.start], [b2, c2, st.end]].map(([b, c, arrow]) => {
     const u = unit(ctrl.x - c.x, ctrl.y - c.y)
     let p = borderPoint(b, u.x, u.y)
     const hasArrow = arrow && arrow != 'none'
-    if ( hasArrow && st.gap ) p = {x: p.x + u.x * (2 * w + 4), y: p.y + u.y * (2 * w + 4)}
+    if ( gap ) p = {x: p.x + u.x * gap, y: p.y + u.y * gap}
     const a = hasArrow ? arrowPath(arrow, p, u, w) : null
     // Le trait s'arrête à la base d'une flèche fermée
     const q = a ? {x: p.x + u.x * a.len * .8, y: p.y + u.y * a.len * .8} : p

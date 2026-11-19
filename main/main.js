@@ -772,6 +772,16 @@ function registerIpc(){
   // toutes les analyses
   handle('liaisons:getTypes', () => AppPrefs.get('link_types') || {})
   handle('liaisons:saveTypes', ({types}) => AppPrefs.set({link_types: types}))
+  handle('liaisons:confirmReplace', async ({name}) => {
+    const {response} = await dialog.showMessageBox(mainWindow, {
+        type:      'question'
+      , message:   t('ui.dialogs.replace_liaison', {name})
+      , buttons:   [t('ui.dialogs.replace'), t('ui.buttons.cancel')]
+      , defaultId: 0
+      , cancelId:  1
+    })
+    return response == 0
+  })
 
   handle('app:themes', () => {
     const folder = path.join(ASSETS_FOLDER, 'themes')
