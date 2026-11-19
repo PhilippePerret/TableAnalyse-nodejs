@@ -3,8 +3,8 @@
 # Texte propre à un système : table {darwin:, win32:, linux:}
 
 app:
-  name: "Table d'analyse"
-  title: "TABLE D'ANALYSE"
+  name: "Table d’analyse"
+  title: "TABLE D’ANALYSE"
   getting_started: "Prise en main"
 
 decimal_separator: ","
