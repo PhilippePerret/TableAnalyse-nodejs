@@ -3,8 +3,14 @@
 
 Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'analyse pour analyser la partition. Ce sont les noms des accords, les marques d'harmonie, les marques de modulation, d'emprunt, etc. Voir tous les <<tags-types>>.
 
+****
+* <<tags-types>>
+* <<tags-group, Regroupement des marques>>
+* <<tags-link, Lier deux marques>>
+****
+
 [[tags-types]]
-=== Types de marques ===
+=== Les types de marques ===
 
 [cols="2,5,1,1"]
 |====
@@ -179,3 +185,35 @@ Pour définir la taille du cercle, bouger ses bords. La touche MAJ permet d'augm
 - avec Maj => garde même axe horizontal ou vertical
 
 include::marques/extraits-partition.adoc[]
+
+[[tags-group]]
+=== Groupe de marques ===
+
+On peut grouper des marques pour les traiter ensemble (les supprimer, les déplacer…). Voyez comment faire ci-dessous.
+
+==== Grouper des marques ====
+
+Pour grouper des marques quelconque : 
+
+* sélectionnez les marques à la souris (rectangle de sélection, ou clic avec la touche MAJ),
+* activez le menu « Marques > Grouper », ou jouer le raccourci Cmd+g (Ctrl+g sous Windows) ou utilisez le menu contextuel.
+* les marques sont groupées.
+
+NOTE: Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut la déverrouiller avant.
+
+==== Dégrouper des marques ====
+
+Pour les dégrouper, utiliser le menu « Marques > Dégrouper » ou le raccourci Cmd+Maj+g (Ctrl+Maj+g sous Windows)
+
+==== Ajout d'une marque à un groupe ====
+
+Pour ajouter une marque quelconque à un groupe :
+
+* sélectionnez le groupe,
+* sélectionnez la marque **en tenant la touche Majuscule appuyée**,
+* choisissez le menu « Marques > Ajouter au groupe » ou le raccourci Cmd+g (Ctrl+g).
+
+[[tags-link]]
+=== Liaison entre marques ===
+
+On peut « tirer un trait », une liaison, entre deux marques

@@ -465,11 +465,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#tags">Marques</a>
 <ul class="sectlevel2">
-<li><a href="#tags-types">Types de marques</a></li>
+<li><a href="#tags-types">Les types de marques</a></li>
 <li><a href="#tags-motifs">Motifs</a></li>
 <li><a href="#tags-text">Textes</a></li>
 <li><a href="#tags-move">Déplacement des marques</a></li>
 <li><a href="#tags-extrait">Extrait de partition</a></li>
+<li><a href="#tags-group">Groupe de marques</a></li>
+<li><a href="#tags-link">Liaison entre marques</a></li>
 </ul>
 </li>
 <li><a href="#prefs">Préférences</a>
@@ -891,10 +893,27 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <h2 id="tags">Marques</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Les <em>marques</em> (ou <em>tags</em>) sont tous les textes que l&#8217;on pose sur la table d&#8217;analyse pour analyser la partition. Ce sont les noms des accords, les marques d&#8217;harmonie, les marques de modulation, d&#8217;emprunt, etc. Voir tous les <a href="#tags-types">Types de marques</a>.</p>
+<p>Les <em>marques</em> (ou <em>tags</em>) sont tous les textes que l&#8217;on pose sur la table d&#8217;analyse pour analyser la partition. Ce sont les noms des accords, les marques d&#8217;harmonie, les marques de modulation, d&#8217;emprunt, etc. Voir tous les <a href="#tags-types">Les types de marques</a>.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#tags-types">Les types de marques</a></p>
+</li>
+<li>
+<p><a href="#tags-group">Regroupement des marques</a></p>
+</li>
+<li>
+<p><a href="#tags-link">Lier deux marques</a></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="tags-types">Types de marques</h3>
+<h3 id="tags-types">Les types de marques</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 22.2222%;">
@@ -1269,6 +1288,74 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 <p>pose d&#8217;un masque blanc sur scories</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tags-group">Groupe de marques</h3>
+<div class="paragraph">
+<p>On peut grouper des marques pour les traiter ensemble (les supprimer, les déplacer…). Voyez comment faire ci-dessous.</p>
+</div>
+<div class="sect3">
+<h4 id="_grouper_des_marques">Grouper des marques</h4>
+<div class="paragraph">
+<p>Pour grouper des marques quelconque :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>sélectionnez les marques à la souris (rectangle de sélection, ou clic avec la touche MAJ),</p>
+</li>
+<li>
+<p>activez le menu « Marques &gt; Grouper », ou jouer le raccourci Cmd+g (Ctrl+g sous Windows) ou utilisez le menu contextuel.</p>
+</li>
+<li>
+<p>les marques sont groupées.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut la déverrouiller avant.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dégrouper_des_marques">Dégrouper des marques</h4>
+<div class="paragraph">
+<p>Pour les dégrouper, utiliser le menu « Marques &gt; Dégrouper » ou le raccourci Cmd+Maj+g (Ctrl+Maj+g sous Windows)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ajout_dune_marque_à_un_groupe">Ajout d&#8217;une marque à un groupe</h4>
+<div class="paragraph">
+<p>Pour ajouter une marque quelconque à un groupe :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>sélectionnez le groupe,</p>
+</li>
+<li>
+<p>sélectionnez la marque <strong>en tenant la touche Majuscule appuyée</strong>,</p>
+</li>
+<li>
+<p>choisissez le menu « Marques &gt; Ajouter au groupe » ou le raccourci Cmd+g (Ctrl+g).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tags-link">Liaison entre marques</h3>
+<div class="paragraph">
+<p>On peut « tirer un trait », une liaison, entre deux marques</p>
 </div>
 </div>
 </div>
