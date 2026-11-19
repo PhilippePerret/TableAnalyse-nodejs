@@ -5,6 +5,7 @@
 app:
   name: "Mesa de análisis"
   title: "MESA DE ANÁLISIS"
+  untitled: "Análisis sin título"
   getting_started: "Primeros pasos"
 
 decimal_separator: ","

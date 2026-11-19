@@ -131,7 +131,7 @@ function createWindow(){
       width:  1400
     , height: 1000
     , show:   !SMOKE || !!process.env.SA_SMOKE_SHOW
-    , title:  ''
+    , title:  t('ui.app.untitled')   // nom de la fenêtre (listes de capture : OBS…)
     // macOS : bande supérieure dessinée par la page (#titlebar), avec les
     // boutons de la fenêtre du système. Windows, Linux : barre de titre
     // du système, sans laquelle la barre des menus n'est pas affichée

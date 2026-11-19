@@ -5,6 +5,7 @@
 app:
   name: "分析台"
   title: "分析台"
+  untitled: "未命名分析"
   getting_started: "入门"
 
 decimal_separator: "."

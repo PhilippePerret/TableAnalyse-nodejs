@@ -5,6 +5,7 @@
 app:
   name: "Analysis Table"
   title: "ANALYSIS TABLE"
+  untitled: "Untitled analysis"
   getting_started: "Getting started"
 
 decimal_separator: "."

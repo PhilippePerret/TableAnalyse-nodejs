@@ -5,6 +5,7 @@
 app:
   name: "分析テーブル"
   title: "分析テーブル"
+  untitled: "無題の分析"
   getting_started: "はじめに"
 
 decimal_separator: "."

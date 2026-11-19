@@ -5,6 +5,7 @@
 app:
   name: "Analysetisch"
   title: "ANALYSETISCH"
+  untitled: "Unbenannte Analyse"
   getting_started: "Erste Schritte"
 
 decimal_separator: ","

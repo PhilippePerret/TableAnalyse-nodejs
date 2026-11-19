@@ -5,6 +5,7 @@
 app:
   name: "분석 테이블"
   title: "분석 테이블"
+  untitled: "제목 없는 분석"
   getting_started: "시작하기"
 
 decimal_separator: "."
