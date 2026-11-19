@@ -359,10 +359,10 @@ panels:
     count_many:       "%{n} 個のマークが見つかりました"
   liaison:
     title:            "連結線"
-    type:             "連結線の種類"
+    type:             "保存された連結線"
     choose_type:      "選択…"
-    no_type:          "（種類なし）"
-    line:             "線"
+    no_type:          "（保存された種類なし）"
+    line:             "線の種類"
     lines:
       solid:          "実線"
       dashed:         "破線"
@@ -377,7 +377,7 @@ panels:
       open:           "開いた矢印"
     gap:              "矢印を縁に接触させない"
     curve:            "曲がり具合"
-    new_type:         "新しい種類"
+    new_type:         "保存"
     type_name_ph:     "種類の名前"
     save_type:        "保存"
   getter:

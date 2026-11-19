@@ -267,6 +267,7 @@ div#liaison_editor div.rows {
   row-gap: .5em;
   align-items: center;
 }
+div#liaison_editor div.rows + div.rows { margin-top: 1.2em; }
 div#liaison_editor div.row { display: contents; }
 div#liaison_editor div.row > label { text-align: right; white-space: nowrap; }
 div#liaison_editor div.fields { display: flex; align-items: center; gap: 6px; }

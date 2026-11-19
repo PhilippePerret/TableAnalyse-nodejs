@@ -7,8 +7,9 @@ import { t } from './i18n.js'
  * LiaisonEditor
  * -------------
  * Boite d'édition d'une liaison (cf. Liaison.js) : trait, épaisseur,
- * couleur, flèches de début et de fin, écart des flèches, courbure.
- * Chaque réglage s'applique aussitôt.
+ * courbure, couleur, flèches de début et de fin, écart des flèches.
+ * Chaque réglage est montré aussitôt, gardé seulement par « OK »
+ * (« Renoncer » : la liaison reprend son état initial).
  * Types de liaison : styles nommés, enregistrés dans les préférences de
  * l'application (communs à toutes les analyses), appliqués par le menu
  * de la boite.
@@ -26,26 +27,26 @@ class LiaisonEditorClass {
     const select = (key, values, labels) => {
       const sel = DCreate('SELECT', {inner: values.map(v => DCreate('OPTION', {value: v, text: labels[v]}))})
       sel.value = st[key]
-      listen(sel, 'change', () => liaison.setStyle({[key]: sel.value}))
+      listen(sel, 'change', () => liaison.previewStyle({[key]: sel.value}))
       return sel
     }
     const arrows = t('ui.panels.liaison.arrows')
     this.fields = {
         line:  select('line', ['solid', 'dashed'], t('ui.panels.liaison.lines'))
-      , width: DCreate('INPUT', {type: 'number', min: '1', max: '20', step: '1', value: String(st.width), style: 'width:4em;'})
+      , width: DCreate('INPUT', {type: 'range', min: '1', max: '20', step: '1', value: String(st.width)})
+      , curve: DCreate('INPUT', {type: 'range', min: '-100', max: '100', step: '1', value: String(st.curve)})
       , color: DCreate('INPUT', {type: 'color', value: st.color})
       , start: select('start', ARROW_TYPES, arrows)
       , end:   select('end', ARROW_TYPES, arrows)
       , gap:   DCreate('INPUT', {type: 'checkbox', id: 'liaison_gap'})
-      , curve: DCreate('INPUT', {type: 'range', min: '-100', max: '100', step: '1', value: String(st.curve)})
     }
     const F = this.fields
     F.gap.checked = !!st.gap
-    listen(F.width, 'input', () => Number(F.width.value) > 0 && liaison.setStyle({width: Number(F.width.value)}))
-    listen(F.color, 'input', () => liaison.setStyle({color: F.color.value}))
-    listen(F.gap, 'change', () => liaison.setStyle({gap: F.gap.checked}))
-    listen(F.curve, 'input', () => liaison.setStyle({curve: Number(F.curve.value)}))
-    // Types de liaison
+    listen(F.width, 'input', () => liaison.previewStyle({width: Number(F.width.value)}))
+    listen(F.curve, 'input', () => liaison.previewStyle({curve: Number(F.curve.value)}))
+    listen(F.color, 'input', () => liaison.previewStyle({color: F.color.value}))
+    listen(F.gap, 'change', () => liaison.previewStyle({gap: F.gap.checked}))
+    // Liaisons mémorisées (types de liaison)
     this.types = await this.loadTypes()
     this.typesMenu = DCreate('SELECT')
     this.fillTypesMenu()
@@ -57,34 +58,40 @@ class LiaisonEditorClass {
     const typeName = DCreate('INPUT', {type: 'text', placeholder: T('type_name_ph'), style: 'width:12em;'})
     const btnSave  = DCreate('BUTTON', {text: T('save_type')})
     listen(btnSave, 'click', () => this.saveType(typeName.value.trim()) && (typeName.value = ''))
+    const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
+    const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
+    listen(btnCancel, 'click', this.close.bind(this))
+    listen(btnOk, 'click', () => { liaison.confirmStyle() ; this.close() })
     const panel = DCreate('DIV', {id: 'liaison_editor', inner: [
-        DCreate('DIV', {class: 'rows', inner: [
-            field(T('type'),  this.typesMenu)
-          , field(T('line'),  F.line)
+        DCreate('DIV', {class: 'rows', inner: [field(T('type'), this.typesMenu)]})
+      , DCreate('DIV', {class: 'rows', inner: [
+            field(T('line'),  F.line)
           , field(T('width'), F.width)
+          , field(T('curve'), F.curve)
           , field(T('color'), F.color)
           , field(T('start'), F.start)
           , field(T('end'),   F.end)
           , field('',         [F.gap, DCreate('LABEL', {for: 'liaison_gap', text: T('gap')})])
-          , field(T('curve'), F.curve)
-          , field(T('new_type'), [typeName, btnSave])
         ]})
-      , DCreate('DIV', {class: 'buttons'})
+      , DCreate('DIV', {class: 'rows', inner: [field(T('new_type'), [typeName, btnSave])]})
+      , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
     ]})
     document.body.appendChild(panel)
     this.panel = panel
     addPanelHead(panel, {title: T('title'), onClose: this.close.bind(this)})
   }
 
+  // Fermeture sans OK (Renoncer, croix…) : la liaison reprend son style
   close(){
+    this.liaison && this.liaison.cancelStyle()
     this.panel && this.panel.remove()
     this.panel = null
     this.liaison = null
   }
 
-  // Style +style+ appliqué à la liaison et aux champs
+  // Style +style+ appliqué (aperçu) à la liaison et aux champs
   apply(style){
-    this.liaison.setStyle(style)
+    this.liaison.previewStyle(style)
     const st = this.liaison.style, F = this.fields
     ;['line', 'width', 'color', 'start', 'end', 'curve'].forEach(k => F[k].value = String(st[k]))
     F.gap.checked = !!st.gap

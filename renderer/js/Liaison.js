@@ -136,13 +136,24 @@ export class Liaison extends AObjet {
 
   //##################################################################
 
-  get style(){ return Object.assign({}, DEFAULT_STYLE, this.data.style) }
+  // Style affiché : celui en cours d'édition (aperçu), sinon l'enregistré
+  get style(){ return Object.assign({}, DEFAULT_STYLE, this.data.style, this.preview) }
 
-  // Changement de style (édition, type de liaison)
-  setStyle(values){
-    this.data.style = Object.assign(this.style, values)
+  // Aperçu d'un changement de style (édition, type de liaison), gardé
+  // seulement par confirmStyle
+  previewStyle(values){
+    this.preview = Object.assign(this.preview || {}, values)
     this.draw()
+  }
+  confirmStyle(){
+    if ( !this.preview ) return
+    this.data.style = this.style
+    delete this.preview
     setModified()
+  }
+  cancelStyle(){
+    delete this.preview
+    this.draw()
   }
 
   build_and_observe(){

@@ -359,10 +359,10 @@ panels:
     count_many:       "%{n} marks found"
   liaison:
     title:            "Link"
-    type:             "Link type"
+    type:             "Saved links"
     choose_type:      "Choose…"
-    no_type:          "(no type)"
-    line:             "Line"
+    no_type:          "(no saved type)"
+    line:             "Line type"
     lines:
       solid:          "Solid"
       dashed:         "Dashed"
@@ -377,7 +377,7 @@ panels:
       open:           "Open"
     gap:              "Arrows do not touch the edges"
     curve:            "Curvature"
-    new_type:         "New type"
+    new_type:         "Save as"
     type_name_ph:     "type name"
     save_type:        "Save"
   getter:

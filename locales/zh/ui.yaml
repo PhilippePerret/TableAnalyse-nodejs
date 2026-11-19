@@ -359,10 +359,10 @@ panels:
     count_many:       "找到 %{n} 个标记"
   liaison:
     title:            "连线"
-    type:             "连线类型"
+    type:             "已保存的连线"
     choose_type:      "选择…"
-    no_type:          "（无类型）"
-    line:             "线条"
+    no_type:          "（无已保存的类型）"
+    line:             "线条类型"
     lines:
       solid:          "实线"
       dashed:         "虚线"
@@ -377,7 +377,7 @@ panels:
       open:           "开口"
     gap:              "箭头不接触边缘"
     curve:            "弧度"
-    new_type:         "新类型"
+    new_type:         "保存为"
     type_name_ph:     "类型名称"
     save_type:        "保存"
   getter:

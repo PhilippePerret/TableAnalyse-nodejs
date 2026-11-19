@@ -359,10 +359,10 @@ panels:
     count_many:       "%{n} marques trouvées"
   liaison:
     title:            "Liaison"
-    type:             "Type de liaison"
+    type:             "Liaisons mémorisées"
     choose_type:      "Choisir…"
-    no_type:          "(aucun type)"
-    line:             "Trait"
+    no_type:          "(aucun type enregistré)"
+    line:             "Type de trait"
     lines:
       solid:          "Continu"
       dashed:         "Pointillé"
@@ -377,7 +377,7 @@ panels:
       open:           "Ouverte"
     gap:              "Les flèches ne touchent pas les bords"
     curve:            "Courbure"
-    new_type:         "Nouveau type"
+    new_type:         "Mémoriser"
     type_name_ph:     "nom du type"
     save_type:        "Enregistrer"
   getter:

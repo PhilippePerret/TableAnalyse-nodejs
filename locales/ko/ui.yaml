@@ -359,10 +359,10 @@ panels:
     count_many:       "표시 %{n}개 찾음"
   liaison:
     title:            "연결선"
-    type:             "연결선 종류"
+    type:             "저장된 연결선"
     choose_type:      "선택…"
-    no_type:          "(종류 없음)"
-    line:             "선"
+    no_type:          "(저장된 종류 없음)"
+    line:             "선 종류"
     lines:
       solid:          "실선"
       dashed:         "점선"
@@ -377,7 +377,7 @@ panels:
       open:           "열린"
     gap:              "화살표가 가장자리에 닿지 않음"
     curve:            "곡률"
-    new_type:         "새 종류"
+    new_type:         "저장"
     type_name_ph:     "종류 이름"
     save_type:        "저장"
   getter:

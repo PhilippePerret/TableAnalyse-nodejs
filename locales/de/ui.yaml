@@ -359,10 +359,10 @@ panels:
     count_many:       "%{n} Markierungen gefunden"
   liaison:
     title:            "Verbindung"
-    type:             "Verbindungstyp"
+    type:             "Gespeicherte Verbindungen"
     choose_type:      "Wählen…"
-    no_type:          "(kein Typ)"
-    line:             "Linie"
+    no_type:          "(kein gespeicherter Typ)"
+    line:             "Linienart"
     lines:
       solid:          "Durchgezogen"
       dashed:         "Gestrichelt"
@@ -377,7 +377,7 @@ panels:
       open:           "Offen"
     gap:              "Pfeile berühren die Ränder nicht"
     curve:            "Krümmung"
-    new_type:         "Neuer Typ"
+    new_type:         "Merken"
     type_name_ph:     "Name des Typs"
     save_type:        "Speichern"
   getter:

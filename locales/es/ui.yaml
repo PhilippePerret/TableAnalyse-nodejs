@@ -359,10 +359,10 @@ panels:
     count_many:       "%{n} marcas encontradas"
   liaison:
     title:            "Unión"
-    type:             "Tipo de unión"
+    type:             "Uniones memorizadas"
     choose_type:      "Elegir…"
-    no_type:          "(ningún tipo)"
-    line:             "Trazo"
+    no_type:          "(ningún tipo guardado)"
+    line:             "Tipo de trazo"
     lines:
       solid:          "Continuo"
       dashed:         "Discontinuo"
@@ -377,7 +377,7 @@ panels:
       open:           "Abierta"
     gap:              "Las flechas no tocan los bordes"
     curve:            "Curvatura"
-    new_type:         "Nuevo tipo"
+    new_type:         "Memorizar"
     type_name_ph:     "nombre del tipo"
     save_type:        "Guardar"
   getter:

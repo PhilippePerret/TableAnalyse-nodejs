@@ -359,10 +359,10 @@ panels:
     count_many:       "%{n} segni trovati"
   liaison:
     title:            "Collegamento"
-    type:             "Tipo di collegamento"
+    type:             "Collegamenti memorizzati"
     choose_type:      "Scegli…"
-    no_type:          "(nessun tipo)"
-    line:             "Linea"
+    no_type:          "(nessun tipo salvato)"
+    line:             "Tipo di linea"
     lines:
       solid:          "Continua"
       dashed:         "Tratteggiata"
@@ -377,7 +377,7 @@ panels:
       open:           "Aperta"
     gap:              "Le frecce non toccano i bordi"
     curve:            "Curvatura"
-    new_type:         "Nuovo tipo"
+    new_type:         "Memorizza"
     type_name_ph:     "nome del tipo"
     save_type:        "Salva"
   getter:
