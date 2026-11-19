@@ -153,6 +153,13 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 `data.groups` d'une marque : identifiants (`g1`, `g2`…) de ses groupes, du plus intérieur au plus extérieur (groupes imbriqués). Sélectionner une marque sélectionne toutes celles de même groupe extérieur (`AObjet.groupOf`, dans `addToSelection` et `removeFromSelection`) : déplacement, suppression, etc. ensemble. « Dégrouper » retire le groupe extérieur ; « Ajouter au groupe » met les autres unités sélectionnées dans le groupe extérieur de la première marque groupée. Ancienne propriété `grp` (groupes plats) convertie au chargement (`Groups.migrate`).
 
 
+## Liaisons
+
+`renderer/js/Liaison.js` (menus « Marque > Relier / Délier », menus contextuels) : marque de type `lia` reliant deux marques (`TYPES_RELIABLES` : cercle, cadre, forme, texte, motif, type de note), données `from`, `to`, `style` (`DEFAULT_STYLE`), `top`/`left` recalculés. Courbe de Bézier quadratique dans un `<svg class="liaison">` de la table, visant le centre de chaque marque et arrêtée sur son bord (boite, ellipse pour un cercle) ; redessinée (une fois par image) dès qu'un élément de la table change (`MutationObserver`, `Liaison.observeTable`). Marque supprimée : ses liaisons aussi. Sélection propre (hors `AObjet.selection`) : clic, double-clic ou Entrée (édition), Effacer. Export : liaisons de la copie redessinées après `respace` (`Liaison.drawIn`), zone de clic (`lia-hit`) retirée.
+
+Édition : `LiaisonEditor.js`, réglages appliqués aussitôt. Types de liaison (styles nommés) : préférence `link_types` de l'application (canaux `liaisons:getTypes`, `liaisons:saveTypes`), communs à toutes les analyses.
+
+
 ## Historique de l'analyse
 
 `renderer/js/History.js` : étapes de la construction (infos, marques, positions des systèmes ; ni préférences, ni options, ni sélections, ni verrouillages) dans `history.jsonl` du dossier de l'analyse (une étape JSON par ligne : état initial complet, puis changements). Étape mémorisée 0,8 s après la dernière modification (`Analyse#setModified`). Menu « Fichier > Historique de l'analyse… » : retour à une étape = nouvelle étape `restore`, enregistrement puis rechargement.

@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "解锁标记"
   unlock_many:      "解锁标记"
   change_type:      "将类型设为…"
+  link:             "连接"
+  unlink:           "取消连接"
 
 suggest_menu:
   none:             "无"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "框版本"
   to_marker:        "界碑版本"
   delete:           "删除"
+  link:             "连接"
+  unlink:           "取消连接"
 
 system_menu:
   unlock:           "解锁"
@@ -353,6 +357,29 @@ panels:
     systems:          "声部组"
     count_one:        "找到 %{n} 个标记"
     count_many:       "找到 %{n} 个标记"
+  liaison:
+    title:            "连线"
+    type:             "连线类型"
+    choose_type:      "选择…"
+    no_type:          "（无类型）"
+    line:             "线条"
+    lines:
+      solid:          "实线"
+      dashed:         "虚线"
+    width:            "粗细"
+    color:            "颜色"
+    start:            "起点箭头"
+    end:              "终点箭头"
+    arrows:
+      none:           "无"
+      full:           "实心"
+      hollow:         "空心"
+      open:           "开口"
+    gap:              "箭头不接触边缘"
+    curve:            "弧度"
+    new_type:         "新类型"
+    type_name_ph:     "类型名称"
+    save_type:        "保存"
   getter:
     new_item:         "新项目"
 

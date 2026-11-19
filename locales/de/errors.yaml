@@ -54,3 +54,4 @@ preference_not_found: "Einstellungselement mit der Kennung #%{key} nicht gefunde
 unknown_adjust: "Die Anpassung '%{adjust}' kann ich nicht verarbeiten."
 panel_id_required: "%{owner} muss die ID des Bereichs festlegen (<owner>.panneauId)"
 manual_not_found: "Handbuch nicht gefunden: %{path}"
+liaison_type_name: "Der Verbindungstyp braucht einen Namen."

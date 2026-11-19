@@ -54,3 +54,4 @@ preference_not_found: "No se encuentra el elemento de preferencia con identifica
 unknown_adjust: "No sé tratar el ajuste '%{adjust}'."
 panel_id_required: "%{owner} debe definir el ID del panel (<owner>.panneauId)"
 manual_not_found: "Manual no encontrado: %{path}"
+liaison_type_name: "El tipo de unión necesita un nombre."

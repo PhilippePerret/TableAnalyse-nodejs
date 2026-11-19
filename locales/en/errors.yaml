@@ -54,3 +54,4 @@ preference_not_found: "Cannot find the preference element with identifier #%{key
 unknown_adjust: "I cannot handle the adjustment '%{adjust}'."
 panel_id_required: "%{owner} must define the panel ID (<owner>.panneauId)"
 manual_not_found: "Manual not found: %{path}"
+liaison_type_name: "The link type needs a name."

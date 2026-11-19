@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "표시 잠금 해제"
   unlock_many:      "표시 잠금 해제"
   change_type:      "종류 설정…"
+  link:             "연결"
+  unlink:           "연결 해제"
 
 suggest_menu:
   none:             "없음"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "틀 버전"
   to_marker:        "경계석 버전"
   delete:           "삭제"
+  link:             "연결"
+  unlink:           "연결 해제"
 
 system_menu:
   unlock:           "잠금 해제"
@@ -353,6 +357,29 @@ panels:
     systems:          "단"
     count_one:        "표시 %{n}개 찾음"
     count_many:       "표시 %{n}개 찾음"
+  liaison:
+    title:            "연결선"
+    type:             "연결선 종류"
+    choose_type:      "선택…"
+    no_type:          "(종류 없음)"
+    line:             "선"
+    lines:
+      solid:          "실선"
+      dashed:         "점선"
+    width:            "두께"
+    color:            "색"
+    start:            "시작 화살표"
+    end:              "끝 화살표"
+    arrows:
+      none:           "없음"
+      full:           "채움"
+      hollow:         "속 빈"
+      open:           "열린"
+    gap:              "화살표가 가장자리에 닿지 않음"
+    curve:            "곡률"
+    new_type:         "새 종류"
+    type_name_ph:     "종류 이름"
+    save_type:        "저장"
   getter:
     new_item:         "새 항목"
 

@@ -54,3 +54,4 @@ preference_not_found: "식별자 #%{key}인 환경설정 요소를 찾을 수 �
 unknown_adjust: "'%{adjust}' 조정은 처리할 수 없습니다."
 panel_id_required: "%{owner}은(는) 패널 ID를 정의해야 합니다(<owner>.panneauId)"
 manual_not_found: "설명서를 찾을 수 없습니다: %{path}"
+liaison_type_name: "연결선 종류에 이름이 필요합니다."

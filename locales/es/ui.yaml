@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "Desbloquear la marca"
   unlock_many:      "Desbloquear las marcas"
   change_type:      "Cambiar el tipo a…"
+  link:             "Unir"
+  unlink:           "Separar"
 
 suggest_menu:
   none:             "Ninguna"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "Versión marco"
   to_marker:        "Versión mojón"
   delete:           "Eliminar"
+  link:             "Unir"
+  unlink:           "Separar"
 
 system_menu:
   unlock:           "Desbloquear"
@@ -353,6 +357,29 @@ panels:
     systems:          "Sistemas"
     count_one:        "%{n} marca encontrada"
     count_many:       "%{n} marcas encontradas"
+  liaison:
+    title:            "Unión"
+    type:             "Tipo de unión"
+    choose_type:      "Elegir…"
+    no_type:          "(ningún tipo)"
+    line:             "Trazo"
+    lines:
+      solid:          "Continuo"
+      dashed:         "Discontinuo"
+    width:            "Grosor"
+    color:            "Color"
+    start:            "Flecha al inicio"
+    end:              "Flecha al final"
+    arrows:
+      none:           "Ninguna"
+      full:           "Llena"
+      hollow:         "Hueca"
+      open:           "Abierta"
+    gap:              "Las flechas no tocan los bordes"
+    curve:            "Curvatura"
+    new_type:         "Nuevo tipo"
+    type_name_ph:     "nombre del tipo"
+    save_type:        "Guardar"
   getter:
     new_item:         "Nuevo elemento"
 

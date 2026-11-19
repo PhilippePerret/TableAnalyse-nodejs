@@ -734,3 +734,19 @@ div.amark.lay.tit span.content {
   white-space: nowrap;
   color: #000;
 }
+
+/* Liaison entre deux marques (cf. Liaison.js) : au-dessus des systèmes,
+   sous les marques ; seul le trait (zone élargie) répond à la souris */
+svg.liaison {
+  position: absolute;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+svg.liaison path.lia-hit {
+  pointer-events: stroke;
+  cursor: pointer;
+}
+svg.liaison.selected path.lia-hit {
+  stroke: rgba(150,180,250, 0.6);
+}

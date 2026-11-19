@@ -768,6 +768,11 @@ function registerIpc(){
     return folder
   })
 
+  // Types de liaison (cf. renderer/js/LiaisonEditor.js), communs à
+  // toutes les analyses
+  handle('liaisons:getTypes', () => AppPrefs.get('link_types') || {})
+  handle('liaisons:saveTypes', ({types}) => AppPrefs.set({link_types: types}))
+
   handle('app:themes', () => {
     const folder = path.join(ASSETS_FOLDER, 'themes')
     if ( !fs.existsSync(folder) ) return []

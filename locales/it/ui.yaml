@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "Sblocca il segno"
   unlock_many:      "Sblocca i segni"
   change_type:      "Imposta il tipo a…"
+  link:             "Collega"
+  unlink:           "Scollega"
 
 suggest_menu:
   none:             "Nessuno"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "Versione cornice"
   to_marker:        "Versione cippo"
   delete:           "Elimina"
+  link:             "Collega"
+  unlink:           "Scollega"
 
 system_menu:
   unlock:           "Sblocca"
@@ -353,6 +357,29 @@ panels:
     systems:          "Sistemi"
     count_one:        "%{n} segno trovato"
     count_many:       "%{n} segni trovati"
+  liaison:
+    title:            "Collegamento"
+    type:             "Tipo di collegamento"
+    choose_type:      "Scegli…"
+    no_type:          "(nessun tipo)"
+    line:             "Linea"
+    lines:
+      solid:          "Continua"
+      dashed:         "Tratteggiata"
+    width:            "Spessore"
+    color:            "Colore"
+    start:            "Freccia iniziale"
+    end:              "Freccia finale"
+    arrows:
+      none:           "Nessuna"
+      full:           "Piena"
+      hollow:         "Vuota"
+      open:           "Aperta"
+    gap:              "Le frecce non toccano i bordi"
+    curve:            "Curvatura"
+    new_type:         "Nuovo tipo"
+    type_name_ph:     "nome del tipo"
+    save_type:        "Salva"
   getter:
     new_item:         "Nuova voce"
 

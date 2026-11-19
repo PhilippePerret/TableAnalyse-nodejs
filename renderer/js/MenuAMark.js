@@ -10,6 +10,7 @@ import { toggleCoordinates } from './handies.js'
 import { DCreate } from './dom.js'
 import { AMARQUES_TYPES } from './Constants.js'
 import { Groups } from './Groups.js'
+import { Liaison } from './Liaison.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -42,6 +43,17 @@ export class AmarkMenu extends MenusTool {
     DGet('option[value="group"]', this.menu).disabled      = !Groups.canGroup(sel)
     DGet('option[value="ungroup"]', this.menu).disabled    = !Groups.canUngroup(sel)
     DGet('option[value="addToGroup"]', this.menu).disabled = !Groups.canAddToGroup(sel)
+    // Liaisons (cf. Liaison.js)
+    DGet('option[value="link"]', this.menu).disabled   = !Liaison.canLink(sel)
+    DGet('option[value="unlink"]', this.menu).disabled = !Liaison.linkOf(sel)
+  }
+
+  static onActivate_link(){
+    Liaison.link(this.selection)
+    this.setAllMenus(this.selection.length > 0)
+  }
+  static onActivate_unlink(){
+    Liaison.unlink(this.selection)
   }
 
   static onActivate_group(){

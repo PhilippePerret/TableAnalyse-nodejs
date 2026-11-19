@@ -16,6 +16,7 @@ import { AMARQUES_TYPES, CADENCES, TYPES_AJUSTABLES, SUBTYPES_AJUSTABLES, TYPES_
 import { UI } from './UI.js'
 import { Forme } from './Forme.js'
 import { ExtraitComposer } from './ExtraitComposer.js'
+import { Liaison } from './Liaison.js'
 import { t } from './i18n.js'
 import { Variables } from './Variables.js'
 import { heightMm, heightText, mmPerTablePx } from './Exporter.js'
@@ -123,6 +124,7 @@ static instanciate(analyse, data){
   switch(data.type){
     case 'img': return new AMImage(analyse, data)
     case 'ext': return new AMExtrait(analyse, data)
+    case 'lia': return new Liaison(analyse, data)
     default:    return new AMark(analyse, data)
   }
 }
@@ -824,6 +826,11 @@ onContextMenu(e){
   // inversement
   FORME_CADRE_BORNE[this.subtype] && this.isForme && items.push({label: T(this.isBorne ? 'to_frame' : 'to_marker'), value: 'toggleFrame'})
   this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'}, {label: T('reload_image'), value: 'reloadImage', enabled: !!this.data.file})
+  // Deux marques sélectionnées : les relier ou les délier (cf. Liaison.js)
+  if ( this.isSelected ) {
+    Liaison.canLink(AObjet.selection) && items.push({type: 'separator'}, {label: T('link'), value: 'link'})
+    Liaison.linkOf(AObjet.selection) && items.push({type: 'separator'}, {label: T('unlink'), value: 'unlink'})
+  }
   items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
   invoke('menu:popup', {items})
     .then(choice => choice && this.onContextChoice(choice))
@@ -845,6 +852,8 @@ onContextChoice(choice){
     case 'align':         return targets.forEach(m => m.alignOnSameType())
     case 'alignHarmony':  return this.alignHorizontallyOn('har', 'no_harmony_mark')
     case 'alignChord':    return this.alignHorizontallyOn('acc', 'no_chord_mark')
+    case 'link':          return Liaison.link(AObjet.selection) && AObjet.setMenusState()
+    case 'unlink':        return Liaison.unlink(AObjet.selection)
     case 'alignMeasure':  return targets.filter(m => m.isBorne).forEach(m => m.placeOnMeasure())
     case 'formHeight':    return targets.filter(m => m.isBorne).forEach(m => m.placeAtHeight())
     case 'toggleFrame':

@@ -54,3 +54,4 @@ preference_not_found: "識別子 #%{key} の環境設定要素が見つかりま
 unknown_adjust: "調整 '%{adjust}' は処理できません。"
 panel_id_required: "%{owner} はパネルの ID を定義する必要があります（<owner>.panneauId）"
 manual_not_found: "マニュアルが見つかりません：%{path}"
+liaison_type_name: "連結線の種類に名前が必要です。"

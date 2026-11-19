@@ -12,6 +12,7 @@ const DEFAULT_PREFERENCES = {
   , last_analyse_path:  null
   , last_dialog_folder: null
   , score_image_command: null
+  , link_types:         {}     // types de liaison {nom: style}
 }
 
 class AppPrefsClass {

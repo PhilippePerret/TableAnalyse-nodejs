@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "Unlock Mark"
   unlock_many:      "Unlock Marks"
   change_type:      "Set Type to…"
+  link:             "Link"
+  unlink:           "Unlink"
 
 suggest_menu:
   none:             "None"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "Frame version"
   to_marker:        "Marker version"
   delete:           "Delete"
+  link:             "Link"
+  unlink:           "Unlink"
 
 system_menu:
   unlock:           "Unlock"
@@ -353,6 +357,29 @@ panels:
     systems:          "Systems"
     count_one:        "%{n} mark found"
     count_many:       "%{n} marks found"
+  liaison:
+    title:            "Link"
+    type:             "Link type"
+    choose_type:      "Choose…"
+    no_type:          "(no type)"
+    line:             "Line"
+    lines:
+      solid:          "Solid"
+      dashed:         "Dashed"
+    width:            "Thickness"
+    color:            "Color"
+    start:            "Start arrow"
+    end:              "End arrow"
+    arrows:
+      none:           "None"
+      full:           "Filled"
+      hollow:         "Hollow"
+      open:           "Open"
+    gap:              "Arrows do not touch the edges"
+    curve:            "Curvature"
+    new_type:         "New type"
+    type_name_ph:     "type name"
+    save_type:        "Save"
   getter:
     new_item:         "New item"
 

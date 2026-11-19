@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "Déverrouiller la marque"
   unlock_many:      "Déverrouiller les marques"
   change_type:      "Mettre le type à…"
+  link:             "Relier"
+  unlink:           "Délier"
 
 suggest_menu:
   none:             "Aucune"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "Version cadre"
   to_marker:        "Version borne"
   delete:           "Supprimer"
+  link:             "Relier"
+  unlink:           "Délier"
 
 system_menu:
   unlock:           "Déverrouiller"
@@ -353,6 +357,29 @@ panels:
     systems:          "Systèmes"
     count_one:        "%{n} marque trouvée"
     count_many:       "%{n} marques trouvées"
+  liaison:
+    title:            "Liaison"
+    type:             "Type de liaison"
+    choose_type:      "Choisir…"
+    no_type:          "(aucun type)"
+    line:             "Trait"
+    lines:
+      solid:          "Continu"
+      dashed:         "Pointillé"
+    width:            "Épaisseur"
+    color:            "Couleur"
+    start:            "Flèche au début"
+    end:              "Flèche à la fin"
+    arrows:
+      none:           "Aucune"
+      full:           "Pleine"
+      hollow:         "Évidée"
+      open:           "Ouverte"
+    gap:              "Les flèches ne touchent pas les bords"
+    curve:            "Courbure"
+    new_type:         "Nouveau type"
+    type_name_ph:     "nom du type"
+    save_type:        "Enregistrer"
   getter:
     new_item:         "Nouvel item"
 

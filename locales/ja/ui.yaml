@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "マークのロックを解除"
   unlock_many:      "マークのロックを解除"
   change_type:      "種類を設定…"
+  link:             "つなぐ"
+  unlink:           "つなぎを解除"
 
 suggest_menu:
   none:             "なし"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "枠版"
   to_marker:        "境界石版"
   delete:           "削除"
+  link:             "つなぐ"
+  unlink:           "つなぎを解除"
 
 system_menu:
   unlock:           "ロックを解除"
@@ -353,6 +357,29 @@ panels:
     systems:          "段"
     count_one:        "%{n} 個のマークが見つかりました"
     count_many:       "%{n} 個のマークが見つかりました"
+  liaison:
+    title:            "連結線"
+    type:             "連結線の種類"
+    choose_type:      "選択…"
+    no_type:          "（種類なし）"
+    line:             "線"
+    lines:
+      solid:          "実線"
+      dashed:         "破線"
+    width:            "太さ"
+    color:            "色"
+    start:            "始点の矢印"
+    end:              "終点の矢印"
+    arrows:
+      none:           "なし"
+      full:           "塗りつぶし"
+      hollow:         "中抜き"
+      open:           "開いた矢印"
+    gap:              "矢印を縁に接触させない"
+    curve:            "曲がり具合"
+    new_type:         "新しい種類"
+    type_name_ph:     "種類の名前"
+    save_type:        "保存"
   getter:
     new_item:         "新しい項目"
 

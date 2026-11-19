@@ -12,6 +12,7 @@ import { Tools } from './Tools.js'
 import { MarksClipboard } from './MarksClipboard.js'
 import { Groups } from './Groups.js'
 import { Split } from './Split.js'
+import { Liaison } from './Liaison.js'
 
 // Saisie en cours dans un champ (panneaux) : touches laissées au champ
 export function inTextField(e){
@@ -68,6 +69,11 @@ export function onKeyDownOnAnalyse(e){
   case 'Enter':
     // Bouton sélectionné (Tab) : Entrée le joue
     if ( e.target instanceof Element && e.target.closest('button') ) return
+    // Liaison sélectionnée : son édition
+    if ( Liaison.selected ) {
+      Liaison.selected.edit()
+      return stopEvent(e)
+    }
     // Édition de la marque, seulement si elle est seule sélectionnée
     const sel = AObjet.selection
     // (marque verrouillée : édition seulement par son menu contextuel)
@@ -99,7 +105,8 @@ export function onKeyUpOnAnalyse(e){
   switch(e.key){
     case 'Backspace':
     case 'Delete':
-      AObjet.removeCurrentSelection()
+      // Liaison sélectionnée : supprimée seule
+      Liaison.selected ? Liaison.selected.remove() : AObjet.removeCurrentSelection()
       break
   }
 }

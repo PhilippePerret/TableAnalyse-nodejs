@@ -54,3 +54,4 @@ preference_not_found: "Impossibile trovare l'elemento di preferenza con identifi
 unknown_adjust: "Non so gestire l'adattamento '%{adjust}'."
 panel_id_required: "%{owner} deve definire l'ID del pannello (<owner>.panneauId)"
 manual_not_found: "Manuale non trovato: %{path}"
+liaison_type_name: "Il tipo di collegamento deve avere un nome."

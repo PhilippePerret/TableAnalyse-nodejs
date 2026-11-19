@@ -98,6 +98,8 @@ mark_menu:
   unlock_one:       "Markierung entsperren"
   unlock_many:      "Markierungen entsperren"
   change_type:      "Typ setzen auf…"
+  link:             "Verbinden"
+  unlink:           "Trennen"
 
 suggest_menu:
   none:             "Keine"
@@ -160,6 +162,8 @@ mark_context:
   to_frame:         "Rahmen-Version"
   to_marker:        "Grenzstein-Version"
   delete:           "Löschen"
+  link:             "Verbinden"
+  unlink:           "Trennen"
 
 system_menu:
   unlock:           "Entsperren"
@@ -353,6 +357,29 @@ panels:
     systems:          "Systeme"
     count_one:        "%{n} Markierung gefunden"
     count_many:       "%{n} Markierungen gefunden"
+  liaison:
+    title:            "Verbindung"
+    type:             "Verbindungstyp"
+    choose_type:      "Wählen…"
+    no_type:          "(kein Typ)"
+    line:             "Linie"
+    lines:
+      solid:          "Durchgezogen"
+      dashed:         "Gestrichelt"
+    width:            "Stärke"
+    color:            "Farbe"
+    start:            "Pfeil am Anfang"
+    end:              "Pfeil am Ende"
+    arrows:
+      none:           "Keiner"
+      full:           "Gefüllt"
+      hollow:         "Hohl"
+      open:           "Offen"
+    gap:              "Pfeile berühren die Ränder nicht"
+    curve:            "Krümmung"
+    new_type:         "Neuer Typ"
+    type_name_ph:     "Name des Typs"
+    save_type:        "Speichern"
   getter:
     new_item:         "Neuer Eintrag"
 

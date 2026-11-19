@@ -10,6 +10,7 @@ import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { TYPES_NOTES } from './Constants.js'
 import { Forme } from './Forme.js'
+import { Liaison } from './Liaison.js'
 /**
 
   Exporter
@@ -31,7 +32,7 @@ import { Forme } from './Forme.js'
 const PX_PER_MM   = 96 / 25.4
 const PAD         = 10      // blanc (px) au-dessus et au-dessous du contenu
 const MAX_PDF_MM  = 5080    // taille maximale d'une page PDF (200 pouces)
-const EXCLUDED    = '.ui-resizable-handle'
+const EXCLUDED    = '.ui-resizable-handle, .lia-hit'
 const UI_CLASSES  = ['selected', 'locked']
 // Polices de l'application, incluses dans les fichiers SVG
 const APP_FONTS   = [
@@ -487,6 +488,8 @@ class Stage {
       prev = b
     })
     seps.forEach(s => { s.item.el.style.display = 'none' })
+    // Liaisons redessinées entre leurs marques déplacées
+    Liaison.drawIn(this.content)
     this.items = this.measureItems()
     this.replaceForm(gapPx || 0)
   }
