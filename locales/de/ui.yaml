@@ -156,7 +156,7 @@ mark_context:
   lock:             "Sperren"
   unlock:           "Entsperren"
   edit:             "Bearbeiten…"
-  border:           "Randstärke…"
+  border:           "Rand/Linie…"
   align:            "An Markierungen gleichen Typs ausrichten"
   align_harmony:    "An der Harmonie ausrichten"
   align_chord:      "Am Akkord ausrichten"

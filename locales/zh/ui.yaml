@@ -156,7 +156,7 @@ mark_context:
   lock:             "锁定"
   unlock:           "解锁"
   edit:             "编辑…"
-  border:           "边框粗细…"
+  border:           "边框/线条…"
   align:            "与同类标记对齐"
   align_harmony:    "与和声标记对齐"
   align_chord:      "与和弦标记对齐"

@@ -156,7 +156,7 @@ mark_context:
   lock:             "Lock"
   unlock:           "Unlock"
   edit:             "Edit…"
-  border:           "Border Thickness…"
+  border:           "Border/Line…"
   align:            "Align with Marks of the Same Type"
   align_harmony:    "Align with the Harmony"
   align_chord:      "Align with the Chord"

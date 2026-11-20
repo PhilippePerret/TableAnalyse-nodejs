@@ -156,7 +156,7 @@ mark_context:
   lock:             "잠그기"
   unlock:           "잠금 해제"
   edit:             "편집…"
-  border:           "테두리 두께…"
+  border:           "테두리/선…"
   align:            "같은 종류의 표시에 맞추기"
   align_harmony:    "화성 표시에 맞추기"
   align_chord:      "코드에 맞추기"

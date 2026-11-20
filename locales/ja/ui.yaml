@@ -156,7 +156,7 @@ mark_context:
   lock:             "ロック"
   unlock:           "ロックを解除"
   edit:             "編集…"
-  border:           "枠線の太さ…"
+  border:           "枠線/線…"
   align:            "同じ種類のマークに揃える"
   align_harmony:    "和声記号に揃える"
   align_chord:      "コードに揃える"

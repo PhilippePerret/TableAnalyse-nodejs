@@ -156,7 +156,7 @@ mark_context:
   lock:             "Blocca"
   unlock:           "Sblocca"
   edit:             "Modifica…"
-  border:           "Spessore dei bordi…"
+  border:           "Bordo/linea…"
   align:            "Allinea ai segni dello stesso tipo"
   align_harmony:    "Allinea con l'armonia"
   align_chord:      "Allinea con l'accordo"

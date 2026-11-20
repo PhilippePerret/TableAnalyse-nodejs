@@ -156,7 +156,7 @@ mark_context:
   lock:             "Verrouiller"
   unlock:           "Déverrouiller"
   edit:             "Éditer…"
-  border:           "Épaisseur des bords…"
+  border:           "Bord/trait…"
   align:            "Aligner sur les marques de même type"
   align_harmony:    "Aligner avec l’harmonie"
   align_chord:      "Aligner sur l’accord"
