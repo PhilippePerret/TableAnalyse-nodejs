@@ -297,7 +297,7 @@ div#animation_box.anim-hidden {
 }
 div#animation_box div.anim-row { display: flex; align-items: center; gap: 8px; margin-top: .6em; }
 div#animation_box input[type="range"] { width: 160px; }
-div#animation_box span.anim-tempo { min-width: 4.5em; font-variant-numeric: tabular-nums; }
+div#animation_box span.anim-tempo { font-variant-numeric: tabular-nums; }
 div#animation_box span.anim-meter { padding: 0 6px; border: 1px solid currentColor; border-radius: 4px; font-size: .85em; opacity: .7; }
 /* Boutons de taille fixe : leurs pictos changent sans que rien ne bouge */
 div#animation_box button.anim-icon { width: 3.2em; padding-left: 0; padding-right: 0; text-align: center; }
@@ -523,4 +523,10 @@ div#new_analyse_box div.error {
   margin: 10px 6px 8px;
   font-size: .8em;
   color: #cc4870;
+}
+
+/* Valeur précise à côté d'un curseur (cf. RangeField.js) */
+input.range-value {
+  width: 4.5em;
+  font-variant-numeric: tabular-nums;
 }

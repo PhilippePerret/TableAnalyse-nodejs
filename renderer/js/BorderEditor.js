@@ -2,6 +2,7 @@ import { DCreate, listen } from './dom.js'
 import { addPanelHead } from './Panneau.js'
 import { t } from './i18n.js'
 import { editorField } from './LiaisonEditor.js'
+import { RangeField } from './RangeField.js'
 /**
  * BorderEditor
  * ------------
@@ -28,20 +29,14 @@ class BorderEditorClass {
     const st = mark.border
     const line  = DCreate('SELECT', {inner: ['solid', 'dashed'].map(v => DCreate('OPTION', {value: v, text: T('lines')[v]}))})
     line.value = st.line
-    const width = DCreate('INPUT', {type: 'range', min: '1', max: '20', step: '1', value: String(st.width)})
-    const value = DCreate('SPAN', {text: `${st.width} px`})
+    const width = new RangeField({min: 1, max: 20, value: st.width, onInput: v => v > 0 && mark.previewBorder({width: v})})
     listen(line, 'change', () => mark.previewBorder({line: line.value}))
-    listen(width, 'input', () => {
-      value.textContent = `${width.value} px`
-      mark.previewBorder({width: Number(width.value)})
-    })
     const btnDefault = DCreate('BUTTON', {text: t('ui.panels.border.default')})
     listen(btnDefault, 'click', () => {
       mark.previewBorder({width: null, line: null})
       const cur = mark.border
       line.value  = cur.line
-      width.value = String(cur.width)
-      value.textContent = `${cur.width} px`
+      width.value = cur.width
     })
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
     const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
@@ -49,7 +44,7 @@ class BorderEditorClass {
     listen(btnOk, 'click', () => { mark.confirmBorder() ; this.close() })
     const panel = DCreate('DIV', {id: 'border_editor', inner: [
         DCreate('DIV', {class: 'rows', inner: [
-            editorField(T('width'), [width, value])
+            editorField(T('width'), [...width.elements, DCreate('SPAN', {text: 'px'})])
           , editorField(T('line'),  line)
           , editorField('', btnDefault)
         ]})

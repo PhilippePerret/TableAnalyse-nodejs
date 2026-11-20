@@ -4,6 +4,7 @@ import { addPanelHead } from './Panneau.js'
 import { erreur, message } from './lib/Message.js'
 import { t } from './i18n.js'
 import { gapOf } from './Liaison.js'
+import { RangeField } from './RangeField.js'
 /**
  * LiaisonEditor
  * -------------
@@ -37,18 +38,15 @@ class LiaisonEditorClass {
     const arrows = t('ui.panels.liaison.arrows')
     this.fields = {
         line:  select('line', ['solid', 'dashed'], t('ui.panels.liaison.lines'))
-      , width: DCreate('INPUT', {type: 'range', min: '1', max: '20', step: '1', value: String(st.width)})
-      , curve: DCreate('INPUT', {type: 'range', min: '-100', max: '100', step: '1', value: String(st.curve)})
+      , width: new RangeField({min: 1, max: 20, value: st.width, onInput: v => liaison.previewStyle({width: v})})
+      , curve: new RangeField({min: -100, max: 100, value: st.curve, onInput: v => liaison.previewStyle({curve: v})})
       , color: DCreate('INPUT', {type: 'color', value: st.color})
       , start: select('start', ARROW_TYPES, arrows)
       , end:   select('end', ARROW_TYPES, arrows)
-      , gap:   DCreate('INPUT', {type: 'range', min: '0', max: '30', step: '1', value: String(gapOf(st))})
+      , gap:   new RangeField({min: 0, max: 30, value: gapOf(st), onInput: v => liaison.previewStyle({gap: v})})
     }
     const F = this.fields
-    listen(F.width, 'input', () => liaison.previewStyle({width: Number(F.width.value)}))
-    listen(F.curve, 'input', () => liaison.previewStyle({curve: Number(F.curve.value)}))
     listen(F.color, 'input', () => liaison.previewStyle({color: F.color.value}))
-    listen(F.gap, 'input', () => liaison.previewStyle({gap: Number(F.gap.value)}))
     // Liaisons mémorisées (types de liaison)
     this.types = await this.loadTypes()
     this.typesMenu = DCreate('SELECT')
@@ -72,12 +70,12 @@ class LiaisonEditorClass {
         DCreate('DIV', {class: 'rows', inner: [field(T('type'), this.typesMenu)]})
       , DCreate('DIV', {class: 'rows', inner: [
             field(T('line'),  F.line)
-          , field(T('width'), F.width)
-          , field(T('curve'), F.curve)
+          , field(T('width'), F.width.elements)
+          , field(T('curve'), F.curve.elements)
           , field(T('color'), F.color)
           , field(T('start'), F.start)
           , field(T('end'),   F.end)
-          , field(T('gap'),   F.gap)
+          , field(T('gap'),   F.gap.elements)
         ]})
       , DCreate('DIV', {class: 'rows', inner: [field(T('new_type'), [typeName, btnSave])]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})

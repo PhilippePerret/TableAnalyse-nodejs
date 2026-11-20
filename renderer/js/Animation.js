@@ -1,6 +1,7 @@
 import { DCreate, listen } from './dom.js'
 import { px } from './handies.js'
 import { erreur } from './lib/Message.js'
+import { RangeField } from './RangeField.js'
 import { addPanelHead } from './Panneau.js'
 import { Preferences } from './Preferences.js'
 import { Analyse } from './Analyse.js'
@@ -272,12 +273,17 @@ class AnimationClass {
     this.btnNext  = DCreate('BUTTON', {class: 'anim-btn anim-icon btn-next', text: '→', title: T('next')})
     this.btnStop  = DCreate('BUTTON', {class: 'anim-btn anim-icon btn-stop', text: '■', title: T('stop')})
     const btnFinish = DCreate('BUTTON', {class: 'btn-default btn-close', text: T('finish')}) // seul bouton de fermeture
-    this.tempoField = DCreate('INPUT', {type: 'range', min: '20', max: '240', value: String(this.tempo)})
-    this.tempoValue = DCreate('SPAN', {class: 'anim-tempo'})
+    this.tempoField = new RangeField({min: 20, max: 240, value: this.tempo, onInput: v => {
+      if ( !(v >= 20 && v <= 240) ) return
+      Preferences.set('animation_tempo', v)
+      Preferences.saveData('animation_tempo', v)
+      this.updateBox()
+    }})
+    this.tempoValue = DCreate('SPAN', {class: 'anim-tempo', text: t('ui.panels.animation.tempo_value', {tempo: ''}).trim()})
     const meter = DCreate('SPAN', {class: 'anim-meter', text: T('meter'), title: T('meter_desc')})
     const box = DCreate('DIV', {id: 'animation_box', inner: [
         DCreate('DIV', {class: 'anim-row', inner: [this.btnStep, this.btnPlay, this.btnNext, this.btnStop]})
-      , DCreate('DIV', {class: 'anim-row', inner: [DCreate('LABEL', {text: T('tempo')}), this.tempoField, this.tempoValue, meter]})
+      , DCreate('DIV', {class: 'anim-row', inner: [DCreate('LABEL', {text: T('tempo')}), this.tempoField.range, this.tempoValue, this.tempoField.field, meter]})
       , DCreate('DIV', {class: 'buttons', inner: [btnFinish]})
     ]})
     document.body.appendChild(box)
@@ -291,11 +297,6 @@ class AnimationClass {
     listen(this.btnNext,  'click', this.next.bind(this))
     listen(this.btnStop,  'click', this.stop.bind(this))
     listen(btnFinish,     'click', this.finish.bind(this))
-    listen(this.tempoField, 'input', () => {
-      Preferences.set('animation_tempo', Number(this.tempoField.value))
-      Preferences.saveData('animation_tempo', this.tempoField.value)
-      this.updateBox()
-    })
     // Boite masquée, montrée quand la souris approche du bas de la fenêtre
     this.onMouseMove = this.onMouseMove || ((e) => {
       if ( !this.box ) return
@@ -329,7 +330,6 @@ class AnimationClass {
     }
     this.btnNext.disabled = !this.stepMode || this.ended
     this.btnStop.disabled = !this.playing
-    this.tempoValue.textContent = T('tempo_value', {tempo: this.tempo})
   }
 }
 

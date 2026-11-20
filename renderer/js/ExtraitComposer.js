@@ -2,6 +2,7 @@ import { DCreate, listen } from './dom.js'
 import { px } from './handies.js'
 import { analyseUrl } from './api.js'
 import { NUMBER_FONT } from './AMark.js'
+import { RangeField } from './RangeField.js'
 import { draggable, resizable } from './lib/interact.js'
 import { addPanelHead } from './Panneau.js'
 import { AObjet } from './AObjet.js'
@@ -14,7 +15,7 @@ import { invoke } from './api.js'
 // Marge (px) autour des morceaux dans la zone d'assemblage
 const PAD = 40
 // Taille par défaut des numéros de mesure (px de la table)
-const NUMBER_SIZE = 14
+const NUMBER_SIZE = 24
 
 /**
  * ExtraitComposer
@@ -162,28 +163,21 @@ export class ExtraitComposer {
   askNumberSize(){
     this.sizeBox && this.sizeBox.remove()
     const k = this.markScale
-    const input = DCreate('INPUT', {type: 'number', value: String(Math.round(this.numbers.size * k)), min: '4', max: '200'})
-    const btn = DCreate('BUTTON', {class: 'btn-default', text: 'OK'})
-    const box = DCreate('DIV', {class: 'ext-size-box', inner: [DCreate('LABEL', {text: t('ui.panels.extract.number_size')}), input, btn]})
-    this.panel.appendChild(box)
-    this.sizeBox = box
-    const apply = () => {
-      const v = Number(input.value)
+    const apply = (v) => {
       if ( !(v > 0) ) return
       this.numbers.size = v / k
       this.buildNumbers()
       this.sizeLayer()
     }
+    const size = new RangeField({min: 6, max: 80, value: Math.round(this.numbers.size * k), onInput: apply})
+    const btn = DCreate('BUTTON', {class: 'btn-default', text: 'OK'})
+    const box = DCreate('DIV', {class: 'ext-size-box', inner: [DCreate('LABEL', {text: t('ui.panels.extract.number_size')}), ...size.elements, btn]})
+    this.panel.appendChild(box)
+    this.sizeBox = box
     const close = () => { box.remove() ; this.sizeBox = null }
-    listen(input, 'input', apply)
-    listen(input, 'keydown', e => {
-      if ( e.key != 'Enter' ) return
-      e.preventDefault() ; e.stopPropagation()
-      apply() ; close()
-    })
-    listen(btn, 'click', e => { e.stopPropagation() ; apply() ; close() })
-    input.focus()
-    input.select()
+    listen(btn, 'click', e => { e.stopPropagation() ; apply(size.value) ; close() })
+    size.field.focus()
+    size.field.select()
   }
 
   // Suppression d'un morceau (en-tête de système, mesures), sauf le
