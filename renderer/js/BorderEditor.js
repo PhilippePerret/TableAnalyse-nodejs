@@ -9,7 +9,8 @@ import { editorField } from './LiaisonEditor.js'
  * AMark#borderTarget) : épaisseur (curseur) et type de trait (continu,
  * pointillé). Chaque réglage est montré aussitôt, gardé seulement par
  * « OK » (« Renoncer » : la marque reprend ses bords), comme pour une
- * liaison (cf. LiaisonEditor.js).
+ * liaison (cf. LiaisonEditor.js). « Valeur par défaut » : bords des
+ * préférences.
  */
 class BorderEditorClass {
 
@@ -27,6 +28,14 @@ class BorderEditorClass {
       value.textContent = `${width.value} px`
       mark.previewBorder({width: Number(width.value)})
     })
+    const btnDefault = DCreate('BUTTON', {text: t('ui.panels.border.default')})
+    listen(btnDefault, 'click', () => {
+      mark.previewBorder({width: null, line: null})
+      const cur = mark.border
+      line.value  = cur.line
+      width.value = String(cur.width)
+      value.textContent = `${cur.width} px`
+    })
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
     const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
     listen(btnCancel, 'click', this.close.bind(this))
@@ -35,6 +44,7 @@ class BorderEditorClass {
         DCreate('DIV', {class: 'rows', inner: [
             editorField(T('width'), [width, value])
           , editorField(T('line'),  line)
+          , editorField('', btnDefault)
         ]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
     ]})

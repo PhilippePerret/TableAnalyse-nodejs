@@ -890,48 +890,63 @@ get borderTarget(){
 
 /**
  * Bords de la marque {width, line} : réglés (data.border, aperçu en
- * cours), sinon ceux de son style
+ * cours), sinon épaisseur des préférences et trait de son style
  */
 get border(){
-  const el = this.borderTarget == 'content' ? this.contentSpan : this.obj
   const st = Object.assign({}, this.data.border, this.borderPreview)
-  if ( !st.width || !st.line ) {
-    const cs = getComputedStyle(el)
-    const sides = ['top', 'right', 'bottom', 'left'].filter(s => parseFloat(cs.getPropertyValue(`border-${s}-width`)) > 0)
-    st.width || (st.width = Math.max(1, Math.round(Math.max(0, ...sides.map(s => parseFloat(cs.getPropertyValue(`border-${s}-width`)))))))
-    st.line  || (st.line = sides.some(s => cs.getPropertyValue(`border-${s}-style`) == 'dashed') ? 'dashed' : 'solid')
+  st.width || (st.width = Number(pref(this.borderPrefKey)))
+  if ( !st.line ) {
+    const cs = getComputedStyle(this.borderTarget == 'content' ? this.contentSpan : this.obj)
+    st.line = ['top', 'right', 'bottom', 'left'].some(s => cs.getPropertyValue(`border-${s}-style`) == 'dashed') ? 'dashed' : 'solid'
   }
   return st
 }
 
 // Bords réglés (data.border, aperçu) appliqués : épaisseur et type de
-// trait des côtés tracés (cf. AMark.css, .cb-obj et .cb-content)
+// trait des côtés tracés (cf. AMark.css, .cb-obj et .cb-content ; .cbw
+// épaisseur, .cbl trait). Valeur non réglée : celle des préférences.
 applyBorder(){
   const target = this.borderTarget
-  const st = target && Object.assign({}, this.data.border, this.borderPreview)
-  const on = !!(st && (st.width || st.line))
-  // Valeurs complètes lues avant le changement de classe (bords du
-  // style pour celles qui ne sont pas réglées)
-  const cur = on && this.border
-  this.obj.classList.toggle('cb-obj', on && target == 'obj')
-  this.obj.classList.toggle('cb-content', on && target == 'content')
-  if ( on ) {
-    this.obj.style.setProperty('--cb-width', px(cur.width))
-    this.obj.style.setProperty('--cb-line', cur.line)
-  } else {
-    this.obj.style.removeProperty('--cb-width')
-    this.obj.style.removeProperty('--cb-line')
-  }
+  const st = Object.assign({}, target && this.data.border, this.borderPreview)
+  const width = target && st.width, line = target && st.line
+  this.obj.classList.toggle('cb-obj', !!(width || line) && target == 'obj')
+  this.obj.classList.toggle('cb-content', !!(width || line) && target == 'content')
+  this.obj.classList.toggle('cbw', !!width)
+  this.obj.classList.toggle('cbl', !!line)
+  width ? this.obj.style.setProperty('--cb-width', px(width)) : this.obj.style.removeProperty('--cb-width')
+  line  ? this.obj.style.setProperty('--cb-line', line)       : this.obj.style.removeProperty('--cb-line')
+}
+
+/**
+ * Préférence de l'épaisseur de bord par défaut de la marque (cf.
+ * Preferences_AppData, :border)
+ */
+get borderPrefKey(){
+  if ( !this.borderTarget ) return null
+  if ( this.isFormeCadre ) return 'border_form'
+  if ( this.type == 'bbx' ) return {box: 'border_box', cel: 'thiness_cellule_line', bxt: 'thiness_border'}[this.subtype]
+  return {cir: 'border_circle', mot: 'thiness_motif_line', seg: 'thiness_segment_line', emp: 'border_emprunt', cad: 'border_cadence', not: 'border_note', txt: 'border_measure'}[this.type]
+}
+
+// Épaisseur propre abandonnée : celle par défaut (préférences)
+resetBorderWidth(){
+  if ( !this.data.border ) return
+  delete this.data.border.width
+  this.data.border.line || delete this.data.border
+  this.applyBorder()
 }
 
 // Aperçu d'un réglage des bords, gardé seulement par confirmBorder
+// (valeur null : celle par défaut)
 previewBorder(values){
   this.borderPreview = Object.assign(this.borderPreview || {}, values)
   this.applyBorder()
 }
 confirmBorder(){
   if ( !this.borderPreview ) return
-  this.data.border = this.border
+  const st = Object.assign({}, this.data.border, this.borderPreview)
+  Object.keys(st).forEach(k => null == st[k] && delete st[k])
+  if ( Object.keys(st).length ) { this.data.border = st } else { delete this.data.border }
   delete this.borderPreview
   setModified()
 }

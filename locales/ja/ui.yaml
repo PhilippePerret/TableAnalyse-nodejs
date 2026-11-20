@@ -187,6 +187,8 @@ buttons:
   replace:          "置き換える"
   ok:               "OK"
   apply:            "適用"
+  answer_yes:       "はい"
+  answer_no:        "いいえ"
   type:             "種類…"
   subtype:          "サブ種類…"
   defaults:         "既定の設定"
@@ -364,6 +366,7 @@ panels:
     count_many:       "%{n} 個のマークが見つかりました"
   border:
     title:            "枠線"
+    default:          "既定値"
   liaison:
     title:            "連結線"
     type:             "保存された連結線"
@@ -415,6 +418,7 @@ dialogs:
   cut_now_detail:        "分析を始めるために楽譜の段が取り出されます。"
   cut_now_yes:           "切り分ける"
   replace_liaison:       "保存された連結線「%{name}」は既にあります。置き換えますか？"
+  border_own:            "独自の値を持つマークにもこの枠線を適用しますか？"
   replace:               "置き換え"
   unsaved:               "分析は保存されていません。"
   unsaved_detail:        "保存せずに終了すると、最近の変更は失われます。"
@@ -460,7 +464,14 @@ prefs:
   thiness_segment_line:   {label: "セグメントの線の太さ"}
   thiness_cellule_line:   {label: "セルの線の太さ"}
   thiness_motif_line:     {label: "動機の枠の太さ"}
-  thiness_border:         {label: "枠の線の太さ"}
+  thiness_border:         {label: "枠付きテキストの枠の太さ"}
+  border_circle:          {label: "円の枠線の太さ"}
+  border_box:             {label: "単純な枠の太さ"}
+  border_emprunt:         {label: "借用の線の太さ"}
+  border_cadence:         {label: "終止形の線の太さ"}
+  border_note:            {label: "音の種類の楕円の太さ"}
+  border_form:            {label: "形式の枠の太さ（枠版）"}
+  border_measure:         {label: "小節番号の枠の太さ（行）"}
   marque_pedale_size:     {label: "保続音のサイズ"}
   marque_texte_size_1:    {label: "大きいテキストのサイズ"}
   marque_texte_size_2:    {label: "中くらいのテキストのサイズ"}

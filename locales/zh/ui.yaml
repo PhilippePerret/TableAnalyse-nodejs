@@ -187,6 +187,8 @@ buttons:
   replace:          "替换"
   ok:               "好"
   apply:            "应用"
+  answer_yes:       "是"
+  answer_no:        "否"
   type:             "类型…"
   subtype:          "子类型…"
   defaults:         "默认设置"
@@ -364,6 +366,7 @@ panels:
     count_many:       "找到 %{n} 个标记"
   border:
     title:            "边框"
+    default:          "默认值"
   liaison:
     title:            "连线"
     type:             "已保存的连线"
@@ -415,6 +418,7 @@ dialogs:
   cut_now_detail:        "将提取乐谱的声部组以开始分析。"
   cut_now_yes:           "切分"
   replace_liaison:       "已存在名为“%{name}”的已保存连线。是否替换？"
+  border_own:            "是否将此边框应用于自定义了数值的标记？"
   replace:               "替换"
   unsaved:               "分析尚未保存。"
   unsaved_detail:        "如果不保存就退出，最近的修改将会丢失。"
@@ -460,7 +464,14 @@ prefs:
   thiness_segment_line:   {label: "片段线条粗细"}
   thiness_cellule_line:   {label: "动机单元线条粗细"}
   thiness_motif_line:     {label: "动机框线粗细"}
-  thiness_border:         {label: "方框线条粗细"}
+  thiness_border:         {label: "框内文本的边框粗细"}
+  border_circle:          {label: "圆圈边框粗细"}
+  border_box:             {label: "简单方框粗细"}
+  border_emprunt:         {label: "借用线条粗细"}
+  border_cadence:         {label: "终止式线条粗细"}
+  border_note:            {label: "音符类型椭圆粗细"}
+  border_form:            {label: "曲式框粗细（框版本）"}
+  border_measure:         {label: "小节号框粗细（行）"}
   marque_pedale_size:     {label: "持续音大小"}
   marque_texte_size_1:    {label: "大号文本大小"}
   marque_texte_size_2:    {label: "中号文本大小"}

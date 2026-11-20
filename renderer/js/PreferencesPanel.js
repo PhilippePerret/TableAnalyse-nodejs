@@ -18,6 +18,9 @@ import { UI } from './UI.js'
 import { emit } from './events.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { t } from './i18n.js'
+import { invoke } from './api.js'
+import { AObjet } from './AObjet.js'
+import { setModified } from './Current.js'
 
 // Groupes du panneau (titres : ui.prefs_groups.<id>)
 const PREFS_GROUPS = [
@@ -28,7 +31,7 @@ const PREFS_GROUPS = [
   , {id: 'marks',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_cadence_type_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_motif_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
   , {id: 'form',     keys: ['form_height_1', 'form_height_2', 'form_height_3', 'form_position']}
   , {id: 'layout',   keys: [1, 2, 3].flatMap(n => ['font', 'size', 'before', 'after'].map(k => `layout_title_${n}_${k}`))}
-  , {id: 'lines',    keys: ['thiness_segment_line', 'thiness_cellule_line', 'thiness_motif_line', 'thiness_border']}
+  , {id: 'lines',    keys: ['border_circle', 'border_box', 'thiness_cellule_line', 'thiness_border', 'thiness_motif_line', 'thiness_segment_line', 'border_emprunt', 'border_cadence', 'border_note', 'border_form', 'border_measure']}
   , {id: 'colors',   keys: ['color_accords', 'color_harmonie', 'color_mark_parties', 'color_mark_sections', 'color_cellule', 'color_modulations', 'color_emprunts', 'color_segments']}
   , {id: 'window',   keys: ['window_width', 'window_height', 'last_scroll']}
 ]
@@ -47,14 +50,33 @@ onKeyPress(e){
 /**
  * Bouton « Appliquer » de la préférence +key+ : traitement propre
  * (onApply_<key>) ou, sinon, styles (taille, épaisseur), couleurs et
- * traitement du changement (onChange_<key>)
+ * traitement du changement (onChange_<key>). +old+ : valeur avant le
+ * changement
  */
-apply(key){
+apply(key, old){
   if ( 'function' == typeof this[`onApply_${key}`] ) return this[`onApply_${key}`]()
   const dp = PreferencesAppData[key]
+  if ( dp.border ) return this.applyBorder(key, old)
   dp.selector && this.updateStylesInHead()
   dp.typeV == 'color' && Current.analyse && Current.analyse.updateModeColor()
   'function' == typeof this[`onChange_${key}`] && this[`onChange_${key}`]()
+}
+
+/**
+ * Épaisseur de bord par défaut +key+ (cf. :border) passée de +old+ à
+ * sa nouvelle valeur : marques qui suivent la valeur par défaut, et
+ * celles qui ont la leur seulement si l'utilisateur le veut (« Non »
+ * par défaut). Une marque dont l'épaisseur propre est l'ancienne
+ * valeur par défaut la suit.
+ */
+async applyBorder(key, old){
+  const marks = AObjet.items.filter(m => m.borderPrefKey == key && m.data.border && null != m.data.border.width)
+  const own = marks.filter(m => Number(m.data.border.width) != Number(old))
+  const all = own.length > 0 && await invoke('prefs:confirmBorderOwn')
+  const follow = all ? marks : marks.filter(m => !own.includes(m))
+  follow.forEach(m => m.resetBorderWidth())
+  this.updateStylesInHead()
+  follow.length && setModified()
 }
 
 onChange_measure_line_offset(){
@@ -137,6 +159,9 @@ prepareOnChangeMethods(){
       break
     case 'inputtext':
       // Enregistrement (et application des styles) à chaque frappe
+      // Épaisseur de bord par défaut : enregistrée par « Appliquer »
+      // seulement (cf. applyBorder)
+      if ( dpref.border ) return
       methode = (function(key, obj){
         Preferences.saveData(key, obj.value)
         Preferences.data[key].selector && this.updateStylesInHead()
@@ -410,14 +435,15 @@ buildInputText(params){
   // Bouton « Appliquer » (méthode onApply_<id>) pour régler tout de
   // suite l'analyse ouverte. Inutile pour les styles (taille,
   // épaisseur…), appliqués à chaque frappe (cf. prepareOnChangeMethods)
-  const live = params.selector && 'function' != typeof this[`onApply_${params.id}`]
+  const live = params.selector && !params.border && 'function' != typeof this[`onApply_${params.id}`]
   if ( params.apply && !live ) {
     const btn = DCreate('BUTTON', {class:'btn-apply', text: t('ui.buttons.apply')})
     listen(btn, 'click', (e) => {
       stopEvent(e)
       // Valeur affichée dans le champ, celle qu'on applique
+      const old = Preferences.get(params.id)
       Preferences.saveData(params.id, field.value)
-      this.apply(params.id)
+      this.apply(params.id, old)
     })
     cell.appendChild(btn)
   }

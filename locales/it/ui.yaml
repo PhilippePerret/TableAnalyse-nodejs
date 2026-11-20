@@ -187,6 +187,8 @@ buttons:
   replace:          "Sostituisci"
   ok:               "OK"
   apply:            "Applica"
+  answer_yes:       "Sì"
+  answer_no:        "No"
   type:             "Tipo…"
   subtype:          "Sottotipo…"
   defaults:         "Impostazioni predefinite"
@@ -364,6 +366,7 @@ panels:
     count_many:       "%{n} segni trovati"
   border:
     title:            "Bordi"
+    default:          "Valore predefinito"
   liaison:
     title:            "Collegamento"
     type:             "Collegamenti memorizzati"
@@ -415,6 +418,7 @@ dialogs:
   cut_now_detail:        "I sistemi della partitura verranno estratti per iniziare l'analisi."
   cut_now_yes:           "Taglia"
   replace_liaison:       "Esiste già un collegamento memorizzato « %{name} ». Sostituirlo?"
+  border_own:            "Applicare questo bordo ai segni che definiscono un proprio valore?"
   replace:               "Sostituisci"
   unsaved:               "L'analisi non è salvata."
   unsaved_detail:        "Le ultime modifiche andranno perse se esci senza salvare."
@@ -460,7 +464,14 @@ prefs:
   thiness_segment_line:   {label: "Spessore linea dei segmenti"}
   thiness_cellule_line:   {label: "Spessore linea delle cellule"}
   thiness_motif_line:     {label: "Spessore della cornice dei motivi"}
-  thiness_border:         {label: "Spessore delle linee dei riquadri"}
+  thiness_border:         {label: "Spessore della cornice dei testi in cornice"}
+  border_circle:          {label: "Spessore del bordo dei cerchi"}
+  border_box:             {label: "Spessore delle cornici semplici"}
+  border_emprunt:         {label: "Spessore della linea dei prestiti"}
+  border_cadence:         {label: "Spessore della linea delle cadenze"}
+  border_note:            {label: "Spessore dell'ovale dei tipi di nota"}
+  border_form:            {label: "Spessore della cornice delle forme (versione cornice)"}
+  border_measure:         {label: "Spessore della cornice dei numeri di battuta (linea)"}
   marque_pedale_size:     {label: "Dimensione dei pedali"}
   marque_texte_size_1:    {label: "Dimensione dei testi grandi"}
   marque_texte_size_2:    {label: "Dimensione dei testi medi"}

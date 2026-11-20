@@ -11,6 +11,7 @@ import { DCreate } from './dom.js'
 import { AMARQUES_TYPES } from './Constants.js'
 import { Groups } from './Groups.js'
 import { Liaison } from './Liaison.js'
+import { BorderEditor } from './BorderEditor.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -46,6 +47,13 @@ export class AmarkMenu extends MenusTool {
     // Liaisons (cf. Liaison.js)
     DGet('option[value="link"]', this.menu).disabled   = !Liaison.canLink(sel)
     DGet('option[value="unlink"]', this.menu).disabled = !Liaison.linkOf(sel)
+    // Bords (cf. BorderEditor.js) : une seule marque, à bord
+    DGet('option[value="border"]', this.menu).disabled = !(sel.length == 1 && sel[0].borderTarget)
+  }
+
+  static onActivate_border(){
+    const mark = this.selection[0]
+    mark && mark.borderTarget && BorderEditor.open(mark)
   }
 
   static onActivate_link(){

@@ -187,6 +187,8 @@ buttons:
   replace:          "Replace"
   ok:               "OK"
   apply:            "Apply"
+  answer_yes:       "Yes"
+  answer_no:        "No"
   type:             "Type…"
   subtype:          "Subtype…"
   defaults:         "Default settings"
@@ -364,6 +366,7 @@ panels:
     count_many:       "%{n} marks found"
   border:
     title:            "Borders"
+    default:          "Default value"
   liaison:
     title:            "Link"
     type:             "Saved links"
@@ -415,6 +418,7 @@ dialogs:
   cut_now_detail:        "The systems of the score will be extracted to start the analysis."
   cut_now_yes:           "Cut"
   replace_liaison:       "A saved link “%{name}” already exists. Replace it?"
+  border_own:            "Apply this border to marks that define their own value?"
   replace:               "Replace"
   unsaved:               "The analysis is not saved."
   unsaved_detail:        "The latest changes will be lost if you quit without saving."
@@ -460,7 +464,14 @@ prefs:
   thiness_segment_line:   {label: "Segment line thickness"}
   thiness_cellule_line:   {label: "Cell line thickness"}
   thiness_motif_line:     {label: "Motif frame thickness"}
-  thiness_border:         {label: "Box line thickness"}
+  thiness_border:         {label: "Text-in-frame border thickness"}
+  border_circle:          {label: "Circle border thickness"}
+  border_box:             {label: "Simple frame thickness"}
+  border_emprunt:         {label: "Borrowing line thickness"}
+  border_cadence:         {label: "Cadence line thickness"}
+  border_note:            {label: "Note type oval thickness"}
+  border_form:            {label: "Form frame thickness (frame version)"}
+  border_measure:         {label: "Bar number box thickness (line)"}
   marque_pedale_size:     {label: "Size of pedals"}
   marque_texte_size_1:    {label: "Size of large texts"}
   marque_texte_size_2:    {label: "Size of medium texts"}

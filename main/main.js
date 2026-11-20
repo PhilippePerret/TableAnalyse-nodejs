@@ -790,6 +790,19 @@ function registerIpc(){
     return response == 0
   })
 
+  // Épaisseur de bord par défaut changée (cf. PreferencesPanel#applyBorder) :
+  // l'appliquer aussi aux marques qui ont la leur ? « Non » par défaut
+  handle('prefs:confirmBorderOwn', async () => {
+    const {response} = await dialog.showMessageBox(mainWindow, {
+        type:      'question'
+      , message:   t('ui.dialogs.border_own')
+      , buttons:   [t('ui.buttons.answer_no'), t('ui.buttons.answer_yes')]
+      , defaultId: 0
+      , cancelId:  0
+    })
+    return response == 1
+  })
+
   handle('app:themes', () => {
     const folder = path.join(ASSETS_FOLDER, 'themes')
     if ( !fs.existsSync(folder) ) return []

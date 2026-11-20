@@ -187,6 +187,8 @@ buttons:
   replace:          "Ersetzen"
   ok:               "OK"
   apply:            "Anwenden"
+  answer_yes:       "Ja"
+  answer_no:        "Nein"
   type:             "Typ…"
   subtype:          "Untertyp…"
   defaults:         "Standardeinstellungen"
@@ -364,6 +366,7 @@ panels:
     count_many:       "%{n} Markierungen gefunden"
   border:
     title:            "Ränder"
+    default:          "Standardwert"
   liaison:
     title:            "Verbindung"
     type:             "Gespeicherte Verbindungen"
@@ -415,6 +418,7 @@ dialogs:
   cut_now_detail:        "Die Systeme der Partitur werden für den Beginn der Analyse extrahiert."
   cut_now_yes:           "Zerschneiden"
   replace_liaison:       "Eine gespeicherte Verbindung „%{name}“ existiert bereits. Ersetzen?"
+  border_own:            "Diesen Rand auch auf Markierungen mit eigenem Wert anwenden?"
   replace:               "Ersetzen"
   unsaved:               "Die Analyse ist nicht gespeichert."
   unsaved_detail:        "Die letzten Änderungen gehen verloren, wenn Sie ohne Speichern beenden."
@@ -460,7 +464,14 @@ prefs:
   thiness_segment_line:   {label: "Linienstärke der Segmente"}
   thiness_cellule_line:   {label: "Linienstärke der Zellen"}
   thiness_motif_line:     {label: "Rahmenstärke der Motive"}
-  thiness_border:         {label: "Linienstärke der Rahmen"}
+  thiness_border:         {label: "Rahmenstärke der Texte im Rahmen"}
+  border_circle:          {label: "Randstärke der Kreise"}
+  border_box:             {label: "Stärke der einfachen Rahmen"}
+  border_emprunt:         {label: "Linienstärke der Ausweichungen"}
+  border_cadence:         {label: "Linienstärke der Kadenzen"}
+  border_note:            {label: "Stärke des Ovals der Notentypen"}
+  border_form:            {label: "Rahmenstärke der Formteile (Rahmenversion)"}
+  border_measure:         {label: "Rahmenstärke der Taktnummern (Zeile)"}
   marque_pedale_size:     {label: "Größe der Orgelpunkte"}
   marque_texte_size_1:    {label: "Größe großer Texte"}
   marque_texte_size_2:    {label: "Größe mittlerer Texte"}

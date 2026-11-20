@@ -187,6 +187,8 @@ buttons:
   replace:          "Remplacer"
   ok:               "OK"
   apply:            "Appliquer"
+  answer_yes:       "Oui"
+  answer_no:        "Non"
   type:             "Type…"
   subtype:          "Sous-type…"
   defaults:         "Réglages par défaut"
@@ -364,6 +366,7 @@ panels:
     count_many:       "%{n} marques trouvées"
   border:
     title:            "Bords"
+    default:          "Valeur par défaut"
   liaison:
     title:            "Liaison"
     type:             "Liaisons mémorisées"
@@ -415,6 +418,7 @@ dialogs:
   cut_now_detail:        "Les systèmes de la partition seront extraits pour commencer l'analyse."
   cut_now_yes:           "Découper"
   replace_liaison:       "Une liaison mémorisée « %{name} » existe déjà. La remplacer ?"
+  border_own:            "Faut-il appliquer ce bord aux marques qui définissent leur propre valeur ?"
   replace:               "Remplacer"
   unsaved:               "L'analyse n'est pas enregistrée."
   unsaved_detail:        "Les dernières modifications seront perdues si vous quittez sans enregistrer."
@@ -460,7 +464,14 @@ prefs:
   thiness_segment_line:   {label: "Épaisseur trait segments"}
   thiness_cellule_line:   {label: "Épaisseur trait cellules"}
   thiness_motif_line:     {label: "Épaisseur du cadre des motifs"}
-  thiness_border:         {label: "Épaisseur des traits de boites"}
+  thiness_border:         {label: "Épaisseur du cadre des textes dans cadre"}
+  border_circle:          {label: "Épaisseur du bord des cercles"}
+  border_box:             {label: "Épaisseur des cadres simples"}
+  border_emprunt:         {label: "Épaisseur du trait des emprunts"}
+  border_cadence:         {label: "Épaisseur du trait des cadences"}
+  border_note:            {label: "Épaisseur de l'ovale des types de note"}
+  border_form:            {label: "Épaisseur du cadre des formes (version cadre)"}
+  border_measure:         {label: "Épaisseur du cadre des numéros de mesure (ligne)"}
   marque_pedale_size:     {label: "Taille des pédales"}
   marque_texte_size_1:    {label: "Taille des gros textes"}
   marque_texte_size_2:    {label: "Taille des textes moyens"}

@@ -187,6 +187,8 @@ buttons:
   replace:          "대치"
   ok:               "확인"
   apply:            "적용"
+  answer_yes:       "예"
+  answer_no:        "아니요"
   type:             "종류…"
   subtype:          "하위 종류…"
   defaults:         "기본 설정"
@@ -364,6 +366,7 @@ panels:
     count_many:       "표시 %{n}개 찾음"
   border:
     title:            "테두리"
+    default:          "기본값"
   liaison:
     title:            "연결선"
     type:             "저장된 연결선"
@@ -415,6 +418,7 @@ dialogs:
   cut_now_detail:        "분석을 시작하기 위해 악보의 단을 추출합니다."
   cut_now_yes:           "자르기"
   replace_liaison:       "저장된 연결선 “%{name}”이(가) 이미 있습니다. 바꾸시겠습니까?"
+  border_own:            "자체 값을 가진 표시에도 이 테두리를 적용할까요?"
   replace:               "바꾸기"
   unsaved:               "분석이 저장되지 않았습니다."
   unsaved_detail:        "저장하지 않고 종료하면 최근 변경 사항이 사라집니다."
@@ -460,7 +464,14 @@ prefs:
   thiness_segment_line:   {label: "구간 선 두께"}
   thiness_cellule_line:   {label: "셀 선 두께"}
   thiness_motif_line:     {label: "동기 틀 두께"}
-  thiness_border:         {label: "상자 선 두께"}
+  thiness_border:         {label: "틀 안 텍스트의 틀 두께"}
+  border_circle:          {label: "원 테두리 두께"}
+  border_box:             {label: "단순 틀 두께"}
+  border_emprunt:         {label: "차용 선 두께"}
+  border_cadence:         {label: "종지 선 두께"}
+  border_note:            {label: "음 유형 타원 두께"}
+  border_form:            {label: "형식 틀 두께 (틀 버전)"}
+  border_measure:         {label: "마디 번호 틀 두께 (줄)"}
   marque_pedale_size:     {label: "지속음 크기"}
   marque_texte_size_1:    {label: "큰 텍스트 크기"}
   marque_texte_size_2:    {label: "중간 텍스트 크기"}
