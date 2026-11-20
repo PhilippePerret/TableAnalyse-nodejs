@@ -530,3 +530,14 @@ input.range-value {
   width: 4.5em;
   font-variant-numeric: tabular-nums;
 }
+/* Bouton discret « → préfs » (cf. RangeField.js) */
+button.to-prefs {
+  padding: 0 4px;
+  border: none;
+  background: none;
+  box-shadow: none;
+  font-size: .8em;
+  opacity: .6;
+  cursor: pointer;
+}
+button.to-prefs:hover { opacity: 1; }

@@ -187,6 +187,8 @@ buttons:
   replace:          "替换"
   ok:               "好"
   apply:            "应用"
+  to_prefs:         "→ 偏好"
+  to_prefs_title:   "将此值设为偏好设置值并应用"
   answer_yes:       "是"
   answer_no:        "否"
   type:             "类型…"

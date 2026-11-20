@@ -3,6 +3,8 @@ import { addPanelHead } from './Panneau.js'
 import { t } from './i18n.js'
 import { editorField } from './LiaisonEditor.js'
 import { RangeField } from './RangeField.js'
+import { Preferences } from './Preferences.js'
+import { PreferencesPanel } from './PreferencesPanel.js'
 /**
  * BorderEditor
  * ------------
@@ -29,7 +31,7 @@ class BorderEditorClass {
     const st = mark.border
     const line  = DCreate('SELECT', {inner: ['solid', 'dashed'].map(v => DCreate('OPTION', {value: v, text: T('lines')[v]}))})
     line.value = st.line
-    const width = new RangeField({min: 1, max: 20, value: st.width, onInput: v => v > 0 && mark.previewBorder({width: v})})
+    const width = new RangeField({min: 1, max: 20, value: st.width, onInput: v => v > 0 && mark.previewBorder({width: v}), toPrefs: v => this.toPrefs(v)})
     listen(line, 'change', () => mark.previewBorder({line: line.value}))
     const btnDefault = DCreate('BUTTON', {text: t('ui.panels.border.default')})
     listen(btnDefault, 'click', () => {
@@ -44,7 +46,7 @@ class BorderEditorClass {
     listen(btnOk, 'click', () => { mark.confirmBorder() ; this.close() })
     const panel = DCreate('DIV', {id: 'border_editor', inner: [
         DCreate('DIV', {class: 'rows', inner: [
-            editorField(T('width'), [...width.elements, DCreate('SPAN', {text: 'px'})])
+            editorField(T('width'), [width.range, width.field, DCreate('SPAN', {text: 'px'}), width.btnPrefs])
           , editorField(T('line'),  line)
           , editorField('', btnDefault)
         ]})
@@ -53,6 +55,23 @@ class BorderEditorClass {
     document.body.appendChild(panel)
     this.panel = panel
     addPanelHead(panel, {title: t('ui.panels.border.title'), onClose: this.close.bind(this)})
+  }
+
+  /**
+   * « → préfs » : épaisseur +v+ devenue celle des préférences de chaque
+   * type des marques éditées, appliquée (cf. PreferencesPanel#applyBorder) ;
+   * ces marques suivent désormais les préférences
+   */
+  async toPrefs(v){
+    if ( !(v > 0) ) return
+    const keys = [...new Set(this.marks.map(m => m.borderPrefKey))]
+    for ( const key of keys ) {
+      const old = Preferences.get(key)
+      Preferences.set(key, v)
+      Preferences.saveData(key, v)
+      await PreferencesPanel.applyBorder(key, old)
+    }
+    this.marks && this.marks.forEach(m => m.previewBorder({width: null}))
   }
 
   // Fermeture sans OK (Renoncer, croix…) : les marques reprennent leurs

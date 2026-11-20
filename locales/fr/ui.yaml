@@ -187,6 +187,8 @@ buttons:
   replace:          "Remplacer"
   ok:               "OK"
   apply:            "Appliquer"
+  to_prefs:         "→ préfs"
+  to_prefs_title:   "Mettre la valeur définie comme valeur de préférences et l'appliquer"
   answer_yes:       "Oui"
   answer_no:        "Non"
   type:             "Type…"
