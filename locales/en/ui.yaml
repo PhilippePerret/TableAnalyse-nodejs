@@ -337,6 +337,8 @@ panels:
     assemble:         "Assemble"
     mask: "White mask"
     mask_title: "White rectangle to cover blemishes (Delete key: remove the chosen mask)"
+    numbers: "Bar numbers"
+    number_size: "Number size (px)"
   animation:
     title:            "Animation"
     play:             "Play"
@@ -524,7 +526,7 @@ marks:
     txt: {name: "Text",          message: "Text to display"}
     ped: {name: "Pedal",         message: "Degree of the pedal"}
     cir: {name: "Circle"}
-    ext: {name: "Score Excerpt", message: "Bar(s) to extract (e.g. 12 or 12-13)"}
+    ext: {name: "Score Excerpt", message: "Bar(s) to extract (e.g. 12, 12-13 or 1,3,5)"}
     frm: {name: "Form…", message: "Portion of the form"}
     mot: {name: "Motif", default: "Motif", message: "Motif name"}
     lay: {name: "Layout", message: "Layout"}

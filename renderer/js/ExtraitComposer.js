@@ -1,6 +1,7 @@
 import { DCreate, listen } from './dom.js'
 import { px } from './handies.js'
 import { analyseUrl } from './api.js'
+import { NUMBER_FONT } from './AMark.js'
 import { draggable, resizable } from './lib/interact.js'
 import { addPanelHead } from './Panneau.js'
 import { AObjet } from './AObjet.js'
@@ -8,9 +9,12 @@ import { setModified } from './Current.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
 import { erreur } from './lib/Message.js'
+import { invoke } from './api.js'
 
 // Marge (px) autour des morceaux dans la zone d'assemblage
 const PAD = 40
+// Taille par défaut des numéros de mesure (px de la table)
+const NUMBER_SIZE = 14
 
 /**
  * ExtraitComposer
@@ -24,7 +28,10 @@ const PAD = 40
  * changées (morceaux proposés pour elles, dès la sortie du champ).
  * « Masque blanc » : rectangle blanc (pointillés dans l'assembleur
  * seulement) déplaçable et dimensionnable, qui couvre les scories de
- * l'image (touche Effacer : suppression du masque choisi).
+ * l'image. « Numéros de mesure » : numéros ajoutés au-dessus des
+ * mesures, toujours alignés (en déplacer un déplace les autres) ;
+ * double-clic : leur taille. Tout élément choisi (morceau, numéro,
+ * masque) se supprime par la touche Effacer ou le menu contextuel.
  */
 export class ExtraitComposer {
 
@@ -44,6 +51,9 @@ export class ExtraitComposer {
     this.onKey = this.onKeyDown.bind(this)
     window.addEventListener('keydown', this.onKey, true)
     this.masks = (this.mark.data.masks || []).map(m => Object.assign({}, m))
+    this.numbers = structuredClone(this.mark.data.numbers || {items: []})
+    this.numbers.size || (this.numbers.size = Math.round(NUMBER_SIZE / this.markScale))
+    this.numbersBox.checked = !!this.numbers.show
     await this.setPieces(this.mark.pieces.map(p => Object.assign({}, p)))
   }
 
@@ -56,6 +66,7 @@ export class ExtraitComposer {
     const minX = Math.min(...pieces.map(p => p.dx)), minY = Math.min(...pieces.map(p => p.dy))
     pieces.forEach(p => { p.dx -= minX ; p.dy -= minY })
     this.masks.forEach(m => { m.x -= minX ; m.y -= minY })
+    null == this.numbers.y || (this.numbers.y -= minY)
     const width = Math.max(1, ...pieces.map(p => p.dx + p.x2 - p.x1))
     this.scale = Math.min(this.markScale, (this.workspace.clientWidth - 2 * PAD) / width)
     this.buildPieces()
@@ -67,6 +78,121 @@ export class ExtraitComposer {
     this.divs = this.pieces.map((p, i) => this.buildPiece(p, i))
     this.divs.length && this.choose(0)
     this.masks.forEach(m => this.buildMask(m))
+    this.buildNumbers()
+    this.sizeLayer()
+  }
+
+  // Chaque élément de la zone d'assemblage : menu contextuel
+  // « Supprimer »
+  listenDelete(div, remove){
+    listen(div, 'contextmenu', e => {
+      e.preventDefault() ; e.stopPropagation()
+      invoke('menu:popup', {items: [{label: t('ui.mark_context.delete'), value: 'delete'}]})
+        .then(choice => choice == 'delete' && remove())
+        .catch(err => console.error(err))
+    })
+  }
+
+  /**
+   * Numéros de mesure (case « Numéros de mesure ») : un par mesure, sur
+   * le morceau qui la contient, tous à la même hauteur ; pendant le
+   * déplacement de l'un, les autres s'alignent sur lui
+   */
+  buildNumbers(){
+    this.layer.querySelectorAll('div.ext-num').forEach(d => d.remove())
+    this.currentNumber = null
+    this.numDivs = []
+    if ( !this.numbers.show || !this.pieces.length ) return
+    const k = this.scale
+    // Hauteur par défaut : au-dessus des morceaux
+    null == this.numbers.y && (this.numbers.y = Math.min(...this.pieces.map(p => p.dy)) - this.numbers.size * 1.4)
+    this.numDivs = this.mark.constructor.numberPlaces(this.pieces, this.numbers).map(pl => {
+      const div = DCreate('DIV', {class: 'ext-num', text: String(pl.item.n)})
+      div.place = pl
+      Object.assign(div.style, {left: px(PAD + pl.x * k), top: px(PAD + pl.y * k), fontSize: px(this.numbers.size * k), fontFamily: NUMBER_FONT})
+      this.layer.appendChild(div)
+      listen(div, 'mousedown', () => this.chooseNumber(div))
+      listen(div, 'dblclick', e => { e.stopPropagation() ; this.askNumberSize() })
+      this.listenDelete(div, () => this.removeNumber(div))
+      draggable(div, {
+          drag: (e, ui) => this.numDivs.forEach(d => d === div || (d.style.top = px(ui.position.top)))
+        , stop: (e, ui) => {
+            const p = pl.piece
+            const x = (ui.position.left - PAD) / k - p.dx + p.x1
+            pl.item.x = Math.round(Math.max(p.x1, Math.min(p.x2 - 1, x)))
+            this.numbers.y = (ui.position.top - PAD) / k
+            this.buildNumbers()
+            this.chooseNumber(this.numDivs.find(d => d.place.item === pl.item))
+            this.sizeLayer()
+          }
+      })
+      return div
+    })
+  }
+
+  chooseNumber(div){
+    this.currentNumber = div
+    if ( div ) {
+      this.divs.forEach(d => d.classList.remove('current'))
+      this.chooseMask(null)
+    }
+    this.numDivs.forEach(d => d.classList.toggle('current', d === div))
+  }
+
+  removeNumber(div){
+    const items = this.numbers.items
+    items.splice(items.indexOf(div.place.item), 1)
+    this.buildNumbers()
+  }
+
+  // Case « Numéros de mesure » : numéros affichés ou retirés (ceux d'un
+  // extrait qui n'en a pas encore : d'après ses mesures)
+  toggleNumbers(){
+    this.numbers.show = this.numbersBox.checked
+    if ( this.numbers.show && !this.numbers.items.length ) {
+      const extract = this.mark.constructor.extractOf(this.field.value)
+      extract && (this.numbers.items = extract.numbers.items)
+    }
+    this.buildNumbers()
+    this.sizeLayer()
+  }
+
+  // Double-clic sur un numéro : taille de tous les numéros (px de la
+  // table)
+  askNumberSize(){
+    this.sizeBox && this.sizeBox.remove()
+    const k = this.markScale
+    const input = DCreate('INPUT', {type: 'number', value: String(Math.round(this.numbers.size * k)), min: '4', max: '200'})
+    const btn = DCreate('BUTTON', {class: 'btn-default', text: 'OK'})
+    const box = DCreate('DIV', {class: 'ext-size-box', inner: [DCreate('LABEL', {text: t('ui.panels.extract.number_size')}), input, btn]})
+    this.panel.appendChild(box)
+    this.sizeBox = box
+    const apply = () => {
+      const v = Number(input.value)
+      if ( !(v > 0) ) return
+      this.numbers.size = v / k
+      this.buildNumbers()
+      this.sizeLayer()
+    }
+    const close = () => { box.remove() ; this.sizeBox = null }
+    listen(input, 'input', apply)
+    listen(input, 'keydown', e => {
+      if ( e.key != 'Enter' ) return
+      e.preventDefault() ; e.stopPropagation()
+      apply() ; close()
+    })
+    listen(btn, 'click', e => { e.stopPropagation() ; apply() ; close() })
+    input.focus()
+    input.select()
+  }
+
+  // Suppression d'un morceau (en-tête de système, mesures), sauf le
+  // dernier
+  removePiece(i){
+    if ( this.pieces.length < 2 ) return
+    this.pieces.splice(i, 1)
+    this.sources.splice(i, 1)
+    this.buildPieces()
     this.sizeLayer()
   }
 
@@ -90,6 +216,7 @@ export class ExtraitComposer {
     this.layer.appendChild(div)
     this.placeMask(div)
     listen(div, 'mousedown', () => this.chooseMask(div))
+    this.listenDelete(div, () => this.removeMask(div))
     draggable(div, {
       stop: (e, ui) => {
         m.x = (ui.position.left - PAD) / this.scale
@@ -123,8 +250,11 @@ export class ExtraitComposer {
 
   chooseMask(div){
     this.currentMask = div
-    // Masque choisi : plus de morceau choisi
-    div && this.divs.forEach(d => d.classList.remove('current'))
+    // Masque choisi : plus de morceau ni de numéro choisi
+    if ( div ) {
+      this.divs.forEach(d => d.classList.remove('current'))
+      this.numDivs && this.chooseNumber(null)
+    }
     this.layer.querySelectorAll('div.ext-mask').forEach(d => d.classList.toggle('current', d === div))
   }
 
@@ -146,11 +276,13 @@ export class ExtraitComposer {
     this.layer.appendChild(div)
     this.place(div, p)
     listen(div, 'mousedown', () => this.choose(i))
+    this.listenDelete(div, () => this.removePiece(this.pieces.indexOf(p)))
     draggable(div, {
       stop: (e, ui) => {
         p.dx = (ui.position.left - PAD) / this.scale
         p.dy = (ui.position.top  - PAD) / this.scale
         this.place(div, p)
+        this.buildNumbers()
         this.sizeLayer()
       }
     })
@@ -158,7 +290,7 @@ export class ExtraitComposer {
         handles: 'n,e,s,w'
       , start:  () => { this.start = Object.assign({}, p, {left: this.leftOf(p), top: this.topOf(p)}) }
       , resize: (e, ui) => this.crop(div, p, ui)
-      , stop:   () => this.sizeLayer()
+      , stop:   () => { this.buildNumbers() ; this.sizeLayer() }
     })
     return div
   }
@@ -184,6 +316,18 @@ export class ExtraitComposer {
     const k = this.scale
     const right  = Math.max(0, ...this.pieces.map(p => this.leftOf(p) + (p.x2 - p.x1) * k), ...this.masks.map(m => PAD + (m.x + m.w) * k))
     const bottom = Math.max(0, ...this.pieces.map(p => this.topOf(p)  + (p.y2 - p.y1) * k), ...this.masks.map(m => PAD + (m.y + m.h) * k))
+    // Numéros au-dessus des morceaux : tout est décalé vers le bas
+    const nums = (this.numDivs || []).map(d => d.offsetTop)
+    const over = Math.max(0, ...nums.map(top => -top))
+    if ( over > 0 ) {
+      const d = over / k
+      this.pieces.forEach(p => p.dy += d)
+      this.masks.forEach(m => m.y += d)
+      this.numbers.y += d
+      this.divs.forEach((div, i) => this.place(div, this.pieces[i]))
+      this.layer.querySelectorAll('div.ext-mask').forEach(div => this.placeMask(div))
+      return this.buildNumbers(), this.sizeLayer()
+    }
     this.layer.style.width  = px(right + PAD)
     this.layer.style.height = px(bottom + PAD)
   }
@@ -217,6 +361,7 @@ export class ExtraitComposer {
     this.current = this.pieces[i]
     this.divs.forEach((d, j) => d.classList.toggle('current', j == i))
     this.chooseMask(null)
+    this.numDivs && this.chooseNumber(null)
   }
 
   // Flèches : déplacement du morceau (ou du masque) choisi (Maj : 10
@@ -224,6 +369,18 @@ export class ExtraitComposer {
   onKeyDown(e){
     if ( ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName) ) return
     if ( this.currentMask ) return this.onKeyDownMask(e)
+    const del = ['Backspace', 'Delete'].includes(e.key)
+    if ( this.currentNumber ) {
+      if ( !del ) return
+      this.removeNumber(this.currentNumber)
+      e.preventDefault() ; e.stopPropagation()
+      return
+    }
+    if ( this.current && del ) {
+      this.removePiece(this.pieces.indexOf(this.current))
+      e.preventDefault() ; e.stopPropagation()
+      return
+    }
     if ( !this.current || !e.key.startsWith('Arrow') ) return
     const d = (e.shiftKey ? 10 : 1) / this.scale
     switch(e.key){
@@ -233,6 +390,7 @@ export class ExtraitComposer {
       case 'ArrowDown':  this.current.dy += d ; break
     }
     this.place(this.divs[this.pieces.indexOf(this.current)], this.current)
+    this.buildNumbers()
     this.sizeLayer()
     e.preventDefault()
     e.stopPropagation()
@@ -265,9 +423,13 @@ export class ExtraitComposer {
     this.workspace = DCreate('DIV', {class: 'ext-workspace', inner: [this.layer]})
     // « Masque blanc » dans le cadre de l'assemblage, en bas à gauche
     const frame = DCreate('DIV', {class: 'ext-frame', inner: [this.workspace, btnMask]})
+    this.numbersBox = DCreate('INPUT', {type: 'checkbox', id: 'ext_numbers'})
     const panel = DCreate('DIV', {id: 'ext_composer_panel', inner: [
         DCreate('P', {class: 'help', text: T('help')})
-      , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('measures')}), this.field]})
+      , DCreate('DIV', {class: 'row', inner: [
+            DCreate('LABEL', {text: T('measures')}), this.field
+          , this.numbersBox, DCreate('LABEL', {for: 'ext_numbers', text: T('numbers')})
+        ]})
       , frame
       , DCreate('DIV', {class: 'buttons', inner: [btnOK, btnCancel]})
     ]})
@@ -279,6 +441,7 @@ export class ExtraitComposer {
     listen(btnMask,     'click', e => { e.stopPropagation() ; btnMask.blur() ; this.addMask() })
     // Mesures changées (sortie du champ, Entrée) : morceaux de ces mesures
     listen(this.field, 'change', () => this.resetMeasures())
+    listen(this.numbersBox, 'change', () => { this.numbersBox.blur() ; this.toggleNumbers() })
     listen(this.field, 'keydown', e => {
       if ( e.key != 'Enter' ) return
       e.preventDefault() ; e.stopPropagation()
@@ -295,6 +458,7 @@ export class ExtraitComposer {
     // Autres morceaux : les masques n'ont plus lieu d'être
     this.masks = []
     this.currentMask = null
+    Object.assign(this.numbers, {items: extract.numbers.items, y: null})
     await this.setPieces(extract.pieces)
   }
 
@@ -306,7 +470,9 @@ export class ExtraitComposer {
     const minY = Math.min(...this.pieces.map(p => p.dy))
     this.pieces.forEach(p => { p.dx -= minX ; p.dy -= minY })
     this.masks.forEach(m => { m.x -= minX ; m.y -= minY })
+    null == this.numbers.y || (this.numbers.y -= minY)
     mark.data.pieces = this.pieces
+    mark.data.numbers = this.numbers
     if ( this.masks.length ) { mark.data.masks = this.masks } else { delete mark.data.masks }
     mark.data.scale  = this.markScale
     this.measures && (mark.content = this.measures)

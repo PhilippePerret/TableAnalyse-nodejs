@@ -35,7 +35,7 @@ tools:
   code_required: "Il faut donner le code dans le champ."
 
 marks:
-  extract_bad_measures: "Mesures invalides : « %{spec} » (p.e. 12 ou 12-13)."
+  extract_bad_measures: "Mesures invalides : « %{spec} » (p.e. 12, 12-13 ou 1,3,5)."
   extract_type: "Un extrait de partition ne peut pas changer de type, ni une autre marque devenir un extrait."
   no_autocontent: "Impossible de définir l'autocontent du type '%{type}'…"
   no_subtype: "Le type '%{type}' ne définit pas son sous-type…"

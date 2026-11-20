@@ -337,6 +337,8 @@ panels:
     assemble:         "Zusammensetzen"
     mask: "Weiße Maske"
     mask_title: "Weißes Rechteck zum Abdecken von Störstellen (Löschtaste: gewählte Maske entfernen)"
+    numbers: "Taktnummern"
+    number_size: "Größe der Nummern (px)"
   animation:
     title:            "Animation"
     play:             "Abspielen"
@@ -524,7 +526,7 @@ marks:
     txt: {name: "Text",          message: "Anzuzeigender Text"}
     ped: {name: "Orgelpunkt",    message: "Stufe des Orgelpunkts"}
     cir: {name: "Kreis"}
-    ext: {name: "Partiturausschnitt", message: "Zu extrahierende Takt(e) (z. B. 12 oder 12-13)"}
+    ext: {name: "Partiturausschnitt", message: "Zu extrahierende Takt(e) (z. B. 12, 12-13 oder 1,3,5)"}
     frm: {name: "Form…", message: "Formteil"}
     mot: {name: "Motiv", default: "Motiv", message: "Name des Motivs"}
     lay: {name: "Seitenlayout", message: "Seitenlayout"}

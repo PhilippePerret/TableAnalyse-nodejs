@@ -337,6 +337,8 @@ panels:
     assemble:         "Ensamblar"
     mask: "Máscara blanca"
     mask_title: "Rectángulo blanco para cubrir impurezas (tecla Suprimir: elimina la máscara elegida)"
+    numbers: "Números de compás"
+    number_size: "Tamaño de los números (px)"
   animation:
     title:            "Animación"
     play:             "Reproducir"
@@ -524,7 +526,7 @@ marks:
     txt: {name: "Texto",         message: "Texto que mostrar"}
     ped: {name: "Pedal",         message: "Grado del pedal"}
     cir: {name: "Círculo"}
-    ext: {name: "Fragmento de partitura", message: "Compás(es) a extraer (p. ej. 12 o 12-13)"}
+    ext: {name: "Fragmento de partitura", message: "Compás(es) a extraer (p. ej. 12, 12-13 o 1,3,5)"}
     frm: {name: "Forma…", message: "Porción de la forma"}
     mot: {name: "Motivo", default: "Motivo", message: "Nombre del motivo"}
     lay: {name: "Maquetación", message: "Maquetación"}

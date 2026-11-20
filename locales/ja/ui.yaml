@@ -337,6 +337,8 @@ panels:
     assemble:         "組み立て"
     mask: "白マスク"
     mask_title: "汚れを隠す白い長方形（削除キー：選択したマスクを削除）"
+    numbers: "小節番号"
+    number_size: "番号のサイズ（px）"
   animation:
     title:            "アニメーション"
     play:             "再生"
@@ -523,7 +525,7 @@ marks:
     txt: {name: "テキスト",      message: "表示するテキスト"}
     ped: {name: "保続音",        message: "保続音の度数"}
     cir: {name: "円"}
-    ext: {name: "楽譜の抜粋", message: "抜粋する小節（例：12 または 12-13）"}
+    ext: {name: "楽譜の抜粋", message: "抜粋する小節（例：12、12-13 または 1,3,5）"}
     frm: {name: "形式…", message: "形式の部分"}
     mot: {name: "動機", default: "動機", message: "動機の名前"}
     lay: {name: "レイアウト", message: "レイアウト"}

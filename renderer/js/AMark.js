@@ -78,6 +78,7 @@ export class AMark extends AObjet {
       // ensuite dans le compositeur ; une copie garde ceux de l'original
       const newExtract = params.type == 'ext' && !params.pieces && !params.image
       params.pieces && (params.pieces = params.pieces.map(p => Object.assign({}, p)))
+      params.numbers && (params.numbers = structuredClone(params.numbers))
       if ( newExtract ) {
         const extract = AMExtrait.extractOf(params.content)
         if ( !extract ) return
@@ -1266,7 +1267,9 @@ get srcPath(){
  * Données propres : pieces, liste de {image, x1, x2, y1, y2, dx, dy}
  * (bornes du morceau dans l'image du système et position dans
  * l'extrait, en px des images) ; scale (px de la table par px des
- * images). Le contenu est le numéro des mesures (« 12 », « 12-15 »).
+ * images) ; numbers, numéros des mesures {show, items, y, size} (cf.
+ * numberPlaces). Le contenu est le numéro des mesures (« 12 »,
+ * « 12-15 », « 1,3,5 »).
  */
 // Largeur de l'en-tête (clé, armure) d'un système, en hauteurs de
 // portée après sa barre de début (réglée ensuite dans le compositeur) ;
@@ -1275,30 +1278,75 @@ const HEADER_STAVES = 2
 const HEADER_STAVES_FIRST = 3
 // Marge (px des images) laissée autour de ce qui est imprimé
 const INK_MARGIN = 6
+// Police des numéros de mesure de l'extrait (cf. ExtraitComposer)
+export const NUMBER_FONT = 'Arial, Helvetica, sans-serif'
 
 export class AMExtrait extends AMark {
 
 /**
- * Morceaux de l'extrait des mesures +spec+ (« 12 », « 12-15 ») : un par
- * système traversé, de la barre de début de la première mesure (après
- * l'en-tête du système pour sa première mesure) à celle de fin de la
- * dernière ; en tête, en morceau séparé, l'en-tête (clé, armure ;
- * métrique pour le premier système) du système de la première mesure.
- * Morceaux bout à bout, portées alignées (cf. aligned).
- * @return {pieces, scale} ou null (message affiché)
+ * Morceaux de l'extrait des mesures +spec+ (« 12 », « 12-15 », mesures
+ * discontinues : « 1,3,5 », « 1-3, 7 ») : pour chaque groupe de
+ * mesures, un par système traversé (cf. bodyOf) ; en tête, en morceau
+ * séparé, l'en-tête (clé, armure ; métrique pour le premier système) du
+ * système de la première mesure. Morceaux bout à bout, portées alignées
+ * (cf. aligned).
+ * @return {pieces, scale, numbers} ou null (message affiché) ;
+ * numbers : {items}, numéros des mesures (cf. numberPlaces)
  */
 static extractOf(spec){
-  const m = String(spec || '').trim().match(/^(\d+)\s*(?:[-–à]\s*(\d+))?$/)
-  if ( !m ) return erreur(t('errors.marks.extract_bad_measures', {spec: escapeLt(String(spec || ''))})), null
-  let [from, to] = [Number(m[1]), Number(m[2] || m[1])]
-  if ( to < from ) [from, to] = [to, from]
-  const mesures = Forme.measureMarks
-  if ( mesures.length == 0 ) return message(t('messages.no_measure_number')), null
-  const found = mesures.find(x => x.number == from)
+  const groups = this.measureGroups(spec)
+  if ( !groups ) return erreur(t('errors.marks.extract_bad_measures', {spec: escapeLt(String(spec || ''))})), null
+  if ( Forme.measureMarks.length == 0 ) return message(t('messages.no_measure_number')), null
+  const pieces = [], items = []
+  let sys0
+  for ( const [from, to] of groups ) {
+    const body = this.bodyOf(from, to)
+    if ( !body ) return null
+    sys0 || (sys0 = body.sys)
+    pieces.push(...body.pieces)
+    items.push(...body.numbers)
+  }
+  // En-tête (clé, armure ; métrique pour le premier système) du système
+  // de la première mesure, toujours en morceau séparé
+  pieces.unshift(Object.assign({image: sys0.image_name, y1: 0, y2: sys0.obj.naturalHeight}, this.headerOf(sys0)))
+  // Hauteur limitée à ce qui est imprimé (pas les marges des systèmes)
+  pieces.forEach(p => {
+    const sys  = Systeme.all.find(s => s.image_name == p.image)
+    const prof = this.rowProfile(sys.obj, p.x1, p.x2)
+    const first = prof.findIndex(n => n > 0), last = prof.findLastIndex(n => n > 0)
+    if ( first < 0 ) return
+    p.y1 = Math.max(0, first - INK_MARGIN)
+    p.y2 = Math.min(prof.length, last + 1 + INK_MARGIN)
+  })
+  return {pieces: this.aligned(pieces), scale: sys0.obj.offsetWidth / sys0.obj.naturalWidth, numbers: {items}}
+}
+
+// Groupes [de, à] des mesures +spec+ (cf. extractOf), ou null
+static measureGroups(spec){
+  const parts = String(spec || '').split(',').map(s => s.trim())
+  const groups = parts.map(part => {
+    const m = part.match(/^(\d+)\s*(?:[-–à]\s*(\d+))?$/)
+    if ( !m ) return null
+    const [a, b] = [Number(m[1]), Number(m[2] || m[1])]
+    return a <= b ? [a, b] : [b, a]
+  })
+  return groups.some(g => !g) ? null : groups
+}
+
+/**
+ * Morceaux des mesures +from+ à +to+ : un par système traversé, de la
+ * barre de début de la première mesure (après l'en-tête du système
+ * pour sa première mesure) à celle de fin de la dernière.
+ * @return {sys, pieces, numbers} ou null (message affiché) ; sys,
+ * système de la première mesure ; numbers, {n, image, x} : numéro et
+ * début de chaque mesure (px de l'image de son système)
+ */
+static bodyOf(from, to){
+  const found = Forme.measureMarks.find(x => x.number == from)
   if ( !found ) return message(t('messages.measure_not_found', {num: from})), null
   const sys0 = Systeme.getSystemeAssociated(found.mark)
   if ( !sys0 || !sys0.obj.naturalWidth ) return message(t('messages.measure_not_found', {num: from})), null
-  const pieces = []
+  const pieces = [], numbers = []
   const systems = Systeme.all
   for ( let i = systems.indexOf(sys0) ; i < systems.length ; ++i ) {
     const sys = systems[i], img = sys.obj
@@ -1327,21 +1375,30 @@ static extractOf(spec){
       , x2: Math.min(img.naturalWidth, Math.round((end - r.left) * k))
       , y1: 0, y2: img.naturalHeight
     })
+    for ( let j = iFrom ; j <= iTo ; ++j ) {
+      numbers.push({n: nums[j], image: sys.image_name, x: j == iFrom ? x1 : Math.round((starts[j] - r.left) * k)})
+    }
     if ( iTo + 1 < nums.length || nums[iTo] >= to ) break
   }
-  // En-tête (clé, armure ; métrique pour le premier système) du système
-  // de la première mesure, toujours en morceau séparé
-  pieces.unshift(Object.assign({image: sys0.image_name, y1: 0, y2: sys0.obj.naturalHeight}, this.headerOf(sys0)))
-  // Hauteur limitée à ce qui est imprimé (pas les marges des systèmes)
-  pieces.forEach(p => {
-    const sys  = Systeme.all.find(s => s.image_name == p.image)
-    const prof = this.rowProfile(sys.obj, p.x1, p.x2)
-    const first = prof.findIndex(n => n > 0), last = prof.findLastIndex(n => n > 0)
-    if ( first < 0 ) return
-    p.y1 = Math.max(0, first - INK_MARGIN)
-    p.y2 = Math.min(prof.length, last + 1 + INK_MARGIN)
-  })
-  return {pieces: this.aligned(pieces), scale: sys0.obj.offsetWidth / sys0.obj.naturalWidth}
+  return {sys: sys0, pieces, numbers}
+}
+
+/**
+ * Place (px de l'extrait) des numéros de mesure +numbers+ ({items, y,
+ * size}) parmi les morceaux +pieces+ : chaque numéro suit le morceau
+ * qui contient le début de sa mesure (absent si ce morceau a été
+ * supprimé) ; tous à la même hauteur (y, au-dessus des morceaux par
+ * défaut).
+ * @return liste de {item, piece, x, y}
+ */
+static numberPlaces(pieces, numbers){
+  const y = null == numbers.y ? Math.min(...pieces.map(p => p.dy)) - numbers.size * 1.4 : numbers.y
+  return (numbers.items || []).map(item => {
+    const piece = pieces
+      .filter(p => p.image == item.image && item.x >= p.x1 && item.x < p.x2)
+      .sort((a, b) => a.dy - b.dy)[0]
+    return piece && {item, piece, x: piece.dx + item.x - piece.x1, y}
+  }).filter(Boolean)
 }
 
 /**
@@ -1526,14 +1583,24 @@ async composeImage(){
   const sources = await Promise.all(pieces.map(p => AMExtrait.sourceOf(p.image)))
   if ( sources.some(s => !s) ) return null
   pieces.forEach((p, i) => null == p.y2 && (p.y2 = sources[i].naturalHeight))
-  const W = Math.max(1, ...pieces.map(p => Math.round(p.dx + p.x2 - p.x1)))
-  const H = Math.max(1, ...pieces.map(p => Math.round(p.dy + p.y2 - p.y1)))
+  // Numéros de mesure (cf. ExtraitComposer) : l'extrait est agrandi
+  // pour les contenir
+  const nb = this.data.numbers
+  const places = nb && nb.show ? AMExtrait.numberPlaces(pieces, nb) : []
+  const font = nb && `${nb.size}px ${NUMBER_FONT}`
+  const measure = DCreate('CANVAS').getContext('2d')
+  font && (measure.font = font)
+  const boxes = places.map(pl => ({text: String(pl.item.n), x: pl.x, y: pl.y, w: measure.measureText(String(pl.item.n)).width, h: nb.size}))
+  const X0 = Math.min(0, ...boxes.map(b => b.x)), Y0 = Math.min(0, ...boxes.map(b => b.y))
+  const W = Math.max(1, ...pieces.map(p => Math.round(p.dx + p.x2 - p.x1)), ...boxes.map(b => Math.ceil(b.x + b.w))) - Math.floor(X0)
+  const H = Math.max(1, ...pieces.map(p => Math.round(p.dy + p.y2 - p.y1)), ...boxes.map(b => Math.ceil(b.y + b.h))) - Math.floor(Y0)
   const canvas = DCreate('CANVAS', {width: W, height: H})
   const ctx = canvas.getContext('2d')
   // Fond blanc, morceaux superposés sans que l'un efface l'encre de
   // l'autre
   ctx.fillStyle = 'white'
   ctx.fillRect(0, 0, W, H)
+  ctx.translate(-Math.floor(X0), -Math.floor(Y0))
   ctx.globalCompositeOperation = 'multiply'
   pieces.forEach((p, i) => {
     const w = p.x2 - p.x1, h = p.y2 - p.y1
@@ -1542,6 +1609,12 @@ async composeImage(){
   // Masques blancs (cf. ExtraitComposer) : scories couvertes
   ctx.globalCompositeOperation = 'source-over'
   ;(this.data.masks || []).forEach(m => ctx.fillRect(Math.round(m.x), Math.round(m.y), Math.round(m.w), Math.round(m.h)))
+  if ( boxes.length ) {
+    ctx.fillStyle = 'black'
+    ctx.font = font
+    ctx.textBaseline = 'top'
+    boxes.forEach(b => ctx.fillText(b.text, Math.round(b.x), Math.round(b.y)))
+  }
   return AMExtrait.trimmed(canvas).toDataURL('image/png')
 }
 

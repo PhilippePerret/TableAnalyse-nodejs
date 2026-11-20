@@ -337,6 +337,8 @@ panels:
     assemble:         "조립"
     mask: "흰색 마스크"
     mask_title: "잡티를 가리는 흰색 사각형 (삭제 키: 선택한 마스크 삭제)"
+    numbers: "마디 번호"
+    number_size: "번호 크기 (px)"
   animation:
     title:            "애니메이션"
     play:             "재생"
@@ -523,7 +525,7 @@ marks:
     txt: {name: "텍스트",        message: "표시할 텍스트"}
     ped: {name: "지속음",        message: "지속음의 도수"}
     cir: {name: "원"}
-    ext: {name: "악보 발췌", message: "발췌할 마디 (예: 12 또는 12-13)"}
+    ext: {name: "악보 발췌", message: "발췌할 마디 (예: 12, 12-13 또는 1,3,5)"}
     frm: {name: "형식…", message: "형식의 부분"}
     mot: {name: "동기", default: "동기", message: "동기 이름"}
     lay: {name: "페이지 구성", message: "페이지 구성"}

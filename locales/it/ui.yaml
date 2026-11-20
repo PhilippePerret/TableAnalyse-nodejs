@@ -337,6 +337,8 @@ panels:
     assemble:         "Assembla"
     mask: "Maschera bianca"
     mask_title: "Rettangolo bianco per coprire le impurità (tasto Canc: elimina la maschera scelta)"
+    numbers: "Numeri di battuta"
+    number_size: "Dimensione dei numeri (px)"
   animation:
     title:            "Animazione"
     play:             "Avvia"
@@ -524,7 +526,7 @@ marks:
     txt: {name: "Testo",         message: "Testo da mostrare"}
     ped: {name: "Pedale",        message: "Grado del pedale"}
     cir: {name: "Cerchio"}
-    ext: {name: "Estratto partitura", message: "Battuta/e da estrarre (es. 12 o 12-13)"}
+    ext: {name: "Estratto partitura", message: "Battuta/e da estrarre (es. 12, 12-13 o 1,3,5)"}
     frm: {name: "Forma…", message: "Porzione della forma"}
     mot: {name: "Motivo", default: "Motivo", message: "Nome del motivo"}
     lay: {name: "Impaginazione", message: "Impaginazione"}

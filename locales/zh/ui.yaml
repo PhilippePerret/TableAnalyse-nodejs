@@ -337,6 +337,8 @@ panels:
     assemble:         "拼接"
     mask: "白色遮罩"
     mask_title: "用于遮盖杂点的白色矩形（删除键：删除所选遮罩）"
+    numbers: "小节号"
+    number_size: "编号大小（px）"
   animation:
     title:            "动画"
     play:             "播放"
@@ -523,7 +525,7 @@ marks:
     txt: {name: "文本",          message: "要显示的文本"}
     ped: {name: "持续音",        message: "持续音的级数"}
     cir: {name: "圆圈"}
-    ext: {name: "乐谱片段", message: "要提取的小节（例如 12 或 12-13）"}
+    ext: {name: "乐谱片段", message: "要提取的小节（例如 12、12-13 或 1,3,5）"}
     frm: {name: "曲式…", message: "曲式部分"}
     mot: {name: "动机", default: "动机", message: "动机名称"}
     lay: {name: "版面", message: "版面"}
