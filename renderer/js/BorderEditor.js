@@ -5,8 +5,8 @@ import { editorField } from './LiaisonEditor.js'
 /**
  * BorderEditor
  * ------------
- * Boite « Épaisseur des bords… » d'une marque à bord (cf.
- * AMark#borderTarget) : épaisseur (curseur) et type de trait (continu,
+ * Boite « Bord/trait… » des marques à bord (cf. AMark#borderTarget),
+ * réglages communs à toutes (valeurs de départ : celles de la première) : épaisseur (curseur) et type de trait (continu,
  * pointillé). Chaque réglage est montré aussitôt, gardé seulement par
  * « OK » (« Renoncer » : la marque reprend ses bords), comme pour une
  * liaison (cf. LiaisonEditor.js). « Valeur par défaut » : bords des
@@ -14,9 +14,16 @@ import { editorField } from './LiaisonEditor.js'
  */
 class BorderEditorClass {
 
-  open(mark){
+  open(marks){
     this.close()
-    this.mark = mark
+    marks = [marks].flat().filter(m => m.borderTarget)
+    if ( !marks.length ) return
+    this.marks = marks
+    const mark = {
+        previewBorder: (v) => marks.forEach(m => m.previewBorder(v))
+      , confirmBorder: () => marks.forEach(m => m.confirmBorder())
+      , get border(){ return marks[0].border }
+    }
     const T = (k) => t(`ui.panels.liaison.${k}`)
     const st = mark.border
     const line  = DCreate('SELECT', {inner: ['solid', 'dashed'].map(v => DCreate('OPTION', {value: v, text: T('lines')[v]}))})
@@ -53,12 +60,13 @@ class BorderEditorClass {
     addPanelHead(panel, {title: t('ui.panels.border.title'), onClose: this.close.bind(this)})
   }
 
-  // Fermeture sans OK (Renoncer, croix…) : la marque reprend ses bords
+  // Fermeture sans OK (Renoncer, croix…) : les marques reprennent leurs
+  // bords
   close(){
-    this.mark && this.mark.cancelBorder()
+    this.marks && this.marks.forEach(m => m.cancelBorder())
     this.panel && this.panel.remove()
     this.panel = null
-    this.mark = null
+    this.marks = null
   }
 }
 

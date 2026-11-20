@@ -851,7 +851,7 @@ onContextChoice(choice){
       setModified()
       break
     case 'edit':          return this.edit()
-    case 'border':        return BorderEditor.open(this)
+    case 'border':        return BorderEditor.open([this, ...targets.filter(m => m !== this)])
     case 'openImage':     return this.openImage()
     case 'reloadImage':   return this.showImage()
     case 'align':         return targets.forEach(m => m.alignOnSameType())

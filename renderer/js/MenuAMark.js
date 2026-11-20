@@ -47,13 +47,12 @@ export class AmarkMenu extends MenusTool {
     // Liaisons (cf. Liaison.js)
     DGet('option[value="link"]', this.menu).disabled   = !Liaison.canLink(sel)
     DGet('option[value="unlink"]', this.menu).disabled = !Liaison.linkOf(sel)
-    // Bords (cf. BorderEditor.js) : une seule marque, à bord
-    DGet('option[value="border"]', this.menu).disabled = !(sel.length == 1 && sel[0].borderTarget)
+    // Bords (cf. BorderEditor.js) : marques à bord de la sélection
+    DGet('option[value="border"]', this.menu).disabled = !sel.some(m => m.borderTarget)
   }
 
   static onActivate_border(){
-    const mark = this.selection[0]
-    mark && mark.borderTarget && BorderEditor.open(mark)
+    BorderEditor.open(this.selection)
   }
 
   static onActivate_link(){
