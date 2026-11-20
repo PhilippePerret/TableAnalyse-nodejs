@@ -289,6 +289,10 @@ div.amark.not span.content {
   height: 24px;
   text-align: center;
 }
+div.amark.not.da span.content,
+div.amark.not.dac span.content {
+  width: 44px;
+}
 
 div.amark.not span.pline {
   position: absolute;

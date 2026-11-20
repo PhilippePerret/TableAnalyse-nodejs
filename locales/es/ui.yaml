@@ -543,6 +543,8 @@ marks:
     np: "Nota de paso"
     ap: "Apoyatura"
     ac: "Apoyatura cromática"
+    da: "Doble apoyatura"
+    dac: "Dbl. apoy. cromática"
     re: "Retardo"
     br: "Bordadura"
     db: "Doble bordadura"
@@ -554,6 +556,7 @@ marks:
     df: "Diferencia"
   notes_full:
     ac: "Apoyatura cromática"
+    dac: "Doble apoyatura cromática"
     bc: "Bordadura cromática"
     dc: "Doble bordadura cromática"
   cadences:

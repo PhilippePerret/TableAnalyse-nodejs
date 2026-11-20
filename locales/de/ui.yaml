@@ -543,6 +543,8 @@ marks:
     np: "Durchgangsnote"
     ap: "Vorhalt (Appoggiatur)"
     ac: "Chromatische Appoggiatur"
+    da: "Doppelvorhalt"
+    dac: "Chrom. Doppelvorhalt"
     re: "Vorhalt"
     br: "Wechselnote"
     db: "Doppelte Wechselnote"
@@ -554,6 +556,7 @@ marks:
     df: "Unterschied"
   notes_full:
     ac: "Chromatischer Vorhalt"
+    dac: "Chromatischer Doppelvorhalt"
     bc: "Chromatische Wechselnote"
     dc: "Chromatische Doppelwechselnote"
   cadences:

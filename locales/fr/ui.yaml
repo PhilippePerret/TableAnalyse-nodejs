@@ -543,6 +543,8 @@ marks:
     np: "Note de passage"
     ap: "Appoggiature"
     ac: "Appog.chromatique"
+    da: "Double appogiature"
+    dac: "Dbl appog. chr."
     re: "Retard"
     br: "Broderie"
     db: "Double-broderie"
@@ -554,6 +556,7 @@ marks:
     df: "Différence"
   notes_full:
     ac: "Appoggiature chromatique"
+    dac: "Double appogiature chromatique"
     bc: "Broderie chromatique"
     dc: "Double-broderie chromatique"
   cadences:

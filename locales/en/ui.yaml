@@ -543,6 +543,8 @@ marks:
     np: "Passing note"
     ap: "Appoggiatura"
     ac: "Chromatic appoggiatura"
+    da: "Double appoggiatura"
+    dac: "Dbl chrom. appog."
     re: "Suspension"
     br: "Neighbor note"
     db: "Double neighbor"
@@ -554,6 +556,7 @@ marks:
     df: "Difference"
   notes_full:
     ac: "Chromatic appoggiatura"
+    dac: "Chromatic double appoggiatura"
     bc: "Chromatic neighbor tone"
     dc: "Chromatic double neighbor"
   cadences:

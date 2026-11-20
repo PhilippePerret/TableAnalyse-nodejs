@@ -29,6 +29,8 @@ export const TYPES_NOTES = {
   'np': {name:t('ui.marks.notes.np')   , value:'np', autocontent:'NP'  , shortcut:'p'}
   , 'ap': {name:t('ui.marks.notes.ap')      , value:'ap', autocontent:'AP'  , shortcut:'a'}
   , 'ac': {name:t('ui.marks.notes.ac') , value:'ac', autocontent:'AC'  , shortcut:'A', full:t('ui.marks.notes_full.ac')}
+  , 'da': {name:t('ui.marks.notes.da') , value:'da', autocontent:'DAP' , shortcut:'g'}
+  , 'dac': {name:t('ui.marks.notes.dac'), value:'dac', autocontent:'DAC' , shortcut:'G', full:t('ui.marks.notes_full.dac')}
   , 're': {name:t('ui.marks.notes.re')            , value:'re', autocontent:'R'   , shortcut:'r'}
   , 'br': {name:t('ui.marks.notes.br')          , value:'br', autocontent:'BR'  , shortcut:'b'}
   , 'db': {name:t('ui.marks.notes.db')   , value:'db', autocontent:'DB'  , shortcut:'d'}

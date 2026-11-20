@@ -92,6 +92,8 @@ Types de notes :
     Note de passage
     Appoggiature
     Appoggiature chromatique
+    Double appogiature
+    Double appogiature chromatique
     Retard
     Broderie
     Double-broderie

@@ -543,6 +543,8 @@ marks:
     np: "Nota di passaggio"
     ap: "Appoggiatura"
     ac: "Appoggiatura cromatica"
+    da: "Doppia appoggiatura"
+    dac: "Dopp. appogg. crom."
     re: "Ritardo"
     br: "Nota di volta"
     db: "Doppia nota di volta"
@@ -554,6 +556,7 @@ marks:
     df: "Differenza"
   notes_full:
     ac: "Appoggiatura cromatica"
+    dac: "Doppia appoggiatura cromatica"
     bc: "Fioritura cromatica"
     dc: "Doppia fioritura cromatica"
   cadences:
