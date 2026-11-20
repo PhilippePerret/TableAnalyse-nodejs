@@ -11,7 +11,7 @@ import { Current } from './Current.js'
 import { draggable } from './lib/interact.js'
 import { Panneau } from './Panneau.js'
 import { Preferences } from './Preferences.js'
-import { PreferencesAppData } from './Preferences_AppData.js'
+import { PreferencesAppData, BORDER_INTENSITY } from './Preferences_AppData.js'
 import { Grid } from './Grid.js'
 import { Systeme } from './Systeme.js'
 import { UI } from './UI.js'
@@ -31,7 +31,7 @@ const PREFS_GROUPS = [
   , {id: 'marks',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_cadence_type_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_motif_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
   , {id: 'form',     keys: ['form_height_1', 'form_height_2', 'form_height_3', 'form_position']}
   , {id: 'layout',   keys: [1, 2, 3].flatMap(n => ['font', 'size', 'before', 'after'].map(k => `layout_title_${n}_${k}`))}
-  , {id: 'lines',    keys: ['border_circle', 'border_box', 'thiness_cellule_line', 'thiness_border', 'thiness_motif_line', 'thiness_segment_line', 'border_emprunt', 'border_cadence', 'border_note', 'border_form', 'border_measure']}
+  , {id: 'lines',    keys: ['border_circle', 'border_box', 'thiness_cellule_line', 'thiness_border', 'thiness_motif_line', 'thiness_segment_line', 'border_emprunt', 'border_cadence', 'border_note', 'border_form', 'border_measure'].flatMap(k => [k, BORDER_INTENSITY[k]])}
   , {id: 'colors',   keys: ['color_accords', 'color_harmonie', 'color_mark_parties', 'color_mark_sections', 'color_cellule', 'color_modulations', 'color_emprunts', 'color_segments']}
   , {id: 'window',   keys: ['window_width', 'window_height', 'last_scroll']}
 ]
@@ -63,18 +63,19 @@ apply(key, old){
 }
 
 /**
- * Épaisseur de bord par défaut +key+ (cf. :border) passée de +old+ à
- * sa nouvelle valeur : marques qui suivent la valeur par défaut, et
- * celles qui ont la leur seulement si l'utilisateur le veut (« Non »
- * par défaut). Une marque dont l'épaisseur propre est l'ancienne
- * valeur par défaut la suit.
+ * Épaisseur ou intensité de bord par défaut +key+ (cf. :border, la
+ * propriété) passée de +old+ à sa nouvelle valeur : marques qui suivent
+ * la valeur par défaut, et celles qui ont la leur seulement si
+ * l'utilisateur le veut (« Non » par défaut). Une marque dont la valeur
+ * propre est l'ancienne valeur par défaut la suit.
  */
 async applyBorder(key, old){
-  const marks = AObjet.items.filter(m => m.borderPrefKey == key && m.data.border && null != m.data.border.width)
-  const own = marks.filter(m => Number(m.data.border.width) != Number(old))
+  const prop = PreferencesAppData[key].border
+  const marks = AObjet.items.filter(m => m.borderPrefKeyOf && m.borderPrefKeyOf(prop) == key && m.data.border && null != m.data.border[prop])
+  const own = marks.filter(m => String(m.data.border[prop]) != String(old))
   const all = own.length > 0 && await invoke('prefs:confirmBorderOwn')
   const follow = all ? marks : marks.filter(m => !own.includes(m))
-  follow.forEach(m => m.resetBorderWidth())
+  follow.forEach(m => m.resetBorder(prop))
   this.updateStylesInHead()
   follow.length && setModified()
 }

@@ -368,6 +368,7 @@ panels:
     count_many:       "%{n} segni trovati"
   border:
     title:            "Bordi"
+    intensity:        "Intensità"
     default:          "Valore predefinito"
   liaison:
     title:            "Collegamento"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "Spessore dell'ovale dei tipi di nota"}
   border_form:            {label: "Spessore della cornice delle forme (versione cornice)"}
   border_measure:         {label: "Spessore della cornice dei numeri di battuta (linea)"}
+  intensity_circle:       {label: "Intensità del bordo dei cerchi"}
+  intensity_box:          {label: "Intensità delle cornici semplici"}
+  intensity_cellule:      {label: "Intensità della linea delle cellule"}
+  intensity_bxt:          {label: "Intensità della cornice dei testi in cornice"}
+  intensity_motif:        {label: "Intensità della cornice dei motivi"}
+  intensity_segment:      {label: "Intensità della linea dei segmenti"}
+  intensity_emprunt:      {label: "Intensità della linea dei prestiti"}
+  intensity_cadence:      {label: "Intensità della linea delle cadenze"}
+  intensity_note:         {label: "Intensità dell'ovale dei tipi di nota"}
+  intensity_form:         {label: "Intensità della cornice delle forme (versione cornice)"}
+  intensity_measure:      {label: "Intensità della cornice dei numeri di battuta (linea)"}
   marque_pedale_size:     {label: "Dimensione dei pedali"}
   marque_texte_size_1:    {label: "Dimensione dei testi grandi"}
   marque_texte_size_2:    {label: "Dimensione dei testi medi"}

@@ -368,6 +368,7 @@ panels:
     count_many:       "找到 %{n} 个标记"
   border:
     title:            "边框"
+    intensity:        "浓度"
     default:          "默认值"
   liaison:
     title:            "连线"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "音符类型椭圆粗细"}
   border_form:            {label: "曲式框粗细（框版本）"}
   border_measure:         {label: "小节号框粗细（行）"}
+  intensity_circle:       {label: "圆圈边框浓度"}
+  intensity_box:          {label: "简单方框浓度"}
+  intensity_cellule:      {label: "动机单元线条浓度"}
+  intensity_bxt:          {label: "框内文本的边框浓度"}
+  intensity_motif:        {label: "动机框线浓度"}
+  intensity_segment:      {label: "片段线条浓度"}
+  intensity_emprunt:      {label: "借用线条浓度"}
+  intensity_cadence:      {label: "终止式线条浓度"}
+  intensity_note:         {label: "音符类型椭圆浓度"}
+  intensity_form:         {label: "曲式框浓度（框版本）"}
+  intensity_measure:      {label: "小节号框浓度（行）"}
   marque_pedale_size:     {label: "持续音大小"}
   marque_texte_size_1:    {label: "大号文本大小"}
   marque_texte_size_2:    {label: "中号文本大小"}

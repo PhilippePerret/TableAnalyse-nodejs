@@ -368,6 +368,7 @@ panels:
     count_many:       "%{n} 個のマークが見つかりました"
   border:
     title:            "枠線"
+    intensity:        "濃さ"
     default:          "既定値"
   liaison:
     title:            "連結線"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "音の種類の楕円の太さ"}
   border_form:            {label: "形式の枠の太さ（枠版）"}
   border_measure:         {label: "小節番号の枠の太さ（行）"}
+  intensity_circle:       {label: "円の枠線の濃さ"}
+  intensity_box:          {label: "単純な枠の濃さ"}
+  intensity_cellule:      {label: "セルの線の濃さ"}
+  intensity_bxt:          {label: "枠付きテキストの枠の濃さ"}
+  intensity_motif:        {label: "動機の枠の濃さ"}
+  intensity_segment:      {label: "セグメントの線の濃さ"}
+  intensity_emprunt:      {label: "借用の線の濃さ"}
+  intensity_cadence:      {label: "終止形の線の濃さ"}
+  intensity_note:         {label: "音の種類の楕円の濃さ"}
+  intensity_form:         {label: "形式の枠の濃さ（枠版）"}
+  intensity_measure:      {label: "小節番号の枠の濃さ（行）"}
   marque_pedale_size:     {label: "保続音のサイズ"}
   marque_texte_size_1:    {label: "大きいテキストのサイズ"}
   marque_texte_size_2:    {label: "中くらいのテキストのサイズ"}

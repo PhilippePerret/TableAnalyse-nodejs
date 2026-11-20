@@ -368,6 +368,7 @@ panels:
     count_many:       "%{n} marques trouvées"
   border:
     title:            "Bords"
+    intensity:        "Intensité"
     default:          "Valeur par défaut"
   liaison:
     title:            "Liaison"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "Épaisseur de l'ovale des types de note"}
   border_form:            {label: "Épaisseur du cadre des formes (version cadre)"}
   border_measure:         {label: "Épaisseur du cadre des numéros de mesure (ligne)"}
+  intensity_circle:       {label: "Intensité du bord des cercles"}
+  intensity_box:          {label: "Intensité des cadres simples"}
+  intensity_cellule:      {label: "Intensité du trait des cellules"}
+  intensity_bxt:          {label: "Intensité du cadre des textes dans cadre"}
+  intensity_motif:        {label: "Intensité du cadre des motifs"}
+  intensity_segment:      {label: "Intensité du trait des segments"}
+  intensity_emprunt:      {label: "Intensité du trait des emprunts"}
+  intensity_cadence:      {label: "Intensité du trait des cadences"}
+  intensity_note:         {label: "Intensité de l'ovale des types de note"}
+  intensity_form:         {label: "Intensité du cadre des formes (version cadre)"}
+  intensity_measure:      {label: "Intensité du cadre des numéros de mesure (ligne)"}
   marque_pedale_size:     {label: "Taille des pédales"}
   marque_texte_size_1:    {label: "Taille des gros textes"}
   marque_texte_size_2:    {label: "Taille des textes moyens"}

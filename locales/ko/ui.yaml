@@ -368,6 +368,7 @@ panels:
     count_many:       "표시 %{n}개 찾음"
   border:
     title:            "테두리"
+    intensity:        "농도"
     default:          "기본값"
   liaison:
     title:            "연결선"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "음 유형 타원 두께"}
   border_form:            {label: "형식 틀 두께 (틀 버전)"}
   border_measure:         {label: "마디 번호 틀 두께 (줄)"}
+  intensity_circle:       {label: "원 테두리 농도"}
+  intensity_box:          {label: "단순 틀 농도"}
+  intensity_cellule:      {label: "셀 선 농도"}
+  intensity_bxt:          {label: "틀 안 텍스트의 틀 농도"}
+  intensity_motif:        {label: "동기 틀 농도"}
+  intensity_segment:      {label: "구간 선 농도"}
+  intensity_emprunt:      {label: "차용 선 농도"}
+  intensity_cadence:      {label: "종지 선 농도"}
+  intensity_note:         {label: "음 유형 타원 농도"}
+  intensity_form:         {label: "형식 틀 농도 (틀 버전)"}
+  intensity_measure:      {label: "마디 번호 틀 농도 (줄)"}
   marque_pedale_size:     {label: "지속음 크기"}
   marque_texte_size_1:    {label: "큰 텍스트 크기"}
   marque_texte_size_2:    {label: "중간 텍스트 크기"}

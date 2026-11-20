@@ -797,6 +797,10 @@ div.amark.cb-obj.cbl,
 div.amark.cb-content.cbl span.content {
   border-style: var(--cb-line) !important;
 }
+div.amark.cb-obj.cbc,
+div.amark.cb-content.cbc span.content {
+  border-color: var(--cb-color) !important;
+}
 div.amark.seg.cb-obj.cbw.h-up     { border-bottom-width: 0 !important; }
 div.amark.seg.cb-obj.cbw.h-down   { border-top-width: 0 !important; }
 div.amark.seg.cb-obj.cbw.v-right  { border-left-width: 0 !important; }

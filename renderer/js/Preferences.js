@@ -130,7 +130,8 @@ saveData(key,value){
   // console.debug("-> saveData(%s, %s)", key, value)
   // Rectification de la valeur en fonction du typeV
   switch(this.data[key].typeV){
-  case 'number': value = Number(value)
+  // Valeur vide : celle par défaut
+  case 'number': value = '' === value ? '' : Number(value)
   }
   Object.assign(this.data[key], {value: value})
   key == 'autosave' && this.syncAutosaveMenu()

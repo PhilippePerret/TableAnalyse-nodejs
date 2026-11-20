@@ -368,6 +368,7 @@ panels:
     count_many:       "%{n} marks found"
   border:
     title:            "Borders"
+    intensity:        "Intensity"
     default:          "Default value"
   liaison:
     title:            "Link"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "Note type oval thickness"}
   border_form:            {label: "Form frame thickness (frame version)"}
   border_measure:         {label: "Bar number box thickness (line)"}
+  intensity_circle:       {label: "Circle border intensity"}
+  intensity_box:          {label: "Simple frame intensity"}
+  intensity_cellule:      {label: "Cell line intensity"}
+  intensity_bxt:          {label: "Text-in-frame border intensity"}
+  intensity_motif:        {label: "Motif frame intensity"}
+  intensity_segment:      {label: "Segment line intensity"}
+  intensity_emprunt:      {label: "Borrowing line intensity"}
+  intensity_cadence:      {label: "Cadence line intensity"}
+  intensity_note:         {label: "Note type oval intensity"}
+  intensity_form:         {label: "Form frame intensity (frame version)"}
+  intensity_measure:      {label: "Bar number box intensity (line)"}
   marque_pedale_size:     {label: "Size of pedals"}
   marque_texte_size_1:    {label: "Size of large texts"}
   marque_texte_size_2:    {label: "Size of medium texts"}

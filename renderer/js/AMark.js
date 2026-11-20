@@ -7,6 +7,7 @@ import { draggable, resizable } from './lib/interact.js'
 import { AObjet } from './AObjet.js'
 import { Current, setModified } from './Current.js'
 import { pref } from './Preferences.js'
+import { BORDER_INTENSITY } from './Preferences_AppData.js'
 import { Grid } from './Grid.js'
 import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
@@ -889,32 +890,46 @@ get borderTarget(){
 }
 
 /**
- * Bords de la marque {width, line} : réglés (data.border, aperçu en
- * cours), sinon épaisseur des préférences et trait de son style
+ * Bords de la marque {width, line, intensity} : réglés (data.border,
+ * aperçu en cours), sinon ceux des préférences et de son style.
+ * intensity : 0 (blanc) à 100 (noir), cf. intensityOf
  */
 get border(){
   const st = Object.assign({}, this.data.border, this.borderPreview)
   st.width || (st.width = Number(pref(this.borderPrefKey)))
-  if ( !st.line ) {
-    const cs = getComputedStyle(this.borderTarget == 'content' ? this.contentSpan : this.obj)
-    st.line = ['top', 'right', 'bottom', 'left'].some(s => cs.getPropertyValue(`border-${s}-style`) == 'dashed') ? 'dashed' : 'solid'
+  const cs = getComputedStyle(this.borderTarget == 'content' ? this.contentSpan : this.obj)
+  const sides = ['top', 'right', 'bottom', 'left'].filter(s => parseFloat(cs.getPropertyValue(`border-${s}-width`)) > 0)
+  st.line || (st.line = sides.some(s => cs.getPropertyValue(`border-${s}-style`) == 'dashed') ? 'dashed' : 'solid')
+  if ( null == st.intensity ) {
+    const p = pref(this.borderPrefKeyOf('intensity'))
+    st.intensity = '' === p ? AMark.intensityOf(cs.getPropertyValue(`border-${sides[0] || 'top'}-color`)) : Number(p)
   }
   return st
 }
 
-// Bords réglés (data.border, aperçu) appliqués : épaisseur et type de
-// trait des côtés tracés (cf. AMark.css, .cb-obj et .cb-content ; .cbw
-// épaisseur, .cbl trait). Valeur non réglée : celle des préférences.
+// Intensité (0 blanc à 100 noir) de la couleur CSS +color+ (rgb(…))
+static intensityOf(color){
+  const [r, g, b] = (String(color).match(/[\d.]+/g) || [0, 0, 0]).map(Number)
+  return Math.round(100 * (1 - (r + g + b) / 3 / 255))
+}
+
+// Bords réglés (data.border, aperçu) appliqués : épaisseur, type de
+// trait et intensité des côtés tracés (cf. AMark.css, .cb-obj et
+// .cb-content ; .cbw épaisseur, .cbl trait, .cbc intensité). Valeur non
+// réglée : celle des préférences.
 applyBorder(){
   const target = this.borderTarget
   const st = Object.assign({}, target && this.data.border, this.borderPreview)
   const width = target && st.width, line = target && st.line
-  this.obj.classList.toggle('cb-obj', !!(width || line) && target == 'obj')
-  this.obj.classList.toggle('cb-content', !!(width || line) && target == 'content')
+  const color = target && null != st.intensity && `hsl(0 0% ${100 - Number(st.intensity)}%)`
+  this.obj.classList.toggle('cb-obj', !!(width || line || color) && target == 'obj')
+  this.obj.classList.toggle('cb-content', !!(width || line || color) && target == 'content')
   this.obj.classList.toggle('cbw', !!width)
   this.obj.classList.toggle('cbl', !!line)
+  this.obj.classList.toggle('cbc', !!color)
   width ? this.obj.style.setProperty('--cb-width', px(width)) : this.obj.style.removeProperty('--cb-width')
   line  ? this.obj.style.setProperty('--cb-line', line)       : this.obj.style.removeProperty('--cb-line')
+  color ? this.obj.style.setProperty('--cb-color', color)     : this.obj.style.removeProperty('--cb-color')
 }
 
 /**
@@ -927,12 +942,17 @@ get borderPrefKey(){
   if ( this.type == 'bbx' ) return {box: 'border_box', cel: 'thiness_cellule_line', bxt: 'thiness_border'}[this.subtype]
   return {cir: 'border_circle', mot: 'thiness_motif_line', seg: 'thiness_segment_line', emp: 'border_emprunt', cad: 'border_cadence', not: 'border_note', txt: 'border_measure'}[this.type]
 }
+// Préférence de la propriété +prop+ ('width', 'intensity') du bord
+borderPrefKeyOf(prop){
+  const key = this.borderPrefKey
+  return key && (prop == 'intensity' ? BORDER_INTENSITY[key] : key)
+}
 
-// Épaisseur propre abandonnée : celle par défaut (préférences)
-resetBorderWidth(){
+// Valeur propre de +prop+ abandonnée : celle par défaut (préférences)
+resetBorder(prop){
   if ( !this.data.border ) return
-  delete this.data.border.width
-  this.data.border.line || delete this.data.border
+  delete this.data.border[prop]
+  Object.keys(this.data.border).length || delete this.data.border
   this.applyBorder()
 }
 

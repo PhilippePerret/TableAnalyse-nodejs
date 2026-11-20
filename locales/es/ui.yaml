@@ -368,6 +368,7 @@ panels:
     count_many:       "%{n} marcas encontradas"
   border:
     title:            "Bordes"
+    intensity:        "Intensidad"
     default:          "Valor por defecto"
   liaison:
     title:            "Unión"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "Grosor del óvalo de los tipos de nota"}
   border_form:            {label: "Grosor del marco de las formas (versión marco)"}
   border_measure:         {label: "Grosor del marco de los números de compás (línea)"}
+  intensity_circle:       {label: "Intensidad del borde de los círculos"}
+  intensity_box:          {label: "Intensidad de los recuadros simples"}
+  intensity_cellule:      {label: "Intensidad del trazo de células"}
+  intensity_bxt:          {label: "Intensidad del marco de los textos enmarcados"}
+  intensity_motif:        {label: "Intensidad del marco de los motivos"}
+  intensity_segment:      {label: "Intensidad del trazo de segmentos"}
+  intensity_emprunt:      {label: "Intensidad del trazo de los préstamos"}
+  intensity_cadence:      {label: "Intensidad del trazo de las cadencias"}
+  intensity_note:         {label: "Intensidad del óvalo de los tipos de nota"}
+  intensity_form:         {label: "Intensidad del marco de las formas (versión marco)"}
+  intensity_measure:      {label: "Intensidad del marco de los números de compás (línea)"}
   marque_pedale_size:     {label: "Tamaño de los pedales"}
   marque_texte_size_1:    {label: "Tamaño de los textos grandes"}
   marque_texte_size_2:    {label: "Tamaño de los textos medianos"}

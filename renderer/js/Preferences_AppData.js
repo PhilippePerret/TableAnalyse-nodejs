@@ -23,17 +23,17 @@ export const PreferencesAppData = {
   , marque_emprunt_size     :{type:'inputtext'    ,typeV:'number'   ,default:24     ,unite:'pt' ,selector:'div.aobj.emp span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_motif_size       :{type:'inputtext'    ,typeV:'number'   ,default:24      ,unite:'px' ,selector:'div.amark.mot span.content', selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_cellule_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.amark.cel span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
-  , thiness_segment_line    :{type:'inputtext'    ,typeV:'number'   ,default:4         ,unite:'px' ,selector:'div.amark.seg'   ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , thiness_cellule_line    :{type:'inputtext'    ,typeV:'number'   ,default:5         ,unite:'px' ,selector:'div.amark.cel'   ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , thiness_motif_line      :{type:'inputtext'    ,typeV:'number'   ,default:1         ,unite:'px' ,selector:'div.amark.mot'   ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , thiness_border          :{type:'inputtext'    ,typeV:'number'   ,default:4  ,unite:'px' ,selector:'div.amark.bbx.bxt' ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , border_circle           :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.cir' ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , border_box              :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.box' ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , border_emprunt          :{type:'inputtext'    ,typeV:'number'   ,default:2  ,unite:'px' ,selector:'div.amark.emp' ,selector_value:'border-top-width:__VALUE__px;border-left-width:__VALUE__px;border-right-width:__VALUE__px;' ,border:true,apply:true}
-  , border_cadence          :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.cad:not(.selected)' ,selector_value:'border-right-width:__VALUE__px;border-bottom-width:__VALUE__px;' ,border:true,apply:true}
-  , border_note             :{type:'inputtext'    ,typeV:'number'   ,default:2  ,unite:'px' ,selector:'div.amark.not span.content' ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , border_form             :{type:'inputtext'    ,typeV:'number'   ,default:4  ,unite:'px' ,selector:'div.amark.bbx.prt span.content, div.amark.bbx.prtz span.content, div.amark.bbx.sec span.content, div.amark.bbx.secz span.content' ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
-  , border_measure          :{type:'inputtext'    ,typeV:'number'   ,default:1  ,unite:'px' ,selector:'div.amark.txt.mes.on-line span.content' ,selector_value:'border-width:__VALUE__px;' ,border:true,apply:true}
+  , thiness_segment_line    :{type:'inputtext'    ,typeV:'number'   ,default:4         ,unite:'px' ,selector:'div.amark.seg'   ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , thiness_cellule_line    :{type:'inputtext'    ,typeV:'number'   ,default:5         ,unite:'px' ,selector:'div.amark.cel'   ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , thiness_motif_line      :{type:'inputtext'    ,typeV:'number'   ,default:1         ,unite:'px' ,selector:'div.amark.mot'   ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , thiness_border          :{type:'inputtext'    ,typeV:'number'   ,default:4  ,unite:'px' ,selector:'div.amark.bbx.bxt' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , border_circle           :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.cir' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , border_box              :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.box' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , border_emprunt          :{type:'inputtext'    ,typeV:'number'   ,default:2  ,unite:'px' ,selector:'div.amark.emp' ,selector_value:'border-top-width:__VALUE__px;border-left-width:__VALUE__px;border-right-width:__VALUE__px;' ,border:'width',apply:true}
+  , border_cadence          :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.cad:not(.selected)' ,selector_value:'border-right-width:__VALUE__px;border-bottom-width:__VALUE__px;' ,border:'width',apply:true}
+  , border_note             :{type:'inputtext'    ,typeV:'number'   ,default:2  ,unite:'px' ,selector:'div.amark.not span.content' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , border_form             :{type:'inputtext'    ,typeV:'number'   ,default:4  ,unite:'px' ,selector:'div.amark.bbx.prt span.content, div.amark.bbx.prtz span.content, div.amark.bbx.sec span.content, div.amark.bbx.secz span.content' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , border_measure          :{type:'inputtext'    ,typeV:'number'   ,default:1  ,unite:'px' ,selector:'div.amark.txt.mes.on-line span.content' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
   , marque_pedale_size      :{type:'inputtext'    ,typeV:'number'   ,default:40             ,unite:'px' ,selector:'div.aobj.ped span.content', selector_value:'font-size:__VALUE__px;width:calc(__VALUE__px / 2);height:calc(__VALUE__px / 2);line-height:calc(__VALUE__px / 2);' ,apply:true}
   , marque_texte_size_1     :{type:'inputtext'    ,typeV:'number'   ,default:60         ,unite:'px' ,selector:'div.amark.txt.size1 span.content'    ,selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_texte_size_2     :{type:'inputtext'    ,typeV:'number'   ,default:40       ,unite:'px' ,selector:'div.amark.txt.size2 span.content'    ,selector_value:'font-size:__VALUE__px;' ,apply:true}
@@ -103,6 +103,32 @@ export const PreferencesAppData = {
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
   , animate                 :{type:'checkbox'     ,typeV:'boolean'  ,default:false}
 }
+
+/**
+ * Intensité des bords (0 blanc à 100 noir, vide : couleur du style) de
+ * chaque type de marque à bord : préférence intensity_<nom>, associée à
+ * celle de son épaisseur (cf. AMark#borderPrefKeyOf)
+ */
+const BORDER_KINDS = {
+    circle:  {width: 'border_circle',        selector: 'div.amark.cir'}
+  , box:     {width: 'border_box',           selector: 'div.amark.box'}
+  , cellule: {width: 'thiness_cellule_line', selector: 'div.amark.cel'}
+  , bxt:     {width: 'thiness_border',       selector: 'div.amark.bbx.bxt'}
+  , motif:   {width: 'thiness_motif_line',   selector: 'div.amark.mot'}
+  , segment: {width: 'thiness_segment_line', selector: 'div.amark.seg'}
+  , emprunt: {width: 'border_emprunt',       selector: 'div.amark.emp'}
+  , cadence: {width: 'border_cadence',       selector: 'div.amark.cad:not(.selected)'}
+  , note:    {width: 'border_note',          selector: 'div.amark.not span.content'}
+  , form:    {width: 'border_form',          selector: 'div.amark.bbx.prt span.content, div.amark.bbx.prtz span.content, div.amark.bbx.sec span.content, div.amark.bbx.secz span.content'}
+  , measure: {width: 'border_measure',       selector: 'div.amark.txt.mes.on-line span.content'}
+}
+// Préférence d'intensité de chaque préférence d'épaisseur
+export const BORDER_INTENSITY = {}
+Object.entries(BORDER_KINDS).forEach(([name, kind]) => {
+  const key = `intensity_${name}`
+  BORDER_INTENSITY[kind.width] = key
+  PreferencesAppData[key] = {type:'inputtext', typeV:'number', default:'', unite:'%', selector: kind.selector, selector_value:'border-color:hsl(0 0% calc(100% - __VALUE__%));', border:'intensity', apply:true}
+})
 
 // Ajout de l'identifiant aux données
 // et de ses textes (locales/<lang>/ui.yaml, prefs)

@@ -368,6 +368,7 @@ panels:
     count_many:       "%{n} Markierungen gefunden"
   border:
     title:            "Ränder"
+    intensity:        "Intensität"
     default:          "Standardwert"
   liaison:
     title:            "Verbindung"
@@ -474,6 +475,17 @@ prefs:
   border_note:            {label: "Stärke des Ovals der Notentypen"}
   border_form:            {label: "Rahmenstärke der Formteile (Rahmenversion)"}
   border_measure:         {label: "Rahmenstärke der Taktnummern (Zeile)"}
+  intensity_circle:       {label: "Randintensität der Kreise"}
+  intensity_box:          {label: "Intensität der einfachen Rahmen"}
+  intensity_cellule:      {label: "Linienintensität der Zellen"}
+  intensity_bxt:          {label: "Rahmenintensität der Texte im Rahmen"}
+  intensity_motif:        {label: "Rahmenintensität der Motive"}
+  intensity_segment:      {label: "Linienintensität der Segmente"}
+  intensity_emprunt:      {label: "Linienintensität der Ausweichungen"}
+  intensity_cadence:      {label: "Linienintensität der Kadenzen"}
+  intensity_note:         {label: "Intensität des Ovals der Notentypen"}
+  intensity_form:         {label: "Rahmenintensität der Formteile (Rahmenversion)"}
+  intensity_measure:      {label: "Rahmenintensität der Taktnummern (Zeile)"}
   marque_pedale_size:     {label: "Größe der Orgelpunkte"}
   marque_texte_size_1:    {label: "Größe großer Texte"}
   marque_texte_size_2:    {label: "Größe mittlerer Texte"}
