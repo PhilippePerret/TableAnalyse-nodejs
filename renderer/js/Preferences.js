@@ -133,7 +133,14 @@ saveData(key,value){
   case 'number': value = Number(value)
   }
   Object.assign(this.data[key], {value: value})
+  key == 'autosave' && this.syncAutosaveMenu()
   setModified()
+}
+
+// Coche du menu « Options > Enregistrement automatique »
+syncAutosaveMenu(){
+  const option = DGet('#options_tool option[value="toggleAutosave"]')
+  if ( option ) option.dataset.checked = this.get('autosave') ? 'true' : 'false'
 }
 
 }//PreferencesClass

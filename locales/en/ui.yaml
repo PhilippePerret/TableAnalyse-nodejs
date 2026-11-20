@@ -86,6 +86,7 @@ options_menu:
   lock_systems:     "Lock Systems"
   coordinates:      "Show Coordinates"
   form_names:       "Show Portion Names"
+  autosave:         "Autosave"
   theme_A:          "Theme A — Plain"
   theme_B:          "Theme B — ScoreAnalyse"
   theme_C:          "Theme C — Dark"

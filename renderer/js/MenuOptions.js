@@ -12,6 +12,7 @@ import { t } from './i18n.js'
 import { toggleCoordinates } from './handies.js'
 import { Forme } from './Forme.js'
 import { Split } from './Split.js'
+import { Preferences, pref } from './Preferences.js'
 /**
 
   Class OptionsTool
@@ -70,6 +71,13 @@ export class OptionsTool extends MenusTool {
 
   static onActivate_toggleLockSystems(){
     Systeme.toggleLock()
+  }
+
+  static onActivate_toggleAutosave(e, option){
+    if ( !Current.analyse ) return
+    Preferences.set('autosave', option.dataset.checked != 'true')
+    Preferences.saveData('autosave', pref('autosave'))
+    Current.analyse.savePreferences()
   }
 
   static onActivate_theme(e, option){

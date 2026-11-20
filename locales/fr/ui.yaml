@@ -86,6 +86,7 @@ options_menu:
   lock_systems:     "Verrouiller les systèmes"
   coordinates:      "Afficher les coordonnées"
   form_names:       "Afficher noms des portions"
+  autosave:         "Enregistrement automatique"
   theme_A:          "Thème A — Sobre"
   theme_B:          "Thème B — ScoreAnalyse"
   theme_C:          "Thème C — Sombre"

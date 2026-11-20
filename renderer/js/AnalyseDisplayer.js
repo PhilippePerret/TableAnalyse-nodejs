@@ -4,6 +4,7 @@
  * Pour écrire sur la table d'analyse une analyse
  */
 import { PreferencesAppData } from './Preferences_AppData.js'
+import { Preferences } from './Preferences.js'
 import { Analyse, setWindowTitle } from './Analyse.js'
 import { UI } from './UI.js'
 import { Variables } from './Variables.js'
@@ -88,6 +89,7 @@ static setPreferences(appPrefs){
       }
     })
   }
+  Preferences.syncAutosaveMenu()
 }
 
 static displaySystems(analyse){
