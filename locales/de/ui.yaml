@@ -156,6 +156,7 @@ mark_context:
   lock:             "Sperren"
   unlock:           "Entsperren"
   edit:             "Bearbeiten…"
+  border:           "Randstärke…"
   align:            "An Markierungen gleichen Typs ausrichten"
   align_harmony:    "An der Harmonie ausrichten"
   align_chord:      "Am Akkord ausrichten"
@@ -361,6 +362,8 @@ panels:
     systems:          "Systeme"
     count_one:        "%{n} Markierung gefunden"
     count_many:       "%{n} Markierungen gefunden"
+  border:
+    title:            "Ränder"
   liaison:
     title:            "Verbindung"
     type:             "Gespeicherte Verbindungen"

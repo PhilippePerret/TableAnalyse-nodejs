@@ -156,6 +156,7 @@ mark_context:
   lock:             "ロック"
   unlock:           "ロックを解除"
   edit:             "編集…"
+  border:           "枠線の太さ…"
   align:            "同じ種類のマークに揃える"
   align_harmony:    "和声記号に揃える"
   align_chord:      "コードに揃える"
@@ -361,6 +362,8 @@ panels:
     systems:          "段"
     count_one:        "%{n} 個のマークが見つかりました"
     count_many:       "%{n} 個のマークが見つかりました"
+  border:
+    title:            "枠線"
   liaison:
     title:            "連結線"
     type:             "保存された連結線"

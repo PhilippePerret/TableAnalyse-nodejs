@@ -156,6 +156,7 @@ mark_context:
   lock:             "Blocca"
   unlock:           "Sblocca"
   edit:             "Modifica…"
+  border:           "Spessore dei bordi…"
   align:            "Allinea ai segni dello stesso tipo"
   align_harmony:    "Allinea con l'armonia"
   align_chord:      "Allinea con l'accordo"
@@ -361,6 +362,8 @@ panels:
     systems:          "Sistemi"
     count_one:        "%{n} segno trovato"
     count_many:       "%{n} segni trovati"
+  border:
+    title:            "Bordi"
   liaison:
     title:            "Collegamento"
     type:             "Collegamenti memorizzati"

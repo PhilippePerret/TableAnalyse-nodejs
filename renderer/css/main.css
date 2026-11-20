@@ -252,25 +252,32 @@ div#export_custom_size div.fields { display: flex; align-items: center; gap: 6px
 div#export_panel div.fields.column { flex-direction: column; align-items: flex-start; gap: .2em; }
 div#export_panel div.fields.explication { display: block; }
 
-/* Édition d'une liaison (cf. LiaisonEditor.js) */
-div#liaison_editor {
+/* Édition d'une liaison (cf. LiaisonEditor.js) et des bords d'une
+   marque (cf. BorderEditor.js) */
+div#liaison_editor,
+div#border_editor {
   position: fixed;
   top: 100px;
   right: 40px;
   z-index: 4500;
   width: max-content;
 }
-div#liaison_editor div.rows {
+div#liaison_editor div.rows,
+div#border_editor div.rows {
   display: grid;
   grid-template-columns: max-content auto;
   column-gap: 10px;
   row-gap: .5em;
   align-items: center;
 }
-div#liaison_editor div.rows + div.rows { margin-top: 1.2em; }
-div#liaison_editor div.row { display: contents; }
-div#liaison_editor div.row > label { text-align: right; white-space: nowrap; }
-div#liaison_editor div.fields { display: flex; align-items: center; gap: 6px; }
+div#liaison_editor div.rows + div.rows,
+div#border_editor div.rows + div.rows { margin-top: 1.2em; }
+div#liaison_editor div.row,
+div#border_editor div.row { display: contents; }
+div#liaison_editor div.row > label,
+div#border_editor div.row > label { text-align: right; white-space: nowrap; }
+div#liaison_editor div.fields,
+div#border_editor div.fields { display: flex; align-items: center; gap: 6px; }
 
 /* Boite de contrôle de l'animation (cf. Animation.js) */
 div#animation_box {

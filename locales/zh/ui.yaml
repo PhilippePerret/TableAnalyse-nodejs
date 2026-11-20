@@ -156,6 +156,7 @@ mark_context:
   lock:             "锁定"
   unlock:           "解锁"
   edit:             "编辑…"
+  border:           "边框粗细…"
   align:            "与同类标记对齐"
   align_harmony:    "与和声标记对齐"
   align_chord:      "与和弦标记对齐"
@@ -361,6 +362,8 @@ panels:
     systems:          "声部组"
     count_one:        "找到 %{n} 个标记"
     count_many:       "找到 %{n} 个标记"
+  border:
+    title:            "边框"
   liaison:
     title:            "连线"
     type:             "已保存的连线"

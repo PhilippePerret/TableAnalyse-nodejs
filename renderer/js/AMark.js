@@ -17,6 +17,7 @@ import { UI } from './UI.js'
 import { Forme } from './Forme.js'
 import { ExtraitComposer } from './ExtraitComposer.js'
 import { Liaison } from './Liaison.js'
+import { BorderEditor } from './BorderEditor.js'
 import { t } from './i18n.js'
 import { Variables } from './Variables.js'
 import { heightMm, heightText, mmPerTablePx } from './Exporter.js'
@@ -467,6 +468,7 @@ build(){
 
   // Css suplémentaires
   this.applyCss()
+  this.applyBorder()
   this.isBorne && (o.title = this.content)
   this.isBorne && Forme.shown && this.toggleExpanded(true)
 
@@ -826,6 +828,7 @@ onContextMenu(e){
   // Marque de forme : passage de la version borne à la version cadre et
   // inversement
   FORME_CADRE_BORNE[this.subtype] && this.isForme && items.push({label: T(this.isBorne ? 'to_frame' : 'to_marker'), value: 'toggleFrame'})
+  this.borderTarget && items.push({label: T('border'), value: 'border'})
   this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'}, {label: T('reload_image'), value: 'reloadImage', enabled: !!this.data.file})
   // Deux marques sélectionnées : les relier ou les délier (cf. Liaison.js)
   if ( this.isSelected ) {
@@ -848,6 +851,7 @@ onContextChoice(choice){
       setModified()
       break
     case 'edit':          return this.edit()
+    case 'border':        return BorderEditor.open(this)
     case 'openImage':     return this.openImage()
     case 'reloadImage':   return this.showImage()
     case 'align':         return targets.forEach(m => m.alignOnSameType())
@@ -869,6 +873,71 @@ onContextChoice(choice){
       setModified()
       break
   }
+}
+
+/**
+ * Élément portant le bord de la marque : 'obj' (la marque), 'content'
+ * (son contenu) ou null (marque sans bord). Cf. « Épaisseur des
+ * bords… » (BorderEditor.js).
+ */
+get borderTarget(){
+  if ( this.isFormeCadre || this.type == 'not' ) return 'content'
+  if ( this.type == 'txt' && this.subtype == 'mes' && this.data.line ) return 'content'
+  if ( ['cir', 'mot', 'seg', 'emp', 'cad'].includes(this.type) ) return 'obj'
+  if ( this.type == 'bbx' && ['box', 'cel', 'bxt'].includes(this.subtype) ) return 'obj'
+  return null
+}
+
+/**
+ * Bords de la marque {width, line} : réglés (data.border, aperçu en
+ * cours), sinon ceux de son style
+ */
+get border(){
+  const el = this.borderTarget == 'content' ? this.contentSpan : this.obj
+  const st = Object.assign({}, this.data.border, this.borderPreview)
+  if ( !st.width || !st.line ) {
+    const cs = getComputedStyle(el)
+    const sides = ['top', 'right', 'bottom', 'left'].filter(s => parseFloat(cs.getPropertyValue(`border-${s}-width`)) > 0)
+    st.width || (st.width = Math.max(1, Math.round(Math.max(0, ...sides.map(s => parseFloat(cs.getPropertyValue(`border-${s}-width`)))))))
+    st.line  || (st.line = sides.some(s => cs.getPropertyValue(`border-${s}-style`) == 'dashed') ? 'dashed' : 'solid')
+  }
+  return st
+}
+
+// Bords réglés (data.border, aperçu) appliqués : épaisseur et type de
+// trait des côtés tracés (cf. AMark.css, .cb-obj et .cb-content)
+applyBorder(){
+  const target = this.borderTarget
+  const st = target && Object.assign({}, this.data.border, this.borderPreview)
+  const on = !!(st && (st.width || st.line))
+  // Valeurs complètes lues avant le changement de classe (bords du
+  // style pour celles qui ne sont pas réglées)
+  const cur = on && this.border
+  this.obj.classList.toggle('cb-obj', on && target == 'obj')
+  this.obj.classList.toggle('cb-content', on && target == 'content')
+  if ( on ) {
+    this.obj.style.setProperty('--cb-width', px(cur.width))
+    this.obj.style.setProperty('--cb-line', cur.line)
+  } else {
+    this.obj.style.removeProperty('--cb-width')
+    this.obj.style.removeProperty('--cb-line')
+  }
+}
+
+// Aperçu d'un réglage des bords, gardé seulement par confirmBorder
+previewBorder(values){
+  this.borderPreview = Object.assign(this.borderPreview || {}, values)
+  this.applyBorder()
+}
+confirmBorder(){
+  if ( !this.borderPreview ) return
+  this.data.border = this.border
+  delete this.borderPreview
+  setModified()
+}
+cancelBorder(){
+  delete this.borderPreview
+  this.applyBorder()
 }
 
 /**

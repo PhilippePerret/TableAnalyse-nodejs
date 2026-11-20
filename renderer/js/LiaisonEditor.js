@@ -17,6 +17,9 @@ import { gapOf } from './Liaison.js'
  */
 const ARROW_TYPES = ['none', 'full', 'hollow', 'open']
 
+// Ligne « libellé : champ(s) » des boites d'édition (aussi BorderEditor)
+export const editorField = (label, input) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), DCreate('DIV', {class: 'fields', inner: [input].flat()})]})
+
 class LiaisonEditorClass {
 
   async open(liaison){
@@ -24,7 +27,7 @@ class LiaisonEditorClass {
     this.liaison = liaison
     const T = (k) => t(`ui.panels.liaison.${k}`)
     const st = liaison.style
-    const field = (label, input) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label}), DCreate('DIV', {class: 'fields', inner: [input].flat()})]})
+    const field = editorField
     const select = (key, values, labels) => {
       const sel = DCreate('SELECT', {inner: values.map(v => DCreate('OPTION', {value: v, text: labels[v]}))})
       sel.value = st[key]

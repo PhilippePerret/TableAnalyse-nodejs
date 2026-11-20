@@ -156,6 +156,7 @@ mark_context:
   lock:             "Bloquear"
   unlock:           "Desbloquear"
   edit:             "Editar…"
+  border:           "Grosor de los bordes…"
   align:            "Alinear con las marcas del mismo tipo"
   align_harmony:    "Alinear con la armonía"
   align_chord:      "Alinear con el acorde"
@@ -361,6 +362,8 @@ panels:
     systems:          "Sistemas"
     count_one:        "%{n} marca encontrada"
     count_many:       "%{n} marcas encontradas"
+  border:
+    title:            "Bordes"
   liaison:
     title:            "Unión"
     type:             "Uniones memorizadas"

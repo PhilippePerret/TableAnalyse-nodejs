@@ -786,3 +786,17 @@ div#ext_composer_panel div.ext-size-box {
 div#ext_composer_panel div.ext-size-box input {
   width: 5em;
 }
+
+/* Bords réglés par « Épaisseur des bords… » (cf. AMark#applyBorder) :
+   épaisseur et type de trait des seuls côtés tracés */
+div.amark.cb-obj,
+div.amark.cb-content span.content {
+  border-width: var(--cb-width) !important;
+  border-style: var(--cb-line) !important;
+}
+div.amark.seg.cb-obj.h-up     { border-bottom-width: 0 !important; }
+div.amark.seg.cb-obj.h-down   { border-top-width: 0 !important; }
+div.amark.seg.cb-obj.v-right  { border-left-width: 0 !important; }
+div.amark.seg.cb-obj.v-left   { border-right-width: 0 !important; }
+div.amark.emp.cb-obj          { border-bottom-width: 0 !important; }
+div.amark.cad.cb-obj          { border-top-width: 0 !important; border-left-width: 0 !important; }
