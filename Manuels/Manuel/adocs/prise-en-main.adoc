@@ -3,6 +3,10 @@
 
 === Prérequis ===
 
+Vous pouvez télécharger l'app **__Table d’Analyse__** sur sa https::www.analyse-musicale.fr/table-analyse/[page de téléchargement]. Il existe une version macOS, une version Windows et une version Unix.
+
+Débloquer l'application, sur MacOS avec le code fourni et sous Windows en la sortant de sa quarantaine dans votre antivirus.
+
 À l'ouverture de l'application **__Table d’Analyse__**, aucune analyse n'est ouverte, il faut donc la créer.
 
 // Note-lien vers la vidéo de prise en main si on préfère "voir"
