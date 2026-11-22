@@ -45,7 +45,6 @@ div.form-diagram div.frow {
 }
 div.form-diagram div.fsubtitle {
   font-size: 32px;
-  font-weight: bold;
   margin: 40px 0 14px;
   padding-top: 14px;
   border-top: 3px solid #000;
@@ -71,7 +70,6 @@ div.form-diagram div.portion {
   overflow: hidden;
   border: 2px solid #000;
   background-color: #fff;
-  font-weight: bold;
 }
 /* Bords communs de deux portions voisines : un seul trait */
 div.form-diagram div.portion + div.portion { margin-left: -2px; }
@@ -89,8 +87,10 @@ div.form-diagram div.portion span {
   overflow-wrap: anywhere;
 }
 div.form-diagram div.portion.fpar { font-size: 26px; border-width: 4px; }
+/* Noms des parties (plus haut niveau) : seuls blocs en gras */
+div.form-diagram div.frow.level1 div.portion { font-weight: bold; }
 div.form-diagram div.portion.fsec { font-size: 22px; }
-div.form-diagram div.portion.fseg { font-size: 18px; border-width: 1px; font-weight: normal; }
+div.form-diagram div.portion.fseg { font-size: 18px; border-width: 1px; }
 /* Numéros de mesure : sous un petit trait, au début de leur mesure */
 div.form-diagram div.frow.fmeasures { height: 40px; }
 div.form-diagram span.fnum {
