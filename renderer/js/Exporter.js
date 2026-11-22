@@ -400,7 +400,10 @@ export class Stage {
 
   async build(){
     const table = DGet('section#content')
-    this.holder = DCreate('DIV', {style: `position:absolute;left:-${table.scrollWidth + 50000}px;top:0;`})
+    // Largeur de la table : sans elle, les marques sans largeur fixée
+    // (ajustées à leur contenu) se replient (trait de prolongation sous
+    // le texte, etc.)
+    this.holder = DCreate('DIV', {style: `position:absolute;left:-${table.scrollWidth + 50000}px;top:0;width:${table.scrollWidth}px;`})
     this.content = table.cloneNode(true)
     this.content.querySelectorAll(EXCLUDED).forEach(e => e.remove())
     this.content.querySelectorAll(UI_CLASSES.map(c => '.' + c).join(',')).forEach(e => e.classList.remove(...UI_CLASSES))
