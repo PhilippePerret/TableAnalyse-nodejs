@@ -3,4 +3,9 @@
 
 Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l'accord.
 
+
+==== Référence au motif dans les textes ====
+
 En définissant un nom de variable pour le motif (plus simple que son nom), on peut l'utiliser dans les textes avec `{<variable}`. Cela permet de simplifier le nom à utiliser mais, plus profondément, ça permet surtout d'avoir un nom « stable » (la variable, paradoxalement) et de motifier le nom du motif en le changeant partout dans les textes.
+
+NOTE: L'immense avantage d'utiliser une variable consiste en la possibilité de motifier le nom du motif sans avoir à retoucher le texte qui sera aussitôt corrigé.

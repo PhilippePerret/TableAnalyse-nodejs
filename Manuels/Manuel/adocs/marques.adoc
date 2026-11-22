@@ -7,58 +7,65 @@ Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'
 * <<tags-types>>
 * <<tags-group, Regroupement des marques>>
 * <<tags-link, Lier deux marques>>
+* <<tags-bords, Épaisseur des bords/traits>>
 ****
 
 [[tags-types]]
 === Les types de marques ===
 
+On choisit le type de marque grâce à un panneau qui s'ouvre dès qu'on clique sur la table d'analyse.
+
+image::images/marques/panneau-type-marque.png[Panneau du choix du type de marque, width=280]
+
+NOTE: Au début de l'utilisation de la table, on aura peut-être tendance à trop ouvrir ce panneau en voulant par exemple désélectionner une marque ou fermer un panneau justement. Si ce réflexe devient trop gênant, on peut régler dans les préférences, pour la création d'une marque, que ce soit un double-clic de sours qui crée cette marque, pas un clic simple.
+
 [cols="2,5,1,1"]
 |====
-| Accord 
+| <<tags-chord, Accord>>
 | Nom et nature de l'accord, en général au-dessus du système.
 | Dm7 
-| <<tags-chord, voir>>
+| 
 
-| Harmonie 
+| <<tags-chiffrage, Harmonie >>
 | Chiffre romain indiquant la fonction de l'accord dans l'harmonie courante 
 | VI 
-| <<tags-chiffrage, voir>> 
+|  
 
 
-| Modulation
+| <<tags-modulation, Modulation>>
 | Marque indiquant une modulation dans la pièce.
 | ...
-| <<tags-modulation, voir>>
+| 
 
-| Emprunt
+| <<tags-emprunt, Emprunt>>
 | Marque indiquant un emprunt à une tonalité dans la pièce.
 | ...
-| <<tags-emprunt, voir>>
+| 
 
-| Cadence
+| <<tags-cadence, Cadence>>
 | Marque indiquant une cadence (parfaite, imparfaite, etc.).
 | ...
-| <<tags-cadence, voir>>
+| 
 
-| Cadre
+| <<tags-cadre, Cadre>>
 | Ajout d'un cadre autour d'une partie de la partition.
 | ...
-| <<tags-cadre, voir>>
+| 
 
 | Type de note
 | Marque permettant d'indiquer la nature mélodique d'une note sur la partition.
 | AP 
 | <<tags-note, voir>>
 
-| Forme
+| <<tags-form, Forme>>
 | Marque permettant de définir la forme de la pièce
 | ...
-| <<tags-form, voir>>
+| 
 
-| Motif
+| <<tags-motifs, Motif>>
 | Marque mettant en exergue un motif, une dispositif, etc. en le nommant.
 | Motif GBc
-| <<tags-motifs, voir>>
+| 
 
 | Degré de note
 | Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l'accord.
@@ -99,26 +106,12 @@ Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'
 NOTE: Pour accélérer la pose des marques, on peut __bloquer__ un type (menu « Marques > Bloquer le type à … > ... ») et poser toutes les marques de ce type d'un coup. Par exemple, on peut poser toutes les marques d'accord d'un coup par ce biais, ce qui accélère considérablement l'analyse. Voir la description dans les <<best-practices, bonnes pratiques>>.
 
 include::marques/accords.adoc[]
-include::marques/chiffrages.adoc[]
-
-[[tags-modulation]]
-==== Marque de Modulation ====
-
-[[tags-emprunt]]
-==== Marque d'Empreint ====
-
-[[tags-cadence]]
-==== Marque de cadence ====
-
-[[tags-cadre]]
-==== Cadre ====
-
-Pour entourer une partie de la partition par un cadre.
-
-[[tags-form]]
-==== Marque de forme ====
-
-Permet d'indiquer les parties, les sections et les segments de la partition pour révéler la forme de la pièce.
+include::marques/harmonies.adoc[]
+include::marques/modulations.adoc[]
+include::marques/emprunts.adoc[]
+include::marques/cadences.adoc[]
+include::marques/cadres.adoc[]
+include::marques/forme.adoc[]
 
 
 [[tags-note]]
@@ -217,3 +210,12 @@ Pour ajouter une marque quelconque à un groupe :
 === Liaison entre marques ===
 
 On peut « tirer un trait », une liaison, entre deux marques
+
+[[tags-bords]]
+=== Épaisseur des bords/traits ===
+
+Le bord de toutes les marques qui en possèdent peuvent être réglées, seule ou en groupe, par le menu contextuel « Bord/trait… » ou le menu « Marques > Bord/trait… »
+
+Comme toutes les valeurs, on peut la définir pour chaque type de marque dans les <<prefs, préférences>> et appliquer la nouvelle valeur aussitôt.
+
+NOTE: Lorsque l'on choisit d'appliquer la nouvelle valeur de bord ou de trait, l'application demande s'il faut l'appliquer indifférement à toutes les marques de ce type ou seulement à celles qui ne définissent pas une valeur propre.

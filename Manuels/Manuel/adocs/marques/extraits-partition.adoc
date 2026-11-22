@@ -1,5 +1,8 @@
 [[tags-extrait]]
 === Extrait de partition ===
 
-- assemblage des parties
+// TODO
+- définition de l'extrait : "x" pour mesure unique, "x-y" pour mesures continues, "x,y,z" pour mesures discontinues, ou un mélange de tout ça 
+- assemblage des parties (à la souris, avec les flèches)
 - pose d'un masque blanc sur scories
+- suppression d'un élément (l'entête de système, etc.)

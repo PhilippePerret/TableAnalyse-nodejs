@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="117.66" height="40.33" viewBox="1008.34 27365 117.66 40.33">
+<defs><clipPath id="c"><path d="M1105.5,27379.0 A6.5,6.5 0 0 1 1118.5,27379.0 L1118.5,27390.0 A0.5,0.5 0 0 1 1118.0,27390.5 L1106.0,27390.5 A0.5,0.5 0 0 1 1105.5,27390.0 Z"/></clipPath></defs>
+<path d="M1104.0,27379.0 A8.0,8.0 0 0 1 1120.0,27379.0 L1120.0,27390.0 A2,2 0 0 1 1118.0,27392.0 L1106.0,27392.0 A2,2 0 0 1 1104.0,27390.0 Z" fill="#ffffff"/>
+<g clip-path="url(#c)"><rect x="1104.0" y="27371.0" width="16.0" height="8.820" fill="#cc2a2a"/><line x1="1104.0" y1="27392.0" x2="1120.0" y2="27371.0" stroke="#222222" stroke-width="2.4"/></g>
+<path d="M1104.75,27379.0 A7.25,7.25 0 0 1 1119.25,27379.0 L1119.25,27390.0 A1.25,1.25 0 0 1 1118.0,27391.25 L1106.0,27391.25 A1.25,1.25 0 0 1 1104.75,27390.0 Z" fill="none" stroke="#333333" stroke-width="1.5"/>
+<text x="1018.344" y="27392" font-family="'Arial Narrow', Arial, Helvetica, Geneva" font-size="17.333" font-weight="700" fill="#000000" xml:space="preserve">Exposition</text>
+</svg>

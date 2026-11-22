@@ -1,7 +1,7 @@
 [[prise-en-main]]
-== Prise en main de l'app ==
+== Prise en main de l'application ==
 
-=== Prérequis ====
+=== Prérequis ===
 
 À l'ouverture de l'application **__Table d’Analyse__**, aucune analyse n'est ouverte, il faut donc la créer.
 

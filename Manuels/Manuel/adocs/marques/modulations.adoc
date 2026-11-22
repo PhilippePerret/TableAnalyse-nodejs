@@ -1,0 +1,11 @@
+[[tags-modulation]]
+==== Marque de Modulation ====
+
+[cols="1,4"]
+|====
+| image:images/marques/marque-modulation.png[Marque de modulation, 80]
+| La marque de modulation permet d'indiquer le début d'une modulation.
+
+La valeur doit être une <<chord-writing, valeur d'accord conforme>>.
+|====
+

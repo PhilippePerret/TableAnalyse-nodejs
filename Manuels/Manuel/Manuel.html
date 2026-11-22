@@ -441,9 +441,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a></li>
-<li><a href="#prise-en-main">Prise en main de l&#8217;app</a>
+<li><a href="#prise-en-main">Prise en main de l&#8217;application</a>
 <ul class="sectlevel2">
-<li><a href="#_prérequis">Prérequis ====</a></li>
+<li><a href="#_prérequis">Prérequis</a></li>
 <li><a href="#_création_de_lanalyse">Création de l&#8217;analyse</a></li>
 <li><a href="#_préparation_de_lanalyse">Préparation de l&#8217;analyse</a></li>
 <li><a href="#_pose_des_premières_marques">Pose des premières marques</a></li>
@@ -472,6 +472,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#tags-extrait">Extrait de partition</a></li>
 <li><a href="#tags-group">Groupe de marques</a></li>
 <li><a href="#tags-link">Liaison entre marques</a></li>
+<li><a href="#tags-bords">Épaisseur des bords/traits</a></li>
 </ul>
 </li>
 <li><a href="#prefs">Préférences</a>
@@ -505,10 +506,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="prise-en-main">Prise en main de l&#8217;app</h2>
+<h2 id="prise-en-main">Prise en main de l&#8217;application</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_prérequis">Prérequis ====</h3>
+<h3 id="_prérequis">Prérequis</h3>
 <div class="paragraph">
 <p>À l&#8217;ouverture de l&#8217;application <strong><em>Table d’Analyse</em></strong>, aucune analyse n&#8217;est ouverte, il faut donc la créer.</p>
 </div>
@@ -908,12 +909,35 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <li>
 <p><a href="#tags-link">Lier deux marques</a></p>
 </li>
+<li>
+<p><a href="#tags-bords">Épaisseur des bords/traits</a></p>
+</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="tags-types">Les types de marques</h3>
+<div class="paragraph">
+<p>On choisit le type de marque grâce à un panneau qui s&#8217;ouvre dès qu&#8217;on clique sur la table d&#8217;analyse.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/marques/panneau-type-marque.png" alt="Panneau du choix du type de marque" width="280">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Au début de l&#8217;utilisation de la table, on aura peut-être tendance à trop ouvrir ce panneau en voulant par exemple désélectionner une marque ou fermer un panneau justement. Si ce réflexe devient trop gênant, on peut régler dans les préférences, pour la création d&#8217;une marque, que ce soit un double-clic de sours qui crée cette marque, pas un clic simple.
+</td>
+</tr>
+</table>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 22.2222%;">
@@ -923,40 +947,40 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accord</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-chord">Accord</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Nom et nature de l&#8217;accord, en général au-dessus du système.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Dm7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-chord">voir</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Harmonie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-chiffrage">Harmonie </a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Chiffre romain indiquant la fonction de l&#8217;accord dans l&#8217;harmonie courante</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">VI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-chiffrage">voir</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Modulation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-modulation">Modulation</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marque indiquant une modulation dans la pièce.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-modulation">voir</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Emprunt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-emprunt">Emprunt</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marque indiquant un emprunt à une tonalité dans la pièce.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-emprunt">voir</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cadence</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-cadence">Cadence</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marque indiquant une cadence (parfaite, imparfaite, etc.).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-cadence">voir</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cadre</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-cadre">Cadre</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ajout d&#8217;un cadre autour d&#8217;une partie de la partition.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-cadre">voir</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Type de note</p></td>
@@ -965,10 +989,10 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-note">voir</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Forme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-form">Forme</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marque permettant de définir la forme de la pièce</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-form">voir</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Motif</p></td>
@@ -1035,7 +1059,46 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 <div class="sect3">
 <h4 id="tags-chord">Marque Accord</h4>
 <div class="paragraph">
-<p>Tous les accords se mettent en notation batave (de A à G). Tous les accords, même les mineurs, se mettent en capital.</p>
+<p>Une marque accord attend simplement la valeur de l&#8217;accord. Cette valeur doit respecter le <a href="#chord-writing">format requis par l&#8217;application</a>.</p>
+</div>
+<div class="paragraph">
+<p>On peut également ajouter ` --` après l&#8217;accord pour obtenir une ligne de prolongation qu&#8217;il suffit de tirer en déplaçant le bord droit. Ne pas oublier l&#8217;espace, sinon le premier « - » sera considéré comme la marque bémol.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ligne de prolongation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"A --"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-accord-prolongation.svg" alt="Accord avec prolongation"></span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="chord-writing">Écriture valide des accords</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Tous les accords se mettent en <strong>notation batave</strong> (de A à G).</p>
+</li>
+<li>
+<p>Tous les accords, <em>même les accords mineurs</em>, se mettent en capital (contrairement à une tradition que nous déconseillons qui veut que les minuscules soit des accords mineurs — les minuscules, dans l&#8217;application, sont utilisées pour les notes).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pour le reste :</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1084,12 +1147,37 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 </tbody>
 </table>
 </div>
+</div>
 <div class="sect3">
 <h4 id="tags-chiffrage">Marque d&#8217;Harmonie (chiffrage)</h4>
+<div class="paragraph">
+<p>Comme pour l'<a href="#tags-chord">accord</a>, on peut également ajouter ` --` après le chiffrage pour obtenir une ligne de prolongation qu&#8217;il suffit de tirer en déplaçant le bord droit. Ne pas oublier l&#8217;espace, sinon le premier « - » sera considéré comme la marque bémol.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ligne de prolongation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"V --"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-harmonie-prolongation.svg" alt="Harmonie avec prolongation"></span></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
 </colgroup>
 <thead>
 <tr>
@@ -1103,38 +1191,222 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>V/V</code> ou <code>VII/V</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dominante de deuxième degré</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>V/II</code> ou <code>VII/II</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Accord de sixte augmentée</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>VI6+</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"> Accord pivot</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;IV–IV&gt;</code> (le trait s&#8217;obtient par Alt-Maj-tiret)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;IV–IV&gt;</code> (le trait n&#8217;est pas un tiret ou un moins, il s&#8217;obtient par Alt-Maj-tiret)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord de tonique en quarte et sixte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>I46</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord de tonique <em>dominantisé</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>I7</code> — marque particulière du système d&#8217;harmonisation de Philippe Perret pour indiquer un phénomène classique : la dominantisation provisoire de la tonique pour appeler la sous-dominante sans pourtant moduler.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
 <h4 id="tags-modulation">Marque de Modulation</h4>
-
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-modulation.png" alt="Marque de modulation" width="80"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La marque de modulation permet d&#8217;indiquer le début d&#8217;une modulation.</p>
+<p class="tableblock">La valeur doit être une <a href="#chord-writing">valeur d&#8217;accord conforme</a>.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="tags-emprunt">Marque d&#8217;Empreint</h4>
-
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-emprunt.png" alt="Marque d&#8217;emprunt" width="80"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La marque d&#8217;emprunt permet d&#8217;indiquer un emprunt.</p>
+<p class="tableblock">La valeur doit être une <a href="#chord-writing">valeur d&#8217;accord conforme</a>.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="tags-cadence">Marque de cadence</h4>
-
+<div class="paragraph">
+<p>Les marques de cadence se place en remplacement de l&#8217;accord final, en général l&#8217;accord de tonique.</p>
+</div>
+<div class="paragraph">
+<p>On tire ensuite le bord gauche pour que le trait inférieur couvre tous les accords de la cadence — ou ceux qu&#8217;on veut mettre en exergue.</p>
+</div>
+<div class="paragraph">
+<p>Voilà les types de cadence qu&#8217;on peut indiquer :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadence-parfaite.svg" alt="Marque de cadence parfaite" width="217" height="50"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cadence parfaite, donc enchainement du V et du I dans leur position fondamentale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadence-imparfaite.svg" alt="Marque de cadence imparfaite" width="213" height="50"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cadence imparfaite, donc enchainement du V et du I dans une autre position que leur position fondamentale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadence-demi.svg" alt="Marque de demi-cadence" width="219" height="50"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Demi-cadence, donc enchainement conduisant à un arrêt sur l&#8217;accord V.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadence-italienne.svg" alt="Marque de cadence italienne" width="217" height="50"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cadence italienne, donc enchainement IV (ou II, ou V/V), V, I avec les deux derniers accords dans leur position fondamentale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadence-rompue.svg" alt="Marque de cadence rompue" width="219" height="50"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cadence rompue, donc enchainement V, à un autre accord autre que le I, souvent — mais pas obligatoirement — le IV.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadence-plagale.svg" alt="Marque de cadence plagale" width="225" height="50"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cadence plagale, donc enchainement I, IV, I, le plus souvent sur une pédale de tonique.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadence-faureenne.svg" alt="Marque de cadence fauréenne" width="216" height="50"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cadence fauréenne — qu&#8217;on devrait plutôt appeler « demi-cadence » puisqu&#8217;elle s&#8217;achève sur le V —, donc l&#8217;enchainement, en mineur, I, IV7<strong> et V. Exemple en Do mineur : Cm IV7</strong> V.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="tags-cadre">Cadre</h4>
 <div class="paragraph">
-<p>Pour entourer une partie de la partition par un cadre.</p>
+<p>Pour entourer une partie de la partition par un cadre qui peut être ou non surmonté d&#8217;un texte.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Sous-type</th>
+<th class="tableblock halign-left valign-top">Aspect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>simple</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadre-simple.png" alt="Cadre simple"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cellule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadre-cellule.png" alt="Cadre cellule"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>texte</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-cadre-texte.png" alt="Cadre texte"></span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>En choisissant "Trait/bord…" dans le menu contextuel (ctrl-clic sur marque ou clic-droit), vous pouvez définir l&#8217;aspect du cadre.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="tags-form">Marque de forme</h4>
 <div class="paragraph">
 <p>Permet d&#8217;indiquer les parties, les sections et les segments de la partition pour révéler la forme de la pièce.</p>
+</div>
+<div class="paragraph">
+<p>Cette marque est particulièrement importante pour l&#8217;analyse puisque c&#8217;est elle qui permet de définir et de <a href="#form-building">construire la forme de l&#8217;œuvre</a>.</p>
+</div>
+<div class="paragraph">
+<p>La forme se définit suivant trois niveaux d&#8217;importance, avec une marque de début et une marque de fin.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Si une marque de fin n&#8217;est pas définie, l&#8217;application considère que la fin de la portion correspond au début de la portion suivante.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Désignation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">En cadre</th>
+<th class="tableblock halign-left valign-top">En borne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Partie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plus grandes portions de la pièces, par exemple l'<em>Exposition</em>, le <em>Développement</em>, etc.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-partie-cadre.png" alt="Marque Partie (cadre)" width="200"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-partie-borne.svg" alt="Marque Partie (borne)"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> Fin de Partie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fin de la partie précédente (à choisir dans un menu contenant les parties)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-fin-de-partie-cadre.svg" alt="Marque Fin de Partie (cadre)" width="200"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-fin-de-partie-borne.svg" alt="Marque Fin de Partie (borne)"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Section</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sous-division de la partie, mettant par exemple en exergue <strong>les thèmes</strong>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-section-cadre.png" alt="Marque Section (cadre)" width="200"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-section-borne.svg" alt="Marque Section (borne)"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fin de Section</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marque de fin de la précédente.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-fin-de-section-cadre.svg" alt="Marque Fin de Section (cadre)" width="200"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-fin-de-section-borne.svg" alt="Marque Fin de Section (borne)"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Segment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sous-division de la section, pouvant mettre par exemple en exergue les phrases mélodiques, les marches harmoniques, etc.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Pas de version cadre</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-segment-borne.svg" alt="Marque Segment (borne)"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fin de Segment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marque de fin de la précédente.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Pas de version cadre</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="images/marques/marque-forme-fin-de-segment-borne.svg" alt="Marque Fin de Segment (borne)"></span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Pour les versions cadre, on peut allonger leur hauteur en "tirant" sur le bord bas de l&#8217;image.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1282,10 +1554,16 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 <div class="ulist">
 <ul>
 <li>
-<p>assemblage des parties</p>
+<p>définition de l&#8217;extrait : "x" pour mesure unique, "x-y" pour mesures continues, "x,y,z" pour mesures discontinues, ou un mélange de tout ça</p>
+</li>
+<li>
+<p>assemblage des parties (à la souris, avec les flèches)</p>
 </li>
 <li>
 <p>pose d&#8217;un masque blanc sur scories</p>
+</li>
+<li>
+<p>suppression d&#8217;un élément (l&#8217;entête de système, etc.)</p>
 </li>
 </ul>
 </div>
@@ -1358,6 +1636,27 @@ Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut
 <p>On peut « tirer un trait », une liaison, entre deux marques</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="tags-bords">Épaisseur des bords/traits</h3>
+<div class="paragraph">
+<p>Le bord de toutes les marques qui en possèdent peuvent être réglées, seule ou en groupe, par le menu contextuel « Bord/trait… » ou le menu « Marques &gt; Bord/trait… »</p>
+</div>
+<div class="paragraph">
+<p>Comme toutes les valeurs, on peut la définir pour chaque type de marque dans les <a href="#prefs">préférences</a> et appliquer la nouvelle valeur aussitôt.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Lorsque l&#8217;on choisit d&#8217;appliquer la nouvelle valeur de bord ou de trait, l&#8217;application demande s&#8217;il faut l&#8217;appliquer indifférement à toutes les marques de ce type ou seulement à celles qui ne définissent pas une valeur propre.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1370,7 +1669,10 @@ Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut
 <h3 id="prefs-systems">Les préférences pour les systèmes</h3>
 <div class="sect3">
 <h4 id="prefs-systems-distance">Distances entre les systèmes</h4>
-
+<div class="paragraph">
+<p>Traiter :
+- clic ou dbl-clic pour créer la marque</p>
+</div>
 </div>
 </div>
 </div>

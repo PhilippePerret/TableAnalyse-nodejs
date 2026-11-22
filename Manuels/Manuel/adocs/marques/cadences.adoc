@@ -1,0 +1,33 @@
+[[tags-cadence]]
+==== Marque de cadence ====
+
+Les marques de cadence se place en remplacement de l'accord final, en général l'accord de tonique.
+
+On tire ensuite le bord gauche pour que le trait inférieur couvre tous les accords de la cadence — ou ceux qu'on veut mettre en exergue.
+
+Voilà les types de cadence qu'on peut indiquer :
+
+[cols="1,2"]
+|====
+| image:images/marques/marque-cadence-parfaite.svg[Marque de cadence parfaite, height=50]
+| Cadence parfaite, donc enchainement du V et du I dans leur position fondamentale.
+
+| image:images/marques/marque-cadence-imparfaite.svg[Marque de cadence imparfaite, height=50]
+| Cadence imparfaite, donc enchainement du V et du I dans une autre position que leur position fondamentale.
+
+| image:images/marques/marque-cadence-demi.svg[Marque de demi-cadence, height=50]
+| Demi-cadence, donc enchainement conduisant à un arrêt sur l'accord V.
+
+| image:images/marques/marque-cadence-italienne.svg[Marque de cadence italienne, height=50]
+| Cadence italienne, donc enchainement IV (ou II, ou V/V), V, I avec les deux derniers accords dans leur position fondamentale.
+
+| image:images/marques/marque-cadence-rompue.svg[Marque de cadence rompue, height=50]
+| Cadence rompue, donc enchainement V, à un autre accord autre que le I, souvent — mais pas obligatoirement — le IV.
+
+| image:images/marques/marque-cadence-plagale.svg[Marque de cadence plagale, height=50]
+| Cadence plagale, donc enchainement I, IV, I, le plus souvent sur une pédale de tonique.
+
+| image:images/marques/marque-cadence-faureenne.svg[Marque de cadence fauréenne, height=50]
+| Cadence fauréenne — qu'on devrait plutôt appeler « demi-cadence » puisqu'elle s'achève sur le V —, donc l'enchainement, en mineur, I, IV7** et V. Exemple en Do mineur : Cm IV7** V.
+
+|====

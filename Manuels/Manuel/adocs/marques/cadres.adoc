@@ -1,0 +1,14 @@
+[[tags-cadre]]
+==== Cadre ====
+
+Pour entourer une partie de la partition par un cadre qui peut être ou non surmonté d'un texte.
+
+[width="50%", options="header"]
+|====
+| Sous-type | Aspect
+| `simple`  | image:images/marques/marque-cadre-simple.png[Cadre simple]
+| `cellule` | image:images/marques/marque-cadre-cellule.png[Cadre cellule]
+| `texte`   | image:images/marques/marque-cadre-texte.png[Cadre texte]
+|====
+
+En choisissant "Trait/bord…" dans le menu contextuel (ctrl-clic sur marque ou clic-droit), vous pouvez définir l'aspect du cadre.

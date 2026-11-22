@@ -1,0 +1,22 @@
+[[tags-chiffrage]]
+==== Marque d'Harmonie (chiffrage) ====
+
+Comme pour l'<<tags-chord, accord>>, on peut également ajouter ` --` après le chiffrage pour obtenir une ligne de prolongation qu'il suffit de tirer en déplaçant le bord droit. Ne pas oublier l'espace, sinon le premier « - » sera considéré comme la marque bémol.
+
+[options="header"]
+|====
+| Description | Code | Effet
+| Ligne de prolongation | "V --" | image:images/marques/marque-harmonie-prolongation.svg[Harmonie avec prolongation]
+|====
+
+
+[cols="1,2", options="header"]
+|====
+| Nature                          | Écriture
+| Dominante de dominante          | `V/V` ou `VII/V`
+| Dominante de deuxième degré     | `V/II` ou `VII/II`
+| Accord de sixte augmentée       | `VI6+`
+| Accord pivot                    | `<IV–IV>` (le trait n'est pas un tiret ou un moins, il s'obtient par Alt-Maj-tiret)
+| Accord de tonique en quarte et sixte | `I46`
+| Accord de tonique __dominantisé__ | `I7` — marque particulière du système d'harmonisation de Philippe Perret pour indiquer un phénomène classique : la dominantisation provisoire de la tonique pour appeler la sous-dominante sans pourtant moduler.
+|====

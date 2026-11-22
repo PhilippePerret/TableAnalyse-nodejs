@@ -20,6 +20,8 @@
 - À LIRE en début de prochaine session : `.claude/A_LIRE_session_2026-11-11.md` (dernier compte rendu, ligne des numéros de mesure ; travail non commité).
 
 - Réponses : « Fait. » + strict minimum. Aucune explication non demandée.
+- Manuel : JAMAIS dire à Phil de le régénérer/actualiser (il le fait en permanence via SuperBoard, 2026-11-22).
+- « Tu pourrais faire X ? » = FAIRE X, pas répondre « oui » (cf. `.claude/feedback_question_faire.md`, 2026-11-22).
   JAMAIS décrire ce qui a été fait quand c'était demandé (p.e. « la liaison suit les marques, passe dans les exports, testé… », #206, 2026-11-19) : seuls les ajouts hors demande, numérotés.
 - TOUJOURS numéroter TOUS les points d'un message qui en a plusieurs, sans exception (Phil furieux 2026-11-15 : point essentiel laissé hors numérotation).
 - Git : interdit en écriture sans autorisation expresse de Phil, SAUF commit obligatoire après chaque correction d'issue (un commit par issue, message contenant « Fixed #N » pour fermer l'issue au push).
@@ -30,6 +32,7 @@
 - Exception : signaler ce qui sort de la demande ET change ce que l'utilisateur vit (données supprimées/remplacées, confirmation ajoutée…). Jugés inutiles par Phil (2026-11-12) : placements de menus, détails d'implémentation, éléments laissés en place. Aussi (2026-11-13) : conséquences directes de ce que Phil a lui-même demandé (p.e. menu supprimé → ses éléments disparaissent).
   Aussi (2026-11-13) : la manière dont une retouche visuelle a été obtenue (p.e. flèche native remplacée par une flèche dessinée).
 - `Manuels/Manuel/` : écrit par Phil, NE JAMAIS Y TOUCHER (2026-11-13). Les autres fichiers (dont `Manuel_AppData.js`, `Manuel_dev.md`) restent modifiables.
+  Exception (2026-11-22) : `Manuels/Manuel/images/` = images du manuel faites par Claude, à la demande. LIRE son `README.md` (organisation en sous-dossiers, procédure de capture détourée). Aussi `Manuels/Manuel/macros.rb` (accord de Phil) : chargé par SuperBoard qui génère le manuel, il charge `_scripts/manuel/extensions/`.
 - Point laissé sans réponse par Phil = sujet clos : ne jamais le relancer.
 - Jamais expliquer à Phil ce qu'il sait déjà (p.e. licences de polices, 2026-11-16 : « tu me prends pour un crétin »). Question de Phil = répondre seulement à ce qu'elle demande en pratique.
 - Aucune négation (« je n'ai pas fait… ») sauf si utile à la demande. JAMAIS signaler que ce n'est « pas poussé » : c'est Phil qui pousse (2026-11-13).

@@ -1,0 +1,10 @@
+[[tags-emprunt]]
+==== Marque d'Empreint ====
+
+[cols="1,4"]
+|====
+| image:images/marques/marque-emprunt.png[Marque d'emprunt, 80]
+| La marque d'emprunt permet d'indiquer un emprunt.
+
+La valeur doit être une <<chord-writing, valeur d'accord conforme>>.
+|====

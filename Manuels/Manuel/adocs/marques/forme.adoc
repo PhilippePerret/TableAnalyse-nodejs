@@ -1,0 +1,52 @@
+[[tags-form]]
+==== Marque de forme ====
+
+Permet d'indiquer les parties, les sections et les segments de la partition pour révéler la forme de la pièce.
+
+Cette marque est particulièrement importante pour l'analyse puisque c'est elle qui permet de définir et de <<form-building, construire la forme de l'œuvre>>.
+
+La forme se définit suivant trois niveaux d'importance, avec une marque de début et une marque de fin.
+
+NOTE: Si une marque de fin n'est pas définie, l'application considère que la fin de la portion correspond au début de la portion suivante.
+
+[cols="1,3,1,1", options="header"]
+|====
+| Désignation
+| Description
+| En cadre 
+| En borne
+
+| Partie
+| Plus grandes portions de la pièces, par exemple l'__Exposition__, le __Développement__, etc. 
+| image:images/marques/marque-forme-partie-cadre.png[Marque Partie (cadre), width=200]
+| image:images/marques/marque-forme-partie-borne.svg[Marque Partie (borne)]
+
+| Fin de Partie
+| Fin de la partie précédente (à choisir dans un menu contenant les parties)
+| image:images/marques/marque-forme-fin-de-partie-cadre.svg[Marque Fin de Partie (cadre), width=200]
+| image:images/marques/marque-forme-fin-de-partie-borne.svg[Marque Fin de Partie (borne)]
+
+
+| Section 
+| Sous-division de la partie, mettant par exemple en exergue **les thèmes**.
+| image:images/marques/marque-forme-section-cadre.png[Marque Section (cadre), width=200]
+| image:images/marques/marque-forme-section-borne.svg[Marque Section (borne)]
+
+| Fin de Section 
+| Marque de fin de la précédente.
+| image:images/marques/marque-forme-fin-de-section-cadre.svg[Marque Fin de Section (cadre), width=200]
+| image:images/marques/marque-forme-fin-de-section-borne.svg[Marque Fin de Section (borne)]
+
+| Segment
+| Sous-division de la section, pouvant mettre par exemple en exergue les phrases mélodiques, les marches harmoniques, etc.
+| __Pas de version cadre__
+| image:images/marques/marque-forme-segment-borne.svg[Marque Segment (borne)]
+
+| Fin de Segment
+| Marque de fin de la précédente.
+| __Pas de version cadre__
+| image:images/marques/marque-forme-fin-de-segment-borne.svg[Marque Fin de Segment (borne)]
+
+|====
+
+Pour les versions cadre, on peut allonger leur hauteur en "tirant" sur le bord bas de l'image.

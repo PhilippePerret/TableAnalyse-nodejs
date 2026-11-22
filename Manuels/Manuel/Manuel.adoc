@@ -20,3 +20,10 @@ include::adocs/affichage.adoc[]
 include::adocs/forme.adoc[]
 
 include::adocs/best-practices.adoc[]
+
+////
+TODO
+Une vidéo montrant des tips plus pointus sur l'application :
+- utilisation des variables pour les motifs dans les textes
+- définition de la forme
+////

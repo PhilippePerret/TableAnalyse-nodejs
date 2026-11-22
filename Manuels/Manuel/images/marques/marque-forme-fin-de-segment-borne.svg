@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="72.58" height="37.33" viewBox="5049.42 27363 72.58 37.33">
+<defs><clipPath id="c"><path d="M5105.5,27377.0 A4.5,4.5 0 0 1 5114.5,27377.0 L5114.5,27385.0 A0.5,0.5 0 0 1 5114.0,27385.5 L5106.0,27385.5 A0.5,0.5 0 0 1 5105.5,27385.0 Z"/></clipPath></defs>
+<path d="M5104.0,27377.0 A6.0,6.0 0 0 1 5116.0,27377.0 L5116.0,27385.0 A2,2 0 0 1 5114.0,27387.0 L5106.0,27387.0 A2,2 0 0 1 5104.0,27385.0 Z" fill="#ffffff"/>
+<g clip-path="url(#c)"><rect x="5104.0" y="27371.0" width="12.0" height="6.720" fill="#3a925e"/><line x1="5104.0" y1="27387.0" x2="5116.0" y2="27371.0" stroke="#222222" stroke-width="2.4"/></g>
+<path d="M5104.75,27377.0 A5.25,5.25 0 0 1 5115.25,27377.0 L5115.25,27385.0 A1.25,1.25 0 0 1 5114.0,27386.25 L5106.0,27386.25 A1.25,1.25 0 0 1 5104.75,27385.0 Z" fill="none" stroke="#333333" stroke-width="1.5"/>
+<text x="5059.422" y="27387" font-family="'Arial Narrow', Arial, Helvetica, Geneva" font-size="17.333" font-weight="700" fill="#000000" xml:space="preserve">Pont</text>
+</svg>

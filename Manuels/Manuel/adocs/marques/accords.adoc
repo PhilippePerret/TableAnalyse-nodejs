@@ -1,9 +1,24 @@
 [[tags-chord]]
 ==== Marque Accord ====
 
-Tous les accords se mettent en notation batave (de A à G). Tous les accords, même les mineurs, se mettent en capital.
+Une marque accord attend simplement la valeur de l'accord. Cette valeur doit respecter le <<chord-writing, format requis par l'application>>.
+
+On peut également ajouter ` --` après l'accord pour obtenir une ligne de prolongation qu'il suffit de tirer en déplaçant le bord droit. Ne pas oublier l'espace, sinon le premier « - » sera considéré comme la marque bémol.
+
+[options="header"]
+|====
+| Description | Code | Effet
+| Ligne de prolongation | "A --" | image:images/marques/marque-accord-prolongation.svg[Accord avec prolongation]
+|====
 
 
+[[chord-writing]]
+===== Écriture valide des accords =====
+
+* Tous les accords se mettent en **notation batave** (de A à G). 
+* Tous les accords, __même les accords mineurs__, se mettent en capital (contrairement à une tradition que nous déconseillons qui veut que les minuscules soit des accords mineurs — les minuscules, dans l'application, sont utilisées pour les notes).
+
+Pour le reste : 
 [cols="1,2,1", options="header"]
 |====
 | Nature | Description | exemple

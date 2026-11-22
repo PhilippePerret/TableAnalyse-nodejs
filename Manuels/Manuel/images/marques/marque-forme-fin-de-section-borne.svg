@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="102.5" height="37.33" viewBox="3021.5 27365 102.5 37.33">
+<defs><clipPath id="c"><path d="M3105.5,27378.0 A5.5,5.5 0 0 1 3116.5,27378.0 L3116.5,27387.0 A0.5,0.5 0 0 1 3116.0,27387.5 L3106.0,27387.5 A0.5,0.5 0 0 1 3105.5,27387.0 Z"/></clipPath></defs>
+<path d="M3104.0,27378.0 A7.0,7.0 0 0 1 3118.0,27378.0 L3118.0,27387.0 A2,2 0 0 1 3116.0,27389.0 L3106.0,27389.0 A2,2 0 0 1 3104.0,27387.0 Z" fill="#ffffff"/>
+<g clip-path="url(#c)"><rect x="3104.0" y="27371.0" width="14.0" height="7.560" fill="#e8c21a"/><line x1="3104.0" y1="27389.0" x2="3118.0" y2="27371.0" stroke="#222222" stroke-width="2.4"/></g>
+<path d="M3104.75,27378.0 A6.25,6.25 0 0 1 3117.25,27378.0 L3117.25,27387.0 A1.25,1.25 0 0 1 3116.0,27388.25 L3106.0,27388.25 A1.25,1.25 0 0 1 3104.75,27387.0 Z" fill="none" stroke="#333333" stroke-width="1.5"/>
+<text x="3031.5" y="27389" font-family="'Arial Narrow', Arial, Helvetica, Geneva" font-size="17.333" font-weight="700" fill="#000000" xml:space="preserve">Thème A</text>
+</svg>
