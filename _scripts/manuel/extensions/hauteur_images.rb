@@ -27,10 +27,11 @@ class HauteurImages < Asciidoctor::Extensions::Treeprocessor
   # Ligne : images en ligne avec height et sans width
   def fix text
     text.gsub(INLINE) do
-      head, target, attrs = $1, $2, $3
+      m = $~
+      head, target, attrs = m[1], m[2], m[3]
       h = attrs[/(?:^|,)\s*height\s*=\s*"?(\d+)/, 1]
-      w = attrs =~ /(?:^|,)\s*width\s*=/ ? :present : nil
-      if h && !w && (nw = width_for(target, h, nil)) then "#{head}#{attrs}, width=#{nw}]" else $& end
+      w = attrs.match?(/(?:^|,)\s*width\s*=/)
+      if h && !w && (nw = width_for(target, h, nil)) then "#{head}#{attrs}, width=#{nw}]" else m[0] end
     end
   end
 
