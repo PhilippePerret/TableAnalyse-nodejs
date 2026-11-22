@@ -187,7 +187,7 @@ buttons:
   replace:          "Replace"
   ok:               "OK"
   apply:            "Apply"
-  to_prefs:         "→ prefs"
+  to_prefs:         "Set as preference"
   to_prefs_title:   "Make this value the preference value and apply it"
   answer_yes:       "Yes"
   answer_no:        "No"

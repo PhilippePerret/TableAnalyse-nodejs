@@ -187,7 +187,7 @@ buttons:
   replace:          "置き換える"
   ok:               "OK"
   apply:            "適用"
-  to_prefs:         "→ 環境設定"
+  to_prefs:         "環境設定にする"
   to_prefs_title:   "この値を環境設定の値にして適用"
   answer_yes:       "はい"
   answer_no:        "いいえ"

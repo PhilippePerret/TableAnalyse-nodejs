@@ -187,7 +187,7 @@ buttons:
   replace:          "Reemplazar"
   ok:               "Aceptar"
   apply:            "Aplicar"
-  to_prefs:         "→ pref."
+  to_prefs:         "Definir como preferencia"
   to_prefs_title:   "Establecer este valor como preferencia y aplicarlo"
   answer_yes:       "Sí"
   answer_no:        "No"

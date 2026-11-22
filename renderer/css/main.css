@@ -537,7 +537,5 @@ button.to-prefs {
   background: none;
   box-shadow: none;
   font-size: .8em;
-  opacity: .6;
   cursor: pointer;
 }
-button.to-prefs:hover { opacity: 1; }

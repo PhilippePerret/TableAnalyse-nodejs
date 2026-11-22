@@ -187,7 +187,7 @@ buttons:
   replace:          "Ersetzen"
   ok:               "OK"
   apply:            "Anwenden"
-  to_prefs:         "→ Einst."
+  to_prefs:         "Als Einstellung festlegen"
   to_prefs_title:   "Diesen Wert als Einstellung übernehmen und anwenden"
   answer_yes:       "Ja"
   answer_no:        "Nein"
