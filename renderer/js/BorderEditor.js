@@ -61,7 +61,7 @@ class BorderEditorClass {
     ]})
     document.body.appendChild(panel)
     this.panel = panel
-    addPanelHead(panel, {title: t('ui.panels.border.title'), onClose: this.close.bind(this)})
+    addPanelHead(panel, {title: t('ui.panels.border.title'), onClose: this.close.bind(this), target: marks.map(m => m.obj)})
   }
 
   /**

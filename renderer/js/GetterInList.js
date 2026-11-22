@@ -266,7 +266,7 @@ export class GetterInList {
 
     document.body.appendChild(c)
     this.obj = c
-    addPanelHead(c, {title: this.data.message, onClose: this.cancel.bind(this)})
+    addPanelHead(c, {title: this.data.message, onClose: this.cancel.bind(this), place: false})
   }
 
   // Annulation (« Renoncer », case de fermeture, touche Échap)

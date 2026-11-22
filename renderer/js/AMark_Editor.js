@@ -253,7 +253,7 @@ getFormStart(){
   ]})
   document.body.appendChild(o)
   const close = (id) => { o.remove() ; UI.reactiveCurrentShortcuts() ; this.onChooseFormStart(id) }
-  addPanelHead(o, {title: TYPES_FORME[this.amark_subtype].name, onClose: () => close(null)})
+  addPanelHead(o, {title: TYPES_FORME[this.amark_subtype].name, onClose: () => close(null), place: false})
   listen(btnCancel, 'click', e => { e.stopPropagation() ; close(null) })
   listen(btnOK,     'click', e => { e.stopPropagation() ; close(Number(menu.value)) })
   // Entrée dans le menu : validation

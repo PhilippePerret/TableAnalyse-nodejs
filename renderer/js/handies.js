@@ -26,7 +26,15 @@ export function keepInView(el, margin = 8){
   if ( r.left + dx < margin ) dx = margin - r.left
   if ( r.bottom > H - margin ) dy = H - margin - r.bottom
   if ( r.top + dy < T ) dy = T - r.top
+  moveBox(el, dx, dy)
+}
+
+/**
+ * Déplace la boite +el+ de +dx+, +dy+ (px de la fenêtre)
+ */
+export function moveBox(el, dx, dy){
   if ( !dx && !dy ) return
+  const r = el.getBoundingClientRect(), z = el.currentCSSZoom || 1
   const cs = getComputedStyle(el)
   if ( cs.position == 'fixed' ) {
     // Position ramenée à left/top (sans right, bottom ni transform)

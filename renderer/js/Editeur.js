@@ -200,7 +200,7 @@ export class Editeur {
     this.obj = o
     this.data.titre && (this.titre = this.data.titre)
     document.body.appendChild(o)
-    addPanelHead(o, {title: t('ui.panels.mark_editor.title'), onClose: this.onClickCancel.bind(this)})
+    addPanelHead(o, {title: t('ui.panels.mark_editor.title'), onClose: this.onClickCancel.bind(this), place: false})
   }
   observe(){
     listen(this.btnOK,      'click', this.onClickOK.bind(this))

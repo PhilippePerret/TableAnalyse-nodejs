@@ -82,7 +82,7 @@ class LiaisonEditorClass {
     ]})
     document.body.appendChild(panel)
     this.panel = panel
-    addPanelHead(panel, {title: T('title'), onClose: this.close.bind(this)})
+    addPanelHead(panel, {title: T('title'), onClose: this.close.bind(this), target: liaison.obj && (liaison.obj.querySelector('path') || liaison.obj)})
   }
 
   // Fermeture sans OK (Renoncer, croix…) : la liaison reprend son style
