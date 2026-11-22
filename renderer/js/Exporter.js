@@ -396,7 +396,7 @@ class ExporterClass {
  * Copie de la table d'analyse, hors de l'écran, épurée des éléments
  * d'interface, sur laquelle sont mesurés les éléments.
  */
-class Stage {
+export class Stage {
 
   async build(){
     const table = DGet('section#content')
