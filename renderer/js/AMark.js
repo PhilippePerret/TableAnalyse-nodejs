@@ -188,9 +188,10 @@ set prolong(v){
  * 
  */
 onDoubleClick(e){
-  // Marque verrouillée : pas d'édition (menu contextuel) ; son clic crée
-  // une marque, comme sur la table (cf. TableAnalyse.onClick)
-  if ( this.isLocked ) return stopEvent(e)
+  // Marque verrouillée : pas d'édition (menu contextuel) ; son clic (ou
+  // double-clic, suivant la préférence) crée une marque, comme sur la
+  // table (cf. TableAnalyse.onClick et onDblClick)
+  if ( this.isLocked ) { e.preventDefault() ; return }
   try{
     this.edit()
   } catch(err){

@@ -508,6 +508,7 @@ prefs:
   color_segments:         {label: "セグメント"}
   animation_tempo:        {label: "アニメーションのテンポ", precision: "アニメーションのカーソルの速さ（1 分あたりの四分音符の数、既定の拍子は 4/4）。"}
   autosave:               {label: "自動保存"}
+  mark_creation_click:    {label: "新しいマークの作成"}
   animate:                {label: "分析をアニメーション表示", precision: "マークが順に表示されます"}
 
 prefs_groups:
@@ -627,6 +628,10 @@ marks:
     type:         "マークの種類"
     cadence:      "終止の種類"
     segment:      "セグメントの配置"
+
+mark_creation_click:
+  simple: "シングルクリック"
+  double: "ダブルクリック"
 
 form_position:
   before: "楽譜の前"

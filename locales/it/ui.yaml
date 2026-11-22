@@ -508,6 +508,7 @@ prefs:
   color_segments:         {label: "Segmenti"}
   animation_tempo:        {label: "Tempo dell'animazione", precision: "Velocità del cursore dell'animazione, in semiminime al minuto (metro 4/4 predefinito)."}
   autosave:               {label: "Salvataggio automatico"}
+  mark_creation_click:    {label: "Creazione di un nuovo segno"}
   animate:                {label: "Anima l'analisi", precision: "I segni saranno mostrati progressivamente"}
 
 prefs_groups:
@@ -628,6 +629,10 @@ marks:
     type:         "Tipo del segno"
     cadence:      "Tipo della cadenza"
     segment:      "Disposizione del segmento"
+
+mark_creation_click:
+  simple: "Clic singolo"
+  double: "Doppio clic"
 
 form_position:
   before: "Prima della partitura"

@@ -508,6 +508,7 @@ prefs:
   color_segments:         {label: "Segments"}
   animation_tempo:        {label: "Tempo de l’animation", precision: "Vitesse du curseur de l'animation, en noires par minute (métrique 4/4 par défaut)."}
   autosave:               {label: "Sauvegarde automatique"}
+  mark_creation_click:    {label: "Création d’une nouvelle marque"}
   animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
 
 prefs_groups:
@@ -629,6 +630,10 @@ marks:
     cadence:      "Type de la cadence"
     segment:      "Disposition du segment"
 
+
+mark_creation_click:
+  simple: "Simple clic"
+  double: "Double clic"
 
 form_position:
   before: "Avant la partition"

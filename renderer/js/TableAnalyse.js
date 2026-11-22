@@ -138,7 +138,28 @@ export class TableAnalyse {
     const down = this.downAt
     if ( down && (Math.abs(e.clientX - down.x) > 4 || Math.abs(e.clientY - down.y) > 4) ) return
     AObjet.deselectAll()
+    if ( this.isDoubleClickCreation ) return
     if ( !e.shiftKey && !e.metaKey && !e.altKey && this.isCreationTarget(e.target) ) AMark.createNew(e)
+  }
+
+  /**
+   * DOUBLE-CLIC : création d'une marque quand la préférence
+   * mark_creation_click vaut 'double' (mêmes cibles et mêmes
+   * restrictions que le clic simple)
+   */
+  static onDblClick(e){
+    if ( !this.isDoubleClickCreation || !Current.analyse ) return
+    if ( e.button !== 0 || e.ctrlKey || e.shiftKey || e.metaKey || e.altKey ) return
+    if ( UI.hasOpenPanel || document.documentElement.classList.contains('animation-running') ) return
+    const down = this.downAt
+    if ( down && (Math.abs(e.clientX - down.x) > 4 || Math.abs(e.clientY - down.y) > 4) ) return
+    if ( !this.isCreationTarget(e.target) ) return
+    AObjet.deselectAll()
+    AMark.createNew(e)
+  }
+
+  static get isDoubleClickCreation(){
+    return pref('mark_creation_click') === 'double'
   }
 
   // Cible d'un clic de création : la table (vide, ligne des numéros,
@@ -158,6 +179,7 @@ export class TableAnalyse {
     listen(window, 'mousedown', this.onMouseDown.bind(this))    
     listen(window, 'mouseup',   this.onMouseUp.bind(this))    
     listen(window, 'click',       this.onClick.bind(this))
+    listen(window, 'dblclick',    this.onDblClick.bind(this))
   }
 
   static get obj(){

@@ -508,6 +508,7 @@ prefs:
   color_segments:         {label: "片段"}
   animation_tempo:        {label: "动画速度", precision: "动画光标的速度，以每分钟四分音符数计（默认拍号 4/4）。"}
   autosave:               {label: "自动保存"}
+  mark_creation_click:    {label: "新建标记"}
   animate:                {label: "动画显示分析", precision: "标记将逐步显示"}
 
 prefs_groups:
@@ -627,6 +628,10 @@ marks:
     type:         "标记类型"
     cadence:      "终止式类型"
     segment:      "片段布局"
+
+mark_creation_click:
+  simple: "单击"
+  double: "双击"
 
 form_position:
   before: "乐谱之前"

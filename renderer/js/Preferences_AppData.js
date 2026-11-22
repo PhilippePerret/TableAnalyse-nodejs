@@ -101,6 +101,10 @@ export const PreferencesAppData = {
 
   , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
+  , mark_creation_click     :{type:'select'       ,typeV:'string'   ,default:'simple', values: [
+        {name: t('ui.mark_creation_click.simple'), value: 'simple'}
+      , {name: t('ui.mark_creation_click.double'), value: 'double'}
+    ]}
   , animate                 :{type:'checkbox'     ,typeV:'boolean'  ,default:false}
 }
 
