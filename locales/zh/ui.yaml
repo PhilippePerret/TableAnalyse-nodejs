@@ -638,8 +638,10 @@ form_position:
   after:  "乐谱之后"
 
 form_diagram:
-  title: "曲式"
-  general: "总体曲式"
+  title: "乐曲的曲式"
+  general_form: "总体曲式：%{form}"
+  structure: "总体结构"
+  details: "各部分详情"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

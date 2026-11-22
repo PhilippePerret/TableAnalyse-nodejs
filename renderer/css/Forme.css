@@ -29,7 +29,10 @@ div.form-diagram div.ftitle {
   font-weight: bold;
   margin-bottom: 30px;
 }
-div.form-diagram div.ftitle span.fprecision { font-weight: normal; }
+div.form-diagram div.fgeneral {
+  font-size: 28px;
+  margin: -14px 0 30px;
+}
 div.form-diagram div.fdescription {
   font-size: 22px;
   line-height: 1.4;
@@ -44,6 +47,14 @@ div.form-diagram div.fsubtitle {
   font-size: 32px;
   font-weight: bold;
   margin: 40px 0 14px;
+  padding-top: 14px;
+  border-top: 3px solid #000;
+}
+div.form-diagram div.fpart {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin: 30px 0 10px;
 }
 div.form-diagram div.fblock { position: relative; }
 div.form-diagram div.frow.level1 { height: 74px; }

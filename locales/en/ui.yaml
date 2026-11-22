@@ -639,8 +639,10 @@ form_position:
   after:  "After the score"
 
 form_diagram:
-  title: "Form"
-  general: "General form"
+  title: "Form of the piece"
+  general_form: "General form: %{form}"
+  structure: "General structure"
+  details: "Detail of the parts"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

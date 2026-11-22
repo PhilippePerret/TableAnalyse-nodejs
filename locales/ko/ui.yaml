@@ -638,8 +638,10 @@ form_position:
   after:  "악보 뒤"
 
 form_diagram:
-  title: "형식"
-  general: "전체 형식"
+  title: "곡의 형식"
+  general_form: "전체 형식: %{form}"
+  structure: "전체 구조"
+  details: "부분별 세부"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

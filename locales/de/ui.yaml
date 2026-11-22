@@ -639,8 +639,10 @@ form_position:
   after:  "Nach der Partitur"
 
 form_diagram:
-  title: "Form"
-  general: "Gesamtform"
+  title: "Form des Stücks"
+  general_form: "Gesamtform: %{form}"
+  structure: "Gesamtstruktur"
+  details: "Einzelheiten der Teile"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

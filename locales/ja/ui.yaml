@@ -638,8 +638,10 @@ form_position:
   after:  "楽譜の後"
 
 form_diagram:
-  title: "形式"
-  general: "全体の形式"
+  title: "曲の形式"
+  general_form: "全体の形式：%{form}"
+  structure: "全体の構造"
+  details: "各部の詳細"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

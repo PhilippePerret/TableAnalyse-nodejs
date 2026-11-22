@@ -640,8 +640,10 @@ form_position:
   after:  "Après la partition"
 
 form_diagram:
-  title: "Forme"
-  general: "Forme générale"
+  title: "Forme de la pièce"
+  general_form: "Forme générale : %{form}"
+  structure: "Structure générale"
+  details: "Détail des parties"
 
 # Types de forme (menu du panneau « Construire la forme »). Liste
 # modifiable : ajouter, retirer ou renommer des lignes (garder « other »

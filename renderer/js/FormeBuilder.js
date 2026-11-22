@@ -8,6 +8,7 @@ import { Forme } from './Forme.js'
 import { UI } from './UI.js'
 import { TYPES_FORME } from './Constants.js'
 import { t } from './i18n.js'
+import { pageUsefulWidthMm } from './Exporter.js'
 /**
 
   FormeBuilder
@@ -42,41 +43,51 @@ const escapeHTML = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').r
 
 const GAP     = 300   // distance (px) entre la forme et la partition
 const MIN_GAP = 30    // distance minimale (px) entre deux numéros
+// Mm (à l'export) par px de la forme : la forme est construite sur la
+// largeur utile de la page d'export (cf. Exporter), les tailles de
+// Forme.css correspondant alors à des tailles imprimées lisibles
+const MM_PER_PX = 0.18
 
 export class FormeBuilder {
 
   /**
-   * Construit (ou reconstruit) la forme
+   * Construit (ou reconstruit) la forme, sur la largeur utile +widthMm+
+   * de la page d'export (par défaut : taille de page enregistrée)
    * @return true si la forme a été construite
    */
-  static build(){
+  static build(widthMm){
     this.remove()
     const last = Forme.lastMeasure
     if ( !last ) { message(t('messages.no_measure_number')) ; return false }
     const portions = this.portions(last)
     if ( !portions.length ) { message(t('messages.no_form_mark')) ; return false }
     const first = Systeme.first
-    const width = Number(pref('systeme_width'))
+    widthMm = widthMm || pageUsefulWidthMm()
+    const width = Math.round(widthMm / MM_PER_PX)
     this.keys = this.keyChanges()
     const o = DCreate('DIV', {id: 'form-diagram', class: 'form-diagram', 'data-position': pref('form_position')})
     o.style.left  = px(first ? first.left : 0)
     o.style.width = px(width)
+    o.dataset.widthMm = widthMm
     o.appendChild(this.titleDiv())
+    const general = this.generalDiv()
+    general && o.appendChild(general)
     const description = Forme.formInfos.description
     description && o.appendChild(DCreate('DIV', {class: 'fdescription', text: escapeHTML(description).replace(/\n/g, '<br>')}))
     // Forme générale : les portions du plus haut niveau, d'un bout à
     // l'autre de la pièce
     const top  = Math.min(...portions.map(p => p.level))
     const tops = portions.filter(p => p.level == top)
-    o.appendChild(DCreate('DIV', {class: 'fsubtitle', text: t('ui.form_diagram.general')}))
+    o.appendChild(DCreate('DIV', {class: 'fsubtitle', text: t('ui.form_diagram.structure').toLocaleUpperCase()}))
     o.appendChild(this.block(tops, 0, last, width / last, true))
     // Détail de chaque portion (ses sections, ses segments), avec une
     // même largeur de mesure pour toutes (la plus longue remplit la ligne)
     const unit = width / Math.max(...tops.map(p => p.to - p.from))
     // (une portion sans sous-portions y figure seule, avec ses tonalités)
+    o.appendChild(DCreate('DIV', {class: 'fsubtitle', text: t('ui.form_diagram.details').toLocaleUpperCase()}))
     tops.forEach(P => {
       const children = portions.filter(p => p.level > top && p.from >= P.from && p.from < P.to)
-      o.appendChild(DCreate('DIV', {class: 'fsubtitle', text: escapeHTML(P.name)}))
+      o.appendChild(DCreate('DIV', {class: 'fpart', text: escapeHTML(P.name)}))
       o.appendChild(this.block(children.length ? children : [P], P.from, P.to, unit, false))
     })
     UI.TableAnalyse.appendChild(o)
@@ -143,11 +154,16 @@ export class FormeBuilder {
     })
   }
 
-  // Titre : « Forme », type de la forme et précision
+  // Titre : « Forme de la pièce »
   static titleDiv(){
-    const div = DCreate('DIV', {class: 'ftitle', text: t('ui.form_diagram.title')})
+    return DCreate('DIV', {class: 'ftitle', text: t('ui.form_diagram.title')})
+  }
+
+  // Sous le titre : « Forme générale : <type> (<précision>) », ou null
+  static generalDiv(){
     const type = Forme.formTypeName, precision = Forme.formInfos.precision
-    type && div.appendChild(DCreate('SPAN', {class: 'ftype', text: ' — ' + escapeHTML(type)}))
+    if ( !type && !precision ) return null
+    const div = DCreate('DIV', {class: 'fgeneral', text: t('ui.form_diagram.general_form', {form: escapeHTML(type || '')})})
     precision && div.appendChild(DCreate('SPAN', {class: 'fprecision', text: ' (' + escapeHTML(precision) + ')'}))
     return div
   }

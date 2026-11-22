@@ -11,6 +11,7 @@ import { Systeme } from './Systeme.js'
 import { TYPES_NOTES } from './Constants.js'
 import { Forme } from './Forme.js'
 import { Liaison } from './Liaison.js'
+import { FormeBuilder } from './FormeBuilder.js'
 /**
 
   Exporter
@@ -85,6 +86,18 @@ export const mmPerTablePx = () => {
   let [w, h] = PAGE_FORMATS[pref('export_page_format')] || [Number(pref('export_page_width')), Number(pref('export_page_height'))]
   if ( (pref('export_page_orientation') == 'landscape') != (w > h) ) [w, h] = [h, w]
   return (w - 2 * Number(pref('export_page_margin'))) / Number(pref('systeme_width'))
+}
+
+/**
+ * Largeur utile (mm) de la page d'export : taille de page enregistrée
+ * (export_page_*) ou +opts+ ({width, height, margin} en mm, orientation
+ * déjà appliquée), moins les marges
+ */
+export const pageUsefulWidthMm = (opts) => {
+  if ( opts ) return opts.width - 2 * opts.margin
+  let [w, h] = PAGE_FORMATS[pref('export_page_format')] || [Number(pref('export_page_width')), Number(pref('export_page_height'))]
+  if ( (pref('export_page_orientation') == 'landscape') != (w > h) ) [w, h] = [h, w]
+  return w - 2 * Number(pref('export_page_margin'))
 }
 
 // Système (index) d'un élément de la table (ou null)
@@ -354,6 +367,11 @@ class ExporterClass {
 
   async export(format, opts){
     message(t(`messages.exporting_${format}`), {keep: true})
+    // Forme construite à la largeur de la page de cet export
+    const form = DGet('#form-diagram')
+    if ( form && opts.mode == 'book' && Number(form.dataset.widthMm) != pageUsefulWidthMm(opts) ) {
+      FormeBuilder.build(pageUsefulWidthMm(opts))
+    }
     const stage = new Stage()
     try {
       await stage.build()
@@ -571,12 +589,19 @@ class Stage {
       height = contentH * scale + 2 * margin
       slices = [[top, bottom]]
     }
-    // Forme : pages à elle seule, avant ou après la partition
+    // Forme : pages à elle seule, avant ou après la partition. En mode
+    // livre, à sa propre échelle : sa largeur (construite sur celle de
+    // la page, cf. FormeBuilder) remplit la largeur utile de la page
     const form = this.formItem
     if ( form ) {
-      const fslices = opts.mode == 'book'
-        ? this.formSlices(form, (height - 2 * margin) / scale)
-        : [[form.top - PAD, form.bottom + PAD]]
+      let fslices
+      if ( opts.mode == 'book' ) {
+        const fw = form.right - form.left, fscale = (width - 2 * margin) / fw
+        fslices = this.formSlices(form, (height - 2 * margin) / fscale)
+        fslices.forEach(sl => Object.assign(sl, {scale: fscale, x0: form.left, contentW: fw}))
+      } else {
+        fslices = [[form.top - PAD, form.bottom + PAD]]
+      }
       form.el.dataset.position == 'before' ? slices.unshift(...fslices) : slices.push(...fslices)
     }
     // Nomenclature : première page, à elle seule
@@ -592,7 +617,7 @@ class Stage {
   formSlices(form, pageH){
     const rects = Array.from(form.el.children).map(el => {
       const r = el.getBoundingClientRect()
-      return {top: r.top - this.base.top, bottom: r.bottom - this.base.top, title: el.classList.contains('fsubtitle')}
+      return {top: r.top - this.base.top, bottom: r.bottom - this.base.top, title: ['fsubtitle', 'fpart'].some(c => el.classList.contains(c))}
     })
     // Titre + bloc suivant : un seul morceau
     const parts = []
@@ -663,10 +688,11 @@ class Stage {
       img.setAttribute('src', cache.get(src))
     }
     const children = Array.from(embedded.children)
-    const {width, height, margin, scale, x0, contentW} = layout
-    const s = scale * PX_PER_MM // px de page par px de table
+    const {width, height, margin} = layout
     const pages = layout.slices.map(slice => {
       const [y0, y1] = slice
+      const {scale, x0, contentW} = Object.assign({}, layout, slice.scale ? slice : {})
+      const s = scale * PX_PER_MM // px de page par px de table
       const inner = this.itemsIn(slice).map(i => children[i.index].outerHTML).join('\n')
       return `<div class="pdf-page" style="width:${width}mm;height:${height}mm;">
   <div style="position:absolute;overflow:hidden;left:${margin}mm;top:${margin}mm;width:${contentW * s}px;height:${(y1 - y0) * s}px;">
@@ -727,7 +753,8 @@ ${inner}
 
   async svgPage(layout, slice){
     const [y0, y1] = slice
-    const {width, height, margin, scale, x0, contentW} = layout
+    const {width, height, margin} = layout
+    const {scale, x0, contentW} = Object.assign({}, layout, slice.scale ? slice : {})
     const parts = []
     for ( const item of this.itemsIn(slice) ) parts.push(await this.svgOf(item.el))
     const fonts = await this.svgFonts(parts.join('\n'))
