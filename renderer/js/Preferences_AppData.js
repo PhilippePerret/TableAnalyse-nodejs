@@ -23,9 +23,9 @@ export const PreferencesAppData = {
   , marque_emprunt_size     :{type:'inputtext'    ,typeV:'number'   ,default:24     ,unite:'pt' ,selector:'div.aobj.emp span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_motif_size       :{type:'inputtext'    ,typeV:'number'   ,default:24      ,unite:'px' ,selector:'div.amark.mot span.content', selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_cellule_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.amark.cel span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
-  , thiness_segment_line    :{type:'inputtext'    ,typeV:'number'   ,default:4         ,unite:'px' ,selector:'div.amark.seg'   ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
-  , thiness_cellule_line    :{type:'inputtext'    ,typeV:'number'   ,default:5         ,unite:'px' ,selector:'div.amark.cel'   ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
-  , thiness_motif_line      :{type:'inputtext'    ,typeV:'number'   ,default:1         ,unite:'px' ,selector:'div.amark.mot'   ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
+  , thiness_segment_line    :{type:'inputtext'    ,typeV:'number'   ,default:4         ,unite:'px' ,selector:'div.amark.seg'   ,selector_value:'border-width:__VALUE__px;--bw:__VALUE__px;' ,border:'width',apply:true}
+  , thiness_cellule_line    :{type:'inputtext'    ,typeV:'number'   ,default:5         ,unite:'px' ,selector:'div.amark.cel'   ,selector_value:'border-width:__VALUE__px;--bw:__VALUE__px;' ,border:'width',apply:true}
+  , thiness_motif_line      :{type:'inputtext'    ,typeV:'number'   ,default:1         ,unite:'px' ,selector:'div.amark.mot'   ,selector_value:'border-width:__VALUE__px;--bw:__VALUE__px;' ,border:'width',apply:true}
   , thiness_border          :{type:'inputtext'    ,typeV:'number'   ,default:4  ,unite:'px' ,selector:'div.amark.bbx.bxt' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
   , border_circle           :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.cir' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
   , border_box              :{type:'inputtext'    ,typeV:'number'   ,default:5  ,unite:'px' ,selector:'div.amark.box' ,selector_value:'border-width:__VALUE__px;' ,border:'width',apply:true}
