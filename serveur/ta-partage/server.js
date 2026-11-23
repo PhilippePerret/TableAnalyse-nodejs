@@ -125,45 +125,47 @@ function ipAllowed(ip){
 }
 
 /**
- * Code de confirmation d'une adresse (spectateur), envoyé par email avec
- * la marche à suivre. +invitation+ : {pseudo, titre} quand c'est la
- * première invitation de cette adresse.
- * @return false si un email vient déjà d'être envoyé
+ * Email d'invitation (à chaque invitation, #224) : marche à suivre, avec
+ * le code de confirmation si l'adresse est encore inconnue. Sans
+ * +invitation+ : nouveau code demandé depuis « Rejoindre… ».
+ * @return false si un code vient déjà d'être envoyé à cette adresse
  */
-async function sendConfirmation(email, invitation){
+function newCode(email){
   const prev = sql.attente.get(email)
-  if ( prev && prev.expire > now() && now() - prev.envoye < RESEND_DELAY ) return false
+  if ( prev && prev.expire > now() && now() - prev.envoye < RESEND_DELAY ) return null
   const code = String(crypto.randomInt(0, 1e6)).padStart(6, '0')
-  const lien = crypto.randomBytes(16).toString('hex')
-  sql.attenteAjout.run(email, null, code, lien, now(), now() + PENDING_TTL)
-  const marche = `Votre code : ${code}
-
-Pour suivre l’analyse :
-1. lancez la Table d’analyse ;
-2. choisissez le menu « Outils › Partage › Rejoindre… » ;
-3. saisissez votre adresse (${email}) et ce code.
-
-Vous n’aurez à saisir ce code qu’une seule fois : ensuite, le menu « Rejoindre… » suffit.
-
-Vous n’avez pas encore la Table d’analyse ? Elle se télécharge ici :
-${DOWNLOAD}`
+  sql.attenteAjout.run(email, null, code, crypto.randomBytes(16).toString('hex'), now(), now() + PENDING_TTL)
+  return code
+}
+async function sendConfirmation(email, invitation){
+  const known = !!sql.compte.get(email)
+  const code = (known && invitation) ? null : newCode(email)
+  if ( !invitation && !code ) return false
+  const etapes = [
+      '* lancez la Table d’analyse,'
+    , '* activez le menu « Outils > Partage > Rejoindre… »,'
+    , ...(code ? [`* saisissez votre adresse (${email}) et le code ${code} (une seule fois : ensuite, ce ne sera plus nécessaire),`] : [])
+    , ...(invitation ? [`* choisissez l’analyse « ${invitation.titre} »,`] : [])
+    , '* cliquez sur le bouton « Rejoindre ».'
+  ].join('\n')
+  const telechargement = known ? '' : `\n\nVous n’avez pas encore la Table d’analyse ? Elle se télécharge ici :\n${DOWNLOAD}`
   if ( invitation ) {
     await sendMail(email, `${invitation.pseudo} vous invite à suivre son analyse`,
 `Bonjour,
 
 ${invitation.pseudo} vous invite à suivre en direct son analyse « ${invitation.titre} » dans la Table d’analyse.
 
-${marche}
-
-Si vous ne connaissez pas ${invitation.pseudo}, ignorez simplement ce message.
+Pour la rejoindre :
+${etapes}${telechargement}
 `)
   } else {
     await sendMail(email, 'Votre code — Table d’analyse',
 `Bonjour,
 
-${marche}
+Votre code : ${code}
 
-Si vous n’avez rien demandé, ignorez simplement ce message.
+Pour rejoindre une analyse :
+${etapes}
 `)
   }
   return true
@@ -301,8 +303,8 @@ function invite(share, emails){
     if ( !validEmail(email) || email == share.owner || share.invites.has(email) ) continue
     if ( share.invites.size >= MAX_INVITES ) break
     share.invites.add(email)
-    // Première invitation : email du code (sinon « Rejoindre… » suffit)
-    sql.compte.get(email) || sendConfirmation(email, {pseudo: share.pseudo, titre: share.titre})
+    // Email à chaque invitation (avec le code, la première fois)
+    sendConfirmation(email, {pseudo: share.pseudo, titre: share.titre})
   }
   sendCount(share)
 }

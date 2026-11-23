@@ -261,12 +261,9 @@ class PartageClass {
     } catch(err) { erreur(err.message) }
   }
 
-  // Partages proposés : un seul → suivi aussitôt ; plusieurs → liste
+  // Partages proposés : choix de l'analyse, puis « Rejoindre »
   async join(){
-    message(T('searching'))
-    const shares = await invoke('partage:list')
-    if ( shares.length == 1 ) return this.accept(shares[0].id)
-    this.buildJoinPanel(shares)
+    this.buildJoinPanel(await invoke('partage:list'))
   }
 
   closePanel(){
@@ -396,7 +393,7 @@ class PartageClass {
         btnInvite.disabled = true
         await invoke('partage:start', {invites, pseudo: name.value.trim()})
         this.closePanel()
-        message(T('invited_sent', {n: invites.length}))
+        message(T('invited_sent'))
       } catch(err) { btnInvite.disabled = false ; erreur(err.message) }
     })
     this.makePanel('partage_invite', T('invite_title'), [
@@ -412,18 +409,26 @@ class PartageClass {
     render()
   }
 
-  // Partages proposés (plusieurs)
+  // Partages proposés : analyse choisie, bouton « Rejoindre »
   buildJoinPanel(shares){
     const list = DCreate('DIV', {class: 'partage-list'})
     shares.length || list.appendChild(DCreate('DIV', {class: 'partage-empty', text: T('no_share')}))
-    shares.forEach(s => {
-      const btn = DCreate('BUTTON', {class: 'btn-default', text: T('follow')})
-      listen(btn, 'click', () => { this.closePanel() ; this.accept(s.id) })
-      list.appendChild(DCreate('DIV', {class: 'partage-row', inner: [
-          DCreate('SPAN', {text: `<b>${esc(s.pseudo)}</b> — « ${esc(s.titre)} »`}), btn
-      ]}))
+    shares.forEach((sh, i) => {
+      const radio = DCreate('INPUT', {type: 'radio', name: 'partage-choix', value: sh.id})
+      radio.checked = i == 0
+      list.appendChild(DCreate('DIV', {class: 'partage-row', inner: [DCreate('LABEL', {inner: [
+          radio, DCreate('SPAN', {text: `« ${esc(sh.titre)} » — <b>${esc(sh.pseudo)}</b>`})
+      ]})]}))
     })
-    this.makePanel('partage_join', T('join_title'), [list], [])
+    const btn = DCreate('BUTTON', {class: 'btn-default', text: T('join')})
+    btn.disabled = !shares.length
+    listen(btn, 'click', () => {
+      const chosen = list.querySelector('input[name="partage-choix"]:checked')
+      if ( !chosen ) return
+      this.closePanel()
+      this.accept(chosen.value)
+    })
+    this.makePanel('partage_join', T('join_title'), [list], [btn])
   }
 }
 
