@@ -348,7 +348,7 @@ function receivers(share, sender){
 }
 function pseudoOf(ws){
   const c = ws && ws.email && sql.compte.get(ws.email)
-  return (c && c.pseudo) || (ws && ws.email ? ws.email.split('@')[0] : '')
+  return (c && c.pseudo) || (ws && ws.email) || ''
 }
 // Main rendue à l'analyste
 function giveBack(share){
@@ -392,7 +392,7 @@ const handlers = {
     const compte = sql.compte.get(ws.email)
     const share = {
         id: crypto.randomBytes(9).toString('base64url'), owner: ws.email
-      , pseudo: (compte && compte.pseudo) || ws.email.split('@')[0]
+      , pseudo: (compte && compte.pseudo) || ws.email
       , titre: String(titre || '').slice(0, 200), invites: new Set(), files: new Map(), size: 0
       , view: null, ownerWs: ws, followers: new Set(), absentTimer: null
       , controller: null, requests: new Map()
