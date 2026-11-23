@@ -720,3 +720,6 @@ partage:
   invited_sent: "Invitation transmise."
   bad_email_list: "Adresse(s) invalide(s) : %{list}"
   joined: "%{pseudo} a rejoint votre analyse."
+  autosave_question: "La sauvegarde automatique de cette analyse est désactivée."
+  autosave_detail: "Les spectateurs ne voient les modifications qu'à chaque enregistrement. L'activer le temps du partage, pour qu'ils suivent en direct ?"
+  autosave_yes: "Activer"

@@ -718,3 +718,6 @@ partage:
   invited_sent: "招待を送信しました。"
   bad_email_list: "無効なアドレス：%{list}"
   joined: "%{pseudo} があなたの分析に参加しました。"
+  autosave_question: "この分析の自動保存はオフになっています。"
+  autosave_detail: "視聴者には保存のたびにしか変更が見えません。共有中は自動保存をオンにして、リアルタイムで見られるようにしますか？"
+  autosave_yes: "オンにする"

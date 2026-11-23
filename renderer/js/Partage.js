@@ -7,7 +7,7 @@ import { AMark } from './AMark.js'
 import { Systeme } from './Systeme.js'
 import { Variables } from './Variables.js'
 import { Current } from './Current.js'
-import { Preferences } from './Preferences.js'
+import { pref } from './Preferences.js'
 import { t } from './i18n.js'
 /**
  * Partage
@@ -30,7 +30,6 @@ import { t } from './i18n.js'
 const T = (key, params) => t(`ui.partage.${key}`, params)
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]))
 const VIEW_DELAY = 80 // ms entre deux envois de la partie visible
-const LIVE_DELAY = 500 // ms après la dernière modification (envoi en direct)
 
 class PartageClass {
 
@@ -59,29 +58,15 @@ class PartageClass {
     this.sendView = sendView
     window.addEventListener('scroll', sendView, {passive: true})
     window.addEventListener('resize', sendView)
-    // Celui qui a la main : chaque modification envoyée en direct, même
-    // sans enregistrement
-    window.addEventListener('analyse:modified', () => {
-      if ( !this.state.sender ) return
-      clearTimeout(this.liveTimer)
-      this.liveTimer = setTimeout(this.sendLive.bind(this), LIVE_DELAY)
-    })
-  }
-
-  // État courant de l'analyse (comme AnalyseSaver, sans enregistrer)
-  sendLive(){
-    const analyse = Current.analyse
-    if ( !analyse || !this.state.sender ) return
-    try {
-      const tags = AObjet.items.filter(o => !o.isSystem).map(o => o.data)
-      const infos = Object.assign({}, analyse.data.infos, {systems: Systeme.getData()})
-      invoke('partage:live', {tags, preferences: Preferences.getData(), infos}).catch(err => console.error(err))
-    } catch(err) { console.error(err) }
   }
 
   setState(s){
     const wasSender = !!(this.state && this.state.sender)
     this.state = s || {}
+    // Sauvegarde automatique le temps du partage (#225)
+    Current.forceAutosave = !!(this.state.sender && this.state.autosave)
+    // Main reçue : même question que l'analyste au début du partage
+    if ( this.state.sender && this.state.following && this.state.autosave === null ) setTimeout(() => this.askAutosave(), 1500)
     this.updateBanner()
     this.state.sender && !wasSender && this.sendView && this.sendView()
     // Demandes de la main closes
@@ -150,6 +135,17 @@ class PartageClass {
     listen(notif, 'click', (e) => e.stopPropagation())
     this.notifBox().appendChild(notif)
     return notif
+  }
+
+  // Question de la sauvegarde automatique (celui qui prend la main)
+  async askAutosave(){
+    if ( this.askingAutosave ) return
+    this.askingAutosave = true
+    try {
+      const on = pref('autosave') ? false : await invoke('partage:askAutosave')
+      await invoke('partage:setAutosave', {on})
+    } catch(err) { console.error(err) }
+    finally { this.askingAutosave = false }
   }
 
   // Analyste : un spectateur demande la main
@@ -411,7 +407,10 @@ class PartageClass {
       if ( bad.length ) return erreur(T('bad_email_list', {list: esc(bad.join(', '))}))
       try {
         btnInvite.disabled = true
-        await invoke('partage:start', {invites, pseudo: name.value.trim()})
+        // Sans sauvegarde automatique, les spectateurs ne suivraient pas :
+        // l'activer le temps du partage ?
+        const autosave = !state.sharing && !pref('autosave') ? await invoke('partage:askAutosave') : false
+        await invoke('partage:start', {invites, pseudo: name.value.trim(), autosave})
         this.closePanel()
         message(T('invited_sent'))
       } catch(err) { btnInvite.disabled = false ; erreur(err.message) }

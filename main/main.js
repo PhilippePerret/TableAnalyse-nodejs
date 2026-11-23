@@ -970,7 +970,22 @@ function registerIpc(){
   handle('partage:validate', (data) => Partage.validate(data))
   handle('partage:book',     () => Partage.book)
   handle('partage:saveBook', (data) => Partage.saveBook(data))
-  handle('partage:start',    ({invites, pseudo}) => Partage.start({invites: invites || [], pseudo}))
+  handle('partage:start',    ({invites, pseudo, autosave}) => Partage.start({invites: invites || [], pseudo, autosave}))
+  handle('partage:setAutosave', ({on}) => Partage.setAutosave({on}))
+  // Analyse sans sauvegarde automatique : l'activer le temps du partage ?
+  handle('partage:askAutosave', async () => {
+    // Lancement de contrôle : réponse imposée (SA_SMOKE_DIALOG=oui|non)
+    if ( SMOKE && process.env.SA_SMOKE_DIALOG ) return process.env.SA_SMOKE_DIALOG == 'oui'
+    const {response} = await dialog.showMessageBox(mainWindow, {
+        type:      'question'
+      , message:   t('ui.partage.autosave_question')
+      , detail:    t('ui.partage.autosave_detail')
+      , buttons:   [t('ui.buttons.answer_no'), t('ui.partage.autosave_yes')]
+      , defaultId: 1
+      , cancelId:  0
+    })
+    return response == 1
+  })
   handle('partage:stop',     () => Partage.stop())
   handle('partage:list',     () => Partage.list())
   handle('partage:accept',   ({id}) => Partage.accept({id}))
@@ -981,7 +996,6 @@ function registerIpc(){
   handle('partage:deny',     ({email}) => Partage.deny({email}))
   handle('partage:takeback', () => Partage.takeback())
   handle('partage:view',     (v) => Partage.view(v))
-  handle('partage:live',     (data) => Partage.live(data))
   // Page du spectateur chargée : partie visible de l'analyste
   handle('partage:ready',    () => Partage.applyView())
   // Analyse d'un partage terminé enregistrée dans un dossier choisi

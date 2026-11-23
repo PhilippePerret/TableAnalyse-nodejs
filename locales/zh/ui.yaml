@@ -718,3 +718,6 @@ partage:
   invited_sent: "邀请已发送。"
   bad_email_list: "无效地址：%{list}"
   joined: "%{pseudo} 已加入您的分析。"
+  autosave_question: "此分析的自动保存已关闭。"
+  autosave_detail: "观众只有在保存时才能看到修改。是否在共享期间开启自动保存，让他们实时跟进？"
+  autosave_yes: "开启"

@@ -55,15 +55,14 @@ export class Analyse {
     this.modified = true
     // Étape de la construction de l'analyse (cf. History.js)
     this.loading || History.schedule()
-    // Partage : modification envoyée en direct (cf. Partage.js)
-    this.loading || window.dispatchEvent(new CustomEvent('analyse:modified'))
   }
 
   // Sauvegarde automatique, quelques secondes après la dernière
-  // modification, si la préférence est activée.
+  // modification, si la préférence est activée (ou le temps d'un
+  // partage, cf. Partage.js).
   programAutosave(){
     clearTimeout(this.autosaveTimer)
-    if ( !pref('autosave') ) return
+    if ( !pref('autosave') && !Current.forceAutosave ) return
     this.autosaveTimer = setTimeout(() => {
       this.modified && Analyse.current === this && AnalyseSaver.save()
     }, 3000)

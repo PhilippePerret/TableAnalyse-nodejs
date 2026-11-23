@@ -27,7 +27,6 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { app } from 'electron'
 import { AppPrefs } from './AppPrefs.js'
-import { yamlString } from './yaml.js'
 import { t } from './i18n.js'
 
 const DEFAULT_SERVER = 'https://partage.analyse-musicale.fr'
@@ -114,6 +113,8 @@ class PartageClass {
       , sharing:   this.sharing && {connected: this.sharing.connected || 0, invited: this.sharing.invited || 0, given: this.sharing.given || null}
       , following: this.following && this.following.ready && {pseudo: this.following.pseudo, titre: this.following.titre, ownerPresent: this.following.ownerPresent !== false, control: !!this.following.control, controller: this.following.controller || null, asked: !!this.following.asked}
       , sender:    !!this.sender
+        // Sauvegarde automatique le temps du partage : null = pas encore demandé
+      , autosave:  this.sender ? (this.sender.autosave ?? null) : false
       , requests:  this.sharing ? [...(this.sharing.requests || new Map()).values()] : []
     }
   }
@@ -254,7 +255,7 @@ class PartageClass {
 
   /* --- Analyste --- */
 
-  async start({invites, pseudo}){
+  async start({invites, pseudo, autosave}){
     const current = this.hooks.current()
     if ( !current ) throw new Error(t('errors.no_analyse_open'))
     pseudo = String(pseudo || '').trim()
@@ -276,7 +277,8 @@ class PartageClass {
     // (connexion de spectateur éventuelle : refaite en analyste)
     if ( this.ws && this.role == 'spectateur' ) { const ws = this.ws ; this.ws = null ; this.online = false ; ws.close() }
     const titre = (current.infos && (current.infos.title || current.infos.titre)) || current.name
-    this.pendingStart = {folder: current.path, titre}
+    // (autosave : sauvegarde automatique pendant le partage, cf. #225)
+    this.pendingStart = {folder: current.path, titre, autosave: !!autosave}
     try { await this.open() }
     catch(err) { this.pendingStart = null ; throw err }
     this.emit({type: 'pseudo', pseudo})
@@ -360,21 +362,10 @@ class PartageClass {
     n && this.emit({type: 'saved', id: s.id})
   }
 
-  /**
-   * Modification en direct (#225) : état courant de l'analyse (marques,
-   * préférences, infos), envoyé sans être enregistré chez celui qui a
-   * la main. Le prochain enregistrement renvoie les fichiers.
-   */
-  live({tags, preferences, infos}){
+  // Sauvegarde automatique le temps du partage (réponse à la question)
+  setAutosave({on}){
     const s = this.sender
-    if ( !s || !this.online ) return
-    const files = {'analyse_tags.yaml': tags, 'preferences.yaml': preferences, 'infos.yaml': infos}
-    for ( const [rel, data] of Object.entries(files) ) {
-      if ( data === undefined ) continue
-      this.emit({type: 'file', id: s.id, path: rel, data: Buffer.from(yamlString(data)).toString('base64')})
-      s.sent.delete(rel)
-    }
-    this.emit({type: 'saved', id: s.id})
+    if ( s ) { s.autosave = !!on ; this.sendState() }
   }
 
   // Partie visible de la fenêtre de l'analyste (px de la page)
@@ -453,7 +444,7 @@ class PartageClass {
     } else if ( f && f.id == id ) {
       f.control = !!on
       f.asked = false
-      if ( on ) f.sent = this.signatures(f.folder)
+      if ( on ) { f.sent = this.signatures(f.folder) ; f.autosave = null }
     } else return
     this.sendState()
     this.hooks.reload()

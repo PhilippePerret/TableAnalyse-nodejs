@@ -28,13 +28,8 @@ export function loadYAML(path, defaultValue){
 }
 
 export function writeYAML(path, data){
-  fs.writeFileSync(path, yamlString(data))
-}
-
-// Texte YAML de +data+ (tel qu'écrit dans les fichiers)
-export function yamlString(data){
   // Aller-retour JSON pour avoir la même sémantique qu'avant (les
   // valeurs undefined disparaissent, les null restent).
   data = JSON.parse(JSON.stringify(data ?? null))
-  return '---\n' + YAML.dump(data, {lineWidth: -1, noRefs: true})
+  fs.writeFileSync(path, '---\n' + YAML.dump(data, {lineWidth: -1, noRefs: true}))
 }
