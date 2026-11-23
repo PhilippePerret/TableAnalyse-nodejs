@@ -18,3 +18,9 @@
 - Ensuite : notification en haut à droite « <pseudo> vous invite à suivre son analyse » [Accepter] [Refuser].
 - Lecture seule, bandeau « Analyse suivie · lecture seule » + bouton « Quitter » ; « Rejoindre » pour revenir (actualisée). Connexion perdue → « Reconnexion… ».
 - Fin du partage (ou Quitter) : déverrouillage, l'analyse devient celle du spectateur (enregistrer où il veut, modifier, exporter). Message : « Le partage est terminé. Cette analyse est maintenant la vôtre : vous pouvez l'enregistrer, la modifier ou l'exporter. »
+
+## Déploiement (2026-11-23, accord de Phil : créer du neuf, NE RIEN TOUCHER d'existant sur l'hébergement)
+- `~/ta-partage/` (code + node_modules), `~/data/ta-partage/` créés ; site AlwaysData « ta-partage » (user_program, `partage.analyse-musicale.fr/`, commande `~/ta-partage/start.sh`, max_idle_time 0, ssl_force) créé par l'API.
+- Clé d'API AlwaysData : `~/.secrets/ldq_rails.env` (ALWAYSDATA_API_KEY), utilisée sur le serveur sans jamais l'afficher ; auth `"$K account=icare:"`.
+- Mise à jour du code : scp vers `~/ta-partage/` puis redémarrage du site (POST /v1/site/<id>/restart/).
+- Reste : adresse `partage@analyse-musicale.fr` à créer par Phil ; essai réel d'envoi d'email.
