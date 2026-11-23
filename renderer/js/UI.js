@@ -143,7 +143,8 @@ export class UIClass {
    * messages n'en est pas un.
    */
   get hasOpenPanel(){
-    return Array.from(document.querySelectorAll('.panneau-ui')).some(p => p.id != 'message' && p.checkVisibility())
+    // (bandeau et notifications du partage : pas des panneaux)
+    return Array.from(document.querySelectorAll('.panneau-ui')).some(p => p.id != 'message' && !p.closest('#partage-bandeau, #partage-notifs') && p.checkVisibility())
   }
 
   /**

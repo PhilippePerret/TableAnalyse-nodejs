@@ -7,6 +7,7 @@ import { AMark } from './AMark.js'
 import { Systeme } from './Systeme.js'
 import { Variables } from './Variables.js'
 import { Current } from './Current.js'
+import { Preferences } from './Preferences.js'
 import { t } from './i18n.js'
 /**
  * Partage
@@ -29,6 +30,7 @@ import { t } from './i18n.js'
 const T = (key, params) => t(`ui.partage.${key}`, params)
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]))
 const VIEW_DELAY = 80 // ms entre deux envois de la partie visible
+const LIVE_DELAY = 500 // ms après la dernière modification (envoi en direct)
 
 class PartageClass {
 
@@ -57,6 +59,24 @@ class PartageClass {
     this.sendView = sendView
     window.addEventListener('scroll', sendView, {passive: true})
     window.addEventListener('resize', sendView)
+    // Celui qui a la main : chaque modification envoyée en direct, même
+    // sans enregistrement
+    window.addEventListener('analyse:modified', () => {
+      if ( !this.state.sender ) return
+      clearTimeout(this.liveTimer)
+      this.liveTimer = setTimeout(this.sendLive.bind(this), LIVE_DELAY)
+    })
+  }
+
+  // État courant de l'analyse (comme AnalyseSaver, sans enregistrer)
+  sendLive(){
+    const analyse = Current.analyse
+    if ( !analyse || !this.state.sender ) return
+    try {
+      const tags = AObjet.items.filter(o => !o.isSystem).map(o => o.data)
+      const infos = Object.assign({}, analyse.data.infos, {systems: Systeme.getData()})
+      invoke('partage:live', {tags, preferences: Preferences.getData(), infos}).catch(err => console.error(err))
+    } catch(err) { console.error(err) }
   }
 
   setState(s){

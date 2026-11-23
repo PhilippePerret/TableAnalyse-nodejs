@@ -55,6 +55,8 @@ export class Analyse {
     this.modified = true
     // Étape de la construction de l'analyse (cf. History.js)
     this.loading || History.schedule()
+    // Partage : modification envoyée en direct (cf. Partage.js)
+    this.loading || window.dispatchEvent(new CustomEvent('analyse:modified'))
   }
 
   // Sauvegarde automatique, quelques secondes après la dernière

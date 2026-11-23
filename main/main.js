@@ -981,6 +981,7 @@ function registerIpc(){
   handle('partage:deny',     ({email}) => Partage.deny({email}))
   handle('partage:takeback', () => Partage.takeback())
   handle('partage:view',     (v) => Partage.view(v))
+  handle('partage:live',     (data) => Partage.live(data))
   // Page du spectateur chargée : partie visible de l'analyste
   handle('partage:ready',    () => Partage.applyView())
   // Analyse d'un partage terminé enregistrée dans un dossier choisi

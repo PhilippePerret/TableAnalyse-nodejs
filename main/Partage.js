@@ -27,6 +27,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { app } from 'electron'
 import { AppPrefs } from './AppPrefs.js'
+import { yamlString } from './yaml.js'
 import { t } from './i18n.js'
 
 const DEFAULT_SERVER = 'https://partage.analyse-musicale.fr'
@@ -357,6 +358,23 @@ class PartageClass {
       s.sent.delete(rel) ; n++
     }
     n && this.emit({type: 'saved', id: s.id})
+  }
+
+  /**
+   * Modification en direct (#225) : état courant de l'analyse (marques,
+   * préférences, infos), envoyé sans être enregistré chez celui qui a
+   * la main. Le prochain enregistrement renvoie les fichiers.
+   */
+  live({tags, preferences, infos}){
+    const s = this.sender
+    if ( !s || !this.online ) return
+    const files = {'analyse_tags.yaml': tags, 'preferences.yaml': preferences, 'infos.yaml': infos}
+    for ( const [rel, data] of Object.entries(files) ) {
+      if ( data === undefined ) continue
+      this.emit({type: 'file', id: s.id, path: rel, data: Buffer.from(yamlString(data)).toString('base64')})
+      s.sent.delete(rel)
+    }
+    this.emit({type: 'saved', id: s.id})
   }
 
   // Partie visible de la fenêtre de l'analyste (px de la page)
