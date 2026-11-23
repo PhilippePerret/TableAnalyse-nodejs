@@ -27,7 +27,7 @@
 - Git : interdit en écriture sans autorisation expresse de Phil, SAUF commit obligatoire après chaque correction d'issue (un commit par issue, message contenant « Fixed #N » pour fermer l'issue au push).
   Modification hors issue : commit aussi, sans « Fixed » (2026-11-17).
   Gestion des issues = job de Claude, sans demander (2026-11-14) : jamais de commit d'issue sans « Fixed #N » ; issue corrigée restée ouverte → la fermer (`gh issue close N -c "Fixed by <sha>"`). Phil est le concepteur, ne touche pas au code.
-- Commande lancée par Phil lui-même (`!…`) : aucune réponse, aucun commentaire.
+- Commande lancée par Phil lui-même (`!…`) : aucune réponse, aucun commentaire. Plus généralement (2026-11-23) : après toute chose « normale » (issue fermée par le push, vérification qui confirme l’attendu…), NE RIEN signaler — ne pas polluer l’espace de lecture.
 - Après une correction : « Fait. » SEUL. Même pour une grosse issue, même pour plusieurs issues (2026-11-14 : compte rendu de #115 jugé baratin).
 - Exception : signaler ce qui sort de la demande ET change ce que l'utilisateur vit (données supprimées/remplacées, confirmation ajoutée…). Jugés inutiles par Phil (2026-11-12) : placements de menus, détails d'implémentation, éléments laissés en place. Aussi (2026-11-13) : conséquences directes de ce que Phil a lui-même demandé (p.e. menu supprimé → ses éléments disparaissent).
   Aussi (2026-11-13) : la manière dont une retouche visuelle a été obtenue (p.e. flèche native remplacée par une flèche dessinée).
