@@ -44,14 +44,32 @@ function copySystems(source, systemsFolder){
 export function createAnalyse(data, appVersion){
   checkData(data)
   const analysePath = path.join(data.folder, data.analyse_id)
+  const analyse = initAnalyse(analysePath, data, appVersion)
+  // Partition du morceau (PDF), gardée dans le dossier de l'analyse
+  data.score && fs.copyFileSync(data.score, path.join(analysePath, path.basename(data.score)))
+  return analyse
+}
+
+/**
+ * Analyse créée dans le dossier +folder+ lui-même, qui contient déjà sa
+ * partition (PDF) ou ses images de systèmes (#230)
+ * @return {Analyse}
+ */
+export function createAnalyseHere(folder, appVersion){
+  return initAnalyse(folder, {folder: path.dirname(folder), analyse_id: path.basename(folder)}, appVersion)
+}
+
+function initAnalyse(analysePath, data, appVersion){
   const analyse = new Analyse(analysePath)
   fs.mkdirSync(analyse.systemsFolder, {recursive: true})
   copySystems(data.systems_source, analyse.systemsFolder)
 
-  fs.copyFileSync(path.join(ASSETS_FOLDER, 'models', 'preferences.yaml'), analyse.preferencesPath)
+  fs.existsSync(analyse.preferencesPath) || fs.copyFileSync(path.join(ASSETS_FOLDER, 'models', 'preferences.yaml'), analyse.preferencesPath)
 
   const now = Math.round(Date.now() / 1000)
-  analyse.infos = {
+  // (dossier qui avait déjà des infos : elles sont gardées)
+  const previous = fs.existsSync(analyse.infosPath) ? analyse.infos : {}
+  analyse.infos = Object.assign({
       piece_title:    data.piece_title   || ''
     , composer:       data.composer      || ''
     , analyse_title:  data.analyse_title || ''
@@ -62,14 +80,12 @@ export function createAnalyse(data, appVersion){
     , created_at:     now
     , updated_at:     now
     , app_version:    appVersion
-  }
+  }, previous, {systems: analyse.layoutSystems(), updated_at: now})
   analyse.saveInfos()
 
-  analyse.tags = []
-  analyse.saveTags()
-
-  // Partition du morceau (PDF), gardée dans le dossier de l'analyse
-  data.score && fs.copyFileSync(data.score, path.join(analysePath, path.basename(data.score)))
-
+  if ( !fs.existsSync(analyse.tagsPath) ) {
+    analyse.tags = []
+    analyse.saveTags()
+  }
   return analyse
 }

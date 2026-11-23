@@ -403,6 +403,10 @@ panels:
     new_item:         "새 항목"
 
 dialogs:
+  make_here: "이 폴더에는 아직 분석이 없습니다."
+  make_here_systems: "단 이미지가 %{count}개 있습니다. 이 폴더에 분석을 만들까요? 단에 번호가 매겨집니다."
+  make_here_pdf: "악보 “%{name}”이(가) 있습니다. 이 폴더에 분석을 만들까요? 악보가 단으로 잘린 뒤 번호가 매겨집니다."
+  make_here_pdfs: "PDF 파일이 %{count}개 있습니다. 이 폴더에 분석을 만들까요? 악보를 고르면 단으로 잘린 뒤 번호가 매겨집니다."
   partage_save_as: "분석을 저장할 폴더"
   choose_analyse_folder: "분석 폴더 선택"
   choose_folder:         "폴더 선택"

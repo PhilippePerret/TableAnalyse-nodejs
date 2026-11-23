@@ -12,9 +12,9 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, protocol, screen, shell, WebContentsView } from 'electron'
-import { Analyse } from './Analyse.js'
+import { Analyse, isSystemImage } from './Analyse.js'
 import { AppPrefs } from './AppPrefs.js'
-import { createAnalyse, newAnalyseError } from './createAnalyse.js'
+import { createAnalyse, createAnalyseHere, newAnalyseError } from './createAnalyse.js'
 import { exportToHtml } from './exportHtml.js'
 import { exportToPdf, exportToSvg } from './exportPdfSvg.js'
 import { buildImageFromCode } from './scoreImage.js'
@@ -649,12 +649,34 @@ function registerIpc(){
     })
     if ( res.canceled || !res.filePaths.length ) return false
     const folder = res.filePaths[0]
-    if ( !Analyse.isConform(folder) ) {
-      throw new Error(t('errors.not_an_analyse_folder', {folder}))
-    }
+    if ( !Analyse.isConform(folder) ) return proposeAnalyseHere(folder)
     setCurrent(folder)
     setTimeout(reloadWindow, 10)
     return true
+  })
+
+  /*
+   * Analyse créée dans un dossier qui contient sa partition ou ses
+   * systèmes (cf. proposeAnalyseHere) : partition découpée et numérotée,
+   * ou systèmes numérotés
+   */
+  handle('analyse:createHere', async ({folder, pdf, countFirst}) => {
+    const analyse = createAnalyseHere(folder, APP_VERSION)
+    if ( pdf ) {
+      const out = fs.mkdtempSync(path.join(os.tmpdir(), 'decoupe-'))
+      try {
+        await runCutter({pdf, out, dpi: 300, quality: 90, countFirst})
+        analyse.replaceSystems(out)
+      } finally {
+        fs.rmSync(out, {recursive: true, force: true})
+      }
+    } else {
+      await runCutter({mode: 'numerotation', folder: analyse.systemsFolder, images: analyse.systemsInFolder, out: analyse.systemsFolder, countFirst})
+    }
+    justCut = true
+    setCurrent(folder)
+    setTimeout(reloadWindow, 10)
+    return folder
   })
 
   // Fermeture de l'analyse courante dans l'application (aucun fichier
@@ -1023,6 +1045,47 @@ function registerIpc(){
     closeAllowed = true
     setTimeout(() => mainWindow && mainWindow.close(), 10)
   })
+}
+
+/**
+ * Dossier ouvert qui n'est pas une analyse (#230) : avec des images de
+ * systèmes (dossier « systems ») ou une partition (PDF), proposition
+ * d'y créer l'analyse ; sinon, erreur (sans le chemin du dossier).
+ * @return {createHere: {folder, pdf, countFirst}} ou false (abandon)
+ */
+async function proposeAnalyseHere(folder){
+  const systemsDir = path.join(folder, 'systems')
+  const images = fs.existsSync(systemsDir) ? fs.readdirSync(systemsDir).filter(isSystemImage) : []
+  const pdfs = images.length ? [] : fs.readdirSync(folder).filter(n => n.toLowerCase().endsWith('.pdf') && !n.startsWith('.'))
+  if ( !images.length && !pdfs.length ) throw new Error(t('errors.not_an_analyse_folder'))
+  const {response} = await dialog.showMessageBox(mainWindow, {
+      type:      'question'
+    , message:   t('ui.dialogs.make_here')
+    , detail:    images.length
+        ? t('ui.dialogs.make_here_systems', {count: images.length})
+        : t(pdfs.length > 1 ? 'ui.dialogs.make_here_pdfs' : 'ui.dialogs.make_here_pdf', {name: pdfs[0], count: pdfs.length})
+    , buttons:   [t('ui.buttons.cancel'), t('ui.buttons.create_analyse')]
+    , defaultId: 1
+    , cancelId:  0
+  })
+  if ( response !== 1 ) return false
+  let pdf = null
+  if ( !images.length ) {
+    pdf = path.join(folder, pdfs[0])
+    if ( pdfs.length > 1 ) {
+      const res = await dialog.showOpenDialog(mainWindow, {
+          title:       t('ui.dialogs.choose_pdf')
+        , defaultPath: folder
+        , properties:  ['openFile']
+        , filters:     [{name: t('ui.dialogs.pdf_filter'), extensions: ['pdf']}]
+      })
+      if ( res.canceled || !res.filePaths.length ) return false
+      pdf = res.filePaths[0]
+    }
+  }
+  const countFirst = await askCountFirstMeasure()
+  if ( null === countFirst ) return false
+  return {createHere: {folder, pdf, countFirst}}
 }
 
 // Compter et numéroter la première mesure (non : anacrouse) ?

@@ -403,6 +403,10 @@ panels:
     new_item:         "新项目"
 
 dialogs:
+  make_here: "此文件夹中还没有分析。"
+  make_here_systems: "其中有 %{count} 张谱行图片。在此文件夹中创建分析吗？谱行将被编号。"
+  make_here_pdf: "其中有乐谱“%{name}”。在此文件夹中创建分析吗？乐谱将被切分为谱行，然后编号。"
+  make_here_pdfs: "其中有 %{count} 个 PDF 文件。在此文件夹中创建分析吗？您将选择乐谱，它将被切分为谱行，然后编号。"
   partage_save_as: "保存分析的文件夹"
   choose_analyse_folder: "选择分析文件夹"
   choose_folder:         "选择文件夹"

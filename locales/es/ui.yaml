@@ -403,6 +403,10 @@ panels:
     new_item:         "Nuevo elemento"
 
 dialogs:
+  make_here: "Esta carpeta todavía no contiene ningún análisis."
+  make_here_systems: "Contiene %{count} imagen(es) de sistemas. ¿Crear el análisis en esta carpeta? Los sistemas se numerarán."
+  make_here_pdf: "Contiene la partitura « %{name} ». ¿Crear el análisis en esta carpeta? La partitura se cortará en sistemas y luego se numerará."
+  make_here_pdfs: "Contiene %{count} archivos PDF. ¿Crear el análisis en esta carpeta? Elegirá la partitura, que se cortará en sistemas y luego se numerará."
   partage_save_as: "Carpeta donde guardar el análisis"
   choose_analyse_folder: "Elegir la carpeta del análisis"
   choose_folder:         "Elegir una carpeta"

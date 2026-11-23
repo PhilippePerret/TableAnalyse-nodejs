@@ -403,6 +403,10 @@ panels:
     new_item:         "新しい項目"
 
 dialogs:
+  make_here: "このフォルダにはまだ分析がありません。"
+  make_here_systems: "段の画像が %{count} 枚あります。このフォルダに分析を作成しますか？段に番号が付けられます。"
+  make_here_pdf: "楽譜「%{name}」があります。このフォルダに分析を作成しますか？楽譜は段に切り分けられ、番号が付けられます。"
+  make_here_pdfs: "PDF ファイルが %{count} 個あります。このフォルダに分析を作成しますか？楽譜を選ぶと、段に切り分けられ、番号が付けられます。"
   partage_save_as: "分析を保存するフォルダ"
   choose_analyse_folder: "分析のフォルダを選択"
   choose_folder:         "フォルダを選択"

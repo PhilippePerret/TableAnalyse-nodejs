@@ -403,6 +403,10 @@ panels:
     new_item:         "New item"
 
 dialogs:
+  make_here: "This folder does not contain an analysis yet."
+  make_here_systems: "It contains %{count} system image(s). Create the analysis in this folder? The systems will be numbered."
+  make_here_pdf: "It contains the score “%{name}”. Create the analysis in this folder? The score will be cut into systems, then numbered."
+  make_here_pdfs: "It contains %{count} PDF files. Create the analysis in this folder? You will choose the score, which will be cut into systems, then numbered."
   partage_save_as: "Folder in which to save the analysis"
   choose_analyse_folder: "Choose the analysis folder"
   choose_folder:         "Choose a folder"

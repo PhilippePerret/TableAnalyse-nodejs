@@ -13,7 +13,7 @@ image_export_todo: "Das Erzeugen des Analysebildes ist noch nicht implementiert.
 svg_export_todo: "Ich kann die Analyse noch nicht als SVG exportieren."
 image_not_found: "Bild nicht gefunden: %{src}"
 infos_not_found: "Die Informationen sind nicht auffindbar (%{path})!"
-not_an_analyse_folder: "Der Ordner „%{folder}“ ist kein Analyseordner (er muss eine Datei 'infos.yaml' und einen Ordner 'systems' enthalten)."
+not_an_analyse_folder: "Dieser Ordner ist kein Analyseordner: Er enthält weder eine Partitur (PDF) noch Systembilder."
 no_systems_to_number: "Die Analyse enthält kein zu nummerierendes System."
 cutting_failed: "Das Zerschneiden ist fehlgeschlagen."
 render_process_gone: "Renderprozess unterbrochen: %{reason}"

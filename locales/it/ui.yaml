@@ -403,6 +403,10 @@ panels:
     new_item:         "Nuova voce"
 
 dialogs:
+  make_here: "Questa cartella non contiene ancora un'analisi."
+  make_here_systems: "Contiene %{count} immagine/i di sistemi. Creare l'analisi in questa cartella? I sistemi saranno numerati."
+  make_here_pdf: "Contiene la partitura « %{name} ». Creare l'analisi in questa cartella? La partitura sarà tagliata in sistemi, poi numerata."
+  make_here_pdfs: "Contiene %{count} file PDF. Creare l'analisi in questa cartella? Sceglierai la partitura, che sarà tagliata in sistemi, poi numerata."
   partage_save_as: "Cartella in cui salvare l'analisi"
   choose_analyse_folder: "Scegli la cartella dell'analisi"
   choose_folder:         "Scegli una cartella"

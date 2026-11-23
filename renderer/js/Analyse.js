@@ -517,8 +517,14 @@ checkSystems(){
   static async openAnalyse(){
     if ( !(await this.saveIfModified()) ) return
     try {
-      await invoke('analyse:open')
+      const res = await invoke('analyse:open')
+      // Dossier avec partition ou systèmes : analyse créée sur place (#230)
+      if ( res && res.createHere ) {
+        Sablier.show(t(res.createHere.pdf ? 'messages.cutting_score' : 'messages.numbering_score'))
+        await invoke('analyse:createHere', res.createHere)
+      }
     } catch(err) {
+      Sablier.hide()
       erreur(err.message)
     }
   }

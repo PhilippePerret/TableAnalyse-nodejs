@@ -13,7 +13,7 @@ image_export_todo: "分析画像の作成はまだ実装されていません。
 svg_export_todo: "分析を SVG に書き出すことはまだできません。"
 image_not_found: "画像が見つかりません：%{src}"
 infos_not_found: "情報が見つかりません（%{path}）！"
-not_an_analyse_folder: "フォルダ「%{folder}」は分析フォルダではありません（'infos.yaml' ファイルと 'systems' フォルダが必要です）。"
+not_an_analyse_folder: "このフォルダは分析フォルダではありません。楽譜（PDF）も段の画像も含まれていません。"
 no_systems_to_number: "分析に番号を付ける段がありません。"
 cutting_failed: "切り分けに失敗しました。"
 render_process_gone: "レンダリングプロセスが中断されました：%{reason}"

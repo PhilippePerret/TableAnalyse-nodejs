@@ -13,7 +13,7 @@ image_export_todo: "La produzione dell'immagine dell'analisi non è ancora imple
 svg_export_todo: "Non so ancora esportare l'analisi in SVG."
 image_not_found: "Immagine non trovata: %{src}"
 infos_not_found: "Informazioni non trovate (%{path})!"
-not_an_analyse_folder: "La cartella «%{folder}» non è una cartella d'analisi (deve contenere un file 'infos.yaml' e una cartella 'systems')."
+not_an_analyse_folder: "Questa cartella non è una cartella d'analisi: non contiene né partitura (PDF) né immagini di sistemi."
 no_systems_to_number: "L'analisi non contiene alcun sistema da numerare."
 cutting_failed: "Il taglio non è riuscito."
 render_process_gone: "Processo di rendering interrotto: %{reason}"

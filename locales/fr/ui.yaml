@@ -403,6 +403,10 @@ panels:
     new_item:         "Nouvel item"
 
 dialogs:
+  make_here: "Ce dossier ne contient pas encore d'analyse."
+  make_here_systems: "Il contient %{count} image(s) de systèmes. Créer l'analyse dans ce dossier ? Les systèmes seront numérotés."
+  make_here_pdf: "Il contient la partition « %{name} ». Créer l'analyse dans ce dossier ? La partition sera découpée en systèmes, puis numérotée."
+  make_here_pdfs: "Il contient %{count} fichiers PDF. Créer l'analyse dans ce dossier ? Vous choisirez la partition, qui sera découpée en systèmes, puis numérotée."
   partage_save_as: "Dossier où enregistrer l'analyse"
   choose_analyse_folder: "Choisir le dossier de l'analyse"
   choose_folder:         "Choisir un dossier"

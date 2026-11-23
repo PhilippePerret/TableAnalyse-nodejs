@@ -13,7 +13,7 @@ image_export_todo: "La production de l'image de l'analyse n'est pas encore impl�
 svg_export_todo: "Je ne sais pas encore exporter l'analyse en SVG."
 image_not_found: "Image introuvable : %{src}"
 infos_not_found: "Les infos sont introuvables (%{path}) !"
-not_an_analyse_folder: "Le dossier « %{folder} » n'est pas un dossier d'analyse (il doit contenir un fichier 'infos.yaml' et un dossier 'systems')."
+not_an_analyse_folder: "Ce dossier n'est pas un dossier d'analyse : il ne contient ni partition (PDF), ni images de systèmes."
 no_systems_to_number: "L'analyse ne contient aucun système à numéroter."
 cutting_failed: "La découpe a échoué."
 render_process_gone: "Processus de rendu interrompu : %{reason}"

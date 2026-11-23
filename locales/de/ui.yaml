@@ -403,6 +403,10 @@ panels:
     new_item:         "Neuer Eintrag"
 
 dialogs:
+  make_here: "Dieser Ordner enthält noch keine Analyse."
+  make_here_systems: "Er enthält %{count} Systembild(er). Die Analyse in diesem Ordner erstellen? Die Systeme werden nummeriert."
+  make_here_pdf: "Er enthält die Partitur „%{name}“. Die Analyse in diesem Ordner erstellen? Die Partitur wird in Systeme geschnitten und dann nummeriert."
+  make_here_pdfs: "Er enthält %{count} PDF-Dateien. Die Analyse in diesem Ordner erstellen? Sie wählen die Partitur, die in Systeme geschnitten und dann nummeriert wird."
   partage_save_as: "Ordner zum Speichern der Analyse"
   choose_analyse_folder: "Ordner der Analyse wählen"
   choose_folder:         "Ordner wählen"
