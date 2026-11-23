@@ -924,7 +924,7 @@ function registerIpc(){
    * étroit, la fenêtre prend toute sa largeur et l'affichage est réduit.
    * @return le zoom de l'affichage
    */
-  handle('window:fitWidth', ({width, zoom: chosen}) => {
+  handle('window:fitWidth', ({width, zoom: chosen, sidebar}) => {
     if ( !mainWindow ) return 1
     // Spectateur : zoom réglé sur la fenêtre de l'analyste (cf. Partage.applyView)
     if ( Partage.spectator ) return mainWindow.webContents.getZoomFactor()
@@ -934,12 +934,15 @@ function registerIpc(){
     const [contentW] = mainWindow.getContentSize()
     const chrome = bounds.width - contentW
     const area = screen.getDisplayMatching(bounds).workArea
+    // Barre latérale du partage (#229) : place en plus, à droite
+    sidebar = Number(sidebar) || 0
     let zoom = 1
-    if ( contentW < width ) {
-      const outer = Math.min(width + chrome, area.width)
+    if ( contentW < width + sidebar ) {
+      const outer = Math.min(width + sidebar + chrome, area.width)
       const x = Math.max(area.x, Math.min(bounds.x, area.x + area.width - outer))
       mainWindow.setBounds({x, y: bounds.y, width: outer, height: bounds.height})
-      if ( outer - chrome < width ) zoom = (outer - chrome) / width
+      const available = outer - chrome - sidebar
+      if ( available < width ) zoom = available / width
     }
     fitZoom = zoom
     return applyZoom()
@@ -995,6 +998,7 @@ function registerIpc(){
   handle('partage:grant',    ({email}) => Partage.grant({email}))
   handle('partage:deny',     ({email}) => Partage.deny({email}))
   handle('partage:takeback', () => Partage.takeback())
+  handle('partage:say',      ({text}) => Partage.say({text: String(text || '')}))
   handle('partage:view',     (v) => Partage.view(v))
   // Page du spectateur chargée : partie visible de l'analyste
   handle('partage:ready',    () => Partage.applyView())

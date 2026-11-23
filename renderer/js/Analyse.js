@@ -108,7 +108,7 @@ export class Analyse {
   async fitWindowToSystems(){
     const width = Number(pref('systeme_width')) + SYSTEMS_MARGIN
     try {
-      const zoom = await invoke('window:fitWidth', {width, zoom: pref('zoom')})
+      const zoom = await invoke('window:fitWidth', {width, zoom: pref('zoom'), sidebar: Current.sidebar})
       document.documentElement.style.setProperty('--ui-zoom', String(1 / zoom))
     } catch(err) { console.error(err) }
   }

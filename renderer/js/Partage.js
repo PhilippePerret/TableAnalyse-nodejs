@@ -30,6 +30,7 @@ import { t } from './i18n.js'
 const T = (key, params) => t(`ui.partage.${key}`, params)
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]))
 const VIEW_DELAY = 80 // ms entre deux envois de la partie visible
+const SIDEBAR = 300   // px : barre latérale de l'analyste (#229)
 
 class PartageClass {
 
@@ -41,18 +42,19 @@ class PartageClass {
     onMain('partage:view', this.onView.bind(this))
     onMain('partage:ended', this.onEnded.bind(this))
     onMain('partage:message', ({error, notice}) => error ? erreur(error) : (notice && message(notice)))
-    onMain('partage:request', this.showRequest.bind(this))
-    invoke('partage:state').then(s => {
-      this.setState(s)
-      ;(s.requests || []).forEach(req => this.showRequest(req))
-    }).catch(err => console.error(err))
+    onMain('partage:event', ({text}) => this.logEvent(text))
+    onMain('partage:said', this.showSaid.bind(this))
+    invoke('partage:state').then(s => this.setState(s)).catch(err => console.error(err))
     invoke('partage:ended').then(raison => raison && this.onEnded({raison})).catch(err => console.error(err))
     // Analyste (ou spectateur qui a la main) : partie visible envoyée
     const sendView = () => {
       if ( !this.state.sender ) return
       clearTimeout(this.viewTimer)
       this.viewTimer = setTimeout(() => {
-        invoke('partage:view', {x: window.scrollX, y: window.scrollY, w: window.innerWidth, h: window.innerHeight}).catch(() => {})
+        // (sans la barre latérale de l'analyste)
+        const bar = DGet('#partage-sidebar')
+        const w = window.innerWidth - (bar ? bar.getBoundingClientRect().width : 0)
+        invoke('partage:view', {x: window.scrollX, y: window.scrollY, w, h: window.innerHeight}).catch(() => {})
       }, VIEW_DELAY)
     }
     this.sendView = sendView
@@ -68,10 +70,8 @@ class PartageClass {
     // Main reçue : même question que l'analyste au début du partage
     if ( this.state.sender && this.state.following && this.state.autosave === null ) setTimeout(() => this.askAutosave(), 1500)
     this.updateBanner()
+    this.updateSidebar()
     this.state.sender && !wasSender && this.sendView && this.sendView()
-    // Demandes de la main closes
-    const emails = new Set((this.state.requests || []).map(r => r.email))
-    document.querySelectorAll('div.partage-notif[data-request]').forEach(n => emails.has(n.dataset.request) || n.remove())
   }
 
   /* --- Bandeau --- */
@@ -79,7 +79,8 @@ class PartageClass {
   updateBanner(){
     const s = this.state
     let banner = DGet('#partage-bandeau')
-    if ( !s.sharing && !s.following ) return banner && banner.remove()
+    // (analyste : barre latérale, cf. updateSidebar)
+    if ( !s.following ) return banner && banner.remove()
     if ( !banner ) {
       banner = DCreate('DIV', {id: 'partage-bandeau', class: 'panneau-ui'})
       document.body.appendChild(banner)
@@ -92,11 +93,7 @@ class PartageClass {
     }
     const sep = ' · '
     const off = s.online ? '' : sep + T('reconnecting')
-    if ( s.sharing && s.sharing.given ) {
-      // Analyste qui a donné la main : lecture seule
-      banner.appendChild(DCreate('SPAN', {text: T('banner_given', {pseudo: esc(s.sharing.given)}) + off}))
-      banner.appendChild(button(T('takeback'), 'partage:takeback'))
-    } else if ( s.following ) {
+    if ( s.following ) {
       const f = s.following
       let text = f.control ? T('banner_control', {pseudo: esc(f.pseudo)}) : T('banner_following', {pseudo: esc(f.pseudo)})
       if ( !f.control && f.controller ) text += sep + T('controller', {pseudo: esc(f.controller)})
@@ -106,10 +103,116 @@ class PartageClass {
       banner.appendChild(DCreate('SPAN', {text}))
       f.control || f.asked || banner.appendChild(button(T('ask'), 'partage:ask'))
       banner.appendChild(button(T('quit'), 'partage:leave'))
-    } else if ( s.sharing ) {
-      const {connected, invited} = s.sharing
-      banner.appendChild(DCreate('SPAN', {text: T('banner_sharing', {connected, invited}) + off}))
     }
+  }
+
+  /* --- Barre latérale de l'analyste (#229) --- */
+
+  /**
+   * Partage en cours (créateur du partage) : barre à droite de la
+   * fenêtre (élargie d'autant, cf. main window:fitWidth), avec le
+   * nombre de spectateurs, la main, les demandes de la main, les
+   * événements, le bouton de fin du partage et le message aux
+   * spectateurs.
+   */
+  updateSidebar(){
+    const s = this.state
+    let bar = DGet('#partage-sidebar')
+    if ( !s.sharing ) {
+      if ( bar ) {
+        bar.remove()
+        this.setSidebarWidth(0)
+      }
+      return
+    }
+    bar || (bar = this.buildSidebar())
+    const {connected, invited, given} = s.sharing
+    this.sbInvited.textContent = invited
+    this.sbConnected.textContent = connected
+    this.sbOffline.classList.toggle('hidden', !!s.online)
+    // La main
+    this.sbHand.innerHTML = ''
+    if ( given ) {
+      const btn = DCreate('BUTTON', {class: 'btn-default', text: T('takeback')})
+      listen(btn, 'click', () => invoke('partage:takeback').catch(err => erreur(err.message)))
+      this.sbHand.append(DCreate('DIV', {text: T('banner_given', {pseudo: `<b>${esc(given)}</b>`})}), btn)
+    }
+    // Demandes de la main
+    this.sbRequests.innerHTML = ''
+    ;(s.requests || []).forEach(({email, pseudo}) => {
+      const deny  = DCreate('BUTTON', {text: T('deny')})
+      const grant = DCreate('BUTTON', {class: 'btn-default', text: T('grant')})
+      listen(deny,  'click', () => invoke('partage:deny', {email}).catch(err => erreur(err.message)))
+      listen(grant, 'click', () => invoke('partage:grant', {email}).catch(err => erreur(err.message)))
+      this.sbRequests.appendChild(DCreate('DIV', {class: 'partage-sb-request', inner: [
+          DCreate('DIV', {text: T('request', {pseudo: `<b>${esc(pseudo)}</b>`})})
+        , DCreate('DIV', {class: 'partage-sb-buttons', inner: [deny, grant]})
+      ]}))
+    })
+  }
+
+  buildSidebar(){
+    const line = (label, value) => DCreate('DIV', {class: 'partage-sb-line', inner: [DCreate('SPAN', {text: label}), value]})
+    this.sbInvited   = DCreate('B', {text: '0'})
+    this.sbConnected = DCreate('B', {text: '0'})
+    this.sbOffline   = DCreate('DIV', {class: 'partage-sb-offline hidden', text: T('reconnecting')})
+    this.sbHand      = DCreate('DIV', {class: 'partage-sb-hand'})
+    this.sbRequests  = DCreate('DIV', {class: 'partage-sb-requests'})
+    this.sbLog       = DCreate('DIV', {class: 'partage-sb-log'})
+    const stop = DCreate('BUTTON', {class: 'partage-sb-stop', text: T('stop_sharing')})
+    listen(stop, 'click', () => invoke('partage:stop').catch(err => erreur(err.message)))
+    const area = DCreate('TEXTAREA', {class: 'partage-sb-say', rows: '3', placeholder: T('say_ph')})
+    const send = DCreate('BUTTON', {text: T('say_send')})
+    const say = () => {
+      const text = area.value.trim()
+      if ( !text ) return
+      invoke('partage:say', {text}).then(() => { area.value = '' ; this.logEvent(T('said_log')) }).catch(err => erreur(err.message))
+    }
+    listen(send, 'click', say)
+    // Entrée : envoi ; Maj + Entrée : retour à la ligne
+    listen(area, 'keydown', (e) => {
+      e.stopPropagation()
+      if ( e.key == 'Enter' && !e.shiftKey ) { e.preventDefault() ; say() }
+    })
+    ;['keypress', 'keyup'].forEach(type => listen(area, type, (e) => e.stopPropagation()))
+    const bar = DCreate('DIV', {id: 'partage-sidebar', class: 'panneau-ui', inner: [
+        DCreate('DIV', {class: 'partage-sb-title', text: T('sidebar_title')})
+      , line(T('sb_invited'), this.sbInvited)
+      , line(T('sb_connected'), this.sbConnected)
+      , this.sbOffline
+      , this.sbHand
+      , this.sbRequests
+      , this.sbLog
+      , DCreate('DIV', {class: 'partage-sb-bottom', inner: [stop, DCreate('LABEL', {text: T('say_label')}), area, DCreate('DIV', {class: 'partage-sb-buttons', inner: [send]})]})
+    ]})
+    ;['click', 'dblclick', 'mousedown'].forEach(type => listen(bar, type, (e) => e.stopPropagation()))
+    document.body.appendChild(bar)
+    this.setSidebarWidth(SIDEBAR)
+    return bar
+  }
+
+  // Place de la barre latérale : fenêtre élargie (ou analyse réduite)
+  setSidebarWidth(width){
+    Current.sidebar = width
+    document.documentElement.classList.toggle('partage-sidebar', !!width)
+    Current.analyse && !this.spectator && Current.analyse.fitWindowToSystems().then(() => this.sendView && this.sendView())
+  }
+
+  // Événement du partage (arrivée, départ…) : dans la barre latérale
+  logEvent(text){
+    if ( !this.sbLog || !DGet('#partage-sidebar') ) return message(text, {duration: 4000})
+    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+    this.sbLog.insertBefore(DCreate('DIV', {class: 'partage-sb-event', text: `<span>${time}</span> ${text}`}), this.sbLog.firstChild)
+  }
+
+  // Spectateur : message de l'analyste, dans un panneau
+  showSaid({pseudo, text}){
+    const panel = DCreate('DIV', {class: 'partage-panneau partage-said', inner: [
+        DCreate('P', {text: T('said', {pseudo: `<b>${esc(pseudo)}</b>`, text: `<i>${esc(text).replace(/\n/g, '<br>')}</i>`})})
+      , DCreate('DIV', {class: 'buttons'})
+    ]})
+    document.body.appendChild(panel)
+    addPanelHead(panel, {title: T('said_title'), onClose: () => panel.remove()})
   }
 
   /* --- Notifications (en haut à droite) --- */
@@ -148,19 +251,6 @@ class PartageClass {
     finally { this.askingAutosave = false }
   }
 
-  // Analyste : un spectateur demande la main
-  showRequest({email, pseudo}){
-    if ( DGet(`div.partage-notif[data-request="${CSS.escape(email)}"]`) ) return
-    const notif = this.notify({
-        text: T('request', {pseudo: `<b>${esc(pseudo)}</b>`})
-      , buttons: [
-            {label: T('deny'),  action: () => invoke('partage:deny', {email}).catch(err => erreur(err.message))}
-          , {label: T('grant'), default: true, action: () => invoke('partage:grant', {email}).catch(err => erreur(err.message))}
-        ]
-    })
-    notif.dataset.request = email
-  }
-
   async accept(id){
     try {
       // Analyse courante modifiée : enregistrée avant de la quitter
@@ -195,7 +285,7 @@ class PartageClass {
     setSpectator(true)
     document.documentElement.classList.add('partage-spectateur')
     document.body.appendChild(DCreate('DIV', {id: 'partage-voile'}))
-    const allowed = (e) => e.target instanceof Element && e.target.closest('#partage-bandeau, #partage-notifs, .panneau-ui')
+    const allowed = (e) => e.target instanceof Element && e.target.closest('#partage-bandeau, #partage-notifs, #partage-sidebar, .panneau-ui')
     ;['mousedown', 'mouseup', 'click', 'dblclick', 'contextmenu', 'wheel'].forEach(type => {
       window.addEventListener(type, (e) => {
         if ( allowed(e) ) return
@@ -412,7 +502,8 @@ class PartageClass {
         const autosave = !state.sharing && !pref('autosave') ? await invoke('partage:askAutosave') : false
         await invoke('partage:start', {invites, pseudo: name.value.trim(), autosave})
         this.closePanel()
-        message(T('invited_sent'))
+        // (message temporisé, #228)
+        message(T('invited_sent'), {duration: 3000})
       } catch(err) { btnInvite.disabled = false ; erreur(err.message) }
     })
     this.makePanel('partage_invite', T('invite_title'), [

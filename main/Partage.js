@@ -37,6 +37,7 @@ const SHARED_FOLDERS = ['systems', 'images']
 // Fichiers dont le changement se suit sans recharger la page
 const LIGHT_FILES    = ['analyse_tags.yaml', 'infos.yaml', 'preferences.yaml']
 const SYNC_DELAY     = 400
+export const SIDEBAR = 300 // px : barre latérale de l'analyste (#229)
 const RECONNECT_MIN  = 2000
 const RECONNECT_MAX  = 30000
 
@@ -235,9 +236,23 @@ class PartageClass {
     }
   }
 
-  // Analyste : un spectateur a rejoint le partage
+  // Analyste : arrivée et départ des spectateurs (barre latérale, #229)
   on_joined({pseudo, email}){
-    this.send('partage:message', {notice: t('ui.partage.joined', {pseudo: pseudo || email})})
+    this.send('partage:event', {text: t('ui.partage.joined', {pseudo: pseudo || email})})
+  }
+  on_left({pseudo, email}){
+    this.send('partage:event', {text: t('ui.partage.left', {pseudo: pseudo || email})})
+  }
+
+  // Analyste (créateur du partage) : message à tous les spectateurs
+  say({text}){
+    if ( !this.sharing ) return
+    this.emit({type: 'say', id: this.sharing.id, text})
+  }
+  // Spectateur : message de l'analyste
+  on_said({id, pseudo, text}){
+    if ( !this.following || this.following.id != id ) return
+    this.send('partage:said', {pseudo, text})
   }
 
   /* --- Carnet d'adresses (analyste) --- */
@@ -556,7 +571,8 @@ class PartageClass {
     const v = this.lastView
     if ( !win || !v || !v.w || !this.spectator ) return
     const [contentW] = win.getContentSize()
-    const zoom = Math.max(0.2, Math.min(4, contentW / v.w))
+    // (analyste qui a passé la main : barre latérale du partage)
+    const zoom = Math.max(0.2, Math.min(4, (contentW - (this.sharing ? SIDEBAR : 0)) / v.w))
     win.webContents.setZoomFactor(zoom)
     this.send('partage:view', {x: v.x, y: v.y, zoom})
   }

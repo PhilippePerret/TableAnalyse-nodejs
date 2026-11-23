@@ -614,3 +614,54 @@ div.partage-panneau div.partage-count { font-size: 14px; margin: 6px 0 10px; opa
 div#partage_join div.partage-row { justify-content: space-between; gap: 20px; padding: 4px 0; }
 div.partage-panneau textarea.partage-addresses { width: 100%; box-sizing: border-box; resize: vertical; margin-bottom: 10px; }
 div#partage_invite input.partage-pseudo { margin-bottom: 4px; }
+
+/* Barre latérale de l'analyste pendant un partage (cf. Partage.updateSidebar, #229) */
+div#partage-sidebar {
+  position: fixed;
+  top: 29px;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  z-index: 4000;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px !important;
+  font-size: 15px !important;
+  border-radius: 0 !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  box-shadow: -4px 0 14px rgba(0,0,0,.08) !important;
+}
+div#partage-sidebar .hidden { display: none; }
+div#partage-sidebar div.partage-sb-title { font-weight: bold; font-size: 17px; color: #3a925e; }
+div#partage-sidebar div.partage-sb-line { display: flex; justify-content: space-between; }
+div#partage-sidebar div.partage-sb-offline { color: #d98a00; }
+div#partage-sidebar div.partage-sb-hand:empty,
+div#partage-sidebar div.partage-sb-requests:empty { display: none; }
+div#partage-sidebar div.partage-sb-hand,
+div#partage-sidebar div.partage-sb-request { border-top: 1px solid rgba(0,0,0,.12); padding-top: 8px; }
+div#partage-sidebar div.partage-sb-hand button { margin-top: 6px; }
+div#partage-sidebar div.partage-sb-buttons { text-align: right; margin-top: 6px; }
+div#partage-sidebar div.partage-sb-buttons button { margin-left: 6px; }
+div#partage-sidebar div.partage-sb-request { margin-bottom: 6px; }
+div#partage-sidebar div.partage-sb-log { flex: 1; overflow-y: auto; font-size: 13px; border-top: 1px solid rgba(0,0,0,.12); padding-top: 8px; }
+div#partage-sidebar div.partage-sb-event { margin-bottom: 4px; }
+div#partage-sidebar div.partage-sb-event span { opacity: .55; margin-right: 4px; }
+div#partage-sidebar div.partage-sb-bottom { border-top: 1px solid rgba(0,0,0,.12); padding-top: 10px; }
+div#partage-sidebar div.partage-sb-bottom label { display: block; font-size: 13px; margin: 12px 0 4px; }
+div#partage-sidebar textarea.partage-sb-say { width: 100%; box-sizing: border-box; resize: vertical; font-size: 14px; }
+div#partage-sidebar button.partage-sb-stop {
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #c8322b;
+  border: 1px solid #a8261f;
+  border-radius: 6px;
+}
+div#partage-sidebar button.partage-sb-stop:hover { background-color: #b02a24; }
+div.partage-said p { font-size: 16px; max-width: 30em; margin: 0 0 10px; }

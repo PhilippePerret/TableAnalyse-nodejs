@@ -495,6 +495,14 @@ const handlers = {
     send(target, {type: 'denied', id})
   },
 
+  // Analyste (créateur du partage seulement) : message à tous les spectateurs
+  say(ws, {id, text}){
+    const share = ownShare(ws, id)
+    const msg = String(text || '').replace(/[\u0000-\u0008\u000b-\u001f]/g, '').trim().slice(0, 2000)
+    if ( !share || !msg ) return
+    for ( const f of share.followers ) send(f, {type: 'said', id, pseudo: share.pseudo, text: msg})
+  },
+
   // Analyste : main reprise
   takeback(ws, {id}){
     const share = ownShare(ws, id)
@@ -532,7 +540,7 @@ function leave(ws){
   const share = ws.following && shares.get(ws.following)
   ws.following = null
   if ( !share ) return
-  share.followers.delete(ws)
+  share.followers.delete(ws) && send(share.ownerWs, {type: 'left', id: share.id, email: ws.email, pseudo: pseudoOf(ws)})
   if ( share.requests.get(ws.email) === ws ) {
     share.requests.delete(ws.email)
     send(share.ownerWs, {type: 'requestClosed', id: share.id, email: ws.email})
