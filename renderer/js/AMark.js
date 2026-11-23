@@ -209,7 +209,10 @@ onDoubleClick(e){
  * 
  */
 edit(){
-  this.editor = this.editor || new Editeur(this)
+  // Valeurs déjà utilisées, comme à la création (#231)
+  const dtype = AMARQUES_TYPES[this.type] || {}
+  const subtype = (dtype.subdata || undefined != dtype.subtype) ? this.subtype : undefined
+  this.editor = this.editor || new Editeur(this, {suggestions: () => AMark_Editor.suggestionsFor(this.type, subtype)})
   this.editor.value = this.content + (this.hasProlongLine ? '--' : '')
   this.editor.show({top:this.top, left:this.left}, AMARQUES_TYPES[this.type].message)
 }

@@ -481,9 +481,18 @@ get editorOfAMarkContent(){
  * créée, uniques, pour l'éditeur du contenu : {mode, values} ou null
  */
 get suggestions(){
+  if ( this.data.markId ) return null
+  return AMark_Editor.suggestionsFor(this.amark_type, this.isRequiringSubType ? this.amark_subtype : undefined)
+}
+
+/**
+ * Valeurs déjà utilisées pour le type +type+ (et le sous-type +subtype+,
+ * si le type en a) : {mode, values…} ou null. Aussi à la réédition
+ * d'une marque (cf. AMark#edit, #231).
+ */
+static suggestionsFor(type, subtype){
   const mode = AMark_Editor.suggestMode
-  if ( mode == 'none' || this.data.markId ) return null
-  const type = this.amark_type, subtype = this.isRequiringSubType ? this.amark_subtype : undefined
+  if ( mode == 'none' ) return null
   if ( [type, subtype].some(v => NO_SUGGESTIONS.includes(v)) ) return null
   let marks = AObjet.select(ao => ao.type == type && (undefined === subtype || ao.subtype == subtype))
   const inScoreOrder = [type, subtype].some(v => SUGGESTIONS_IN_SCORE_ORDER.includes(v))
