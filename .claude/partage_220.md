@@ -24,3 +24,8 @@
 - Clé d'API AlwaysData : `~/.secrets/ldq_rails.env` (ALWAYSDATA_API_KEY), utilisée sur le serveur sans jamais l'afficher ; auth `"$K account=icare:"`.
 - Mise à jour du code : scp vers `~/ta-partage/` puis redémarrage du site (POST /v1/site/1108899/restart/ ; site sans nom, retrouvé par son adresse).
 - Adresse `partage@analyse-musicale.fr` : existe. Reste : essai réel d'envoi d'email.
+
+## Révision #223 (2026-11-23, Phil furieux du premier parcours) — FAIT FOI
+- Analyste : AUCUNE identification. « Inviter… » = nom (vu des spectateurs) + champ multiligne d'adresses + déjà invités (+ groupes) ; bouton « Inviter » ; ensuite il n'a plus RIEN à faire. Confirmation à chaque arrivée d'un spectateur.
+- Spectateur, 1re invitation : email avec le CODE + marche à suivre ; « Outils › Partage › Rejoindre… » → adresse + code → l'analyse s'affiche.
+- Spectateur déjà validé : PAS de lien permanent avec le serveur, PAS de notification d'invitation ; « Rejoindre… » interroge le serveur.

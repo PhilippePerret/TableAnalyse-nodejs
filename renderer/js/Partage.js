@@ -14,13 +14,14 @@ import { t } from './i18n.js'
  * Partage à distance de l'analyse (issue #220), côté interface (cf.
  * main/Partage.js) :
  *
- * - menu « Outils › Partage › Inviter… » : panneau des invitations
- *   (adresses déjà invitées, groupes nommés), qui démarre le partage ;
- * - « Outils › Partage › Rejoindre… » : partages où l'on est invité ;
- * - identification (une seule fois) : adresse, puis code de la page du
- *   lien reçu par email ;
+ * - menu « Outils › Partage › Inviter… » : panneau des invitations (nom
+ *   de l'analyste, adresses à inviter, adresses déjà invitées, groupes
+ *   nommés) ; « Inviter » démarre le partage, rien d'autre à faire ;
+ * - « Outils › Partage › Rejoindre… » : partages proposés (demandés au
+ *   serveur) ; la première fois, adresse et code reçu par email ;
  * - bandeau « En partage » (analyste), « Analyse suivie » (spectateur) ;
- * - notifications en haut à droite (invitations, fin du partage) ;
+ * - notifications en haut à droite (demandes de la main, fin du
+ *   partage) ;
  * - spectateur : lecture seule (voile), même partie de l'analyse que
  *   l'analyste (cf. onView), marques actualisées à chaque
  *   enregistrement de l'analyste (cf. onUpdate).
@@ -35,7 +36,6 @@ class PartageClass {
     if ( IS_MIRROR ) return
     this.state = {}
     onMain('partage:state', this.setState.bind(this))
-    onMain('partage:invitation', this.showInvitation.bind(this))
     onMain('partage:update', this.onUpdate.bind(this))
     onMain('partage:view', this.onView.bind(this))
     onMain('partage:ended', this.onEnded.bind(this))
@@ -43,7 +43,6 @@ class PartageClass {
     onMain('partage:request', this.showRequest.bind(this))
     invoke('partage:state').then(s => {
       this.setState(s)
-      ;(s.invitations || []).forEach(inv => this.showInvitation(inv))
       ;(s.requests || []).forEach(req => this.showRequest(req))
     }).catch(err => console.error(err))
     invoke('partage:ended').then(raison => raison && this.onEnded({raison})).catch(err => console.error(err))
@@ -65,9 +64,7 @@ class PartageClass {
     this.state = s || {}
     this.updateBanner()
     this.state.sender && !wasSender && this.sendView && this.sendView()
-    // Invitations retirées (partage arrêté), demandes de la main closes
-    const ids = new Set((this.state.invitations || []).map(i => i.id))
-    document.querySelectorAll('div.partage-notif[data-invitation]').forEach(n => ids.has(n.dataset.invitation) || n.remove())
+    // Demandes de la main closes
     const emails = new Set((this.state.requests || []).map(r => r.email))
     document.querySelectorAll('div.partage-notif[data-request]').forEach(n => emails.has(n.dataset.request) || n.remove())
   }
@@ -133,19 +130,6 @@ class PartageClass {
     listen(notif, 'click', (e) => e.stopPropagation())
     this.notifBox().appendChild(notif)
     return notif
-  }
-
-  showInvitation({id, pseudo, titre}){
-    if ( DGet(`div.partage-notif[data-invitation="${CSS.escape(id)}"]`) ) return
-    this.notify({
-        invitation: id
-      , text:   T('invitation', {pseudo: `<b>${esc(pseudo)}</b>`})
-      , detail: titre ? `« ${esc(titre)} »` : ''
-      , buttons: [
-            {label: T('refuse'), action: () => invoke('partage:refuse', {id}).catch(err => erreur(err.message))}
-          , {label: T('accept'), default: true, action: () => this.accept(id)}
-        ]
-    })
   }
 
   // Analyste : un spectateur demande la main
@@ -263,9 +247,8 @@ class PartageClass {
   // Menu « Outils › Partage › Inviter… »
   async openInvite(){
     try {
-      const s = await invoke('partage:state')
-      if ( !s.identity || !s.identity.pseudo ) return this.openIdentify({asOwner: true, then: () => this.openInvite()})
-      this.buildInvitePanel(await invoke('partage:book'), s)
+      const [book, state] = await Promise.all([invoke('partage:book'), invoke('partage:state')])
+      this.buildInvitePanel(book, state)
     } catch(err) { erreur(err.message) }
   }
 
@@ -273,9 +256,17 @@ class PartageClass {
   async openJoin(){
     try {
       const s = await invoke('partage:state')
-      if ( !s.identity ) return this.openIdentify({asOwner: false, then: () => this.openJoin()})
-      this.buildJoinPanel(await invoke('partage:list'))
+      if ( !s.identity || !s.identity.email ) return this.openCode()
+      this.join()
     } catch(err) { erreur(err.message) }
+  }
+
+  // Partages proposés : un seul → suivi aussitôt ; plusieurs → liste
+  async join(){
+    message(T('searching'))
+    const shares = await invoke('partage:list')
+    if ( shares.length == 1 ) return this.accept(shares[0].id)
+    this.buildJoinPanel(shares)
   }
 
   closePanel(){
@@ -296,83 +287,58 @@ class PartageClass {
   }
 
   /**
-   * Identification : adresse (et pseudo pour l'analyste) → email avec
-   * lien ; la page du lien donne le code, saisi ici.
+   * Spectateur, la première fois : adresse et code reçu par email
+   * (« Recevoir un nouveau code » si l'email est perdu)
    */
-  async openIdentify({asOwner, then}){
-    const s = await invoke('partage:state')
-    // Déjà identifié : pseudo seul (analyste)
-    if ( s.identity && asOwner ) return this.openPseudo(s.identity, then)
-    const pseudo = DCreate('INPUT', {type: 'text', class: 'partage-pseudo', maxlength: '40', placeholder: T('pseudo_ph')})
-    const email  = DCreate('INPUT', {type: 'text', inputmode: 'email', class: 'partage-email', placeholder: T('email_ph')})
-    const code   = DCreate('INPUT', {type: 'text', class: 'partage-code', maxlength: '6', inputmode: 'numeric', placeholder: '000000'})
-    const step2  = DCreate('DIV', {class: 'partage-step2 hidden', inner: [
-        DCreate('P', {text: T('identify_code')})
-      , code
-    ]})
-    const btnSend = DCreate('BUTTON', {class: 'btn-default', text: T('send_link')})
-    const btnOk   = DCreate('BUTTON', {class: 'hidden', text: T('validate')})
-    const inner = [DCreate('P', {class: 'partage-intro', text: T(asOwner ? 'identify_owner' : 'identify_spectator')})]
-    asOwner && inner.push(DCreate('LABEL', {text: T('pseudo')}), pseudo)
-    inner.push(DCreate('LABEL', {text: T('email')}), email, step2)
-    this.makePanel('partage_identify', T('identify_title'), inner, [btnSend, btnOk])
-    ;(asOwner ? pseudo : email).focus()
-    listen(btnSend, 'click', async () => {
-      if ( asOwner && !pseudo.value.trim() ) return erreur(T('pseudo_required'))
+  openCode(){
+    const email = DCreate('INPUT', {type: 'text', inputmode: 'email', class: 'partage-email', placeholder: T('email_ph')})
+    const code  = DCreate('INPUT', {type: 'text', class: 'partage-code', maxlength: '6', inputmode: 'numeric', placeholder: '000000'})
+    const btnNew  = DCreate('BUTTON', {text: T('new_code')})
+    const btnJoin = DCreate('BUTTON', {class: 'btn-default', text: T('join')})
+    this.makePanel('partage_code', T('join_title'), [
+        DCreate('P', {class: 'partage-intro', text: T('code_intro')})
+      , DCreate('LABEL', {text: T('email')}), email
+      , DCreate('LABEL', {text: T('code')}), code
+    ], [btnNew, btnJoin])
+    email.focus()
+    listen(btnNew, 'click', async () => {
       try {
-        await invoke('partage:identify', {email: email.value.trim(), pseudo: pseudo.value.trim()})
-        step2.classList.remove('hidden')
-        btnSend.classList.remove('btn-default')
-        btnSend.textContent = T('send_again')
-        btnOk.classList.remove('hidden')
-        btnOk.classList.add('btn-default')
-        message(T('link_sent', {email: esc(email.value.trim())}))
+        await invoke('partage:identify', {email: email.value.trim()})
+        message(T('code_sent', {email: esc(email.value.trim())}))
         code.focus()
       } catch(err) { erreur(err.message) }
     })
-    listen(btnOk, 'click', async () => {
+    listen(btnJoin, 'click', async () => {
       try {
-        await invoke('partage:validate', {email: email.value.trim(), code: code.value.trim(), pseudo: pseudo.value.trim()})
+        await invoke('partage:validate', {email: email.value.trim(), code: code.value.trim()})
         this.closePanel()
-        then && then()
+        await this.join()
       } catch(err) { erreur(err.message) }
-    })
-  }
-
-  // Analyste identifié comme spectateur : pseudo à donner
-  openPseudo(identity, then){
-    const pseudo = DCreate('INPUT', {type: 'text', class: 'partage-pseudo', maxlength: '40', placeholder: T('pseudo_ph')})
-    const btn = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
-    this.makePanel('partage_identify', T('identify_title'), [
-        DCreate('P', {class: 'partage-intro', text: T('pseudo_intro')})
-      , DCreate('LABEL', {text: T('pseudo')}), pseudo
-    ], [btn])
-    pseudo.focus()
-    listen(btn, 'click', async () => {
-      if ( !pseudo.value.trim() ) return erreur(T('pseudo_required'))
-      await invoke('partage:setPseudo', {pseudo: pseudo.value.trim()})
-      this.closePanel()
-      then && then()
     })
   }
 
   /**
-   * Invitations : adresses déjà invitées (cases), groupes nommés (cocher
-   * un groupe coche ses adresses), ajout d'une adresse ; « Inviter et
-   * démarrer le partage ».
+   * Invitations : nom vu des spectateurs, adresses à inviter (champ
+   * multiligne), adresses déjà invitées (cases), groupes nommés (cocher
+   * un groupe coche ses adresses). « Inviter » : c'est tout.
    */
   buildInvitePanel(book, state){
     let {contacts, groups} = book
     const checked = new Set()
+    const name     = DCreate('INPUT', {type: 'text', class: 'partage-pseudo', maxlength: '40', placeholder: T('pseudo_ph')})
+    name.value = state.pseudo || ''
+    const area     = DCreate('TEXTAREA', {class: 'partage-addresses', rows: '5', placeholder: T('addresses_ph')})
     const listBox  = DCreate('DIV', {class: 'partage-list partage-contacts'})
     const groupBox = DCreate('DIV', {class: 'partage-list partage-groups'})
-    const add      = DCreate('INPUT', {type: 'text', inputmode: 'email', class: 'partage-email', placeholder: T('add_ph')})
-    const btnAdd   = DCreate('BUTTON', {text: T('add')})
     const gname    = DCreate('INPUT', {type: 'text', class: 'partage-gname', placeholder: T('group_name_ph')})
     const btnGroup = DCreate('BUTTON', {text: T('group_create')})
     const count    = DCreate('DIV', {class: 'partage-count'})
-    const btnStart = DCreate('BUTTON', {class: 'btn-default', text: T(state.sharing ? 'invite_more' : 'invite_start')})
+    const btnInvite = DCreate('BUTTON', {class: 'btn-default', text: T('invite')})
 
+    // Adresses du champ (une par ligne, ou séparées par virgules, espaces…)
+    const typed = () => area.value.split(/[\s,;]+/).map(e => e.trim().toLowerCase()).filter(Boolean)
+    const isEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)
+    const chosen = () => [...new Set([...checked, ...typed()])]
     const save = async () => {
       try { ({contacts, groups} = await invoke('partage:saveBook', {contacts, groups})) } catch(err) { erreur(err.message) }
     }
@@ -384,6 +350,11 @@ class PartageClass {
       listen(del, 'click', onDelete)
       return DCreate('DIV', {class: 'partage-row', inner: [DCreate('LABEL', {inner: [cb, DCreate('SPAN', {text: label})]}), ...(extra || []), del]})
     }
+    const updateCount = () => {
+      const n = chosen().length
+      count.textContent = T(n > 1 ? 'count_many' : 'count_one', {n})
+      btnInvite.disabled = n == 0
+    }
     const render = () => {
       listBox.innerHTML = ''
       contacts.length || listBox.appendChild(DCreate('DIV', {class: 'partage-empty', text: T('no_contacts')}))
@@ -393,55 +364,55 @@ class PartageClass {
       )))
       groupBox.innerHTML = ''
       Object.keys(groups).length || groupBox.appendChild(DCreate('DIV', {class: 'partage-empty', text: T('no_groups')}))
-      Object.entries(groups).forEach(([name, list]) => {
+      Object.entries(groups).forEach(([gn, list]) => {
         const full = list.length && list.every(e => checked.has(e))
         const update = DCreate('SPAN', {class: 'partage-update', title: T('group_update_title'), text: T('group_update')})
-        listen(update, 'click', () => { groups[name] = [...checked] ; save().then(render) })
-        groupBox.appendChild(row(`${esc(name)} <span class="partage-n">(${list.length})</span>`, full
+        listen(update, 'click', () => { groups[gn] = chosen() ; save().then(render) })
+        groupBox.appendChild(row(`${esc(gn)} <span class="partage-n">(${list.length})</span>`, full
           , (on) => { list.forEach(e => on ? checked.add(e) : checked.delete(e)) ; render() }
-          , () => { delete groups[name] ; save().then(render) }
+          , () => { delete groups[gn] ; save().then(render) }
           , [update]
         ))
       })
-      count.textContent = T(checked.size > 1 ? 'count_many' : 'count_one', {n: checked.size})
-      btnStart.disabled = checked.size == 0
+      updateCount()
     }
-    const addEmail = () => {
-      const email = add.value.trim().toLowerCase()
-      if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ) return erreur(T('bad_email'))
-      contacts.includes(email) || (contacts = [...contacts, email].sort())
-      checked.add(email)
-      add.value = ''
-      save().then(render)
-    }
-    listen(btnAdd, 'click', addEmail)
-    listen(add, 'keydown', (e) => { if ( e.key == 'Enter' ) { e.preventDefault() ; e.stopPropagation() ; addEmail() } })
+    listen(area, 'input', updateCount)
     listen(btnGroup, 'click', () => {
-      const name = gname.value.trim()
-      if ( !name ) return erreur(T('group_name_required'))
-      if ( !checked.size ) return erreur(T('group_empty'))
-      groups[name] = [...checked]
+      const gn = gname.value.trim()
+      if ( !gn ) return erreur(T('group_name_required'))
+      const list = chosen()
+      if ( !list.length ) return erreur(T('group_empty'))
+      if ( list.some(e => !isEmail(e)) ) return erreur(T('bad_email_list', {list: esc(list.filter(e => !isEmail(e)).join(', '))}))
+      groups[gn] = list
       gname.value = ''
       save().then(render)
     })
-    listen(btnStart, 'click', async () => {
+    listen(btnInvite, 'click', async () => {
+      if ( !name.value.trim() ) return erreur(T('pseudo_required'))
+      const invites = chosen()
+      const bad = invites.filter(e => !isEmail(e))
+      if ( bad.length ) return erreur(T('bad_email_list', {list: esc(bad.join(', '))}))
       try {
-        await invoke('partage:start', {invites: [...checked]})
+        btnInvite.disabled = true
+        await invoke('partage:start', {invites, pseudo: name.value.trim()})
         this.closePanel()
-        message(T(state.sharing ? 'invited' : 'started', {n: checked.size}))
-      } catch(err) { erreur(err.message) }
+        message(T('invited_sent', {n: invites.length}))
+      } catch(err) { btnInvite.disabled = false ; erreur(err.message) }
     })
     this.makePanel('partage_invite', T('invite_title'), [
-        DCreate('DIV', {class: 'partage-cols', inner: [
-            DCreate('DIV', {inner: [DCreate('H4', {text: T('contacts')}), listBox, DCreate('DIV', {class: 'partage-line', inner: [add, btnAdd]})]})
+        DCreate('LABEL', {text: T('invite_name')}), name
+      , DCreate('LABEL', {text: T('addresses')}), area
+      , DCreate('DIV', {class: 'partage-cols', inner: [
+            DCreate('DIV', {inner: [DCreate('H4', {text: T('contacts')}), listBox]})
           , DCreate('DIV', {inner: [DCreate('H4', {text: T('groups')}), groupBox, DCreate('DIV', {class: 'partage-line', inner: [gname, btnGroup]})]})
         ]})
       , count
-    ], [btnStart])
+    ], [btnInvite])
+    ;(name.value ? area : name).focus()
     render()
   }
 
-  // Partages en cours où l'on est invité
+  // Partages proposés (plusieurs)
   buildJoinPanel(shares){
     const list = DCreate('DIV', {class: 'partage-list'})
     shares.length || list.appendChild(DCreate('DIV', {class: 'partage-empty', text: T('no_share')}))

@@ -3,19 +3,25 @@
  * principal : connexion au serveur ta-partage (serveur/ta-partage/),
  * identification, envoi de l'analyse (analyste), réception (spectateur).
  *
- * Analyste : « Outils › Partage › Inviter… » démarre le partage de
- * l'analyse courante ; ses fichiers sont envoyés, puis chaque
- * enregistrement (différences du dossier, cf. sync) et la partie
- * visible de la fenêtre (cf. view).
+ * Analyste : « Outils › Partage › Inviter… » (nom vu des spectateurs et
+ * adresses, sans autre formalité) démarre le partage de l'analyse
+ * courante ; ses fichiers sont envoyés, puis chaque enregistrement
+ * (différences du dossier, cf. sync) et la partie visible de la fenêtre
+ * (cf. view).
  *
- * Spectateur : l'analyse suivie est écrite dans un dossier des données
- * de l'application (partages/<id>/), ouvert en lecture seule. À la fin
- * du partage (ou « Quitter »), elle devient une analyse ordinaire.
+ * Spectateur : « Outils › Partage › Rejoindre… » (code reçu par email,
+ * la première fois) ; l'analyse suivie est écrite dans un dossier des
+ * données de l'application (partages/<id>/), ouvert en lecture seule. À
+ * la fin du partage (ou « Quitter »), elle devient une analyse
+ * ordinaire.
  *
- * Préférences de l'application : partage_jeton, partage_email,
- * partage_pseudo, partage_contacts (adresses invitées), partage_groupes
- * ({nom: [adresses]}). Serveur : SA_PARTAGE_URL (essais) ou
- * partage_server.
+ * Connexion au serveur seulement pendant un partage, un suivi ou la
+ * recherche des partages proposés (#223).
+ *
+ * Préférences de l'application : partage_jeton et partage_email
+ * (spectateur), partage_analyste_jeton et partage_pseudo (analyste),
+ * partage_contacts (adresses invitées), partage_groupes ({nom:
+ * [adresses]}). Serveur : SA_PARTAGE_URL (essais) ou partage_server.
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -45,20 +51,20 @@ class PartageClass {
     this.online = false
     this.sharing = null     // analyste : {id, folder, titre, sent: Map rel → signature, connected, invited}
     this.following = null   // spectateur : {id, pseudo, titre, folder, ready, changed: Set, ownerPresent}
-    this.invitations = new Map()
+    this.proposed = new Map() // partages proposés (cf. list)
+    this.waiters = []
     this.lastView = null
     this.retry = RECONNECT_MIN
     // Lancement de contrôle : identité d'essai (cf. Manuel_dev.md)
     if ( process.env.SA_SMOKE && process.env.SA_PARTAGE_JETON ) {
-      AppPrefs.set({partage_jeton: process.env.SA_PARTAGE_JETON, partage_email: process.env.SA_PARTAGE_EMAIL || '', partage_pseudo: process.env.SA_PARTAGE_PSEUDO || ''})
+      AppPrefs.set({partage_jeton: process.env.SA_PARTAGE_JETON, partage_email: process.env.SA_PARTAGE_EMAIL || ''})
     }
-    this.connect()
+    if ( process.env.SA_SMOKE && process.env.SA_PARTAGE_PSEUDO ) AppPrefs.set({partage_pseudo: process.env.SA_PARTAGE_PSEUDO})
   }
 
   get server(){ return (process.env.SA_PARTAGE_URL || AppPrefs.get('partage_server') || DEFAULT_SERVER).replace(/\/$/, '') }
   get identity(){
-    const jeton = AppPrefs.get('partage_jeton')
-    return jeton ? {email: AppPrefs.get('partage_email'), pseudo: AppPrefs.get('partage_pseudo') || ''} : null
+    return {email: AppPrefs.get('partage_jeton') ? AppPrefs.get('partage_email') : null, pseudo: AppPrefs.get('partage_pseudo') || ''}
   }
   /**
    * Page en lecture seule, qui suit la fenêtre de celui qui a la main :
@@ -102,19 +108,46 @@ class PartageClass {
   state(){
     return {
         identity:  this.identity
+      , pseudo:    AppPrefs.get('partage_pseudo') || ''
       , online:    this.online
       , sharing:   this.sharing && {connected: this.sharing.connected || 0, invited: this.sharing.invited || 0, given: this.sharing.given || null}
       , following: this.following && this.following.ready && {pseudo: this.following.pseudo, titre: this.following.titre, ownerPresent: this.following.ownerPresent !== false, control: !!this.following.control, controller: this.following.controller || null, asked: !!this.following.asked}
       , sender:    !!this.sender
       , requests:  this.sharing ? [...(this.sharing.requests || new Map()).values()] : []
-      , invitations: [...this.invitations.values()]
     }
   }
 
   /* --- Connexion --- */
 
+  // Rôle de la connexion : analyste (partage) ou spectateur
+  get role(){ return (this.sharing || this.pendingStart) ? 'analyste' : 'spectateur' }
+  jetonFor(role){ return AppPrefs.get(role == 'analyste' ? 'partage_analyste_jeton' : 'partage_jeton') }
+  // Connexion nécessaire ?
+  get needed(){ return !!(this.sharing || this.pendingStart || this.following || this.listing) }
+
+  // Connexion ouverte (et identifiée)
+  open(){
+    if ( this.ws && this.online ) return Promise.resolve()
+    return new Promise((resolve, reject) => {
+      const w = {resolve, reject}
+      this.waiters.push(w)
+      setTimeout(() => this.flush(w, new Error(t('errors.partage.offline'))), 10000)
+      this.connect()
+    })
+  }
+  flush(only, err){
+    const list = only ? [only] : this.waiters
+    list.forEach(w => { if ( !this.waiters.includes(w) ) return ; err ? w.reject(err) : w.resolve() })
+    this.waiters = this.waiters.filter(w => !list.includes(w))
+  }
+  closeIfIdle(){
+    if ( !this.needed && this.ws ) { const ws = this.ws ; this.ws = null ; this.online = false ; ws.close() }
+  }
+
   connect(){
-    if ( this.ws || !AppPrefs.get('partage_jeton') ) return
+    if ( this.ws || !this.needed ) return
+    const jeton = this.jetonFor(this.role)
+    if ( !jeton ) return this.flush(null, new Error(t('errors.partage.server')))
     let ws
     try {
       ws = new WebSocket(this.server.replace(/^http/, 'ws') + '/ws')
@@ -122,7 +155,7 @@ class PartageClass {
     this.ws = ws
     ws.addEventListener('open', () => {
       this.retry = RECONNECT_MIN
-      ws.send(JSON.stringify({type: 'hello', jeton: AppPrefs.get('partage_jeton')}))
+      ws.send(JSON.stringify({type: 'hello', jeton}))
     })
     ws.addEventListener('message', (e) => {
       let msg
@@ -132,17 +165,17 @@ class PartageClass {
       try { fn && fn.call(this, msg) } catch(err) { console.error('[partage]', msg.type, err) }
     })
     ws.addEventListener('close', () => {
+      if ( this.ws !== ws ) return
       this.ws = null
       const was = this.online
       this.online = false
       was && this.sendState()
-      this.scheduleReconnect()
+      this.needed && this.scheduleReconnect()
     })
     ws.addEventListener('error', () => {})
   }
   scheduleReconnect(){
     clearTimeout(this.reconnectTimer)
-    if ( !AppPrefs.get('partage_jeton') ) return
     this.reconnectTimer = setTimeout(() => this.connect(), this.retry)
     this.retry = Math.min(RECONNECT_MAX, this.retry * 2)
   }
@@ -166,46 +199,43 @@ class PartageClass {
     return body
   }
 
-  // Email de confirmation demandé
-  async identify({email, pseudo}){
-    const res = await this.post('/identifier', {email, pseudo})
+  // Spectateur : nouveau code demandé (envoyé par email)
+  async identify({email}){
+    const res = await this.post('/identifier', {email})
     return {sent: res.sent}
   }
 
-  // Code de la page du lien : l'application est identifiée
-  async validate({email, code, pseudo}){
-    const res = await this.post('/valider', {email, code, pseudo})
-    AppPrefs.set({partage_jeton: res.jeton, partage_email: res.email, partage_pseudo: res.pseudo || pseudo || ''})
-    this.ws && this.ws.close()
-    this.retry = RECONNECT_MIN
-    this.connect()
+  // Spectateur : code de l'email → application reconnue
+  async validate({email, code}){
+    const res = await this.post('/valider', {email, code})
+    AppPrefs.set({partage_jeton: res.jeton, partage_email: res.email})
     this.sendState()
     return this.identity
   }
 
-  setPseudo(pseudo){
-    AppPrefs.set({partage_pseudo: pseudo})
-    this.emit({type: 'pseudo', pseudo})
-  }
-
-  on_welcome({email, pseudo}){
+  on_welcome(){
     this.online = true
-    if ( pseudo ) AppPrefs.set({partage_pseudo: pseudo})
-    else if ( AppPrefs.get('partage_pseudo') ) this.emit({type: 'pseudo', pseudo: AppPrefs.get('partage_pseudo')})
+    this.flush()
     // Reprise après une coupure
     this.sharing && this.emit({type: 'resume', id: this.sharing.id})
-    this.following && this.emit({type: 'accept', id: this.following.id})
+    this.following && this.following.ready && this.emit({type: 'accept', id: this.following.id})
     this.sendState()
   }
 
   on_error({code}){
     if ( code == 'jeton' ) {
-      // Jeton refusé : nouvelle identification nécessaire
-      AppPrefs.set({partage_jeton: null})
+      // Jeton refusé : un autre sera demandé
+      AppPrefs.set(this.role == 'analyste' ? {partage_analyste_jeton: null} : {partage_jeton: null, partage_email: null})
+      this.flush(null, new Error(t('errors.partage.aucune')))
       this.sendState()
     } else if ( code == 'taille' ) {
       this.send('partage:message', {error: t('errors.partage.too_big')})
     }
+  }
+
+  // Analyste : un spectateur a rejoint le partage
+  on_joined({pseudo, email}){
+    this.send('partage:message', {notice: t('ui.partage.joined', {pseudo: pseudo || email})})
   }
 
   /* --- Carnet d'adresses (analyste) --- */
@@ -223,19 +253,32 @@ class PartageClass {
 
   /* --- Analyste --- */
 
-  start({invites}){
+  async start({invites, pseudo}){
     const current = this.hooks.current()
     if ( !current ) throw new Error(t('errors.no_analyse_open'))
-    if ( !this.online ) throw new Error(t('errors.partage.offline'))
+    pseudo = String(pseudo || '').trim()
+    if ( !pseudo ) throw new Error(t('ui.partage.pseudo_required'))
+    if ( this.following ) throw new Error(t('errors.partage.busy'))
     const contacts = new Set([...(AppPrefs.get('partage_contacts') || []), ...invites])
-    AppPrefs.set({partage_contacts: [...contacts].sort()})
+    AppPrefs.set({partage_contacts: [...contacts].sort(), partage_pseudo: pseudo})
+    if ( !AppPrefs.get('partage_analyste_jeton') ) {
+      const res = await this.post('/analyste', {pseudo})
+      AppPrefs.set({partage_analyste_jeton: res.jeton})
+    }
     if ( this.sharing && this.sharing.folder == current.path ) {
       // Partage en cours : nouvelles invitations seules
+      await this.open()
+      this.emit({type: 'pseudo', pseudo})
       this.emit({type: 'invite', id: this.sharing.id, invites})
       return
     }
+    // (connexion de spectateur éventuelle : refaite en analyste)
+    if ( this.ws && this.role == 'spectateur' ) { const ws = this.ws ; this.ws = null ; this.online = false ; ws.close() }
     const titre = (current.infos && (current.infos.title || current.infos.titre)) || current.name
     this.pendingStart = {folder: current.path, titre}
+    try { await this.open() }
+    catch(err) { this.pendingStart = null ; throw err }
+    this.emit({type: 'pseudo', pseudo})
     this.emit({type: 'start', titre, invites})
   }
 
@@ -260,6 +303,7 @@ class PartageClass {
     this.emit({type: 'stop', id: this.sharing.id})
     this.sharing = null
     this.sendState()
+    setTimeout(() => this.closeIfIdle(), 300)
   }
 
   // Analyse courante changée : son partage s'arrête
@@ -404,40 +448,35 @@ class PartageClass {
 
   /* --- Spectateur --- */
 
-  on_invitation({id, pseudo, titre}){
-    if ( this.following && this.following.id == id ) return
-    this.invitations.set(id, {id, pseudo, titre})
-    this.send('partage:invitation', {id, pseudo, titre})
-    this.sendState()
-  }
-  on_withdrawn({id}){
-    this.invitations.delete(id)
-    this.sendState()
-  }
   on_list({shares}){
-    shares.forEach(s => this.invitations.set(s.id, s))
+    this.proposed = new Map(shares.map(s => [s.id, s]))
     this.listResolve && this.listResolve(shares)
     this.listResolve = null
   }
-  list(){
-    if ( !this.online ) throw new Error(t('errors.partage.offline'))
-    return new Promise(resolve => {
-      this.listResolve = resolve
-      this.emit({type: 'list'})
-      setTimeout(() => { this.listResolve && this.listResolve([]) ; this.listResolve = null }, 5000)
-    })
+  // Spectateur : partages proposés (connexion le temps de la demande)
+  async list(){
+    if ( !AppPrefs.get('partage_jeton') ) throw new Error(t('errors.partage.aucune'))
+    if ( this.sharing ) throw new Error(t('errors.partage.busy'))
+    this.listing = true
+    try {
+      await this.open()
+      return await new Promise(resolve => {
+        this.listResolve = resolve
+        this.emit({type: 'list'})
+        setTimeout(() => { this.listResolve && this.listResolve([]) ; this.listResolve = null }, 8000)
+      })
+    } finally {
+      this.listing = false
+      setTimeout(() => this.closeIfIdle(), 300)
+    }
   }
 
-  accept({id}){
-    if ( !this.online ) throw new Error(t('errors.partage.offline'))
-    const inv = this.invitations.get(id) || {}
-    this.invitations.delete(id)
+  async accept({id}){
+    const inv = this.proposed.get(id) || {}
     this.following = {id, pseudo: inv.pseudo, titre: inv.titre, ready: false, changed: new Set()}
+    try { await this.open() }
+    catch(err) { this.following = null ; throw err }
     this.emit({type: 'accept', id})
-    this.sendState()
-  }
-  refuse({id}){
-    this.invitations.delete(id)
     this.sendState()
   }
 
@@ -550,6 +589,7 @@ class PartageClass {
     this.lastView = null
     this.sendState()
     ready && this.hooks.reload()
+    setTimeout(() => this.closeIfIdle(), 300)
   }
 
   // Dossiers d'anciens partages suivis (plus de 30 jours) effacés

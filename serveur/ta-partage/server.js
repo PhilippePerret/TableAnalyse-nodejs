@@ -9,9 +9,9 @@
  * confirmées (pseudo, jetons des applications).
  *
  * HTTP
- *   POST /identifier {email, pseudo?}  → email de confirmation (lien)
- *   GET  /confirmer?l=<lien>           → page du code à 6 chiffres
- *   POST /valider {email, code}        → {jeton, pseudo}
+ *   POST /analyste {pseudo}            → {jeton} de l'analyste (sans email)
+ *   POST /identifier {email}           → email du code (spectateur)
+ *   POST /valider {email, code}        → {jeton} du spectateur
  *
  * WebSocket /ws (messages JSON, cf. Manuel_dev.md § Partage)
  *
@@ -125,42 +125,43 @@ function ipAllowed(ip){
 }
 
 /**
- * Confirmation d'une adresse : lien envoyé par email ; la page du lien
- * donne le code à saisir dans l'application. +invitation+ : {pseudo,
- * titre} quand c'est un analyste qui invite cette adresse.
+ * Code de confirmation d'une adresse (spectateur), envoyé par email avec
+ * la marche à suivre. +invitation+ : {pseudo, titre} quand c'est la
+ * première invitation de cette adresse.
  * @return false si un email vient déjà d'être envoyé
  */
-async function sendConfirmation(email, pseudo, invitation){
+async function sendConfirmation(email, invitation){
   const prev = sql.attente.get(email)
   if ( prev && prev.expire > now() && now() - prev.envoye < RESEND_DELAY ) return false
   const code = String(crypto.randomInt(0, 1e6)).padStart(6, '0')
   const lien = crypto.randomBytes(16).toString('hex')
-  sql.attenteAjout.run(email, pseudo || (prev && prev.pseudo) || null, code, lien, now(), now() + PENDING_TTL)
-  const url = `${URL_PUB}/confirmer?l=${lien}`
+  sql.attenteAjout.run(email, null, code, lien, now(), now() + PENDING_TTL)
+  const marche = `Votre code : ${code}
+
+Pour suivre l’analyse :
+1. lancez la Table d’analyse ;
+2. choisissez le menu « Outils › Partage › Rejoindre… » ;
+3. saisissez votre adresse (${email}) et ce code.
+
+Vous n’aurez à saisir ce code qu’une seule fois : ensuite, le menu « Rejoindre… » suffit.
+
+Vous n’avez pas encore la Table d’analyse ? Elle se télécharge ici :
+${DOWNLOAD}`
   if ( invitation ) {
     await sendMail(email, `${invitation.pseudo} vous invite à suivre son analyse`,
 `Bonjour,
 
 ${invitation.pseudo} vous invite à suivre en direct son analyse « ${invitation.titre} » dans la Table d’analyse.
 
-Pour accepter, confirmez votre adresse (une seule fois) :
-${url}
-
-La page du lien vous donnera un code à saisir dans la Table d’analyse (menu Outils › Partage › Rejoindre…).
-
-Vous n’avez pas encore la Table d’analyse ? Elle se télécharge ici :
-${DOWNLOAD}
+${marche}
 
 Si vous ne connaissez pas ${invitation.pseudo}, ignorez simplement ce message.
 `)
   } else {
-    await sendMail(email, 'Confirmation de votre adresse — Table d’analyse',
+    await sendMail(email, 'Votre code — Table d’analyse',
 `Bonjour,
 
-Pour confirmer votre adresse dans la Table d’analyse (partage d’analyse), ouvrez ce lien :
-${url}
-
-La page du lien vous donnera un code à saisir dans la Table d’analyse.
+${marche}
 
 Si vous n’avez rien demandé, ignorez simplement ce message.
 `)
@@ -196,12 +197,25 @@ function clientIp(req){
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x')
   try {
+    // Analyste : jeton sans email (il n'a qu'à inviter)
+    if ( req.method == 'POST' && url.pathname == '/analyste' ) {
+      const e = await readJson(req)
+      const pseudo = cleanPseudo(e.pseudo)
+      if ( !pseudo ) return json(res, 422, {ok: false, error: 'pseudo'})
+      if ( !ipAllowed(clientIp(req)) ) return json(res, 429, {ok: false, error: 'trop'})
+      const id = 'analyste:' + crypto.randomBytes(9).toString('hex')
+      sql.compteAjout.run(id, pseudo, now())
+      const jeton = crypto.randomBytes(24).toString('hex')
+      sql.jetonAjout.run(sha(jeton), id, now(), now())
+      return json(res, 200, {ok: true, jeton})
+    }
+    // Spectateur : nouveau code demandé
     if ( req.method == 'POST' && url.pathname == '/identifier' ) {
       const e = await readJson(req)
       const email = normEmail(e.email)
       if ( !validEmail(email) ) return json(res, 422, {ok: false, error: 'email'})
       if ( !ipAllowed(clientIp(req)) ) return json(res, 429, {ok: false, error: 'trop'})
-      const sent = await sendConfirmation(email, cleanPseudo(e.pseudo))
+      const sent = await sendConfirmation(email)
       return json(res, 200, {ok: true, sent})
     }
     if ( req.method == 'POST' && url.pathname == '/valider' ) {
@@ -210,7 +224,6 @@ const server = http.createServer(async (req, res) => {
       const code  = String(e.code || '').replace(/\D/g, '')
       const att = sql.attente.get(email)
       if ( !att || att.expire < now() ) return json(res, 404, {ok: false, error: 'aucune'})
-      if ( !att.clique ) return json(res, 403, {ok: false, error: 'lien'})
       if ( att.code !== code ) {
         sql.attenteEssai.run(email)
         if ( att.essais + 1 >= MAX_TRIES ) sql.attenteSuppr.run(email)
@@ -288,11 +301,8 @@ function invite(share, emails){
     if ( !validEmail(email) || email == share.owner || share.invites.has(email) ) continue
     if ( share.invites.size >= MAX_INVITES ) break
     share.invites.add(email)
-    if ( sql.compte.get(email) ) {
-      for ( const ws of sockets ) ws.email == email && send(ws, invitationOf(share))
-    } else {
-      sendConfirmation(email, null, {pseudo: share.pseudo, titre: share.titre})
-    }
+    // Première invitation : email du code (sinon « Rejoindre… » suffit)
+    sql.compte.get(email) || sendConfirmation(email, {pseudo: share.pseudo, titre: share.titre})
   }
   sendCount(share)
 }
@@ -378,7 +388,6 @@ const handlers = {
     const compte = sql.compte.get(row.email)
     sockets.add(ws)
     send(ws, {type: 'welcome', email: row.email, pseudo: (compte && compte.pseudo) || ''})
-    for ( const share of shares.values() ) share.invites.has(ws.email) && send(ws, invitationOf(share))
   },
 
   // Pseudo de l'analyste (choisi à la première invitation)
@@ -499,9 +508,12 @@ const handlers = {
     const share = shares.get(id)
     if ( !share || !share.invites.has(ws.email) ) return send(ws, {type: 'gone', id})
     if ( ws.following && ws.following != id ) leave(ws)
+    const already = share.followers.has(ws)
     share.followers.add(ws)
     ws.following = id
     sendSnapshot(share, ws)
+    // Confirmation de la participation, pour l'analyste
+    already || send(share.ownerWs, {type: 'joined', id, email: ws.email, pseudo: pseudoOf(ws)})
     sendCount(share)
   },
 

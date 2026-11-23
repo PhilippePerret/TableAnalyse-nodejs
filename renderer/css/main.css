@@ -612,3 +612,5 @@ div.partage-panneau div.partage-line { display: flex; gap: 6px; }
 div.partage-panneau div.partage-empty { font-size: 14px; opacity: .6; font-style: italic; }
 div.partage-panneau div.partage-count { font-size: 14px; margin: 6px 0 10px; opacity: .8; }
 div#partage_join div.partage-row { justify-content: space-between; gap: 20px; padding: 4px 0; }
+div.partage-panneau textarea.partage-addresses { width: 100%; box-sizing: border-box; resize: vertical; margin-bottom: 10px; }
+div#partage_invite input.partage-pseudo { margin-bottom: 4px; }
