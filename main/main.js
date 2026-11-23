@@ -19,6 +19,7 @@ import { exportToHtml } from './exportHtml.js'
 import { exportToPdf, exportToSvg } from './exportPdfSvg.js'
 import { buildImageFromCode } from './scoreImage.js'
 import { runCutter } from './cutter/runCutter.js'
+import { Partage } from './Partage.js'
 import { loadYAML } from './yaml.js'
 import { APP_FOLDER, ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
 import { locale, t, LANGUAGES, currentLang } from './i18n.js'
@@ -70,7 +71,13 @@ protocol.registerSchemesAsPrivileged([{
 function setCurrent(folder){
   current = folder ? new Analyse(folder) : null
   if ( current ) AppPrefs.set({last_analyse_path: current.path})
+  Partage.onCurrentChanged(current && current.path)
   updateMenu()
+}
+
+// Fichier de l'analyse courante écrit : envoyé aux spectateurs (partage)
+function written(){
+  current && Partage.changed(current.path)
 }
 
 function findStartAnalyse(){
@@ -160,6 +167,8 @@ function createWindow(){
   // Fenêtre scindée : vues replacées ; refermée au rechargement de la
   // page (autre analyse, rechargement…)
   mainWindow.on('resize', layoutSplit)
+  // Spectateur d'un partage : même partie de l'analyse que l'analyste
+  mainWindow.on('resize', () => Partage.applyView())
   mainWindow.webContents.on('did-start-loading', () => split && closeSplit())
 
   if ( SMOKE ) {
@@ -202,6 +211,7 @@ function createWindow(){
 const ZOOM_STEPS = [0.5, 0.67, 0.75, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2]
 function applyZoom(){
   if ( !mainWindow ) return 1
+  if ( Partage.spectator ) return mainWindow.webContents.getZoomFactor()
   const zoom = fitZoom * userZoom
   mainWindow.webContents.setZoomFactor(zoom)
   split && split.view.webContents.setZoomFactor(fitZoom * VIEWER_ZOOM)
@@ -430,6 +440,12 @@ function buildMenu(){
           {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: byClick(() => sendMenuCommand('toolsPanel'))}
         , {label: t('ui.menu.animate'),         click: () => sendMenuCommand('animate')}
         , {label: t('ui.menu.variable'),        submenu: variablesSubmenu()}
+        , {label: t('ui.menu.partage'),         submenu: [
+              {label: t('ui.menu.partage_invite'), id: 'partageInvite', enabled: !!current && !Partage.spectator, click: () => sendMenuCommand('partageInvite')}
+            , {label: t('ui.menu.partage_stop'),   enabled: !!Partage.sharing, click: () => Partage.stop()}
+            , {type: 'separator'}
+            , {label: t('ui.menu.partage_join'),   click: () => sendMenuCommand('partageJoin')}
+          ]}
         , {type: 'separator'}
         , {label: t('ui.menu.cut_score'),       id: 'cutScore',    click: () => sendMenuCommand('cutScore')}
         , {label: t('ui.menu.renumber_measures'), id: 'renumberMeasures', click: () => sendMenuCommand('renumberMeasures')}
@@ -510,6 +526,8 @@ function updateMenu(){
     const item = menu.getMenuItemById(id)
     if ( item ) item.enabled = !!current
   })
+  const invite = menu.getMenuItemById('partageInvite')
+  if ( invite ) invite.enabled = !!current && !Partage.spectator
 }
 
 /* --- Fenêtres de choix (dernier dossier mémorisé) --- */
@@ -579,29 +597,39 @@ function registerIpc(){
     current.importMeasures()
     const data = Object.assign(current.allDataForClient(), {just_cut: justCut})
     justCut = false
+    // Analyse suivie (spectateur d'un partage) : lecture seule
+    data.partage = Partage.spectator ? {pseudo: Partage.following.pseudo, titre: Partage.following.titre} : null
+    written()
     return data
   })
 
   handle('analyse:saveInfos', ({infos}) => {
     const analyse = requireCurrent()
+    if ( Partage.spectator ) return
     analyse.infos = Object.assign({}, infos, {updated_at: Math.round(Date.now() / 1000)})
     analyse.saveInfos()
+    written()
   })
 
   handle('analyse:savePreferences', ({preferences}) => {
     const analyse = requireCurrent()
+    if ( Partage.spectator ) return
     analyse.preferences = preferences
     analyse.savePreferences()
+    written()
   })
 
   handle('analyse:saveWindowSize', ({width, height}) => {
+    if ( Partage.spectator ) return
     requireCurrent().saveWindowSize(Math.round(width), Math.round(height))
   })
 
   handle('analyse:saveTags', ({tags}) => {
     const analyse = requireCurrent()
+    if ( Partage.spectator ) return
     analyse.tags = tags
     analyse.saveTags()
+    written()
   })
 
   handle('history:load',   () => requireCurrent().loadHistory())
@@ -840,6 +868,7 @@ function registerIpc(){
     fs.mkdirSync(analyse.imagesFolder, {recursive: true})
     const name = `extrait-${Number(id)}.png`
     fs.writeFileSync(path.join(analyse.imagesFolder, name), Buffer.from(String(data).replace(/^data:image\/png;base64,/, ''), 'base64'))
+    written()
     return name
   })
 
@@ -881,6 +910,7 @@ function registerIpc(){
   })
 
   handle('window:setSize', ({width, height}) => {
+    if ( Partage.spectator ) return
     if ( mainWindow && width && height ) mainWindow.setSize(Math.round(width), Math.round(height))
   })
 
@@ -892,6 +922,8 @@ function registerIpc(){
    */
   handle('window:fitWidth', ({width, zoom: chosen}) => {
     if ( !mainWindow ) return 1
+    // Spectateur : zoom réglé sur la fenêtre de l'analyste (cf. Partage.applyView)
+    if ( Partage.spectator ) return mainWindow.webContents.getZoomFactor()
     // Zoom choisi enregistré avec l'analyse
     if ( chosen ) userZoom = Number(chosen) || 1
     const bounds = mainWindow.getBounds()
@@ -926,6 +958,41 @@ function registerIpc(){
     return ['save', 'discard', 'cancel'][response]
   })
 
+  /* Partage à distance (cf. Partage.js) */
+  handle('partage:state',    () => Partage.state())
+  // Page chargée : fin de partage à annoncer
+  handle('partage:ended',    () => Partage.takeEnded())
+  handle('partage:identify', (data) => Partage.identify(data))
+  handle('partage:validate', (data) => Partage.validate(data))
+  handle('partage:setPseudo', ({pseudo}) => Partage.setPseudo(String(pseudo || '').trim()))
+  handle('partage:book',     () => Partage.book)
+  handle('partage:saveBook', (data) => Partage.saveBook(data))
+  handle('partage:start',    ({invites}) => Partage.start({invites: invites || []}))
+  handle('partage:stop',     () => Partage.stop())
+  handle('partage:list',     () => Partage.list())
+  handle('partage:accept',   ({id}) => Partage.accept({id}))
+  handle('partage:refuse',   ({id}) => Partage.refuse({id}))
+  handle('partage:leave',    () => Partage.leave())
+  handle('partage:view',     (v) => Partage.view(v))
+  // Page du spectateur chargée : partie visible de l'analyste
+  handle('partage:ready',    () => Partage.applyView())
+  // Analyse d'un partage terminé enregistrée dans un dossier choisi
+  handle('partage:saveAs', async () => {
+    const analyse = requireCurrent()
+    const res = await showOpenDialog({
+        title: t('ui.dialogs.partage_save_as')
+      , properties: ['openDirectory', 'createDirectory']
+    })
+    if ( res.canceled || !res.filePaths.length ) return null
+    const base = String((analyse.infos && (analyse.infos.title || analyse.infos.titre)) || 'Analyse').replace(/[\\/:*?"<>|]+/g, '-').trim() || 'Analyse'
+    let dest = path.join(res.filePaths[0], base), n = 1
+    while ( fs.existsSync(dest) ) dest = path.join(res.filePaths[0], `${base} ${++n}`)
+    fs.cpSync(analyse.path, dest, {recursive: true})
+    setCurrent(dest)
+    setTimeout(reloadWindow, 10)
+    return dest
+  })
+
   handle('app:closeReady', () => {
     closeAllowed = true
     setTimeout(() => mainWindow && mainWindow.close(), 10)
@@ -955,6 +1022,13 @@ app.whenReady().then(() => {
   buildMenu()
   setCurrent(findStartAnalyse())
   createWindow()
+  Partage.init({
+      window:     () => mainWindow
+    , current:    () => current
+    , openFolder: (folder) => { setCurrent(folder) ; setTimeout(reloadWindow, 10) }
+    , reload:     () => setTimeout(reloadWindow, 10)
+    , menu:       () => buildMenu()
+  })
 })
 
 app.on('window-all-closed', () => app.quit())

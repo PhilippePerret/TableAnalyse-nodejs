@@ -55,3 +55,15 @@ unknown_adjust: "Non so gestire l'adattamento '%{adjust}'."
 panel_id_required: "%{owner} deve definire l'ID del pannello (<owner>.panneauId)"
 manual_not_found: "Manuale non trovato: %{path}"
 liaison_type_name: "Il tipo di collegamento deve avere un nome."
+
+# Partage à distance (cf. main/Partage.js)
+partage:
+  offline: "Il server di condivisione non è raggiungibile (connessione internet?)."
+  email: "Indirizzo email non valido."
+  trop: "Troppe richieste: riprova tra un'ora."
+  aucune: "Nessuna richiesta in corso per questo indirizzo: chiedi una nuova email."
+  lien: "Apri prima il link dell'email ricevuta."
+  code: "Codice errato."
+  server: "Errore del server di condivisione."
+  requete: "Richiesta rifiutata dal server di condivisione."
+  too_big: "L'analisi è troppo voluminosa per essere condivisa."

@@ -539,3 +539,76 @@ button.to-prefs {
   font-size: .8em;
   cursor: pointer;
 }
+
+/* --- Partage à distance (cf. js/Partage.js) --- */
+div#partage-voile {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  cursor: not-allowed;
+}
+div#partage-bandeau {
+  position: fixed;
+  top: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 16px !important;
+  font-size: 15px !important;
+  white-space: nowrap;
+  border-left: 4px solid #3a925e !important;
+}
+html.partage-spectateur div#partage-bandeau { border-left-color: #cc4870 !important; }
+div#partage-bandeau button { font-size: 14px; }
+div#partage-notifs {
+  position: fixed;
+  top: 36px;
+  right: 8px;
+  z-index: 9600;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 360px;
+}
+div#partage-notifs div.partage-notif {
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+  border-left: 4px solid #3a925e !important;
+}
+div.partage-notif div.partage-notif-detail { margin-top: 4px; font-size: 14px; opacity: .8; }
+div.partage-notif div.partage-notif-buttons { margin-top: 10px; text-align: right; }
+div.partage-notif div.partage-notif-buttons button { margin-left: 8px; }
+div.partage-panneau {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9700;
+  min-width: 380px;
+  max-width: 760px;
+}
+div.partage-panneau.hidden, div.partage-panneau .hidden { display: none; }
+div.partage-panneau p.partage-intro { margin: 0 0 12px; font-size: 15px; max-width: 32em; }
+div.partage-panneau label { display: block; font-size: 14px; margin: 8px 0 2px; }
+div.partage-panneau input.partage-email,
+div.partage-panneau input.partage-pseudo,
+div.partage-panneau input.partage-gname { width: 100%; box-sizing: border-box; }
+div.partage-panneau input.partage-code { font-size: 22px; letter-spacing: .2em; width: 8em; text-align: center; }
+div.partage-panneau div.partage-step2 p { font-size: 14px; margin: 14px 0 6px; }
+div.partage-panneau div.partage-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+div.partage-panneau h4 { margin: 0 0 6px; font-size: 15px; }
+div.partage-panneau div.partage-list { max-height: 260px; overflow-y: auto; min-width: 280px; margin-bottom: 8px; }
+div.partage-panneau div.partage-row { display: flex; align-items: center; gap: 8px; font-size: 14px; padding: 2px 0; }
+div.partage-panneau div.partage-row label { flex: 1; display: flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; }
+div.partage-panneau div.partage-row span.partage-n { opacity: .6; }
+div.partage-panneau span.partage-del { cursor: pointer; opacity: .5; padding: 0 4px; }
+div.partage-panneau span.partage-del:hover { opacity: 1; color: #cc4870; }
+div.partage-panneau span.partage-update { cursor: pointer; font-size: 12px; opacity: .6; text-decoration: underline; }
+div.partage-panneau span.partage-update:hover { opacity: 1; }
+div.partage-panneau div.partage-line { display: flex; gap: 6px; }
+div.partage-panneau div.partage-empty { font-size: 14px; opacity: .6; font-style: italic; }
+div.partage-panneau div.partage-count { font-size: 14px; margin: 6px 0 10px; opacity: .8; }
+div#partage_join div.partage-row { justify-content: space-between; gap: 20px; padding: 4px 0; }

@@ -55,3 +55,15 @@ unknown_adjust: "Je ne sais pas traiter l'ajustement '%{adjust}'."
 panel_id_required: "%{owner} faut définir l'ID du panneau (<owner>.panneauId)"
 manual_not_found: "Manuel introuvable : %{path}"
 liaison_type_name: "Il faut donner un nom au type de liaison."
+
+# Partage à distance (cf. main/Partage.js)
+partage:
+  offline: "Le serveur de partage est injoignable (connexion internet ?)."
+  email: "Adresse email invalide."
+  trop: "Trop de demandes : réessayez dans une heure."
+  aucune: "Aucune demande en cours pour cette adresse : demandez un nouvel email."
+  lien: "Ouvrez d'abord le lien de l'email reçu."
+  code: "Code erroné."
+  server: "Erreur du serveur de partage."
+  requete: "Requête refusée par le serveur de partage."
+  too_big: "L'analyse est trop volumineuse pour être partagée."

@@ -17,6 +17,7 @@ import { Variables } from './Variables.js'
 import { Split } from './Split.js'
 import { Systeme } from './Systeme.js'
 import { keepPanelsInView } from './Panneau.js'
+import { Partage } from './Partage.js'
 
 class AppClass {
 
@@ -40,6 +41,8 @@ class AppClass {
   onload_analyse(data){
     if (data) {
       var analyse = new Analyse(data)
+      // Analyse suivie (partage) : lecture seule
+      data.partage && Partage.enterSpectator(data.partage)
       Preferences.setValuesSaved(data.preferences)
       analyse.checkSystems()
       analyse.display()
@@ -94,6 +97,8 @@ class AppClass {
       case 'prefs':         return PreferencesPanel.toggle()
       case 'manual':        return Manuel.toggle()
       case 'toggleSplit':   return Split.toggle()
+      case 'partageInvite': return Partage.openInvite()
+      case 'partageJoin':   return Partage.openJoin()
       default: console.error("Commande de menu inconnue : %s", command)
     }
   }
@@ -118,6 +123,7 @@ class AppClass {
 
   observe(){
     Split.init()
+    Partage.init()
     onMain('menu', this.onMenuCommand.bind(this))
     onMain('menu:variable', name => Variables.copy(name))
     // Zoom de l'affichage (cf. main.js applyZoom) : les éléments

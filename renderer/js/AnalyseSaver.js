@@ -7,7 +7,7 @@
  *
  */
 import { erreur } from './lib/Message.js'
-import { invoke, IS_MIRROR } from './api.js'
+import { invoke, IS_MIRROR, isSpectator } from './api.js'
 import { AObjet } from './AObjet.js'
 import { Current } from './Current.js'
 import { Preferences } from './Preferences.js'
@@ -25,7 +25,8 @@ export class AnalyseSaver {
    */
   static async save(){
     // Vue de visualisation de la fenêtre scindée : jamais d'enregistrement
-    if ( IS_MIRROR ) return
+    // Spectateur d'un partage : lecture seule
+    if ( IS_MIRROR || isSpectator() ) return
     const analyse = Current.analyse
     if ( !analyse ) {
       erreur(t('errors.need_analyse_to_save'))

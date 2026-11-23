@@ -55,3 +55,15 @@ unknown_adjust: "无法处理调整 '%{adjust}'。"
 panel_id_required: "%{owner} 必须定义面板的 ID（<owner>.panneauId）"
 manual_not_found: "找不到手册：%{path}"
 liaison_type_name: "连线类型需要名称。"
+
+# Partage à distance (cf. main/Partage.js)
+partage:
+  offline: "无法连接共享服务器（网络连接？）。"
+  email: "邮箱地址无效。"
+  trop: "请求过多：请一小时后再试。"
+  aucune: "此地址没有进行中的请求：请重新获取邮件。"
+  lien: "请先打开收到的邮件中的链接。"
+  code: "代码错误。"
+  server: "共享服务器出错。"
+  requete: "共享服务器拒绝了请求。"
+  too_big: "分析过大，无法共享。"

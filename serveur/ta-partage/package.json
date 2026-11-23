@@ -1,0 +1,18 @@
+{
+  "name": "ta-partage",
+  "version": "1.0.0",
+  "description": "Serveur de partage à distance de la Table d'analyse",
+  "type": "module",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.0",
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

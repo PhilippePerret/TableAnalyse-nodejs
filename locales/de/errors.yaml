@@ -55,3 +55,15 @@ unknown_adjust: "Die Anpassung '%{adjust}' kann ich nicht verarbeiten."
 panel_id_required: "%{owner} muss die ID des Bereichs festlegen (<owner>.panneauId)"
 manual_not_found: "Handbuch nicht gefunden: %{path}"
 liaison_type_name: "Der Verbindungstyp braucht einen Namen."
+
+# Partage à distance (cf. main/Partage.js)
+partage:
+  offline: "Der Freigabeserver ist nicht erreichbar (Internetverbindung?)."
+  email: "Ungültige E-Mail-Adresse."
+  trop: "Zu viele Anfragen: in einer Stunde erneut versuchen."
+  aucune: "Keine laufende Anfrage für diese Adresse: neue E-Mail anfordern."
+  lien: "Öffnen Sie zuerst den Link der E-Mail."
+  code: "Falscher Code."
+  server: "Fehler des Freigabeservers."
+  requete: "Anfrage vom Freigabeserver abgelehnt."
+  too_big: "Die Analyse ist zu groß zum Teilen."

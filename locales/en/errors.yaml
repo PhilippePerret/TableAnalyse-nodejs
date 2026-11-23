@@ -55,3 +55,15 @@ unknown_adjust: "I cannot handle the adjustment '%{adjust}'."
 panel_id_required: "%{owner} must define the panel ID (<owner>.panneauId)"
 manual_not_found: "Manual not found: %{path}"
 liaison_type_name: "The link type needs a name."
+
+# Partage à distance (cf. main/Partage.js)
+partage:
+  offline: "The sharing server cannot be reached (internet connection?)."
+  email: "Invalid email address."
+  trop: "Too many requests: try again in an hour."
+  aucune: "No pending request for this address: ask for a new email."
+  lien: "First open the link in the email."
+  code: "Wrong code."
+  server: "Sharing server error."
+  requete: "Request refused by the sharing server."
+  too_big: "The analysis is too large to be shared."

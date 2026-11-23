@@ -55,3 +55,15 @@ unknown_adjust: "'%{adjust}' 조정은 처리할 수 없습니다."
 panel_id_required: "%{owner}은(는) 패널 ID를 정의해야 합니다(<owner>.panneauId)"
 manual_not_found: "설명서를 찾을 수 없습니다: %{path}"
 liaison_type_name: "연결선 종류에 이름이 필요합니다."
+
+# Partage à distance (cf. main/Partage.js)
+partage:
+  offline: "공유 서버에 연결할 수 없습니다 (인터넷 연결?)."
+  email: "잘못된 이메일 주소입니다."
+  trop: "요청이 너무 많습니다. 한 시간 후에 다시 시도하세요."
+  aucune: "이 주소로 진행 중인 요청이 없습니다. 새 이메일을 요청하세요."
+  lien: "먼저 받은 이메일의 링크를 여세요."
+  code: "코드가 틀렸습니다."
+  server: "공유 서버 오류입니다."
+  requete: "공유 서버가 요청을 거부했습니다."
+  too_big: "분석이 너무 커서 공유할 수 없습니다."
