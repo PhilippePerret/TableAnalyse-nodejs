@@ -17,6 +17,7 @@ import { Variables } from './Variables.js'
 import { Split } from './Split.js'
 import { Systeme } from './Systeme.js'
 import { keepPanelsInView } from './Panneau.js'
+import { once } from './events.js'
 import { Partage } from './Partage.js'
 
 class AppClass {
@@ -49,6 +50,13 @@ class AppClass {
       analyse.applyWindowSize()
       analyse.scrollToLastPosition()
       PreferencesPanel.afterLoadingAnalyse()
+      // Numéros de mesure tout juste importés (découpe, numérotation) :
+      // distance après leur ligne (distance_after_measure_line) appliquée
+      // et enregistrée
+      data.measures_imported && once('systems:loaded', () => requestAnimationFrame(() => {
+        Systeme.spaceAfterMeasureLines()
+        AnalyseSaver.save()
+      }))
       if ( data.just_cut ) {
         message(t('messages.after_cut'), {keep: true})
       } else if ( !data.systems_in_folder.length ) {

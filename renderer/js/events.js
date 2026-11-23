@@ -15,3 +15,8 @@ export function emit(name, detail){
 export function on(name, callback){
   bus.addEventListener(name, e => callback(e.detail))
 }
+
+// Une seule fois
+export function once(name, callback){
+  bus.addEventListener(name, e => callback(e.detail), {once: true})
+}

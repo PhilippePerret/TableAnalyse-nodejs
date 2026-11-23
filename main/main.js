@@ -597,8 +597,9 @@ function registerIpc(){
     // Instance vierge pour relire les fichiers (rechargement de la page)
     current = new Analyse(current.path)
     current.makeBackup()
-    current.importMeasures()
-    const data = Object.assign(current.allDataForClient(), {just_cut: justCut})
+    // (numéros importés : distance après leur ligne appliquée par le renderer)
+    const imported = current.importMeasures()
+    const data = Object.assign(current.allDataForClient(), {just_cut: justCut, measures_imported: imported})
     justCut = false
     // Analyse suivie (spectateur d'un partage) : lecture seule
     data.partage = Partage.readOnlyInfo
