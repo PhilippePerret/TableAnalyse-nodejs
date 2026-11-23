@@ -443,6 +443,9 @@ function buildMenu(){
         , {label: t('ui.menu.partage'),         submenu: [
               {label: t('ui.menu.partage_invite'), id: 'partageInvite', enabled: !!current && !Partage.spectator, click: () => sendMenuCommand('partageInvite')}
             , {label: t('ui.menu.partage_stop'),   enabled: !!Partage.sharing, click: () => Partage.stop()}
+            , {label: t('ui.menu.partage_takeback'), enabled: !!(Partage.sharing && Partage.sharing.given), click: () => Partage.takeback()}
+            , {type: 'separator'}
+            , {label: t('ui.menu.partage_ask'),    accelerator: 'CmdOrCtrl+Shift+M', enabled: !!(Partage.following && Partage.following.ready && !Partage.following.control), click: () => Partage.ask()}
             , {type: 'separator'}
             , {label: t('ui.menu.partage_join'),   click: () => sendMenuCommand('partageJoin')}
           ]}
@@ -598,7 +601,7 @@ function registerIpc(){
     const data = Object.assign(current.allDataForClient(), {just_cut: justCut})
     justCut = false
     // Analyse suivie (spectateur d'un partage) : lecture seule
-    data.partage = Partage.spectator ? {pseudo: Partage.following.pseudo, titre: Partage.following.titre} : null
+    data.partage = Partage.readOnlyInfo
     written()
     return data
   })
@@ -620,7 +623,7 @@ function registerIpc(){
   })
 
   handle('analyse:saveWindowSize', ({width, height}) => {
-    if ( Partage.spectator ) return
+    if ( Partage.spectator || Partage.following ) return
     requireCurrent().saveWindowSize(Math.round(width), Math.round(height))
   })
 
@@ -910,7 +913,8 @@ function registerIpc(){
   })
 
   handle('window:setSize', ({width, height}) => {
-    if ( Partage.spectator ) return
+    // (analyse suivie : taille de la fenêtre de l'analyste ignorée)
+    if ( Partage.spectator || Partage.following ) return
     if ( mainWindow && width && height ) mainWindow.setSize(Math.round(width), Math.round(height))
   })
 
@@ -973,6 +977,11 @@ function registerIpc(){
   handle('partage:accept',   ({id}) => Partage.accept({id}))
   handle('partage:refuse',   ({id}) => Partage.refuse({id}))
   handle('partage:leave',    () => Partage.leave())
+  // La main (#221)
+  handle('partage:ask',      () => Partage.ask())
+  handle('partage:grant',    ({email}) => Partage.grant({email}))
+  handle('partage:deny',     ({email}) => Partage.deny({email}))
+  handle('partage:takeback', () => Partage.takeback())
   handle('partage:view',     (v) => Partage.view(v))
   // Page du spectateur chargée : partie visible de l'analyste
   handle('partage:ready',    () => Partage.applyView())

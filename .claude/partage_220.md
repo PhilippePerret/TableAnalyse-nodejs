@@ -22,5 +22,5 @@
 ## Déploiement (2026-11-23, accord de Phil : créer du neuf, NE RIEN TOUCHER d'existant sur l'hébergement)
 - `~/ta-partage/` (code + node_modules), `~/data/ta-partage/` créés ; site AlwaysData « ta-partage » (user_program, `partage.analyse-musicale.fr/`, commande `~/ta-partage/start.sh`, max_idle_time 0, ssl_force) créé par l'API.
 - Clé d'API AlwaysData : `~/.secrets/ldq_rails.env` (ALWAYSDATA_API_KEY), utilisée sur le serveur sans jamais l'afficher ; auth `"$K account=icare:"`.
-- Mise à jour du code : scp vers `~/ta-partage/` puis redémarrage du site (POST /v1/site/<id>/restart/).
+- Mise à jour du code : scp vers `~/ta-partage/` puis redémarrage du site (POST /v1/site/1108899/restart/ ; site sans nom, retrouvé par son adresse).
 - Adresse `partage@analyse-musicale.fr` : existe. Reste : essai réel d'envoi d'email.

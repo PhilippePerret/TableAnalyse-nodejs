@@ -60,7 +60,34 @@ class PartageClass {
     const jeton = AppPrefs.get('partage_jeton')
     return jeton ? {email: AppPrefs.get('partage_email'), pseudo: AppPrefs.get('partage_pseudo') || ''} : null
   }
-  get spectator(){ return !!(this.following && this.following.ready) }
+  /**
+   * Page en lecture seule, qui suit la fenêtre de celui qui a la main :
+   * spectateur (sans la main), ou analyste qui a donné la main (#221)
+   */
+  get spectator(){
+    return !!((this.following && this.following.ready && !this.following.control) || (this.sharing && this.sharing.given))
+  }
+  // Celui qui envoie l'analyse : analyste (sauf main donnée) ou
+  // spectateur qui a la main
+  get sender(){
+    if ( this.sharing && !this.sharing.given ) return this.sharing
+    if ( this.following && this.following.ready && this.following.control ) return this.following
+    return null
+  }
+  // Celui qui reçoit : spectateur sans la main, analyste qui l'a donnée
+  receiverFor(id){
+    const f = this.following
+    if ( f && f.id == id && f.folder && !f.control ) return f
+    const s = this.sharing
+    if ( s && s.id == id && s.given ) return s
+    return null
+  }
+  // Infos de la page en lecture seule (cf. main analyse:getCurrent)
+  get readOnlyInfo(){
+    if ( !this.spectator ) return null
+    if ( this.sharing ) return {owner: true, pseudo: this.sharing.given, titre: this.sharing.titre}
+    return {pseudo: this.following.pseudo, titre: this.following.titre}
+  }
 
   send(channel, data){
     const win = this.hooks.window()
@@ -76,8 +103,10 @@ class PartageClass {
     return {
         identity:  this.identity
       , online:    this.online
-      , sharing:   this.sharing && {connected: this.sharing.connected || 0, invited: this.sharing.invited || 0}
-      , following: this.following && this.following.ready && {pseudo: this.following.pseudo, titre: this.following.titre, ownerPresent: this.following.ownerPresent !== false}
+      , sharing:   this.sharing && {connected: this.sharing.connected || 0, invited: this.sharing.invited || 0, given: this.sharing.given || null}
+      , following: this.following && this.following.ready && {pseudo: this.following.pseudo, titre: this.following.titre, ownerPresent: this.following.ownerPresent !== false, control: !!this.following.control, controller: this.following.controller || null, asked: !!this.following.asked}
+      , sender:    !!this.sender
+      , requests:  this.sharing ? [...(this.sharing.requests || new Map()).values()] : []
       , invitations: [...this.invitations.values()]
     }
   }
@@ -212,7 +241,7 @@ class PartageClass {
 
   on_started({id}){
     if ( !this.pendingStart ) return
-    this.sharing = Object.assign({id, sent: new Map(), connected: 0, invited: 0}, this.pendingStart)
+    this.sharing = Object.assign({id, sent: new Map(), connected: 0, invited: 0, given: null, requests: new Map(), changed: new Set()}, this.pendingStart)
     this.pendingStart = null
     this.sync()
     this.sendState()
@@ -240,7 +269,8 @@ class PartageClass {
 
   // Un fichier de l'analyse a été écrit
   changed(folder){
-    if ( !this.sharing || this.sharing.folder != folder ) return
+    const s = this.sender
+    if ( !s || s.folder != folder ) return
     clearTimeout(this.syncTimer)
     this.syncTimer = setTimeout(() => this.sync(), SYNC_DELAY)
   }
@@ -265,7 +295,7 @@ class PartageClass {
 
   // Différences du dossier depuis le dernier envoi
   sync(){
-    const s = this.sharing
+    const s = this.sender
     if ( !s || !this.online ) return
     const files = this.sharedFiles(s.folder)
     let n = 0
@@ -287,7 +317,89 @@ class PartageClass {
 
   // Partie visible de la fenêtre de l'analyste (px de la page)
   view(v){
-    this.sharing && this.emit({type: 'view', id: this.sharing.id, view: v})
+    const s = this.sender
+    s && this.emit({type: 'view', id: s.id, view: v})
+  }
+
+  // Signatures des fichiers du dossier (rien à renvoyer, cf. sync)
+  signatures(folder){
+    const sent = new Map()
+    Object.entries(this.sharedFiles(folder)).forEach(([rel, full]) => {
+      try { const st = fs.statSync(full) ; sent.set(rel, `${st.size}:${st.mtimeMs}`) } catch(err) {}
+    })
+    return sent
+  }
+
+  /* --- La main (#221) --- */
+
+  // Spectateur : « Demander la main… »
+  ask(){
+    const f = this.following
+    if ( !f || !f.ready || f.control ) return
+    f.asked = true
+    this.emit({type: 'ask', id: f.id})
+    this.sendState()
+  }
+  // Analyste : demande reçue
+  on_request({id, email, pseudo}){
+    const s = this.sharing
+    if ( !s || s.id != id ) return
+    s.requests.set(email, {email, pseudo})
+    this.send('partage:request', {email, pseudo})
+    this.sendState()
+  }
+  on_requestClosed({id, email}){
+    const s = this.sharing
+    if ( !s || s.id != id ) return
+    s.requests.delete(email)
+    this.sendState()
+  }
+  grant({email}){
+    const s = this.sharing
+    s && s.requests.has(email) && this.emit({type: 'grant', id: s.id, email})
+  }
+  deny({email}){
+    const s = this.sharing
+    if ( !s ) return
+    s.requests.delete(email)
+    this.emit({type: 'deny', id: s.id, email})
+    this.sendState()
+  }
+  takeback(){
+    const s = this.sharing
+    s && s.given && this.emit({type: 'takeback', id: s.id})
+  }
+  on_denied({id}){
+    if ( !this.following || this.following.id != id ) return
+    this.following.asked = false
+    this.send('partage:message', {notice: t('ui.partage.denied', {pseudo: this.following.pseudo})})
+    this.sendState()
+  }
+  on_askClosed({id}){
+    if ( !this.following || this.following.id != id ) return
+    this.following.asked = false
+    this.sendState()
+  }
+  // Main reçue (on) ou perdue : la page change de mode
+  on_control({id, on, pseudo}){
+    const s = this.sharing, f = this.following
+    if ( s && s.id == id ) {
+      s.given = on ? null : (pseudo || '?')
+      // Main reprise : l'analyse reçue n'est pas renvoyée
+      if ( on ) s.sent = this.signatures(s.folder)
+      s.changed = new Set()
+    } else if ( f && f.id == id ) {
+      f.control = !!on
+      f.asked = false
+      if ( on ) f.sent = this.signatures(f.folder)
+    } else return
+    this.sendState()
+    this.hooks.reload()
+  }
+  on_controller({id, pseudo}){
+    if ( !this.following || this.following.id != id ) return
+    this.following.controller = pseudo
+    this.sendState()
   }
 
   /* --- Spectateur --- */
@@ -341,25 +453,28 @@ class PartageClass {
     this.cleanOldFolders(id)
   }
 
-  writeFile(rel, data){
-    const f = this.following
-    const full = path.resolve(f.folder, rel)
-    if ( !full.startsWith(path.resolve(f.folder) + path.sep) ) return
-    fs.mkdirSync(path.dirname(full), {recursive: true})
-    fs.writeFileSync(full, Buffer.from(data, 'base64'))
-    f.changed.add(rel)
+  // Chemin complet d'un fichier reçu, seulement parmi les fichiers
+  // partagés (dossier de l'analyste compris, cf. #221)
+  receivedPath(r, rel){
+    const ok = SHARED_FILES.includes(rel) || SHARED_FOLDERS.some(sub => new RegExp(`^${sub}/[^/]+$`).test(rel))
+    const full = path.resolve(r.folder, rel)
+    return ok && full.startsWith(path.resolve(r.folder) + path.sep) ? full : null
   }
 
   on_file({id, path: rel, data}){
-    if ( !this.following || this.following.id != id || !this.following.folder ) return
-    this.writeFile(rel, data)
+    const r = this.receiverFor(id)
+    const full = r && this.receivedPath(r, rel)
+    if ( !full ) return
+    fs.mkdirSync(path.dirname(full), {recursive: true})
+    fs.writeFileSync(full, Buffer.from(data, 'base64'))
+    r.changed.add(rel)
   }
   on_remove({id, path: rel}){
-    const f = this.following
-    if ( !f || f.id != id || !f.folder ) return
-    const full = path.resolve(f.folder, rel)
-    full.startsWith(path.resolve(f.folder) + path.sep) && fs.rmSync(full, {force: true})
-    f.changed.add(rel)
+    const r = this.receiverFor(id)
+    const full = r && this.receivedPath(r, rel)
+    if ( !full ) return
+    fs.rmSync(full, {force: true})
+    r.changed.add(rel)
   }
 
   on_ready({id}){
@@ -374,8 +489,8 @@ class PartageClass {
   // Enregistrement de l'analyste : marques seules → actualisation dans
   // la page ; autre changement (systèmes…) → page rechargée
   on_saved({id}){
-    const f = this.following
-    if ( !f || f.id != id || !f.ready ) return
+    const f = this.receiverFor(id)
+    if ( !f || (f === this.following && !f.ready) ) return
     const changed = [...f.changed]
     f.changed.clear()
     if ( changed.every(rel => LIGHT_FILES.includes(rel)) ) this.send('partage:update')
@@ -383,7 +498,7 @@ class PartageClass {
   }
 
   on_view({id, view}){
-    if ( !this.following || this.following.id != id ) return
+    if ( !this.receiverFor(id) ) return
     this.lastView = view
     this.applyView()
   }

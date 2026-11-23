@@ -252,7 +252,14 @@ const server = http.createServer(async (req, res) => {
 /**
  * share = {id, owner (email), pseudo, titre, invites: Set, files: Map
  *          path → base64, size, view, ownerWs, followers: Set<ws>,
- *          absentTimer}
+ *          absentTimer, controller (ws du spectateur qui a la main, ou
+ *          null : l'analyste), requests: Map email → ws (demandes de
+ *          la main)}
+ *
+ * La main (issue #221) : un spectateur la demande (ask), l'analyste
+ * l'accorde (grant) ou la refuse (deny), puis la reprend (takeback).
+ * Celui qui a la main envoie les fichiers et la partie visible ; les
+ * autres (analyste compris) les reçoivent.
  */
 const shares = new Map()
 const sockets = new Set()   // ws identifiés : ws.email
@@ -291,6 +298,7 @@ function invite(share, emails){
 }
 
 function endShare(share, raison){
+  share.requests.clear()
   for ( const ws of share.followers ) { send(ws, {type: 'end', id: share.id, raison}) ; ws.following = null }
   for ( const ws of sockets ) ws.email && share.invites.has(ws.email) && !share.followers.has(ws) && send(ws, {type: 'withdrawn', id: share.id})
   clearTimeout(share.absentTimer)
@@ -327,6 +335,38 @@ const ownShare = (ws, id) => {
   const share = shares.get(id)
   return share && share.owner == ws.email && share.ownerWs === ws ? share : null
 }
+// Partage dont +ws+ a la main (analyste, ou spectateur à qui elle est donnée)
+const controlShare = (ws, id) => {
+  const share = shares.get(id)
+  if ( !share ) return null
+  if ( share.controller ) return share.controller === ws ? share : null
+  return share.ownerWs === ws ? share : null
+}
+// Destinataires des envois de celui qui a la main
+function receivers(share, sender){
+  return [share.ownerWs, ...share.followers].filter(w => w && w !== sender)
+}
+function pseudoOf(ws){
+  const c = ws && ws.email && sql.compte.get(ws.email)
+  return (c && c.pseudo) || (ws && ws.email ? ws.email.split('@')[0] : '')
+}
+// Main rendue à l'analyste
+function giveBack(share){
+  if ( !share.controller ) return
+  const prev = share.controller
+  share.controller = null
+  send(prev, {type: 'control', id: share.id, on: false})
+  send(share.ownerWs, {type: 'control', id: share.id, on: true})
+  for ( const f of share.followers ) f !== prev && send(f, {type: 'controller', id: share.id, pseudo: null})
+}
+// Demandes de la main abandonnées (main accordée, partage fini…)
+function clearRequests(share, except){
+  for ( const [email, w] of share.requests ) {
+    if ( w !== except ) send(w, {type: 'askClosed', id: share.id})
+    send(share.ownerWs, {type: 'requestClosed', id: share.id, email})
+  }
+  share.requests.clear()
+}
 
 const handlers = {
 
@@ -355,6 +395,7 @@ const handlers = {
       , pseudo: (compte && compte.pseudo) || ws.email.split('@')[0]
       , titre: String(titre || '').slice(0, 200), invites: new Set(), files: new Map(), size: 0
       , view: null, ownerWs: ws, followers: new Set(), absentTimer: null
+      , controller: null, requests: new Map()
     }
     shares.set(share.id, share)
     ws.sharing = share.id
@@ -377,33 +418,76 @@ const handlers = {
     ws.sharing = id
     send(ws, {type: 'resumed', id})
     for ( const f of share.followers ) send(f, {type: 'owner', id, present: true})
+    if ( share.controller ) {
+      // Modifications faites pendant l'absence de l'analyste
+      send(ws, {type: 'control', id, on: false, pseudo: pseudoOf(share.controller)})
+      for ( const [rel, data] of share.files ) send(ws, {type: 'file', id, path: rel, data})
+      send(ws, {type: 'saved', id})
+    }
+    for ( const [email, w] of share.requests ) send(ws, {type: 'request', id, email, pseudo: pseudoOf(w)})
     sendCount(share)
   },
 
   file(ws, {id, path: rel, data}){
-    const share = ownShare(ws, id)
+    const share = controlShare(ws, id)
     if ( !share || !validPath(rel) || typeof data != 'string' ) return
     if ( !storeFile(share, rel, data) ) return send(ws, {type: 'error', code: 'taille'})
-    for ( const f of share.followers ) send(f, {type: 'file', id, path: rel, data})
+    for ( const f of receivers(share, ws) ) send(f, {type: 'file', id, path: rel, data})
   },
 
   remove(ws, {id, path: rel}){
-    const share = ownShare(ws, id)
+    const share = controlShare(ws, id)
     if ( !share || !validPath(rel) ) return
     removeFile(share, rel)
-    for ( const f of share.followers ) send(f, {type: 'remove', id, path: rel})
+    for ( const f of receivers(share, ws) ) send(f, {type: 'remove', id, path: rel})
   },
 
   saved(ws, {id}){
-    const share = ownShare(ws, id)
-    share && share.followers.forEach(f => send(f, {type: 'saved', id}))
+    const share = controlShare(ws, id)
+    share && receivers(share, ws).forEach(f => send(f, {type: 'saved', id}))
   },
 
   view(ws, {id, view}){
-    const share = ownShare(ws, id)
+    const share = controlShare(ws, id)
     if ( !share || !view || typeof view != 'object' ) return
     share.view = {x: Number(view.x) || 0, y: Number(view.y) || 0, w: Number(view.w) || 0, h: Number(view.h) || 0}
-    for ( const f of share.followers ) send(f, {type: 'view', id, view: share.view})
+    for ( const f of receivers(share, ws) ) send(f, {type: 'view', id, view: share.view})
+  },
+
+  // Spectateur : demande de la main
+  ask(ws, {id}){
+    const share = shares.get(id)
+    if ( !share || !share.followers.has(ws) || share.controller === ws ) return
+    share.requests.set(ws.email, ws)
+    send(share.ownerWs, {type: 'request', id, email: ws.email, pseudo: pseudoOf(ws)})
+  },
+
+  // Analyste : main accordée (les autres demandes sont abandonnées)
+  grant(ws, {id, email}){
+    const share = ownShare(ws, id)
+    const target = share && share.requests.get(email)
+    if ( !target || !share.followers.has(target) ) return
+    clearRequests(share, target)
+    if ( share.controller ) send(share.controller, {type: 'control', id, on: false})
+    share.controller = target
+    const pseudo = pseudoOf(target)
+    send(target, {type: 'control', id, on: true})
+    send(ws, {type: 'control', id, on: false, pseudo})
+    for ( const f of share.followers ) f !== target && send(f, {type: 'controller', id, pseudo})
+  },
+
+  deny(ws, {id, email}){
+    const share = ownShare(ws, id)
+    const target = share && share.requests.get(email)
+    if ( !target ) return
+    share.requests.delete(email)
+    send(target, {type: 'denied', id})
+  },
+
+  // Analyste : main reprise
+  takeback(ws, {id}){
+    const share = ownShare(ws, id)
+    share && giveBack(share)
   },
 
   stop(ws, {id}){
@@ -433,7 +517,15 @@ const handlers = {
 function leave(ws){
   const share = ws.following && shares.get(ws.following)
   ws.following = null
-  if ( share ) { share.followers.delete(ws) ; sendCount(share) }
+  if ( !share ) return
+  share.followers.delete(ws)
+  if ( share.requests.get(ws.email) === ws ) {
+    share.requests.delete(ws.email)
+    send(share.ownerWs, {type: 'requestClosed', id: share.id, email: ws.email})
+  }
+  // Celui qui avait la main s'en va : elle revient à l'analyste
+  share.controller === ws && giveBack(share)
+  sendCount(share)
 }
 
 function onClose(ws){

@@ -39,15 +39,17 @@ class PartageClass {
     onMain('partage:update', this.onUpdate.bind(this))
     onMain('partage:view', this.onView.bind(this))
     onMain('partage:ended', this.onEnded.bind(this))
-    onMain('partage:message', ({error}) => error && erreur(error))
+    onMain('partage:message', ({error, notice}) => error ? erreur(error) : (notice && message(notice)))
+    onMain('partage:request', this.showRequest.bind(this))
     invoke('partage:state').then(s => {
       this.setState(s)
       ;(s.invitations || []).forEach(inv => this.showInvitation(inv))
+      ;(s.requests || []).forEach(req => this.showRequest(req))
     }).catch(err => console.error(err))
     invoke('partage:ended').then(raison => raison && this.onEnded({raison})).catch(err => console.error(err))
-    // Analyste : partie visible envoyée aux spectateurs
+    // Analyste (ou spectateur qui a la main) : partie visible envoyée
     const sendView = () => {
-      if ( !this.state.sharing ) return
+      if ( !this.state.sender ) return
       clearTimeout(this.viewTimer)
       this.viewTimer = setTimeout(() => {
         invoke('partage:view', {x: window.scrollX, y: window.scrollY, w: window.innerWidth, h: window.innerHeight}).catch(() => {})
@@ -59,13 +61,15 @@ class PartageClass {
   }
 
   setState(s){
-    const wasSharing = !!(this.state && this.state.sharing)
+    const wasSender = !!(this.state && this.state.sender)
     this.state = s || {}
     this.updateBanner()
-    this.state.sharing && !wasSharing && this.sendView && this.sendView()
-    // Invitations retirées (partage arrêté)
+    this.state.sender && !wasSender && this.sendView && this.sendView()
+    // Invitations retirées (partage arrêté), demandes de la main closes
     const ids = new Set((this.state.invitations || []).map(i => i.id))
     document.querySelectorAll('div.partage-notif[data-invitation]').forEach(n => ids.has(n.dataset.invitation) || n.remove())
+    const emails = new Set((this.state.requests || []).map(r => r.email))
+    document.querySelectorAll('div.partage-notif[data-request]').forEach(n => emails.has(n.dataset.request) || n.remove())
   }
 
   /* --- Bandeau --- */
@@ -73,26 +77,36 @@ class PartageClass {
   updateBanner(){
     const s = this.state
     let banner = DGet('#partage-bandeau')
-    if ( !s.sharing && !this.spectator ) return banner && banner.remove()
+    if ( !s.sharing && !s.following ) return banner && banner.remove()
     if ( !banner ) {
       banner = DCreate('DIV', {id: 'partage-bandeau', class: 'panneau-ui'})
       document.body.appendChild(banner)
     }
     banner.innerHTML = ''
-    if ( this.spectator ) {
-      const f = s.following || this.spectator
-      let text = T('banner_following', {pseudo: esc(f.pseudo)})
-      if ( !s.online ) text += ' · ' + T('reconnecting')
-      else if ( f.ownerPresent === false ) text += ' · ' + T('owner_absent', {pseudo: esc(f.pseudo)})
-      const quit = DCreate('BUTTON', {text: T('quit')})
-      listen(quit, 'click', () => invoke('partage:leave').catch(err => erreur(err.message)))
+    const button = (label, channel) => {
+      const btn = DCreate('BUTTON', {text: label})
+      listen(btn, 'click', () => invoke(channel).catch(err => erreur(err.message)))
+      return btn
+    }
+    const sep = ' · '
+    const off = s.online ? '' : sep + T('reconnecting')
+    if ( s.sharing && s.sharing.given ) {
+      // Analyste qui a donné la main : lecture seule
+      banner.appendChild(DCreate('SPAN', {text: T('banner_given', {pseudo: esc(s.sharing.given)}) + off}))
+      banner.appendChild(button(T('takeback'), 'partage:takeback'))
+    } else if ( s.following ) {
+      const f = s.following
+      let text = f.control ? T('banner_control', {pseudo: esc(f.pseudo)}) : T('banner_following', {pseudo: esc(f.pseudo)})
+      if ( !f.control && f.controller ) text += sep + T('controller', {pseudo: esc(f.controller)})
+      if ( f.asked ) text += sep + T('asked')
+      if ( off ) text += off
+      else if ( f.ownerPresent === false ) text += sep + T('owner_absent', {pseudo: esc(f.pseudo)})
       banner.appendChild(DCreate('SPAN', {text}))
-      banner.appendChild(quit)
-    } else {
+      f.control || f.asked || banner.appendChild(button(T('ask'), 'partage:ask'))
+      banner.appendChild(button(T('quit'), 'partage:leave'))
+    } else if ( s.sharing ) {
       const {connected, invited} = s.sharing
-      let text = T('banner_sharing', {connected, invited})
-      if ( !s.online ) text += ' · ' + T('reconnecting')
-      banner.appendChild(DCreate('SPAN', {text}))
+      banner.appendChild(DCreate('SPAN', {text: T('banner_sharing', {connected, invited}) + off}))
     }
   }
 
@@ -132,6 +146,19 @@ class PartageClass {
           , {label: T('accept'), default: true, action: () => this.accept(id)}
         ]
     })
+  }
+
+  // Analyste : un spectateur demande la main
+  showRequest({email, pseudo}){
+    if ( DGet(`div.partage-notif[data-request="${CSS.escape(email)}"]`) ) return
+    const notif = this.notify({
+        text: T('request', {pseudo: `<b>${esc(pseudo)}</b>`})
+      , buttons: [
+            {label: T('deny'),  action: () => invoke('partage:deny', {email}).catch(err => erreur(err.message))}
+          , {label: T('grant'), default: true, action: () => invoke('partage:grant', {email}).catch(err => erreur(err.message))}
+        ]
+    })
+    notif.dataset.request = email
   }
 
   async accept(id){
