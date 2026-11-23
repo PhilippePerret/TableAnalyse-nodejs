@@ -720,5 +720,5 @@ partage:
   bad_email_list: "Ungültige Adresse(n): %{list}"
   joined: "%{pseudo} nimmt an Ihrer Analyse teil."
   autosave_question: "Die automatische Speicherung ist für diese Analyse ausgeschaltet."
-  autosave_detail: "Die Zuschauer sehen Änderungen erst beim Speichern. Für die Dauer der Freigabe einschalten, damit sie live folgen können?"
-  autosave_yes: "Einschalten"
+  autosave_detail: "Die Zuschauer sehen Änderungen erst beim Speichern.\n\nAutomatische Speicherung für die Dauer der Freigabe einschalten, damit live verfolgt werden kann?"
+  autosave_yes: "Ja, einschalten"

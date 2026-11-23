@@ -720,5 +720,5 @@ partage:
   bad_email_list: "Indirizzo/i non valido/i: %{list}"
   joined: "%{pseudo} si è unito/a alla tua analisi."
   autosave_question: "Il salvataggio automatico di questa analisi è disattivato."
-  autosave_detail: "Gli spettatori vedono le modifiche solo a ogni salvataggio. Attivarlo per la durata della condivisione, perché seguano in diretta?"
-  autosave_yes: "Attiva"
+  autosave_detail: "Gli spettatori vedono le modifiche solo a ogni salvataggio.\n\nAttivare il salvataggio automatico per la durata della condivisione, per seguire in diretta?"
+  autosave_yes: "Sì, attiva"

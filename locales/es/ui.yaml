@@ -720,5 +720,5 @@ partage:
   bad_email_list: "Dirección(es) no válida(s): %{list}"
   joined: "%{pseudo} se ha unido a su análisis."
   autosave_question: "El guardado automático de este análisis está desactivado."
-  autosave_detail: "Los espectadores solo ven los cambios al guardar. ¿Activarlo durante la sesión compartida para que sigan en directo?"
-  autosave_yes: "Activar"
+  autosave_detail: "Los espectadores solo ven los cambios al guardar.\n\n¿Activar el guardado automático durante la sesión compartida, para un seguimiento en directo?"
+  autosave_yes: "Sí, activar"

@@ -720,5 +720,5 @@ partage:
   bad_email_list: "Invalid address(es): %{list}"
   joined: "%{pseudo} has joined your analysis."
   autosave_question: "Autosave is turned off for this analysis."
-  autosave_detail: "Viewers only see changes when the analysis is saved. Turn it on for the sharing session, so they can follow live?"
-  autosave_yes: "Turn on"
+  autosave_detail: "Viewers only see changes when the analysis is saved.\n\nTurn on autosave for the sharing session, for live following?"
+  autosave_yes: "Yes, turn on"

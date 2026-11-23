@@ -719,5 +719,5 @@ partage:
   bad_email_list: "잘못된 주소: %{list}"
   joined: "%{pseudo}님이 분석에 참여했습니다."
   autosave_question: "이 분석의 자동 저장이 꺼져 있습니다."
-  autosave_detail: "관람자는 저장할 때만 변경 내용을 볼 수 있습니다. 공유하는 동안 자동 저장을 켜서 실시간으로 볼 수 있게 할까요?"
-  autosave_yes: "켜기"
+  autosave_detail: "관람자는 저장할 때만 변경 내용을 볼 수 있습니다.\n\n공유하는 동안 자동 저장을 켜서 실시간으로 볼 수 있게 할까요?"
+  autosave_yes: "예, 켜기"
