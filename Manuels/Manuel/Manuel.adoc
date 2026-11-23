@@ -7,8 +7,6 @@ include::adocs/prise-en-main.adoc[]
 
 include::adocs/creation.adoc[]
 
-include::adocs/score-preparation.adoc[]
-
 include::adocs/systemes.adoc[]
 
 include::adocs/marques.adoc[]
@@ -20,6 +18,8 @@ include::adocs/affichage.adoc[]
 include::adocs/forme.adoc[]
 
 include::adocs/best-practices.adoc[]
+
+include::adocs/partage.adoc[]
 
 ////
 TODO

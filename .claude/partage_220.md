@@ -4,7 +4,7 @@
 - Service Node `ta-partage`, adresse `partage.analyse-musicale.fr` (DNS chez AlwaysData, site distinct, www intact).
 - Code `~/ta-partage/` (script de démarrage façon `~/remark42/start.sh`), base `~/data/ta-partage/partage.sqlite` (emails confirmés, jeton, pseudo).
 - Analyses partagées en mémoire seulement ; effacées à l'arrêt ou après 1 h d'absence de l'analyste. Rien de gardé sur le serveur.
-- Emails : SMTP AlwaysData (`smtp-icare.alwaysdata.net`, identifiants dans `~/.secrets/smtp.env`). Expéditeur `partage@analyse-musicale.fr` : Phil la créera — LE LUI RAPPELER.
+- Emails : SMTP AlwaysData (`smtp-icare.alwaysdata.net`, identifiants dans `~/.secrets/smtp.env`). Expéditeur `partage@analyse-musicale.fr` : existe (ne plus en parler).
 - NE RIEN CRÉER sur le serveur sans en parler à Phil avant.
 
 ## Application
@@ -23,4 +23,4 @@
 - `~/ta-partage/` (code + node_modules), `~/data/ta-partage/` créés ; site AlwaysData « ta-partage » (user_program, `partage.analyse-musicale.fr/`, commande `~/ta-partage/start.sh`, max_idle_time 0, ssl_force) créé par l'API.
 - Clé d'API AlwaysData : `~/.secrets/ldq_rails.env` (ALWAYSDATA_API_KEY), utilisée sur le serveur sans jamais l'afficher ; auth `"$K account=icare:"`.
 - Mise à jour du code : scp vers `~/ta-partage/` puis redémarrage du site (POST /v1/site/<id>/restart/).
-- Reste : adresse `partage@analyse-musicale.fr` à créer par Phil ; essai réel d'envoi d'email.
+- Adresse `partage@analyse-musicale.fr` : existe. Reste : essai réel d'envoi d'email.

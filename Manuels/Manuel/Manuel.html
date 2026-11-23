@@ -454,10 +454,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#analyse-infos">Informations concernant l&#8217;analyse</a></li>
 </ul>
 </li>
-<li><a href="#score-preparation">Découpage de la partition</a></li>
 <li><a href="#systems">Les systèmes</a>
 <ul class="sectlevel2">
-<li><a href="#systems-preparation">Préparation des systèmes</a></li>
+<li><a href="#score-preparation">Découpage de la partition</a></li>
+<li><a href="#systems-preparation">Nettoyage des systèmes</a></li>
+<li><a href="#systems-check-numeros">Contrôle de la numérotation</a></li>
 <li><a href="#systems-position">Positionnement des systèmes</a></li>
 <li><a href="#systems-default-positions">Positions par défaut des systèmes</a></li>
 <li><a href="#systems-move-manu">Déplacement manuel des systèmes</a></li>
@@ -493,6 +494,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#best-practices">Meilleures pratiques</a></li>
+<li><a href="#partage">Partage</a>
+<ul class="sectlevel2">
+<li><a href="#_partager_une_analyse">Partager une analyse</a></li>
+<li><a href="#_suivre_une_analyse">Suivre une analyse</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -511,7 +518,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_prérequis">Prérequis</h3>
 <div class="paragraph">
-<p>Vous pouvez télécharger l&#8217;app <strong><em>Table d’Analyse</em></strong> sur sa https::www.analyse-musicale.fr/table-analyse/[page de téléchargement]. Il existe une version macOS, une version Windows et une version Unix.</p>
+<p>Vous pouvez télécharger l&#8217;app <strong><em>Table d’Analyse</em></strong> sur sa <a href="https://www.analyse-musicale.fr/table-analyse/" target="_blank" rel="noopener">page de téléchargement</a>. Il existe une version macOS, une version Windows et une version Unix.</p>
 </div>
 <div class="paragraph">
 <p>Débloquer l&#8217;application, sur MacOS avec le code fourni et sous Windows en la sortant de sa quarantaine dans votre antivirus.</p>
@@ -653,16 +660,16 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <div class="ulist">
 <ul>
 <li>
-<p>lancer l&#8217;application <strong><em>Table d&#8217;analyse</em></strong>,</p>
+<p>lancez l&#8217;application <strong><em>Table d&#8217;analyse</em></strong>,</p>
 </li>
 <li>
-<p>activer le menu « Analyse &gt; Nouvelle analyse… »,</p>
+<p>activez le menu « Analyse &gt; Nouvelle analyse… »,</p>
 </li>
 <li>
 <p>définissez les <a href="#analyse-infos">informations demandées</a>, en tout cas celles requises,</p>
 </li>
 <li>
-<p>cliquer sur le bouton « Créer la nouvelle analyse »,</p>
+<p>cliquez sur le bouton « Créer la nouvelle analyse »,</p>
 </li>
 </ul>
 </div>
@@ -672,13 +679,13 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <div class="ulist">
 <ul>
 <li>
-<p>Activer « Outils &gt; Découper la partition… »,</p>
+<p>Activz « Outils &gt; Découper la partition… »,</p>
 </li>
 <li>
 <p>choisissez la partition PDF à découper,</p>
 </li>
 <li>
-<p>cliquer « OK » (ou autre nom suivant votre système).</p>
+<p>cliquez « OK » (ou autre nom suivant votre système).</p>
 </li>
 </ul>
 </div>
@@ -688,7 +695,7 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <div class="sect2">
 <h3 id="analyse-infos">Informations concernant l&#8217;analyse</h3>
 <div class="paragraph">
-<p>Lors de la <a href="#analyse-create">création de l&#8217;analyse</a>, ces informations sont demandées :</p>
+<p>Après la <a href="#analyse-create">création de l&#8217;analyse</a>, vous pouvez définir ces informations en activant le menu « Analyse &gt; Information » ou en jouant le raccourci Cmd + Maj + i (Ctrl + Maj + i sous Windows) :</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -730,24 +737,32 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 </div>
 </div>
 <div class="sect1">
-<h2 id="score-preparation">Découpage de la partition</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Parmi les outils puissant de <strong><em>Table d&#8217;analyse</em></strong> d&#8217;analyse, il y a la découpe automatique de la partition en systèmes et la numérotation des mesures.</p>
-</div>
-<div class="paragraph">
-<p>Une fois les systèmes découpé (et affichés), vous pouvez <a href="#systems-preparation">les nettoyer</a> pour retirer toutes les marques inutiles ou les taches.</p>
-</div>
-<div class="paragraph">
-<p>Vous pouvez également <a href="#systems-position">ajuster la position des systèmes</a> pour qu&#8217;ils soient exactement comme vous le désirez.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="systems">Les systèmes</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="systems-preparation">Préparation des systèmes</h3>
+<h3 id="score-preparation">Découpage de la partition</h3>
+<div class="paragraph">
+<p>Parmi les outils puissant de <strong><em>Table d&#8217;analyse</em></strong> d&#8217;analyse, il y a la <strong>découpe automatique de la partition</strong> en systèmes et la <strong>numérotation des mesures</strong> — qui font gagner un temps précieux et évite des efforts rébarbatifs.</p>
+</div>
+<div class="paragraph">
+<p>Pour lancer la découpe de la partition — si vous ne l&#8217;avez pas demandé lors de la création de l&#8217;analyse — :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>activez le menu « Outils &gt; Découper la partition… ».</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Précisez, pour la numérotation des mesures, si la pièce commence par une anacrouse (pas de numérotation pour la première mesure) ou non (numérotation de la première mesure) et lancez la découpe.</p>
+</div>
+<div class="paragraph">
+<p>Une fois les systèmes découpé (numérotés et affichés), vous pouvez les nettoyer (<a href="#systems-preparation">cf. ci-dessous</a>) pour retirer toutes les marques inutiles.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="systems-preparation">Nettoyage des systèmes</h3>
 <div class="paragraph">
 <p>La <em>préparation des systèmes</em> consiste surtout, après le découpage de la partition, à les « nettoyer » :</p>
 </div>
@@ -788,6 +803,21 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 </div>
 <div class="paragraph">
 <p><sup>*</sup> Attention : ne découper l&#8217;image du système qu&#8217;en hauteur. Si vous changer la largeur de l&#8217;image du système, le système sera grossi à l&#8217;affichage par rapport aux autres.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="systems-check-numeros">Contrôle de la numérotation</h3>
+<div class="paragraph">
+<p>Ensuite, vérifiez les numéros des mesures qui peuvent, parfois, être erronés.</p>
+</div>
+<div class="paragraph">
+<p>Le plus simple, si votre partition était numérotées, est de rejoindre la fin pour voir si les numéros correspondent. En cas de divergence, remonter pour trouver le système fautif.</p>
+</div>
+<div class="paragraph">
+<p>Si un numéro supplémentaire a été ajouté, il suffit de le sélectionner et de le supprimer.</p>
+</div>
+<div class="paragraph">
+<p>Si un numéro manque, il suffit de dupliquer le numéro précédent : cliquez sur ce numéro, tenez la touche Alt appuyée et glissez le numéro à l&#8217;endroit voulu. Inutile de changer le nombre, il est automatiquement recalculé.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1871,10 +1901,48 @@ Il est possible que cette distinction change avec le temps pour permettre de don
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="partage">Partage</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_partager_une_analyse">Partager une analyse</h3>
+<div class="paragraph">
+<p>Vous pouvez partager à distance une analyse que vous faites sur <em><strong>Table d’analyse</strong></em> de façon très simple grâce à l&#8217;outil « Partage » (« Outils &gt; Partage &gt; &#8230;&#8203; »).</p>
+</div>
+<div class="paragraph">
+<p>Pour partager une analyse, vous avez seulement besoin de connaitre l&#8217;adresse email des personnes avec qui vous voulez la partager et de les inviter grâce à « Outils &gt; Partage &gt; Inviter… ».</p>
+</div>
+<div class="paragraph">
+<p>Une fois invités, ces personnes deviennent des spectateurs de votre analyse.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Pour être en contact plus <em>serré</em> avec vos spectateurs, utilisez un moyen de communication comme WhatsApp, Discord, ou autre Google Meet.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>À la fin de l&#8217;analyse, mettez fin au partage par le menu « Outils &gt; Partage &gt; Arrêter le partage. »</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_suivre_une_analyse">Suivre une analyse</h3>
+<div class="paragraph">
+<p>Vous pouvez aussi être spectateur d&#8217;une analyse si un ou une <em>analyste</em> vous a invité(e) à suivre son analyse. Répondez alors au mail qui vous a été envoyé la première fois ou démarrez votre <em><strong>Table d’analyse</strong></em> pour recevoir l&#8217;invitation directement dans l&#8217;application.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-11-22 11:28:07 +0100
+Last updated 2026-11-23 05:23:56 +0100
 </div>
 </div>
 </body>

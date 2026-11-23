@@ -7,16 +7,16 @@ NOTE: Vous pouvez l'obtenir facilement sur le site https://imslp.org[].
 
 Ensuite : 
 
-* lancer l'application **__Table d'analyse__**,
-* activer le menu « Analyse > Nouvelle analyse… »,
+* lancez l'application **__Table d'analyse__**,
+* activez le menu « Analyse > Nouvelle analyse… »,
 * définissez les <<analyse-infos, informations demandées>>, en tout cas celles requises,
-* cliquer sur le bouton « Créer la nouvelle analyse »,
+* cliquez sur le bouton « Créer la nouvelle analyse »,
 
 L'opération suivante va consister à définir les systèmes de la pièce (c'est-à-dire les groupes de portées, deux ou exceptionnement trois pour le piano). Dans l'application, en effet, la partition est découpée en ses systèmes pour permettre d'indiquer confortablement toutes les données de l'analyse. Pour ce faire, il existe un outil puissant : la découpe de partition.
 
-* Activer « Outils > Découper la partition… »,
+* Activz « Outils > Découper la partition… »,
 * choisissez la partition PDF à découper,
-* cliquer « OK » (ou autre nom suivant votre système).
+* cliquez « OK » (ou autre nom suivant votre système).
 
 **__Table d'analyse__** procède alors au <<score-preparation,découpage de la partition>> que vous pouvez affiner au besoin (suivre le lien précédent) et à la répartition des systèmes sur la table (vous pouvez bien sûr <<systems-position,ajuster la position des systèmes>>).
 
@@ -24,7 +24,7 @@ L'opération suivante va consister à définir les systèmes de la pièce (c'est
 [[analyse-infos]]
 === Informations concernant l'analyse ===
 
-Lors de la <<analyse-create, création de l'analyse>>, ces informations sont demandées :
+Après la <<analyse-create, création de l'analyse>>, vous pouvez définir ces informations en activant le menu « Analyse > Information » ou en jouant le raccourci Cmd + Maj + i (Ctrl + Maj + i sous Windows) :
 
 [cols="1,3"]
 |====

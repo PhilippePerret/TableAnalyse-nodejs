@@ -1,8 +1,21 @@
 [[systems]]
 == Les systèmes ==
 
+[[score-preparation]]
+=== Découpage de la partition ===
+
+Parmi les outils puissant de **__Table d'analyse__** d'analyse, il y a la **découpe automatique de la partition** en systèmes et la **numérotation des mesures** — qui font gagner un temps précieux et évite des efforts rébarbatifs.
+
+Pour lancer la découpe de la partition — si vous ne l'avez pas demandé lors de la création de l'analyse — : 
+
+* activez le menu « Outils > Découper la partition… ».
+
+Précisez, pour la numérotation des mesures, si la pièce commence par une anacrouse (pas de numérotation pour la première mesure) ou non (numérotation de la première mesure) et lancez la découpe.
+
+Une fois les systèmes découpé (numérotés et affichés), vous pouvez les nettoyer (<<systems-preparation, cf. ci-dessous>>) pour retirer toutes les marques inutiles.
+
 [[systems-preparation]]
-=== Préparation des systèmes ===
+=== Nettoyage des systèmes ===
 
 La __préparation des systèmes__ consiste surtout, après le découpage de la partition, à les « nettoyer » :
 
@@ -20,6 +33,18 @@ Si vous êtes sur macOS, l'image du système s'ouvrira dans Aperçu. Les raccour
 * Cmd + k pour découper l'image après avoir défini ses dimensions avec la sélection de souris^*^
 
 ^*^ Attention : ne découper l'image du système qu'en hauteur. Si vous changer la largeur de l'image du système, le système sera grossi à l'affichage par rapport aux autres.
+
+[[systems-check-numeros]]
+=== Contrôle de la numérotation ===
+
+Ensuite, vérifiez les numéros des mesures qui peuvent, parfois, être erronés.
+
+Le plus simple, si votre partition était numérotées, est de rejoindre la fin pour voir si les numéros correspondent. En cas de divergence, remonter pour trouver le système fautif.
+
+Si un numéro supplémentaire a été ajouté, il suffit de le sélectionner et de le supprimer.
+
+Si un numéro manque, il suffit de dupliquer le numéro précédent : cliquez sur ce numéro, tenez la touche Alt appuyée et glissez le numéro à l'endroit voulu. Inutile de changer le nombre, il est automatiquement recalculé.
+
 
 [[systems-position]]
 === Positionnement des systèmes ===

@@ -1,0 +1,18 @@
+[[partage]]
+== Partage ==
+
+=== Partager une analyse ===
+
+Vous pouvez partager à distance une analyse que vous faites sur __**Table d’analyse**__ de façon très simple grâce à l'outil « Partage » (« Outils > Partage > ... »).
+
+Pour partager une analyse, vous avez seulement besoin de connaitre l'adresse email des personnes avec qui vous voulez la partager et de les inviter grâce à « Outils > Partage > Inviter… ».
+
+Une fois invités, ces personnes deviennent des spectateurs de votre analyse.
+
+NOTE: Pour être en contact plus __serré__ avec vos spectateurs, utilisez un moyen de communication comme WhatsApp, Discord, ou autre Google Meet.
+
+À la fin de l'analyse, mettez fin au partage par le menu « Outils > Partage > Arrêter le partage. »
+
+=== Suivre une analyse ===
+
+Vous pouvez aussi être spectateur d'une analyse si un ou une __analyste__ vous a invité(e) à suivre son analyse. Répondez alors au mail qui vous a été envoyé la première fois ou démarrez votre __**Table d’analyse**__ pour recevoir l'invitation directement dans l'application.
