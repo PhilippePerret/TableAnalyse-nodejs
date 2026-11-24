@@ -19,9 +19,12 @@
  * « G/E »).
  *
  * « Do » est ambigu : en batave, c'est Ré suivi de « o ». +doIsC+ (vrai
- * quand l'affichage est en italien) décide : vrai → « Do » = C, faux →
- * « Do » laissé tel quel (et, dans l'autre sens, « C » n'est pas converti,
- * pour qu'il revienne identique).
+ * en entrée italienne) décide : vrai → « Do » = C, faux → « Do » laissé
+ * tel quel (et, dans l'autre sens, « C » n'est pas converti, pour qu'il
+ * revienne identique).
+ *
+ * Texte libre : « La » et « Si » en début de phrase ne sont jamais des
+ * notes.
  */
 
 const BEFORE = '(^|[\\s/(])'
@@ -59,7 +62,7 @@ export function toItalian(str, {doIsC = true} = {}){
 
 // Notes italiennes d'un texte libre, sous leur forme exacte (capitale puis
 // minuscules : « Sol », pas « sol » ni « SOL ») : {name, letter} par nom
-export const TEXT_ITALIAN_NOTES = /(?<![\p{L}\p{N}])(Sol|Do|Ré|Re|Mi|Fa|La|Si)([\-\+=]?m?)(\+?[24579][\-\+]?)?(?=[\s.,;:!?)]|$)/gu
+export const TEXT_ITALIAN_NOTES = /(?<![\p{L}\p{N}])((?<!(?:^|[.!?…«"]\s*|__RET__\s*))(?:La|Si)|Sol|Do|Ré|Re|Mi|Fa)([\-\+=]?m?)(\+?[24579][\-\+]?)?(?=[\s.,;:!?)]|$)/gu
 export function bataveOf(italianName){
   return IT_TO_BAT[italianName.toLowerCase()]
 }

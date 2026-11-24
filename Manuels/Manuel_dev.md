@@ -119,8 +119,8 @@ Ce fichier contient toutes les marques d'analyse à poser sur la table d'analyse
 
 - Accords (marques accord, modulation, emprunt) TOUJOURS enregistrés en batave. Conversion : `renderer/js/lib/notation.js` (pur), branchements : `renderer/js/Notation.js`.
 - Préférences de l'analyse : `notation_display` (police des marques : `PhilNote` ou `PhilNoteIt`, variable CSS `--philnote-font` ajoutée aux styles des préférences, donc aussi aux exports) et `notation_input` (notation remise dans le champ d'édition).
-- Validation : noms italiens (toute casse) → lettres. « Do » = C seulement si l'affichage est en italien (sinon Ré + « o »). Après « / », la casse est gardée (« sol/mi » → « G/e »).
-- Marques texte : « Do », « Ré », « Sol »… (forme exacte) mis dans la police des notes (`AMark#tunize`).
+- Validation : noms italiens (toute casse) → lettres. « Do » = C seulement en entrée italienne (sinon Ré + « o »). Après « / », la casse est gardée (« sol/mi » → « G/e »).
+- Marques texte : « Do », « Ré », « Sol »… (forme exacte) mis dans la police des notes (`AMark#tunize`), sauf « La » et « Si » en début de phrase.
 - Police `assets/fonts/PhilNote7-it.otf` : PhilNote7 dont les capitales A à G sont les noms italiens. Fabrication : `_scripts/polices/philnote_it.py` (fontforge).
 
 ## Forme
