@@ -48,7 +48,8 @@ export class AMark extends AObjet {
    * @param {Hash}    params  Les données
    */
   static createNew(e, params){
-    if ( undefined == params ) {
+    // (« === » : null, l'abandon, ne doit pas relancer la création, #238)
+    if ( undefined === params ) {
 
       const editor = new AMark_Editor({event:e, onReleaseMethod: this.createNew.bind(this, e)})
       return editor.proceed()

@@ -117,6 +117,7 @@ export class AmarkMenu extends MenusTool {
   }
 
   static onTypeChosen(data){
+    if ( !data ) return // abandon
     this.boucle(tag => tag.changeType && tag.changeType(data.type, data.subtype))
   }
 

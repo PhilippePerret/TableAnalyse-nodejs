@@ -218,6 +218,9 @@ getAMarkSubType(){
   this.getterOfAMarkSubtype.show(this.positionFixed)
 }
 onChooseSubtype(subtype){
+  // Renoncer, case de fermeture, Échap : abandon (sans quoi la liste des
+  // sous-types se rouvrirait aussitôt, #238)
+  if ( null == subtype ) return this.finishWith(null)
   this._amark_subtype = subtype
   this.proceed()
 }
