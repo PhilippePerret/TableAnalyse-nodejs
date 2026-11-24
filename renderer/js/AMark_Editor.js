@@ -89,8 +89,10 @@ constructor(data){
   this.data   = data
   this.event  = data.event
   data.type && (this._amark_type = data.type)
-  // Création (pas un changement de type) : type bloqué
-  if ( !data.type && !data.onlyType && AMark_Editor.lockedType ) this._amark_type = AMark_Editor.lockedType
+  // Création (pas un changement de type) : type bloqué, sauf Alt-clic
+  // (ou Alt-double-clic) qui fait choisir le type (#233)
+  const bypassLock = !!(this.event && this.event.altKey)
+  if ( !data.type && !data.onlyType && AMark_Editor.lockedType && !bypassLock ) this._amark_type = AMark_Editor.lockedType
 
   /* Pour écrire toutes les coordonnées
   var xy = {}

@@ -129,6 +129,7 @@ export class TableAnalyse {
    * Rien quand un panneau est ouvert, pendant l'animation, après une
    * sélection par rectangle ou un glissement, pour le second clic d'un
    * double-clic, un clic droit ou un Ctrl-clic (menu contextuel).
+   * Alt-clic : création sans le type bloqué (choix du type, #233).
    */
   static onClick(e){
     if ( this.justSelected ) { this.justSelected = false ; return }
@@ -139,7 +140,7 @@ export class TableAnalyse {
     if ( down && (Math.abs(e.clientX - down.x) > 4 || Math.abs(e.clientY - down.y) > 4) ) return
     AObjet.deselectAll()
     if ( this.isDoubleClickCreation ) return
-    if ( !e.shiftKey && !e.metaKey && !e.altKey && this.isCreationTarget(e.target) ) AMark.createNew(e)
+    if ( !e.shiftKey && !e.metaKey && this.isCreationTarget(e.target) ) AMark.createNew(e)
   }
 
   /**
@@ -149,7 +150,7 @@ export class TableAnalyse {
    */
   static onDblClick(e){
     if ( !this.isDoubleClickCreation || !Current.analyse ) return
-    if ( e.button !== 0 || e.ctrlKey || e.shiftKey || e.metaKey || e.altKey ) return
+    if ( e.button !== 0 || e.ctrlKey || e.shiftKey || e.metaKey ) return
     if ( UI.hasOpenPanel || document.documentElement.classList.contains('animation-running') ) return
     const down = this.downAt
     if ( down && (Math.abs(e.clientX - down.x) > 4 || Math.abs(e.clientY - down.y) > 4) ) return
