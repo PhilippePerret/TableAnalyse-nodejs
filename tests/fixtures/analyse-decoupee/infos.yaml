@@ -1,0 +1,66 @@
+---
+piece_title: Partition découpée
+composer: ''
+analyse_title: ''
+analyst: ''
+systems:
+  - id: 1
+    image_name: system-001.jpg
+    top: 300
+    left: 0
+    height: 289
+  - id: 2
+    image_name: system-002.jpg
+    top: 989
+    left: 0
+    height: 243
+  - id: 3
+    image_name: system-003.jpg
+    top: 1632
+    left: 0
+    height: 260
+  - id: 4
+    image_name: system-004.jpg
+    top: 2292
+    left: 0
+    height: 243
+  - id: 5
+    image_name: system-005.jpg
+    top: 2935
+    left: 0
+    height: 257
+  - id: 6
+    image_name: system-006.jpg
+    top: 3592
+    left: 0
+    height: 273
+  - id: 7
+    image_name: system-007.jpg
+    top: 4265
+    left: 0
+    height: 253
+  - id: 8
+    image_name: system-008.jpg
+    top: 4918
+    left: 0
+    height: 238
+  - id: 9
+    image_name: system-009.jpg
+    top: 5556
+    left: 0
+    height: 269
+  - id: 10
+    image_name: system-010.jpg
+    top: 6225
+    left: 0
+    height: 314
+  - id: 11
+    image_name: system-011.jpg
+    top: 6939
+    left: 0
+    height: 281
+  - id: 12
+    image_name: system-012.jpg
+    top: 7620
+    left: 0
+    height: 255

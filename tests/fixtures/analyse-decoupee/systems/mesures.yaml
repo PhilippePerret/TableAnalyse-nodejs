@@ -1,0 +1,135 @@
+# Numéros de mesure détectés par la découpe (coordonnées en pixels de chaque image).
+# Importés à l'ouverture de l'analyse comme numéros de mesure, posés sous chaque système.
+---
+- image: system-001.jpg
+  width: 1268
+  height: 289
+  measures:
+    - {number: 1, x: 187}
+    - {number: 2, x: 276}
+    - {number: 3, x: 394}
+    - {number: 4, x: 515}
+    - {number: 5, x: 645}
+    - {number: 6, x: 811}
+    - {number: 7, x: 1011}
+  end: 1251
+- image: system-002.jpg
+  width: 1291
+  height: 243
+  measures:
+    - {number: 8, x: 106}
+    - {number: 9, x: 368}
+    - {number: 10, x: 579}
+    - {number: 11, x: 786}
+    - {number: 12, x: 951}
+    - {number: 13, x: 1088}
+  end: 1277
+- image: system-003.jpg
+  width: 1289
+  height: 260
+  measures:
+    - {number: 14, x: 107}
+    - {number: 15, x: 280}
+    - {number: 16, x: 484}
+    - {number: 17, x: 673}
+    - {number: 18, x: 838}
+    - {number: 19, x: 1016}
+    - {number: 20, x: 1163}
+  end: 1275
+- image: system-004.jpg
+  width: 1290
+  height: 243
+  measures:
+    - {number: 21, x: 103}
+    - {number: 22, x: 295}
+    - {number: 23, x: 497}
+    - {number: 24, x: 696}
+    - {number: 25, x: 893}
+    - {number: 26, x: 1072}
+  end: 1275
+- image: system-005.jpg
+  width: 1292
+  height: 257
+  measures:
+    - {number: 27, x: 111}
+    - {number: 28, x: 304}
+    - {number: 29, x: 428}
+    - {number: 30, x: 568}
+    - {number: 31, x: 746}
+    - {number: 32, x: 967}
+    - {number: 33, x: 1145}
+  end: 1278
+- image: system-006.jpg
+  width: 1292
+  height: 273
+  measures:
+    - {number: 34, x: 105}
+    - {number: 35, x: 288}
+    - {number: 36, x: 505}
+    - {number: 37, x: 682}
+    - {number: 38, x: 885}
+    - {number: 39, x: 1088}
+  end: 1278
+- image: system-007.jpg
+  width: 1312
+  height: 253
+  measures:
+    - {number: 40, x: 114}
+    - {number: 41, x: 355}
+    - {number: 42, x: 589}
+    - {number: 43, x: 829}
+    - {number: 44, x: 1065}
+  end: 1297
+- image: system-008.jpg
+  width: 1310
+  height: 238
+  measures:
+    - {number: 45, x: 113}
+    - {number: 46, x: 358}
+    - {number: 47, x: 601}
+    - {number: 48, x: 822}
+    - {number: 49, x: 1068}
+  end: 1296
+- image: system-009.jpg
+  width: 1311
+  height: 269
+  measures:
+    - {number: 50, x: 115}
+    - {number: 51, x: 326}
+    - {number: 52, x: 516}
+    - {number: 53, x: 722}
+    - {number: 54, x: 912}
+    - {number: 55, x: 1110}
+  end: 1296
+- image: system-010.jpg
+  width: 1309
+  height: 314
+  measures:
+    - {number: 56, x: 115}
+    - {number: 57, x: 345}
+    - {number: 58, x: 552}
+    - {number: 59, x: 774}
+    - {number: 60, x: 988}
+  end: 1200
+- image: system-011.jpg
+  width: 1311
+  height: 281
+  measures:
+    - {number: 61, x: 124}
+    - {number: 62, x: 338}
+    - {number: 63, x: 552}
+    - {number: 64, x: 761}
+    - {number: 65, x: 993}
+    - {number: 66, x: 1128}
+  end: 1296
+- image: system-012.jpg
+  width: 1311
+  height: 255
+  measures:
+    - {number: 67, x: 124}
+    - {number: 68, x: 308}
+    - {number: 69, x: 522}
+    - {number: 70, x: 661}
+    - {number: 71, x: 859}
+    - {number: 72, x: 1073}
+  end: 1297
