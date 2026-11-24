@@ -649,6 +649,13 @@ mark_creation_click:
   simple: "Clic simple"
   double: "Doble clic"
 
+checks:
+  title:          "Comprobaciones"
+  flag_title:     "Errores del análisis"
+  chords_overlap: "Los acordes %{a} y %{b} se superponen en el compás %{num}"
+  dismiss:        "Quitar de la lista (no volver a señalar)"
+  goto:           "Ver los acordes"
+
 notation:
   bat: "bátava (letra)"
   it:  "italiana (nota)"

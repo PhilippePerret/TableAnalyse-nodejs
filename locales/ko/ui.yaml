@@ -648,6 +648,13 @@ mark_creation_click:
   simple: "한 번 클릭"
   double: "두 번 클릭"
 
+checks:
+  title:          "검사"
+  flag_title:     "분석 오류"
+  chords_overlap: "%{num}마디에서 코드 %{a}와(과) %{b}이(가) 겹칩니다"
+  dismiss:        "목록에서 제거 (더 이상 알리지 않음)"
+  goto:           "코드 보기"
+
 notation:
   bat: "바타비아식 (문자)"
   it:  "이탈리아식 (음이름)"

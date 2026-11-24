@@ -137,6 +137,11 @@ Ce fichier contient toutes les marques d'analyse à poser sur la table d'analyse
 - Écriture américaine (#234) : `notation_display: 'us'`, police `PhilNoteUs` (`assets/fonts/PhilNote7-us.otf` : PhilNote7 + glyphes de PhilNote6-US — cadences IAC, PC, DC, HC, altération avant le chiffre, M7). Fabrication : `_scripts/polices/philnote_us.py`. Contenu toujours en batave.
 - Police `assets/fonts/PhilNote7-it.otf` : PhilNote7 dont les capitales A à G sont les noms italiens. Fabrication : `_scripts/polices/philnote_it.py` (fontforge).
 
+## Vérifications (#237)
+
+- `renderer/js/Verifications.js` : accords (et seulement eux) qui se chevauchent écrits en rouge (classe `chord-overlap`, retirée des exports), « ! » rouge à droite de la bande du haut, liste des erreurs (clic : accords montrés et sélectionnés ; « × » : erreur retirée, plus signalée, préférence cachée `checks_dismissed`).
+- Contrôle relancé (différé) après toute modification de l'analyse, tout changement des styles des préférences (tailles, écriture des accords) et au chargement.
+
 ## Forme
 
 Marques de forme : type `frm`, sous-types (`TYPES_FORME`, `Constants.js`) `fpar`/`fsec`/`fseg` (début de partie, section, segment) et `fparz`/`fsecz`/`fsegz` (fins). Une fin est associée à sa marque de début par `data.start` (identifiant) et prend son nom. Menu « Forme » : `Forme.js`.

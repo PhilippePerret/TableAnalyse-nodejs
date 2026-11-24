@@ -649,6 +649,13 @@ mark_creation_click:
   simple: "Clic singolo"
   double: "Doppio clic"
 
+checks:
+  title:          "Verifiche"
+  flag_title:     "Errori dell'analisi"
+  chords_overlap: "Gli accordi %{a} e %{b} si sovrappongono alla battuta %{num}"
+  dismiss:        "Togli dall'elenco (non segnalare più)"
+  goto:           "Mostra gli accordi"
+
 notation:
   bat: "batava (lettera)"
   it:  "italiana (nota)"

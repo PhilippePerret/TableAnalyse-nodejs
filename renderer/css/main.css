@@ -144,6 +144,39 @@ section#content {
   margin-bottom: 400px!important;
 }
 
+/* Vérifications (cf. Verifications.js) : marqueur « ! » de la bande du
+   haut, accords qui se chevauchent, liste des erreurs */
+div#check-flag {
+  -webkit-app-region: no-drag;
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  border-radius: 50%;
+  text-align: center;
+  font: 700 11px system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #fff;
+  background-color: #d9534f;
+  opacity: .75;
+  cursor: pointer;
+}
+div#check-flag:hover { opacity: 1; }
+div#check-flag.hidden { display: none; }
+div.amark.chord-overlap span.content { color: #d9534f !important; }
+div#checks-panel {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  z-index: 5001;
+  max-width: 480px;
+}
+div#checks-panel ul.checks-list { list-style: none; margin: 0; padding: 8px 12px; max-height: 50vh; overflow-y: auto; }
+div#checks-panel ul.checks-list li { padding: 3px 0; font-size: 13px; }
+div#checks-panel span.check-message { cursor: pointer; }
+div#checks-panel span.check-message:hover { text-decoration: underline; }
+div#checks-panel span.check-dismiss { cursor: pointer; color: #999; margin-right: 8px; }
+div#checks-panel span.check-dismiss:hover { color: #d9534f; }
+
 
 div.aobj {
   position: absolute;

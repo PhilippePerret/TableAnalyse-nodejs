@@ -648,6 +648,13 @@ mark_creation_click:
   simple: "シングルクリック"
   double: "ダブルクリック"
 
+checks:
+  title:          "チェック"
+  flag_title:     "分析のエラー"
+  chords_overlap: "第 %{num} 小節でコード %{a} と %{b} が重なっています"
+  dismiss:        "一覧から外す（今後は表示しない）"
+  goto:           "コードを表示"
+
 notation:
   bat: "バタヴィア式（文字）"
   it:  "イタリア式（音名）"

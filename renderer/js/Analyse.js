@@ -27,6 +27,7 @@ import { addPanelHead } from './Panneau.js'
 import { Variables } from './Variables.js'
 import { History } from './History.js'
 import { supize } from './lib/exposants.js'
+import { Verifications } from './Verifications.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
 const SYSTEMS_MARGIN = 40
@@ -56,6 +57,8 @@ export class Analyse {
     this.modified = true
     // Étape de la construction de l'analyse (cf. History.js)
     this.loading || History.schedule()
+    // Accords qui se chevauchent (cf. Verifications.js)
+    this.loading || Verifications.schedule()
   }
 
   // Sauvegarde automatique, quelques secondes après la dernière
@@ -678,7 +681,7 @@ static async exportCurrentToHtml(){
     */
     content.querySelectorAll('.ui-resizable-handle').forEach(h => h.remove())
     // Aucune marque d'interface à l'export (sélection, verrouillage)
-    content.querySelectorAll('.selected, .locked').forEach(e => e.classList.remove('selected', 'locked'))
+    content.querySelectorAll('.selected, .locked, .chord-overlap').forEach(e => e.classList.remove('selected', 'locked', 'chord-overlap'))
     /*
     |  Les images sont mises en dur dans le code
     */

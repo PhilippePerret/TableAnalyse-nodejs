@@ -649,6 +649,13 @@ mark_creation_click:
   simple: "Single click"
   double: "Double click"
 
+checks:
+  title:          "Checks"
+  flag_title:     "Analysis errors"
+  chords_overlap: "Chords %{a} and %{b} overlap at measure %{num}"
+  dismiss:        "Remove from the list (no longer report)"
+  goto:           "Show the chords"
+
 notation:
   bat: "batavian (letter)"
   it:  "italian (note)"

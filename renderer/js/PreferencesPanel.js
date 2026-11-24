@@ -15,10 +15,11 @@ import { PreferencesAppData, BORDER_INTENSITY } from './Preferences_AppData.js'
 import { Grid } from './Grid.js'
 import { Systeme } from './Systeme.js'
 import { UI } from './UI.js'
-import { emit } from './events.js'
+import { emit, once } from './events.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { t } from './i18n.js'
 import { notationCss } from './Notation.js'
+import { Verifications } from './Verifications.js'
 import { invoke } from './api.js'
 import { AObjet } from './AObjet.js'
 import { setModified } from './Current.js'
@@ -140,6 +141,9 @@ afterLoadingAnalyse(){
   this.build()
   this.insertStylesCSSInHead();
   this.prepareOnChangeMethods()
+  // Accords qui se chevauchent, une fois les systèmes affichés
+  once('systems:loaded', () => Verifications.schedule())
+  Verifications.schedule()
   // Systèmes toujours verrouillés à l'ouverture
   Preferences.set('lock_systems', true)
   Systeme.systemsLocked = true
@@ -219,6 +223,8 @@ insertStylesCSSInHead(){
  */
 updateStylesInHead(){
   this.stylesTagInHead.innerHTML = this.buildSelectorsInHead()
+  // Tailles, écriture des accords : chevauchements à recontrôler
+  Verifications.schedule()
 }
 buildSelectorsInHead(){
   const my = this

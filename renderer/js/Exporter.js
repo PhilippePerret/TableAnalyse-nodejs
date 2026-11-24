@@ -34,7 +34,7 @@ const PX_PER_MM   = 96 / 25.4
 const PAD         = 10      // blanc (px) au-dessus et au-dessous du contenu
 const MAX_PDF_MM  = 5080    // taille maximale d'une page PDF (200 pouces)
 const EXCLUDED    = '.ui-resizable-handle, .lia-hit'
-const UI_CLASSES  = ['selected', 'locked']
+const UI_CLASSES  = ['selected', 'locked', 'chord-overlap']
 // Polices de l'application, incluses dans les fichiers SVG
 const APP_FONTS   = [
     {family: 'PhilNote', weight: 'normal', file: 'PhilNote7-Regular.otf'}

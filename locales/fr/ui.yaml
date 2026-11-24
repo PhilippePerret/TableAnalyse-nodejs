@@ -650,6 +650,13 @@ mark_creation_click:
   simple: "Simple clic"
   double: "Double clic"
 
+checks:
+  title:          "Vérifications"
+  flag_title:     "Erreurs de l’analyse"
+  chords_overlap: "Les accords %{a} et %{b} se chevauchent à la mesure %{num}"
+  dismiss:        "Retirer de la liste (ne plus signaler)"
+  goto:           "Voir les accords"
+
 notation:
   bat: "batave (lettre)"
   it:  "italien (note)"

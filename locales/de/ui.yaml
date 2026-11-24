@@ -649,6 +649,13 @@ mark_creation_click:
   simple: "Einfacher Klick"
   double: "Doppelklick"
 
+checks:
+  title:          "Prüfungen"
+  flag_title:     "Fehler der Analyse"
+  chords_overlap: "Die Akkorde %{a} und %{b} überschneiden sich in Takt %{num}"
+  dismiss:        "Aus der Liste entfernen (nicht mehr melden)"
+  goto:           "Akkorde zeigen"
+
 notation:
   bat: "batavisch (Buchstabe)"
   it:  "italienisch (Note)"

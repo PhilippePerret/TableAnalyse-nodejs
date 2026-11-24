@@ -98,6 +98,8 @@ export const PreferencesAppData = {
   , form_build_keys         :{type:'checkbox'     ,typeV:'boolean'  ,default:true   ,hidden:true}
   , form_built              :{type:'checkbox'     ,typeV:'boolean'  ,default:false  ,hidden:true}
   , show_form_names         :{type:'checkbox'     ,typeV:'boolean'  ,default:false  ,hidden:true}
+    // Erreurs de vérification retirées à la main (JSON, cf. Verifications.js)
+  , checks_dismissed        :{type:'inputtext'    ,typeV:'string'   ,default:''     ,hidden:true}
 
   , animation_tempo         :{type:'inputtext'    ,typeV:'number'   ,default:60 ,unite:'BPM'}
   , autosave                :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
