@@ -521,8 +521,11 @@ prefs:
   autosave:               {label: "自动保存"}
   mark_creation_click:    {label: "新建标记"}
   animate:                {label: "动画显示分析", precision: "标记将逐步显示"}
+  notation_display:       {label: "和弦音名显示", precision: "和弦始终以字母保存，仅显示方式改变。"}
+  notation_input:         {label: "和弦音名输入", precision: "修改和弦时放回输入框的记法。意大利唱名（do、ré…）始终可以输入。"}
 
 prefs_groups:
+  notation:               "和弦记法"
   layout:                 "版面"
   general:                "常规"
   systems:                "声部组"
@@ -643,6 +646,10 @@ marks:
 mark_creation_click:
   simple: "单击"
   double: "双击"
+
+notation:
+  bat: "字母 (C, D, E…)"
+  it:  "意大利唱名 (Do, Ré, Mi…)"
 
 form_position:
   before: "乐谱之前"

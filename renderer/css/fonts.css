@@ -8,9 +8,18 @@
   font-weight: bold;
 }
 
+/* Notation italienne des accords (préférence « notation_display »,
+   cf. Notation.js) : capitales A à G remplacées par Do, Ré… */
+@font-face {
+  font-family:  PhilNoteIt;
+  src: url("../assets/fonts/PhilNote7-it.otf");
+}
+:root {
+  --philnote-font: PhilNote;
+}
 
 .philnote {
-  font-family: PhilNote;
+  font-family: var(--philnote-font, PhilNote);
   font-size: 32px;  
 }
 

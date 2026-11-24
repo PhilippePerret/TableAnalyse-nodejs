@@ -18,6 +18,7 @@ import { UI } from './UI.js'
 import { emit } from './events.js'
 import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { t } from './i18n.js'
+import { notationCss } from './Notation.js'
 import { invoke } from './api.js'
 import { AObjet } from './AObjet.js'
 import { setModified } from './Current.js'
@@ -25,6 +26,7 @@ import { setModified } from './Current.js'
 // Groupes du panneau (titres : ui.prefs_groups.<id>)
 const PREFS_GROUPS = [
     {id: 'general',  keys: ['theme', 'autosave', 'mark_creation_click', 'animate', 'animation_tempo']}
+  , {id: 'notation', keys: ['notation_display', 'notation_input']}
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes', 'max_table_blank', 'export_systems_gap']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
   , {id: 'grid',     keys: ['grid_horizontal_space', 'grid_vertical_space', 'adjust_same_mark', 'snap_for_adjust_pos']}
@@ -108,6 +110,11 @@ onChange_grid_horizontal_space(){
 onChange_grid_vertical_space(){
   Grid.vSnap && (Grid.vSnap = Number(Preferences.getValueOf('grid_vertical_space')))
   UI.rebuildGrid()
+}
+// Notation d'affichage des accords : police des marques (cf. Notation.js)
+onChange_notation_display(){
+  Preferences.saveData('notation_display', Preferences.getValueOf('notation_display'))
+  this.updateStylesInHead()
 }
 onChange_theme(){
   const theme = Preferences.getValueOf('theme')
@@ -220,6 +227,8 @@ buildSelectorsInHead(){
     if ( undefined == dp.selector ) return ;
     selectors.push(`${dp.selector} {${dp.selector_value.replace(/__VALUE__/g, Preferences.get(dp.id))}}`)
   })
+  // Notation des accords (police des marques)
+  selectors.push(notationCss())
   selectors = selectors.join("\n")
   // console.debug("selectors = ", selectors)
   return selectors

@@ -39,6 +39,7 @@ const UI_CLASSES  = ['selected', 'locked']
 const APP_FONTS   = [
     {family: 'PhilNote', weight: 'normal', file: 'PhilNote7-Regular.otf'}
   , {family: 'PhilNote', weight: 'bold',   file: 'PhilNote2-Bold.otf'}
+  , {family: 'PhilNoteIt', weight: 'normal', file: 'PhilNote7-it.otf'}
 ]
 
 // Formats de page courants (mm, portrait)
@@ -776,7 +777,7 @@ ${parts.join('\n')}
    * la page les utilise : affichage correct sans les installer
    */
   async svgFonts(code){
-    const used = APP_FONTS.filter(f => code.includes(`font-family="${f.family}`) && (f.weight == 'normal' || /font-weight="(bold|[6-9]00)"/.test(code)))
+    const used = APP_FONTS.filter(f => new RegExp(`font-family="'?${f.family}['",]`).test(code) && (f.weight == 'normal' || /font-weight="(bold|[6-9]00)"/.test(code)))
     if ( !used.length ) return ''
     this.fontData || (this.fontData = new Map())
     const faces = []

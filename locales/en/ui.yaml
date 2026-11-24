@@ -521,8 +521,11 @@ prefs:
   autosave:               {label: "Autosave"}
   mark_creation_click:    {label: "New mark creation"}
   animate:                {label: "Animate the analysis", precision: "Marks will be displayed progressively"}
+  notation_display:       {label: "Chord note display", precision: "Chords are always saved with letters; only the display changes."}
+  notation_input:         {label: "Chord note input", precision: "Notation put back in the field to edit a chord. Italian names (do, ré…) are always accepted."}
 
 prefs_groups:
+  notation:               "Chord notation"
   layout:                 "Layout"
   general:                "General"
   systems:                "Systems"
@@ -644,6 +647,10 @@ marks:
 mark_creation_click:
   simple: "Single click"
   double: "Double click"
+
+notation:
+  bat: "Letters (C, D, E…)"
+  it:  "Italian (Do, Ré, Mi…)"
 
 form_position:
   before: "Before the score"

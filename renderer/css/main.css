@@ -209,7 +209,7 @@ div#coordonnates {
 }
 
 mus {
-  font-family:'PhilNote';
+  font-family: var(--philnote-font, PhilNote);
   font-size: inherit;
 }
 

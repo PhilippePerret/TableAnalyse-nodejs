@@ -24,7 +24,7 @@ export async function exportToPdf(analyse, {code_html, width, height}){
 </style>
 `
   const tmp = path.join(os.tmpdir(), `score-analyse-${process.pid}-${Date.now()}.html`)
-  fs.writeFileSync(tmp, head(analyse.infos) + pageCss + code_html + '</body></html>')
+  fs.writeFileSync(tmp, head(analyse.infos, code_html) + pageCss + code_html + '</body></html>')
   const win = new BrowserWindow({show: false, webPreferences: {sandbox: true, contextIsolation: true, nodeIntegration: false}})
   try {
     await win.loadFile(tmp)

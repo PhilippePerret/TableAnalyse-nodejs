@@ -38,7 +38,7 @@ div.amark:not(.philnote):not(.deg) span.content {
 
 div.amark.philnote span.content, 
 .amark.philnote {
-  font-family: PhilNote;
+  font-family: var(--philnote-font, PhilNote);
   font-size: 32pt;
 }
 
@@ -214,7 +214,7 @@ div.amark.cad div.mtype {
 
 div.amark.deg {
   font-size: 1.5em;
-  font-family: PhilNote;
+  font-family: var(--philnote-font, PhilNote);
   font-weight: bold;
 }
 

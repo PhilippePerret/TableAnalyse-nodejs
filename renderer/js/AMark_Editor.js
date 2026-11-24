@@ -6,6 +6,7 @@ import { px, uiZoom, keepInView, escapeLt } from './handies.js'
 import { addPanelHead } from './Panneau.js'
 import { UI } from './UI.js'
 import { Editeur } from './Editeur.js'
+import { contentForField, contentFromField, suggestionForField } from './Notation.js'
 import { AMARQUES_TYPES, CADENCES, TYPES_NOTES, TYPES_CADRE, TYPES_SEGMENT, TYPES_FORME, TYPES_PHILHARMONIEFONT } from './Constants.js'
 import { AObjet } from './AObjet.js'
 import { Forme } from './Forme.js'
@@ -320,7 +321,8 @@ onWantTypes(){
  * Méthode pour obtenir le contenu textuel de l amark
  */
 getAMarkContent(){
-  this.editorOfAMarkContent.value = this.amark_content || this.defaultValue
+  // Accords : en entrée italienne, notes remises en italien (cf. Notation.js)
+  this.editorOfAMarkContent.value = contentForField(this.amark_type, this.amark_content || this.defaultValue)
   this.editorOfAMarkContent.show(this.position)
 }
 
@@ -338,6 +340,8 @@ onSetContent(content){
     this._amark_content = this.hasProlong 
       ? content.substring(0, content.length - 2) 
       : content
+    // Accords : noms italiens enregistrés en batave (cf. Notation.js)
+    this._amark_content = contentFromField(this.amark_type, this._amark_content)
     // On met toujours une prolongation à une pédale, même lorsqu'elle
     // n'est pas indiquée
     if ( this.amark_type == 'ped' ) this.hasProlong = true
@@ -507,7 +511,12 @@ static suggestionsFor(type, subtype){
     values.sort((a, b) => count[b] - count[a] || alpha(a, b))
   } else if ( !inScoreOrder ) values.sort(alpha)
   // Valeurs affichées comme sur la table (police PhilNote)
-  return {mode, values, philnote: TYPES_PHILHARMONIEFONT.includes(type), digits: !NO_DIGIT_CHOICE.includes(type)}
+  return {mode, values, philnote: TYPES_PHILHARMONIEFONT.includes(type), digits: !NO_DIGIT_CHOICE.includes(type)
+    // Accords : texte du menu dans la notation d'entrée ; valeur choisie
+    // mise dans le champ sous une forme qui redonne la valeur enregistrée
+    , menuText: v => contentForField(type, v)
+    , toField:  v => suggestionForField(type, v)
+  }
 }
 
 /**

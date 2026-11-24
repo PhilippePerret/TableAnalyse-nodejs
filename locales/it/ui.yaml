@@ -521,8 +521,11 @@ prefs:
   autosave:               {label: "Salvataggio automatico"}
   mark_creation_click:    {label: "Creazione di un nuovo segno"}
   animate:                {label: "Anima l'analisi", precision: "I segni saranno mostrati progressivamente"}
+  notation_display:       {label: "Visualizzazione delle note degli accordi", precision: "Gli accordi sono sempre registrati con le lettere; cambia solo la visualizzazione."}
+  notation_input:         {label: "Inserimento delle note degli accordi", precision: "Notazione rimessa nel campo per modificare un accordo. I nomi italiani (do, re…) sono sempre accettati."}
 
 prefs_groups:
+  notation:               "Notazione degli accordi"
   layout:                 "Impaginazione"
   general:                "Generale"
   systems:                "Sistemi"
@@ -644,6 +647,10 @@ marks:
 mark_creation_click:
   simple: "Clic singolo"
   double: "Doppio clic"
+
+notation:
+  bat: "Lettere (C, D, E…)"
+  it:  "Italiana (Do, Re, Mi…)"
 
 form_position:
   before: "Prima della partitura"

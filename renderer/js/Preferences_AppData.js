@@ -106,6 +106,16 @@ export const PreferencesAppData = {
       , {name: t('ui.mark_creation_click.double'), value: 'double'}
     ]}
   , animate                 :{type:'checkbox'     ,typeV:'boolean'  ,default:false}
+
+  // --- Notation des accords (cf. Notation.js) ---
+  , notation_display        :{type:'select'       ,typeV:'string'   ,default:'bat', values: [
+        {name: t('ui.notation.bat'), value: 'bat'}
+      , {name: t('ui.notation.it'),  value: 'it'}
+    ]}
+  , notation_input          :{type:'select'       ,typeV:'string'   ,default:'bat', values: [
+        {name: t('ui.notation.bat'), value: 'bat'}
+      , {name: t('ui.notation.it'),  value: 'it'}
+    ]}
 }
 
 /**

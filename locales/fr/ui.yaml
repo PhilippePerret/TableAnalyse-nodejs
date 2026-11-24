@@ -521,8 +521,11 @@ prefs:
   autosave:               {label: "Sauvegarde automatique"}
   mark_creation_click:    {label: "Création d’une nouvelle marque"}
   animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
+  notation_display:       {label: "Affichage des notes des accords", precision: "Les accords sont toujours enregistrés en batave ; seul l’affichage change."}
+  notation_input:         {label: "Entrée des notes des accords", precision: "Notation remise dans le champ pour modifier un accord. Les noms italiens (do, ré…) sont toujours acceptés."}
 
 prefs_groups:
+  notation:               "Notation des accords"
   layout:                 "Mise en page"
   general:                "Général"
   systems:                "Systèmes"
@@ -645,6 +648,10 @@ marks:
 mark_creation_click:
   simple: "Simple clic"
   double: "Double clic"
+
+notation:
+  bat: "Batave (C, D, E…)"
+  it:  "Italienne (Do, Ré, Mi…)"
 
 form_position:
   before: "Avant la partition"

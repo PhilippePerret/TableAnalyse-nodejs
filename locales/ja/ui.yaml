@@ -521,8 +521,11 @@ prefs:
   autosave:               {label: "自動保存"}
   mark_creation_click:    {label: "新しいマークの作成"}
   animate:                {label: "分析をアニメーション表示", precision: "マークが順に表示されます"}
+  notation_display:       {label: "コードの音名の表示", precision: "コードは常に英字で保存され、表示だけが変わります。"}
+  notation_input:         {label: "コードの音名の入力", precision: "コードを編集するときに欄に戻す表記。イタリア式の音名（do、ré…）は常に入力できます。"}
 
 prefs_groups:
+  notation:               "コード表記"
   layout:                 "レイアウト"
   general:                "一般"
   systems:                "段"
@@ -643,6 +646,10 @@ marks:
 mark_creation_click:
   simple: "シングルクリック"
   double: "ダブルクリック"
+
+notation:
+  bat: "英字 (C, D, E…)"
+  it:  "イタリア式 (Do, Ré, Mi…)"
 
 form_position:
   before: "楽譜の前"

@@ -234,13 +234,15 @@ export class Editeur {
     const values = (sug && sug.values) || []
     const mode   = values.length ? sug.mode : null
     this.suggestValues = values
+    this.suggestData   = sug
     // Chiffre tapé en tête du champ : valeur de ce numéro (panneau)
     this.digitChoice = mode == 'panel' && !!sug.digits
     this.suggestMenu.innerHTML = ''
     this.suggestList.innerHTML = ''
     if ( mode == 'menu' ) {
       this.suggestMenu.appendChild(DCreate('OPTION', {value:'', text:t('ui.marks.suggestions.menu_title')}))
-      values.forEach((v, i) => this.suggestMenu.appendChild(DCreate('OPTION', {value:String(i), text:escapeLt(displayedValue(v))})))
+      const menuText = (sug.menuText || (v => v))
+      values.forEach((v, i) => this.suggestMenu.appendChild(DCreate('OPTION', {value:String(i), text:escapeLt(displayedValue(menuText(v)))})))
       this.suggestMenu.selectedIndex = 0
     } else if ( mode == 'panel' ) {
       values.forEach((v, i) => {
@@ -262,7 +264,8 @@ export class Editeur {
   chooseSuggestion(index){
     const v = this.suggestValues && this.suggestValues[index]
     if ( undefined === v ) return
-    this.value = v
+    const toField = this.suggestData && this.suggestData.toField
+    this.value = toField ? toField(v) : v
     this.onClickOK()
   }
   onSuggestMenu(e){

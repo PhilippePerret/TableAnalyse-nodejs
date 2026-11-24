@@ -37,7 +37,9 @@ function pageTitre(infos){
 `
 }
 
-export function head(infos){
+// +code+ : code exporté (police italienne ajoutée s'il l'utilise, cf.
+// Notation.js)
+export function head(infos, code = ''){
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -54,8 +56,12 @@ export function head(infos){
       src: url(${fontSource('PhilNote2-Bold.otf')});
       font-weight: bold;
     }
+    ${code.includes('PhilNoteIt') ? `@font-face {
+      font-family:  PhilNoteIt;
+      src: url(${fontSource('PhilNote7-it.otf')});
+    }` : ''}
     .philnote {
-      font-family: PhilNote;
+      font-family: var(--philnote-font, PhilNote);
       font-size: 32px;
     }
     div#page_titre {
@@ -103,6 +109,6 @@ export function exportPath(folder, suffix){
 export function exportToHtml(analyse, codeHtml){
   fs.mkdirSync(analyse.exportFolder, {recursive: true})
   const htmlPath = exportPath(analyse.exportFolder, '.html')
-  fs.writeFileSync(htmlPath, head(analyse.infos) + pageTitre(analyse.infos) + codeHtml + '</body></html>')
+  fs.writeFileSync(htmlPath, head(analyse.infos, codeHtml) + pageTitre(analyse.infos) + codeHtml + '</body></html>')
   return htmlPath
 }

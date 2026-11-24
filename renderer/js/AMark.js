@@ -7,6 +7,8 @@ import { draggable, resizable } from './lib/interact.js'
 import { AObjet } from './AObjet.js'
 import { Current, setModified } from './Current.js'
 import { pref } from './Preferences.js'
+import { contentForField, contentFromField } from './Notation.js'
+import { TEXT_ITALIAN_NOTES, bataveOf } from './lib/notation.js'
 import { BORDER_INTENSITY } from './Preferences_AppData.js'
 import { Grid } from './Grid.js'
 import { Systeme } from './Systeme.js'
@@ -213,7 +215,8 @@ edit(){
   const dtype = AMARQUES_TYPES[this.type] || {}
   const subtype = (dtype.subdata || undefined != dtype.subtype) ? this.subtype : undefined
   this.editor = this.editor || new Editeur(this, {suggestions: () => AMark_Editor.suggestionsFor(this.type, subtype)})
-  this.editor.value = this.content + (this.hasProlongLine ? '--' : '')
+  // Accords : en entrée italienne, notes remises en italien (cf. Notation.js)
+  this.editor.value = contentForField(this.type, this.content) + (this.hasProlongLine ? '--' : '')
   this.editor.show({top:this.top, left:this.left}, AMARQUES_TYPES[this.type].message)
 }
 
@@ -254,6 +257,8 @@ setValue(newvalue){
   this.prolong = this.data.prolong = newvalue.endsWith('--')
   
   newvalue = this.prolong ? newvalue.substring(0, newvalue.length - 2) : newvalue
+  // Accords : noms italiens enregistrés en batave (cf. Notation.js)
+  newvalue = contentFromField(this.type, newvalue)
 
   /**
    * Re-définition du contenu et de la prolongation
@@ -534,6 +539,10 @@ markdownize(str){
 }
 tunize(str){
   /** Repère les notes dans +str+ et leur met la bonne fonte **/
+  // Notes italiennes sous leur forme exacte (« Sol », pas « sol ») :
+  // écrites en batave dans la police des notes, qui les affiche dans la
+  // notation choisie (cf. Notation.js)
+  str = str.replace(TEXT_ITALIAN_NOTES, (all, name, alt, num) => `<mus>${bataveOf(name)}${alt}${num || ''}</mus>`)
   return str.replace(/\b([A-H][\-\+=]?m?)(\+?[24579][\-\+]?)?([\s\.\,])/, '<mus>$1</mus>$3')
 }
 
