@@ -445,7 +445,7 @@ prefs:
   form_height_1:          {label: "Hauteur des marques de partie (au-dessus du système)"}
   form_height_2:          {label: "Hauteur des marques de section (au-dessus du système)"}
   form_height_3:          {label: "Hauteur des marques de segment (au-dessus du système)"}
-  theme:                  {label: "Thème analyse", precision: "Définit les tailles à appliquer ainsi que les couleurs (dans le mode couleur de l’analyse)"}
+  theme:                  {label: "Aspect de l’analyse"}
   lock_systems:           {label: "Verrouiller les systèmes"}
   grid_horizontal_space:  {label: "Pas horizontal de la grille"}
   grid_vertical_space:    {label: "Pas vertical de la grille"}
@@ -521,10 +521,11 @@ prefs:
   autosave:               {label: "Sauvegarde automatique"}
   mark_creation_click:    {label: "Création d’une nouvelle marque"}
   animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
-  notation_display:       {label: "Affichage des notes des accords", precision: "Les accords sont toujours enregistrés en batave ; seul l’affichage change."}
-  notation_input:         {label: "Entrée des notes des accords", precision: "Notation remise dans le champ pour modifier un accord. Les noms italiens (do, ré…) sont toujours acceptés."}
+  notation_display:       {label: "Affichage des notes des accords"}
+  notation_input:         {label: "Entrée des notes des accords"}
 
 prefs_groups:
+  animation:              "Animation"
   notation:               "Notation des accords"
   layout:                 "Mise en page"
   general:                "Général"
@@ -650,8 +651,8 @@ mark_creation_click:
   double: "Double clic"
 
 notation:
-  bat: "Batave (C, D, E…)"
-  it:  "Italienne (Do, Ré, Mi…)"
+  bat: "batave (lettre)"
+  it:  "italien (note)"
 
 form_position:
   before: "Avant la partition"

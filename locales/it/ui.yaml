@@ -445,7 +445,7 @@ prefs:
   form_height_1:          {label: "Altezza delle marche di parte (sopra il sistema)"}
   form_height_2:          {label: "Altezza delle marche di sezione (sopra il sistema)"}
   form_height_3:          {label: "Altezza delle marche di segmento (sopra il sistema)"}
-  theme:                  {label: "Tema dell'analisi", precision: "Definisce le dimensioni da applicare e i colori (nella modalità a colori dell'analisi)"}
+  theme:                  {label: "Aspetto dell'analisi"}
   lock_systems:           {label: "Blocca i sistemi"}
   grid_horizontal_space:  {label: "Passo orizzontale della griglia"}
   grid_vertical_space:    {label: "Passo verticale della griglia"}
@@ -521,10 +521,11 @@ prefs:
   autosave:               {label: "Salvataggio automatico"}
   mark_creation_click:    {label: "Creazione di un nuovo segno"}
   animate:                {label: "Anima l'analisi", precision: "I segni saranno mostrati progressivamente"}
-  notation_display:       {label: "Visualizzazione delle note degli accordi", precision: "Gli accordi sono sempre registrati con le lettere; cambia solo la visualizzazione."}
-  notation_input:         {label: "Inserimento delle note degli accordi", precision: "Notazione rimessa nel campo per modificare un accordo. I nomi italiani (do, re…) sono sempre accettati."}
+  notation_display:       {label: "Visualizzazione delle note degli accordi"}
+  notation_input:         {label: "Inserimento delle note degli accordi"}
 
 prefs_groups:
+  animation:              "Animazione"
   notation:               "Notazione degli accordi"
   layout:                 "Impaginazione"
   general:                "Generale"
@@ -649,8 +650,8 @@ mark_creation_click:
   double: "Doppio clic"
 
 notation:
-  bat: "Lettere (C, D, E…)"
-  it:  "Italiana (Do, Re, Mi…)"
+  bat: "batava (lettera)"
+  it:  "italiana (nota)"
 
 form_position:
   before: "Prima della partitura"

@@ -445,7 +445,7 @@ prefs:
   form_height_1:          {label: "부 표시의 높이 (보표 위)"}
   form_height_2:          {label: "섹션 표시의 높이 (보표 위)"}
   form_height_3:          {label: "세그먼트 표시의 높이 (보표 위)"}
-  theme:                  {label: "분석 테마", precision: "적용할 크기와 색을 정의합니다(분석의 컬러 모드에서)"}
+  theme:                  {label: "분석의 모양"}
   lock_systems:           {label: "단 잠그기"}
   grid_horizontal_space:  {label: "격자 가로 간격"}
   grid_vertical_space:    {label: "격자 세로 간격"}
@@ -521,10 +521,11 @@ prefs:
   autosave:               {label: "자동 저장"}
   mark_creation_click:    {label: "새 표시 만들기"}
   animate:                {label: "분석 애니메이션", precision: "표시가 차례로 나타납니다"}
-  notation_display:       {label: "코드 음이름 표시", precision: "코드는 항상 알파벳으로 저장되며 표시만 바뀝니다."}
-  notation_input:         {label: "코드 음이름 입력", precision: "코드를 수정할 때 입력란에 되돌려 놓는 표기법. 이탈리아식 이름(do, ré…)은 항상 입력할 수 있습니다."}
+  notation_display:       {label: "코드 음이름 표시"}
+  notation_input:         {label: "코드 음이름 입력"}
 
 prefs_groups:
+  animation:              "애니메이션"
   notation:               "코드 표기법"
   layout:                 "페이지 구성"
   general:                "일반"
@@ -648,8 +649,8 @@ mark_creation_click:
   double: "두 번 클릭"
 
 notation:
-  bat: "알파벳 (C, D, E…)"
-  it:  "이탈리아식 (Do, Ré, Mi…)"
+  bat: "바타비아식 (문자)"
+  it:  "이탈리아식 (음이름)"
 
 form_position:
   before: "악보 앞"

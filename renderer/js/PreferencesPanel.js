@@ -25,8 +25,8 @@ import { setModified } from './Current.js'
 
 // Groupes du panneau (titres : ui.prefs_groups.<id>)
 const PREFS_GROUPS = [
-    {id: 'general',  keys: ['theme', 'autosave', 'mark_creation_click', 'animate', 'animation_tempo']}
-  , {id: 'notation', keys: ['notation_display', 'notation_input']}
+    {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme']}
+  , {id: 'notation', keys: ['notation_input', 'notation_display']}
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes', 'max_table_blank', 'export_systems_gap']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
   , {id: 'grid',     keys: ['grid_horizontal_space', 'grid_vertical_space', 'adjust_same_mark', 'snap_for_adjust_pos']}
@@ -36,6 +36,7 @@ const PREFS_GROUPS = [
   , {id: 'lines',    keys: ['border_circle', 'border_box', 'thiness_cellule_line', 'thiness_border', 'thiness_motif_line', 'thiness_segment_line', 'border_emprunt', 'border_cadence', 'border_note', 'border_form', 'border_measure'].flatMap(k => [k, BORDER_INTENSITY[k]])}
   , {id: 'colors',   keys: ['color_accords', 'color_harmonie', 'color_mark_parties', 'color_mark_sections', 'color_cellule', 'color_modulations', 'color_emprunts', 'color_segments']}
   , {id: 'window',   keys: ['window_width', 'window_height', 'last_scroll']}
+  , {id: 'animation', keys: ['animate', 'animation_tempo']}
 ]
 
 class PreferencesPanelClass {

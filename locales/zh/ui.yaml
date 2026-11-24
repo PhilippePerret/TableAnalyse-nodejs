@@ -445,7 +445,7 @@ prefs:
   form_height_1:          {label: "部标记的高度（系统上方）"}
   form_height_2:          {label: "段标记的高度（系统上方）"}
   form_height_3:          {label: "片段标记的高度（系统上方）"}
-  theme:                  {label: "分析主题", precision: "定义要应用的尺寸和颜色（在分析的彩色模式中）"}
+  theme:                  {label: "分析的外观"}
   lock_systems:           {label: "锁定声部组"}
   grid_horizontal_space:  {label: "网格水平步长"}
   grid_vertical_space:    {label: "网格垂直步长"}
@@ -521,10 +521,11 @@ prefs:
   autosave:               {label: "自动保存"}
   mark_creation_click:    {label: "新建标记"}
   animate:                {label: "动画显示分析", precision: "标记将逐步显示"}
-  notation_display:       {label: "和弦音名显示", precision: "和弦始终以字母保存，仅显示方式改变。"}
-  notation_input:         {label: "和弦音名输入", precision: "修改和弦时放回输入框的记法。意大利唱名（do、ré…）始终可以输入。"}
+  notation_display:       {label: "和弦音名显示"}
+  notation_input:         {label: "和弦音名输入"}
 
 prefs_groups:
+  animation:              "动画"
   notation:               "和弦记法"
   layout:                 "版面"
   general:                "常规"
@@ -648,8 +649,8 @@ mark_creation_click:
   double: "双击"
 
 notation:
-  bat: "字母 (C, D, E…)"
-  it:  "意大利唱名 (Do, Ré, Mi…)"
+  bat: "字母式（字母）"
+  it:  "意大利式（唱名）"
 
 form_position:
   before: "乐谱之前"

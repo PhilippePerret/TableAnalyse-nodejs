@@ -445,7 +445,7 @@ prefs:
   form_height_1:          {label: "Altura de las marcas de parte (encima del sistema)"}
   form_height_2:          {label: "Altura de las marcas de sección (encima del sistema)"}
   form_height_3:          {label: "Altura de las marcas de segmento (encima del sistema)"}
-  theme:                  {label: "Tema del análisis", precision: "Define los tamaños que aplicar y los colores (en el modo color del análisis)"}
+  theme:                  {label: "Aspecto del análisis"}
   lock_systems:           {label: "Bloquear los sistemas"}
   grid_horizontal_space:  {label: "Paso horizontal de la cuadrícula"}
   grid_vertical_space:    {label: "Paso vertical de la cuadrícula"}
@@ -521,10 +521,11 @@ prefs:
   autosave:               {label: "Guardado automático"}
   mark_creation_click:    {label: "Creación de una nueva marca"}
   animate:                {label: "Animar el análisis", precision: "Las marcas se mostrarán progresivamente"}
-  notation_display:       {label: "Visualización de las notas de los acordes", precision: "Los acordes se guardan siempre con letras; solo cambia la visualización."}
-  notation_input:         {label: "Entrada de las notas de los acordes", precision: "Notación devuelta al campo para modificar un acorde. Los nombres italianos (do, re…) se aceptan siempre."}
+  notation_display:       {label: "Visualización de las notas de los acordes"}
+  notation_input:         {label: "Entrada de las notas de los acordes"}
 
 prefs_groups:
+  animation:              "Animación"
   notation:               "Notación de los acordes"
   layout:                 "Maquetación"
   general:                "General"
@@ -649,8 +650,8 @@ mark_creation_click:
   double: "Doble clic"
 
 notation:
-  bat: "Letras (C, D, E…)"
-  it:  "Italiana (Do, Re, Mi…)"
+  bat: "bátava (letra)"
+  it:  "italiana (nota)"
 
 form_position:
   before: "Antes de la partitura"

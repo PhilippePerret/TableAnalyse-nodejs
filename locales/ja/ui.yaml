@@ -445,7 +445,7 @@ prefs:
   form_height_1:          {label: "部マークの高さ（段の上）"}
   form_height_2:          {label: "セクションマークの高さ（段の上）"}
   form_height_3:          {label: "セグメントマークの高さ（段の上）"}
-  theme:                  {label: "分析のテーマ", precision: "適用するサイズと色を定義します（分析のカラーモード時）"}
+  theme:                  {label: "分析の外観"}
   lock_systems:           {label: "段をロック"}
   grid_horizontal_space:  {label: "グリッドの横の間隔"}
   grid_vertical_space:    {label: "グリッドの縦の間隔"}
@@ -521,10 +521,11 @@ prefs:
   autosave:               {label: "自動保存"}
   mark_creation_click:    {label: "新しいマークの作成"}
   animate:                {label: "分析をアニメーション表示", precision: "マークが順に表示されます"}
-  notation_display:       {label: "コードの音名の表示", precision: "コードは常に英字で保存され、表示だけが変わります。"}
-  notation_input:         {label: "コードの音名の入力", precision: "コードを編集するときに欄に戻す表記。イタリア式の音名（do、ré…）は常に入力できます。"}
+  notation_display:       {label: "コードの音名の表示"}
+  notation_input:         {label: "コードの音名の入力"}
 
 prefs_groups:
+  animation:              "アニメーション"
   notation:               "コード表記"
   layout:                 "レイアウト"
   general:                "一般"
@@ -648,8 +649,8 @@ mark_creation_click:
   double: "ダブルクリック"
 
 notation:
-  bat: "英字 (C, D, E…)"
-  it:  "イタリア式 (Do, Ré, Mi…)"
+  bat: "バタヴィア式（文字）"
+  it:  "イタリア式（音名）"
 
 form_position:
   before: "楽譜の前"
