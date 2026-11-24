@@ -53,6 +53,19 @@ SA_SMOKE=8 SA_SMOKE_JS=/chemin/script.js npx electron . /chemin/analyse
 Fenêtre invisible, messages de la console du renderer recopiés dans le Terminal, script optionnel joué dans le renderer après chargement, arrêt au bout de `SA_SMOKE` secondes. `SA_SMOKE_SHOT=/chemin/capture.png` : capture de la fenêtre juste avant l'arrêt. `SA_SMOKE_SHOW=1` : fenêtre visible (nécessaire pour capturer la vue de visualisation d'une fenêtre scindée, dans `<capture>-bas.png`). `SA_SMOKE_MIRROR_JS=/chemin/script.js` : script joué dans la vue de visualisation de la fenêtre scindée.
 
 
+### Suite de tests
+
+~~~bash
+npm test                  # tous les tests
+npm test -- notation      # fichiers dont le nom contient « notation »
+~~~
+
+À relancer EN ENTIER après chaque changement.
+
+- `tests/unit/*.test.mjs` : modules purs (`node --test`) — notation, cohérence des 8 langues, clés de traduction utilisées dans le code.
+- `tests/app/*.test.js` : application réelle, lancée sans fenêtre (lancement de contrôle) sur une copie de `tests/fixtures/analyse-base` (8 systèmes, 55 marques ; autre analyse : `// fixture: <nom>` en tête du fichier). Harnais : `tests/app/_harness.js` (`T.test`, `T.eq`, `T.ok`, `T.includes`, `T.until`, `T.mark`, `T.imp`, `T.readFile`…). Toute erreur de la console du renderer fait échouer le fichier.
+- Lanceur : `tests/run.mjs`. Côté processus principal, `SA_TEST` (fichier des résultats) active les canaux `test:done`, `test:readFile`, `test:listFiles`.
+
 ### Localisation
 
 Textes dans `locales/<langue>/` (`ui.yaml`, `messages.yaml`, `errors.yaml`) : `fr` (référence), `en`, `de`, `it`, `es`, `zh`, `ja`, `ko`. `t()` dans `main/i18n.js` et `renderer/js/i18n.js`.

@@ -12,7 +12,8 @@
  * Une note n'est reconnue qu'en début de marque, après une espace, une
  * barre oblique ou une parenthèse ouvrante, et seulement suivie d'un
  * élément de chiffrage (- + = m M o ° ø / * chiffre ( ) ]), d'une espace
- * ou de la fin. « mineur » ne contient donc pas de « mi ».
+ * ou de la fin. « mineur » ne contient donc pas de « mi », ni « Lamento »
+ * de « la ».
  *
  * Avant « / » : note de l'accord, toujours en capitale (« sol7 » → « G7 »).
  * Après « / » : la casse est gardée (« sol/mi » → « G/e », « Sol/Mi » →
@@ -28,12 +29,18 @@
  */
 
 const BEFORE = '(^|[\\s/(])'
-const AFTER  = '(?=$|[\\s\\-+=mMo°ø/*()\\]0-9])'
+// « m » (mineur) seulement suivi d'autre chose qu'une lettre, ou de « aj »
+// (maj) : « Lamento » n'est pas un accord
+const AFTER  = '(?=$|[\\s\\-+=Mo°ø/*()\\]0-9]|m(?:aj|(?![a-zé])))'
 
 const IT_TO_BAT = {do: 'C', 'ré': 'D', re: 'D', mi: 'E', fa: 'F', sol: 'G', la: 'A', si: 'B'}
 const BAT_TO_IT = {C: 'Do', D: 'Ré', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si'}
 
-const RE_ITALIAN = new RegExp(`${BEFORE}(sol|do|ré|re|mi|fa|la|si)${AFTER}`, 'giu')
+// Noms en toute casse (classes de caractères : le chiffrage qui suit,
+// lui, distingue « m » de « M »)
+const ci = w => [...w].map(c => c == 'é' ? '[éÉ]' : `[${c}${c.toUpperCase()}]`).join('')
+const NAMES = ['sol', 'do', 'ré', 're', 'mi', 'fa', 'la', 'si'].map(ci).join('|')
+const RE_ITALIAN = new RegExp(`${BEFORE}(${NAMES})${AFTER}`, 'gu')
 const RE_BATAVE  = new RegExp(`${BEFORE}([A-Ga-g])${AFTER}`, 'gu')
 
 export function toBatave(str, {doIsC = true} = {}){

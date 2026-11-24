@@ -39,6 +39,16 @@ const T = (() => {
     },
     readFile(rel){ return T.invoke('test:readFile', {rel}) },
     listFiles(rel){ return T.invoke('test:listFiles', {rel}) },
+    // Nouvelle marque construite directement avec ses données (sans
+    // l'éditeur) : {type, subtype, content, top, left…}
+    async mark(params){
+      const { AMark } = await T.imp('AMark')
+      const { AObjet } = await T.imp('AObjet')
+      const before = new Set(AObjet.items.map(m => m.id))
+      const p = Object.assign({top: 600, left: 600}, params)
+      AMark.createNew({pageX: p.left, pageY: p.top, clientX: p.left, clientY: p.top}, p)
+      return AObjet.items.find(m => !before.has(m.id))
+    },
     // Évènements souris/clavier simulés
     mouse(target, type, opts = {}){
       target.dispatchEvent(new MouseEvent(type, Object.assign({bubbles: true, cancelable: true, button: 0}, opts)))

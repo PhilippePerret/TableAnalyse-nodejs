@@ -1,0 +1,55 @@
+// Chargement et enregistrement de l'analyse (infos, préférences, marques)
+const { Current } = await T.imp('Current')
+const { AObjet } = await T.imp('AObjet')
+const { Systeme } = await T.imp('Systeme')
+const { Preferences } = await T.imp('Preferences')
+const { AnalyseSaver } = await T.imp('AnalyseSaver')
+
+const marks = () => AObjet.items.filter(o => !o.isSystem)
+
+T.test('chargement : systèmes, marques, préférences', async () => {
+  T.ok(Current.analyse, 'analyse courante')
+  T.eq(Systeme.all.length, 8, 'nombre de systèmes')
+  T.eq(document.querySelectorAll('img.systeme').length, 8, 'images des systèmes')
+  T.eq(marks().length, 55, 'nombre de marques')
+  T.ok(marks().every(m => m.obj && document.body.contains(m.obj)), 'chaque marque est affichée')
+  const measures = marks().filter(m => m.type == 'txt' && m.subtype == 'mes')
+  T.eq(measures.length, 49, 'numéros de mesure')
+  const g = AObjet.get(348)
+  T.eq([g.type, g.content], ['acc', 'G'], 'marque d’accord 348')
+  T.includes(g.obj.textContent, 'G', 'texte affiché de l’accord')
+  T.eq(AObjet.get(352).content, 'Crotte', 'marque de texte 352')
+  T.eq(Preferences.get('grid_horizontal_space'), 80, 'préférence enregistrée (grille)')
+  T.eq(Preferences.get('form_position'), 'after', 'préférence par défaut (forme)')
+  // Systèmes dans l'ordre, sans chevauchement
+  const tops = Systeme.all.map(s => s.top)
+  T.ok(tops.every((t, i) => i == 0 || t > tops[i - 1]), 'systèmes dans l’ordre vertical')
+})
+
+T.test('enregistrement : marques, préférences, infos', async () => {
+  const acc = await T.mark({type: 'acc', content: 'Bm7', top: 1000, left: 700})
+  const id = acc.id
+  Preferences.saveData('marque_accords_size', 31)
+  T.ok(Current.analyse.modified, 'analyse marquée modifiée')
+  T.eq(await AnalyseSaver.save(), true, 'enregistrement réussi')
+  T.no(Current.analyse.modified, 'analyse non modifiée après enregistrement')
+  const tags = await T.readFile('analyse_tags.yaml')
+  T.includes(tags, `id: ${id}`, 'nouvelle marque enregistrée')
+  T.includes(tags, 'content: Bm7', 'contenu de la nouvelle marque')
+  T.eq((tags.match(/^- /gm) || []).length, 56, 'nombre de marques enregistrées')
+  const prefs = await T.readFile('preferences.yaml')
+  T.includes(prefs, 'marque_accords_size: 31', 'préférence enregistrée')
+  const infos = await T.readFile('infos.yaml')
+  T.eq((infos.match(/image_name:/g) || []).length, 8, 'systèmes enregistrés dans les infos')
+  // Suppression puis enregistrement
+  AObjet.remove(acc)
+  await AnalyseSaver.save()
+  const tags2 = await T.readFile('analyse_tags.yaml')
+  T.no(tags2.includes(`id: ${id}\n`), 'marque supprimée absente du fichier')
+  T.eq((tags2.match(/^- /gm) || []).length, 55, 'nombre de marques après suppression')
+})
+
+T.test('sauvegardes de sécurité (dossier backups)', async () => {
+  const list = await T.listFiles('backups')
+  T.ok(Array.isArray(list), 'dossier backups présent après enregistrement')
+})
