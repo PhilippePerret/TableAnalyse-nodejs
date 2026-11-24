@@ -14,6 +14,9 @@
  *    (tests/app/_harness.js) joue les tests dans le renderer et renvoie
  *    les résultats. Toute erreur de la console du renderer fait échouer
  *    le fichier.
+ *    Un fichier qui utilise T.phase est joué deux fois sur la MÊME copie
+ *    de l'analyse (T.phase = 1, puis 2) : enregistrement, puis
+ *    réouverture.
  */
 import fs from 'node:fs'
 import os from 'node:os'
@@ -53,26 +56,32 @@ for ( const file of apps ) {
   const analyse = path.join(dir, fixture)
   fs.mkdirSync(dir, {recursive: true})
   fs.cpSync(path.join(TESTS, 'fixtures', fixture), analyse, {recursive: true})
-  const bundle  = path.join(dir, 'bundle.js')
-  const resFile = path.join(dir, 'results.json')
-  fs.writeFileSync(bundle, `${harness}\n;(async () => {\n${code}\n;await T.run()\n})().catch(e => console.error('HARNAIS', e.stack))\n`)
+  const phases = code.includes('T.phase') ? [1, 2] : [1]
   const t0 = Date.now()
-  const out = await new Promise(resolve => {
+  let out = '', results = [], missing = false
+  for ( const phase of phases ) {
+  const bundle  = path.join(dir, `bundle-${phase}.js`)
+  const resFile = path.join(dir, `results-${phase}.json`)
+  fs.writeFileSync(bundle, `${harness}\nT.phase = ${phase}\n;(async () => {\n${code}\n;await T.run()\n})().catch(e => console.error('HARNAIS', e.stack))\n`)
+  out += await new Promise(resolve => {
     const child = spawn(ELECTRON, ['.', analyse], {cwd: ROOT, env: Object.assign({}, process.env, {SA_SMOKE: String(TIMEOUT), SA_SMOKE_JS: bundle, SA_TEST: resFile})})
     let log = ''
     child.stdout.on('data', d => log += d) ; child.stderr.on('data', d => log += d)
     child.on('close', () => resolve(log))
   })
+  if ( !fs.existsSync(resFile) ) { missing = true ; break }
+  const res = JSON.parse(fs.readFileSync(resFile, 'utf8'))
+  results.push(...(phases.length > 1 ? res.map(r => Object.assign(r, {name: `[${phase}] ${r.name}`})) : res))
+  }
   const secs = ((Date.now() - t0) / 1000).toFixed(1)
   const consoleErrors = out.split('\n').filter(l => /^\[renderer:error\]|HARNAIS|\[smoke\] ERREUR|Uncaught/.test(l))
   console.log(`\n${BOLD(file)} (${secs} s)`)
-  if ( !fs.existsSync(resFile) ) {
+  if ( missing ) {
     failedFiles++
     console.log(RED(`  ✗ aucun résultat (délai dépassé ou plantage)`))
     console.log(out.split('\n').slice(-30).map(l => '    ' + l).join('\n'))
     continue
   }
-  const results = JSON.parse(fs.readFileSync(resFile, 'utf8'))
   let fileFailed = false
   for ( const r of results ) {
     totalTests++ ; totalChecks += r.checks

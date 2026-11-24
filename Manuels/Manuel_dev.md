@@ -64,6 +64,7 @@ npm test -- notation      # fichiers dont le nom contient « notation »
 
 - `tests/unit/*.test.mjs` : modules purs (`node --test`) — notation, cohérence des 8 langues, clés de traduction utilisées dans le code.
 - `tests/app/*.test.js` : application réelle, lancée sans fenêtre (lancement de contrôle) sur une copie de `tests/fixtures/analyse-base` (8 systèmes, 55 marques ; autre analyse : `// fixture: <nom>` en tête du fichier). Harnais : `tests/app/_harness.js` (`T.test`, `T.eq`, `T.ok`, `T.includes`, `T.until`, `T.mark`, `T.imp`, `T.readFile`…). Toute erreur de la console du renderer fait échouer le fichier.
+- Fichier qui utilise `T.phase` : joué deux fois sur la même copie (1 : préparation et enregistrement, 2 : réouverture et contrôles).
 - Lanceur : `tests/run.mjs`. Côté processus principal, `SA_TEST` (fichier des résultats) active les canaux `test:done`, `test:readFile`, `test:listFiles`.
 
 ### Localisation
