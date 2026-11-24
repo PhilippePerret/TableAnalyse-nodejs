@@ -651,6 +651,7 @@ mark_creation_click:
 notation:
   bat: "字母式（字母）"
   it:  "意大利式（唱名）"
+  us:  "英式（字母）"
 
 form_position:
   before: "乐谱之前"

@@ -111,6 +111,7 @@ export const PreferencesAppData = {
   , notation_display        :{type:'select'       ,typeV:'string'   ,default:'bat', values: [
         {name: t('ui.notation.bat'), value: 'bat'}
       , {name: t('ui.notation.it'),  value: 'it'}
+      , {name: t('ui.notation.us'),  value: 'us'}
     ]}
   , notation_input          :{type:'select'       ,typeV:'string'   ,default:'bat', values: [
         {name: t('ui.notation.bat'), value: 'bat'}

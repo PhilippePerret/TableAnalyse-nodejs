@@ -653,6 +653,7 @@ mark_creation_click:
 notation:
   bat: "batave (lettre)"
   it:  "italien (note)"
+  us:  "anglais (lettre)"
 
 form_position:
   before: "Avant la partition"

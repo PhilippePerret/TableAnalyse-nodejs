@@ -14,6 +14,11 @@
   font-family:  PhilNoteIt;
   src: url("../assets/fonts/PhilNote7-it.otf");
 }
+/* Notation américaine (cadences IAC…, altérations avant le chiffre) */
+@font-face {
+  font-family:  PhilNoteUs;
+  src: url("../assets/fonts/PhilNote7-us.otf");
+}
 :root {
   --philnote-font: PhilNote;
 }

@@ -61,6 +61,10 @@ export function head(infos, code = ''){
       font-family:  PhilNoteIt;
       src: url(${fontSource('PhilNote7-it.otf')});
     }` : ''}
+    ${code.includes('PhilNoteUs') ? `@font-face {
+      font-family:  PhilNoteUs;
+      src: url(${fontSource('PhilNote7-us.otf')});
+    }` : ''}
     .philnote {
       font-family: var(--philnote-font, PhilNote);
       font-size: 32px;

@@ -652,6 +652,7 @@ mark_creation_click:
 notation:
   bat: "bátava (letra)"
   it:  "italiana (nota)"
+  us:  "inglés (letra)"
 
 form_position:
   before: "Antes de la partitura"

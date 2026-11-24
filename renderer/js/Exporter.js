@@ -40,6 +40,7 @@ const APP_FONTS   = [
     {family: 'PhilNote', weight: 'normal', file: 'PhilNote7-Regular.otf'}
   , {family: 'PhilNote', weight: 'bold',   file: 'PhilNote2-Bold.otf'}
   , {family: 'PhilNoteIt', weight: 'normal', file: 'PhilNote7-it.otf'}
+  , {family: 'PhilNoteUs', weight: 'normal', file: 'PhilNote7-us.otf'}
 ]
 
 // Formats de page courants (mm, portrait)

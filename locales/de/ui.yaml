@@ -652,6 +652,7 @@ mark_creation_click:
 notation:
   bat: "batavisch (Buchstabe)"
   it:  "italienisch (Note)"
+  us:  "englisch (Buchstabe)"
 
 form_position:
   before: "Vor der Partitur"

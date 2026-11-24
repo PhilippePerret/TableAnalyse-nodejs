@@ -652,6 +652,7 @@ mark_creation_click:
 notation:
   bat: "batavian (letter)"
   it:  "italian (note)"
+  us:  "english (letter)"
 
 form_position:
   before: "Before the score"
