@@ -53,8 +53,11 @@ const T = (() => {
     mouse(target, type, opts = {}){
       target.dispatchEvent(new MouseEvent(type, Object.assign({bubbles: true, cancelable: true, button: 0}, opts)))
     },
+    // Touche pressée puis relâchée (+opts+ : metaKey, shiftKey…)
     key(target, key, opts = {}){
-      target.dispatchEvent(new KeyboardEvent('keydown', Object.assign({bubbles: true, cancelable: true, key}, opts)))
+      for ( const type of ['keydown', 'keyup'] ) {
+        target.dispatchEvent(new KeyboardEvent(type, Object.assign({bubbles: true, cancelable: true, key}, opts)))
+      }
     },
   }
 
