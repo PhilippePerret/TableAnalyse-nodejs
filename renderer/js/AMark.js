@@ -9,6 +9,7 @@ import { Current, setModified } from './Current.js'
 import { pref } from './Preferences.js'
 import { contentForField, contentFromField } from './Notation.js'
 import { TEXT_ITALIAN_NOTES, bataveOf } from './lib/notation.js'
+import { supize } from './lib/exposants.js'
 import { BORDER_INTENSITY } from './Preferences_AppData.js'
 import { Grid } from './Grid.js'
 import { Systeme } from './Systeme.js'
@@ -519,21 +520,22 @@ changeTextAlignement(css){
 get formated_content(){
   // Saut de page, délimitation : leur nom (et la hauteur)
   if ( this.isLayoutLine ) {
-    return escapeLt(TYPES_MISE_EN_PAGE[this.subtype].name + (this.content ? ` : ${this.content}` : ''))
+    return supize(escapeLt(TYPES_MISE_EN_PAGE[this.subtype].name + (this.content ? ` : ${this.content}` : '')))
   }
   // Variables (`{title}`, motif…) remplacées par leur valeur
   const content = Variables.replaceIn(this.content)
   if ( this.hasFormatedText && content ) {
     return this.markdownize(this.tunize(escapeLt(content)))
   } else {
-    return content && escapeLt(content)
+    // Exposants (« 1^er^ »), sauf dans les marques en police PhilNote
+    // (accords, harmonies…), où « ^ » appartient au chiffrage (#236)
+    return content && (TYPES_PHILHARMONIEFONT.includes(this.type) ? escapeLt(content) : supize(escapeLt(content)))
   }
 }
 markdownize(str){
-  return str.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+  return supize(str).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
           .replace(/\*(.+?)\*/g, '<i>$1</i>')
           .replace(/\b_(.+?)_\b/g, '<u>$1</u>')
-          .replace(/\^(te|re|er|e)/g, '<sup>$1</sup>')
           .replace(/¡(.+?)¡/g,'<span class="smaller">$1</span>')
           .replace(/__RET__/g, '<br>')
           .replace(/\[#([0-9]+?)\]/, '<span class="goto-tag" data-tag="$1">⎆</span>')

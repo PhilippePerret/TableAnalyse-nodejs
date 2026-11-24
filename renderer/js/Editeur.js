@@ -5,6 +5,7 @@ import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
 import { AMark_Editor } from './AMark_Editor.js'
 import { AMARQUES_TYPES, typeHasSubtype } from './Constants.js'
+import { supize, plainSup } from './lib/exposants.js'
 /**
  * Classe Editeur
  * --------------
@@ -242,14 +243,14 @@ export class Editeur {
     if ( mode == 'menu' ) {
       this.suggestMenu.appendChild(DCreate('OPTION', {value:'', text:t('ui.marks.suggestions.menu_title')}))
       const menuText = (sug.menuText || (v => v))
-      values.forEach((v, i) => this.suggestMenu.appendChild(DCreate('OPTION', {value:String(i), text:escapeLt(displayedValue(menuText(v)))})))
+      values.forEach((v, i) => this.suggestMenu.appendChild(DCreate('OPTION', {value:String(i), text:escapeLt(plainSup(displayedValue(menuText(v))))})))
       this.suggestMenu.selectedIndex = 0
     } else if ( mode == 'panel' ) {
       values.forEach((v, i) => {
         const letter = i < LETTERS.length ? LETTERS[i] : ''
         this.suggestList.appendChild(DCreate('DIV', {class:'suggestion', 'data-index':String(i), inner:[
             DCreate('SPAN', {class:'letter', text:letter})
-          , DCreate('SPAN', {class:'value',  text:escapeLt(displayedValue(v))})
+          , DCreate('SPAN', {class:'value',  text:sug.philnote ? escapeLt(displayedValue(v)) : supize(escapeLt(displayedValue(v)))})
         ]}))
       })
       this.suggestList.scrollTop = 0

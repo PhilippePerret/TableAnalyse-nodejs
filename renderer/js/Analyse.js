@@ -8,7 +8,7 @@
 import { DCreate, DGet } from './dom.js'
 import { not, isNil } from './lib/common.js'
 import { message, erreur, Message } from './lib/Message.js'
-import { raise } from './handies.js'
+import { raise, escapeLt } from './handies.js'
 import { invoke } from './api.js'
 import { Sablier } from './Sablier.js'
 import { Current } from './Current.js'
@@ -26,6 +26,7 @@ import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
 import { Variables } from './Variables.js'
 import { History } from './History.js'
+import { supize } from './lib/exposants.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
 const SYSTEMS_MARGIN = 40
@@ -793,8 +794,9 @@ static async exportCurrentToHtml(){
  */
 export function setWindowTitle(infos){
   infos = infos || {}
-  DGet('#window-title').textContent = [infos.piece_title, infos.composer, infos.analyse_title]
-    .map(s => String(s || '').trim()).filter(Boolean).join(', ')
+  // Exposants (« 1^er^ », #236)
+  DGet('#window-title').innerHTML = supize(escapeLt([infos.piece_title, infos.composer, infos.analyse_title]
+    .map(s => String(s || '').trim()).filter(Boolean).join(', ')))
 }
 
 /**

@@ -9,6 +9,7 @@ import { UI } from './UI.js'
 import { TYPES_FORME } from './Constants.js'
 import { t } from './i18n.js'
 import { pageUsefulWidthMm } from './Exporter.js'
+import { supize, plainSup } from './lib/exposants.js'
 /**
 
   FormeBuilder
@@ -39,7 +40,8 @@ import { pageUsefulWidthMm } from './Exporter.js'
 
 */
 
-const escapeHTML = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+// Texte de l'utilisateur échappé, exposants (« 1^er^ ») compris (#236)
+const escapeHTML = s => supize(String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'))
 
 const GAP     = 300   // distance (px) entre la forme et la partition
 const MIN_GAP = 30    // distance minimale (px) entre deux numéros
@@ -113,7 +115,7 @@ export class FormeBuilder {
     levels.forEach(level => {
       const row = items.filter(p => p.level == level).sort((a, b) => a.from - b.from)
       b.appendChild(DCreate('DIV', {class: `frow level${level}`, inner: row.map((p, i) => {
-        const box = DCreate('DIV', {class: `portion ${p.subtype}${p.empty ? ' empty' : ''}`, title: p.name, inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
+        const box = DCreate('DIV', {class: `portion ${p.subtype}${p.empty ? ' empty' : ''}`, title: plainSup(p.name), inner: [DCreate('SPAN', {text: escapeHTML(p.name)})]})
         // Portion chevauchée par la suivante (fin marquée plus loin) :
         // dessinée jusqu'à celle-ci, nom centré dans ce qui est visible
         const end = Math.min(p.to, to, row[i + 1] ? row[i + 1].from : Infinity)

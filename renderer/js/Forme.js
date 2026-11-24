@@ -12,6 +12,7 @@ import { Editeur } from './Editeur.js'
 import { TYPES_FORME, formLevel } from './Constants.js'
 import { t } from './i18n.js'
 import { splitInset } from './handies.js'
+import { plainSup } from './lib/exposants.js'
 /**
 
   Forme
@@ -276,7 +277,8 @@ export class Forme {
   static labelOf(mark){
     const mes = this.nearestMeasureMark(mark)
     const name = mark.content || TYPES_FORME[mark.subtype].name
-    return mes ? t('ui.marks.forms.at_measure', {name, num: String(mes.content).trim()}) : name
+    // (texte d'option de menu : exposants sans « ^ », #236)
+    return plainSup(mes ? t('ui.marks.forms.at_measure', {name, num: String(mes.content).trim()}) : name)
   }
 
   /**

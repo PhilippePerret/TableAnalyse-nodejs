@@ -8,6 +8,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
+import { supize, plainSup } from '../renderer/js/lib/exposants.js'
 
 const CSS_FILES = ['AMark', 'AObjet', 'Forme', 'main', 'Print']
 
@@ -27,12 +28,12 @@ function stylesCss(){
 function pageTitre(infos){
   return `<div id="page_titre">
   <div class="mot">Analyse de</div>
-  <div id="titre_oeuvre">${escapeHtml(infos.piece_title)}</div>
+  <div id="titre_oeuvre">${supize(escapeHtml(infos.piece_title))}</div>
   <div class="mot">de</div>
-  <div id="composer_oeuvre">${escapeHtml(infos.composer)}</div>
-  <div id="titre_analyse">${escapeHtml(infos.analyse_title)}</div>
+  <div id="composer_oeuvre">${supize(escapeHtml(infos.composer))}</div>
+  <div id="titre_analyse">${supize(escapeHtml(infos.analyse_title))}</div>
   <div class="mot">par</div>
-  <div id="analyst">${escapeHtml(infos.analyst)}</div>
+  <div id="analyst">${supize(escapeHtml(infos.analyst))}</div>
 </div>
 `
 }
@@ -45,7 +46,7 @@ export function head(infos, code = ''){
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Analyse ${escapeHtml(infos.piece_title)}</title>
+  <title>Analyse ${escapeHtml(plainSup(infos.piece_title))}</title>
   <style type="text/css">
     @font-face {
       font-family:  PhilNote;

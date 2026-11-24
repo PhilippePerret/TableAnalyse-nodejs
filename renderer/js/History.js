@@ -8,6 +8,7 @@ import { addPanelHead } from './Panneau.js'
 import { AMARQUES_TYPES } from './Constants.js'
 import { on } from './events.js'
 import { t } from './i18n.js'
+import { plainSup } from './lib/exposants.js'
 /**
  * History
  * -------
@@ -228,7 +229,7 @@ export class History {
   static markName(data){
     if ( !data ) return '?'
     const type = AMARQUES_TYPES[data.type]
-    const content = String(data.content || '').replace(/__RET__/g, ' ').trim()
+    const content = plainSup(String(data.content || '').replace(/__RET__/g, ' ').trim())
     return (type ? type.name : data.type) + (content ? ` «\u00a0${content.length > 30 ? content.slice(0, 30) + '…' : content}\u00a0»` : '')
   }
 }
