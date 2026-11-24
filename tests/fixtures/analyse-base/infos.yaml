@@ -1,0 +1,43 @@
+---
+piece_title: ''
+composer: ''
+analyse_title: ''
+analyse_id: analyse-base
+folder: ''
+analyst: ''
+systems:
+  - image_name: system-001.jpg
+    top: 300
+    left: 0
+    measures_end: 0.9878
+  - image_name: system-002.jpg
+    top: 1266
+    left: 0
+    measures_end: 0.9899
+  - image_name: system-003.jpg
+    top: 2129
+    left: 0
+    measures_end: 0.9895
+  - image_name: system-004.jpg
+    top: 3036
+    left: 0
+    measures_end: 0.9891
+  - image_name: system-005.jpg
+    top: 3915
+    left: 0
+    measures_end: 0.9892
+  - image_name: system-006.jpg
+    top: 4816
+    left: 0
+    measures_end: 0.9899
+  - image_name: system-007.jpg
+    top: 5748
+    left: 0
+    measures_end: 0.9889
+  - image_name: system-008.jpg
+    top: 6643
+    left: 0
+    measures_end: 0.9897
+created_at: 1794840570
+updated_at: 1795445720
+app_version: 3.0.3

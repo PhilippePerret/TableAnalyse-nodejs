@@ -15,7 +15,7 @@ On peut également ajouter ` --` après l'accord pour obtenir une ligne de prolo
 [[chord-writing]]
 ===== Écriture valide des accords =====
 
-* Tous les accords se mettent en **notation batave** (de A à G). 
+* Tous les accords se mettent en **notation batave** (de A à G) sauf si la préférence « Entrée des notes » est réglée sur « Italien (note) ». 
 * Tous les accords, __même les accords mineurs__, se mettent en capital (contrairement à une tradition que nous déconseillons qui veut que les minuscules soit des accords mineurs — les minuscules, dans l'application, sont utilisées pour les notes).
 
 Pour le reste : 

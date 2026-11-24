@@ -564,6 +564,25 @@ function handle(channel, method){
 
 function registerIpc(){
 
+  // Suite de tests (tests/run.mjs), lancement de contrôle seulement :
+  // lecture des fichiers de l'analyse courante, puis résultats écrits
+  // dans le fichier SA_TEST et arrêt de l'application
+  if ( SMOKE && process.env.SA_TEST ) {
+    handle('test:readFile', ({rel}) => {
+      const p = path.join(requireCurrent().path, rel)
+      return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
+    })
+    handle('test:listFiles', ({rel}) => {
+      const p = path.join(requireCurrent().path, rel || '')
+      return fs.existsSync(p) ? fs.readdirSync(p) : null
+    })
+    handle('test:done', ({results}) => {
+      fs.writeFileSync(process.env.SA_TEST, JSON.stringify(results, null, 2))
+      setTimeout(() => app.exit(0), 100)
+      return true
+    })
+  }
+
   // Textes localisés, demandés de façon synchrone par preload.cjs
   ipcMain.on('app:locale', (e) => { e.returnValue = locale() })
 

@@ -39,6 +39,13 @@ Cette analyse consiste principalement à **poser des « <<tags, marques>>** au-
 
 === Pose des premières marques ===
 
+Avant de poser vos premières marques, vous devriez choisir dans les préférences le mode d'entrée des notes, Batave (par lettre de A à G) ou Italien (par note de Do à Si) :
+
+* ouvrez les préférences avec la menu « Analyse > Préférences » ou le raccourci clavier Cmd+, (Ctrl+, sous Windows)
+* cherchez la ligne « Entrée des notes » et choisissez votre mode d'entrée préféré,
+* réglez par la même occasion le menu suivant « Écriture des notes » qui peut être différent (par exemple, vous pouvez vouloir entrer les notes en Batave mais proposer une analyse en notes italiennes),
+* enregistrez les préférences en cliquant le bouton « Enregistrer »
+
 Vous pouvez essayer de poser vos premières marques :
 
 * cliquez à l'endroit voulu, au-dessus de la partition => le panneau du type de marque s'ouvre,

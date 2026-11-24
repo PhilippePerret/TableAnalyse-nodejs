@@ -1,6 +1,13 @@
 = Manuel de ScoreAnalyse =
 :toc:
 
+////
+FONCTIONNALITÉS À PRÉSENTER DANS LE TUTORIEL
+- alt-clic pour contourner le blocage sur un type de marque
+- écriture italienne au lieu de batave : ajouter, au tout début, avant la pose de la première marque, le choix dans les préférences des deux menus "Entrée des notes" et "Écriture des notes"
+-?utile? Problème de l'écriture "Do/" en italien/batave → documenter (dire de bien régler l'entrée des notesff)
+////
+
 include::adocs/introduction.adoc[]
 
 include::adocs/prise-en-main.adoc[]

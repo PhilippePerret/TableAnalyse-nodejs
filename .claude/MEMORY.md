@@ -51,7 +51,7 @@
 1. Issue #3 (sélection rectangle) — ancienne app, non traitée.
 2. Export image statique / SVG : non implémentés (ne l'étaient pas non plus en Ruby).
 3. « Partition rapide » (boite à outils) : dépend de la commande externe ScoreImage (`score-image`, configurable via `score_image_command` dans `prefs.json` des données utilisateur).
-4. Mettre en place des tests.
+4. PRIORITÉ (exigence de Phil, 2026-11-24) : suite de tests SÉRIEUSE couvrant toute l'app, relancée en entier après chaque changement (app professionnelle ; aujourd'hui seuls des contrôles ponctuels SA_SMOKE). À faire juste après la notation batave/italienne (commit 19aadc1). Tests dans les deux notations.
 5. Tutoriel (`Manuels/Tutoriel_ScoreAnalyse.md`) à mettre à jour.
 6. 2026-11-13 : #24 à #28, #30 à #36 commitées et poussées. #23 (transparence menus natifs) : capture d'écran attendue de Phil. #29 (langues) faite le 2026-11-13 (8 langues, menu « Langue »). Manuel (Manuels/Manuel) à traduire quand il sera presque achevé (choix de Phil). Export PDF/SVG : `renderer/js/Exporter.js`, `main/exportPdfSvg.js` (SVG testé seulement avec marques texte).
 7. Issues #5 à #9 traitées le 2026-11-12 (non fermées sur GitHub). Thèmes : `renderer/css/themes.css` + `Themes.js` (A par défaut, choix de Phil), menu Options ; en-tête des panneaux : `addPanelHead` (Panneau.js).
@@ -60,3 +60,4 @@
 - Rappel Phil (2026-11-16) : compte rendu de 3 points jugé blabla. Après exécution : « Fait. » SEUL, même pour plusieurs demandes. Question nécessaire = une ligne.
 - Raccourci « Scinder la fenêtre » = ⌘ + Maj + « : » (clavier français macOS), JAMAIS ⌘ + « : » ni ⌘ + Maj + « , » (Phil furieux 2026-11-18, raté deux fois). Géré dans `KeyboardEvents.js` (accélérateur natif `CmdOrCtrl+/` répond à ⌘ + « : » sur macOS AZERTY → `registerAccelerator: false`).
 - Issue #220 (partage à distance) : spécification validée dans `.claude/partage_220.md` (2026-11-23). La lire avant d'y travailler.
+- Contrôles ponctuels (SA_SMOKE, scripts jetables) ≠ tests : ne JAMAIS les appeler « tests » ni « validations » (Phil furieux 2026-11-24, croyait à une suite de tests).
