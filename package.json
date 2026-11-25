@@ -64,6 +64,7 @@
       "artifactName": "Table-Analyse-${version}.${ext}"
     },
     "linux": {
+      "executableName": "Table_analyse",
       "target": [
         "AppImage"
       ],
