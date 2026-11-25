@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>Manuel de ScoreAnalyse</title>
+<title>Manuel de Table d’analyse</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,7 +436,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>Manuel de ScoreAnalyse</h1>
+<h1>Manuel de Table d’analyse</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -449,9 +449,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_pose_des_premières_marques">Pose des premières marques</a></li>
 </ul>
 </li>
+<li><a href="#analyse">Qu&#8217;est-ce qu&#8217;une analyse ?</a></li>
 <li><a href="#analyse-create">Création d&#8217;une analyse</a>
 <ul class="sectlevel2">
 <li><a href="#analyse-infos">Informations concernant l&#8217;analyse</a></li>
+<li><a href="#analyse-export">Export de l&#8217;analyse</a></li>
 </ul>
 </li>
 <li><a href="#systems">Les systèmes</a>
@@ -466,14 +468,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#tags">Marques</a>
 <ul class="sectlevel2">
+<li><a href="#tags-handing">Manipulation des marques</a></li>
 <li><a href="#tags-types">Les types de marques</a></li>
 <li><a href="#tags-motifs">Motifs</a></li>
 <li><a href="#tags-text">Textes</a></li>
-<li><a href="#tags-move">Déplacement des marques</a></li>
 <li><a href="#tags-extrait">Extrait de partition</a></li>
-<li><a href="#tags-group">Groupe de marques</a></li>
-<li><a href="#tags-link">Liaison entre marques</a></li>
 <li><a href="#tags-bords">Épaisseur des bords/traits</a></li>
+<li><a href="#tags-link">Trait de liaison entre deux marques</a></li>
 </ul>
 </li>
 <li><a href="#prefs">Préférences</a>
@@ -656,6 +657,20 @@ Pour un bon numérotage des mesures, assurez-vous de faire le bon choix, de dist
 </div>
 </div>
 <div class="sect1">
+<h2 id="analyse">Qu&#8217;est-ce qu&#8217;une analyse ?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La définition de ce qu&#8217;est une <em>analyse musicale</em> peut varier en fonction des écoles (de pensée), en fonction des cursus (scolaires ou univertaires), en fonction des musiciens et des pédagogues.</p>
+</div>
+<div class="paragraph">
+<p>Pour l&#8217;application <strong><em>Table d&#8217;analyse</em></strong>, l'<em>analyse</em> est un terme générique qui accepte toutes les définitions. Chacun peut s&#8217;approprier l&#8217;application et l&#8217;utiliser à sa guise.</p>
+</div>
+<div class="paragraph">
+<p>Une pratique assez commune comprendre le chiffrage de la partition (indication des <a href="#tags-chord">accords</a> et de <a href="#tags-chiffrage">leur fonction</a>) ainsi que l'<a href="#form">établissement de la forme</a>. La <em>Table d&#8217;analyse</em> permet de le faire avec aisance et facilité.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="analyse-create">Création d&#8217;une analyse</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -752,6 +767,10 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="analyse-export">Export de l&#8217;analyse</h3>
+
 </div>
 </div>
 </div>
@@ -956,18 +975,252 @@ Vous pouvez l&#8217;obtenir facilement sur le site <a href="https://imslp.org" c
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#tags-types">Les types de marques</a></p>
+<p><a href="#tags-handing">Manipulation des marques</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#tags-pose">Pose de la marque</a></p>
 </li>
 <li>
-<p><a href="#tags-group">Regroupement des marques</a></p>
+<p><a href="#tags-select">Sélection de la marque</a></p>
 </li>
 <li>
-<p><a href="#tags-link">Lier deux marques</a></p>
+<p><a href="#tags-move">Déplacement de la marque</a></p>
+</li>
+<li>
+<p><a href="#tags-contextual">Menu contextuel de la marque</a></p>
+</li>
+<li>
+<p><a href="#tags-edit">Modification de la marque</a></p>
+</li>
+<li>
+<p><a href="#tags-delete">Suppression de la marque</a></p>
+</li>
+<li>
+<p><a href="#tags-lock">Verrouillage de la marque</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="#tags-group">Regroupement de marques</a></p>
+</li>
+<li>
+<p><a href="#tags-types"><strong>Tous les types de marque</strong></a></p>
 </li>
 <li>
 <p><a href="#tags-bords">Épaisseur des bords/traits</a></p>
 </li>
+<li>
+<p><a href="#tags-link">Lier deux marques</a></p>
+</li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tags-handing">Manipulation des marques</h3>
+<div class="sect3">
+<h4 id="tags-pose">Pose de la marque</h4>
+<div class="paragraph">
+<p>Pour ajouter une marque à l&#8217;analyse, il suffit de cliquer ou double-cliquer à l&#8217;endroit voulu sur la table d&#8217;analyse lorsqu&#8217;une analyse est ouverte.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Le choix entre le clic et le double-clic se fait dans les <a href="#prefs">préférences</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="tags-select">Sélection de la marque</h4>
+<div class="paragraph">
+<p>On sélectionne une marque simplement en cliquant sur elle à la souris, sauf lorsqu&#8217;elle est <a href="#tags-lock">verrouillée</a>. Elle se teinte alors de bleu.</p>
+</div>
+<div class="paragraph">
+<p>On peut sélectionner <strong>plusieurs marques</strong> en utilisant une des méthodes décrites ci-dessous.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">À l&#8217;aide de…</th>
+<th class="tableblock halign-left valign-top">Manipulation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Rectangle de sélection</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cliquez au-dessus et à gauche de la 1<sup>re</sup> marque à sélectionner puis, la souris appuyée, glissez jusqu&#8217;à un point au-dessous et à droite de la dernière marque, puis relâcher la souris.
+Notez que cette méthode ne sélectionne pas les <a href="#tags-lock">marques verrouillées</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Touche MAJ</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Désélectionnez toutes les marques, pressez la touche MAJ et cliquez sur toutes les marques à sélectionner.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_désélection_des_marques">Désélection des marques</h5>
+<div class="paragraph">
+<p>Pour <strong>désélectionner</strong> la ou les marques, on peut jouer la touche Esc[ape] ou cliquer ailleurs sur la table d&#8217;harmonie.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="tags-move">Déplacement de la marque</h4>
+<div class="paragraph">
+<p>Pour déplacer la marque, il faut tout d&#8217;abord la <a href="#tags-select">sélectionner</a>. Ensuite, on peut utiliser les flèches de direction haut, bas, gauche ou droite. On peut également utiliser la souris.</p>
+</div>
+<div class="paragraph">
+<p>Avec la souris, la touche Maj appuyée permet de garder le même axe en fonction du déplacement. L&#8217;axe vertical si le déplacement est vertical, l&#8217;axe horizontal si le déplacement est horizontal.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="tags-contextual">Menu contextuel de la marque</h4>
+<div class="paragraph">
+<p>La plupart des opérations sur la marque peuvent être accomplie par le biais de son <em>menu contextuel</em>. Pour ouvrir ce menu, même avec la marque déselectionnée, on peut utiliser une de ces méthodes suivant sa souris et son système d&#8217;exploitation :</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Avec une souris à plusieurs bouton, on clique-droit sur la marque.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sous MacOS, on peut cliquer sur la marque en tenant la touche Control appuyée.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="tags-edit">Modification de la marque</h4>
+<div class="paragraph">
+<p>Vous pouvez modifiez complètement la marque, jusqu&#8217;à même changer son <a href="#tags-types">type</a>. Pour ce faire, il suffit de la  et d&#8217;utiliser une de ces méthodes :</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Double-cliquez sur la marque à modifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-select">Sélectionner</a> la marque puis pressez la touche Entrée</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#tags-contextual">Ouvrez le menu contextuel</a> et choisissez l&#8217;item « Éditer… »</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="tags-delete">Suppression de la marque</h4>
+<div class="paragraph">
+<p>Attention, pour le moment, la destruction d&#8217;une marque est définitive, l&#8217;analyse n&#8217;était pas encore implémentée dans la version que vise ce manuel (2.2). Si vous supprimez la marque d&#8217;un texte long expliquant l&#8217;analyse, sans avoir encore fait d'<a href="#analyse-export">export</a>, ce texte sera définitivement perdue.</p>
+</div>
+<div class="paragraph">
+<p>Pour supprimer la marque, vous la <a href="#tags-select">sélectionnez</a> et vous utilisez une de ces techniques :</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pressez la touche BACKSPACE (effacement arrière)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pressez la touche DELETE (effacement avant)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vous activez le menu contextuel (clic-droit sur la marque) et vous choisissez « Supprimer »</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="tags-lock">Verrouillage de la marque</h4>
+<div class="paragraph">
+<p>Pour éviter le problème d&#8217;effacement involontaire d&#8217;une marque importante (cf. ci-dessus), vous pouvez tout simplement <em>verrouiller</em> la marque. Une marque verrouillée ne peut ni être détruite, ni être déplacée, ni être modifiée, ni être groupée, etc. Elle peut juste être… <em>déverrouillée</em>.</p>
+</div>
+<div class="paragraph">
+<p>Pour verrouiller la marque, choisissez l&#8217;item de menu « Verrouiller » dans le <a href="#tags-contextual">menu contextuel</a>. Inversement, pour la déverrouiller, cliquez-droit dessus (ou Ctrl+clic sur MacOS) et choisissez l&#8217;item de menu « Déverrouiller ».</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="tags-group">Groupe de marques</h4>
+<div class="paragraph">
+<p>On peut grouper des marques pour les traiter ensemble (les supprimer, les déplacer…). Voyez comment faire ci-dessous.</p>
+</div>
+<div class="sect4">
+<h5 id="_grouper_des_marques">Grouper des marques</h5>
+<div class="paragraph">
+<p>Pour grouper des marques quelconques :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#tags-select">sélectionnez les marques</a>,</p>
+</li>
+<li>
+<p>activez le menu « Marques &gt; Grouper », ou jouer le raccourci Cmd+g (Ctrl+g sous Windows) ou utilisez le menu contextuel.</p>
+</li>
+<li>
+<p>les marques sont groupées.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut la déverrouiller avant.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_dégrouper_des_marques">Dégrouper des marques</h5>
+<div class="paragraph">
+<p>Pour les dégrouper, utiliser le menu « Marques &gt; Dégrouper » ou le raccourci Cmd+Maj+g (Ctrl+Maj+g sous Windows)</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ajout_dune_marque_à_un_groupe">Ajout d&#8217;une marque à un groupe</h5>
+<div class="paragraph">
+<p>Pour ajouter une marque quelconque à un groupe :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>sélectionnez le groupe,</p>
+</li>
+<li>
+<p>sélectionnez la marque <strong>en tenant la touche Majuscule appuyée</strong>,</p>
+</li>
+<li>
+<p>choisissez le menu « Marques &gt; Ajouter au groupe » ou le raccourci Cmd+g (Ctrl+g).</p>
+</li>
+</ul>
+</div>
+<hr>
 </div>
 </div>
 </div>
@@ -1562,7 +1815,7 @@ L&#8217;immense avantage d&#8217;utiliser une variable consiste en la possibilit
 </div>
 </div>
 <div class="sect3">
-<h4 id="tags-circle">Marque de cercle ===</h4>
+<h4 id="tags-circle">Cercle ===</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1601,22 +1854,7 @@ L&#8217;immense avantage d&#8217;utiliser une variable consiste en la possibilit
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="tags-move">Déplacement des marques</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>aux flèches</p>
-</li>
-<li>
-<p>à la souris</p>
-</li>
-<li>
-<p>avec Maj &#8658; garde même axe horizontal ou vertical</p>
-</li>
-</ul>
+<hr>
 </div>
 </div>
 <div class="sect2">
@@ -1636,74 +1874,6 @@ L&#8217;immense avantage d&#8217;utiliser une variable consiste en la possibilit
 <p>suppression d&#8217;un élément (l&#8217;entête de système, etc.)</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="tags-group">Groupe de marques</h3>
-<div class="paragraph">
-<p>On peut grouper des marques pour les traiter ensemble (les supprimer, les déplacer…). Voyez comment faire ci-dessous.</p>
-</div>
-<div class="sect3">
-<h4 id="_grouper_des_marques">Grouper des marques</h4>
-<div class="paragraph">
-<p>Pour grouper des marques quelconque :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>sélectionnez les marques à la souris (rectangle de sélection, ou clic avec la touche MAJ),</p>
-</li>
-<li>
-<p>activez le menu « Marques &gt; Grouper », ou jouer le raccourci Cmd+g (Ctrl+g sous Windows) ou utilisez le menu contextuel.</p>
-</li>
-<li>
-<p>les marques sont groupées.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut la déverrouiller avant.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_dégrouper_des_marques">Dégrouper des marques</h4>
-<div class="paragraph">
-<p>Pour les dégrouper, utiliser le menu « Marques &gt; Dégrouper » ou le raccourci Cmd+Maj+g (Ctrl+Maj+g sous Windows)</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ajout_dune_marque_à_un_groupe">Ajout d&#8217;une marque à un groupe</h4>
-<div class="paragraph">
-<p>Pour ajouter une marque quelconque à un groupe :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>sélectionnez le groupe,</p>
-</li>
-<li>
-<p>sélectionnez la marque <strong>en tenant la touche Majuscule appuyée</strong>,</p>
-</li>
-<li>
-<p>choisissez le menu « Marques &gt; Ajouter au groupe » ou le raccourci Cmd+g (Ctrl+g).</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="tags-link">Liaison entre marques</h3>
-<div class="paragraph">
-<p>On peut « tirer un trait », une liaison, entre deux marques</p>
 </div>
 </div>
 <div class="sect2">
@@ -1727,14 +1897,103 @@ Lorsque l&#8217;on choisit d&#8217;appliquer la nouvelle valeur de bord ou de tr
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="tags-link">Trait de liaison entre deux marques</h3>
+<div class="paragraph">
+<p>On peut « tirer un trait », une liaison, entre deux marques</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="prefs">Préférences</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pour ouvrir le panneau des préférences, jouer ⌘, (Ctrl+, sous Windows et Linux) ou choisir « Préférences… » dans le menu « Analyse ».</p>
+<p>Les « préférences » de l&#8217;application permettent de régler un grand nombre de paramètres de l&#8217;application, depuis le comportement de la souris jusqu&#8217;à la notation de l&#8217;analyse (italienne ou batave) en passant par tous les aspects par défaut des <a href="#tags">marques</a> ou des <a href="#systems">systèmes</a>.</p>
 </div>
+<div class="paragraph">
+<p>Vous ouvrez le panneau des préférences en jouant Cmd+virgule sur MacOS (Ctrl+, sous Windows et Linux) ou en choissant le menu « Analyse &gt; Préférences… ».</p>
+</div>
+<div class="paragraph">
+<p>Vous ouvrez alors un panneau qui contient ces éléments (certaines variantes peuvent exister entre votre version et celle de ce manuel).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Paramètre</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Général</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Sauvegarde automatique</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cochée, la sauvegarde de l&#8217;analyse se fait automatiquement. Décochée, vous devez enregistrer manuellement l&#8217;analyse.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Création d&#8217;une nouvelle marque</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Définit la façon de créer une marque sur la table, par clic simple ou double-clic.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Aspect de l&#8217;analyse</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Définit comment l&#8217;analyse doit s&#8217;afficher de façon générale. En mode « Gris » ou « Clair de gris », on peut <em>sortir</em> la marque de ce mode grâce à l&#8217;item « Sortir du mode gris » de son <a href="#tags-contextual">menu contextuel</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Notation des accords</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Entrée des notes des accords</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Définit la façon dont seront tapées les notes, soit en version italienne (Do, Ré, Mi…), soit en notation batave (A, B, C…). Ce paramètre n&#8217;a <strong>aucun impact</strong> sur l&#8217;écriture des notes sur la table d&#8217;analyse.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Affichage des notes des accords</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Définit la façon dont les notes seront marquées sur la partition pour l&#8217;analyse, soit en notation italienne (Do, Ré, Mi…) soit en notation batave (A, B, C…). Ce paramètre n&#8217;a <strong>aucun impact</strong> sur la façon dont sont entrées (définies) les notes dans leur boite d&#8217;édition.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Systèmes</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Grosse section des paramètres gérant les systèmes, donc les ensembles de portées.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Verrouiller les systèmes</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Afin de <a href="#tags-pose">poser les marques</a> plus confortablement, les systèmes sont verrouillés par défaut (on nen peut pas les bouger). On peut cependant les déverrouiller ponctuellement pour les ajuster.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Largeur des systèmes</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Définit la largeur total que prendront les systèmes. Le régler en fonction de votre écran.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Décalage haut du premier système</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Définit l&#8217;espace à laisser tout en haut, avant le premier système. Il peut permettre d&#8217;ajouter le titre de l&#8217;œuvre, le compositeur, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Distance par défaut des systèmes</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Définit la distance entre chaque système. <span class="small">Attention, cette mesure se fait par rapport à l&#8217;image et non pas par rapport à la note la plus haute ou la première ligne de la première portée. D&#8217;où la nécessité de bien découper les iamges.</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Espace blanc vertical maximal (sur la table)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Permet de ne jamais trop espacer les systèmes sur la table d&#8217;analyse (i.e. ce paramètre n&#8217;a aucun impact sur la sortie)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Espace blanc vertical maximal (export)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">À l&#8217;export, tous les « blancs » sont réduits au maximum pour ne pas laisser de « trous » dans les documents. La hauteur maximale de « trou » tolérée est définie par cette valeur.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Numéros de mesure</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Distance de la ligne des numéros de mesure sous le système</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">// TODO</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2">
 <h3 id="prefs-systems">Les préférences pour les systèmes</h3>
 <div class="sect3">
@@ -1961,7 +2220,7 @@ Pour être en contact plus <em>serré</em> avec vos spectateurs, utilisez un moy
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-11-24 07:23:03 +0100
+Last updated 2026-11-25 04:04:42 +0100
 </div>
 </div>
 </body>

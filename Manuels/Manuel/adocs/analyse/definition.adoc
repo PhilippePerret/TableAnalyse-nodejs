@@ -1,0 +1,8 @@
+[[analyse]]
+== Qu'est-ce qu'une analyse ? ==
+
+La définition de ce qu'est une __analyse musicale__ peut varier en fonction des écoles (de pensée), en fonction des cursus (scolaires ou univertaires), en fonction des musiciens et des pédagogues.
+
+Pour l'application **__Table d'analyse__**, l'__analyse__ est un terme générique qui accepte toutes les définitions. Chacun peut s'approprier l'application et l'utiliser à sa guise. 
+
+Une pratique assez commune comprendre le chiffrage de la partition (indication des <<tags-chord, accords>> et de <<tags-chiffrage, leur fonction>>) ainsi que l'<<form, établissement de la forme>>. La __Table d'analyse__ permet de le faire avec aisance et facilité.

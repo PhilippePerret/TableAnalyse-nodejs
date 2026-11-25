@@ -1,7 +1,61 @@
 [[prefs]]
 == Préférences ==
 
-Pour ouvrir le panneau des préférences, jouer ⌘, (Ctrl+, sous Windows et Linux) ou choisir « Préférences… » dans le menu « Analyse ».
+Les « préférences » de l'application permettent de régler un grand nombre de paramètres de l'application, depuis le comportement de la souris jusqu'à la notation de l'analyse (italienne ou batave) en passant par tous les aspects par défaut des <<tags, marques>> ou des <<systems, systèmes>>.
+
+Vous ouvrez le panneau des préférences en jouant Cmd+virgule sur MacOS (Ctrl+, sous Windows et Linux) ou en choissant le menu « Analyse > Préférences… ».
+
+Vous ouvrez alors un panneau qui contient ces éléments (certaines variantes peuvent exister entre votre version et celle de ce manuel).
+
+[cols="1,2", options="header"]
+|====
+| Paramètre | Description
+
+2+| **Général**
+| __Sauvegarde automatique__
+| Cochée, la sauvegarde de l'analyse se fait automatiquement. Décochée, vous devez enregistrer manuellement l'analyse.
+
+| __Création d'une nouvelle marque__
+| Définit la façon de créer une marque sur la table, par clic simple ou double-clic.
+
+| __Aspect de l'analyse__
+| Définit comment l'analyse doit s'afficher de façon générale. En mode « Gris » ou « Clair de gris », on peut __sortir__ la marque de ce mode grâce à l'item « Sortir du mode gris » de son <<tags-contextual, menu contextuel>>.
+
+2+| **Notation des accords**
+
+| __Entrée des notes des accords__
+| Définit la façon dont seront tapées les notes, soit en version italienne (Do, Ré, Mi…), soit en notation batave (A, B, C…). Ce paramètre n'a **aucun impact** sur l'écriture des notes sur la table d'analyse.
+
+| __Affichage des notes des accords__
+| Définit la façon dont les notes seront marquées sur la partition pour l'analyse, soit en notation italienne (Do, Ré, Mi…) soit en notation batave (A, B, C…). Ce paramètre n'a **aucun impact** sur la façon dont sont entrées (définies) les notes dans leur boite d'édition.
+
+2+| **Systèmes**
+2+| Grosse section des paramètres gérant les systèmes, donc les ensembles de portées.
+
+| __Verrouiller les systèmes__
+| Afin de <<tags-pose, poser les marques>> plus confortablement, les systèmes sont verrouillés par défaut (on nen peut pas les bouger). On peut cependant les déverrouiller ponctuellement pour les ajuster.
+
+| __Largeur des systèmes__
+| Définit la largeur total que prendront les systèmes. Le régler en fonction de votre écran.
+
+| __Décalage haut du premier système__
+| Définit l'espace à laisser tout en haut, avant le premier système. Il peut permettre d'ajouter le titre de l'œuvre, le compositeur, etc.
+
+| __Distance par défaut des systèmes__
+| Définit la distance entre chaque système. [.small]#Attention, cette mesure se fait par rapport à l'image et non pas par rapport à la note la plus haute ou la première ligne de la première portée. D'où la nécessité de bien découper les iamges.#
+
+| __Espace blanc vertical maximal (sur la table)__
+| Permet de ne jamais trop espacer les systèmes sur la table d'analyse (i.e. ce paramètre n'a aucun impact sur la sortie)
+
+| __Espace blanc vertical maximal (export)__
+| À l'export, tous les « blancs » sont réduits au maximum pour ne pas laisser de « trous » dans les documents. La hauteur maximale de « trou » tolérée est définie par cette valeur.
+
+2+| **Numéros de mesure**
+
+| __Distance de la ligne des numéros de mesure sous le système__
+| // TODO
+
+|====
 
 include::prefs/systemes.adoc[]
 

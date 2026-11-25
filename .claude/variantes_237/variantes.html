@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>#237 — largeur des noms italiens</title>
+<style>
+@font-face{font-family:Bat;src:url(../../assets/fonts/PhilNote7-Regular.otf)}
+@font-face{font-family:Actuelle;src:url(PhilNote7-it.actuelle.otf)}
+@font-face{font-family:Noms;src:url(PhilNote7-it.noms.otf)}
+@font-face{font-family:Tout;src:url(PhilNote7-it.tout.otf)}
+@font-face{font-family:Etroits;src:url(PhilNote7-it.etroits.otf)}
+@font-face{font-family:Noms70;src:url(PhilNote7-it.noms70.otf)}
+body{font-family:-apple-system,Helvetica,sans-serif;background:#fff;color:#222;margin:24px}
+h1{font-size:20px} h2{font-size:15px;margin:28px 0 4px} p.note{font-size:13px;color:#555;margin:2px 0 6px;max-width:1100px}
+.row{position:relative;height:70px;border-bottom:1px dotted #ccc}
+.ch{position:absolute;top:12px;font-size:26pt;color:#555;white-space:nowrap;line-height:1}
+.ch.over{color:#c0392b;background:rgba(192,57,43,.08)}
+.bar{position:absolute;top:0;bottom:0;border-left:1px solid #eee}
+</style></head><body>
+<h1>#237 — Largeur des accords en notation italienne (26 pt, comme sur la table)</h1>
+<p class="note">Chaque ligne place les accords aux mêmes positions que la ligne batave (espacés de leur largeur en batave + 8 px). En rouge : accord qui chevauche le suivant.</p>
+<div id="out"></div>
+<script>
+const CHORDS = ['C', 'Fm75-', 'G7', 'Cm', 'D7-', 'B-m', 'E7', 'A-7M', 'F/a', 'G', 'C']
+const VARIANTS = [
+  ['Bat', 'Batave (référence)', 'PhilNote7, lettres.'],
+  ['Actuelle', 'A — Actuelle', 'Noms à la même hauteur que les lettres : chevauchements.'],
+  ['Noms', 'B — Noms réduits (×0,51), chiffrage inchangé', '« Fa » aussi large que « F » : consigne de largeur tenue pour toutes les notes, même taille pour toutes, mais noms nettement plus petits que le chiffrage.'],
+  ['Tout', 'C — Toute la police réduite (×0,51)', 'Mêmes proportions qu’en A, accords entiers deux fois plus petits.'],
+  ['Etroits', 'D — Noms rétrécis en largeur seulement (×0,51)', 'Même hauteur que les lettres, lettres très étroites (déformées).'],
+  ['Noms70', 'E — Noms réduits (×0,7), chiffrage inchangé', 'Compromis : moins petits, mais Do, Mi, Fa restent plus larges que C, E, F.'],
+]
+const out = document.getElementById('out')
+Promise.all(VARIANTS.map(([f]) => document.fonts.load(`26pt ${f}`, 'CDoSol7m'))).then(() => {
+  // Positions d'après la largeur batave
+  const probe = document.createElement('span') ; probe.className = 'ch' ; probe.style.fontFamily = 'Bat' ; probe.style.visibility = 'hidden'
+  document.body.appendChild(probe)
+  let x = 10 ; const xs = CHORDS.map(c => { probe.textContent = c ; const at = x ; x += probe.getBoundingClientRect().width + 8 ; return at })
+  probe.remove()
+  for ( const [font, title, note] of VARIANTS ) {
+    out.insertAdjacentHTML('beforeend', `<h2>${title}</h2><p class="note">${note}</p>`)
+    const row = document.createElement('div') ; row.className = 'row' ; out.appendChild(row)
+    const els = CHORDS.map((c, i) => { const s = document.createElement('span') ; s.className = 'ch' ; s.style.fontFamily = font ; s.style.left = xs[i] + 'px' ; s.textContent = c ; row.appendChild(s) ; return s })
+    els.forEach((s, i) => { const n = els[i + 1] ; if ( n && s.getBoundingClientRect().right > n.getBoundingClientRect().left ) s.classList.add('over') })
+  }
+})
+</script></body></html>

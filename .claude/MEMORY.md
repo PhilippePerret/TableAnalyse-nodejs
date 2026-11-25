@@ -17,6 +17,8 @@
 
 ## Notes de session
 
+- **OBLIGATOIRE — TESTS À CHAQUE IMPLÉMENTATION** (Phil furieux 2026-11-25, #240) : tout ce qui est implémenté ou corrigé (issue ou non) reçoit ses tests dans `tests/app/` ou `tests/unit/` (cf. Manuel_dev § Suite de tests), écrits AVANT le commit, dans le même commit. Puis `npm test` EN ENTIER. Sans attendre que Phil le demande. Les contrôles SA_SMOKE ne comptent pas. Tester aussi les EXPORTS (PDF, SVG, HTML) dès que l'affichage des marques est concerné : c'est l'export qui compte.
+
 - À LIRE en début de prochaine session : `.claude/A_LIRE_session_2026-11-11.md` (dernier compte rendu, ligne des numéros de mesure ; travail non commité).
 
 - Réponses : « Fait. » + strict minimum. Aucune explication non demandée.

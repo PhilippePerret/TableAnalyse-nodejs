@@ -4,11 +4,131 @@
 Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'analyse pour analyser la partition. Ce sont les noms des accords, les marques d'harmonie, les marques de modulation, d'emprunt, etc. Voir tous les <<tags-types>>.
 
 ****
-* <<tags-types>>
-* <<tags-group, Regroupement des marques>>
-* <<tags-link, Lier deux marques>>
+* <<tags-handing, Manipulation des marques>>
+** <<tags-pose>>
+** <<tags-select>>
+** <<tags-move>>
+** <<tags-contextual>>
+** <<tags-edit>>
+** <<tags-delete>>
+** <<tags-lock>>
+* <<tags-group, Regroupement de marques>>
+* <<tags-types, **Tous les types de marque**>>
 * <<tags-bords, Épaisseur des bords/traits>>
+* <<tags-link, Lier deux marques>>
 ****
+
+[[tags-handing]]
+=== Manipulation des marques ===
+
+[[tags-pose]]
+==== Pose de la marque ====
+
+Pour ajouter une marque à l'analyse, il suffit de cliquer ou double-cliquer à l'endroit voulu sur la table d'analyse lorsqu'une analyse est ouverte.
+
+NOTE: Le choix entre le clic et le double-clic se fait dans les <<prefs, préférences>>.
+
+[[tags-select]]
+==== Sélection de la marque ====
+
+On sélectionne une marque simplement en cliquant sur elle à la souris, sauf lorsqu'elle est <<tags-lock, verrouillée>>. Elle se teinte alors de bleu.
+
+On peut sélectionner **plusieurs marques** en utilisant une des méthodes décrites ci-dessous.
+
+[cols="1,3", options="header"]
+|====
+| À l'aide de… | Manipulation
+| **Rectangle de sélection**
+| Cliquez au-dessus et à gauche de la 1^re^ marque à sélectionner puis, la souris appuyée, glissez jusqu'à un point au-dessous et à droite de la dernière marque, puis relâcher la souris. 
+Notez que cette méthode ne sélectionne pas les <<tags-lock, marques verrouillées>>.
+| **Touche MAJ**
+| Désélectionnez toutes les marques, pressez la touche MAJ et cliquez sur toutes les marques à sélectionner.
+|====
+
+===== Désélection des marques =====
+
+Pour **désélectionner** la ou les marques, on peut jouer la touche Esc[ape] ou cliquer ailleurs sur la table d'harmonie.
+
+[[tags-move]]
+==== Déplacement de la marque ====
+
+Pour déplacer la marque, il faut tout d'abord la <<tags-select, sélectionner>>. Ensuite, on peut utiliser les flèches de direction haut, bas, gauche ou droite. On peut également utiliser la souris.
+
+Avec la souris, la touche Maj appuyée permet de garder le même axe en fonction du déplacement. L'axe vertical si le déplacement est vertical, l'axe horizontal si le déplacement est horizontal.
+
+[[tags-contextual]]
+==== Menu contextuel de la marque ====
+
+La plupart des opérations sur la marque peuvent être accomplie par le biais de son __menu contextuel__. Pour ouvrir ce menu, même avec la marque déselectionnée, on peut utiliser une de ces méthodes suivant sa souris et son système d'exploitation :
+
+[width="50%"]
+|====
+| Avec une souris à plusieurs bouton, on clique-droit sur la marque.
+| Sous MacOS, on peut cliquer sur la marque en tenant la touche Control appuyée.
+|====
+
+[[tags-edit]]
+==== Modification de la marque ====
+
+Vous pouvez modifiez complètement la marque, jusqu'à même changer son <<tags-types, type>>. Pour ce faire, il suffit de la  et d'utiliser une de ces méthodes : 
+
+[width="50%"]
+|====
+| Double-cliquez sur la marque à modifier
+| <<tags-select, Sélectionner>> la marque puis pressez la touche Entrée
+| <<tags-contextual, Ouvrez le menu contextuel>> et choisissez l'item « Éditer… »
+|====
+
+[[tags-delete]]
+==== Suppression de la marque ====
+
+Attention, pour le moment, la destruction d'une marque est définitive, l'analyse n'était pas encore implémentée dans la version que vise ce manuel (2.2). Si vous supprimez la marque d'un texte long expliquant l'analyse, sans avoir encore fait d'<<analyse-export, export>>, ce texte sera définitivement perdue.
+
+Pour supprimer la marque, vous la <<tags-select, sélectionnez>> et vous utilisez une de ces techniques :
+
+[width="50%"]
+|====
+| Pressez la touche BACKSPACE (effacement arrière)
+| Pressez la touche DELETE (effacement avant)
+| Vous activez le menu contextuel (clic-droit sur la marque) et vous choisissez « Supprimer »
+|====
+
+[[tags-lock]]
+==== Verrouillage de la marque ====
+
+Pour éviter le problème d'effacement involontaire d'une marque importante (cf. ci-dessus), vous pouvez tout simplement __verrouiller__ la marque. Une marque verrouillée ne peut ni être détruite, ni être déplacée, ni être modifiée, ni être groupée, etc. Elle peut juste être… __déverrouillée__.
+
+Pour verrouiller la marque, choisissez l'item de menu « Verrouiller » dans le <<tags-contextual, menu contextuel>>. Inversement, pour la déverrouiller, cliquez-droit dessus (ou Ctrl+clic sur MacOS) et choisissez l'item de menu « Déverrouiller ».
+
+[[tags-group]]
+==== Groupe de marques ====
+
+On peut grouper des marques pour les traiter ensemble (les supprimer, les déplacer…). Voyez comment faire ci-dessous.
+
+===== Grouper des marques =====
+
+Pour grouper des marques quelconques : 
+
+* <<tags-select, sélectionnez les marques>>,
+* activez le menu « Marques > Grouper », ou jouer le raccourci Cmd+g (Ctrl+g sous Windows) ou utilisez le menu contextuel.
+* les marques sont groupées.
+
+NOTE: Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut la déverrouiller avant.
+
+===== Dégrouper des marques =====
+
+Pour les dégrouper, utiliser le menu « Marques > Dégrouper » ou le raccourci Cmd+Maj+g (Ctrl+Maj+g sous Windows)
+
+===== Ajout d'une marque à un groupe =====
+
+Pour ajouter une marque quelconque à un groupe :
+
+* sélectionnez le groupe,
+* sélectionnez la marque **en tenant la touche Majuscule appuyée**,
+* choisissez le menu « Marques > Ajouter au groupe » ou le raccourci Cmd+g (Ctrl+g).
+
+
+---
 
 [[tags-types]]
 === Les types de marques ===
@@ -154,7 +274,7 @@ include::marques/textes.adoc[]
 Pour indiquer l'usage d'une pédage, sous le système. Elle correspond au degré de la note (chiffre arabe) dans la tonalité courante.
 
 [[tags-circle]]
-==== Marque de cercle ===
+==== Cercle ===
 
 * Double-cliqer à l'endroit voulu,
 * choisir « Cercle » ou taper la lettre « r ».
@@ -169,47 +289,9 @@ Pour définir la taille du cercle, bouger ses bords. La touche MAJ permet d'augm
 | Maj+Alt | Accomplit les deux en même temps
 |====
 
-
-[[tags-move]]
-=== Déplacement des marques ===
-
-- aux flèches
-- à la souris
-- avec Maj => garde même axe horizontal ou vertical
+---
 
 include::marques/extraits-partition.adoc[]
-
-[[tags-group]]
-=== Groupe de marques ===
-
-On peut grouper des marques pour les traiter ensemble (les supprimer, les déplacer…). Voyez comment faire ci-dessous.
-
-==== Grouper des marques ====
-
-Pour grouper des marques quelconque : 
-
-* sélectionnez les marques à la souris (rectangle de sélection, ou clic avec la touche MAJ),
-* activez le menu « Marques > Grouper », ou jouer le raccourci Cmd+g (Ctrl+g sous Windows) ou utilisez le menu contextuel.
-* les marques sont groupées.
-
-NOTE: Attention, une marque verrouillée ne sera jamais ajoutée à un groupe. Il faut la déverrouiller avant.
-
-==== Dégrouper des marques ====
-
-Pour les dégrouper, utiliser le menu « Marques > Dégrouper » ou le raccourci Cmd+Maj+g (Ctrl+Maj+g sous Windows)
-
-==== Ajout d'une marque à un groupe ====
-
-Pour ajouter une marque quelconque à un groupe :
-
-* sélectionnez le groupe,
-* sélectionnez la marque **en tenant la touche Majuscule appuyée**,
-* choisissez le menu « Marques > Ajouter au groupe » ou le raccourci Cmd+g (Ctrl+g).
-
-[[tags-link]]
-=== Liaison entre marques ===
-
-On peut « tirer un trait », une liaison, entre deux marques
 
 [[tags-bords]]
 === Épaisseur des bords/traits ===
@@ -219,3 +301,8 @@ Le bord de toutes les marques qui en possèdent peuvent être réglées, seule o
 Comme toutes les valeurs, on peut la définir pour chaque type de marque dans les <<prefs, préférences>> et appliquer la nouvelle valeur aussitôt.
 
 NOTE: Lorsque l'on choisit d'appliquer la nouvelle valeur de bord ou de trait, l'application demande s'il faut l'appliquer indifférement à toutes les marques de ce type ou seulement à celles qui ne définissent pas une valeur propre.
+
+[[tags-link]]
+=== Trait de liaison entre deux marques ===
+
+On peut « tirer un trait », une liaison, entre deux marques
