@@ -98,6 +98,10 @@ options_menu:
   theme_C:          "Thema C — Dunkel"
 
 mark_menu:
+  ungray_one:       "Markierung aus dem Graumodus nehmen"
+  ungray_many:      "Markierungen aus dem Graumodus nehmen"
+  regray_one:       "Markierung wieder in den Graumodus setzen"
+  regray_many:      "Markierungen wieder in den Graumodus setzen"
   group:            "Gruppieren"
   ungroup:          "Gruppierung aufheben"
   add_to_group:     "Zur Gruppe hinzufügen"
@@ -158,6 +162,8 @@ borders_menu:
 
 # Kontextmenü einer Markierung
 mark_context:
+  ungray:           "Aus dem Graumodus nehmen"
+  regray:           "Wieder in den Graumodus setzen"
   reload_image:     "Bild neu laden"
   lock:             "Sperren"
   unlock:           "Entsperren"
@@ -753,3 +759,10 @@ partage:
   said_log: "Nachricht an die Zuschauer gesendet."
   said: "%{pseudo} sagt: „%{text}“"
   said_title: "Nachricht"
+
+# Aspects de l'analyse (préférence « theme », fichiers assets/themes)
+themes:
+  commun:           "Standard"
+  discret:          "Dezent"
+  gris:             "Grau"
+  clair_de_gris:    "Hellgrau"

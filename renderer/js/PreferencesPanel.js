@@ -23,6 +23,7 @@ import { Verifications } from './Verifications.js'
 import { invoke } from './api.js'
 import { AObjet } from './AObjet.js'
 import { setModified } from './Current.js'
+import { Aspect } from './Aspect.js'
 
 // Groupes du panneau (titres : ui.prefs_groups.<id>)
 const PREFS_GROUPS = [
@@ -126,6 +127,8 @@ onChange_theme(){
     if ( key == 'name' ) continue
     Preferences.set(key, theme_data[key])
   }
+  Preferences.set('theme', theme)
+  Aspect.apply()
   /*
   |  Actualisation des codes en dur pour l'analyse courante
   */
@@ -140,6 +143,7 @@ onChange_theme(){
 afterLoadingAnalyse(){
   this.build()
   this.insertStylesCSSInHead();
+  Aspect.apply()
   this.prepareOnChangeMethods()
   // Accords qui se chevauchent, une fois les systèmes affichés
   once('systems:loaded', () => Verifications.schedule())

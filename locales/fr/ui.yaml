@@ -98,6 +98,10 @@ options_menu:
   theme_C:          "Thème C — Sombre"
 
 mark_menu:
+  ungray_one:       "Sortir la marque du mode gris"
+  ungray_many:      "Sortir les marques du mode gris"
+  regray_one:       "Remettre la marque dans le mode gris"
+  regray_many:      "Remettre les marques dans le mode gris"
   group:            "Grouper"
   ungroup:          "Dégrouper"
   add_to_group:     "Ajouter au groupe"
@@ -158,6 +162,8 @@ borders_menu:
 
 # Menu contextuel d'une marque
 mark_context:
+  ungray:           "Sortir du mode gris"
+  regray:           "Remettre dans le mode gris"
   reload_image:     "Recharger l'image"
   lock:             "Verrouiller"
   unlock:           "Déverrouiller"
@@ -754,3 +760,10 @@ partage:
   said_log: "Message envoyé aux spectateurs."
   said: "%{pseudo} vous dit : « %{text} »"
   said_title: "Message"
+
+# Aspects de l'analyse (préférence « theme », fichiers assets/themes)
+themes:
+  commun:           "Commun"
+  discret:          "Discret"
+  gris:             "Gris"
+  clair_de_gris:    "Clair de gris"

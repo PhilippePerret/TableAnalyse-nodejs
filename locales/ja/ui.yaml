@@ -98,6 +98,10 @@ options_menu:
   theme_C:          "テーマ C — ダーク"
 
 mark_menu:
+  ungray_one:       "マークをグレーモードから外す"
+  ungray_many:      "マークをグレーモードから外す"
+  regray_one:       "マークをグレーモードに戻す"
+  regray_many:      "マークをグレーモードに戻す"
   group:            "グループ化"
   ungroup:          "グループ解除"
   add_to_group:     "グループに追加"
@@ -158,6 +162,8 @@ borders_menu:
 
 # マークのコンテキストメニュー
 mark_context:
+  ungray:           "グレーモードから外す"
+  regray:           "グレーモードに戻す"
   reload_image:     "画像を再読み込み"
   lock:             "ロック"
   unlock:           "ロックを解除"
@@ -752,3 +758,10 @@ partage:
   said_log: "視聴者にメッセージを送信しました。"
   said: "%{pseudo} より：「%{text}」"
   said_title: "メッセージ"
+
+# Aspects de l'analyse (préférence « theme », fichiers assets/themes)
+themes:
+  commun:           "標準"
+  discret:          "控えめ"
+  gris:             "グレー"
+  clair_de_gris:    "ライトグレー"

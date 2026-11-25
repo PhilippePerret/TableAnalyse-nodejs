@@ -98,6 +98,10 @@ options_menu:
   theme_C:          "Tema C — Scuro"
 
 mark_menu:
+  ungray_one:       "Togli il segno dalla modalità grigia"
+  ungray_many:      "Togli i segni dalla modalità grigia"
+  regray_one:       "Rimetti il segno nella modalità grigia"
+  regray_many:      "Rimetti i segni nella modalità grigia"
   group:            "Raggruppa"
   ungroup:          "Separa"
   add_to_group:     "Aggiungi al gruppo"
@@ -158,6 +162,8 @@ borders_menu:
 
 # Menu contestuale di un segno
 mark_context:
+  ungray:           "Togli dalla modalità grigia"
+  regray:           "Rimetti nella modalità grigia"
   reload_image:     "Ricarica l'immagine"
   lock:             "Blocca"
   unlock:           "Sblocca"
@@ -753,3 +759,10 @@ partage:
   said_log: "Messaggio inviato agli spettatori."
   said: "%{pseudo} ti dice: « %{text} »"
   said_title: "Messaggio"
+
+# Aspects de l'analyse (préférence « theme », fichiers assets/themes)
+themes:
+  commun:           "Comune"
+  discret:          "Discreto"
+  gris:             "Grigio"
+  clair_de_gris:    "Grigio chiaro"

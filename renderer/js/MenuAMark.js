@@ -12,6 +12,7 @@ import { AMARQUES_TYPES } from './Constants.js'
 import { Groups } from './Groups.js'
 import { Liaison } from './Liaison.js'
 import { BorderEditor } from './BorderEditor.js'
+import { Aspect } from './Aspect.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -19,6 +20,7 @@ export class AmarkMenu extends MenusTool {
     super.init()
     this.setAllMenus(false)
     on('selection:changed', ({selection}) => this.setAllMenus(selection.length > 0))
+    on('aspect:changed', () => this.setAllMenus(this.selection.length > 0))
   }
 
 
@@ -49,6 +51,19 @@ export class AmarkMenu extends MenusTool {
     DGet('option[value="unlink"]', this.menu).disabled = !Liaison.linkOf(sel)
     // Bords (cf. BorderEditor.js) : marques à bord de la sélection
     DGet('option[value="border"]', this.menu).disabled = !sel.some(m => m.borderTarget)
+    // Mode gris (cf. Aspect.js) : sortir les marques du mode gris ou les y remettre
+    const grays = sel.filter(m => m.setUngray && !m.isLongText)
+    const regray = grays.length > 0 && grays.every(m => m.isUngray)
+    this.menuGray.innerHTML = t(`ui.mark_menu.${regray ? 'regray' : 'ungray'}_${grays.length > 1 ? 'many' : 'one'}`)
+    this.menuGray.dataset.ope = regray ? 'regray' : 'ungray'
+    this.menuGray.disabled = !Aspect.isGray || grays.length == 0
+  }
+
+  static onActivate_toggleGray(){
+    const out = this.menuGray.dataset.ope == 'ungray'
+    this.selection.filter(m => m.setUngray && !m.isLongText).forEach(m => m.setUngray(out))
+    setModified()
+    this.setAllMenus(this.selection.length > 0)
   }
 
   static onActivate_border(){
@@ -133,6 +148,9 @@ export class AmarkMenu extends MenusTool {
 
   /* --- HTML Elements ---  */
 
+  static get menuGray(){
+    return DGet('option[value="toggleGray"]', this.menu)
+  }
   static get menuLock(){
     return DGet('option[value="toogleLock"]', this.menu)
   }

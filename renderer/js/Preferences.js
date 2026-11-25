@@ -108,7 +108,8 @@ async loadThemes(){
  */
 themesAsMenu(){
   return Object.values(this.themes || {}).map(theme => {
-    const name = theme.name.substring(0,1).toUpperCase() + theme.name.substring(1).toLowerCase()
+    const key  = `ui.themes.${theme.name}`
+    const name = t(key) != key ? t(key) : theme.name.substring(0,1).toUpperCase() + theme.name.substring(1).toLowerCase()
     return {name: name, value: theme.name}
   })
 }

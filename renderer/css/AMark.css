@@ -813,3 +813,10 @@ div.amark.seg.cb-obj.cbw.v-right  { border-left-width: 0 !important; }
 div.amark.seg.cb-obj.cbw.v-left   { border-right-width: 0 !important; }
 div.amark.emp.cb-obj.cbw          { border-bottom-width: 0 !important; }
 div.amark.cad.cb-obj.cbw          { border-top-width: 0 !important; border-left-width: 0 !important; }
+
+/* Aspect de l'analyse « Gris » et « Clair de gris » (#240, cf. Aspect.js) :
+   marques atténuées, sauf les textes longs et les marques sorties du
+   mode gris (.ungray). Clair de gris : textes moins atténués. */
+.aspect-gris div.amark.aobj:not(.long):not(.ungray)          { opacity: .45 }
+.aspect-clair_de_gris div.amark.aobj:not(.long):not(.ungray) { opacity: .28 }
+.aspect-clair_de_gris div.amark.aobj:is(.txt, .seg, .mot, .bxt):not(.long):not(.ungray) { opacity: .35 }

@@ -98,6 +98,10 @@ options_menu:
   theme_C:          "主题 C — 深色"
 
 mark_menu:
+  ungray_one:       "将标记移出灰色模式"
+  ungray_many:      "将标记移出灰色模式"
+  regray_one:       "将标记恢复为灰色模式"
+  regray_many:      "将标记恢复为灰色模式"
   group:            "编组"
   ungroup:          "取消编组"
   add_to_group:     "加入编组"
@@ -158,6 +162,8 @@ borders_menu:
 
 # 标记的上下文菜单
 mark_context:
+  ungray:           "退出灰色模式"
+  regray:           "恢复灰色模式"
   reload_image:     "重新载入图像"
   lock:             "锁定"
   unlock:           "解锁"
@@ -752,3 +758,10 @@ partage:
   said_log: "消息已发送给观众。"
   said: "%{pseudo} 对您说：“%{text}”"
   said_title: "消息"
+
+# Aspects de l'analyse (préférence « theme », fichiers assets/themes)
+themes:
+  commun:           "常规"
+  discret:          "低调"
+  gris:             "灰色"
+  clair_de_gris:    "浅灰"

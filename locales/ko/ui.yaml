@@ -98,6 +98,10 @@ options_menu:
   theme_C:          "테마 C — 어두움"
 
 mark_menu:
+  ungray_one:       "마크를 회색 모드에서 빼기"
+  ungray_many:      "마크들을 회색 모드에서 빼기"
+  regray_one:       "마크를 회색 모드로 되돌리기"
+  regray_many:      "마크들을 회색 모드로 되돌리기"
   group:            "그룹으로 묶기"
   ungroup:          "그룹 해제"
   add_to_group:     "그룹에 추가"
@@ -158,6 +162,8 @@ borders_menu:
 
 # 표시의 컨텍스트 메뉴
 mark_context:
+  ungray:           "회색 모드에서 빼기"
+  regray:           "회색 모드로 되돌리기"
   reload_image:     "이미지 다시 불러오기"
   lock:             "잠그기"
   unlock:           "잠금 해제"
@@ -752,3 +758,10 @@ partage:
   said_log: "관람자에게 메시지를 보냈습니다."
   said: "%{pseudo}님의 말: «%{text}»"
   said_title: "메시지"
+
+# Aspects de l'analyse (préférence « theme », fichiers assets/themes)
+themes:
+  commun:           "기본"
+  discret:          "은은하게"
+  gris:             "회색"
+  clair_de_gris:    "연회색"

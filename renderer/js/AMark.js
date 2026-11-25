@@ -23,6 +23,7 @@ import { ExtraitComposer } from './ExtraitComposer.js'
 import { Liaison } from './Liaison.js'
 import { BorderEditor } from './BorderEditor.js'
 import { t } from './i18n.js'
+import { Aspect } from './Aspect.js'
 import { Variables } from './Variables.js'
 import { heightMm, heightText, mmPerTablePx } from './Exporter.js'
 
@@ -336,6 +337,17 @@ unlock(){
 }
 get isLocked(){
   return this.data.locked == true
+}
+
+/* --- Mode gris (cf. Aspect.js) --- */
+
+// Texte long : jamais grisé
+get isLongText(){ return this.type == 'txt' && this.subtype == 'long' }
+// Marque sortie du mode gris
+get isUngray(){ return !!(this.data.css && this.data.css.includes('ungray')) }
+setUngray(out){
+  out ? this.addCss('ungray') : this.removeCss('ungray')
+  this.obj && this.obj.classList.toggle('ungray', out)
 }
 
 /* --- Groupes : cf. Groups.js --- */
@@ -846,6 +858,8 @@ onContextMenu(e){
   // inversement
   FORME_CADRE_BORNE[this.subtype] && this.isForme && items.push({label: T(this.isBorne ? 'to_frame' : 'to_marker'), value: 'toggleFrame'})
   this.borderTarget && items.push({label: T('border'), value: 'border'})
+  // Mode gris : sortir la marque du mode gris (ou l'y remettre)
+  Aspect.isGray && !this.isLongText && items.push({label: T(this.isUngray ? 'regray' : 'ungray'), value: 'toggleGray'})
   this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'}, {label: T('reload_image'), value: 'reloadImage', enabled: !!this.data.file})
   // Deux marques sélectionnées : les relier ou les délier (cf. Liaison.js)
   if ( this.isSelected ) {
@@ -868,6 +882,11 @@ onContextChoice(choice){
       setModified()
       break
     case 'edit':          return this.edit()
+    case 'toggleGray':
+      const out = !this.isUngray
+      targets.forEach(m => m.setUngray(out))
+      setModified()
+      break
     case 'border':        return BorderEditor.open([this, ...targets.filter(m => m !== this)])
     case 'openImage':     return this.openImage()
     case 'reloadImage':   return this.showImage()

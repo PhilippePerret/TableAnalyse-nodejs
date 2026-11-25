@@ -98,6 +98,10 @@ options_menu:
   theme_C:          "Theme C — Dark"
 
 mark_menu:
+  ungray_one:       "Take the mark out of grey mode"
+  ungray_many:      "Take the marks out of grey mode"
+  regray_one:       "Put the mark back in grey mode"
+  regray_many:      "Put the marks back in grey mode"
   group:            "Group"
   ungroup:          "Ungroup"
   add_to_group:     "Add to group"
@@ -158,6 +162,8 @@ borders_menu:
 
 # Context menu of a mark
 mark_context:
+  ungray:           "Take out of grey mode"
+  regray:           "Put back in grey mode"
   reload_image:     "Reload Image"
   lock:             "Lock"
   unlock:           "Unlock"
@@ -753,3 +759,10 @@ partage:
   said_log: "Message sent to the viewers."
   said: "%{pseudo} says: “%{text}”"
   said_title: "Message"
+
+# Aspects de l'analyse (préférence « theme », fichiers assets/themes)
+themes:
+  commun:           "Common"
+  discret:          "Discreet"
+  gris:             "Grey"
+  clair_de_gris:    "Light grey"
