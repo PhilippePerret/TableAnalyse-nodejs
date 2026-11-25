@@ -693,6 +693,8 @@ export class Stage {
       img.setAttribute('src', cache.get(src))
     }
     const children = Array.from(embedded.children)
+    // Aspect de l'analyse (modes gris, cf. Aspect.js)
+    const aspect = Array.from(this.content.classList).filter(c => c.startsWith('aspect-')).join(' ')
     const {width, height, margin} = layout
     const pages = layout.slices.map(slice => {
       const [y0, y1] = slice
@@ -702,7 +704,7 @@ export class Stage {
       return `<div class="pdf-page" style="width:${width}mm;height:${height}mm;">
   <div style="position:absolute;overflow:hidden;left:${margin}mm;top:${margin}mm;width:${contentW * s}px;height:${(y1 - y0) * s}px;">
     <div style="position:absolute;left:0;top:0;transform:scale(${s});transform-origin:0 0;">
-      <section id="content" style="position:absolute;margin:0 !important;left:${-x0}px;top:${-y0}px;width:${this.content.scrollWidth}px;height:${y1}px;">
+      <section id="content" class="${aspect}" style="position:absolute;margin:0 !important;left:${-x0}px;top:${-y0}px;width:${this.content.scrollWidth}px;height:${y1}px;">
 ${inner}
       </section>
     </div>
