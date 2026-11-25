@@ -4,6 +4,7 @@
 ////
 TODO
 - poursuivre la description de chaque préférence
+- document l'avertissement de chevauchement (quand on change de notation italienne/batave)
 
 FONCTIONNALITÉS À PRÉSENTER DANS LE TUTORIEL
 -?utile? Problème de l'écriture "Do/" en italien/batave → documenter (dire de bien régler l'entrée des notesff) [Vidéo faite]
