@@ -844,6 +844,14 @@ onClick(e){
  */
 onContextMenu(e){
   stopEvent(e)
+  invoke('menu:popup', {items: this.contextMenuItems})
+    .then(choice => choice && this.onContextChoice(choice))
+    .catch(err => console.error(err))
+  return false
+}
+
+// Éléments du menu contextuel
+get contextMenuItems(){
   const T = (k) => t(`ui.mark_context.${k}`)
   const items = [
       {label: T(this.isLocked ? 'unlock' : 'lock'), value: 'lock'}
@@ -867,10 +875,7 @@ onContextMenu(e){
     Liaison.linkOf(AObjet.selection) && items.push({type: 'separator'}, {label: T('unlink'), value: 'unlink'})
   }
   items.push({type: 'separator'}, {label: T('delete'), value: 'delete'})
-  invoke('menu:popup', {items})
-    .then(choice => choice && this.onContextChoice(choice))
-    .catch(err => console.error(err))
-  return false
+  return items
 }
 
 onContextChoice(choice){
