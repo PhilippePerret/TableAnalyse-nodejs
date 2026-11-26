@@ -558,6 +558,11 @@ prefs_lines:
     form: "部分（框版）"
     measure: "小节号框"
 
+prefs_current:
+  width:  "当前宽度"
+  height: "当前高度"
+  scroll: "当前滚动位置"
+
 prefs_groups:
   animation:              "动画"
   notation:               "和弦记法"

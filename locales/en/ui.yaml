@@ -558,6 +558,11 @@ prefs_lines:
     form: "Portion (box version)"
     measure: "Measure number box"
 
+prefs_current:
+  width:  "Current width"
+  height: "Current height"
+  scroll: "Current scroll"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Chord notation"

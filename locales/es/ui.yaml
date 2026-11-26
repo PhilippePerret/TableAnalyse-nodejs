@@ -558,6 +558,11 @@ prefs_lines:
     form: "Porción (versión marco)"
     measure: "Marco de número de compás"
 
+prefs_current:
+  width:  "Anchura actual"
+  height: "Altura actual"
+  scroll: "Desplazamiento actual"
+
 prefs_groups:
   animation:              "Animación"
   notation:               "Notación de los acordes"

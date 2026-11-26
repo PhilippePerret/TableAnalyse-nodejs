@@ -69,11 +69,11 @@ export const PreferencesAppData = {
   , export_document         :{type:'inputtext'    ,typeV:'string'   ,default:'normal'   ,hidden:true}
 
   // --- Window ---
-  , window_width            :{type:'inputtext'    ,typeV:'number'   ,default:null}
-  , window_height           :{type:'inputtext'    ,typeV:'number'   ,default:null}
+  , window_width            :{type:'inputtext'    ,typeV:'number'   ,default:null ,current:'width'}
+  , window_height           :{type:'inputtext'    ,typeV:'number'   ,default:null ,current:'height'}
     // Zoom choisi de l'affichage (menu « Fenêtre > Zoom », cf. main.js)
   , zoom                    :{type:'inputtext'    ,typeV:'number'   ,default:1      ,hidden:true}
-  , last_scroll             :{type:'inputtext'    ,typeV:'number'   ,default:0}
+  , last_scroll             :{type:'inputtext'    ,typeV:'number'   ,default:0 ,current:'scroll'}
   
   // --- Couleurs ---
   , color_mesure            :{type:'inputtext'    ,typeV:'color'    ,default:'000099'      ,selectors:'div.amark.txt.mes span.content' ,apply:true}

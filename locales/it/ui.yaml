@@ -558,6 +558,11 @@ prefs_lines:
     form: "Porzione (versione riquadro)"
     measure: "Riquadro numero di battuta"
 
+prefs_current:
+  width:  "Larghezza attuale"
+  height: "Altezza attuale"
+  scroll: "Scorrimento attuale"
+
 prefs_groups:
   animation:              "Animazione"
   notation:               "Notazione degli accordi"

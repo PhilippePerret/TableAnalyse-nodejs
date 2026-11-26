@@ -558,6 +558,11 @@ prefs_lines:
     form: "Portion (version cadre)"
     measure: "Cadre numéro mesure"
 
+prefs_current:
+  width:  "Largeur actuelle"
+  height: "Hauteur actuelle"
+  scroll: "Scroll courant"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Notation des accords"

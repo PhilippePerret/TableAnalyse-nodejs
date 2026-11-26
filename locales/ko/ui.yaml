@@ -558,6 +558,11 @@ prefs_lines:
     form: "부분 (상자형)"
     measure: "마디 번호 상자"
 
+prefs_current:
+  width:  "현재 너비"
+  height: "현재 높이"
+  scroll: "현재 스크롤"
+
 prefs_groups:
   animation:              "애니메이션"
   notation:               "코드 표기법"

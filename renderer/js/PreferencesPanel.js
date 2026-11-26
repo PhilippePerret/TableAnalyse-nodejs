@@ -33,6 +33,12 @@ const LINES_KEYS = [
   , ['emprunt', 'border_emprunt'], ['cadence', 'border_cadence'], ['note', 'border_note']
   , ['form', 'border_form'], ['measure', 'border_measure']
 ]
+// Valeurs courantes (boutons des préférences de la fenêtre, #248)
+const CURRENT_VALUES = {
+    width:  () => window.outerWidth
+  , height: () => window.outerHeight
+  , scroll: () => Math.round(window.scrollY)
+}
 const PREFS_GROUPS = [
     {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme']}
   , {id: 'notation', keys: ['notation_input', 'notation_display']}
@@ -550,6 +556,17 @@ buildInputText(params){
       const old = Preferences.get(params.id)
       Preferences.saveData(params.id, field.value)
       this.apply(params.id, old)
+    })
+    cell.appendChild(btn)
+  }
+  // Bouton de la valeur courante (« Largeur actuelle », « Scroll
+  // courant »…) : mise dans le champ (et enregistrée), #248
+  if ( params.current ) {
+    const btn = DCreate('BUTTON', {class:'btn-current', text: t(`ui.prefs_current.${params.current}`)})
+    listen(btn, 'click', (e) => {
+      stopEvent(e)
+      field.value = String(CURRENT_VALUES[params.current]())
+      field.dispatchEvent(new Event('input'))
     })
     cell.appendChild(btn)
   }

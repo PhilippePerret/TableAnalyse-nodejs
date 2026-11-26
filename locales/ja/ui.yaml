@@ -558,6 +558,11 @@ prefs_lines:
     form: "部分（枠版）"
     measure: "小節番号の枠"
 
+prefs_current:
+  width:  "現在の幅"
+  height: "現在の高さ"
+  scroll: "現在のスクロール"
+
 prefs_groups:
   animation:              "アニメーション"
   notation:               "コード表記"

@@ -558,6 +558,11 @@ prefs_lines:
     form: "Abschnitt (Rahmenversion)"
     measure: "Taktnummernrahmen"
 
+prefs_current:
+  width:  "Aktuelle Breite"
+  height: "Aktuelle Höhe"
+  scroll: "Aktueller Bildlauf"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Akkordnotation"
