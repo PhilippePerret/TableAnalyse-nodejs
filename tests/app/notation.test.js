@@ -113,7 +113,7 @@ T.test('affichage en américain (#234, #242) : police américaine, contenu batav
   const options = [...document.querySelector('#pref-notation_display').options].map(o => o.value)
   T.eq(options, ['bat', 'it', 'us'], 'trois écritures proposées')
   const labelUs = document.querySelector('#pref-notation_display option[value="us"]').textContent
-  T.ok(/américain/.test(labelUs) && !/anglais/i.test(labelUs), 'libellé « américain », jamais « anglais »')
+  T.eq(labelUs, 'américain', 'libellé « américain » et rien d’autre')
   const r = create('acc', 'G7M')
   T.eq(r.mark.content, 'G7M', 'contenu enregistré en batave')
   T.eq(fontOf(r.mark), 'PhilNoteUs', 'police américaine')

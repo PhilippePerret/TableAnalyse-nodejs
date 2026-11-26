@@ -668,7 +668,7 @@ checks:
 notation:
   bat: "字母式（字母）"
   it:  "意大利式（唱名）"
-  us:  "美式（字母）"
+  us:  "美式"
 
 form_position:
   before: "乐谱之前"

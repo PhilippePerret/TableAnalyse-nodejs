@@ -669,7 +669,7 @@ checks:
 notation:
   bat: "batavisch (Buchstabe)"
   it:  "italienisch (Note)"
-  us:  "amerikanisch (Buchstabe)"
+  us:  "amerikanisch"
 
 form_position:
   before: "Vor der Partitur"
