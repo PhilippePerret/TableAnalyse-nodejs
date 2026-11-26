@@ -55,8 +55,7 @@
       "artifactName": "Table-Analyse-${version}.${ext}",
       "x64ArchFiles": "**/node_modules/@napi-rs/canvas-darwin-*/**",
       "extendInfo": {
-        "CFBundleDisplayName": "Table d’analyse",
-        "CFBundleName": "Table d’analyse"
+        "CFBundleDisplayName": "Table d’analyse"
       }
     },
     "win": {
