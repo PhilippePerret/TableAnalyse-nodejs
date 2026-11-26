@@ -510,15 +510,15 @@ prefs:
   marque_pedale_size:     {label: "지속음 크기"}
   marque_texte_size_1:    {label: "큰 텍스트 크기"}
   marque_texte_size_2:    {label: "중간 텍스트 크기"}
-  measure_line_offset:    {label: "단 아래 마디 번호 줄까지의 거리"}
-  distance_after_measure_line: {label: "마디 번호 줄과 다음 단 사이 거리"}
+  measure_line_offset:    {label: "단과 마디 번호 사이 거리"}
+  distance_after_measure_line: {label: "마디 번호와 다음 단 사이 거리"}
   marque_measure:         {label: "마디 번호 크기"}
   marque_texte_size_3:    {label: "작은 텍스트 크기"}
   marque_texte_size_4:    {label: "아주 작은 텍스트 크기"}
   window_width:           {label: "열 때 윈도우 너비"}
   window_height:          {label: "열 때 윈도우 높이"}
   last_scroll:            {label: "열 때 스크롤 위치"}
-  color_mesure:           {label: "마디 번호"}
+  color_mesure:           {label: "마디 번호 색"}
   color_accords:          {label: "코드 이름"}
   color_harmonie:         {label: "화성 기호"}
   color_mark_parties:     {label: "부분 표시"}
@@ -542,7 +542,7 @@ prefs_groups:
   systems:                "단"
   measures:               "마디 번호"
   grid:                   "격자와 정렬"
-  marks:                  "표시"
+  marks:                  "표시 크기"
   lines:                  "선"
   colors:                 "색"
   window:                 "윈도우"

@@ -510,15 +510,15 @@ prefs:
   marque_pedale_size:     {label: "Taille des pédales"}
   marque_texte_size_1:    {label: "Taille des gros textes"}
   marque_texte_size_2:    {label: "Taille des textes moyens"}
-  measure_line_offset:    {label: "Distance de la ligne des numéros de mesure sous le système"}
-  distance_after_measure_line: {label: "Distance entre la ligne des numéros de mesure et le système suivant"}
-  marque_measure:         {label: "Taille numéros de mesures"}
+  measure_line_offset:    {label: "Distance entre système et numéros de mesures"}
+  distance_after_measure_line: {label: "Distance entre numéros de mesures et système suivant"}
+  marque_measure:         {label: "Taille des numéros de mesure"}
   marque_texte_size_3:    {label: "Taille des petits textes"}
   marque_texte_size_4:    {label: "Taille des textes très petits"}
   window_width:           {label: "Largeur de la fenêtre à l’ouverture"}
   window_height:          {label: "Hauteur de la fenêtre à l’ouverture"}
   last_scroll:            {label: "Scroll à l’ouverture"}
-  color_mesure:           {label: "Numéros de mesure"}
+  color_mesure:           {label: "Couleur des numéros de mesure"}
   color_accords:          {label: "Noms d’accords"}
   color_harmonie:         {label: "Chiffrages harmoniques"}
   color_mark_parties:     {label: "Marques de partie"}
@@ -542,7 +542,7 @@ prefs_groups:
   systems:                "Systèmes"
   measures:               "Numéros de mesure"
   grid:                   "Grille et alignement"
-  marks:                  "Marques"
+  marks:                  "Taille des marques"
   lines:                  "Traits"
   colors:                 "Couleurs"
   window:                 "Fenêtre"

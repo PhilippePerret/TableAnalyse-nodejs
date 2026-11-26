@@ -510,15 +510,15 @@ prefs:
   marque_pedale_size:     {label: "Tamaño de los pedales"}
   marque_texte_size_1:    {label: "Tamaño de los textos grandes"}
   marque_texte_size_2:    {label: "Tamaño de los textos medianos"}
-  measure_line_offset:    {label: "Distancia de la línea de números de compás bajo el sistema"}
-  distance_after_measure_line: {label: "Distancia entre la línea de números de compás y el sistema siguiente"}
+  measure_line_offset:    {label: "Distancia entre sistema y números de compás"}
+  distance_after_measure_line: {label: "Distancia entre números de compás y sistema siguiente"}
   marque_measure:         {label: "Tamaño de los números de compás"}
   marque_texte_size_3:    {label: "Tamaño de los textos pequeños"}
   marque_texte_size_4:    {label: "Tamaño de los textos muy pequeños"}
   window_width:           {label: "Anchura de la ventana al abrir"}
   window_height:          {label: "Altura de la ventana al abrir"}
   last_scroll:            {label: "Desplazamiento al abrir"}
-  color_mesure:           {label: "Números de compás"}
+  color_mesure:           {label: "Color de los números de compás"}
   color_accords:          {label: "Nombres de acordes"}
   color_harmonie:         {label: "Cifrados armónicos"}
   color_mark_parties:     {label: "Marcas de parte"}
@@ -542,7 +542,7 @@ prefs_groups:
   systems:                "Sistemas"
   measures:               "Números de compás"
   grid:                   "Cuadrícula y alineación"
-  marks:                  "Marcas"
+  marks:                  "Tamaño de las marcas"
   lines:                  "Trazos"
   colors:                 "Colores"
   window:                 "Ventana"

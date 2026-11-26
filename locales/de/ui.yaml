@@ -510,15 +510,15 @@ prefs:
   marque_pedale_size:     {label: "Größe der Orgelpunkte"}
   marque_texte_size_1:    {label: "Größe großer Texte"}
   marque_texte_size_2:    {label: "Größe mittlerer Texte"}
-  measure_line_offset:    {label: "Abstand der Taktnummernlinie unter dem System"}
-  distance_after_measure_line: {label: "Abstand zwischen der Taktnummernlinie und dem nächsten System"}
+  measure_line_offset:    {label: "Abstand zwischen System und Taktnummern"}
+  distance_after_measure_line: {label: "Abstand zwischen Taktnummern und nächstem System"}
   marque_measure:         {label: "Größe der Taktnummern"}
   marque_texte_size_3:    {label: "Größe kleiner Texte"}
   marque_texte_size_4:    {label: "Größe sehr kleiner Texte"}
   window_width:           {label: "Fensterbreite beim Öffnen"}
   window_height:          {label: "Fensterhöhe beim Öffnen"}
   last_scroll:            {label: "Bildlauf beim Öffnen"}
-  color_mesure:           {label: "Taktnummern"}
+  color_mesure:           {label: "Farbe der Taktnummern"}
   color_accords:          {label: "Akkordnamen"}
   color_harmonie:         {label: "Harmonische Bezifferung"}
   color_mark_parties:     {label: "Teilmarkierungen"}
@@ -542,7 +542,7 @@ prefs_groups:
   systems:                "Systeme"
   measures:               "Taktnummern"
   grid:                   "Raster und Ausrichtung"
-  marks:                  "Markierungen"
+  marks:                  "Größe der Markierungen"
   lines:                  "Linien"
   colors:                 "Farben"
   window:                 "Fenster"

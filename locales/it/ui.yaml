@@ -510,15 +510,15 @@ prefs:
   marque_pedale_size:     {label: "Dimensione dei pedali"}
   marque_texte_size_1:    {label: "Dimensione dei testi grandi"}
   marque_texte_size_2:    {label: "Dimensione dei testi medi"}
-  measure_line_offset:    {label: "Distanza della linea dei numeri di battuta sotto il sistema"}
-  distance_after_measure_line: {label: "Distanza tra la linea dei numeri di battuta e il sistema seguente"}
+  measure_line_offset:    {label: "Distanza tra sistema e numeri di battuta"}
+  distance_after_measure_line: {label: "Distanza tra numeri di battuta e sistema seguente"}
   marque_measure:         {label: "Dimensione dei numeri di battuta"}
   marque_texte_size_3:    {label: "Dimensione dei testi piccoli"}
   marque_texte_size_4:    {label: "Dimensione dei testi molto piccoli"}
   window_width:           {label: "Larghezza della finestra all'apertura"}
   window_height:          {label: "Altezza della finestra all'apertura"}
   last_scroll:            {label: "Scorrimento all'apertura"}
-  color_mesure:           {label: "Numeri di battuta"}
+  color_mesure:           {label: "Colore dei numeri di battuta"}
   color_accords:          {label: "Nomi degli accordi"}
   color_harmonie:         {label: "Cifrature armoniche"}
   color_mark_parties:     {label: "Segni di parte"}
@@ -542,7 +542,7 @@ prefs_groups:
   systems:                "Sistemi"
   measures:               "Numeri di battuta"
   grid:                   "Griglia e allineamento"
-  marks:                  "Segni"
+  marks:                  "Dimensione dei segni"
   lines:                  "Linee"
   colors:                 "Colori"
   window:                 "Finestra"

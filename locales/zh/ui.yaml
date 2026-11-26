@@ -510,15 +510,15 @@ prefs:
   marque_pedale_size:     {label: "持续音大小"}
   marque_texte_size_1:    {label: "大号文本大小"}
   marque_texte_size_2:    {label: "中号文本大小"}
-  measure_line_offset:    {label: "小节号行位于声部组下方的距离"}
-  distance_after_measure_line: {label: "小节号行与下一个声部组的距离"}
+  measure_line_offset:    {label: "声部组与小节号的距离"}
+  distance_after_measure_line: {label: "小节号与下一个声部组的距离"}
   marque_measure:         {label: "小节号大小"}
   marque_texte_size_3:    {label: "小号文本大小"}
   marque_texte_size_4:    {label: "极小文本大小"}
   window_width:           {label: "打开时的窗口宽度"}
   window_height:          {label: "打开时的窗口高度"}
   last_scroll:            {label: "打开时的滚动位置"}
-  color_mesure:           {label: "小节号"}
+  color_mesure:           {label: "小节号颜色"}
   color_accords:          {label: "和弦名称"}
   color_harmonie:         {label: "和声级数标记"}
   color_mark_parties:     {label: "部分标记"}
@@ -542,7 +542,7 @@ prefs_groups:
   systems:                "声部组"
   measures:               "小节号"
   grid:                   "网格与对齐"
-  marks:                  "标记"
+  marks:                  "标记大小"
   lines:                  "线条"
   colors:                 "颜色"
   window:                 "窗口"
