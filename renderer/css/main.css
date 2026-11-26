@@ -278,6 +278,8 @@ div#export_custom_size div.rows {
 div#export_panel div.row,
 div#export_custom_size div.row { display: contents; }
 div#export_panel div.row[hidden] { display: none; }
+/* Case inaccessible (p.e. « Export en couleur » sans élément en couleur), libellé compris */
+div#export_panel div.row.disabled { opacity: .4; pointer-events: none; }
 div#export_panel div.row > label,
 div#export_custom_size div.row > label { text-align: right; white-space: nowrap; }
 div#export_panel div.fields,

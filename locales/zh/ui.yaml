@@ -289,6 +289,7 @@ panels:
   export:
     title:            "导出分析"
     type:             "格式"
+    color:            "彩色导出"
     document:         "文档类型"
     documents:
       normal:         "普通（KDP 类型）"

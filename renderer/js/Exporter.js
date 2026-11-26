@@ -212,6 +212,10 @@ class ExporterClass {
     const selType = DCreate('SELECT', {id: 'export_type', inner: EXPORT_TYPES.map(type => DCreate('OPTION', {value: type, text: T(`types.${type}`)}))})
     selType.value = EXPORT_TYPES.includes(pref('export_type')) ? pref('export_type') : 'pdf'
     // Type de document : normal (type KDP) ou pour imprimeur (hirondelles)
+    // Export en couleur (#247) : case accessible seulement quand des
+    // éléments sont en couleur (cf. detectColors)
+    const colorBox = DCreate('INPUT', {type: 'checkbox', id: 'export_color'})
+    colorBox.checked = !!pref('export_color')
     const selDocument = DCreate('SELECT', {id: 'export_document', inner: EXPORT_DOCUMENTS.map(d => DCreate('OPTION', {value: d, text: T(`documents.${d}`)}))})
     selDocument.value = EXPORT_DOCUMENTS.includes(pref('export_document')) ? pref('export_document') : 'normal'
     // Ligne libellé | champ(s) ; sans libellé : champ dans la colonne des champs
@@ -278,6 +282,7 @@ class ExporterClass {
         DCreate('DIV', {class: 'rows', inner: [
             row(T('type'), selType)
           , row(T('document'), selDocument)
+          , DCreate('DIV', {class: 'row export-color-row', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields', inner: [colorBox, DCreate('LABEL', {for: 'export_color', text: T('color')})]})]})
           , DCreate('DIV', {class: 'row svg-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields explication', text: T('svg_desc')})]})
           , DCreate('DIV', {class: 'row pdf-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields column', inner: [radio('page', false), radio('book', true)]})]})
           , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('measures')}), DCreate('DIV', {class: 'fields column', inner: [
@@ -311,6 +316,8 @@ class ExporterClass {
     listen(selType, 'change', setMode)
     panel.querySelectorAll('input[name="export_mode"]').forEach(r => listen(r, 'change', setMode))
     setMode()
+    this.setColorBox(panel, false)
+    this.colorsDetection = this.detectColors().then(has => this.panel === panel && this.setColorBox(panel, has))
     const close = () => { this.closeCustom() ; panel.remove() ; this.panel = null }
     addPanelHead(panel, {title: T('title'), onClose: close})
     listen(panel, 'click', (e) => e.stopPropagation())
@@ -332,6 +339,7 @@ class ExporterClass {
         , margin: toMm(num(margin), unit)
         , gap:    toMm(num(gap), unit) / UNITS.pt
         , document: selDocument.value
+        , colors:   colorBox.checked && !colorBox.disabled
       }
       if ( gap.value == '' || !(opts.gap >= 0) ) return erreur(T('bad_gap'))
       if ( DGet('#export_measures_some', panel).checked ) {
@@ -356,6 +364,7 @@ class ExporterClass {
         })
       }
       this.remember({export_type: format, export_document: opts.document})
+      colorBox.disabled || this.remember({export_color: colorBox.checked})
       close()
       this.export(format, opts)
     })
@@ -400,6 +409,29 @@ class ExporterClass {
     this.customPanel = null
   }
 
+  // Case « Export en couleur » accessible (+on+) ou grisée, son libellé
+  // compris
+  setColorBox(panel, on){
+    const box = DGet('#export_color', panel)
+    box.disabled = !on
+    box.closest('.row').classList.toggle('disabled', !on)
+  }
+
+  // @return true si l'analyse comporte des éléments en couleur (copie
+  // d'export, telle qu'elle serait exportée)
+  async detectColors(){
+    const stage = new Stage()
+    try {
+      await stage.build()
+      return stage.hasColors()
+    } catch(err) {
+      console.error(err)
+      return false
+    } finally {
+      stage.remove()
+    }
+  }
+
   remember(values){
     Object.entries(values).forEach(([key, value]) => {
       Preferences.saveData(key, value)
@@ -420,6 +452,9 @@ class ExporterClass {
       opts.systems && stage.keepSystems(opts.systems)
       stage.respace(opts)
       stage.addLegend()
+      // Export en couleur (case cochée, #247), sinon en niveaux de gris
+      stage.colors = !!opts.colors
+      opts.colors || stage.toGray()
       const layout = stage.layout(opts)
       const res = format == 'pdf'
         ? await invoke('analyse:exportPdf', await stage.pdfData(layout))
@@ -456,6 +491,51 @@ export class Stage {
   }
 
   remove(){ this.holder && this.holder.remove() }
+
+  /* --- Couleurs (#247) --- */
+
+  /**
+   * @return true si un élément de la copie (marque, forme…, hors images
+   * de la partition) est en couleur (pas seulement en niveaux de gris)
+   */
+  hasColors(){
+    for ( const el of this.content.querySelectorAll('*') ) {
+      if ( el.tagName == 'IMG' ) continue
+      for ( const pseudo of [null, '::before', '::after'] ) {
+        const cs = getComputedStyle(el, pseudo)
+        if ( pseudo && (!cs.content || cs.content == 'none' || cs.content == 'normal') ) continue
+        if ( cs.display == 'none' || cs.visibility == 'hidden' ) continue
+        if ( COLOR_PROPS.some(prop => isColored(cs.getPropertyValue(prop))) ) return true
+      }
+    }
+    return false
+  }
+
+  /**
+   * Copie mise en niveaux de gris (export sans couleur) : chaque couleur
+   * remplacée par le gris de même luminance, sur l'élément (style en
+   * ligne) ou son pseudo-élément (règle propre, cf. grayCss)
+   */
+  toGray(){
+    const rules = []
+    let n = 0
+    for ( const el of this.content.querySelectorAll('*') ) {
+      if ( el.tagName == 'IMG' ) continue
+      for ( const pseudo of [null, '::before', '::after'] ) {
+        const cs = getComputedStyle(el, pseudo)
+        if ( pseudo && (!cs.content || cs.content == 'none' || cs.content == 'normal') ) continue
+        const decls = COLOR_PROPS.map(prop => [prop, cs.getPropertyValue(prop)]).filter(([, v]) => isColored(v))
+        if ( !decls.length ) continue
+        if ( !pseudo ) { decls.forEach(([prop, v]) => el.style.setProperty(prop, grayOf(v), 'important')) ; continue }
+        // (sélecteur plus fort que ceux du mode couleur)
+        const cls = `sa-gray-${++n}`
+        el.classList.add(cls)
+        rules.push(`section#content .${cls}${pseudo} {${decls.map(([prop, v]) => `${prop}:${grayOf(v)} !important;`).join('')}}`)
+      }
+    }
+    this.grayCss = rules.join('\n')
+    rules.length && this.holder.appendChild(DCreate('STYLE', {text: this.grayCss}))
+  }
 
   /**
    * Seuls les systèmes d'index +indexes+ (Set) sont exportés, avec leurs
@@ -756,7 +836,11 @@ ${inner}
   </div>
 </div>`
     })
-    const styles = `<style type="text/css">\n${PreferencesPanel.buildSelectorsInHead()}\n</style>`
+    // Couleurs : celles du mode couleur (export en couleur) ou les gris
+    // des pseudo-éléments (export sans couleur, cf. toGray)
+    const colorTag = DGet('style#mode_couleur')
+    const colorCss = this.colors && colorTag && !colorTag.disabled ? colorTag.textContent : ''
+    const styles = `<style type="text/css">\n${PreferencesPanel.buildSelectorsInHead()}\n${colorCss}\n${this.grayCss || ''}\n</style>`
     return {code_html: styles + pages.join('\n'), width: width + 2 * crop, height: height + 2 * crop}
   }
 
@@ -932,6 +1016,27 @@ ${crop ? cropMarksLines(layout.width, layout.height, crop) : ''}
 }
 
 /* --- Fonctions utilitaires (SVG) --- */
+
+// Propriétés de couleur examinées (export en couleur, #247)
+const COLOR_PROPS = ['color', 'background-color', 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', 'outline-color', 'fill', 'stroke', 'text-decoration-color']
+// Composantes [r, g, b, a] d'une couleur CSS calculée (rgb[a](…)), ou null
+function rgbaOf(css){
+  const m = String(css).match(/^rgba?\(([^)]+)\)$/)
+  if ( !m ) return null
+  const [r, g, b, a = 1] = m[1].split(/[\s,\/]+/).filter(Boolean).map(Number)
+  return [r, g, b, a]
+}
+// Couleur visible qui n'est pas un gris (écart entre composantes)
+function isColored(css){
+  const c = rgbaOf(css)
+  return !!c && c[3] > 0 && Math.max(c[0], c[1], c[2]) - Math.min(c[0], c[1], c[2]) > 12
+}
+// Gris de même luminance (transparence gardée)
+function grayOf(css){
+  const [r, g, b, a] = rgbaOf(css)
+  const l = Math.round(0.299 * r + 0.587 * g + 0.114 * b)
+  return a < 1 ? `rgba(${l}, ${l}, ${l}, ${a})` : `rgb(${l}, ${l}, ${l})`
+}
 
 function num(n, decimals = 3){
   return String(Math.round(n * 10 ** decimals) / 10 ** decimals)

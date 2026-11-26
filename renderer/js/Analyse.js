@@ -159,7 +159,8 @@ toggleModeColor(modeON){
   if ( modeON && not(DGet('style#mode_couleur')) ) {
     this.buildStyleTagForModeColor()
   }
-  DGet('style#mode_couleur').disabled = !modeON
+  const tag = DGet('style#mode_couleur')
+  tag && (tag.disabled = !modeON)
 }
 /**
 * Construire la balise <style> pour le mode couleur

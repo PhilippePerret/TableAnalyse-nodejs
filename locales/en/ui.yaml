@@ -289,6 +289,7 @@ panels:
   export:
     title:            "Export the Analysis"
     type:             "Format"
+    color:            "Export in color"
     document:         "Document type"
     documents:
       normal:         "Normal (KDP type)"

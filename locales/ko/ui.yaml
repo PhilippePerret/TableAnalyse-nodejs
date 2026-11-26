@@ -289,6 +289,7 @@ panels:
   export:
     title:            "분석 내보내기"
     type:             "형식"
+    color:            "컬러로 내보내기"
     document:         "문서 유형"
     documents:
       normal:         "일반 (KDP 유형)"

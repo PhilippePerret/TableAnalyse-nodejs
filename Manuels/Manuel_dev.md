@@ -175,6 +175,8 @@ Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; esp
 
 Type de document (#241, menu du panneau d'export, préférence cachée `export_document`) : `normal` (« Normal (type KDP) ») ou `printer` (« Imprimeur ») : page agrandie de `CROP_ZONE_MM` de chaque côté (`layout.crop`), hirondelles aux coins (`cropMarks`), en PDF et en SVG.
 
+Export en couleur (#247, case du panneau d'export, préférence cachée `export_color`) : case accessible seulement si la copie d'export a des éléments en couleur (`Stage.hasColors`, couleurs non grises, images des systèmes exclues ; détection à l'ouverture du panneau). En couleur : styles du mode couleur ajoutés au PDF. Sans : `Stage.toGray` (gris de même luminance, en ligne ou règle propre des pseudo-éléments).
+
 Panneau des préférences (#239) : position mémorisée (`panneauFixedPosition` du propriétaire d'un `Panneau`, `localStorage`), jamais placé près du clic.
 
 

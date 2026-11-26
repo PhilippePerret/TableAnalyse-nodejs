@@ -67,6 +67,7 @@ export const PreferencesAppData = {
   , export_systems_gap      :{type:'inputtext'    ,typeV:'number'   ,default:20         ,unite:'pt'}
   , export_type             :{type:'inputtext'    ,typeV:'string'   ,default:'pdf'      ,hidden:true}
   , export_document         :{type:'inputtext'    ,typeV:'string'   ,default:'normal'   ,hidden:true}
+  , export_color            :{type:'checkbox'     ,typeV:'boolean'  ,default:false      ,hidden:true}
 
   // --- Window ---
   , window_width            :{type:'inputtext'    ,typeV:'number'   ,default:null ,current:'width'}
