@@ -26,6 +26,7 @@
   },
   "build": {
     "appId": "fr.philippeperret.table-analyse",
+    "productName": "Table Analyse",
     "icon": "assets/icons/icon.png",
     "files": [
       "main/**",
@@ -54,7 +55,8 @@
       "artifactName": "Table-Analyse-${version}.${ext}",
       "x64ArchFiles": "**/node_modules/@napi-rs/canvas-darwin-*/**",
       "extendInfo": {
-        "CFBundleDisplayName": "Table d’analyse"
+        "CFBundleDisplayName": "Table d’analyse",
+        "CFBundleName": "Table d’analyse"
       }
     },
     "win": {
@@ -62,6 +64,9 @@
         "nsis"
       ],
       "artifactName": "Table-Analyse-${version}.${ext}"
+    },
+    "nsis": {
+      "shortcutName": "Table d’analyse"
     },
     "linux": {
       "executableName": "Table_analyse",

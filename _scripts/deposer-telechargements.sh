@@ -11,6 +11,10 @@
 # Écrit SEULEMENT dans DOSSIER (dossier des données du site, hors des
 # sites publiés) : chaque fichier y est d'abord envoyé sous un nom
 # provisoire, puis renommé (aucun fichier à moitié envoyé n'est proposé).
+#
+# Hébergement Alwaysdata saturé un jour : les fichiers peuvent aussi être
+# déposés sur le CloudFlare de Phil (R2, qui héberge déjà la vidéo de
+# démonstration), api/telecharger.php redirigeant alors vers eux.
 
 VERSION="$1"
 HEBERGEMENT="ssh-icare.alwaysdata.net"

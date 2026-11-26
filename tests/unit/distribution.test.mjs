@@ -25,6 +25,8 @@ test('Linux (AppImage) : nom du programme accepté par electron-builder', () => 
 test('nom affiché : « Table d’analyse » sur les trois systèmes', () => {
   assert.equal(PKG.productName, 'Table d’analyse')
   assert.equal(PKG.build.mac.extendInfo.CFBundleDisplayName, 'Table d’analyse')
+  assert.equal(PKG.build.mac.extendInfo.CFBundleName, 'Table d’analyse')
+  assert.equal(PKG.build.nsis.shortcutName, 'Table d’analyse')
   assert.equal(PKG.build.linux.desktop.entry.Name, 'Table d’analyse')
 })
 
@@ -32,4 +34,10 @@ test('fichiers téléchargeables : « Table-Analyse-<version>.<ext> », sans car
   for ( const os of ['mac', 'win', 'linux'] ) {
     assert.equal(PKG.build[os].artifactName, 'Table-Analyse-${version}.${ext}', os)
   }
+})
+
+test('application installée : « Table Analyse.app » (nom de la commande de déblocage macOS)', () => {
+  assert.equal(PKG.build.productName, 'Table Analyse')
+  const { sanitizeFileName: sf } = { sanitizeFileName }
+  assert.equal(sf(PKG.build.productName), 'Table Analyse', 'nom du paquet .app')
 })
