@@ -107,11 +107,13 @@ T.test('exports en notation italienne (SVG, PDF)', async () => {
   setPref('notation_display', 'bat')
 })
 
-T.test('affichage en anglais (#234) : police américaine, contenu batave inchangé, exports', async () => {
+T.test('affichage en américain (#234, #242) : police américaine, contenu batave inchangé, exports', async () => {
   setPref('notation_input', 'bat') ; setPref('notation_display', 'us')
   T.eq(Preferences.get('notation_display'), 'us', 'préférence')
   const options = [...document.querySelector('#pref-notation_display').options].map(o => o.value)
   T.eq(options, ['bat', 'it', 'us'], 'trois écritures proposées')
+  const labelUs = document.querySelector('#pref-notation_display option[value="us"]').textContent
+  T.ok(/américain/.test(labelUs) && !/anglais/i.test(labelUs), 'libellé « américain », jamais « anglais »')
   const r = create('acc', 'G7M')
   T.eq(r.mark.content, 'G7M', 'contenu enregistré en batave')
   T.eq(fontOf(r.mark), 'PhilNoteUs', 'police américaine')

@@ -664,7 +664,7 @@ checks:
 notation:
   bat: "바타비아식 (문자)"
   it:  "이탈리아식 (음이름)"
-  us:  "영어식 (문자)"
+  us:  "미국식 (문자)"
 
 form_position:
   before: "악보 앞"

@@ -666,7 +666,7 @@ checks:
 notation:
   bat: "batave (lettre)"
   it:  "italien (note)"
-  us:  "anglais (lettre)"
+  us:  "américain (lettre)"
 
 form_position:
   before: "Avant la partition"

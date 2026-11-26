@@ -665,7 +665,7 @@ checks:
 notation:
   bat: "batavian (letter)"
   it:  "italian (note)"
-  us:  "english (letter)"
+  us:  "american (letter)"
 
 form_position:
   before: "Before the score"

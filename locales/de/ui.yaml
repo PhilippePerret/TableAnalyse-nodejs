@@ -665,7 +665,7 @@ checks:
 notation:
   bat: "batavisch (Buchstabe)"
   it:  "italienisch (Note)"
-  us:  "englisch (Buchstabe)"
+  us:  "amerikanisch (Buchstabe)"
 
 form_position:
   before: "Vor der Partitur"

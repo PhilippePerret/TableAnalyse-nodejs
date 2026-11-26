@@ -664,7 +664,7 @@ checks:
 notation:
   bat: "バタヴィア式（文字）"
   it:  "イタリア式（音名）"
-  us:  "英語式（文字）"
+  us:  "米国式（文字）"
 
 form_position:
   before: "楽譜の前"

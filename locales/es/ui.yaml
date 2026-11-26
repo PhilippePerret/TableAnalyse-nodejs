@@ -665,7 +665,7 @@ checks:
 notation:
   bat: "bátava (letra)"
   it:  "italiana (nota)"
-  us:  "inglés (letra)"
+  us:  "americano (letra)"
 
 form_position:
   before: "Antes de la partitura"
