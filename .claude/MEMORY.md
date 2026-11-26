@@ -22,6 +22,8 @@
 - À LIRE en début de prochaine session : `.claude/A_LIRE_session_2026-11-11.md` (dernier compte rendu, ligne des numéros de mesure ; travail non commité).
 
 - Réponses : « Fait. » + strict minimum. Aucune explication non demandée.
+- AUCUN COMMENTAIRE, JAMAIS. Après une tâche : « Fait. » et RIEN d'autre (Phil furieux 2026-11-26). Jamais « relancer l'application » ni rien d'évident.
+- Libellés exigés dans une issue : EXACTEMENT ce mot, sans rien ajouter (p.e. « américain », pas « américain (lettre) », #242).
 - Manuel : JAMAIS dire à Phil de le régénérer/actualiser (il le fait en permanence via SuperBoard, 2026-11-22).
 - « Tu pourrais faire X ? » = FAIRE X, pas répondre « oui » (cf. `.claude/feedback_question_faire.md`, 2026-11-22).
   JAMAIS décrire ce qui a été fait quand c'était demandé (p.e. « la liaison suit les marques, passe dans les exports, testé… », #206, 2026-11-19) : seuls les ajouts hors demande, numérotés.

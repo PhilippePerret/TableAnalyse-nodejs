@@ -93,6 +93,32 @@ Vous ouvrez alors un panneau qui contient ces éléments (certaines variantes pe
 | __Hauteur des marques de section (au-dessus du système)__
 | Définit à quelle hauteur les marques de __Section__ vont s'afficher par défaut. Si ce sont des portions type « cadre », il est toujours possible de les déplacer ensuite. Seules les types « borne » restent toujours en place.
 
+2+| Mise en page
+2+| __Préférence concernant l'aspect des titres sur la table et lors de l'exportation en PDF ou en SVG.
+2+| On peut régler dans cette les marques de type « Mise en forme » qui permettent d'écrire des titres sur la table d'analyse.
+
+| Police 
+| Police utilisée pour écrire le titre. ELle doit exister sur le système d'exploitation.
+
+| Taille
+| La grosseur à donner au titre.
+
+| Espace avant
+| Espace blanc laissé au-dessus du titre, mais seulement à l'export en PDF ou SVG, pas sur la table d'analyse.
+
+| Espace après
+| Espace blanc laissé au-dessous du titre, mais seulement à l'export en PDF ou SVG, pas sur la table d'analyse.
+
+2+| **Traits**
+2+| __Préférences concernant tous les traits utilisables pour l'analyse, cadre et autres cercles.__
+
+| __Épaisseur__
+| Concerne la taille du bord, en épaisseur, en pixels. La valeur peut être ajustée ensuite ponctuellement.
+
+
+| __Intensité__
+| Valeur de 0 à 100 permettant de définir précisément la « teinte » par défaut du trait, de 0 (blanc) à 100 (noir intense). La valeur peut être ajustée ensuite ponctuellement.
+
 |====
 
 include::prefs/systemes.adoc[]
