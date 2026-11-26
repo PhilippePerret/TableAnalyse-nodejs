@@ -3,11 +3,15 @@
 
 ////
 TODO
+- comment signaler un problème
 - poursuivre la description de chaque préférence
 - document l'avertissement de chevauchement (quand on change de notation italienne/batave)
 
 FONCTIONNALITÉS À PRÉSENTER DANS LE TUTORIEL
 -?utile? Problème de l'écriture "Do/" en italien/batave → documenter (dire de bien régler l'entrée des notesff) [Vidéo faite]
+
+NOUVEAUX TUTORIELS
+- sur l'alignement (naturel, utilisation de la grille, alignement accord/harmonie, etc.)
 ////
 
 include::adocs/introduction.adoc[]

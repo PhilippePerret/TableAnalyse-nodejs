@@ -51,9 +51,47 @@ Vous ouvrez alors un panneau qui contient ces éléments (certaines variantes pe
 | À l'export, tous les « blancs » sont réduits au maximum pour ne pas laisser de « trous » dans les documents. La hauteur maximale de « trou » tolérée est définie par cette valeur.
 
 2+| **Numéros de mesure**
+2+| __Cette section traite de tout ce qui concerne les numéros de mesure.__
+| __Distance entre système et numéros de mesures__
+| Pour régler la place sous le système, pour y poser les marques d'harmonie, les degrés harmoniques.
 
-| __Distance de la ligne des numéros de mesure sous le système__
-| // TODO
+| __Distance entre numéros de mesures et système suivant__
+| Pour régler la distance qui va donc se trouver au-dessus du système pour poser le nom des accords (ou les segments et autres textes explicatifs)
+
+| __Taille des numéros de mesure__
+| Comme son nom l'indique on peut définir ici la grosseur, à l'affichage et à l'exportation, des numéros de mesure sur la partition.
+
+| __Couleur des numéros de mesure__
+| Couleur héxadécimale des numéros de mesure. Vous pouvez utiliser un service comme https://htmlcolorcodes.com/fr/[Code couleur HTML] pour trouver votre couleur.
+
+2+| **Grille et alignement**
+2+| __Il est question dans cette partie de tout ce qui concerne l'alignement des marques, pour obtenir l'aspect le plus esthétique possible très rapidement.__
+
+| __Ajuster en hauteur les marques de même type__
+| Si cette fonctionnalité est activée, lorsque l'on crée et que l'on déplace les marques, elles s'alignent naturellement aux autres marques de même type déjà posées sur la table, bien sûr seulement si elles se trouvent à une distance minimale définie ci-dessous.
+
+| __Distance maximale de magnétisation des marques__
+| En relation avec la préférence précédente, si la différence de hauteur d'une nouvelle marque est égale ou inférieur à cette valeur, la nouvelle marque sera alignée aux autres marques. Si, au contraire, la différence de hauteur est supérieure à cette valeur, la marque rester en place.
+
+| __Pas horizontal de la grille__
+| Lorsque la grille est affichée (et donc activée) grâce aux options, les marques peuvent se déplacer horizontalement de cette valeur.
+
+| __Pas vertical de la grille__
+| Lorsque la grille est affichée (et donc activée) grâce aux options, les marques peuvent se déplacer verticalement de cette valeur.
+
+2+| **Taille des marques**
+2+| __Comme son nom l'indique, cette section permet de définir la taille par défaut de toutes les marques.__
+|
+| Les libellés des préférences nous semblent assez explicatifs ici pour ne pas avoir à les détailler.
+
+2+| **Forme**
+2+| __Préférences concernant la forme, la structure de la pièce et sa construction sur la table d'analyse ainsi que l'aspect des marques au cours de la partition.
+
+| __Hauteur des marques de parties (au-dessus du système)__
+| Définit à quelle hauteur les marques de __Parties__ vont s'afficher par défaut. Si ce sont des portions type « cadres », il est toujours possible de les déplacer ensuite. Seules les types « borne » restent toujours en place.
+
+| __Hauteur des marques de section (au-dessus du système)__
+| Définit à quelle hauteur les marques de __Section__ vont s'afficher par défaut. Si ce sont des portions type « cadre », il est toujours possible de les déplacer ensuite. Seules les types « borne » restent toujours en place.
 
 |====
 
