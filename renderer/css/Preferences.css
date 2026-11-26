@@ -66,3 +66,6 @@ section#preferences-panel div.type-valeur input[type="text"] {
   width: 80px;
   text-align: center;
 }
+
+/* Préférence inaccessible (p.e. distance de magnétisation sans « Ajuster en hauteur », #246) */
+section#preferences-panel div.pref-disabled { opacity: .4; pointer-events: none; }

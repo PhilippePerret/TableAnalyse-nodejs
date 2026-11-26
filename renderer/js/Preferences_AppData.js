@@ -15,7 +15,7 @@ export const PreferencesAppData = {
   , distance_systemes       :{type:'inputtext'    ,typeV:'number'   ,default:50, apply:true ,unite:'px'}
   , max_table_blank         :{type:'inputtext'    ,typeV:'number'   ,default:80 ,unite:'px'}
   , adjust_same_mark        :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
-  , snap_for_adjust_pos     :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px'}
+  , snap_for_adjust_pos     :{type:'inputtext'    ,typeV:'number'   ,default:30 ,unite:'px'}
   , marque_accords_size     :{type:'inputtext'    ,typeV:'number'   ,default:26      ,unite:'pt' ,selector:'div.aobj.acc span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_harmonie_size    :{type:'inputtext'    ,typeV:'number'   ,default:26    ,unite:'pt' ,selector:'div.aobj.har span.content, div.aobj.cad span.content', selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_cadence_type_size:{type:'inputtext'    ,typeV:'number'   ,default:20    ,unite:'px' ,selector:'div.amark.cad div.mtype', selector_value:'font-size:__VALUE__px;' ,apply:true}

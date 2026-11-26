@@ -477,7 +477,7 @@ prefs:
   layout_title_3_after: {label: "3 级标题后的间距"}
   export_systems_gap:     {label: "最大垂直空白（导出）"}
   adjust_same_mark:       {label: "同类标记高度对齐"}
-  snap_for_adjust_pos:    {label: "标记对齐的吸附距离", precision: "作用于同类标记，且仅当上方的“高度对齐”偏好已勾选时有效。"}
+  snap_for_adjust_pos:    {label: "标记的最大吸附距离"}
   marque_accords_size:    {label: "和弦标记大小"}
   marque_harmonie_size:   {label: "和声标记大小"}
   marque_cadence_type_size: {label: "终止式标记文字的字号（例如“C.P.”）"}

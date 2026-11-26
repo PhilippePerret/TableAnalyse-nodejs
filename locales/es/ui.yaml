@@ -477,7 +477,7 @@ prefs:
   layout_title_3_after: {label: "Espacio después de los títulos de nivel 3"}
   export_systems_gap:     {label: "Espacio en blanco vertical máximo (exportación)"}
   adjust_same_mark:       {label: "Igualar en altura las marcas del mismo tipo"}
-  snap_for_adjust_pos:    {label: "Distancia de imantación de la alineación", precision: "Afecta a las marcas del mismo tipo y solo si la preferencia «Igualar en altura» de arriba está activada."}
+  snap_for_adjust_pos:    {label: "Distancia máxima de imantación de las marcas"}
   marque_accords_size:    {label: "Tamaño de las marcas de acorde"}
   marque_harmonie_size:   {label: "Tamaño de las marcas de armonía"}
   marque_cadence_type_size: {label: "Tamaño de letra del texto de la marca de cadencia (p. ej. “C.P.”)"}

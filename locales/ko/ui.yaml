@@ -477,7 +477,7 @@ prefs:
   layout_title_3_after: {label: "3단계 제목 뒤 간격"}
   export_systems_gap:     {label: "최대 세로 빈 공간 (내보내기)"}
   adjust_same_mark:       {label: "같은 종류의 표시 높이 맞추기"}
-  snap_for_adjust_pos:    {label: "표시 정렬 맞춤 거리", precision: "같은 종류의 표시에 적용되며, 위의 “높이 맞추기”가 켜져 있을 때만 작동합니다."}
+  snap_for_adjust_pos:    {label: "표시의 최대 자석 거리"}
   marque_accords_size:    {label: "코드 표시 크기"}
   marque_harmonie_size:   {label: "화성 표시 크기"}
   marque_cadence_type_size: {label: "종지 표시 글자 크기 (예: “C.P.”)"}

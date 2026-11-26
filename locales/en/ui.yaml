@@ -477,7 +477,7 @@ prefs:
   layout_title_3_after: {label: "Space after level 3 titles"}
   export_systems_gap:     {label: "Maximum vertical blank space (export)"}
   adjust_same_mark:       {label: "Align marks of the same type vertically"}
-  snap_for_adjust_pos:    {label: "Mark alignment snap distance", precision: "Affects marks of the same type, and only if the “Align vertically” preference above is checked."}
+  snap_for_adjust_pos:    {label: "Maximum mark snapping distance"}
   marque_accords_size:    {label: "Size of chord marks"}
   marque_harmonie_size:   {label: "Size of harmony marks"}
   marque_cadence_type_size: {label: "Font size of the cadence mark text (e.g. “C.P.”)"}

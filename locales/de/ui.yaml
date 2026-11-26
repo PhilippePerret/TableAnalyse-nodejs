@@ -477,7 +477,7 @@ prefs:
   layout_title_3_after: {label: "Abstand nach Titeln Ebene 3"}
   export_systems_gap:     {label: "Maximaler vertikaler Leerraum (Export)"}
   adjust_same_mark:       {label: "Markierungen gleichen Typs in der Höhe angleichen"}
-  snap_for_adjust_pos:    {label: "Einrastabstand für die Ausrichtung", precision: "Betrifft Markierungen gleichen Typs, und nur wenn die Einstellung „in der Höhe angleichen“ oben aktiviert ist."}
+  snap_for_adjust_pos:    {label: "Maximaler Einrastabstand der Markierungen"}
   marque_accords_size:    {label: "Größe der Akkordmarkierungen"}
   marque_harmonie_size:   {label: "Größe der Harmoniemarkierungen"}
   marque_cadence_type_size: {label: "Schriftgröße des Textes der Kadenzmarke (z. B. „C.P.“)"}

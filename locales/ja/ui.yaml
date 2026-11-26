@@ -477,7 +477,7 @@ prefs:
   layout_title_3_after: {label: "レベル 3 の見出しの後の間隔"}
   export_systems_gap:     {label: "垂直方向の最大余白（書き出し）"}
   adjust_same_mark:       {label: "同じ種類のマークの高さを揃える"}
-  snap_for_adjust_pos:    {label: "マーク整列のスナップ距離", precision: "同じ種類のマークに作用し、上の「高さを揃える」が有効な場合のみ働きます。"}
+  snap_for_adjust_pos:    {label: "マークの最大吸着距離"}
   marque_accords_size:    {label: "コードマークのサイズ"}
   marque_harmonie_size:   {label: "和声記号のサイズ"}
   marque_cadence_type_size: {label: "終止マークの文字サイズ（例：「C.P.」）"}

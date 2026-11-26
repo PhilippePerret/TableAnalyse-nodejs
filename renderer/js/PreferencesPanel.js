@@ -116,6 +116,14 @@ onChange_grid_vertical_space(){
   UI.rebuildGrid()
 }
 // Notation d'affichage des accords : police des marques (cf. Notation.js)
+// Distance de magnétisation grisée, inaccessible, quand « Ajuster en
+// hauteur les marques de même type » est décoché (#246)
+onChange_adjust_same_mark(){
+  const cb = DGet('#pref-adjust_same_mark'), field = DGet('#pref-snap_for_adjust_pos')
+  if ( !cb || !field ) return
+  field.disabled = !cb.checked
+  field.closest('.div-data').classList.toggle('pref-disabled', !cb.checked)
+}
 onChange_notation_display(){
   Preferences.saveData('notation_display', Preferences.getValueOf('notation_display'))
   this.updateStylesInHead()
@@ -146,6 +154,7 @@ afterLoadingAnalyse(){
   this.insertStylesCSSInHead();
   Aspect.apply()
   this.prepareOnChangeMethods()
+  this.onChange_adjust_same_mark()
   // Accords qui se chevauchent, une fois les systèmes affichés
   once('systems:loaded', () => Verifications.schedule())
   Verifications.schedule()
@@ -308,6 +317,7 @@ resetToDefaults(){
   })
   this.updateStylesInHead()
   Current.analyse && Current.analyse.updateModeColor()
+  this.onChange_adjust_same_mark()
 }
 
 // Enregistrement des préférences de l'analyse, puis fermeture
