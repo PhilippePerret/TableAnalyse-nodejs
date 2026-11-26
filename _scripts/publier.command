@@ -2,8 +2,9 @@
 # Fabrique les versions téléchargeables de la Table d'analyse (macOS,
 # Windows, Linux) sur GitHub et les publie dans la Release v<version> du
 # dépôt (workflow .github/workflows/distribution.yml). Met à jour la
-# version proposée par la page de téléchargement du site (src/lib/site.ts),
-# qui pointe vers ces fichiers.
+# version proposée par la page de téléchargement du site (src/lib/site.ts)
+# et dépose ces fichiers sur l'hébergement du site, sous les noms
+# « Table Analyse.<ext> » (_scripts/deposer-telechargements.sh).
 #
 # Le numéro de version est d'abord incrémenté (patch, mineure ou majeure,
 # au choix, ou aucune incrémentation) dans VERSION, package.json et
@@ -89,6 +90,9 @@ ECHECS=$(gh run view "$RUN_ID" --json jobs -q '.jobs[] | select(.conclusion != "
 
 echo "\nFichiers de la Release v$VERSION :"
 gh release view "v$VERSION" --json assets -q '.assets[].name' || fin "Release v$VERSION introuvable."
+
+# Fichiers déposés sur l'hébergement du site (« Table Analyse.<ext> »)
+"$APP_FOLDER/_scripts/deposer-telechargements.sh" "$VERSION" || fin "Dépôt des fichiers sur le site impossible."
 
 # Version proposée par la page de téléchargement du site
 [[ -f "$SITE/src/lib/site.ts" ]] && sed -i '' "s/^export const TABLE_ANALYSE_VERSION = .*/export const TABLE_ANALYSE_VERSION = '$VERSION';/" "$SITE/src/lib/site.ts"
