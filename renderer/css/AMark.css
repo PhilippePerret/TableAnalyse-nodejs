@@ -820,3 +820,6 @@ div.amark.cad.cb-obj.cbw          { border-top-width: 0 !important; border-left-
 .aspect-gris div.amark.aobj:not(.long):not(.ungray)          { opacity: .45 }
 .aspect-clair_de_gris div.amark.aobj:not(.long):not(.ungray) { opacity: .28 }
 .aspect-clair_de_gris div.amark.aobj:is(.txt, .seg, .mot, .bxt):not(.long):not(.ungray) { opacity: .35 }
+
+/* Titres dans les textes (« = », « == », « === ») */
+div.amark span.content span.txt-title { display: block; line-height: 1.2; }

@@ -545,11 +545,18 @@ get formated_content(){
   }
 }
 markdownize(str){
-  return supize(str).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+  // Titres : ligne commençant par « = », « == » ou « === » (niveaux 1 à
+  // 3, police et taille des titres de la mise en page)
+  const titleLine = (line) => {
+    const m = line.match(/^\s*(={1,3})\s+(.+?)\s*$/)
+    return m ? {title: true, html: `<span class="txt-title t${m[1].length}">${m[2]}</span>`} : {title: false, html: line}
+  }
+  const inline = (line) => line.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
           .replace(/\*(.+?)\*/g, '<i>$1</i>')
           .replace(/\b_(.+?)_\b/g, '<u>$1</u>')
           .replace(/¡(.+?)¡/g,'<span class="smaller">$1</span>')
-          .replace(/__RET__/g, '<br>')
+  return supize(str).split('__RET__').map(l => titleLine(inline(l)))
+          .reduce((out, l, i, all) => out + l.html + (i < all.length - 1 && !l.title ? '<br>' : ''), '')
           .replace(/\[#([0-9]+?)\]/, '<span class="goto-tag" data-tag="$1">⎆</span>')
 }
 tunize(str){
