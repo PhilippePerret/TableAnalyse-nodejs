@@ -132,7 +132,7 @@ Ce fichier contient toutes les marques d'analyse à poser sur la table d'analyse
 ## Notation des accords (batave / italienne)
 
 - Accords (marques accord, modulation, emprunt) TOUJOURS enregistrés en batave. Conversion : `renderer/js/lib/notation.js` (pur), branchements : `renderer/js/Notation.js`.
-- Préférences de l'analyse : `notation_display` (police des marques : `PhilNote` ou `PhilNoteIt`, variable CSS `--philnote-font` ajoutée aux styles des préférences, donc aussi aux exports) et `notation_input` (notation remise dans le champ d'édition).
+- Préférences de l'analyse : `notation_display` (police des marques : `PhilNote`, `PhilNoteIt` ou `PhilNoteUs`, libellé « américain », jamais « anglais » #242, variable CSS `--philnote-font` ajoutée aux styles des préférences, donc aussi aux exports) et `notation_input` (notation remise dans le champ d'édition).
 - Validation : noms italiens (toute casse) → lettres. « Do » = C seulement en entrée italienne (sinon Ré + « o »). Après « / », la casse est gardée (« sol/mi » → « G/e »).
 - Marques texte : « Do », « Ré », « Sol »… (forme exacte) mis dans la police des notes (`AMark#tunize`), sauf « La » et « Si » en début de phrase.
 - Écriture américaine (#234) : `notation_display: 'us'`, police `PhilNoteUs` (`assets/fonts/PhilNote7-us.otf` : PhilNote7 + glyphes de PhilNote6-US — cadences IAC, PC, DC, HC, altération avant le chiffre, M7). Fabrication : `_scripts/polices/philnote_us.py`. Contenu toujours en batave.
@@ -172,6 +172,10 @@ Assemblage : `ExtraitComposer.js` (à la création et au double-clic), boite `#e
 Marque de type `lay` (`TYPES_MISE_EN_PAGE`, `Constants.js`) : `pag` (saut de page), `del` (délimitation, contenu = hauteur « 10 mm », « 1 cm », « 20 pt »…), `tit` (titre, `data.level` 1 à 3, choisi après le sous-type dans `AMark_Editor`). Saut de page et délimitation : ligne sur la largeur des systèmes, non exportée. Titres : police et taille en préférences (`layout_title_<n>_font/size`), espaces avant/après à l'export (`layout_title_<n>_before/after`).
 
 Export (`Stage.respace`) : blocs = systèmes avec leurs éléments, titres ; espace avant un bloc = hauteur de la délimitation qui le précède, sinon espace avant/après du titre, sinon au plus l'espace blanc vertical maximal. Sauts de page : `Stage.breaks`, coupures imposées dans `paginate` (mode « pages de taille fixe » seulement).
+
+Type de document (#241, menu du panneau d'export, préférence cachée `export_document`) : `normal` (« Normal (type KDP) ») ou `printer` (« Imprimeur ») : page agrandie de `CROP_ZONE_MM` de chaque côté (`layout.crop`), hirondelles aux coins (`cropMarks`), en PDF et en SVG.
+
+Panneau des préférences (#239) : position mémorisée (`panneauFixedPosition` du propriétaire d'un `Panneau`, `localStorage`), jamais placé près du clic.
 
 
 ## Groupement des marques

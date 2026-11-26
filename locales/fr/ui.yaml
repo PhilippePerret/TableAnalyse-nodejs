@@ -289,6 +289,10 @@ panels:
   export:
     title:            "Exporter l'analyse"
     type:             "Format"
+    document:         "Type de document"
+    documents:
+      normal:         "Normal (type KDP)"
+      printer:        "Imprimeur"
     types:
       pdf:            "PDF"
       svg:            "SVG"

@@ -289,6 +289,10 @@ panels:
   export:
     title:            "分析を書き出す"
     type:             "形式"
+    document:         "文書の種類"
+    documents:
+      normal:         "通常（KDP タイプ）"
+      printer:        "印刷所"
     types:
       pdf:            "PDF"
       svg:            "SVG"

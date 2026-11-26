@@ -59,6 +59,41 @@ const PAGE_FORMATS = {
 
 // Formats d'export
 const EXPORT_TYPES = ['pdf', 'svg', 'html']
+// Types de document (#241) : « Normal (type KDP) », « Imprimeur »
+const EXPORT_DOCUMENTS = ['normal', 'printer']
+
+/*
+  HIRONDELLES (document pour imprimeur) : la page (format choisi, ligne de
+  coupe) est entourée d'une bande de CROP_ZONE_MM où, à chaque coin, deux
+  traits prolongent ses bords, à CROP_OFFSET_MM de la ligne de coupe.
+*/
+const CROP_ZONE_MM   = 10
+const CROP_OFFSET_MM = 3
+const CROP_LENGTH_MM = 6
+const CROP_STROKE_MM = 0.1
+
+// Traits des hirondelles d'une page coupée à +width+ × +height+ mm, dans
+// une page agrandie de +crop+ mm de chaque côté : [[x1, y1, x2, y2]…] en mm
+export function cropMarks(width, height, crop){
+  const lines = []
+  const near = CROP_OFFSET_MM, far = CROP_OFFSET_MM + CROP_LENGTH_MM
+  for ( const [x, dx] of [[crop, -1], [crop + width, 1]] ) {
+    for ( const [y, dy] of [[crop, -1], [crop + height, 1]] ) {
+      lines.push([x + dx * near, y, x + dx * far, y]) // bord horizontal prolongé
+      lines.push([x, y + dy * near, x, y + dy * far]) // bord vertical prolongé
+    }
+  }
+  return lines
+}
+function cropMarksLines(width, height, crop){
+  return `<g class="crop-marks" stroke="#000" stroke-width="${CROP_STROKE_MM}" fill="none">${
+    cropMarks(width, height, crop).map(([x1, y1, x2, y2]) => `<line x1="${num(x1)}" y1="${num(y1)}" x2="${num(x2)}" y2="${num(y2)}"/>`).join('')
+  }</g>`
+}
+function cropMarksSvg(width, height, crop, style){
+  const W = width + 2 * crop, H = height + 2 * crop
+  return `<svg xmlns="http://www.w3.org/2000/svg" style="${style}" width="${num(W)}mm" height="${num(H)}mm" viewBox="0 0 ${num(W)} ${num(H)}">${cropMarksLines(width, height, crop)}</svg>`
+}
 
 // Unités de la taille personnalisée (en mm)
 const UNITS = {mm: 1, cm: 10, in: 25.4, pt: 25.4 / 72, pc: 25.4 / 6}
@@ -176,6 +211,9 @@ class ExporterClass {
     }
     const selType = DCreate('SELECT', {id: 'export_type', inner: EXPORT_TYPES.map(type => DCreate('OPTION', {value: type, text: T(`types.${type}`)}))})
     selType.value = EXPORT_TYPES.includes(pref('export_type')) ? pref('export_type') : 'pdf'
+    // Type de document : normal (type KDP) ou pour imprimeur (hirondelles)
+    const selDocument = DCreate('SELECT', {id: 'export_document', inner: EXPORT_DOCUMENTS.map(d => DCreate('OPTION', {value: d, text: T(`documents.${d}`)}))})
+    selDocument.value = EXPORT_DOCUMENTS.includes(pref('export_document')) ? pref('export_document') : 'normal'
     // Ligne libellé | champ(s) ; sans libellé : champ dans la colonne des champs
     const row = (label, ...fields) => DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: label || ''}), DCreate('DIV', {class: 'fields', inner: fields})]})
     // Taille personnalisée courante (mm)
@@ -239,6 +277,7 @@ class ExporterClass {
     const inner = [
         DCreate('DIV', {class: 'rows', inner: [
             row(T('type'), selType)
+          , row(T('document'), selDocument)
           , DCreate('DIV', {class: 'row svg-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields explication', text: T('svg_desc')})]})
           , DCreate('DIV', {class: 'row pdf-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields column', inner: [radio('page', false), radio('book', true)]})]})
           , DCreate('DIV', {class: 'row', inner: [DCreate('LABEL', {text: T('measures')}), DCreate('DIV', {class: 'fields column', inner: [
@@ -292,6 +331,7 @@ class ExporterClass {
         , width, height
         , margin: toMm(num(margin), unit)
         , gap:    toMm(num(gap), unit) / UNITS.pt
+        , document: selDocument.value
       }
       if ( gap.value == '' || !(opts.gap >= 0) ) return erreur(T('bad_gap'))
       if ( DGet('#export_measures_some', panel).checked ) {
@@ -315,7 +355,7 @@ class ExporterClass {
           , export_systems_gap:       opts.gap
         })
       }
-      this.remember({export_type: format})
+      this.remember({export_type: format, export_document: opts.document})
       close()
       this.export(format, opts)
     })
@@ -612,7 +652,10 @@ export class Stage {
     // Nomenclature : première page, à elle seule
     const legend = this.items.find(i => i.el === this.legendEl)
     legend && slices.unshift([legend.top - PAD, legend.bottom + PAD])
-    return {width, height, margin, scale, x0, contentW, slices}
+    // Document pour imprimeur : page agrandie d'une bande où sont posées
+    // les hirondelles (traits de coupe), cf. cropMarks
+    const crop = opts.document == 'printer' ? CROP_ZONE_MM : 0
+    return {width, height, margin, scale, x0, contentW, slices, crop}
   }
 
   /**
@@ -695,13 +738,15 @@ export class Stage {
     const children = Array.from(embedded.children)
     // Aspect de l'analyse (modes gris, cf. Aspect.js)
     const aspect = Array.from(this.content.classList).filter(c => c.startsWith('aspect-')).join(' ')
-    const {width, height, margin} = layout
+    const {width, height, crop = 0} = layout
+    const margin = layout.margin + crop
+    const marks = crop ? cropMarksSvg(width, height, crop, 'position:absolute;left:0;top:0;') : ''
     const pages = layout.slices.map(slice => {
       const [y0, y1] = slice
       const {scale, x0, contentW} = Object.assign({}, layout, slice.scale ? slice : {})
       const s = scale * PX_PER_MM // px de page par px de table
       const inner = this.itemsIn(slice).map(i => children[i.index].outerHTML).join('\n')
-      return `<div class="pdf-page" style="width:${width}mm;height:${height}mm;">
+      return `<div class="pdf-page" style="width:${width + 2 * crop}mm;height:${height + 2 * crop}mm;">${marks}
   <div style="position:absolute;overflow:hidden;left:${margin}mm;top:${margin}mm;width:${contentW * s}px;height:${(y1 - y0) * s}px;">
     <div style="position:absolute;left:0;top:0;transform:scale(${s});transform-origin:0 0;">
       <section id="content" class="${aspect}" style="position:absolute;margin:0 !important;left:${-x0}px;top:${-y0}px;width:${this.content.scrollWidth}px;height:${y1}px;">
@@ -712,7 +757,7 @@ ${inner}
 </div>`
     })
     const styles = `<style type="text/css">\n${PreferencesPanel.buildSelectorsInHead()}\n</style>`
-    return {code_html: styles + pages.join('\n'), width, height}
+    return {code_html: styles + pages.join('\n'), width: width + 2 * crop, height: height + 2 * crop}
   }
 
   /* --- SVG --- */
@@ -760,7 +805,8 @@ ${inner}
 
   async svgPage(layout, slice){
     const [y0, y1] = slice
-    const {width, height, margin} = layout
+    const {crop = 0} = layout
+    const width = layout.width + 2 * crop, height = layout.height + 2 * crop, margin = layout.margin + crop
     const {scale, x0, contentW} = Object.assign({}, layout, slice.scale ? slice : {})
     const parts = []
     for ( const item of this.itemsIn(slice) ) parts.push(await this.svgOf(item.el))
@@ -771,6 +817,7 @@ ${inner}
 <g transform="translate(${num(margin)} ${num(margin)}) scale(${num(scale, 6)}) translate(${num(-x0)} ${num(-y0)})" clip-path="url(#page)">
 ${parts.join('\n')}
 </g>
+${crop ? cropMarksLines(layout.width, layout.height, crop) : ''}
 </svg>
 `
   }

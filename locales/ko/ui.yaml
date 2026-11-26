@@ -289,6 +289,10 @@ panels:
   export:
     title:            "분석 내보내기"
     type:             "형식"
+    document:         "문서 유형"
+    documents:
+      normal:         "일반 (KDP 유형)"
+      printer:        "인쇄소"
     types:
       pdf:            "PDF"
       svg:            "SVG"
