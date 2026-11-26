@@ -122,7 +122,11 @@ onChange_adjust_same_mark(){
   const cb = DGet('#pref-adjust_same_mark'), field = DGet('#pref-snap_for_adjust_pos')
   if ( !cb || !field ) return
   field.disabled = !cb.checked
-  field.closest('.div-data').classList.toggle('pref-disabled', !cb.checked)
+  const row = field.closest('.div-data')
+  row.classList.toggle('pref-disabled', !cb.checked)
+  // Tout le texte de la ligne grisé (libellé, champ, unité)
+  row.style.opacity = cb.checked ? '' : '0.4'
+  row.style.pointerEvents = cb.checked ? '' : 'none'
 }
 onChange_notation_display(){
   Preferences.saveData('notation_display', Preferences.getValueOf('notation_display'))
