@@ -275,6 +275,7 @@ build(){
     const prefs = group.keys.map(k => PreferencesAppData[k]).filter(dp => dp && !dp.hidden)
     if ( !prefs.length ) return
     o.appendChild(DCreate('DIV', {class:'pref-group', text: t(`ui.prefs_groups.${group.id}`)}))
+    if ( group.id == 'layout' ) return o.appendChild(this.buildLayoutTable())
     prefs.forEach(dp => this.buildPref(o, dp))
   })
 
@@ -293,6 +294,31 @@ build(){
 
   this.isBuilt = true
 
+}
+
+/**
+ * Titres (section « Mise en page ») : tableau, une ligne par niveau,
+ * colonnes Titre | Police | Taille | Espace avant et après (export)
+ */
+buildLayoutTable(){
+  const T = k => t(`ui.prefs_layout.${k}`)
+  const cell = (key) => {
+    const field = this.buildInputText(PreferencesAppData[`layout_title_${key}`]).querySelector('.pref-field')
+    return DCreate('TD', {inner: [field]})
+  }
+  const table = DCreate('TABLE', {id: 'prefs-layout-table', inner: [
+      DCreate('TR', {inner: ['title', 'font', 'size', 'spaces'].map(k => DCreate('TH', {text: T(k)}))})
+    , ...[1, 2, 3].map(n => DCreate('TR', {inner: [
+          DCreate('TD', {class: 'level', text: t('ui.prefs_layout.level', {n})})
+        , cell(`${n}_font`)
+        , cell(`${n}_size`)
+        , DCreate('TD', {class: 'spaces', inner: [
+              this.buildInputText(PreferencesAppData[`layout_title_${n}_before`]).querySelector('.pref-field')
+            , this.buildInputText(PreferencesAppData[`layout_title_${n}_after`]).querySelector('.pref-field')
+          ]})
+      ]}))
+  ]})
+  return DCreate('DIV', {class: 'div-layout-table', inner: [table]})
 }
 
 buildPref(o, dp){

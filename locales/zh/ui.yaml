@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "和弦音名显示"}
   notation_input:         {label: "和弦音名输入"}
 
+prefs_layout:
+  title:  "标题"
+  font:   "字体"
+  size:   "大小"
+  spaces: "前后间距（导出）"
+  level:  "级别 %{n}"
+
 prefs_groups:
   animation:              "动画"
   notation:               "和弦记法"

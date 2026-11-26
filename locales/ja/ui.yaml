@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "コードの音名の表示"}
   notation_input:         {label: "コードの音名の入力"}
 
+prefs_layout:
+  title:  "見出し"
+  font:   "フォント"
+  size:   "サイズ"
+  spaces: "前後の間隔（書き出し）"
+  level:  "レベル %{n}"
+
 prefs_groups:
   animation:              "アニメーション"
   notation:               "コード表記"

@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "Affichage des notes des accords"}
   notation_input:         {label: "Entrée des notes des accords"}
 
+prefs_layout:
+  title:  "Titre"
+  font:   "Police"
+  size:   "Taille"
+  spaces: "Espace avant et après (export)"
+  level:  "Niveau %{n}"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Notation des accords"

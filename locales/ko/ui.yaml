@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "코드 음이름 표시"}
   notation_input:         {label: "코드 음이름 입력"}
 
+prefs_layout:
+  title:  "제목"
+  font:   "글꼴"
+  size:   "크기"
+  spaces: "앞뒤 간격 (내보내기)"
+  level:  "수준 %{n}"
+
 prefs_groups:
   animation:              "애니메이션"
   notation:               "코드 표기법"

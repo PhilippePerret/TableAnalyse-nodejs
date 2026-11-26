@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "Visualizzazione delle note degli accordi"}
   notation_input:         {label: "Inserimento delle note degli accordi"}
 
+prefs_layout:
+  title:  "Titolo"
+  font:   "Carattere"
+  size:   "Dimensione"
+  spaces: "Spazio prima e dopo (esportazione)"
+  level:  "Livello %{n}"
+
 prefs_groups:
   animation:              "Animazione"
   notation:               "Notazione degli accordi"

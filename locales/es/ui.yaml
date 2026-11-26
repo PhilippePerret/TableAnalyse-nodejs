@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "Visualización de las notas de los acordes"}
   notation_input:         {label: "Entrada de las notas de los acordes"}
 
+prefs_layout:
+  title:  "Título"
+  font:   "Fuente"
+  size:   "Tamaño"
+  spaces: "Espacio antes y después (exportación)"
+  level:  "Nivel %{n}"
+
 prefs_groups:
   animation:              "Animación"
   notation:               "Notación de los acordes"

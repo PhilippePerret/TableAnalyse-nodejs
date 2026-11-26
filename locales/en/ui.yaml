@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "Chord note display"}
   notation_input:         {label: "Chord note input"}
 
+prefs_layout:
+  title:  "Title"
+  font:   "Font"
+  size:   "Size"
+  spaces: "Space before and after (export)"
+  level:  "Level %{n}"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Chord notation"

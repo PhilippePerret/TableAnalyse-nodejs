@@ -534,6 +534,13 @@ prefs:
   notation_display:       {label: "Anzeige der Akkordnoten"}
   notation_input:         {label: "Eingabe der Akkordnoten"}
 
+prefs_layout:
+  title:  "Titel"
+  font:   "Schrift"
+  size:   "Größe"
+  spaces: "Abstand davor und danach (Export)"
+  level:  "Ebene %{n}"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Akkordnotation"
