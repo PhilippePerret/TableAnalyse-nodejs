@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "前后间距（导出）"
   level:  "级别 %{n}"
 
+prefs_lines:
+  border:    "边框"
+  width:     "粗细"
+  intensity: "浓度"
+  kinds:
+    circle: "圆"
+    box: "简单框"
+    cellule: "音乐细胞"
+    text: "文本框"
+    motif: "动机框"
+    segment: "片段线"
+    emprunt: "借用线"
+    cadence: "终止线"
+    note: "音符类型轮廓"
+    form: "部分（框版）"
+    measure: "小节号框"
+
 prefs_groups:
   animation:              "动画"
   notation:               "和弦记法"

@@ -26,6 +26,13 @@ import { setModified } from './Current.js'
 import { Aspect } from './Aspect.js'
 
 // Groupes du panneau (titres : ui.prefs_groups.<id>)
+// Traits (tableau de la section « Traits ») : [nom, préférence d'épaisseur]
+const LINES_KEYS = [
+    ['circle', 'border_circle'], ['box', 'border_box'], ['cellule', 'thiness_cellule_line']
+  , ['text', 'thiness_border'], ['motif', 'thiness_motif_line'], ['segment', 'thiness_segment_line']
+  , ['emprunt', 'border_emprunt'], ['cadence', 'border_cadence'], ['note', 'border_note']
+  , ['form', 'border_form'], ['measure', 'border_measure']
+]
 const PREFS_GROUPS = [
     {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme']}
   , {id: 'notation', keys: ['notation_input', 'notation_display']}
@@ -35,7 +42,7 @@ const PREFS_GROUPS = [
   , {id: 'marks',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_cadence_type_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_motif_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
   , {id: 'form',     keys: ['form_height_1', 'form_height_2', 'form_height_3', 'form_position']}
   , {id: 'layout',   keys: [1, 2, 3].flatMap(n => ['font', 'size', 'before', 'after'].map(k => `layout_title_${n}_${k}`))}
-  , {id: 'lines',    keys: ['border_circle', 'border_box', 'thiness_cellule_line', 'thiness_border', 'thiness_motif_line', 'thiness_segment_line', 'border_emprunt', 'border_cadence', 'border_note', 'border_form', 'border_measure'].flatMap(k => [k, BORDER_INTENSITY[k]])}
+  , {id: 'lines',    keys: LINES_KEYS.flatMap(([, k]) => [k, BORDER_INTENSITY[k]])}
   , {id: 'colors',   keys: ['color_accords', 'color_harmonie', 'color_mark_parties', 'color_mark_sections', 'color_cellule', 'color_modulations', 'color_emprunts', 'color_segments']}
   , {id: 'window',   keys: ['window_width', 'window_height', 'last_scroll']}
   , {id: 'animation', keys: ['animate', 'animation_tempo']}
@@ -276,6 +283,7 @@ build(){
     if ( !prefs.length ) return
     o.appendChild(DCreate('DIV', {class:'pref-group', text: t(`ui.prefs_groups.${group.id}`)}))
     if ( group.id == 'layout' ) return o.appendChild(this.buildLayoutTable())
+    if ( group.id == 'lines' )  return o.appendChild(this.buildLinesTable())
     prefs.forEach(dp => this.buildPref(o, dp))
   })
 
@@ -297,28 +305,41 @@ build(){
 }
 
 /**
- * Titres (section « Mise en page ») : tableau, une ligne par niveau,
- * colonnes Titre | Police | Taille | Espace avant et après (export)
+ * Section en tableau : libellés des colonnes au-dessus (+heads+), une
+ * ligne par élément ({label, cells: [[clés des préférences]…]}),
+ * libellés à gauche, champs à droite. Un clic sur le libellé d'une
+ * ligne place dans son premier champ.
  */
+buildPrefsTable(id, heads, rows){
+  const field = key => PreferencesAppData[key] ? this.buildInputText(PreferencesAppData[key]).querySelector('.pref-field') : null
+  const table = DCreate('TABLE', {id, class: 'prefs-table', inner: [
+      DCreate('TR', {inner: heads.map(h => DCreate('TH', {text: h}))})
+    , ...rows.map(({label, cells}) => {
+        const head = DCreate('TD', {class: 'row-label', text: label})
+        const tr = DCreate('TR', {inner: [head, ...cells.map(keys => DCreate('TD', {class: 'values', inner: keys.map(field).filter(Boolean)}))]})
+        listen(head, 'click', () => { const f = tr.querySelector('input, select') ; f && (f.focus(), f.select && f.select()) })
+        return tr
+      })
+  ]})
+  return DCreate('DIV', {class: 'div-prefs-table', inner: [table]})
+}
+
+// Titres (section « Mise en page ») : Titre | Police | Taille | Espaces
 buildLayoutTable(){
   const T = k => t(`ui.prefs_layout.${k}`)
-  const cell = (key) => {
-    const field = this.buildInputText(PreferencesAppData[`layout_title_${key}`]).querySelector('.pref-field')
-    return DCreate('TD', {inner: [field]})
-  }
-  const table = DCreate('TABLE', {id: 'prefs-layout-table', inner: [
-      DCreate('TR', {inner: ['title', 'font', 'size', 'spaces'].map(k => DCreate('TH', {text: T(k)}))})
-    , ...[1, 2, 3].map(n => DCreate('TR', {inner: [
-          DCreate('TD', {class: 'level', text: t('ui.prefs_layout.level', {n})})
-        , cell(`${n}_font`)
-        , cell(`${n}_size`)
-        , DCreate('TD', {class: 'spaces', inner: [
-              this.buildInputText(PreferencesAppData[`layout_title_${n}_before`]).querySelector('.pref-field')
-            , this.buildInputText(PreferencesAppData[`layout_title_${n}_after`]).querySelector('.pref-field')
-          ]})
-      ]}))
-  ]})
-  return DCreate('DIV', {class: 'div-layout-table', inner: [table]})
+  return this.buildPrefsTable('prefs-layout-table', ['title', 'font', 'size', 'spaces'].map(T), [1, 2, 3].map(n => ({
+      label: t('ui.prefs_layout.level', {n})
+    , cells: [[`layout_title_${n}_font`], [`layout_title_${n}_size`], [`layout_title_${n}_before`, `layout_title_${n}_after`]]
+  })))
+}
+
+// Traits (section « Traits ») : Bord | Épaisseur | Intensité
+buildLinesTable(){
+  const T = k => t(`ui.prefs_lines.${k}`)
+  return this.buildPrefsTable('prefs-lines-table', ['border', 'width', 'intensity'].map(T), LINES_KEYS.map(([name, key]) => ({
+      label: T(`kinds.${name}`)
+    , cells: [[key], [BORDER_INTENSITY[key]]]
+  })))
 }
 
 buildPref(o, dp){
@@ -374,7 +395,7 @@ buildMenuSelect(params){
    **/
   const div = DCreate('DIV', {class:'div-data type-valeur'})
 
-  const label = DCreate('LABEL', {text: params.label })
+  const label = DCreate('LABEL', {for: `pref-${params.id}`, text: params.label })
   div.appendChild(label)
 
   const menu = DCreate('SELECT', {id: `pref-${params.id}`})
@@ -447,7 +468,7 @@ buildCheckBox(params){
 buildChoixPressoirs(params){
   const my = this
   const div = DCreate('DIV', {id:`div-${params.id}`, class:'type-valeur div-data'})
-  const lab = DCreate('LABEL', {text:params.label})
+  const lab = DCreate('LABEL', {for: params.id, text:params.label})
   div.appendChild(lab)
   const val = Number(Preferences.data[params.id].value||0)
   const btn = DCreate('BUTTON', {id:params.id, text: params.values[val]})
@@ -484,7 +505,7 @@ buildInputText(params){
   const domId = `pref-${params.id}`
   const prop = params.id.split('-')[1]
   const div = DCreate('DIV', {id:`div-${params.id}`, class:'type-valeur div-data'})
-  const lab = DCreate('LABEL', {text:params.label})
+  const lab = DCreate('LABEL', {for: domId, text:params.label})
   div.appendChild(lab)
   // 0 est une valeur (seules les valeurs absentes prennent le défaut)
   const value = (undefined === params.value || null === params.value || '' === params.value) ? params.default : params.value

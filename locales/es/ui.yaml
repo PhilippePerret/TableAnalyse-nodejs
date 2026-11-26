@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "Espacio antes y después (exportación)"
   level:  "Nivel %{n}"
 
+prefs_lines:
+  border:    "Borde"
+  width:     "Grosor"
+  intensity: "Intensidad"
+  kinds:
+    circle: "Círculo"
+    box: "Marco simple"
+    cellule: "Célula musical"
+    text: "Marco de texto"
+    motif: "Marco de motivo"
+    segment: "Línea de segmento"
+    emprunt: "Línea de préstamos"
+    cadence: "Línea de cadencia"
+    note: "Contorno de tipo de nota"
+    form: "Porción (versión marco)"
+    measure: "Marco de número de compás"
+
 prefs_groups:
   animation:              "Animación"
   notation:               "Notación de los acordes"

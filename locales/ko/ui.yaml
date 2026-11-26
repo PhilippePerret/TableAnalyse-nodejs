@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "앞뒤 간격 (내보내기)"
   level:  "수준 %{n}"
 
+prefs_lines:
+  border:    "테두리"
+  width:     "두께"
+  intensity: "농도"
+  kinds:
+    circle: "원"
+    box: "단순 상자"
+    cellule: "음악적 세포"
+    text: "텍스트 상자"
+    motif: "모티프 상자"
+    segment: "구간 선"
+    emprunt: "차용 선"
+    cadence: "종지 선"
+    note: "음표 유형 윤곽"
+    form: "부분 (상자형)"
+    measure: "마디 번호 상자"
+
 prefs_groups:
   animation:              "애니메이션"
   notation:               "코드 표기법"

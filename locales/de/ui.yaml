@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "Abstand davor und danach (Export)"
   level:  "Ebene %{n}"
 
+prefs_lines:
+  border:    "Rand"
+  width:     "Stärke"
+  intensity: "Intensität"
+  kinds:
+    circle: "Kreis"
+    box: "Einfacher Rahmen"
+    cellule: "Musikalische Zelle"
+    text: "Textrahmen"
+    motif: "Motivrahmen"
+    segment: "Segmentlinie"
+    emprunt: "Entlehnungslinie"
+    cadence: "Kadenzlinie"
+    note: "Notentyp-Umriss"
+    form: "Abschnitt (Rahmenversion)"
+    measure: "Taktnummernrahmen"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Akkordnotation"

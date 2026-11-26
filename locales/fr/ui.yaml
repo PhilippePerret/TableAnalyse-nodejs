@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "Espace avant et après (export)"
   level:  "Niveau %{n}"
 
+prefs_lines:
+  border:    "Bord"
+  width:     "Épaisseur"
+  intensity: "Intensité"
+  kinds:
+    circle: "Cercle"
+    box: "Cadre simple"
+    cellule: "Cellule musicale"
+    text: "Cadre texte"
+    motif: "Cadre motif"
+    segment: "Trait segment"
+    emprunt: "Trait emprunts"
+    cadence: "Trait cadence"
+    note: "Contour type de note"
+    form: "Portion (version cadre)"
+    measure: "Cadre numéro mesure"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Notation des accords"

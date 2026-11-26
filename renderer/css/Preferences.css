@@ -59,9 +59,6 @@ section#preferences-panel div.div-data input[type="checkbox"] + label
 section#preferences-panel div.type-valeur label {
   display: inline-block;
 }
-section#preferences-panel div.type-valeur label:after {
-  content:  " : ";
-}
 section#preferences-panel div.type-valeur input[type="text"] {
   width: 80px;
   text-align: center;
@@ -70,11 +67,15 @@ section#preferences-panel div.type-valeur input[type="text"] {
 /* Préférence inaccessible (p.e. distance de magnétisation sans « Ajuster en hauteur », #246) */
 section#preferences-panel div.pref-disabled { opacity: .4; pointer-events: none; }
 
-/* Titres (section « Mise en page ») : tableau niveau × réglages */
-section#preferences-panel table#prefs-layout-table { width: 100%; border-collapse: collapse; margin: 4px 0 8px; }
-section#preferences-panel table#prefs-layout-table th { font-weight: normal; color: #777; font-size: 14px; text-align: left; padding: 2px 6px; }
-section#preferences-panel table#prefs-layout-table td { padding: 3px 6px; vertical-align: middle; }
-section#preferences-panel table#prefs-layout-table td.level { white-space: nowrap; }
-section#preferences-panel table#prefs-layout-table td.spaces { display: flex; gap: 10px; }
-section#preferences-panel table#prefs-layout-table input[type="text"] { width: 50px; text-align: center; }
+/* Sections en tableau (Mise en page, Traits) : libellés à gauche, champs
+   à droite, de l'air entre les deux */
+section#preferences-panel table.prefs-table { width: 100%; border-collapse: collapse; margin: 4px 0 8px; }
+section#preferences-panel table.prefs-table th { font-weight: normal; color: #777; font-size: 14px; text-align: right; padding: 2px 0 2px 24px; white-space: nowrap; }
+section#preferences-panel table.prefs-table th:first-child { text-align: left; padding-left: 0; width: 100%; }
+section#preferences-panel table.prefs-table td { padding: 3px 0 3px 24px; vertical-align: middle; }
+section#preferences-panel table.prefs-table td.row-label { padding-left: 0; padding-right: 32px; cursor: pointer; }
+section#preferences-panel table.prefs-table td.values { white-space: nowrap; }
+section#preferences-panel table.prefs-table td.values > span.pref-field { display: inline-flex; justify-content: flex-end; }
+section#preferences-panel table.prefs-table td.values > span.pref-field + span.pref-field { margin-left: 10px; }
+section#preferences-panel table.prefs-table input[type="text"] { width: 50px; text-align: center; }
 section#preferences-panel table#prefs-layout-table td:nth-child(2) input[type="text"] { width: 120px; text-align: left; }

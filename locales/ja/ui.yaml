@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "前後の間隔（書き出し）"
   level:  "レベル %{n}"
 
+prefs_lines:
+  border:    "枠"
+  width:     "太さ"
+  intensity: "濃さ"
+  kinds:
+    circle: "円"
+    box: "単純な枠"
+    cellule: "音楽的細胞"
+    text: "テキスト枠"
+    motif: "モチーフ枠"
+    segment: "セグメント線"
+    emprunt: "借用線"
+    cadence: "終止線"
+    note: "音符の種類の輪郭"
+    form: "部分（枠版）"
+    measure: "小節番号の枠"
+
 prefs_groups:
   animation:              "アニメーション"
   notation:               "コード表記"

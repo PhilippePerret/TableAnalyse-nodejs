@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "Spazio prima e dopo (esportazione)"
   level:  "Livello %{n}"
 
+prefs_lines:
+  border:    "Bordo"
+  width:     "Spessore"
+  intensity: "Intensità"
+  kinds:
+    circle: "Cerchio"
+    box: "Riquadro semplice"
+    cellule: "Cellula musicale"
+    text: "Riquadro testo"
+    motif: "Riquadro motivo"
+    segment: "Linea segmento"
+    emprunt: "Linea prestiti"
+    cadence: "Linea cadenza"
+    note: "Contorno tipo di nota"
+    form: "Porzione (versione riquadro)"
+    measure: "Riquadro numero di battuta"
+
 prefs_groups:
   animation:              "Animazione"
   notation:               "Notazione degli accordi"

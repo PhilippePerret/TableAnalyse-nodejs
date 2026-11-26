@@ -541,6 +541,23 @@ prefs_layout:
   spaces: "Space before and after (export)"
   level:  "Level %{n}"
 
+prefs_lines:
+  border:    "Border"
+  width:     "Width"
+  intensity: "Intensity"
+  kinds:
+    circle: "Circle"
+    box: "Simple box"
+    cellule: "Musical cell"
+    text: "Text box"
+    motif: "Motif box"
+    segment: "Segment line"
+    emprunt: "Borrowing line"
+    cadence: "Cadence line"
+    note: "Note type outline"
+    form: "Portion (box version)"
+    measure: "Measure number box"
+
 prefs_groups:
   animation:              "Animation"
   notation:               "Chord notation"
