@@ -3,9 +3,9 @@
 
 ////
 TODO
-- comment signaler un problème
-- poursuivre la description de chaque préférence
-- document l'avertissement de chevauchement (quand on change de notation italienne/batave)
+- Document : comment signaler un problème (issue sur Github)
+- documenter l'avertissement de chevauchement (quand on change de notation italienne/batave)
+- documenter l'animation (fichier animation.adoc)
 
 FONCTIONNALITÉS À PRÉSENTER DANS LE TUTORIEL
 -?utile? Problème de l'écriture "Do/" en italien/batave → documenter (dire de bien régler l'entrée des notesff) [Vidéo faite]

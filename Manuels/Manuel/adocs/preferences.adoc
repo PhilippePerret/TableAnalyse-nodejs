@@ -115,11 +115,37 @@ Vous ouvrez alors un panneau qui contient ces éléments (certaines variantes pe
 | __Épaisseur__
 | Concerne la taille du bord, en épaisseur, en pixels. La valeur peut être ajustée ensuite ponctuellement.
 
-
 | __Intensité__
 | Valeur de 0 à 100 permettant de définir précisément la « teinte » par défaut du trait, de 0 (blanc) à 100 (noir intense). La valeur peut être ajustée ensuite ponctuellement.
 
+2+| **Couleurs**
+2+| __Préférences pour régler toutes les couleurs__
+2+| Lorsque des éléments sont mis en couleur, il ne faut pas oublier de cocher la case « Export en couleur » dans le panneau de l'export pour que ces couleurs soient exportées.
+
+2+| **Fenêtre**
+2+| __Pour définir le comportement de la fenêtre de la table d'analyse__
+
+| __Largeur de la fenêtre à l'ouverture__
+| Pour définir explicitement la taille de la fenêtre quand on ouvre la table d'analyse. Par défaut (vide), la taille sera ajustée à la partition, à la largeur des systèmes. On peut appliquer la largeur actuelle en cliquant sur le bouton « Largeur actuelle ».
+
+| __Hauteur de la fenêtre à l'ouverture__
+| Pour définir explicitement la hauteur de la fenêtre quand on ouvre la table d'analyse. Par défaut (vide), il n'y a pas de taille définie, c'est la taille « naturelle » qui est utilisées. On peut appliquer la hateur actuelle en cliquant sur le bouton « Hauteur actuelle ».
+
+| __Scroll à l'ouverture__
+| On peut définir un scroll à appliquer à l'ouverture. On peut prendre la valeur actuelle en cliquant sur le bouton « Scroll actuel ».
+
+2+| **Animation**
+2+| __Préférences pour tout ce qui relève de l'animation__
+
+| __Animer l'animation à l'ouverture__
+| Si cette case est cochée, à l'ouverture de la table, l'animation se mettra toujours en action.
+
+| __Tempo de l'animation__
+| Définissez ici, par défaut, le rythme d'avancée de l'animation. Notez que cette valeur ne tient aucun compte de la métrique de la pièce analysée ou de son tempo indiqué. C'est juste une vitesse.
+
 |====
+
+Notez que vous pouvez revenir aux valeurs par défaut en cliquant sur le bouton « Réglages par défaut ».
 
 include::prefs/systemes.adoc[]
 
