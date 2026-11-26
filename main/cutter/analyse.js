@@ -674,6 +674,10 @@ function findMeasures(dark, w, systems, s){
         }
       }
     }
+    // En-tête (clé, armure, chiffrage) : aucune barre (un chiffrage, qui
+    // couvre la portée, peut passer pour une barre, #243)
+    const header = headerEnd(dark, w, sys, left, right, s)
+    bars = bars.filter(b => b.x0 > header)
     sys.barlines = bars
     sys.lastBar = bars.length ? bars[bars.length - 1].x0 : null
     const starts = [headerEnd(dark, w, sys, left, bars.length ? bars[0].x0 : right, s)]

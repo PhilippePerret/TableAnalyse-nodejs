@@ -68,3 +68,22 @@ test('découpe : fichier absent → erreur', () => {
   assert.notEqual(res.status, 0)
   assert.match(res.stdout + res.stderr, /introuvable/)
 })
+
+// Chiffrage (3/4) couvrant la portée en début de pièce : jamais pris pour
+// une barre de mesure (première mesure ajoutée à tort, #243).
+// tests/fixtures/partition/chiffrage.pdf : Bach, BWV 935, 7 systèmes, 48 mesures
+test('découpe : chiffrage en tête jamais pris pour une barre (#243)', () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'sa-decoupe-'))
+  const res = spawnSync(ELECTRON, [path.join(ROOT, 'main', 'cutter', 'cli.js'), path.join(ROOT, 'tests', 'fixtures', 'partition', 'chiffrage.pdf'), '--out', out], {encoding: 'utf8', timeout: 120000})
+  try {
+    assert.equal(res.status, 0, res.stdout + res.stderr)
+    const entries = yaml.load(fs.readFileSync(path.join(out, 'mesures.yaml'), 'utf8'))
+    const numbers = entries.flatMap(e => e.measures.map(m => m.number))
+    assert.deepEqual(numbers, Array.from({length: 48}, (_, i) => i + 1), '48 mesures, de 1 à 48')
+    const first = entries[0].measures
+    assert.equal(first.length, 7, 'premier système : 7 mesures')
+    assert.ok(first[1].x - first[0].x > 200, `première mesure de largeur normale (${first[1].x - first[0].x} px)`)
+  } finally {
+    fs.rmSync(out, {recursive: true, force: true})
+  }
+})
