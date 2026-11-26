@@ -26,21 +26,46 @@ export class Panneau {
     UI.desactiveCurrentShortcuts()
     if ( 'function' == typeof this.owner.onKeyPress) { window.onkeypress = this.owner.onKeyPress.bind(this)}
     this.obj || this.owner.build()
-    this.head || (this.head = addPanelHead(this.obj, {
-        title:    this.owner.panneauTitle
-      , onClose:  this.hide.bind(this)
-    }))
+    const fixed = !!this.owner.panneauFixedPosition
+    if ( !this.head ) {
+      this.head = addPanelHead(this.obj, {
+          title:    this.owner.panneauTitle
+        , onClose:  this.hide.bind(this)
+        , place:    !fixed
+      })
+      fixed && listen(this.head, 'mouseup', () => this.savePosition())
+    }
     this.observeDoubleClick()
     this.obj.classList.remove('hidden')
-    requestAnimationFrame(() => { placePanel(this.obj, this.owner.panelTarget) ; keepInView(this.obj) })
+    fixed && this.restorePosition()
+    requestAnimationFrame(() => { fixed || placePanel(this.obj, this.owner.panelTarget) ; keepInView(this.obj) })
     this.isOpened = true
     'function' == typeof this.owner.onOpen  && this.owner.onOpen()
   }
   hide(){
+    this.owner.panneauFixedPosition && this.savePosition()
     this.obj.classList.add('hidden')
     UI.reactiveCurrentShortcuts()
     this.isOpened = false
     'function' == typeof this.owner.onClose && this.owner.onClose()
+  }
+
+  /**
+   * Panneau à position fixe (owner.panneauFixedPosition) : position
+   * mémorisée (navigateur de l'application), retrouvée à chaque ouverture,
+   * sans placement près du clic.
+   */
+  get positionKey(){ return `panneau-position-${this.id}` }
+  savePosition(){
+    const r = this.obj.getBoundingClientRect(), z = this.obj.currentCSSZoom || 1
+    if ( !r.width && !r.height ) return
+    try { localStorage.setItem(this.positionKey, JSON.stringify({left: r.left / z, top: r.top / z})) } catch(err) {}
+  }
+  restorePosition(){
+    let pos = null
+    try { pos = JSON.parse(localStorage.getItem(this.positionKey)) } catch(err) {}
+    if ( !pos || !Number.isFinite(pos.left) || !Number.isFinite(pos.top) ) return
+    Object.assign(this.obj.style, {left: `${pos.left}px`, top: `${pos.top}px`, right: 'auto', bottom: 'auto', transform: 'none'})
   }
 
   observe(){

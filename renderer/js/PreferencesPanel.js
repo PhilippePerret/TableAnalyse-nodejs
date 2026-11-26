@@ -47,6 +47,7 @@ toggle(){this.panneau.toggle.call(this.panneau)}
 get panneau(){return this._pano || (this._pano = new Panneau(this))}
 get panneauId(){return 'preferences-panel'}
 get panneauTitle(){return t('ui.panels.prefs.title')}
+get panneauFixedPosition(){return true} // toujours au même endroit (#239)
 onKeyPress(e){
   var returnU = onKeyDownUniversel(e)
   if ( isBool(returnU) ) return returnU
