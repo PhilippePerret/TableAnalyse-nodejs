@@ -527,10 +527,10 @@ prefs:
   color_modulations:      {label: "転調のマーク"}
   color_emprunts:         {label: "借用のマーク"}
   color_segments:         {label: "セグメント"}
-  animation_tempo:        {label: "アニメーションのテンポ", precision: "アニメーションのカーソルの速さ（1 分あたりの四分音符の数、既定の拍子は 4/4）。"}
+  animation_tempo:        {label: "アニメーションのテンポ"}
   autosave:               {label: "自動保存"}
   mark_creation_click:    {label: "新しいマークの作成"}
-  animate:                {label: "分析をアニメーション表示", precision: "マークが順に表示されます"}
+  animate:                {label: "開くときにアニメーションを開始", precision: "マークが順に表示されます"}
   notation_display:       {label: "コードの音名の表示"}
   notation_input:         {label: "コードの音名の入力"}
 

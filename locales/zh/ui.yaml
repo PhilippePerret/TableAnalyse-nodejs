@@ -527,10 +527,10 @@ prefs:
   color_modulations:      {label: "转调标记"}
   color_emprunts:         {label: "借用标记"}
   color_segments:         {label: "片段"}
-  animation_tempo:        {label: "动画速度", precision: "动画光标的速度，以每分钟四分音符数计（默认拍号 4/4）。"}
+  animation_tempo:        {label: "动画速度"}
   autosave:               {label: "自动保存"}
   mark_creation_click:    {label: "新建标记"}
-  animate:                {label: "动画显示分析", precision: "标记将逐步显示"}
+  animate:                {label: "打开时启动动画", precision: "标记将逐步显示"}
   notation_display:       {label: "和弦音名显示"}
   notation_input:         {label: "和弦音名输入"}
 

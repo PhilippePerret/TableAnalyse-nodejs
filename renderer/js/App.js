@@ -2,7 +2,7 @@ import { message, erreur } from './lib/Message.js'
 import { invoke, onMain } from './api.js'
 import { Analyse } from './Analyse.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
-import { Preferences } from './Preferences.js'
+import { Preferences, pref } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
@@ -50,6 +50,9 @@ class AppClass {
       analyse.applyWindowSize()
       analyse.scrollToLastPosition()
       PreferencesPanel.afterLoadingAnalyse()
+      // « Animer l’animation à l’ouverture » : animation lancée une fois
+      // les systèmes affichés
+      pref('animate') && !data.partage && once('systems:loaded', () => setTimeout(() => Animation.start(), 300))
       // Numéros de mesure tout juste importés (découpe, numérotation) :
       // distance après leur ligne (distance_after_measure_line) appliquée
       // et enregistrée

@@ -527,10 +527,10 @@ prefs:
   color_modulations:      {label: "전조 표시"}
   color_emprunts:         {label: "차용 표시"}
   color_segments:         {label: "구간"}
-  animation_tempo:        {label: "애니메이션 템포", precision: "애니메이션 커서의 속도, 분당 4분음표 수(기본 박자 4/4)."}
+  animation_tempo:        {label: "애니메이션 템포"}
   autosave:               {label: "자동 저장"}
   mark_creation_click:    {label: "새 표시 만들기"}
-  animate:                {label: "분석 애니메이션", precision: "표시가 차례로 나타납니다"}
+  animate:                {label: "열 때 애니메이션 시작", precision: "표시가 차례로 나타납니다"}
   notation_display:       {label: "코드 음이름 표시"}
   notation_input:         {label: "코드 음이름 입력"}
 

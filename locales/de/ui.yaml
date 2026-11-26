@@ -527,10 +527,10 @@ prefs:
   color_modulations:      {label: "Modulationsmarkierungen"}
   color_emprunts:         {label: "Ausweichungsmarkierungen"}
   color_segments:         {label: "Segmente"}
-  animation_tempo:        {label: "Tempo der Animation", precision: "Geschwindigkeit des Animationscursors in Viertelnoten pro Minute (standardmäßig 4/4-Takt)."}
+  animation_tempo:        {label: "Tempo der Animation"}
   autosave:               {label: "Automatisch sichern"}
   mark_creation_click:    {label: "Neue Markierung erstellen"}
-  animate:                {label: "Analyse animieren", precision: "Die Markierungen werden nach und nach angezeigt"}
+  animate:                {label: "Animation beim Öffnen starten", precision: "Die Markierungen werden nach und nach angezeigt"}
   notation_display:       {label: "Anzeige der Akkordnoten"}
   notation_input:         {label: "Eingabe der Akkordnoten"}
 

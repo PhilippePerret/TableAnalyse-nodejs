@@ -527,10 +527,10 @@ prefs:
   color_modulations:      {label: "Marques de modulations"}
   color_emprunts:         {label: "Marques d’emprunts"}
   color_segments:         {label: "Segments"}
-  animation_tempo:        {label: "Tempo de l’animation", precision: "Vitesse du curseur de l'animation, en noires par minute (métrique 4/4 par défaut)."}
+  animation_tempo:        {label: "Tempo de l’animation"}
   autosave:               {label: "Sauvegarde automatique"}
   mark_creation_click:    {label: "Création d’une nouvelle marque"}
-  animate:                {label: "Animer l’analyse", precision: "Les marques seront affichées progressivement"}
+  animate:                {label: "Animer l’animation à l’ouverture", precision: "Les marques seront affichées progressivement"}
   notation_display:       {label: "Affichage des notes des accords"}
   notation_input:         {label: "Entrée des notes des accords"}
 

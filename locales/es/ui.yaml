@@ -527,10 +527,10 @@ prefs:
   color_modulations:      {label: "Marcas de modulación"}
   color_emprunts:         {label: "Marcas de préstamo"}
   color_segments:         {label: "Segmentos"}
-  animation_tempo:        {label: "Tempo de la animación", precision: "Velocidad del cursor de la animación, en negras por minuto (compás de 4/4 por defecto)."}
+  animation_tempo:        {label: "Tempo de la animación"}
   autosave:               {label: "Guardado automático"}
   mark_creation_click:    {label: "Creación de una nueva marca"}
-  animate:                {label: "Animar el análisis", precision: "Las marcas se mostrarán progresivamente"}
+  animate:                {label: "Iniciar la animación al abrir", precision: "Las marcas se mostrarán progresivamente"}
   notation_display:       {label: "Visualización de las notas de los acordes"}
   notation_input:         {label: "Entrada de las notas de los acordes"}
 
