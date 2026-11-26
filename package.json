@@ -66,7 +66,8 @@
       "artifactName": "Table-Analyse-${version}.${ext}"
     },
     "nsis": {
-      "shortcutName": "Table d’analyse"
+      "shortcutName": "Table d’analyse",
+      "uninstallDisplayName": "Table d’analyse"
     },
     "linux": {
       "executableName": "Table_analyse",

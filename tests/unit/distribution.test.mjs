@@ -27,6 +27,7 @@ test('nom affiché : « Table d’analyse » sur les trois systèmes', () => {
   assert.equal(PKG.build.mac.extendInfo.CFBundleDisplayName, 'Table d’analyse')
   assert.equal(PKG.build.mac.extendInfo.CFBundleName, 'Table d’analyse')
   assert.equal(PKG.build.nsis.shortcutName, 'Table d’analyse')
+  assert.equal(PKG.build.nsis.uninstallDisplayName, 'Table d’analyse')
   assert.equal(PKG.build.linux.desktop.entry.Name, 'Table d’analyse')
 })
 
