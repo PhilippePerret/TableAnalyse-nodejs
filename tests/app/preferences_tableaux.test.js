@@ -10,25 +10,44 @@ const NAMES = ['Cercle', 'Cadre simple', 'Cellule musicale', 'Cadre texte', 'Cad
 T.test('section « Traits » : tableau Bord | Épaisseur | Intensité, noms exacts', async () => {
   const table = panel().querySelector('table#prefs-lines-table')
   T.ok(table, 'tableau présent')
-  T.eq([...table.querySelectorAll('th')].map(e => e.textContent), ['Bord', 'Épaisseur', 'Intensité'], 'libellés des colonnes')
+  T.eq([...table.querySelectorAll('th')].map(e => e.textContent).filter(Boolean), ['Bord', 'Épaisseur', 'Intensité'], 'libellés des colonnes')
   const rows = [...table.querySelectorAll('tr')].slice(1)
   T.eq(rows.map(r => r.querySelector('td.row-label').textContent), NAMES, 'noms des bords')
   rows.forEach((r, i) => {
-    T.ok(r.querySelector(`td:nth-child(2) #pref-${KEYS[i]}`), `épaisseur ${NAMES[i]}`)
-    T.ok(r.querySelector('td:nth-child(3) input[id^="pref-intensity_"]'), `intensité ${NAMES[i]}`)
+    const ids = [...r.querySelectorAll('input')].map(e => e.id)
+    T.eq(ids.length, 2, `deux champs ${NAMES[i]}`)
+    T.eq(ids[0], `pref-${KEYS[i]}`, `épaisseur ${NAMES[i]}`)
+    T.ok(/^pref-intensity_/.test(ids[1]), `intensité ${NAMES[i]}`)
   })
 })
 
-T.test('tableaux : libellés à gauche, champs à droite, de l’air entre les deux', async () => {
+T.test('tableaux : libellés à gauche, champs à droite, libellés des colonnes au-dessus des champs', async () => {
   PreferencesPanel.toggle() ; await T.wait(150)
   for ( const id of ['prefs-lines-table', 'prefs-layout-table'] ) {
     const table = panel().querySelector(`#${id}`)
+    const tR = table.getBoundingClientRect()
     const tr = table.querySelectorAll('tr')[1]
-    const label = tr.querySelector('td.row-label'), last = tr.lastElementChild
-    const tR = table.getBoundingClientRect(), fields = [...tr.querySelectorAll('input')].map(i => i.getBoundingClientRect())
-    T.ok(Math.abs(label.getBoundingClientRect().left - tR.left) < 2, `${id} : libellé à gauche`)
-    T.ok(tR.right - Math.max(...last.querySelectorAll('span.pref-field').length ? [...last.querySelectorAll('span.pref-field')].map(f => f.getBoundingClientRect().right) : [0]) < 4, `${id} : champs à droite`)
-    T.ok(Math.min(...fields.map(f => f.left)) - label.getBoundingClientRect().right >= 24, `${id} : espace entre libellé et champs`)
+    const range = document.createRange() ; range.selectNodeContents(tr.querySelector('td.row-label'))
+    const label = range.getBoundingClientRect()
+    const inputs = [...tr.querySelectorAll('input')].map(i => i.getBoundingClientRect())
+    const lastCell = tr.lastElementChild.getBoundingClientRect()
+    T.ok(Math.abs(label.left - tR.left) < 2, `${id} : libellé à gauche`)
+    T.ok(tR.right - lastCell.right < 2, `${id} : valeurs à droite`)
+    T.ok(Math.min(...inputs.map(f => f.left)) - label.right >= 24, `${id} : espace entre libellé et champs`)
+    // Chaque libellé de colonne centré au-dessus de son (ou ses) champ(s)
+    const heads = [...table.querySelectorAll('th.col-head')]
+    const cols = heads.length
+    for ( const tr of [...table.querySelectorAll('tr')].slice(1) ) {
+      const ins = [...tr.querySelectorAll('input')].map(i => i.getBoundingClientRect())
+      // Regroupement des champs par colonne : 1 champ par colonne, sauf la
+      // dernière de « Mise en page » (2 : avant et après)
+      const groups = ins.length == cols ? ins.map(r => [r]) : [...ins.slice(0, cols - 1).map(r => [r]), ins.slice(cols - 1)]
+      heads.forEach((th, i) => {
+        const h = th.getBoundingClientRect(), g = groups[i]
+        const center = (Math.min(...g.map(r => r.left)) + Math.max(...g.map(r => r.right))) / 2
+        T.ok(Math.abs((h.left + h.right) / 2 - center) < 4, `${id} : « ${th.textContent} » au-dessus de son champ (écart ${Math.round((h.left + h.right) / 2 - center)} px)`)
+      })
+    }
   }
   PreferencesPanel.toggle()
 })

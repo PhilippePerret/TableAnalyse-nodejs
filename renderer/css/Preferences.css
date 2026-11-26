@@ -68,14 +68,17 @@ section#preferences-panel div.type-valeur input[type="text"] {
 section#preferences-panel div.pref-disabled { opacity: .4; pointer-events: none; }
 
 /* Sections en tableau (Mise en page, Traits) : libellés à gauche, champs
-   à droite, de l'air entre les deux */
+   (avec le libellé de leur colonne au-dessus, centré) à droite, de l'air
+   entre les deux. Champ, unité et bouton chacun dans sa colonne. */
 section#preferences-panel table.prefs-table { width: 100%; border-collapse: collapse; margin: 4px 0 8px; }
-section#preferences-panel table.prefs-table th { font-weight: normal; color: #777; font-size: 14px; text-align: right; padding: 2px 0 2px 24px; white-space: nowrap; }
+section#preferences-panel table.prefs-table th { font-weight: normal; color: #777; font-size: 14px; padding: 2px 4px; white-space: nowrap; }
 section#preferences-panel table.prefs-table th:first-child { text-align: left; padding-left: 0; width: 100%; }
-section#preferences-panel table.prefs-table td { padding: 3px 0 3px 24px; vertical-align: middle; }
+section#preferences-panel table.prefs-table th.col-head { text-align: center; }
+section#preferences-panel table.prefs-table td { padding: 3px 4px; vertical-align: middle; white-space: nowrap; }
 section#preferences-panel table.prefs-table td.row-label { padding-left: 0; padding-right: 32px; cursor: pointer; }
-section#preferences-panel table.prefs-table td.values { white-space: nowrap; }
-section#preferences-panel table.prefs-table td.values > span.pref-field { display: inline-flex; justify-content: flex-end; }
-section#preferences-panel table.prefs-table td.values > span.pref-field + span.pref-field { margin-left: 10px; }
+section#preferences-panel table.prefs-table td.pt-field { text-align: center; }
+section#preferences-panel table.prefs-table td.pt-unit { padding-left: 0; }
+section#preferences-panel table.prefs-table td.pt-unit span.pref-unit { min-width: 0; }
+section#preferences-panel table.prefs-table td:last-child { padding-right: 0; }
 section#preferences-panel table.prefs-table input[type="text"] { width: 50px; text-align: center; }
 section#preferences-panel table#prefs-layout-table td:nth-child(2) input[type="text"] { width: 120px; text-align: left; }

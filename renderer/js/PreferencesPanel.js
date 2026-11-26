@@ -311,12 +311,35 @@ build(){
  * ligne place dans son premier champ.
  */
 buildPrefsTable(id, heads, rows){
-  const field = key => PreferencesAppData[key] ? this.buildInputText(PreferencesAppData[key]).querySelector('.pref-field') : null
+  // Cellules d'une préférence : champ | unité | bouton « Appliquer »
+  // (chacun dans sa colonne, pour aligner les libellés sur les champs)
+  const parts = key => {
+    const f = PreferencesAppData[key] && this.buildInputText(PreferencesAppData[key]).querySelector('.pref-field')
+    if ( !f ) return []
+    return [
+        {kind: 'field',  el: f.querySelector('input')}
+      , {kind: 'unit',   el: f.querySelector('.pref-unit')}
+      , {kind: 'button', el: f.querySelector('button')}
+    ]
+  }
+  const built = rows.map(({label, cells}) => ({label, groups: cells.map(keys => keys.flatMap(parts))}))
+  // En-tête : chaque libellé au-dessus des champs de sa colonne
+  const model = built[0].groups
+  const ths = [DCreate('TH', {text: heads[0]})]
+  model.forEach((group, g) => {
+    const fields = group.map((p, i) => p.kind == 'field' ? i : -1).filter(i => i >= 0)
+    const first = fields[0], last = fields[fields.length - 1]
+    for ( let i = 0 ; i < first ; ++i ) ths.push(DCreate('TH'))
+    ths.push(DCreate('TH', {class: 'col-head', text: heads[g + 1], colspan: last - first + 1}))
+    for ( let i = last + 1 ; i < group.length ; ++i ) ths.push(DCreate('TH'))
+  })
+  ths.forEach(th => th.getAttribute('colspan') || th.removeAttribute('colspan'))
   const table = DCreate('TABLE', {id, class: 'prefs-table', inner: [
-      DCreate('TR', {inner: heads.map(h => DCreate('TH', {text: h}))})
-    , ...rows.map(({label, cells}) => {
+      DCreate('TR', {inner: ths})
+    , ...built.map(({label, groups}) => {
         const head = DCreate('TD', {class: 'row-label', text: label})
-        const tr = DCreate('TR', {inner: [head, ...cells.map(keys => DCreate('TD', {class: 'values', inner: keys.map(field).filter(Boolean)}))]})
+        const tds = groups.flatMap(group => group.map(p => DCreate('TD', {class: `pt-${p.kind}`, inner: p.el ? [p.el] : []})))
+        const tr = DCreate('TR', {inner: [head, ...tds]})
         listen(head, 'click', () => { const f = tr.querySelector('input, select') ; f && (f.focus(), f.select && f.select()) })
         return tr
       })
