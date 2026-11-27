@@ -8,6 +8,7 @@ import { AObjet } from './AObjet.js'
 import { Current, setModified } from './Current.js'
 import { pref } from './Preferences.js'
 import { QuickKeyboard } from './QuickKeyboard.js'
+import { Groups } from './Groups.js'
 import { contentForField, contentFromField } from './Notation.js'
 import { noteInTextRegex, bataveOf } from './lib/notation.js'
 import { supize } from './lib/exposants.js'
@@ -765,6 +766,15 @@ observe(){
         e.shiftKey && keepOneAxis(ui, this.debLeft, this.debTop)
         // Saut de page, délimitation : déplacement vertical seulement
         my.isLayoutLine && (ui.position.left = this.debLeft)
+        // Copie d'un groupe (Alt, #269) : les copies des autres marques
+        // du groupe suivent
+        if ( this.forDuplication && this.groupGhosts ) {
+          const dx = ui.position.left - this.debLeft, dy = ui.position.top - this.debTop
+          this.groupGhosts.forEach(({el, ao}) => {
+            el.style.left = px(ao.left + dx)
+            el.style.top  = px(ao.top + dy)
+          })
+        }
         // Les autres marques sélectionnées suivent la marque déplacée
         if ( !this.forDuplication && my.isSelected ) {
           const diffTop   = this.debTop - ui.position.top
@@ -789,6 +799,22 @@ observe(){
         this.initData = Object.assign({}, my.data)
         // La copie (Alt) n'entre pas dans le groupe de l'original
         delete this.initData.groups
+        // Marque d'un groupe, copie (Alt) : tout le groupe est copié
+        // (#269), aperçu des autres marques pendant le déplacement
+        this.groupGhosts = null
+        const outer = this.forDuplication && Groups.outerOf(my)
+        if ( outer ) {
+          this.groupMembers = AObjet.items.filter(ao => ao instanceof AMark && ao.obj && Groups.outerOf(ao) == outer)
+          this.groupGhosts = this.groupMembers.filter(ao => ao !== my).map(ao => {
+            const el = ao.obj.cloneNode(true)
+            el.removeAttribute('id')
+            el.classList.remove('selected')
+            el.style.cursor = 'copy'
+            el.style.pointerEvents = 'none'
+            ao.obj.parentNode.appendChild(el)
+            return {el, ao}
+          })
+        }
       }
     , stop:function(e,ui){
         // console.log("Fin : ", {
@@ -819,6 +845,29 @@ observe(){
         const diffLeft  = this.debLeft - ui.position.left
         // console.log("diffLeft = %i / diffTop = %i", diffLeft, diffTop)
         let saufId = null
+        // Copie d'un groupe (Alt, #269) : toutes ses marques, mêmes
+        // distances, dans un nouveau groupe
+        if ( this.forDuplication && this.groupGhosts ) {
+          this.groupGhosts.forEach(({el}) => el.remove())
+          this.groupGhosts = null
+          ui.helper[0] !== my.obj && ui.helper[0].remove()
+          const dx = ui.position.left - this.debLeft, dy = ui.position.top - this.debTop
+          const newGroups = {}
+          const copies = this.groupMembers.map(ao => {
+            const data = JSON.parse(JSON.stringify(ao.data))
+            delete data.id
+            delete data.grp
+            data.groups && (data.groups = data.groups.map(g => newGroups[g] || (newGroups[g] = Groups.newId(Object.values(newGroups)))))
+            Object.assign(data, {left: ao.left + dx, top: ao.top + dy})
+            const copy = AMark.createNew(null, data)
+            copy && copy.isBorne && copy.placeAtHeight()
+            return copy
+          }).filter(Boolean)
+          AObjet.deselectAll()
+          copies.forEach(c => AObjet.addToSelection(c))
+          setModified()
+          return
+        }
         if ( this.forDuplication ) {
           // Créer la nouvelle marque
           var newMark = AMark.createNew(e, this.initData)
