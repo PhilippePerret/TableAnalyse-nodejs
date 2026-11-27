@@ -437,7 +437,7 @@ function buildMenu(){
     {
       label: t('ui.menu.tools_menu'),
       submenu: [
-          {label: t('ui.menu.tools'),           accelerator: 'Shift+O', registerAccelerator: false, click: byClick(() => sendMenuCommand('toolsPanel'))}
+          {label: t('ui.menu.tools'),           accelerator: 'CmdOrCtrl+Shift+O', registerAccelerator: false, click: byClick(() => sendMenuCommand('toolsPanel'))}
         , {label: t('ui.menu.animate'),         click: () => sendMenuCommand('animate')}
         , {label: t('ui.menu.variable'),        submenu: variablesSubmenu()}
         , {label: t('ui.menu.partage'),         submenu: [

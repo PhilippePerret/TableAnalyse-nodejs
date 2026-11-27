@@ -30,8 +30,6 @@ export function onKeypressOnAnalyse(e){
     case 'M':
       return onRelease(e, () => Manuel.toggle())
 
-    case 'O':
-      return onRelease(e, () => Tools.toggle())
   }
 }
 
@@ -137,6 +135,10 @@ export function onKeyDownUniversel(e){
         // Dans un champ : annulation de la saisie (celle du système)
         if ( inTextField(e) ) return null
         return onRelease(e, () => e.shiftKey ? Cancel.unzLast(e) : Cancel.zLast(e))
+      case 'o':
+        // Boite à outils : ⌘/Ctrl + Maj + O (#257)
+        if ( !e.shiftKey || e.altKey ) return null
+        return onRelease(e, () => Tools.toggle())
       case 'g':
         // Grouper (Maj : dégrouper) les marques sélectionnées
         if ( inTextField(e) || !AObjet.selection ) return null

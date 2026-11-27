@@ -1,5 +1,4 @@
 import { DGet, listen } from './dom.js'
-import { onRelease } from './KeyRelease.js'
 import { isBool } from './lib/common.js'
 import { message, erreur } from './lib/Message.js'
 import { invoke } from './api.js'
@@ -8,7 +7,7 @@ import { Preferences } from './Preferences.js'
 import { Current } from './Current.js'
 import { Systeme } from './Systeme.js'
 import { Analyse } from './Analyse.js'
-import { onKeyDownUniversel, inTextField } from './KeyboardEvents.js'
+import { onKeyDownUniversel } from './KeyboardEvents.js'
 import { t } from './i18n.js'
 
 export class Tools {
@@ -20,7 +19,6 @@ export class Tools {
   static onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU
-    if ( e.shiftKey && e.key == 'O' && !inTextField(e) ) return onRelease(e, () => this.toggle())
   }
 
   /**

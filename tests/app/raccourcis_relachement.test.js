@@ -132,3 +132,26 @@ T.test('Entrée sur une marque sélectionnée : édition au relâchement', async
     cancelPendingShortcut()
   }
 })
+
+T.test('boite à outils : ⌘ + Maj + O, plus Maj + O (#257)', async () => {
+  const { Tools } = await T.imp('Tools')
+  const orig = Tools.toggle
+  let n = 0
+  Tools.toggle = function(){ n++ }
+  try {
+    kev('keydown', 'O', {code: 'KeyO', shiftKey: true}, document.body)
+    kev('keypress', 'O', {code: 'KeyO', shiftKey: true}, document.body)
+    kev('keyup', 'O', {code: 'KeyO', shiftKey: true}, document.body)
+    T.eq(n, 0, 'Maj + O : rien')
+    kev('keydown', 'o', {code: 'KeyO', shiftKey: true, metaKey: true}, document.body)
+    T.eq(n, 0, '⌘ + Maj + O pressées : rien encore')
+    kev('keyup', 'o', {code: 'KeyO', shiftKey: true, metaKey: true}, document.body)
+    T.eq(n, 1, '⌘ + Maj + O relâchées : boite à outils')
+    kev('keydown', 'o', {code: 'KeyO', metaKey: true}, document.body)
+    kev('keyup', 'o', {code: 'KeyO', metaKey: true}, document.body)
+    T.eq(n, 1, '⌘ + O (sans Maj) : pas la boite à outils')
+  } finally {
+    Tools.toggle = orig
+    cancelPendingShortcut()
+  }
+})
