@@ -1,7 +1,7 @@
 [[tags-chiffrage]]
 ==== Marque d'Harmonie (chiffrage) ====
 
-Comme pour l'<<tags-chord, accord>>, on peut également ajouter ` --` après le chiffrage pour obtenir une ligne de prolongation qu'il suffit de tirer en déplaçant le bord droit. Ne pas oublier l'espace, sinon le premier « - » sera considéré comme la marque bémol.
+Comme pour l'<<tags-chord, accord>>, on peut également tirer le bord droit ou ajouter ` --` après le chiffrage pour obtenir une ligne de prolongation.
 
 [options="header"]
 |====

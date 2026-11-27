@@ -3,14 +3,13 @@
 
 ////
 TODO
-- Documenter : Cmd + (Maj +) flèche pour scroller
-- TUTORIEL : 
+TUTORIEL : 
   * utilisation des variables
-- TUTORIEL : Définition de la forme
+TUTORIEL : Définition de la forme
   * Mise des marques de forme
   * Affinements (textes, etc.)
   * Choix d'un thème à l'export
-- TUTORIEL : toutes les façons de créer une marque
+TUTORIEL : toutes les façons de créer une marque
   * méthode normal, mais avec simple ou double click
   * blocage d'un type en particulier
   * production marque quelconque avec ALT/OPTION quand blocage

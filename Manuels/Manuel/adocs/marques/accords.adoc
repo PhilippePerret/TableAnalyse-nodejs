@@ -3,7 +3,7 @@
 
 Une marque accord attend simplement la valeur de l'accord. Cette valeur doit respecter le <<chord-writing, format requis par l'application>>.
 
-On peut également ajouter ` --` après l'accord pour obtenir une ligne de prolongation qu'il suffit de tirer en déplaçant le bord droit. Ne pas oublier l'espace, sinon le premier « - » sera considéré comme la marque bémol.
+On peut ajouter un trait de prolongation simplement en tirant sur le bord droit de la marque. On peut également ajouter ` --` après le nom de l'accord.
 
 [options="header"]
 |====
