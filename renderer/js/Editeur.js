@@ -325,11 +325,14 @@ export class Editeur {
       this.data.onTypeButton.call(null)
       return stopEvent(e)
     }
-    // Liste des types (ou des sous-types) à droite du panneau, jamais
-    // dessus (#270 ; les listes sont placées 40 px au-dessus et à gauche
-    // du point donné, cf. AMark_Editor#positionFixed)
+    // Liste des types (ou des sous-types) À LA PLACE du panneau de valeur,
+    // qui dépend du type : panneau masqué, liste à sa place, panneau
+    // revenu après le choix ou l'abandon (#270 ; les listes sont placées
+    // 40 px au-dessus et à gauche du point donné, cf.
+    // AMark_Editor#positionFixed)
     const r = this.obj.getBoundingClientRect()
-    const x = Math.round(r.right + 12 + 40), y = Math.round(r.top + 40)
+    const x = Math.round(r.left + 40), y = Math.round(r.top + 40)
+    this.obj.classList.add('hidden')
     const editor = new AMark_Editor({
         onReleaseMethod:  this.onTypeChosen.bind(this)
       , event:            {clientX: x, clientY: y, pageX: x + window.scrollX, pageY: y + window.scrollY}
@@ -341,6 +344,8 @@ export class Editeur {
     return stopEvent(e)
   }
   onTypeChosen(data){
+    // Panneau de valeur revenu (cf. onClickType)
+    this.obj.classList.remove('hidden')
     if ( data ) {
       // Fin de portion de la forme : son texte est le nom du début
       const value = data.start ? data.content : this.getValue()
