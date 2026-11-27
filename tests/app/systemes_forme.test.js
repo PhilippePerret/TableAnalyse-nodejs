@@ -113,6 +113,9 @@ T.test('forme : portions, construction du diagramme, tonalités', async () => {
   T.ok(diag, 'diagramme affiché')
   T.includes(diag && diag.textContent, 'Exposition', 'nom de partie dans le diagramme')
   T.includes(diag && diag.textContent, 'Thème B', 'nom de section dans le diagramme')
+  // Décollée du bord gauche (#278)
+  const sysLeft = Systeme.first.obj.getBoundingClientRect().left
+  T.ok(diag.getBoundingClientRect().left - Math.max(0, sysLeft) >= 40, 'forme décollée du bord gauche')
   FormeBuilder.remove()
   T.no(document.querySelector('#form-diagram'), 'diagramme retiré')
   ;[p1, p2, s1, s2, mod].forEach(m => AObjet.remove(m))

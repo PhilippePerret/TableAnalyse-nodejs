@@ -50,6 +50,10 @@ const MIN_GAP = 30    // distance minimale (px) entre deux numéros
 // Forme.css correspondant alors à des tailles imprimées lisibles
 const MM_PER_PX = 0.18
 
+// Marge (px de la table) entre le bord gauche des systèmes et la forme
+// construite (#278)
+export const FORM_LEFT_MARGIN = 60
+
 export class FormeBuilder {
 
   /**
@@ -68,7 +72,9 @@ export class FormeBuilder {
     const width = Math.round(widthMm / MM_PER_PX)
     this.keys = this.keyChanges()
     const o = DCreate('DIV', {id: 'form-diagram', class: 'form-diagram', 'data-position': pref('form_position')})
-    o.style.left  = px(first ? first.left : 0)
+    // Décollée du bord gauche (#278 ; à l'export, elle a sa propre page,
+    // cadrée sur elle)
+    o.style.left  = px((first ? first.left : 0) + FORM_LEFT_MARGIN)
     o.style.width = px(width)
     o.dataset.widthMm = widthMm
     o.appendChild(this.titleDiv())
