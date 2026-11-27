@@ -305,6 +305,9 @@ panels:
       html:           "HTML"
     svg_desc:         "每页一个 SVG 文件。"
     legend_title:     "所用符号"
+    legend_mark:      "标记"
+    legend_description: "说明"
+    theme:            "主题"
     gap:              "最大垂直空白"
     gap_desc:         "一个系统最低的对象与下一个系统最高的对象之间保留的最大距离。导出文档中更大的空白会被缩小。"
     bad_gap:          "最大垂直空白无效。"
@@ -829,3 +832,12 @@ prefs_version:
   error: "无法检查（%{error}）"
   dialog_message: "应用程序有新版本可用（%{latest}）"
   dialog_detail: "当前版本：%{current}。“立即更新”将打开下载页面。"
+
+# Thèmes de la sortie de l’analyse (export, #255)
+export_themes:
+  sans-style: "无样式"
+  sobre: "简洁"
+  filets: "线条"
+  cadre: "边框"
+  classique: "经典"
+  tableau: "表格"

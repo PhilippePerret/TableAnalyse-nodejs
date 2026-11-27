@@ -9,6 +9,7 @@ import { Analyse } from './Analyse.js'
 import { AObjet } from './AObjet.js'
 import { Systeme } from './Systeme.js'
 import { TYPES_NOTES } from './Constants.js'
+import { EXPORT_THEMES, exportTheme } from './export_themes/index.js'
 import { Forme } from './Forme.js'
 import { Liaison } from './Liaison.js'
 import { FormeBuilder } from './FormeBuilder.js'
@@ -216,6 +217,9 @@ class ExporterClass {
     // éléments sont en couleur (cf. detectColors)
     const colorBox = DCreate('INPUT', {type: 'checkbox', id: 'export_color'})
     colorBox.checked = !!pref('export_color')
+    // Thème de la sortie (nomenclature…, #255)
+    const selTheme = DCreate('SELECT', {id: 'export_theme', inner: EXPORT_THEMES.map(th => DCreate('OPTION', {value: th.id, text: t(`ui.export_themes.${th.id}`)}))})
+    selTheme.value = exportTheme(pref('export_theme')).id
     const selDocument = DCreate('SELECT', {id: 'export_document', inner: EXPORT_DOCUMENTS.map(d => DCreate('OPTION', {value: d, text: T(`documents.${d}`)}))})
     selDocument.value = EXPORT_DOCUMENTS.includes(pref('export_document')) ? pref('export_document') : 'normal'
     // Ligne libellé | champ(s) ; sans libellé : champ dans la colonne des champs
@@ -282,6 +286,7 @@ class ExporterClass {
         DCreate('DIV', {class: 'rows', inner: [
             row(T('type'), selType)
           , row(T('document'), selDocument)
+          , row(T('theme'), selTheme)
           , DCreate('DIV', {class: 'row export-color-row', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields', inner: [colorBox, DCreate('LABEL', {for: 'export_color', text: T('color')})]})]})
           , DCreate('DIV', {class: 'row svg-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields explication', text: T('svg_desc')})]})
           , DCreate('DIV', {class: 'row pdf-only', inner: [DCreate('LABEL'), DCreate('DIV', {class: 'fields column', inner: [radio('page', false), radio('book', true)]})]})
@@ -340,6 +345,7 @@ class ExporterClass {
         , gap:    toMm(num(gap), unit) / UNITS.pt
         , document: selDocument.value
         , colors:   colorBox.checked && !colorBox.disabled
+        , theme:    selTheme.value
       }
       if ( gap.value == '' || !(opts.gap >= 0) ) return erreur(T('bad_gap'))
       if ( DGet('#export_measures_some', panel).checked ) {
@@ -363,7 +369,7 @@ class ExporterClass {
           , export_systems_gap:       opts.gap
         })
       }
-      this.remember({export_type: format, export_document: opts.document})
+      this.remember({export_type: format, export_document: opts.document, export_theme: opts.theme})
       colorBox.disabled || this.remember({export_color: colorBox.checked})
       close()
       this.export(format, opts)
@@ -451,7 +457,7 @@ class ExporterClass {
       await stage.build()
       opts.systems && stage.keepSystems(opts.systems)
       stage.respace(opts)
-      stage.addLegend()
+      stage.addLegend(opts.theme)
       // Export en couleur (case cochée, #247), sinon en niveaux de gris
       stage.colors = !!opts.colors
       opts.colors || stage.toGray()
@@ -644,25 +650,52 @@ export class Stage {
   /**
    * Page de nomenclature : les types de notes utilisés (signe tel qu'il
    * apparait dans l'analyse et nom), posée au-dessus de l'analyse, sur
-   * une page à elle seule (cf. layout)
+   * une page à elle seule (cf. layout). Aspect : thème +themeId+ de la
+   * sortie (cf. export_themes, #255), styles en ligne (tous les exports)
    */
-  addLegend(){
+  addLegend(themeId = pref('export_theme')){
     const used = Object.keys(TYPES_NOTES).map(subtype => this.content.querySelector(`div.amark.not.${subtype}`)).filter(Boolean)
     if ( !used.length ) return
     const items = this.items
-    const legend = DCreate('DIV', {class: 'sa-legend', style: `position:absolute;left:${Math.min(...items.map(i => i.left))}px;top:0;font-family:Arial, Helvetica, sans-serif;color:#000;`})
-    legend.appendChild(DCreate('DIV', {text: t('ui.panels.export.legend_title'), style: 'font-size:60px;font-weight:bold;margin-bottom:50px;'}))
-    used.forEach(mark => {
+    const theme = exportTheme(themeId)
+    const S = theme.styles
+    const el = (tag, style, attrs = {}) => {
+      const e = DCreate(tag, attrs)
+      style && Object.assign(e.style, style)
+      return e
+    }
+    const legend = el('DIV', S.legend, {class: `sa-legend theme-${theme.id}`})
+    Object.assign(legend.style, {position: 'absolute', left: `${Math.min(...items.map(i => i.left))}px`, top: '0'})
+    legend.appendChild(el('DIV', S.title1, {class: 'sa-legend-title', text: t('ui.panels.export.legend_title')}))
+    S.rule && legend.appendChild(el('DIV', S.rule))
+    const entries = used.map(mark => {
       const sign = mark.cloneNode(true)
       sign.removeAttribute('id')
       sign.querySelectorAll('span.pline, .ui-resizable-handle, div.handler_prolong').forEach(e => e.remove())
-      Object.assign(sign.style, {position: 'relative', left: 'auto', top: 'auto', width: 'auto', height: 'auto'})
+      Object.assign(sign.style, {position: 'relative', left: 'auto', top: 'auto', width: 'auto', height: 'auto', display: 'inline-block'})
+      S.signShape && Object.assign(sign.querySelector('span.content').style, S.signShape)
       const subtype = Object.keys(TYPES_NOTES).find(st => mark.classList.contains(st))
-      legend.appendChild(DCreate('DIV', {style: 'display:flex;align-items:center;gap:40px;margin:24px 0;', inner: [
-          DCreate('DIV', {style: 'width:160px;display:flex;justify-content:center;', inner: [sign]})
-        , DCreate('SPAN', {text: TYPES_NOTES[subtype].full || TYPES_NOTES[subtype].name, style: 'font-size:40px;'})
-      ]}))
+      return {sign, text: TYPES_NOTES[subtype].full || TYPES_NOTES[subtype].name}
     })
+    if ( theme.layout == 'table' ) {
+      const table = el('TABLE', S.table)
+      theme.header && table.appendChild(el('TR', null, {inner: [
+          el('TH', Object.assign({}, S.th, {textAlign: 'center'}), {text: t('ui.panels.export.legend_mark')})
+        , el('TH', S.th, {text: t('ui.panels.export.legend_description')})
+      ]}))
+      entries.forEach(({sign, text}) => table.appendChild(el('TR', null, {inner: [
+          el('TD', Object.assign({}, S.td, S.sign), {class: 'sa-legend-sign', inner: [sign]})
+        , el('TD', Object.assign({}, S.td, S.description), {class: 'sa-legend-desc', text})
+      ]})))
+      legend.appendChild(table)
+    } else {
+      const box = el('DIV', S.items)
+      entries.forEach(({sign, text}) => box.appendChild(el('DIV', S.item, {class: 'sa-legend-item', inner: [
+          el('DIV', S.sign, {class: 'sa-legend-sign', inner: [sign]})
+        , el('SPAN', S.description, {class: 'sa-legend-desc', text})
+      ]})))
+      legend.appendChild(box)
+    }
     this.content.appendChild(legend)
     const minTop = Math.min(...items.map(i => i.top))
     legend.style.top = `${minTop - 400 - legend.getBoundingClientRect().height}px`
@@ -1001,6 +1034,8 @@ ${crop ? cropMarksLines(layout.width, layout.height, crop) : ''}
       , `font-size="${num(parseFloat(cs.fontSize))}"`
       , cs.fontWeight != '400' ? `font-weight="${cs.fontWeight}"` : ''
       , cs.fontStyle != 'normal' ? `font-style="${cs.fontStyle}"` : ''
+      // (petites capitales : titre du thème « Tableau », #255)
+      , cs.fontVariantCaps == 'small-caps' ? 'font-variant="small-caps"' : ''
       , cs.letterSpacing != 'normal' ? `letter-spacing="${num(parseFloat(cs.letterSpacing))}"` : ''
       , `fill="${fill.rgb}"`, fill.a < 1 ? `fill-opacity="${num(fill.a)}"` : ''
     ].filter(Boolean).join(' ')

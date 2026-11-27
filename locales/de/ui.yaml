@@ -305,6 +305,9 @@ panels:
       html:           "HTML"
     svg_desc:         "Eine SVG-Datei pro Seite."
     legend_title:     "Verwendete Zeichen"
+    legend_mark:      "Zeichen"
+    legend_description: "Beschreibung"
+    theme:            "Thema"
     gap:              "Maximaler vertikaler Leerraum"
     gap_desc:         "Größter Abstand zwischen dem tiefsten Objekt eines Systems und dem höchsten Objekt des nächsten. Größere Abstände werden im exportierten Dokument verkleinert."
     bad_gap:          "Ungültiger maximaler vertikaler Leerraum."
@@ -830,3 +833,12 @@ prefs_version:
   error: "Prüfung nicht möglich (%{error})"
   dialog_message: "Eine neue Version der Anwendung ist verfügbar (%{latest})"
   dialog_detail: "Aktuelle Version: %{current}. „Jetzt aktualisieren“ öffnet die Download-Seite."
+
+# Thèmes de la sortie de l’analyse (export, #255)
+export_themes:
+  sans-style: "Ohne Stil"
+  sobre: "Schlicht"
+  filets: "Linien"
+  cadre: "Rahmen"
+  classique: "Klassisch"
+  tableau: "Tabelle"

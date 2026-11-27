@@ -69,6 +69,7 @@ export const PreferencesAppData = {
   , export_type             :{type:'inputtext'    ,typeV:'string'   ,default:'pdf'      ,hidden:true}
   , export_document         :{type:'inputtext'    ,typeV:'string'   ,default:'normal'   ,hidden:true}
   , export_color            :{type:'checkbox'     ,typeV:'boolean'  ,default:false      ,hidden:true}
+  , export_theme            :{type:'inputtext'    ,typeV:'string'   ,default:'classique',hidden:true} // (#255, cf. export_themes)
 
   // --- Window ---
   , window_width            :{type:'inputtext'    ,typeV:'number'   ,default:null ,current:'width'}

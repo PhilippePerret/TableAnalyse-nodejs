@@ -305,6 +305,9 @@ panels:
       html:           "HTML"
     svg_desc:         "1 ページにつき 1 つの SVG ファイル。"
     legend_title:     "使用した記号"
+    legend_mark:      "記号"
+    legend_description: "説明"
+    theme:            "テーマ"
     gap:              "垂直方向の最大余白"
     gap_desc:         "ある段の最も低いオブジェクトと次の段の最も高いオブジェクトの間に残す最大の間隔。これより大きい間隔は書き出した文書で縮められます。"
     bad_gap:          "垂直方向の最大余白が無効です。"
@@ -829,3 +832,12 @@ prefs_version:
   error: "確認できません（%{error}）"
   dialog_message: "アプリケーションの新しいバージョンがあります（%{latest}）"
   dialog_detail: "現在のバージョン：%{current}。「今すぐ更新」でダウンロードページを開きます。"
+
+# Thèmes de la sortie de l’analyse (export, #255)
+export_themes:
+  sans-style: "スタイルなし"
+  sobre: "シンプル"
+  filets: "罫線"
+  cadre: "枠"
+  classique: "クラシック"
+  tableau: "表"

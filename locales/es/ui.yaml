@@ -305,6 +305,9 @@ panels:
       html:           "HTML"
     svg_desc:         "Un archivo SVG por página."
     legend_title:     "Signos utilizados"
+    legend_mark:      "Marca"
+    legend_description: "Descripción"
+    theme:            "Tema"
     gap:              "Espacio en blanco vertical máximo"
     gap_desc:         "Mayor espacio dejado entre el objeto más bajo de un sistema y el objeto más alto del siguiente. Los espacios mayores se reducen en el documento exportado."
     bad_gap:          "Espacio en blanco vertical máximo no válido."
@@ -830,3 +833,12 @@ prefs_version:
   error: "Comprobación imposible (%{error})"
   dialog_message: "Hay una nueva versión de la aplicación disponible (%{latest})"
   dialog_detail: "Versión actual: %{current}. «Actualizar ahora» abre la página de descarga."
+
+# Thèmes de la sortie de l’analyse (export, #255)
+export_themes:
+  sans-style: "Sin estilo"
+  sobre: "Sobrio"
+  filets: "Filetes"
+  cadre: "Marcos"
+  classique: "Clásico"
+  tableau: "Tabla"

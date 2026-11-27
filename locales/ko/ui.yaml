@@ -305,6 +305,9 @@ panels:
       html:           "HTML"
     svg_desc:         "페이지마다 SVG 파일 하나."
     legend_title:     "사용한 기호"
+    legend_mark:      "기호"
+    legend_description: "설명"
+    theme:            "테마"
     gap:              "최대 세로 빈 공간"
     gap_desc:         "한 단의 가장 낮은 객체와 다음 단의 가장 높은 객체 사이에 남기는 최대 간격. 더 큰 간격은 내보낸 문서에서 줄어듭니다."
     bad_gap:          "최대 세로 빈 공간이 올바르지 않습니다."
@@ -829,3 +832,12 @@ prefs_version:
   error: "확인할 수 없음 (%{error})"
   dialog_message: "애플리케이션의 새 버전이 있습니다 (%{latest})"
   dialog_detail: "현재 버전: %{current}. “지금 업데이트”를 누르면 다운로드 페이지가 열립니다."
+
+# Thèmes de la sortie de l’analyse (export, #255)
+export_themes:
+  sans-style: "스타일 없음"
+  sobre: "간결"
+  filets: "선"
+  cadre: "테두리"
+  classique: "클래식"
+  tableau: "표"
