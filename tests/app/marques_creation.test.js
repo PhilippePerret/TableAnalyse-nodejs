@@ -141,9 +141,18 @@ T.test('édition : nouveau contenu, ligne de prolongation ajoutée puis retirée
   m.setValue('Dm7 --')
   T.ok(m.prolong && m.hasProlongLine, 'prolongation ajoutée')
   T.eq(m.content, 'Dm7 ', 'contenu sans les tirets')
+  // Accord : trait gardé quand le texte change (retiré en le rétrécissant, #276)
   m.setValue('Dm7')
-  T.no(m.hasProlongLine, 'prolongation retirée')
+  T.ok(m.hasProlongLine, 'accord : prolongation gardée')
   AObjet.remove(m)
+  // Autres marques (degré) : « -- » retiré, prolongation retirée
+  const d = (await T.mark({type: 'deg', content: '5', top: 1100, left: 800}))
+  d.setValue('5--')
+  T.ok(d.prolong && d.hasProlongLine, 'degré : prolongation ajoutée')
+  d.setValue('5')
+  T.no(d.hasProlongLine, 'degré : prolongation retirée')
+  T.eq(d.obj.style.width, '', 'degré : taille normale')
+  AObjet.remove(d)
 })
 
 T.test('suppression par la touche Effacement (sélection)', async () => {
