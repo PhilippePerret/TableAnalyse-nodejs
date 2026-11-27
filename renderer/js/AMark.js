@@ -38,6 +38,10 @@ function keepOneAxis(ui, left, top){
   else ui.position.left = left
 }
 
+// Allongement (px) d'un accord ou d'une harmonie étiré à partir duquel
+// le trait de prolongation apparait (#268)
+const STRETCH_MIN = 40
+
 export class AMark extends AObjet {
 
   /**
@@ -719,6 +723,8 @@ observe(){
       }
     })
   }
+  // Accord, harmonie : étirés par leur bord droit (#268)
+  this.isStretchable && this.observeStretch()
   if ( this.isDelimiter ) {
     // Délimitation : poignée du bas, hauteur (texte) modifiée en direct
     resizable(this.obj, {
@@ -1272,8 +1278,10 @@ buildLigneProlongation(){
   const my = this
   if ( my.hasProlongLine ) return
   my.prolongLine = DCreate('SPAN', {class:'pline'})
-  my.obj.appendChild(this.prolongLine)
+  my.obj.insertBefore(this.prolongLine, this.contentSpan.nextSibling)
   my.data.width || my.applyWidth(200)
+  // Accord, harmonie : poignée déjà en place (cf. observeStretch)
+  if ( my.isStretchable ) return
   // Resizable
   resizable(my.obj, {
       alsoResize: my.prolongLine
@@ -1299,7 +1307,54 @@ destroyLigneProlongation(){
   if (this.hasProlongLine){
     this.prolongLine.remove()
     delete this.prolongLine
-    resizable(this.obj, "disable")
+    // (accord, harmonie : toujours étirables)
+    this.isStretchable || resizable(this.obj, "disable")
+  }
+}
+
+/**
+ * ÉTIREMENT d'un accord ou d'une harmonie par son bord droit (#268) :
+ * au-delà de STRETCH_MIN pixels de plus que sa largeur naturelle, trait
+ * de prolongation (comme « -- » en fin de texte) ; ramenée en deçà, la
+ * marque reprend sa taille normale, sans trait.
+ */
+get isStretchable(){ return ['acc', 'har'].includes(this.type) }
+// Largeur sans trait (cf. setProlongLineWidth)
+get naturalWidth(){ return this.contentSpan.offsetWidth + 20 }
+
+observeStretch(){
+  const my = this
+  resizable(this.obj, {
+      handles: 'e'
+    , resize: function(e, ui){ my.stretchTo(ui.size.width, false) }
+    , stop:   function(e, ui){ my.stretchTo(ui.size.width, true) }
+  })
+}
+
+stretchTo(w, final){
+  const natural = this.naturalWidth
+  if ( w - natural >= STRETCH_MIN ) {
+    if ( !this.hasProlongLine ) {
+      this.prolongLine = DCreate('SPAN', {class:'pline'})
+      this.obj.insertBefore(this.prolongLine, this.contentSpan.nextSibling)
+    }
+    this.prolongLine.style.width = px(w - natural)
+    this.obj.style.width = px(w)
+    if ( final ) {
+      this.prolong = true
+      this.setProlongLineWidth(w)
+    }
+  } else {
+    if ( this.hasProlongLine ) {
+      this.prolongLine.remove()
+      delete this.prolongLine
+    }
+    this.obj.style.width = final ? '' : px(Math.max(w, natural))
+    if ( final && (this.prolong || this.data.width) ) {
+      this.prolong = false
+      this.data.width = null
+      setModified()
+    }
   }
 }
 
