@@ -17,7 +17,7 @@ jobs:
             target: --mac
             files: dist/*.dmg
           - os: windows-latest
-            target: --win
+            target: --win --config _scripts/build/electron-builder.win.cjs
             files: dist/*.exe
           - os: ubuntu-latest
             target: --linux

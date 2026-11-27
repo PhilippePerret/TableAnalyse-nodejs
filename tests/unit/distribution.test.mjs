@@ -5,6 +5,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
+import os from 'node:os'
 import { createRequire } from 'node:module'
 
 const ROOT    = path.join(import.meta.dirname, '..', '..')
@@ -25,7 +26,7 @@ test('Linux (AppImage) : nom du programme accepté par electron-builder', () => 
 test('nom affiché : « Table d’analyse » sur les trois systèmes', () => {
   assert.equal(PKG.productName, 'Table d’analyse')
   assert.equal(PKG.build.mac.extendInfo.CFBundleDisplayName, 'Table d’analyse')
-  assert.equal(PKG.build.mac.extendInfo.CFBundleName, 'Table d’analyse')
+  assert.equal(PKG.build.mac.extendInfo.LSHasLocalizedDisplayName, true)
   assert.equal(PKG.build.nsis.shortcutName, 'Table d’analyse')
   assert.equal(PKG.build.nsis.uninstallDisplayName, 'Table d’analyse')
   assert.equal(PKG.build.linux.desktop.entry.Name, 'Table d’analyse')
@@ -41,4 +42,41 @@ test('application installée : « Table Analyse.app » (nom de la commande de d�
   assert.equal(PKG.build.productName, 'Table Analyse')
   const { sanitizeFileName: sf } = { sanitizeFileName }
   assert.equal(sf(PKG.build.productName), 'Table Analyse', 'nom du paquet .app')
+})
+
+test('macOS : CFBundleName jamais modifié (sinon les « Helper.app » sont introuvables)', () => {
+  assert.equal(PKG.build.mac.extendInfo.CFBundleName, undefined)
+})
+
+test('macOS : afterPack écrit « Table d’analyse » dans chaque InfoPlist.strings', () => {
+  assert.equal(PKG.build.afterPack, '_scripts/build/afterPack.cjs')
+  const { writeLocalizedNames } = require(path.join(ROOT, PKG.build.afterPack))
+  const tmp  = fs.mkdtempSync(path.join(os.tmpdir(), 'sa-afterpack-'))
+  const app  = path.join(tmp, 'Table Analyse.app')
+  const res  = path.join(app, 'Contents', 'Resources')
+  for ( const l of ['en', 'fr', 'ja'] ) fs.mkdirSync(path.join(res, `${l}.lproj`), { recursive: true })
+  try {
+    assert.equal(writeLocalizedNames(app), 3)
+    for ( const l of ['en', 'fr', 'ja'] ) {
+      const txt = fs.readFileSync(path.join(res, `${l}.lproj`, 'InfoPlist.strings'), 'utf8')
+      assert.match(txt, /^CFBundleName = "Table d’analyse";$/m, l)
+      assert.match(txt, /^CFBundleDisplayName = "Table d’analyse";$/m, l)
+    }
+  } finally { fs.rmSync(tmp, { recursive: true, force: true }) }
+})
+
+test('macOS : afterPack ignore les autres systèmes', async () => {
+  const afterPack = require(path.join(ROOT, PKG.build.afterPack))
+  await assert.doesNotReject(afterPack({ electronPlatformName: 'win32', appOutDir: '/inexistant' }))
+})
+
+test('Windows : « Table Analyse.exe », nom affiché « Table d’analyse »', () => {
+  const cfg = require(path.join(ROOT, '_scripts/build/electron-builder.win.cjs'))
+  assert.equal(cfg.productName, 'Table d’analyse')
+  assert.equal(cfg.win.executableName, 'Table Analyse')
+  assert.equal(sanitizeFileName(cfg.win.executableName), 'Table Analyse', 'nom du .exe')
+  assert.equal(cfg.win.artifactName, PKG.build.win.artifactName)
+  assert.equal(cfg.nsis.shortcutName, 'Table d’analyse')
+  const wf = fs.readFileSync(path.join(ROOT, '.github/workflows/distribution.yml'), 'utf8')
+  assert.match(wf, /target: --win --config _scripts\/build\/electron-builder\.win\.cjs/)
 })
