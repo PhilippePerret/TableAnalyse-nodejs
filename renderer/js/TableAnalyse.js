@@ -10,6 +10,7 @@ import { Current, setModified } from './Current.js'
 import { message } from './lib/Message.js'
 import { FormeBuilder } from './FormeBuilder.js'
 import { t } from './i18n.js'
+import { HeldLetter } from './HeldLetter.js'
 
 export class TableAnalyse {
 
@@ -130,6 +131,8 @@ export class TableAnalyse {
    * sélection par rectangle ou un glissement, pour le second clic d'un
    * double-clic, un clic droit ou un Ctrl-clic (menu contextuel).
    * Alt-clic : création sans le type bloqué (choix du type, #233).
+   * Lettre tenue (cf. HeldLetter) : création par simple clic, même en
+   * mode double-clic, du type dont la lettre est le raccourci.
    */
   static onClick(e){
     if ( this.justSelected ) { this.justSelected = false ; return }
@@ -139,6 +142,11 @@ export class TableAnalyse {
     const down = this.downAt
     if ( down && (Math.abs(e.clientX - down.x) > 4 || Math.abs(e.clientY - down.y) > 4) ) return
     AObjet.deselectAll()
+    if ( HeldLetter.letter ) {
+      if ( e.metaKey || !this.isCreationTarget(e.target) ) return
+      const letter = HeldLetter.take(e)
+      return AMark.createNew(e, undefined, {type: HeldLetter.typeOf(letter), chooseType: true})
+    }
     if ( this.isDoubleClickCreation ) return
     if ( !e.shiftKey && !e.metaKey && this.isCreationTarget(e.target) ) AMark.createNew(e)
   }
@@ -150,6 +158,7 @@ export class TableAnalyse {
    */
   static onDblClick(e){
     if ( !this.isDoubleClickCreation || !Current.analyse ) return
+    if ( HeldLetter.active ) return // (création par simple clic)
     if ( e.button !== 0 || e.ctrlKey || e.shiftKey || e.metaKey ) return
     if ( UI.hasOpenPanel || document.documentElement.classList.contains('animation-running') ) return
     const down = this.downAt
@@ -181,6 +190,7 @@ export class TableAnalyse {
     listen(window, 'mouseup',   this.onMouseUp.bind(this))    
     listen(window, 'click',       this.onClick.bind(this))
     listen(window, 'dblclick',    this.onDblClick.bind(this))
+    HeldLetter.observe()
   }
 
   static get obj(){

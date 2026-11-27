@@ -48,12 +48,15 @@ export class AMark extends AObjet {
    * 
    * @param {Event}   e       L'event double-click (ou null)
    * @param {Hash}    params  Les données
+   * @param {Hash}    options (création) {type} : type déjà choisi (null :
+   *                          aucun) ; {chooseType: true} : sans le type
+   *                          bloqué
    */
-  static createNew(e, params){
+  static createNew(e, params, options = {}){
     // (« === » : null, l'abandon, ne doit pas relancer la création, #238)
     if ( undefined === params ) {
 
-      const editor = new AMark_Editor({event:e, onReleaseMethod: this.createNew.bind(this, e)})
+      const editor = new AMark_Editor({event:e, type: options.type, chooseType: options.chooseType, onReleaseMethod: this.createNew.bind(this, e)})
       return editor.proceed()
 
     } else if ( null === params ) {

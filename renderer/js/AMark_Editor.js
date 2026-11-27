@@ -41,6 +41,7 @@ import { Variables } from './Variables.js'
  *    - mettre 'onlyType' à true pour ne choisir que le type et
  *      sous-type de la marque
  *    - 'type' : type déjà connu (on commence alors par le sous-type)
+ *    - 'chooseType' : à true pour ignorer le type bloqué
  *    - 'markId' : identifiant de la marque éditée (le cas échéant)
  */
 
@@ -90,8 +91,9 @@ constructor(data){
   this.event  = data.event
   data.type && (this._amark_type = data.type)
   // Création (pas un changement de type) : type bloqué, sauf Alt-clic
-  // (ou Alt-double-clic) qui fait choisir le type (#233)
-  const bypassLock = !!(this.event && this.event.altKey)
+  // (ou Alt-double-clic) qui fait choisir le type (#233), et lettre
+  // tenue sans type (cf. HeldLetter)
+  const bypassLock = !!(this.event && this.event.altKey) || !!data.chooseType
   if ( !data.type && !data.onlyType && AMark_Editor.lockedType && !bypassLock ) this._amark_type = AMark_Editor.lockedType
 
   /* Pour écrire toutes les coordonnées
