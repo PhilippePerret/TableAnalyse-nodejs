@@ -628,6 +628,7 @@ marks:
     idx:   {name: "Am Rand (Index)",  default: "Index"}
   notes:
     np: "Durchgangsnote"
+    pc: "Chrom. Durchgang"
     ap: "Vorhalt (Appoggiatur)"
     ac: "Chromatische Appoggiatur"
     da: "Doppelvorhalt"
@@ -642,6 +643,7 @@ marks:
     an: "Vorausnahme"
     df: "Unterschied"
   notes_full:
+    pc: "Chromatische Durchgangsnote"
     ac: "Chromatischer Vorhalt"
     dac: "Chromatischer Doppelvorhalt"
     bc: "Chromatische Wechselnote"

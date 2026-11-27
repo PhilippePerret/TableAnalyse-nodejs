@@ -627,6 +627,7 @@ marks:
     idx:   {name: "页边（索引）",     default: "索引"}
   notes:
     np: "经过音"
+    pc: "半音经过音"
     ap: "倚音"
     ac: "半音倚音"
     da: "双倚音"
@@ -641,6 +642,7 @@ marks:
     an: "先现音"
     df: "差异"
   notes_full:
+    pc: "半音经过音"
     ac: "半音倚音"
     dac: "半音双倚音"
     bc: "半音辅助音"

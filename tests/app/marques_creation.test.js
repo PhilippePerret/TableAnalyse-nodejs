@@ -168,3 +168,19 @@ T.test('toutes les marques créées sont enregistrées avec leurs données', asy
     T.includes(tags, `type: ${m.type}`, `type ${m.type}`)
   }
 })
+
+T.test('note de passage chromatique (#254)', async () => {
+  const pc = C.TYPES_NOTES.pc
+  T.ok(pc, 'type de note défini')
+  T.eq(pc.shortcut, 'P', 'raccourci « P »')
+  const { t } = await T.imp('i18n')
+  if ( t('ui.marks.notes.np') == 'Note de passage' ) {
+    T.eq(pc.name, 'Passage chromatique', 'nom dans le panneau d’édition')
+    T.eq(pc.full, 'Note de passage chromatique', 'nom complet (nomenclature)')
+  }
+  const shortcuts = Object.values(C.TYPES_NOTES).map(d => d.shortcut)
+  T.eq(shortcuts.filter(s => s == 'P').length, 1, 'raccourci unique')
+  const {mark} = create('not', 'pc')
+  T.eq([mark.type, mark.subtype], ['not', 'pc'], 'marque créée')
+  AObjet.remove(mark)
+})

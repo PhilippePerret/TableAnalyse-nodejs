@@ -628,6 +628,7 @@ marks:
     idx:   {name: "En marge (index)", default: "Index"}
   notes:
     np: "Note de passage"
+    pc: "Passage chromatique"
     ap: "Appoggiature"
     ac: "Appog.chromatique"
     da: "Double appogiature"
@@ -642,6 +643,7 @@ marks:
     an: "Anacrouse"
     df: "Différence"
   notes_full:
+    pc: "Note de passage chromatique"
     ac: "Appoggiature chromatique"
     dac: "Double appogiature chromatique"
     bc: "Broderie chromatique"

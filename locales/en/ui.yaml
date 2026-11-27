@@ -628,6 +628,7 @@ marks:
     idx:   {name: "In margin (index)", default: "Index"}
   notes:
     np: "Passing note"
+    pc: "Chrom. passing note"
     ap: "Appoggiatura"
     ac: "Chromatic appoggiatura"
     da: "Double appoggiatura"
@@ -642,6 +643,7 @@ marks:
     an: "Anticipation"
     df: "Difference"
   notes_full:
+    pc: "Chromatic passing note"
     ac: "Chromatic appoggiatura"
     dac: "Chromatic double appoggiatura"
     bc: "Chromatic neighbor tone"

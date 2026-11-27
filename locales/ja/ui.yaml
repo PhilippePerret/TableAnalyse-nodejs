@@ -627,6 +627,7 @@ marks:
     idx:   {name: "余白（索引）",     default: "索引"}
   notes:
     np: "経過音"
+    pc: "半音階的経過音"
     ap: "倚音"
     ac: "半音階的倚音"
     da: "二重倚音"
@@ -641,6 +642,7 @@ marks:
     an: "先取音"
     df: "相違"
   notes_full:
+    pc: "半音階的経過音"
     ac: "半音倚音"
     dac: "半音二重倚音"
     bc: "半音刺繍音"

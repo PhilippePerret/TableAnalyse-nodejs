@@ -628,6 +628,7 @@ marks:
     idx:   {name: "A margine (indice)", default: "Indice"}
   notes:
     np: "Nota di passaggio"
+    pc: "Pass. cromatico"
     ap: "Appoggiatura"
     ac: "Appoggiatura cromatica"
     da: "Doppia appoggiatura"
@@ -642,6 +643,7 @@ marks:
     an: "Anticipazione"
     df: "Differenza"
   notes_full:
+    pc: "Nota di passaggio cromatica"
     ac: "Appoggiatura cromatica"
     dac: "Doppia appoggiatura cromatica"
     bc: "Fioritura cromatica"
