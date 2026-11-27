@@ -227,7 +227,7 @@ T.test('défilement : ⌘ + ↓/↑ (hauteur de la fenêtre), avec Maj : trois f
   }
   window.scrollTo({top: 0, behavior: 'instant'})
   const r = key('ArrowDown')
-  T.eq(r.pressedY, 0, 'touches pressées : pas encore de défilement')
+  T.eq(Math.round(r.pressedY), Math.round(h), 'défilement dès l’appui, sans attendre le relâchement (#264)')
   T.ok(r.defaultPrevented, 'défilement du système empêché')
   T.eq(Math.round(window.scrollY), Math.round(h), '⌘ + ↓ : une hauteur de fenêtre')
   key('ArrowDown', {shiftKey: true})
@@ -240,14 +240,29 @@ T.test('défilement : ⌘ + ↓/↑ (hauteur de la fenêtre), avec Maj : trois f
   window.scrollTo({top: 0, behavior: 'instant'})
 })
 
-T.test('⌘ tenu, flèche pressée plusieurs fois sans relâchement reçu (macOS) : chaque appui compte', async () => {
+T.test('⌘ tenu, touche pressée plusieurs fois sans relâchement reçu (macOS) : chaque appui compte', async () => {
+  const { AnalyseSaver } = await T.imp('AnalyseSaver')
+  const orig = AnalyseSaver.save
+  let n = 0
+  AnalyseSaver.save = async function(){ n++ ; return true }
+  try {
+    const down = (opts = {}) => document.body.dispatchEvent(new KeyboardEvent('keydown', Object.assign({bubbles: true, cancelable: true, key: 's', code: 'KeyS', metaKey: true}, opts)))
+    down() ; down() ; down({repeat: true}) ; down()
+    T.eq(n, 2, 'deux appuis comptés, la répétition ignorée')
+    document.body.dispatchEvent(new KeyboardEvent('keyup', {bubbles: true, cancelable: true, key: 'Meta', code: 'MetaLeft'}))
+    T.eq(n, 3, 'relâchement de ⌘ : troisième appui')
+  } finally {
+    AnalyseSaver.save = orig
+    cancelPendingShortcut()
+  }
+})
+
+T.test('⌘ + ↓ tenu : défilement à chaque appui (#264)', async () => {
   const h = window.innerHeight
   window.scrollTo({top: 0, behavior: 'instant'})
-  const down = (opts = {}) => document.body.dispatchEvent(new KeyboardEvent('keydown', Object.assign({bubbles: true, cancelable: true, key: 'ArrowDown', code: 'ArrowDown', metaKey: true}, opts)))
-  down() ; down() ; down({repeat: true}) ; down()
-  T.eq(Math.round(window.scrollY), Math.round(2 * h), 'deux appuis comptés, la répétition ignorée')
-  document.body.dispatchEvent(new KeyboardEvent('keyup', {bubbles: true, cancelable: true, key: 'Meta', code: 'MetaLeft'}))
-  T.eq(Math.round(window.scrollY), Math.round(3 * h), 'relâchement de ⌘ : troisième appui')
+  const down = () => document.body.dispatchEvent(new KeyboardEvent('keydown', {bubbles: true, cancelable: true, key: 'ArrowDown', code: 'ArrowDown', metaKey: true}))
+  down() ; T.eq(Math.round(window.scrollY), Math.round(h), 'premier appui')
+  down() ; T.eq(Math.round(window.scrollY), Math.round(2 * h), 'second appui, ⌘ toujours tenu')
   window.scrollTo({top: 0, behavior: 'instant'})
 })
 

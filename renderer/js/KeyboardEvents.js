@@ -43,10 +43,12 @@ export function onKeyDownOnAnalyse(e){
   if ( inTextField(e) ) return
 
   // Défilement de la table : ⌘/Ctrl + ↓ ou ↑, de la hauteur de la
-  // fenêtre ; avec Maj, de trois fois cette hauteur (#259)
+  // fenêtre ; avec Maj, de trois fois cette hauteur (#259). Navigation,
+  // comme les flèches seules : à l'appui, sans attendre (#264)
   if ( cmdKey(e) && !e.altKey && (e.key == 'ArrowDown' || e.key == 'ArrowUp') ) {
     const dy = (e.key == 'ArrowDown' ? 1 : -1) * window.innerHeight * (e.shiftKey ? 3 : 1)
-    return onRelease(e, () => window.scrollBy({top: dy, behavior: 'instant'}))
+    window.scrollBy({top: dy, behavior: 'instant'})
+    return stopEvent(e)
   }
 
   // Copier, couper, coller des marques (cf. MarksClipboard)
