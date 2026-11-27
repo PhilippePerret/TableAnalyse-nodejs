@@ -112,6 +112,10 @@ export const QuickKeyboard = {
     ;['click', 'dblclick', 'mousedown'].forEach(type => listen(o, type, e => e.stopPropagation()))
     document.body.appendChild(o)
     this.obj = o
+    // Placé par son haut, jamais par son bas : hauteur gardée quand il
+    // est déplacé (#265)
+    const r = o.getBoundingClientRect()
+    Object.assign(o.style, {top: px(Math.max(0, window.innerHeight - r.height - 16)), bottom: 'auto'})
     this.restorePosition()
     draggable(o, {stop: () => this.savePosition()})
     this.letters.forEach(l => this.renderKey(l))

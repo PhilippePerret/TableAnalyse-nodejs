@@ -168,3 +168,19 @@ T.test('saisie normale : lettre + clic reste la saisie accélérée', async () =
     T.eq(step, 'har', 'h + clic : harmonie')
   } finally { P.getAMarkContent = origC ; HeldLetter.reset() }
 })
+
+T.test('clavier déplacé : sa hauteur reste la même (#265)', async () => {
+  setMode('quick')
+  try {
+    const h0 = kb().getBoundingClientRect().height
+    T.eq(getComputedStyle(kb()).bottom == 'auto' || kb().style.bottom == 'auto', true, 'placé par son haut')
+    const from = center(kb().querySelector('.qk-row.r1'))
+    from.y = kb().getBoundingClientRect().top + 4
+    T.mouse(kb(), 'mousedown', {clientX: from.x, clientY: from.y})
+    T.mouse(document, 'mousemove', {clientX: from.x + 30, clientY: from.y - 150})
+    T.mouse(document, 'mousemove', {clientX: from.x + 60, clientY: from.y - 300})
+    T.mouse(kb(), 'mouseup', {clientX: from.x + 60, clientY: from.y - 300})
+    T.eq(Math.round(kb().getBoundingClientRect().height), Math.round(h0), 'hauteur gardée')
+    T.ok(kb().getBoundingClientRect().bottom < window.innerHeight - 100, 'plus collé au bas de la fenêtre')
+  } finally { setMode('normal') }
+})
