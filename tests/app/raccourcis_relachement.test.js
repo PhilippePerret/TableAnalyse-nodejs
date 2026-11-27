@@ -250,3 +250,22 @@ T.test('⌘ tenu, flèche pressée plusieurs fois sans relâchement reçu (macOS
   T.eq(Math.round(window.scrollY), Math.round(3 * h), 'relâchement de ⌘ : troisième appui')
   window.scrollTo({top: 0, behavior: 'instant'})
 })
+
+T.test('combinaison avec ⌘ : jouée au premier relâchement d’une de ses touches (Maj comprise, #261)', async () => {
+  const { Split } = await T.imp('Split')
+  const orig = Split.toggle
+  let n = 0
+  Split.toggle = function(){ n++ }
+  try {
+    document.body.dispatchEvent(new KeyboardEvent('keydown', {bubbles: true, cancelable: true, key: '/', code: 'Period', metaKey: true, shiftKey: true}))
+    T.eq(n, 0, 'touches pressées : rien')
+    // (relâchement de « : » jamais reçu, ⌘ tenue)
+    document.body.dispatchEvent(new KeyboardEvent('keyup', {bubbles: true, cancelable: true, key: 'Shift', code: 'ShiftLeft', metaKey: true}))
+    T.eq(n, 1, 'relâchement de Maj : fenêtre scindée')
+    document.body.dispatchEvent(new KeyboardEvent('keyup', {bubbles: true, cancelable: true, key: 'Meta', code: 'MetaLeft'}))
+    T.eq(n, 1, 'relâchement de ⌘ ensuite : rien de plus')
+  } finally {
+    Split.toggle = orig
+    cancelPendingShortcut()
+  }
+})

@@ -11,12 +11,13 @@
  *    return onRelease(e, () => <action>)
  *
  * L'appui est arrêté (ni saisie, ni autre gestionnaire), ses répétitions
- * aussi ; l'action est jouée au relâchement de la touche (ou de ⌘/Ctrl
- * pour une combinaison : macOS n'envoie pas toujours le relâchement
- * d'une lettre tenue avec ⌘), relâchement qui ne va ensuite nulle part.
+ * aussi ; l'action est jouée au relâchement de la touche ou, pour une
+ * combinaison, au premier relâchement d'une de ses touches (⌘, Ctrl,
+ * Maj, Option : macOS n'envoie pas le relâchement d'une lettre tenue
+ * avec ⌘, #261), relâchement qui ne va ensuite nulle part.
  */
 
-let pending = null // {code, mod, action}
+let pending = null // {code, mods, action}
 // Touches pressées depuis le dernier clic, et dernier relâchement
 const down = new Set()
 let lastRelease = null // {event, clean}
@@ -27,7 +28,11 @@ export function onRelease(e, action){
   e.preventDefault()
   e.stopPropagation()
   if ( !pending ) {
-    pending = {code: codeOf(e), mod: e.metaKey ? 'Meta' : (e.ctrlKey ? 'Control' : null), action}
+    // Touches de modification de la combinaison (seulement avec ⌘/Ctrl)
+    const mods = (e.metaKey || e.ctrlKey) ? [
+        e.metaKey && 'Meta', e.ctrlKey && 'Control', e.shiftKey && 'Shift', e.altKey && 'Alt'
+      ].filter(Boolean) : []
+    pending = {code: codeOf(e), mods, action}
   }
   return false
 }
@@ -71,7 +76,7 @@ window.addEventListener('keypress', (e) => {
 window.addEventListener('keyup', (e) => {
   lastRelease = {event: e, clean: down.delete(codeOf(e))}
   if ( !pending ) return
-  if ( codeOf(e) != pending.code && e.key != pending.mod ) return
+  if ( codeOf(e) != pending.code && !pending.mods.includes(e.key) ) return
   swallow(e)
   const { action } = pending
   pending = null
