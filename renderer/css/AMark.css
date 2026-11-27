@@ -835,7 +835,7 @@ div#sys_image_panel {
   top: 5vh;
   left: 4vw;
   width: 92vw;
-  height: 88vh;
+  max-height: 88vh;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -850,9 +850,12 @@ div#sys_image_panel div.row {
   gap: 8px;
   margin-bottom: 12px;
 }
-div#sys_image_panel div.row span.spacer { flex: 1; }
+div#sys_image_panel span.sie-all { margin: 0 14px; display: inline-flex; align-items: center; gap: 6px; vertical-align: middle; }
+div#sys_image_panel span.sie-all label { font-size: 15px; }
+div#sys_image_panel button.btn-close { float: left; }
+/* Hauteur : celle du système (cf. buildImage), jamais plus que la place */
 div#sys_image_panel div.sie-workspace {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   min-height: 0;
   overflow: auto;

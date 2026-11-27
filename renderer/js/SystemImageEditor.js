@@ -71,13 +71,14 @@ export class SystemImageEditor {
     this.workspace  = DCreate('DIV', {class: 'sie-workspace', inner: [this.layer]})
     const panel = DCreate('DIV', {id: 'sys_image_panel', inner: [
         DCreate('P', {class: 'help', text: T('help')})
-      , DCreate('DIV', {class: 'row', inner: [
-            this.btnRect, this.btnPoly
-          , DCreate('SPAN', {class: 'spacer'})
-          , this.allBox, DCreate('LABEL', {for: 'sys_img_all', text: T('all_systems')})
-        ]})
+      , DCreate('DIV', {class: 'row', inner: [this.btnRect, this.btnPoly]})
       , this.workspace
-      , DCreate('DIV', {class: 'buttons', inner: [btnOK, btnCancel]})
+        // « Appliquer à tous les systèmes » juste à gauche de « Appliquer » (#272)
+      , DCreate('DIV', {class: 'buttons', inner: [
+            btnCancel
+          , DCreate('SPAN', {class: 'sie-all', inner: [this.allBox, DCreate('LABEL', {for: 'sys_img_all', text: T('all_systems')})]})
+          , btnOK
+        ]})
     ]})
     document.body.appendChild(panel)
     this.panel = panel
@@ -95,6 +96,8 @@ export class SystemImageEditor {
   buildImage(){
     const k = this.scale, w = this.source.naturalWidth * k, h = this.source.naturalHeight * k
     Object.assign(this.layer.style, {width: px(w + 2 * PAD), height: px(h + 2 * PAD)})
+    // Zone d'édition à la hauteur du système (un peu plus), pas plus (#273)
+    this.workspace.style.height = px(h + 2 * PAD + 2)
     const img = DCreate('IMG', {class: 'sie-image', src: this.source.src})
     img.draggable = false
     Object.assign(img.style, {left: px(PAD), top: px(PAD), width: px(w), height: px(h)})
@@ -113,10 +116,12 @@ export class SystemImageEditor {
     this.drawing && this.endPolygon()
     const ws = this.workspace, k = this.scale
     const w = 160 / k, h = 80 / k
+    // En haut à gauche de la partie visible de l'image, près du bouton,
+    // un peu décalé vers la droite (#274)
     const m = {
         kind: 'rect'
-      , x: Math.max(0, (ws.scrollLeft + ws.clientWidth / 2 - PAD) / k - w / 2)
-      , y: Math.max(0, (ws.scrollTop + ws.clientHeight / 2 - PAD) / k - h / 2)
+      , x: Math.max(0, (ws.scrollLeft + 60) / k)
+      , y: Math.max(0, (ws.scrollTop + 10) / k)
       , w, h
     }
     this.masks.push(m)

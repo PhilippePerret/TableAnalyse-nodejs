@@ -155,3 +155,35 @@ T.test('polygone tracé à la souris : un clic par point, clic sur le premier po
     T.eq(ed.masks.length, 2, 'double-clic : second polygone')
   } finally { ed.close() }
 })
+
+T.test('« Appliquer à tous les systèmes » à gauche de « Appliquer » (#272)', async () => {
+  const ed = await openEditor(Systeme.all[0])
+  try {
+    const foot = ed.panel.querySelector(':scope > div.panneau-foot')
+    T.ok(foot.contains(ed.allBox), 'case dans le pied')
+    const ok = foot.querySelector('button.btn-default')
+    T.eq(ok.previousElementSibling && ok.previousElementSibling.contains(ed.allBox), true, 'juste avant « Appliquer »')
+    T.ok(ed.allBox.getBoundingClientRect().right < ok.getBoundingClientRect().left, 'à gauche du bouton')
+  } finally { ed.close() }
+})
+
+T.test('éditeur à la hauteur du système, un peu plus (#273)', async () => {
+  const ed = await openEditor(Systeme.all[0])
+  try {
+    const img = ed.layer.querySelector('img.sie-image').getBoundingClientRect()
+    const ws = ed.workspace.getBoundingClientRect()
+    T.ok(ws.height >= img.height && ws.height <= img.height + 80, `zone d’édition (${Math.round(ws.height)}) ≈ système (${Math.round(img.height)})`)
+    T.ok(ed.panel.getBoundingClientRect().height < window.innerHeight * 0.88 - 1 || img.height > window.innerHeight * 0.6, 'panneau pas plus haut que nécessaire')
+  } finally { ed.close() }
+})
+
+T.test('rectangle blanc posé en haut à gauche, un peu à droite (#274)', async () => {
+  const ed = await openEditor(Systeme.all[0])
+  try {
+    const m = ed.addRect()
+    const img = ed.layer.querySelector('img.sie-image').getBoundingClientRect()
+    const r = m.el.getBoundingClientRect()
+    T.ok(r.left - img.left >= 30 && r.left - img.left <= 90, 'un peu à droite du bord gauche')
+    T.ok(r.top - img.top >= 0 && r.top - img.top <= 30, 'en haut')
+  } finally { ed.close() }
+})
