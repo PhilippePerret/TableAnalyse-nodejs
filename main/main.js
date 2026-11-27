@@ -931,10 +931,14 @@ function registerIpc(){
    * renderer (null si aucune).
    */
   handle('menu:systemContext', ({image, locked}) => {
-    const file = path.join(requireCurrent().systemsFolder, path.basename(image))
+    const analyse = requireCurrent()
+    const file = path.join(analyse.systemsFolder, path.basename(image))
     return new Promise(resolve => {
       const menu = Menu.buildFromTemplate([
           {label: t(locked ? 'ui.system_menu.unlock' : 'ui.system_menu.lock'), click: () => resolve('toggleLock')}
+        , {type: 'separator'}
+        , {label: t('ui.system_menu.fix_image'),      click: () => resolve('fixImage')}
+        , {label: t('ui.system_menu.restore_image'),  enabled: analyse.hasOriginalImage(image), click: () => resolve('restoreImage')}
         , {type: 'separator'}
         , {label: t('ui.system_menu.open_image'),  click: () => showInFinder(file)}
         , {label: t('ui.system_menu.show_image'),  click: () => showInFinder(file, true)}
@@ -943,6 +947,25 @@ function registerIpc(){
       menu.popup({window: mainWindow, callback: () => setTimeout(() => resolve(null), 200)})
     })
   })
+
+  // Correction des images des systèmes (#253) : +images+ = [{name, data
+  // (data URL)}], tous les systèmes copiés d'abord (images originales)
+  handle('system:correct', ({images}) => {
+    const analyse = requireCurrent()
+    analyse.backupSystems()
+    images.forEach(({name, data}) => {
+      analyse.writeSystemImage(name, Buffer.from(String(data).replace(/^data:image\/[a-z]+;base64,/, ''), 'base64'))
+    })
+    written()
+    return true
+  })
+  // « Remettre l'image originale » du système
+  handle('system:restore', ({name}) => {
+    const done = requireCurrent().restoreSystemImage(name)
+    done && written()
+    return done
+  })
+  handle('system:hasOriginal', ({name}) => requireCurrent().hasOriginalImage(name))
 
   // Image d'un extrait de partition (PNG) enregistrée dans le dossier
   // images de l'analyse ; retourne son nom

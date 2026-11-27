@@ -824,3 +824,84 @@ div.amark.cad.cb-obj.cbw          { border-top-width: 0 !important; border-left-
 
 /* Titres dans les textes (« = », « == », « === ») */
 div.amark span.content span.txt-title { display: block; line-height: 1.2; }
+
+/* Correction de l'image d'un système (#253, cf. SystemImageEditor.js) :
+   masques blancs en pointillés (ici seulement) */
+div#sys_image_panel {
+  position: fixed;
+  top: 5vh;
+  left: 4vw;
+  width: 92vw;
+  height: 88vh;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+div#sys_image_panel p.help {
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+div#sys_image_panel div.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+div#sys_image_panel div.row span.spacer { flex: 1; }
+div#sys_image_panel div.sie-workspace {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  background-color: white;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+}
+div#sys_image_panel div.sie-layer { position: relative; }
+div#sys_image_panel.drawing div.sie-layer { cursor: crosshair; }
+div#sys_image_panel img.sie-image {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+  outline: 1px solid #e0e0e0;
+}
+div#sys_image_panel svg.sie-svg {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+div#sys_image_panel svg.sie-svg polygon.sie-poly {
+  fill: white;
+  stroke: #555;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+  pointer-events: all;
+  cursor: move;
+}
+div#sys_image_panel.drawing svg.sie-svg polygon.sie-poly { pointer-events: none; }
+div#sys_image_panel svg.sie-svg polygon.sie-poly.current {
+  stroke: #3a925e;
+  stroke-width: 2;
+}
+div#sys_image_panel svg.sie-svg polyline.sie-trace {
+  fill: rgba(255, 255, 255, .6);
+  stroke: #3a925e;
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+div#sys_image_panel div.sie-mask {
+  position: absolute;
+  z-index: 3;
+  background-color: white;
+  outline: 1px dashed #555;
+  cursor: move;
+}
+div#sys_image_panel.drawing div.sie-mask { pointer-events: none; }
+div#sys_image_panel div.sie-mask.current { outline: 2px dashed #3a925e; }
+div#sys_image_panel div.sie-mask .ui-resizable-n { top: 0; }
+div#sys_image_panel div.sie-mask .ui-resizable-s { bottom: 0; }
+div#sys_image_panel div.sie-mask .ui-resizable-e { right: 0; }
+div#sys_image_panel div.sie-mask .ui-resizable-w { left: 0; }

@@ -57,6 +57,19 @@ export class Systeme extends AObjet {
     return Current.analyse ? Current.analyse.systems : []
   }
 
+  // Système sélectionné (en déplacement), pour le menu « Marques >
+  // Corriger l'image du système » (#253)
+  static get selected(){
+    return this.all.find(s => s.moving || s.isSelected) || null
+  }
+
+  // Correction de l'image du système +sys+ (#253)
+  static fixImage(sys){
+    if ( !sys ) return
+    sys.moving && sys.stopMoving()
+    return import('./SystemImageEditor.js').then(m => m.SystemImageEditor.open(sys))
+  }
+
   /**
   * Pour déplacer tous les systèmes (et seulement les systèmes) de
   * la valeur positive ou négative (+diff+) à partir du système 
@@ -535,7 +548,13 @@ export class Systeme extends AObjet {
     stopEvent(e)
     const locked = !!Preferences.get('lock_systems')
     invoke('menu:systemContext', {image: this.image_name, locked})
-      .then(choice => { if ( choice == 'toggleLock' ) Systeme.toggleLock(null, !locked) })
+      .then(choice => {
+        switch(choice){
+          case 'toggleLock':   return Systeme.toggleLock(null, !locked)
+          case 'fixImage':     return Systeme.fixImage(this)
+          case 'restoreImage': return this.restoreImage()
+        }
+      })
       .catch(err => console.error(err))
     return false
   }
@@ -659,6 +678,7 @@ export class Systeme extends AObjet {
       Systeme.placeMeasureNumbers()
       // Un seul déplacement de système à la fois
       this.moving = false
+      emit('system:selection')
       Systeme.toggleLock(null, true)
       // Le clic ne fait rien d'autre (pas de création de marque)
       return stopEvent(e)
@@ -675,7 +695,26 @@ export class Systeme extends AObjet {
       this.obj.classList.add('selected')    
     }
     this.moving = !this.moving
+    emit('system:selection')
     return stopEvent(e)
+  }
+
+  // Fin du déplacement sans le valider (système remis à sa place)
+  stopMoving(){
+    this.moving = false
+    this.obj.style.top = px(this.top)
+    this.obj.classList.remove('selected')
+    emit('system:selection')
+  }
+
+  // Image relue (après correction, #253)
+  reloadImage(){
+    this.obj && (this.obj.src = analyseUrl(`systems/${this.image_name}`) + `?v=${Date.now()}`)
+  }
+
+  // « Remettre l'image originale » (#253)
+  async restoreImage(){
+    if ( await invoke('system:restore', {name: this.image_name}) ) this.reloadImage()
   }
 
   onMove(e){

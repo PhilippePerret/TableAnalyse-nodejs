@@ -99,6 +99,7 @@ options_menu:
 
 mark_menu:
   ungray_one:       "Take the mark out of grey mode"
+  fix_system_image: "Fix system image"
   ungray_many:      "Take the marks out of grey mode"
   regray_one:       "Put the mark back in grey mode"
   regray_many:      "Put the marks back in grey mode"
@@ -181,6 +182,8 @@ mark_context:
   unlink:           "Unlink"
 
 system_menu:
+  fix_image:        "Fix image…"
+  restore_image:    "Restore original image"
   unlock:           "Unlock"
   lock:             "Lock"
   open_image:       "Open Image"
@@ -352,6 +355,14 @@ panels:
     fonts_notice:     "The analysis fonts (PhilNote…) must be installed on the computer that opens the SVG files."
   mark_editor:
     title:            "Edit Mark"
+  system_image:
+    title: "System image correction"
+    help: "Place white masks over the parts of the image to erase: rectangle (movable, resizable) or polygon (one click per point; double-click, click on the first point or “Finish polygon” to close it). Delete key or context menu: removes the selected mask. “Apply” builds the new image; the original image remains available (system context menu “Restore original image”)."
+    rect: "Rectangular mask"
+    poly: "Polygonal mask"
+    poly_end: "Finish polygon"
+    all_systems: "Apply to all systems"
+    apply: "Apply"
   extract:
     title:            "Excerpt Assembler"
     help:             "This editor lets you adjust the parts of the excerpt as you wish, by moving them or changing their length. Click the “Assemble” button to build the image, which you can then refine in your image software (context menu “Open Image”, then “Reload Image”)."

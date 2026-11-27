@@ -99,6 +99,7 @@ options_menu:
 
 mark_menu:
   ungray_one:       "Togli il segno dalla modalità grigia"
+  fix_system_image: "Correggi l’immagine del sistema"
   ungray_many:      "Togli i segni dalla modalità grigia"
   regray_one:       "Rimetti il segno nella modalità grigia"
   regray_many:      "Rimetti i segni nella modalità grigia"
@@ -181,6 +182,8 @@ mark_context:
   unlink:           "Scollega"
 
 system_menu:
+  fix_image:        "Correggi l’immagine…"
+  restore_image:    "Ripristina l’immagine originale"
   unlock:           "Sblocca"
   lock:             "Blocca"
   open_image:       "Apri l'immagine"
@@ -352,6 +355,14 @@ panels:
     fonts_notice:     "I caratteri dell'analisi (PhilNote…) devono essere installati sul computer che aprirà i file SVG."
   mark_editor:
     title:            "Modifica del segno"
+  system_image:
+    title: "Correzione dell’immagine del sistema"
+    help: "Posiziona maschere bianche sulle parti dell’immagine da cancellare: rettangolo (spostabile, ridimensionabile) o poligono (un clic per punto; doppio clic, clic sul primo punto o «Termina il poligono» per chiuderlo). Tasto Canc o menu contestuale: elimina la maschera scelta. «Applica» crea la nuova immagine; l’immagine originale resta disponibile (menu contestuale del sistema «Ripristina l’immagine originale»)."
+    rect: "Maschera rettangolare"
+    poly: "Maschera poligonale"
+    poly_end: "Termina il poligono"
+    all_systems: "Applica a tutti i sistemi"
+    apply: "Applica"
   extract:
     title:            "Assemblatore di estratto"
     help:             "Questo editor permette di regolare a piacere le parti dell'estratto, spostandole o modificandone la lunghezza. Fai clic su «Assembla» per creare l'immagine, che potrai rifinire nel tuo programma di immagini (menu contestuale «Apri l'immagine», poi «Ricarica l'immagine»)."

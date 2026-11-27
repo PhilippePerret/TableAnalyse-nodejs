@@ -51,6 +51,8 @@ export class Analyse {
   get preferencesPath() { return path.join(this.path, 'preferences.yaml') }
   get tagsPath()        { return path.join(this.path, 'analyse_tags.yaml') }
   get systemsFolder()   { return path.join(this.path, 'systems') }
+  // Images originales des systèmes corrigés dans l'application (#253)
+  get originalsFolder() { return path.join(this.systemsFolder, 'originaux') }
   get imagesFolder()    { return path.join(this.path, 'images') }
   get backupsFolder()   { return path.join(this.path, 'backups') }
   get exportFolder()    { return path.join(this.path, 'export') }
@@ -186,8 +188,40 @@ export class Analyse {
    * Remplace les images de systèmes (et les numéros de mesure) par celles
    * du dossier +source+ (produit par la découpe) et replace les systèmes.
    */
+  /**
+   * Correction des images des systèmes (#253). Avant la première
+   * correction, copie de TOUS les systèmes (dossier systems/originaux),
+   * pour remettre l'image originale de chacun ; copies jamais écrasées.
+   */
+  backupSystems(){
+    fs.mkdirSync(this.originalsFolder, {recursive: true})
+    this.systemsInFolder.forEach(name => {
+      const copy = path.join(this.originalsFolder, name)
+      fs.existsSync(copy) || fs.copyFileSync(path.join(this.systemsFolder, name), copy)
+    })
+  }
+  systemImagePath(name){
+    name = path.basename(String(name || ''))
+    if ( !this.systemsInFolder.includes(name) ) throw new Error(`Image de système inconnue : ${name}`)
+    return path.join(this.systemsFolder, name)
+  }
+  writeSystemImage(name, buffer){
+    fs.writeFileSync(this.systemImagePath(name), buffer)
+  }
+  hasOriginalImage(name){
+    return fs.existsSync(path.join(this.originalsFolder, path.basename(String(name || ''))))
+  }
+  // Image originale remise (la copie est gardée)
+  restoreSystemImage(name){
+    if ( !this.hasOriginalImage(name) ) return false
+    fs.copyFileSync(path.join(this.originalsFolder, path.basename(name)), this.systemImagePath(name))
+    return true
+  }
+
   replaceSystems(source){
     this.systemsInFolder.forEach(name => fs.rmSync(path.join(this.systemsFolder, name)))
+    // Autre partition : plus d'images originales à remettre
+    fs.rmSync(this.originalsFolder, {recursive: true, force: true})
     fs.readdirSync(source).filter(name => isSystemImage(name) || name == MEASURES_FILE).forEach(name => {
       fs.copyFileSync(path.join(source, name), path.join(this.systemsFolder, name))
     })

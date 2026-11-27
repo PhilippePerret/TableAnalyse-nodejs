@@ -99,6 +99,7 @@ options_menu:
 
 mark_menu:
   ungray_one:       "Sacar la marca del modo gris"
+  fix_system_image: "Corregir la imagen del sistema"
   ungray_many:      "Sacar las marcas del modo gris"
   regray_one:       "Volver a poner la marca en modo gris"
   regray_many:      "Volver a poner las marcas en modo gris"
@@ -181,6 +182,8 @@ mark_context:
   unlink:           "Separar"
 
 system_menu:
+  fix_image:        "Corregir la imagen…"
+  restore_image:    "Restaurar la imagen original"
   unlock:           "Desbloquear"
   lock:             "Bloquear"
   open_image:       "Abrir la imagen"
@@ -352,6 +355,14 @@ panels:
     fonts_notice:     "Las fuentes del análisis (PhilNote…) deben estar instaladas en el ordenador que abra los archivos SVG."
   mark_editor:
     title:            "Edición de la marca"
+  system_image:
+    title: "Corrección de la imagen del sistema"
+    help: "Coloque máscaras blancas sobre las partes de la imagen que desea borrar: rectángulo (desplazable, redimensionable) o polígono (un clic por punto; doble clic, clic en el primer punto o «Terminar el polígono» para cerrarlo). Tecla Suprimir o menú contextual: elimina la máscara elegida. «Aplicar» crea la nueva imagen; la imagen original sigue disponible (menú contextual del sistema «Restaurar la imagen original»)."
+    rect: "Máscara rectangular"
+    poly: "Máscara poligonal"
+    poly_end: "Terminar el polígono"
+    all_systems: "Aplicar a todos los sistemas"
+    apply: "Aplicar"
   extract:
     title:            "Ensamblador de fragmento"
     help:             "Este editor le permite ajustar las partes del fragmento a su gusto, moviéndolas o cambiando su longitud. Pulse el botón «Ensamblar» para crear la imagen, que podrá afinar en su programa de imágenes (menú contextual «Abrir la imagen» y luego «Recargar la imagen»)."

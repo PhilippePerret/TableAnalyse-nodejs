@@ -99,6 +99,7 @@ options_menu:
 
 mark_menu:
   ungray_one:       "将标记移出灰色模式"
+  fix_system_image: "修正系统图像"
   ungray_many:      "将标记移出灰色模式"
   regray_one:       "将标记恢复为灰色模式"
   regray_many:      "将标记恢复为灰色模式"
@@ -181,6 +182,8 @@ mark_context:
   unlink:           "取消连接"
 
 system_menu:
+  fix_image:        "修正图像…"
+  restore_image:    "恢复原始图像"
   unlock:           "解锁"
   lock:             "锁定"
   open_image:       "打开图像"
@@ -352,6 +355,14 @@ panels:
     fonts_notice:     "打开 SVG 文件的电脑必须安装分析所用的字体（PhilNote…）。"
   mark_editor:
     title:            "编辑标记"
+  system_image:
+    title: "系统图像修正"
+    help: "在要擦除的图像部分放置白色遮罩：矩形（可移动、可调整大小）或多边形（每个点单击一次；双击、单击第一个点或“完成多边形”以闭合）。删除键或右键菜单：删除所选遮罩。“应用”生成新图像；原始图像仍可使用（系统右键菜单“恢复原始图像”）。"
+    rect: "矩形遮罩"
+    poly: "多边形遮罩"
+    poly_end: "完成多边形"
+    all_systems: "应用于所有系统"
+    apply: "应用"
   extract:
     title:            "片段拼接器"
     help:             "此编辑器可让您随意调整片段的各个部分：移动它们或改变其长度。点击“拼接”按钮生成图像，之后可在图像软件中进一步修改（右键菜单“打开图像”，然后“重新载入图像”）。"

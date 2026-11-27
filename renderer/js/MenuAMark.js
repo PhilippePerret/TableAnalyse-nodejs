@@ -13,6 +13,7 @@ import { Groups } from './Groups.js'
 import { Liaison } from './Liaison.js'
 import { BorderEditor } from './BorderEditor.js'
 import { Aspect } from './Aspect.js'
+import { Systeme } from './Systeme.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -21,6 +22,7 @@ export class AmarkMenu extends MenusTool {
     this.setAllMenus(false)
     on('selection:changed', ({selection}) => this.setAllMenus(selection.length > 0))
     on('aspect:changed', () => this.setAllMenus(this.selection.length > 0))
+    on('system:selection', () => this.setAllMenus(this.selection.length > 0))
   }
 
 
@@ -57,6 +59,12 @@ export class AmarkMenu extends MenusTool {
     this.menuGray.innerHTML = t(`ui.mark_menu.${regray ? 'regray' : 'ungray'}_${grays.length > 1 ? 'many' : 'one'}`)
     this.menuGray.dataset.ope = regray ? 'regray' : 'ungray'
     this.menuGray.disabled = !Aspect.isGray || grays.length == 0
+    // Image du système sélectionné (#253)
+    DGet('option[value="fixSystemImage"]', this.menu).disabled = !Systeme.selected
+  }
+
+  static onActivate_fixSystemImage(){
+    Systeme.fixImage(Systeme.selected)
   }
 
   static onActivate_toggleGray(){
