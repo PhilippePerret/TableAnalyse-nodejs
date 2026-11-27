@@ -41,7 +41,7 @@ const CURRENT_VALUES = {
 }
 const PREFS_GROUPS = [
     {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme', 'auto_update']}
-  , {id: 'notation', keys: ['notation_input', 'notation_display']}
+  , {id: 'notation', keys: ['notation_input', 'notation_display', 'note_char']}
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes', 'max_table_blank', 'export_systems_gap']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
   , {id: 'grid',     keys: ['adjust_same_mark', 'snap_for_adjust_pos', 'grid_horizontal_space', 'grid_vertical_space']}
@@ -144,6 +144,11 @@ onChange_adjust_same_mark(){
 onChange_notation_display(){
   Preferences.saveData('notation_display', Preferences.getValueOf('notation_display'))
   this.updateStylesInHead()
+}
+// Caractère de note : textes des marques réécrits (#250)
+onChange_note_char(){
+  Preferences.saveData('note_char', Preferences.getValueOf('note_char'))
+  AObjet.items.forEach(m => m.isMark && m.contentSpan && (m.contentSpan.innerHTML = m.formated_content))
 }
 onChange_theme(){
   const theme = Preferences.getValueOf('theme')

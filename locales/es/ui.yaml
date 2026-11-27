@@ -535,6 +535,7 @@ prefs:
   animate:                {label: "Iniciar la animación al abrir", precision: "Las marcas se mostrarán progresivamente"}
   notation_display:       {label: "Visualización de las notas de los acordes"}
   notation_input:         {label: "Entrada de las notas de los acordes"}
+  note_char:              {label: "Carácter que indica una nota en los textos", precision: "En los textos, solo las letras (o nombres de notas) precedidas de este carácter son notas: «_A». Los acordes, modulaciones y préstamos no se ven afectados."}
 
 prefs_layout:
   title:  "Título"

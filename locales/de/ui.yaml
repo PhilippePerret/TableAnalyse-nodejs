@@ -535,6 +535,7 @@ prefs:
   animate:                {label: "Animation beim Öffnen starten", precision: "Die Markierungen werden nach und nach angezeigt"}
   notation_display:       {label: "Anzeige der Akkordnoten"}
   notation_input:         {label: "Eingabe der Akkordnoten"}
+  note_char:              {label: "Zeichen für eine Note in Texten", precision: "In Texten sind nur Buchstaben (oder Notennamen) mit diesem vorangestellten Zeichen Noten: „_A“. Akkorde, Modulationen und Entlehnungen sind nicht betroffen."}
 
 prefs_layout:
   title:  "Titel"

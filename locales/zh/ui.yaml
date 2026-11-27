@@ -535,6 +535,7 @@ prefs:
   animate:                {label: "打开时启动动画", precision: "标记将逐步显示"}
   notation_display:       {label: "和弦音名显示"}
   notation_input:         {label: "和弦音名输入"}
+  note_char:              {label: "文本中表示音符的字符", precision: "在文本中，只有前面带有此字符的字母（或音名）才是音符：“_A”。和弦、转调和借用不受影响。"}
 
 prefs_layout:
   title:  "标题"

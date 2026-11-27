@@ -1,4 +1,5 @@
 import { t } from './i18n.js'
+import { NOTE_CHARS } from './lib/notation.js'
 
 /**
  * Préférences propres à l'application
@@ -124,6 +125,8 @@ export const PreferencesAppData = {
         {name: t('ui.notation.bat'), value: 'bat'}
       , {name: t('ui.notation.it'),  value: 'it'}
     ]}
+  // Caractère indiquant une note dans les textes (« _A », #250)
+  , note_char               :{type:'select'       ,typeV:'string'   ,default:'_', values: NOTE_CHARS.map(c => ({name: c, value: c}))}
 }
 
 /**

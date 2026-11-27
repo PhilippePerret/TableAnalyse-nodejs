@@ -1,7 +1,7 @@
 // Conversion des notes des accords batave ⇄ italienne (renderer/js/lib/notation.js)
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { toBatave, toItalian, TEXT_ITALIAN_NOTES, bataveOf } from '../../renderer/js/lib/notation.js'
+import { toBatave, toItalian, noteInTextRegex, NOTE_CHARS, bataveOf } from '../../renderer/js/lib/notation.js'
 
 const IT = {doIsC: true}, BAT = {doIsC: false}
 
@@ -60,14 +60,20 @@ test('aller-retour exact batave → italien → batave', () => {
   for ( const o of [IT, BAT] ) for ( const b of bats ) assert.equal(toBatave(toItalian(b, o), o), b, `${b} ${JSON.stringify(o)}`)
 })
 
-test('notes italiennes dans un texte libre', () => {
-  const f = t => t.replace(TEXT_ITALIAN_NOTES, (a, n, alt, num) => `<${bataveOf(n)}${alt}${num || ''}>`)
-  assert.equal(f('Passage en Sol majeur.'), 'Passage en <G> majeur.')
-  assert.equal(f('puis Ré7 et Fa-m.'), 'puis <D7> et <F-m>.')
-  assert.equal(f('sol et fa ignorés, SOL aussi'), 'sol et fa ignorés, SOL aussi')
-  assert.equal(f('La mélodie en La, puis Si.'), 'La mélodie en <A>, puis <B>.')
-  assert.equal(f('Si tu veux. Si on passe en Si-m'), 'Si tu veux. Si on passe en <B-m>')
-  assert.equal(f('Fin.__RET__La suite'), 'Fin.__RET__La suite')
-  assert.equal(f('Sol majeur en tête'), '<G> majeur en tête')
-  assert.equal(f('Mineur, Solo, Silence'), 'Mineur, Solo, Silence')
+test('notes dans un texte libre : seulement après le caractère de note (#250)', () => {
+  assert.deepEqual(NOTE_CHARS, ['_', ':', '!', '^'])
+  const f = (t, c = '_') => t.replace(noteInTextRegex(c), (a, it, bat, alt, num) => `<${it ? bataveOf(it) : bat}${alt}${num || ''}>`)
+  assert.equal(f('Thème A'), 'Thème A')
+  assert.equal(f('La tonalité de _A est maintenue tout le segment A'), 'La tonalité de <A> est maintenue tout le segment A')
+  assert.equal(f('Passage en Sol majeur, puis Ré7 et La.'), 'Passage en Sol majeur, puis Ré7 et La.')
+  assert.equal(f('Passage en _Sol majeur, puis _Ré7 et _Fa-m.'), 'Passage en <G> majeur, puis <D7> et <F-m>.')
+  assert.equal(f('_a7 (_Am) _C, _E.'), '<a7> (<Am>) <C>, <E>.')
+  assert.equal(f('_Lamento, _Solo, _Amélie'), '_Lamento, _Solo, _Amélie')
+  assert.equal(f('x_A __RET___B'), 'x_A __RET___B', 'après une lettre ou « _ »')
+  assert.equal(f('_A_ souligné'), '_A_ souligné')
+  for ( const c of [':', '!', '^'] ) {
+    assert.equal(f(`Thème A, en ${c}A puis ${c}Sol`, c), 'Thème A, en <A> puis <G>', c)
+    assert.equal(f('en _A', c), 'en _A', `${c} : « _ » sans effet`)
+  }
+  assert.equal(f('1^er^, 2^e^, XIX^e^', '^'), '1^er^, 2^e^, XIX^e^', 'exposants intacts')
 })

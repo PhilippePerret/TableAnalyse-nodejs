@@ -79,16 +79,43 @@ for ( const input of ['bat', 'it'] ) for ( const display of ['bat', 'it'] ) {
   })
 }
 
-T.test('texte : notes italiennes (forme exacte, pas La/Si en début de phrase)', async () => {
+T.test('textes : notes seulement après le caractère de note (#250)', async () => {
   setPref('notation_display', 'it')
   const found = newIds()
   AMark.createNew(ev, {type: 'txt', subtype: 'size3', content: 'x', top: 600, left: 600})
   const m = found()
-  m.content = 'La phrase. Si on passe en Sol majeur, puis fa et sol.'
-  const html = m.obj.querySelector('span.content').innerHTML
-  T.includes(html, '<mus>G</mus>', 'Sol détecté')
-  T.no(/<mus>[^G]/.test(html), 'sol, fa, La et Si en début de phrase ignorés')
+  const html = () => m.obj.querySelector('span.content').innerHTML
+  m.content = 'Thème A en Sol majeur. La tonalité de _A est maintenue tout le segment A, puis _Sol et _a7.'
+  T.eq(html().match(/<mus>[^<]*<\/mus>/g), ['<mus>A</mus>', '<mus>G</mus>', '<mus>a7</mus>'], 'notes signalées seulement')
+  T.includes(html(), 'Thème A en Sol majeur', 'lettres et noms sans caractère : texte')
+  T.no(html().includes('_'), 'caractère retiré')
+  // Autre caractère : textes réécrits
+  const sel = () => document.querySelector('#pref-note_char')
+  T.ok(sel(), 'menu des préférences')
+  T.eq(Array.from(sel().options).map(o => o.value), ['_', ':', '!', '^'], 'choix du menu')
+  sel().value = '!'
+  sel().dispatchEvent(new Event('change'))
+  T.eq(Preferences.get('note_char'), '!', 'préférence enregistrée')
+  T.no(html().includes('<mus>'), '« _ » sans effet avec « ! »')
+  m.content = 'En !A puis 1^er^ et _B'
+  T.eq(html().match(/<mus>[^<]*<\/mus>/g), ['<mus>A</mus>'], 'note avec « ! »')
+  T.includes(html(), '<sup>er</sup>', 'exposant intact')
+  sel().value = '_'
+  sel().dispatchEvent(new Event('change'))
+  // Motif, segment : même règle
+  for ( const type of ['mot', 'seg'] ) {
+    const foundMk = newIds()
+    AMark.createNew(ev, {type, subtype: type == 'seg' ? 'h-up' : undefined, content: 'Thème A sur _C', top: 700, left: 600})
+    const mk = foundMk()
+    T.eq(mk.obj.querySelector('span.content').innerHTML.match(/<mus>[^<]*<\/mus>/g), ['<mus>C</mus>'], type)
+    AObjet.remove(mk)
+  }
+  // Accords : toujours des notes
+  const acc = create('acc', 'Sol7').mark
+  T.eq(acc.content, 'G7', 'accord : conversion inchangée')
+  AObjet.remove(acc)
   AObjet.remove(m)
+  setPref('notation_display', 'bat')
 })
 
 T.test('exports en notation italienne (SVG, PDF)', async () => {

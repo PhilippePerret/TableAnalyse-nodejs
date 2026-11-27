@@ -535,6 +535,7 @@ prefs:
   animate:                {label: "열 때 애니메이션 시작", precision: "표시가 차례로 나타납니다"}
   notation_display:       {label: "코드 음이름 표시"}
   notation_input:         {label: "코드 음이름 입력"}
+  note_char:              {label: "텍스트에서 음을 나타내는 문자", precision: "텍스트에서는 이 문자가 앞에 붙은 글자(또는 음이름)만 음으로 처리됩니다: “_A”. 화음, 전조, 차용은 해당되지 않습니다."}
 
 prefs_layout:
   title:  "제목"

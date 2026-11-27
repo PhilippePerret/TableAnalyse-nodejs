@@ -7,7 +7,7 @@
  * Module pur (aucune dépendance) :
  *   - toBatave(str, {doIsC})   entrée italienne → batave
  *   - toItalian(str, {doIsC})  batave → italienne (champ d'édition)
- *   - TEXT_ITALIAN_NOTES, bataveOf  notes italiennes d’un texte libre
+ *   - noteInTextRegex, bataveOf  notes d’un texte libre (caractère de note)
  *
  * Une note n'est reconnue qu'en début de marque, après une espace, une
  * barre oblique ou une parenthèse ouvrante, et seulement suivie d'un
@@ -67,9 +67,20 @@ export function toItalian(str, {doIsC = true} = {}){
   })
 }
 
-// Notes italiennes d'un texte libre, sous leur forme exacte (capitale puis
-// minuscules : « Sol », pas « sol » ni « SOL ») : {name, letter} par nom
-export const TEXT_ITALIAN_NOTES = /(?<![\p{L}\p{N}])((?<!(?:^|[.!?…«"]\s*|__RET__\s*))(?:La|Si)|Sol|Do|Ré|Re|Mi|Fa)([\-\+=]?m?)(\+?[24579][\-\+]?)?(?=[\s.,;:!?)]|$)/gu
+/**
+ * Note dans un texte libre (#250) : SEULEMENT précédée du caractère de
+ * note (préférence note_char : « _ » par défaut, « : », « ! », « ^ »),
+ * lettre (capitale ou minuscule) ou nom italien, puis chiffrage
+ * éventuel : « _A », « _a7 », « _Sol », « _Fa+m7 ». Groupes : 1 nom
+ * italien, 2 lettre, 3 altération/mode, 4 chiffrage
+ */
+export const NOTE_CHARS = ['_', ':', '!', '^']
+export function noteInTextRegex(char = '_'){
+  const c = String(char || '_').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  // (ni après une lettre, un chiffre ou « _ » : « x_A », « __RET__A » ;
+  // ni suivie du caractère : « _A_ » souligné, « 2^e^ » exposant)
+  return new RegExp(`(?<![\\p{L}\\p{N}_])${c}(?:(Sol|Do|Ré|Re|Mi|Fa|La|Si|sol|do|ré|re|mi|fa|la|si)|([A-Ha-h]))([\\-\\+=]?m?)(\\+?[24579][\\-\\+]?)?(?![\\p{L}\\p{N}]|${c})`, 'gu')
+}
 export function bataveOf(italianName){
   return IT_TO_BAT[italianName.toLowerCase()]
 }

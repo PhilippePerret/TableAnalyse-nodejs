@@ -8,7 +8,7 @@ import { AObjet } from './AObjet.js'
 import { Current, setModified } from './Current.js'
 import { pref } from './Preferences.js'
 import { contentForField, contentFromField } from './Notation.js'
-import { TEXT_ITALIAN_NOTES, bataveOf } from './lib/notation.js'
+import { noteInTextRegex, bataveOf } from './lib/notation.js'
 import { supize } from './lib/exposants.js'
 import { BORDER_INTENSITY } from './Preferences_AppData.js'
 import { Grid } from './Grid.js'
@@ -543,8 +543,9 @@ get formated_content(){
     return this.markdownize(this.tunize(escapeLt(content)))
   } else {
     // Exposants (« 1^er^ »), sauf dans les marques en police PhilNote
-    // (accords, harmonies…), où « ^ » appartient au chiffrage (#236)
-    return content && (TYPES_PHILHARMONIEFONT.includes(this.type) ? escapeLt(content) : supize(escapeLt(content)))
+    // (accords, harmonies…), où « ^ » appartient au chiffrage (#236) ;
+    // notes signalées par le caractère de note (#250)
+    return content && (TYPES_PHILHARMONIEFONT.includes(this.type) ? escapeLt(content) : supize(this.tunize(escapeLt(content))))
   }
 }
 markdownize(str){
@@ -563,12 +564,18 @@ markdownize(str){
           .replace(/\[#([0-9]+?)\]/, '<span class="goto-tag" data-tag="$1">⎆</span>')
 }
 tunize(str){
-  /** Repère les notes dans +str+ et leur met la bonne fonte **/
-  // Notes italiennes sous leur forme exacte (« Sol », pas « sol ») :
-  // écrites en batave dans la police des notes, qui les affiche dans la
-  // notation choisie (cf. Notation.js)
-  str = str.replace(TEXT_ITALIAN_NOTES, (all, name, alt, num) => `<mus>${bataveOf(name)}${alt}${num || ''}</mus>`)
-  return str.replace(/\b([A-H][\-\+=]?m?)(\+?[24579][\-\+]?)?([\s\.\,])/, '<mus>$1</mus>$3')
+  /**
+   * Notes de +str+ (texte des marques autres que les accords,
+   * modulations, emprunts…) : SEULEMENT celles précédées du caractère de
+   * note (préférence note_char, « _ » par défaut), retiré (#250) :
+   * « Thème A » reste « Thème A », « _A » est la note. Écrites en batave
+   * dans la police des notes, qui les affiche dans la notation choisie
+   * (cf. Notation.js) ; nom italien en minuscules : note minuscule.
+   */
+  return str.replace(noteInTextRegex(pref('note_char')), (all, it, bat, alt, num) => {
+    const letter = it ? (it == it.toLowerCase() ? bataveOf(it).toLowerCase() : bataveOf(it)) : bat
+    return `<mus>${letter}${alt}${num || ''}</mus>`
+  })
 }
 
 /* --- Predicate Methods --- */

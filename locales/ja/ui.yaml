@@ -535,6 +535,7 @@ prefs:
   animate:                {label: "開くときにアニメーションを開始", precision: "マークが順に表示されます"}
   notation_display:       {label: "コードの音名の表示"}
   notation_input:         {label: "コードの音名の入力"}
+  note_char:              {label: "テキスト内で音名を示す文字", precision: "テキストでは、この文字が前に付いた文字（または音名）だけが音名になります：「_A」。コード、転調、借用は対象外です。"}
 
 prefs_layout:
   title:  "見出し"

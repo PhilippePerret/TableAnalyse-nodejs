@@ -535,6 +535,7 @@ prefs:
   animate:                {label: "Start the animation on opening", precision: "Marks will be displayed progressively"}
   notation_display:       {label: "Chord note display"}
   notation_input:         {label: "Chord note input"}
+  note_char:              {label: "Character marking a note in texts", precision: "In texts, only letters (or note names) preceded by this character are notes: “_A”. Chords, modulations and borrowings are not affected."}
 
 prefs_layout:
   title:  "Title"

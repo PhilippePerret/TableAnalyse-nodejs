@@ -535,6 +535,7 @@ prefs:
   animate:                {label: "Animer l’animation à l’ouverture", precision: "Les marques seront affichées progressivement"}
   notation_display:       {label: "Affichage des notes des accords"}
   notation_input:         {label: "Entrée des notes des accords"}
+  note_char:              {label: "Caractère indiquant une note dans les textes", precision: "Dans les textes, seules les lettres (ou noms de notes) précédées de ce caractère sont des notes : « _A ». Les accords, modulations et emprunts ne sont pas concernés."}
 
 prefs_layout:
   title:  "Titre"
