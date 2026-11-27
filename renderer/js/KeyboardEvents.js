@@ -111,6 +111,36 @@ export function isSplitShortcut(e){
 }
 
 /**
+ * Raccourci « Scinder la fenêtre » AFFICHÉ dans les menus (#252) :
+ * « ⌘/ » quel que soit le clavier. Electron affiche, pour un
+ * accélérateur, le caractère de la touche à cette place sur le clavier
+ * de l'utilisateur (« CmdOrCtrl+/ » : « ⌘: » sur le clavier français
+ * macOS). +layout+ : touche (code) → caractère sans Maj
+ * (navigator.keyboard.getLayoutMap). Touche du « / » : son nom
+ * américain ; sinon touche du « : », avec Maj (« / » = Maj + « : »,
+ * clavier français) ; sinon (Windows, Linux) « CmdOrCtrl+/ ».
+ */
+const US_KEYS = {
+    Slash: '/', Period: '.', Comma: ',', Semicolon: ';', Quote: "'", Minus: '-', Equal: '='
+  , BracketLeft: '[', BracketRight: ']', Backslash: '\\', Backquote: '`'
+  , Digit0: '0', Digit1: '1', Digit2: '2', Digit3: '3', Digit4: '4', Digit5: '5', Digit6: '6', Digit7: '7', Digit8: '8', Digit9: '9'
+}
+export function splitAcceleratorFor(layout, platform){
+  const DEFAULT = 'CmdOrCtrl+/'
+  if ( platform != 'darwin' || !layout ) return DEFAULT
+  const codeOf = char => Object.keys(US_KEYS).find(code => layout.get(code) === char)
+  const slash = codeOf('/')
+  if ( slash ) return `CmdOrCtrl+${US_KEYS[slash]}`
+  const colon = codeOf(':')
+  return colon ? `CmdOrCtrl+Shift+${US_KEYS[colon]}` : DEFAULT
+}
+export async function splitAccelerator(){
+  let layout = null
+  try { layout = navigator.keyboard && await navigator.keyboard.getLayoutMap() } catch(err) {}
+  return splitAcceleratorFor(layout, window.api && window.api.platform)
+}
+
+/**
 * Quelle que soit la situation, ce gestionnaire de Key-down est
 * appelé.
 * Il doit absolument retourne null s'il n'a rien faire et true ou

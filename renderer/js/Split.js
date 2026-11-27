@@ -9,7 +9,7 @@ import { Systeme } from './Systeme.js'
 import { Editeur } from './Editeur.js'
 import { Forme } from './Forme.js'
 import { keepPanelsInView } from './Panneau.js'
-import { isSplitShortcut } from './KeyboardEvents.js'
+import { isSplitShortcut, splitAccelerator } from './KeyboardEvents.js'
 /**
  * Split
  * -----
@@ -45,6 +45,16 @@ export class Split {
     })
     this.sendTitlebarHeight()
     window.addEventListener('resize', this.sendTitlebarHeight.bind(this))
+    this.setAccelerator()
+  }
+
+  // Raccourci affiché « ⌘/ » dans les menus « Options » et « Fenêtre »
+  // (#252, cf. splitAcceleratorFor)
+  static async setAccelerator(){
+    const accelerator = await splitAccelerator()
+    const option = DGet('#options_tool option[value="toggleSplit"]')
+    option && (option.dataset.accelerator = accelerator)
+    invoke('menu:splitAccelerator', {accelerator}).catch(err => console.error(err))
   }
 
   // Hauteur de la bande supérieure (place de la vue de visualisation,

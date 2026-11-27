@@ -58,6 +58,9 @@ let formShown   = false   // menu « Forme > Voir la forme » coché
 let variableNames = {general: [], motifs: []} // menu « Outils > Variable »
 let dynamicMenus = []     // menus « Options », « Marque »… décrits par le renderer (MenusBar.js)
 let split       = null    // fenêtre scindée : {view, bar, ratio, dragging} (cf. openSplit)
+// Raccourci affiché de « Scinder la fenêtre » (« ⌘/ » sur tout clavier,
+// calculé par le renderer, #252)
+let splitAccel  = 'CmdOrCtrl+/'
 let titlebarHeight = 29   // hauteur (px de la page) de la bande supérieure de la page (cf. layoutSplit)
 let fitZoom     = 1       // zoom qui fait tenir les systèmes dans la fenêtre (cf. window:fitWidth)
 let userZoom    = 1       // zoom choisi (menu « Fenêtre > Zoom », cf. changeZoom)
@@ -518,7 +521,7 @@ function buildMenu(){
               , {label: t('ui.menu.zoom_in'),  id: 'zoomIn2', enabled: !!current, accelerator: 'CmdOrCtrl+=', visible: false, click: () => changeZoom(1)}
             ]}
           , {type: 'separator'}
-          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: 'CmdOrCtrl+/', registerAccelerator: false, click: byClick(menuToggleSplit)}
+          , {label: t('ui.menu.split_window'), id: 'splitWindow', type: 'checkbox', checked: !!split, enabled: !!current, accelerator: splitAccel, registerAccelerator: false, click: byClick(menuToggleSplit)}
           , {label: t('ui.menu.refresh_view'), enabled: !!split, click: () => split && split.view.webContents.send('split:refresh')}
           , ...(isMac ? [{type: 'separator'}, {role: 'front', label: t('ui.menu.front')}] : [{role: 'close', label: t('ui.menu.close_window')}])
         ]
@@ -1041,6 +1044,11 @@ function registerIpc(){
   handle('app:checkVersion', () => checkVersion(APP_VERSION))
   handle('app:openDownloadPage', () => openUrl(DOWNLOAD_PAGE))
   handle('app:openManualPref', () => openManualPref())
+  handle('menu:splitAccelerator', ({accelerator}) => {
+    if ( !/^CmdOrCtrl\+(Shift\+)?\S$/.test(String(accelerator)) || accelerator == splitAccel ) return
+    splitAccel = accelerator
+    buildMenu()
+  })
   handle('window:setTitle', ({title}) => {
     mainWindow && mainWindow.setTitle(String(title || '').trim() || t('ui.app.untitled'))
   })

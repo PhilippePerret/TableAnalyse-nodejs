@@ -199,3 +199,17 @@ T.test('manuel : ⌘ + Maj + M (format des préférences), plus Maj + M ; demand
     cancelPendingShortcut()
   }
 })
+
+T.test('« Scinder la fenêtre » : raccourci affiché « ⌘/ » quel que soit le clavier (#252)', async () => {
+  const { splitAcceleratorFor, splitAccelerator } = await T.imp('KeyboardEvents')
+  const map = obj => new Map(Object.entries(obj))
+  const fr = map({Slash: '=', Period: ':', Comma: ';', Semicolon: 'm', KeyM: ','})
+  const us = map({Slash: '/', Period: '.', Comma: ','})
+  T.eq(splitAcceleratorFor(fr, 'darwin'), 'CmdOrCtrl+Shift+.', 'clavier français (macOS) : Maj + touche du « : »')
+  T.eq(splitAcceleratorFor(us, 'darwin'), 'CmdOrCtrl+/', 'clavier américain')
+  T.eq(splitAcceleratorFor(map({Digit7: '/'}), 'darwin'), 'CmdOrCtrl+7', '« / » sur une autre touche')
+  T.eq(splitAcceleratorFor(fr, 'win32'), 'CmdOrCtrl+/', 'Windows : inchangé')
+  T.eq(splitAcceleratorFor(null, 'darwin'), 'CmdOrCtrl+/', 'disposition inconnue')
+  const expected = await splitAccelerator()
+  await T.until(() => document.querySelector('#options_tool option[value="toggleSplit"]').dataset.accelerator == expected, 'menu « Options » réglé')
+})
