@@ -3,6 +3,8 @@
 
 ////
 TODO
+- documenter : on peut maintenant éditer l'image du système dans l'application
+  * possibilité de revenir à l'image originale (menu contextuel + menu "Marque > )
 TUTORIEL : 
   * utilisation des variables
 TUTORIEL : Définition de la forme
