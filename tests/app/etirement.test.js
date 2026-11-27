@@ -45,3 +45,36 @@ for ( const type of ['acc', 'har'] ) {
     } finally { AObjet.remove(m) }
   })
 }
+
+// Vrais événements, page défilée (#276)
+const real = (x, y, o = {}) => T.invoke('test:realClick', Object.assign({x: Math.round(x), y: Math.round(y)}, o))
+
+T.test('accord étiré, édité puis validé : il garde son trait (#276)', async () => {
+  window.scrollTo({top: 900, behavior: 'instant'})
+  const m = await T.mark({type: 'acc', content: 'C', top: 1300, left: 500})
+  try {
+    const h = m.obj.querySelector('.ui-resizable-handle.ui-resizable-e').getBoundingClientRect()
+    await T.invoke('test:realDrag', {x: Math.round(h.left + h.width / 2), y: Math.round(h.top + h.height / 2), dx: 200, dy: 0})
+    T.ok(m.prolong && m.hasProlongLine, 'étiré : trait')
+    const width = m.obj.offsetWidth
+    for ( const how of ['OK', 'Entrée', 'nouveau texte'] ) {
+      const r = m.contentSpan.getBoundingClientRect()
+      await real(r.left + 5, r.top + 5, {clickCount: 2})
+      await T.until(() => m.editor && !m.editor.obj.classList.contains('hidden'), `${how} : édition`)
+      const e = m.editor
+      T.no(e.textField.value.endsWith('--'), `${how} : pas de « -- » dans le champ`)
+      if ( how == 'nouveau texte' ) e.textField.value = 'G7'
+      if ( how == 'Entrée' ) {
+        e.textField.focus()
+        for ( const type of ['keydown', 'keypress', 'keyup'] ) e.textField.dispatchEvent(new KeyboardEvent(type, {bubbles: true, cancelable: true, key: 'Enter', code: 'Enter'}))
+      } else {
+        const ok = e.btnOK.getBoundingClientRect()
+        await real(ok.left + ok.width / 2, ok.top + ok.height / 2)
+      }
+      await T.until(() => e.obj.classList.contains('hidden'), `${how} : validé`)
+      T.ok(m.prolong && m.hasProlongLine, `${how} : trait gardé`)
+      T.ok(Math.abs(m.obj.offsetWidth - width) <= 30, `${how} : longueur gardée`)
+    }
+    T.eq(m.content, 'G7', 'texte changé')
+  } finally { AObjet.remove(m) ; window.scrollTo({top: 0, behavior: 'instant'}) }
+})
