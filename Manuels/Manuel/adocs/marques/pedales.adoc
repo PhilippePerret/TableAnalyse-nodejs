@@ -1,0 +1,4 @@
+[[tags-pedal]]
+==== Marque de pédale ====
+
+Pour indiquer l'usage d'une pédage, sous le système. Elle correspond au degré de la note (chiffre arabe) dans la tonalité courante.

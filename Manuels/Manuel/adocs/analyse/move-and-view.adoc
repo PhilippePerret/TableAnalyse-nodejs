@@ -1,0 +1,22 @@
+[[analyse-move-view]]
+=== Se déplacer et voir ===
+
+Pour scroller la fenêtre, on peut utiliser l'ascenseur ou le glissé du doigt sur une Magic Souris ou un trackpad, ou encore utiliser le raccourci-clavier Cmd + ↑/↓. Ajouter la touche Majuscule pour augmenter l'intensité du scroll.
+
+==== Diviser la fenêtre ====
+
+C'est une des fonctionnalités les plus pratiques de la table d'analyse, qui fait oublier qu'on n'utilise pas des feuilles de papier. Elle permet de __splitter__ (diviser) la fenêtre pour voir en même temps deux parties différentes de la partition. Idéal pour comparer l'exposition et la réexposition ou voir l'exploitation d'un motif mélodique.
+
+* jouez le raccourci Cmd+Maj+: ou activez le menu « Options > Scinder la fenêtre… »,
+* indiquez le numéro de la mesure à afficher dans l'écran du haut,
+* cliquez sur le bouton.
+
+NOTE: À dessein et par mesure de sécurité, aucune édition n'est possible dans la partie haute de la fenêtre. C'est dans la partie basse, la plus petite, que continue de se faire l'édition.
+
+NOTE: Vous pouvez appliquer le zoom pour augmenter la partie visible (Cmd + « + » ou « - » — avec Control sous Windows).
+
+
+==== Se rendre à une mesure précise ====
+
+* jouez Alt/Option + g (« go ») ou activez le menu « Forme > Aller à la mesure… »,
+* tapez le numéro de mesure à rejoindre.

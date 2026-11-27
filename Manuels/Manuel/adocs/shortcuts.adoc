@@ -1,0 +1,14 @@
+[[shortcuts]]
+== Raccourcis-clavier ==
+
+[cols="1,2,2", options="header"]
+|====
+| Raccourci
+| Effet
+| Note
+
+| Cmd + ↑/↓
+| Scroller la fenêtre 
+| Ajouter la touche Maj pour augmenter le scroll.
+
+|====

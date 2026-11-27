@@ -3,9 +3,32 @@
 
 ////
 TODO
-- Document : comment signaler un problème (issue sur Github)
+- Documenter : Cmd + (Maj +) flèche pour scroller
+- TUTORIEL : 
+  * utilisation des variables
+- TUTORIEL : Définition de la forme
+  * Mise des marques de forme
+  * Affinements (textes, etc.)
+  * Choix d'un thème à l'export
+- TUTORIEL : toutes les façons de créer une marque
+  * méthode normal, mais avec simple ou double click
+  * blocage d'un type en particulier
+  * production marque quelconque avec ALT/OPTION quand blocage
+  * lettre + click pour mettre direct la marque du type voulu (noter que là, c'est toujours click simple, même si double-click est réglé pour créer — ça n'est pas un bug mais un choix : le click simple peut être confondu avec la volonté de désélectionner ou fermer un panneau, lettre+click ne peut pas être confondu)
+  * glisser une marque avec ALT/OPTION
+  * + tenue de la lettre Maj pour créer sur la même horizontale ou verticale
+- Documenter : correction du système dans l'application
+  + possibilité d'appliquer à tous les systèmes
+  + possibilité de revenir à l'original par système (menu contextuel)
+- Documenter : l'écriture des accords dans les textes 
+  + bien préciser que ça ne s'applique pas aux accords, modulations, emprunt
+  + ajouter la préférence du signe avant une lettre pour indiquer que c'est une note ("_" par défaut)
+- Documenter : comment signaler un problème (issue sur Github)
 - documenter l'avertissement de chevauchement (quand on change de notation italienne/batave)
 - documenter l'animation (fichier animation.adoc)
+- documenter Cmd+Maj+O pour ouvrir la boite à outils (voir à quoi elle sert encore)
+- documenter Cmd+Maj+M pour ouvrir le manuel
+  + préférence permettant de définir ce que doit ouvrir le raccourci (PDF/HTML/ePub)
 
 FONCTIONNALITÉS À PRÉSENTER DANS LE TUTORIEL
 -?utile? Problème de l'écriture "Do/" en italien/batave → documenter (dire de bien régler l'entrée des notesff) [Vidéo faite]
@@ -34,9 +57,4 @@ include::adocs/best-practices.adoc[]
 
 include::adocs/partage.adoc[]
 
-////
-TODO
-Une vidéo montrant des tips plus pointus sur l'application :
-- utilisation des variables pour les motifs dans les textes
-- définition de la forme
-////
+include::adocs/shortcuts.adoc[]

@@ -1,0 +1,16 @@
+[[tags-mep]]
+==== Marques de mise en page ====
+
+Marques permettant de gérer la mise en page de l'analyse à l'export. On trouve ces marques : 
+
+[cols="1,2"]
+|====
+| Saut de page
+| Pour forcer un saut de page.
+
+| Délimitation
+| Lors de l'export, les trops grands blancs sur la table d'analyse sont supprimés, en tous cas ramenés à des proportions raisonnables. Si l'on a besoin, réellement, d'un espace libre assez grand, on utilise alors ces délimitations (ou « délimiteurs ») pour imposer à l'export un espace précis.
+
+| Titre
+| Ajout d'un titre. Son aspect dépendra du <<analyse-theme, thème de l'analyse>>.
+|====

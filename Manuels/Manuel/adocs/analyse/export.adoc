@@ -2,3 +2,10 @@
 === Export de l'analyse ===
 
 // TODO
+
+[[analyse-theme]]
+==== Choix du thème ====
+
+L'analyse peut avoir plusieurs aspects, en fonction de son thème.
+
+// TODO

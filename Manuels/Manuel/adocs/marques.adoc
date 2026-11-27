@@ -24,9 +24,23 @@ Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'
 [[tags-pose]]
 ==== Pose de la marque ====
 
-Pour ajouter une marque à l'analyse, il suffit de cliquer ou double-cliquer à l'endroit voulu sur la table d'analyse lorsqu'une analyse est ouverte.
+Pour ajouter une marque à l'analyse, il suffit de cliquer ou de double-cliquer (suivant les préférences) à l'endroit voulu sur la table d'analyse lorsqu'une analyse est ouverte. Par défaut, c'est le click simple qui est appliqué.
 
 NOTE: Le choix entre le clic et le double-clic se fait dans les <<prefs, préférences>>.
+
+S'ouvre ensuite le panneau des types de marques qui permet de choisir la marque à créer sur la table d'analyse. Tous les types sont décrits <<tags-types, ci-dessous>>.
+
+===== Méthode la plus rapide =====
+
+Avec l'habitude de l'application, et la connaissance des raccourcis clavier qui sont assez « auto-explicatifs », la façon la plus rapide de placer une marque est de **presser la touche du raccourci de la marque et de cliquer à l'endroit voulu**, puis de relâcher la touche.
+
+NOTE: Même si les préférences définissent que c'est le double-click qui crée une marque, c'est le simple click qui fonctionnne avec cette méthode.
+
+===== Méthode accélérée =====
+
+Une autre méthode, impliquant une autre technique, permet aussi d'aller très vite : le **blocage du type** qu'on peut appliquer grâce au menu « Marques > Bloquer le type à > …… ». Permet de mettre tous les noms d'accord, puis tous les chiffrages, etc. en allant très vite.
+
+Notez que pour sortir momentanément du blocage — i.e. pour ajouter une marque d'un autre type — il suffit de cliquer ou de double-cliquer (suivant préférences) en maintenant la touche Alt/Option appuyée.
 
 [[tags-select]]
 ==== Sélection de la marque ====
@@ -139,88 +153,98 @@ image::images/marques/panneau-type-marque.png[Panneau du choix du type de marque
 
 NOTE: Au début de l'utilisation de la table, on aura peut-être tendance à trop ouvrir ce panneau en voulant par exemple désélectionner une marque ou fermer un panneau justement. Si ce réflexe devient trop gênant, on peut régler dans les préférences, pour la création d'une marque, que ce soit un double-clic de sours qui crée cette marque, pas un clic simple.
 
-[cols="2,5,1,1"]
+[cols="2,5,1,1", options="header"]
 |====
+| Type 
+| Description
+| Exemple
+| Raccourci
+
 | <<tags-chord, Accord>>
 | Nom et nature de l'accord, en général au-dessus du système.
 | Dm7 
-| 
+| `a`
 
 | <<tags-chiffrage, Harmonie >>
 | Chiffre romain indiquant la fonction de l'accord dans l'harmonie courante 
 | VI 
-|  
+| `h`
 
 
 | <<tags-modulation, Modulation>>
 | Marque indiquant une modulation dans la pièce.
 | ...
-| 
+| Maj + `m`
 
 | <<tags-emprunt, Emprunt>>
 | Marque indiquant un emprunt à une tonalité dans la pièce.
 | ...
-| 
+| `e`
 
 | <<tags-cadence, Cadence>>
 | Marque indiquant une cadence (parfaite, imparfaite, etc.).
-| ...
-| 
+| image:images/marques/marque-cadence-faureenne.svg[]
+| `c`
 
 | <<tags-cadre, Cadre>>
 | Ajout d'un cadre autour d'une partie de la partition.
 | ...
-| 
+| `b` (bord)
 
-| Type de note
+| <<tags-note, Type de note>>
 | Marque permettant d'indiquer la nature mélodique d'une note sur la partition.
 | AP 
-| <<tags-note, voir>>
+| `n`
 
 | <<tags-form, Forme>>
 | Marque permettant de définir la forme de la pièce
-| ...
-| 
+| image:images/marques/marque-forme-fin-de-partie-borne.svg[]
+| `f`
 
 | <<tags-motifs, Motif>>
 | Marque mettant en exergue un motif, une dispositif, etc. en le nommant.
 | Motif GBc
-| 
+| `m`
 
-| Degré de note
+| <<tags-note-degree, Degré de note>>
 | Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l'accord.
 | 2
-| <<tags-note-degree, voir>>
+| `d`
 
-| Segment
+| <<tags-segment, Segment>>
 | Pour dessiner un segment avec légende ou pas sur ou sous la portée.
 | ...
-| <<tags-segment, voir>>
+| `s`
 
-| Image
+| <<tags-image, Image>>
 | Pour insérer une image quelconque dans l'analyse de la partition.
 | ...
-| <<tags-image, voir>>
+| `i`
 
-| Texte
+| <<tags-text, Texte>>
 | Pour insérer un texte quelconque dans l'analyse de la partition.
 | ...
-| <<tags-text, voir>>
+| `t`
 
-| Pédale
+| <<tags-pedal, Pédale>>
 | Pour indiquer l'usage d'une pédage, sous le système.
-| 4 ———
-| <<tags-pedal, voir>>
+| image:images/marques/marque-pedale.png[]
+| `p`
 
-| Cercle
+| <<tags-circle, Cercle>>
 | Simple cercle pour mettre une note ou des notes en exergue.
 | ...
-| <<tags-circle, voir>>
+| `r` (rotation)
 
-| Extrait partition
+| <<tags-mep, Mise en page>>
+| Marques permettant de gérer la mise en page de l'analyse à l'export.
+| ...
+| Maj + `p` (page)
+
+| <<tags-extrait, Extrait partition>>
 | Pour extraire des mesures de la partition (en faire une image).
 | ...
-| <<tags-extrait, voir>>
+| Maj + `e`
 |====
 
 NOTE: Pour accélérer la pose des marques, on peut __bloquer__ un type (menu « Marques > Bloquer le type à … > ... ») et poser toutes les marques de ce type d'un coup. Par exemple, on peut poser toutes les marques d'accord d'un coup par ce biais, ce qui accélère considérablement l'analyse. Voir la description dans les <<best-practices, bonnes pratiques>>.
@@ -232,66 +256,17 @@ include::marques/emprunts.adoc[]
 include::marques/cadences.adoc[]
 include::marques/cadres.adoc[]
 include::marques/forme.adoc[]
-
-
-[[tags-note]]
-==== Marque de type de note ====
-
-Marque permettant d'indiquer la nature mélodique d'une note sur la partition. Le choix de cette marque ouvre un autre panneau qui permet de préciser la nature de la note.
-
+include::marques/type-note.adoc[]
 include::marques/motifs.adoc[]
-
-[[tags-note-degree]]
-==== Marque de degré de note ====
-
-Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l'accord (à bien préciser). 
-
-[[tags-segment]]
-==== Segment ====
-
-Pour dessiner un segment avec légende ou pas sur ou sous la portée. Pour indiquer des marches harmoniques, par exemple.
-
-Quand on choisit cette marque, un nouveau panneau permet de choisir le type de segment.
-
-[cols="1,3"]
-|====
-| Plat sur la portée | Pour une indication horizontale AU-DESSUS de la portée.
-| Plat sous la portée | Pour une indication horizontale AU-DESSOUS de la portée. 
-| Vertical trait gauche | Pour un segment vertical avec le trait À GAUCHE
-| Vertical trait droit | Pour un segment vertical avec le trait À DROITE
-|====
-
-[[tags-image]]
-==== Image ====
-
-Pour insérer une image quelconque dans l'analyse de la partition.
-
+include::marques/segment.adoc[]
+include::marques/images.adoc[]
 include::marques/textes.adoc[]
-
-[[tags-pedal]]
-==== Marque de pédale ====
-
-Pour indiquer l'usage d'une pédage, sous le système. Elle correspond au degré de la note (chiffre arabe) dans la tonalité courante.
-
-[[tags-circle]]
-==== Cercle ===
-
-* Double-cliqer à l'endroit voulu,
-* choisir « Cercle » ou taper la lettre « r ».
-
-Pour définir la taille du cercle, bouger ses bords. La touche MAJ permet d'augmenter la taille en conservant la forme (le cercle, par défaut, ou l'ovale si la dimension horizontale a été modifiéee).
-
-[cols="1,3", options="header"]
-|====
-2+| Ajout de touches modificatrice
-| Majuscule | Conserve la forme (le cercle par exemple) en agrandissant homothétiquement
-| Alt     | Maitient le centre du cercle (ou de l'ovale) en place
-| Maj+Alt | Accomplit les deux en même temps
-|====
+include::marques/pedales.adoc[]
+include::marques/cercles.adoc[]
+include::marques/mise-en-page.adoc[]
+include::marques/extraits-partition.adoc[]
 
 ---
-
-include::marques/extraits-partition.adoc[]
 
 [[tags-bords]]
 === Épaisseur des bords/traits ===

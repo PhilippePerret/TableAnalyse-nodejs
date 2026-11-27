@@ -1,0 +1,11 @@
+[[tags-note]]
+==== Marque de type de note ====
+
+Marque permettant d'indiquer la nature mélodique d'une note sur la partition. Le choix de cette marque ouvre un autre panneau qui permet de préciser la nature de la note.
+
+
+[[tags-note-degree]]
+==== Marque de degré de note ====
+
+Marque indiquant le degré de la note dans la tonalité courante ou par rapport à l'accord (à bien préciser). 
+

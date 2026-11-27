@@ -1,0 +1,15 @@
+[[tags-circle]]
+==== Cercle ===
+
+* Double-cliqer à l'endroit voulu,
+* choisir « Cercle » ou taper la lettre « r ».
+
+Pour définir la taille du cercle, bouger ses bords. La touche MAJ permet d'augmenter la taille en conservant la forme (le cercle, par défaut, ou l'ovale si la dimension horizontale a été modifiéee).
+
+[cols="1,3", options="header"]
+|====
+2+| Ajout de touches modificatrice
+| Majuscule | Conserve la forme (le cercle par exemple) en agrandissant homothétiquement
+| Alt     | Maitient le centre du cercle (ou de l'ovale) en place
+| Maj+Alt | Accomplit les deux en même temps
+|====

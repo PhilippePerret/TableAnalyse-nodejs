@@ -1,0 +1,5 @@
+[[tags-image]]
+==== Image ====
+
+Pour insérer une image quelconque dans l'analyse de la partition.
+

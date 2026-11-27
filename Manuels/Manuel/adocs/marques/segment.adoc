@@ -1,0 +1,15 @@
+[[tags-segment]]
+==== Segment ====
+
+Pour dessiner un segment avec légende ou pas sur ou sous la portée. Pour indiquer des marches harmoniques, par exemple.
+
+Quand on choisit cette marque, un nouveau panneau permet de choisir le type de segment.
+
+[cols="1,3"]
+|====
+| Plat sur la portée | Pour une indication horizontale AU-DESSUS de la portée.
+| Plat sous la portée | Pour une indication horizontale AU-DESSOUS de la portée. 
+| Vertical trait gauche | Pour un segment vertical avec le trait À GAUCHE
+| Vertical trait droit | Pour un segment vertical avec le trait À DROITE
+|====
+
