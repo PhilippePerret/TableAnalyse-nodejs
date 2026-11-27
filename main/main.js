@@ -11,7 +11,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, protocol, screen, shell, WebContentsView } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, protocol, screen, shell, systemPreferences, WebContentsView } from 'electron'
 import { Analyse, isSystemImage } from './Analyse.js'
 import { AppPrefs } from './AppPrefs.js'
 import { createAnalyse, createAnalyseHere, newAnalyseError } from './createAnalyse.js'
@@ -623,6 +623,7 @@ function registerIpc(){
       return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
     })
     handle('test:windowTitle', () => mainWindow && mainWindow.getTitle())
+    handle('test:pressAndHold', () => process.platform == 'darwin' ? systemPreferences.getUserDefault('ApplePressAndHoldEnabled', 'boolean') : null)
     handle('test:latestVersion', ({version}) => forceLatestVersion(version))
     handle('test:openedUrls', () => openedUrls)
     handle('test:listFiles', ({rel}) => {
@@ -1225,6 +1226,9 @@ async function askCountFirstMeasure(){
 
 app.whenReady().then(() => {
   if ( app.dock ) app.dock.setIcon(path.join(ASSETS_FOLDER, 'icons', 'icon.png'))
+  // macOS : lettre tenue (saisie accélérée, saisie rapide) sans le menu
+  // des variantes de la lettre (accents…) du système (#267)
+  process.platform == 'darwin' && systemPreferences.setUserDefault('ApplePressAndHoldEnabled', 'boolean', false)
   registerProtocol()
   registerIpc()
   buildMenu()

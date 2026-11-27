@@ -145,3 +145,8 @@ T.test('après le clic, la lettre tenue ne va plus nulle part jusqu’à son rel
     restore()
   }
 })
+
+T.test('macOS : lettre tenue sans le menu des variantes de la lettre (#267)', async () => {
+  if ( window.api.platform != 'darwin' ) return T.ok(true, 'hors macOS')
+  T.eq(await T.invoke('test:pressAndHold'), false, 'ApplePressAndHoldEnabled désactivé pour l’application')
+})
