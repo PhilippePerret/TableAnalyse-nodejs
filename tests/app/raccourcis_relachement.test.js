@@ -213,3 +213,40 @@ T.test('« Scinder la fenêtre » : raccourci affiché « ⌘/ » quel que soit 
   const expected = await splitAccelerator()
   await T.until(() => document.querySelector('#options_tool option[value="toggleSplit"]').dataset.accelerator == expected, 'menu « Options » réglé')
 })
+
+T.test('défilement : ⌘ + ↓/↑ (hauteur de la fenêtre), avec Maj : trois fois (#259)', async () => {
+  const h = window.innerHeight
+  const maxY = document.documentElement.scrollHeight - h
+  T.ok(maxY > 5 * h, 'table assez haute')
+  const key = (k, opts) => {
+    const down = new KeyboardEvent('keydown', Object.assign({bubbles: true, cancelable: true, key: k, code: k, metaKey: true}, opts))
+    document.body.dispatchEvent(down)
+    const y = window.scrollY
+    document.body.dispatchEvent(new KeyboardEvent('keyup', Object.assign({bubbles: true, cancelable: true, key: k, code: k, metaKey: true}, opts)))
+    return {pressedY: y, defaultPrevented: down.defaultPrevented}
+  }
+  window.scrollTo({top: 0, behavior: 'instant'})
+  const r = key('ArrowDown')
+  T.eq(r.pressedY, 0, 'touches pressées : pas encore de défilement')
+  T.ok(r.defaultPrevented, 'défilement du système empêché')
+  T.eq(Math.round(window.scrollY), Math.round(h), '⌘ + ↓ : une hauteur de fenêtre')
+  key('ArrowDown', {shiftKey: true})
+  T.eq(Math.round(window.scrollY), Math.round(4 * h), '⌘ + Maj + ↓ : trois hauteurs de plus')
+  key('ArrowUp', {shiftKey: true})
+  T.eq(Math.round(window.scrollY), Math.round(h), '⌘ + Maj + ↑ : trois hauteurs de moins')
+  key('ArrowUp')
+  T.eq(Math.round(window.scrollY), 0, '⌘ + ↑ : retour en haut')
+  // Ctrl (Windows, Linux) : cf. cmdKey
+  window.scrollTo({top: 0, behavior: 'instant'})
+})
+
+T.test('⌘ tenu, flèche pressée plusieurs fois sans relâchement reçu (macOS) : chaque appui compte', async () => {
+  const h = window.innerHeight
+  window.scrollTo({top: 0, behavior: 'instant'})
+  const down = (opts = {}) => document.body.dispatchEvent(new KeyboardEvent('keydown', Object.assign({bubbles: true, cancelable: true, key: 'ArrowDown', code: 'ArrowDown', metaKey: true}, opts)))
+  down() ; down() ; down({repeat: true}) ; down()
+  T.eq(Math.round(window.scrollY), Math.round(2 * h), 'deux appuis comptés, la répétition ignorée')
+  document.body.dispatchEvent(new KeyboardEvent('keyup', {bubbles: true, cancelable: true, key: 'Meta', code: 'MetaLeft'}))
+  T.eq(Math.round(window.scrollY), Math.round(3 * h), 'relâchement de ⌘ : troisième appui')
+  window.scrollTo({top: 0, behavior: 'instant'})
+})

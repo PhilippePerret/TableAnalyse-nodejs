@@ -55,7 +55,15 @@ function swallow(e){
 // (phase de capture sur window : avant tout autre gestionnaire)
 window.addEventListener('keydown', (e) => {
   down.add(codeOf(e))
-  pending && codeOf(e) == pending.code && swallow(e)
+  if ( !pending || codeOf(e) != pending.code ) return
+  // Répétition de la touche tenue : rien
+  if ( e.repeat ) return swallow(e)
+  // Nouvel appui de la même touche, son relâchement non reçu (macOS,
+  // touche tenue avec ⌘ : p.e. ⌘ tenu, ↓ ↓ ↓) : l'appui précédent
+  // compte, le nouveau suit son cours
+  const { action } = pending
+  pending = null
+  action()
 }, true)
 window.addEventListener('keypress', (e) => {
   pending && codeOf(e) == pending.code && swallow(e)
