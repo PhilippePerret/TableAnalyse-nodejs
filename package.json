@@ -82,6 +82,7 @@
         }
       }
     },
-    "afterPack": "_scripts/build/afterPack.cjs"
+    "afterPack": "_scripts/build/afterPack.cjs",
+    "copyright": "© 2026 Philippe Perret – Tous droits réservés"
   }
 }

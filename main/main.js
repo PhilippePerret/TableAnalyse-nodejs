@@ -24,6 +24,7 @@ import { loadYAML } from './yaml.js'
 import { APP_FOLDER, ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
 import { locale, t, LANGUAGES, currentLang } from './i18n.js'
 import { checkVersion, forceLatestVersion, DOWNLOAD_PAGE } from './versionCheck.js'
+import { COPYRIGHT } from './copyright.js'
 
 const SMOKE = !!process.env.SA_SMOKE // lancement de contrôle, sans fenêtre visible
 
@@ -47,7 +48,7 @@ const USER_DATA_FOLDER = SMOKE
   : path.join(app.getPath('appData'), 'ScoreAnalyse')
 app.setPath('userData', USER_DATA_FOLDER)
 app.setName(t('ui.app.name'))
-app.setAboutPanelOptions({applicationName: t('ui.app.name'), applicationVersion: APP_VERSION})
+app.setAboutPanelOptions({applicationName: t('ui.app.name'), applicationVersion: APP_VERSION, copyright: COPYRIGHT})
 
 let mainWindow  = null
 let current     = null    // {Analyse} analyse courante

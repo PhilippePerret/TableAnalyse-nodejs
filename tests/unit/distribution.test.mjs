@@ -80,3 +80,11 @@ test('Windows : « Table Analyse.exe », nom affiché « Table d’analyse »', 
   const wf = fs.readFileSync(path.join(ROOT, '.github/workflows/distribution.yml'), 'utf8')
   assert.match(wf, /target: --win --config _scripts\/build\/electron-builder\.win\.cjs/)
 })
+
+test('mention du droit d’auteur : « À propos », informations des fichiers, README', async () => {
+  const { COPYRIGHT } = await import('../../main/copyright.js')
+  assert.equal(COPYRIGHT, '© 2026 Philippe Perret – Tous droits réservés')
+  assert.equal(PKG.build.copyright, COPYRIGHT, 'package.json (build.copyright)')
+  assert.match(fs.readFileSync(path.join(ROOT, 'main', 'main.js'), 'utf8'), /setAboutPanelOptions\(\{[^}]*copyright: COPYRIGHT/)
+  assert.ok(fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8').includes(COPYRIGHT), 'README')
+})

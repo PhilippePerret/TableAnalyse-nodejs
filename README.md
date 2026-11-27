@@ -28,3 +28,7 @@ ou double-clic sur `_scripts/_run.command` (ouvre l'analyse `./analyses/analyse`
 * ouvrir le manuel (`⇧M`) pour en savoir un peu plus.
 
 Documentation développeur : `Manuels/Manuel_dev.md`.
+
+---
+
+© 2026 Philippe Perret – Tous droits réservés
