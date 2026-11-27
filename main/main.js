@@ -625,20 +625,20 @@ function registerIpc(){
     handle('test:windowTitle', () => mainWindow && mainWindow.getTitle())
     // Clic « réel » (chaîne d'entrée de Chromium : focus, mousedown,
     // mouseup, click) au point (x, y) de la fenêtre
-    handle('test:realDrag', async ({x, y, dx, dy}) => {
+    handle('test:realDrag', async ({x, y, dx, dy, modifiers = []}) => {
       const wc = mainWindow.webContents
-      wc.sendInputEvent({type: 'mouseMove', x, y})
-      wc.sendInputEvent({type: 'mouseDown', x, y, button: 'left', clickCount: 1})
-      for ( let i = 1 ; i <= 5 ; ++i ) wc.sendInputEvent({type: 'mouseMove', x: Math.round(x + dx * i / 5), y: Math.round(y + dy * i / 5), button: 'left'})
-      wc.sendInputEvent({type: 'mouseUp', x: x + dx, y: y + dy, button: 'left', clickCount: 1})
+      wc.sendInputEvent({type: 'mouseMove', x, y, modifiers})
+      wc.sendInputEvent({type: 'mouseDown', x, y, button: 'left', clickCount: 1, modifiers})
+      for ( let i = 1 ; i <= 5 ; ++i ) wc.sendInputEvent({type: 'mouseMove', x: Math.round(x + dx * i / 5), y: Math.round(y + dy * i / 5), button: 'left', modifiers})
+      wc.sendInputEvent({type: 'mouseUp', x: x + dx, y: y + dy, button: 'left', clickCount: 1, modifiers})
       await new Promise(r => setTimeout(r, 150))
     })
-    handle('test:realClick', async ({x, y, clickCount = 1}) => {
+    handle('test:realClick', async ({x, y, clickCount = 1, modifiers = []}) => {
       const wc = mainWindow.webContents
       for ( let n = 1 ; n <= clickCount ; ++n ) {
-        wc.sendInputEvent({type: 'mouseMove', x, y})
-        wc.sendInputEvent({type: 'mouseDown', x, y, button: 'left', clickCount: n})
-        wc.sendInputEvent({type: 'mouseUp',   x, y, button: 'left', clickCount: n})
+        wc.sendInputEvent({type: 'mouseMove', x, y, modifiers})
+        wc.sendInputEvent({type: 'mouseDown', x, y, button: 'left', clickCount: n, modifiers})
+        wc.sendInputEvent({type: 'mouseUp',   x, y, button: 'left', clickCount: n, modifiers})
       }
       await new Promise(r => setTimeout(r, 150))
     })

@@ -233,7 +233,8 @@ edit(){
   const subtype = (dtype.subdata || undefined != dtype.subtype) ? this.subtype : undefined
   this.editor = this.editor || new Editeur(this, {suggestions: () => AMark_Editor.suggestionsFor(this.type, subtype)})
   // Accords : en entrée italienne, notes remises en italien (cf. Notation.js)
-  this.editor.value = contentForField(this.type, this.content) + (this.hasProlongLine ? '--' : '')
+  // (accord, harmonie : trait réglé par l'étirement, cf. stretchTo, #276)
+  this.editor.value = contentForField(this.type, this.content) + (this.hasProlongLine && !this.isStretchable ? '--' : '')
   this.editor.show({top:this.top, left:this.left}, AMARQUES_TYPES[this.type].message)
 }
 
@@ -271,9 +272,12 @@ setValue(newvalue){
   // console.log("-> setValue('%s')", newvalue)
   const oldProlong = true && this.prolong
 
-  this.prolong = this.data.prolong = newvalue.endsWith('--')
+  const dashes = newvalue.endsWith('--')
+  // Accord, harmonie : le trait (étirement) est gardé quand le texte est
+  // modifié ; « -- » l'ajoute (#276)
+  this.prolong = this.data.prolong = dashes || (this.isStretchable && !!oldProlong)
   
-  newvalue = this.prolong ? newvalue.substring(0, newvalue.length - 2) : newvalue
+  newvalue = dashes ? newvalue.substring(0, newvalue.length - 2) : newvalue
   // Accords : noms italiens enregistrés en batave (cf. Notation.js)
   newvalue = contentFromField(this.type, newvalue)
 
@@ -295,6 +299,7 @@ setValue(newvalue){
     } else if ( this.hasProlongLine && !this.prolong ) {
       this.destroyLigneProlongation()
       this.data.width = null
+      this.obj && (this.obj.style.width = '')
     }
   }
 
@@ -799,12 +804,15 @@ observe(){
         this.initData = Object.assign({}, my.data)
         // La copie (Alt) n'entre pas dans le groupe de l'original
         delete this.initData.groups
-        // Marque d'un groupe, copie (Alt) : tout le groupe est copié
-        // (#269), aperçu des autres marques pendant le déplacement
+        // Copie (Alt) d'une marque de la sélection (#277) ou d'un groupe
+        // (#269) : toute la sélection, ou tout le groupe, est copiée ;
+        // aperçu des autres marques pendant le déplacement
         this.groupGhosts = null
         const outer = this.forDuplication && Groups.outerOf(my)
-        if ( outer ) {
-          this.groupMembers = AObjet.items.filter(ao => ao instanceof AMark && ao.obj && Groups.outerOf(ao) == outer)
+        const selection = (AObjet.selection || []).filter(ao => ao instanceof AMark && ao.obj)
+        const many = this.forDuplication && my.isSelected && selection.length > 1
+        if ( many || outer ) {
+          this.groupMembers = many ? selection : AObjet.items.filter(ao => ao instanceof AMark && ao.obj && Groups.outerOf(ao) == outer)
           this.groupGhosts = this.groupMembers.filter(ao => ao !== my).map(ao => {
             const el = ao.obj.cloneNode(true)
             el.removeAttribute('id')
