@@ -92,10 +92,10 @@ export class Editeur {
     }
   }
 
+  // Titre (p.e. « Nom de l'accord ») : dans l'entête du panneau (#262)
   set titre(v){
     this.init()
-    this.spanTitre.innerHTML = v
-    this.spanTitre.classList.remove('hidden')
+    this.headTitle.innerHTML = v
   }
   /**
    * Modification de la fonte
@@ -165,8 +165,6 @@ export class Editeur {
   }
   build(){
     const o = DCreate('DIV', {class:'mini_editeur hidden'})
-    this.spanTitre = DCreate('DIV', {class:'titre hidden'})
-    o.appendChild(this.spanTitre)
     this.textField = DCreate('INPUT',{type:'text', value:this.value})
     o.appendChild(this.textField)
     this.textarea = DCreate('TEXTAREA',{})
@@ -184,25 +182,32 @@ export class Editeur {
         DCreate('LABEL', {text:t('ui.marks.variable.label')})
       , this.variableField
     ]})
-    o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea, this.variablesHint, this.variableRow]})]}))
-    o.appendChild(this.suggestPane)
+    // Aspect (#262, « carte à entête ») : entête avec le titre et le
+    // bouton du type, champ dans le corps, valeurs déjà utilisées en
+    // grille sous le champ, « Renoncer » et « OK » à droite du pied
+    o.appendChild(DCreate('DIV', {class:'body', inner:[DCreate('DIV', {class:'fields', inner:[this.suggestMenu, this.textField, this.textarea, this.variablesHint, this.variableRow]}), this.suggestPane]}))
     const divBoutons = DCreate('DIV', {class:'buttons'})
-    // Marque d'analyse : changement de son type (de son sous-type
-    // d'abord quand elle en a un). En création : retour au choix du type
-    if ( this.isAMark ) {
-      divBoutons.appendChild(DCreate('BUTTON', {text:this.typeButtonLabel, class:'type'}))
-    } else if ( this.data.onTypeButton ) {
-      divBoutons.appendChild(DCreate('BUTTON', {text:this.data.typeButtonLabel || t('ui.buttons.type'), class:'type'}))
-    }
-    // Bouton OK toujours le dernier, à droite
+    // « Renoncer » hors de l'ordre des tabulations ; OK le dernier
+    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', tabindex:'-1'}))
     divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.ok'), class:'ok btn-default'}))
-    // « Renoncer » à gauche, hors de l'ordre des tabulations
-    divBoutons.appendChild(DCreate('BUTTON', {text:t('ui.buttons.renounce'), class:'cancel btn-close', style:'float:left;', tabindex:'-1'}))
     o.appendChild(divBoutons)
     this.obj = o
-    this.data.titre && (this.titre = this.data.titre)
     document.body.appendChild(o)
     addPanelHead(o, {title: t('ui.panels.mark_editor.title'), onClose: this.onClickCancel.bind(this), place: false})
+    const head = o.querySelector(':scope > div.panneau-head')
+    this.headTitle = head.querySelector('span.panneau-title')
+    // Marque d'analyse : changement de son type (de son sous-type
+    // d'abord quand elle en a un). En création : retour au choix du type.
+    // Dans l'entête, à droite
+    let btnType = null
+    if ( this.isAMark ) {
+      btnType = DCreate('BUTTON', {text:this.typeButtonLabel, class:'type'})
+    } else if ( this.data.onTypeButton ) {
+      btnType = DCreate('BUTTON', {text:this.data.typeButtonLabel || t('ui.buttons.type'), class:'type'})
+    }
+    const spacer = head.querySelector('span.panneau-spacer')
+    btnType ? spacer.replaceWith(btnType) : spacer.remove()
+    this.data.titre && (this.titre = this.data.titre)
   }
   observe(){
     listen(this.btnOK,      'click', this.onClickOK.bind(this))

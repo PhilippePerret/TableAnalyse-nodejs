@@ -1,12 +1,9 @@
 /* Fond, bords et en-tête : panneau commun (cf. themes.css) */
 div.mini_editeur {
   position: absolute;
-  width: 340px;
+  width: 400px;
   font-size: inherit;
   z-index: 50;
-}
-div.mini_editeur div.titre {
-  margin: .6em 0 .5em;
 }
 
 /* Le mini-editeur, en règle générale, peut éditer un texte
@@ -53,83 +50,51 @@ div.mini_editeur.longtext textarea {
 }
 
 /* Valeurs déjà utilisées (cf. Editeur#setSuggestions) : menu au-dessus
-  du champ, ou panneau coupé en deux (à droite la liste seule, de la bande
-  supérieure au bas du panneau ; à gauche tout le reste) */
+  du champ, ou grille numérotée sous le champ (#262) */
 div.mini_editeur select.suggest-menu {
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
-body div.mini_editeur.with-suggestions:not(.hidden) {
-  display: grid;
-  /* Partie droite à la taille des valeurs (cf. suggest-pane) */
-  grid-template-columns: 322px auto;
-  grid-template-rows: auto auto 1fr auto;
-  width: auto;
-  height: 340px;
-  padding-right: 0;
+div.mini_editeur div.suggest-pane {
+  margin-top: 18px;
 }
-body div.mini_editeur.longtext.with-suggestions {
-  grid-template-columns: 722px auto;
-  width: auto;
-  height: 620px;
-}
-body div.mini_editeur.with-suggestions > div.panneau-head {
-  grid-column: 1 / -1;
-  grid-row: 1;
-  margin-right: 0;
-}
-div.mini_editeur.with-suggestions > div.titre { grid-column: 1; grid-row: 2; margin-right: 18px; }
-div.mini_editeur.with-suggestions > div.body  { grid-column: 1; grid-row: 3; margin-right: 18px; height: auto; min-height: 0; }
-body div.mini_editeur.with-suggestions > div.panneau-foot {
-  grid-column: 1;
-  grid-row: 4;
-  margin-right: 0;
-  border-radius: 0 0 0 10px;
-}
-div.mini_editeur.with-suggestions > div.suggest-pane {
-  grid-column: 2;
-  grid-row: 2 / 5;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  min-width: 100px;
-  max-width: 320px;
-  margin: -12px 0 -16px;
-  padding: 8px 8px 12px;
-  background-color: white;
-  border-left: 1px solid #d0d0d0;
-  border-radius: 0 0 10px 0;
-}
+div.mini_editeur div.suggest-pane.hidden { display: none; }
 div.mini_editeur div.suggest-list {
-  flex: 1;
-  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  max-height: 196px;
   overflow-y: auto;
+  padding: 2px;
   font-size: 14px;
 }
+div.mini_editeur div.suggest-list:focus { outline: none; }
+div.mini_editeur div.suggest-list:focus-within,
 div.mini_editeur div.suggest-list:focus {
-  outline: none;
-}
-div.mini_editeur div.suggest-pane:focus-within {
-  box-shadow: inset 0 0 0 2px #3a925e;
+  border-radius: 8px;
+  box-shadow: 0 0 0 2px rgba(58,146,94,.45);
 }
 div.mini_editeur div.suggestion {
   display: flex;
-  align-items: center;
-  padding: 2px 8px;
-  border-radius: 4px;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid #e2e2e2;
+  border-radius: 7px;
+  background-color: #fcfcfc;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 div.mini_editeur div.suggestion:hover {
-  background-color: #e6f2ea;
+  background-color: #eef5f1;
+  border-color: #b9d8c5;
 }
 div.mini_editeur div.suggestion span.letter {
   flex: none;
-  width: 1.4em;
-  color: #888;
-  font-family: monospace;
+  color: #999;
+  font-size: 11px;
 }
 /* Accords, harmonies : valeurs affichées comme sur la table */
 div.mini_editeur div.suggestion span.value {
@@ -139,7 +104,7 @@ div.mini_editeur div.suggestion span.value {
 div.mini_editeur div.suggest-list.philnote span.value {
   font-family: var(--philnote-font, PhilNote);
   font-size: 19px;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 
 div.mini_editeur input[type="text"] {
@@ -150,12 +115,6 @@ div.mini_editeur input[type="text"] {
   font-family: 'Arial Narrow', Arial, Geneva, Helvetica;
 }
 
-div.mini_editeur div.buttons {
-  margin-top: 1em;
-}
-div.mini_editeur div.buttons button {
-  margin-left: 8px;
-}
 
 /* Motif : nom de sa variable */
 div.mini_editeur div.variable-row {
@@ -172,3 +131,53 @@ div.mini_editeur div.variable-row input[type="text"] {
   font-size: inherit;
   font-family: monospace;
 }
+
+/* Aspect « carte à entête », aéré (#262) : marges généreuses, entête
+   avec le titre (à gauche) et le bouton du type (à droite) */
+body div.panneau-ui.mini_editeur {
+  padding: 0 26px 24px;
+}
+body div.panneau-ui.mini_editeur > div.panneau-head {
+  height: auto;
+  min-height: 44px;
+  margin: 0 -26px 24px;
+  padding: 8px 16px;
+  gap: 12px;
+}
+body div.panneau-ui.mini_editeur > div.panneau-head span.panneau-title {
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.3;
+}
+body div.panneau-ui.mini_editeur > div.panneau-head button.type {
+  flex: none;
+  font-size: 13px;
+  padding: 3px 12px;
+}
+body div.panneau-ui.mini_editeur input[type="text"]:not(.variable) {
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+body div.panneau-ui.mini_editeur input[type="text"]:focus,
+body div.panneau-ui.mini_editeur textarea:focus {
+  outline: none;
+  border-color: #3a925e;
+  box-shadow: 0 0 0 3px rgba(58,146,94,.3);
+}
+body div.panneau-ui.mini_editeur textarea {
+  padding: 12px 14px;
+  border-radius: 8px;
+  line-height: 1.45;
+}
+body div.panneau-ui.mini_editeur > div.panneau-foot {
+  margin: 24px -26px -24px;
+  bottom: -24px;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+body div.panneau-ui.mini_editeur > div.panneau-foot::after { content: none; }
+body div.panneau-ui.mini_editeur { background-color: white; }
+body div.panneau-ui.mini_editeur > div.panneau-head { background-color: #f2f2f2; border-bottom-color: #dcdcdc; }
+body div.panneau-ui.mini_editeur > div.panneau-foot { background-color: white; border-top-color: #ececec; }
