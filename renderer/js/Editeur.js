@@ -325,8 +325,11 @@ export class Editeur {
       this.data.onTypeButton.call(null)
       return stopEvent(e)
     }
-    const r = this.btnType.getBoundingClientRect()
-    const x = Math.round(r.left), y = Math.round(r.bottom)
+    // Liste des types (ou des sous-types) à droite du panneau, jamais
+    // dessus (#270 ; les listes sont placées 40 px au-dessus et à gauche
+    // du point donné, cf. AMark_Editor#positionFixed)
+    const r = this.obj.getBoundingClientRect()
+    const x = Math.round(r.right + 12 + 40), y = Math.round(r.top + 40)
     const editor = new AMark_Editor({
         onReleaseMethod:  this.onTypeChosen.bind(this)
       , event:            {clientX: x, clientY: y, pageX: x + window.scrollX, pageY: y + window.scrollY}
