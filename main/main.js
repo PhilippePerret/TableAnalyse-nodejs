@@ -623,6 +623,25 @@ function registerIpc(){
       return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
     })
     handle('test:windowTitle', () => mainWindow && mainWindow.getTitle())
+    // Clic « réel » (chaîne d'entrée de Chromium : focus, mousedown,
+    // mouseup, click) au point (x, y) de la fenêtre
+    handle('test:realDrag', async ({x, y, dx, dy}) => {
+      const wc = mainWindow.webContents
+      wc.sendInputEvent({type: 'mouseMove', x, y})
+      wc.sendInputEvent({type: 'mouseDown', x, y, button: 'left', clickCount: 1})
+      for ( let i = 1 ; i <= 5 ; ++i ) wc.sendInputEvent({type: 'mouseMove', x: Math.round(x + dx * i / 5), y: Math.round(y + dy * i / 5), button: 'left'})
+      wc.sendInputEvent({type: 'mouseUp', x: x + dx, y: y + dy, button: 'left', clickCount: 1})
+      await new Promise(r => setTimeout(r, 150))
+    })
+    handle('test:realClick', async ({x, y, clickCount = 1}) => {
+      const wc = mainWindow.webContents
+      for ( let n = 1 ; n <= clickCount ; ++n ) {
+        wc.sendInputEvent({type: 'mouseMove', x, y})
+        wc.sendInputEvent({type: 'mouseDown', x, y, button: 'left', clickCount: n})
+        wc.sendInputEvent({type: 'mouseUp',   x, y, button: 'left', clickCount: n})
+      }
+      await new Promise(r => setTimeout(r, 150))
+    })
     handle('test:pressAndHold', () => process.platform == 'darwin' ? systemPreferences.getUserDefault('ApplePressAndHoldEnabled', 'boolean') : null)
     handle('test:latestVersion', ({version}) => forceLatestVersion(version))
     handle('test:openedUrls', () => openedUrls)

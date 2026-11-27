@@ -119,9 +119,16 @@ export function addPanelHead(obj, {title, onClose, target, place = true}){
   listen(close, 'click', (e) => { e.stopPropagation() ; onClose() })
   // Position ramenée à left/top (sans right, bottom ni transform) avant
   // un déplacement
-  listen(head, 'mousedown', () => {
+  listen(head, 'mousedown', (e) => {
+    // Bouton de l'entête (p.e. « Sous-type… ») : pas un déplacement (#275)
+    if ( e.target instanceof Element && e.target.closest('button, input, select, textarea, span.panneau-close') ) return
     const r = obj.getBoundingClientRect(), z = obj.currentCSSZoom || 1
-    Object.assign(obj.style, {left: `${r.left / z}px`, top: `${r.top / z}px`, right: 'auto', bottom: 'auto', transform: 'none'})
+    // Position absolue (dans la page) : coordonnées de la page, pas de la
+    // fenêtre (sinon, page défilée, le panneau sauterait hors de la vue)
+    const fixed = getComputedStyle(obj).position == 'fixed'
+    const left = fixed ? r.left : r.left + window.scrollX
+    const top  = fixed ? r.top  : r.top  + window.scrollY
+    Object.assign(obj.style, {left: `${left / z}px`, top: `${top / z}px`, right: 'auto', bottom: 'auto', transform: 'none'})
   })
   draggable(obj, {handle: '.panneau-head'})
   // Touches tapées dans un champ : elles ne sortent pas du panneau (un
