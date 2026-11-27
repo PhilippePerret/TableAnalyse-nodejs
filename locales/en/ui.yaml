@@ -530,6 +530,7 @@ prefs:
   color_segments:         {label: "Segments"}
   animation_tempo:        {label: "Animation tempo"}
   autosave:               {label: "Autosave"}
+  auto_update:            {label: "Automatic application update", precision: "At launch, the version is checked and an update is offered when another version is published"}
   mark_creation_click:    {label: "New mark creation"}
   animate:                {label: "Start the animation on opening", precision: "Marks will be displayed progressively"}
   notation_display:       {label: "Chord note display"}
@@ -802,3 +803,15 @@ themes:
   discret:          "Discreet"
   gris:             "Grey"
   clair_de_gris:    "Light grey"
+
+# Version de l’application (préférences, #249)
+prefs_version:
+  check: "Check version"
+  update_now: "Update now"
+  later: "Later"
+  checking: "Checking…"
+  up_to_date: "Version %{current}: the application is up to date"
+  available: "Published version: %{latest} (current version: %{current})"
+  error: "Check failed (%{error})"
+  dialog_message: "A new version of the application is available (%{latest})"
+  dialog_detail: "Current version: %{current}. “Update now” opens the download page."

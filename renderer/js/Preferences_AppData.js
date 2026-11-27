@@ -110,6 +110,9 @@ export const PreferencesAppData = {
       , {name: t('ui.mark_creation_click.double'), value: 'double'}
     ]}
   , animate                 :{type:'checkbox'     ,typeV:'boolean'  ,default:false}
+  // Préférence de l'APPLICATION (app:true : enregistrée pour toutes les
+  // analyses, cf. Preferences.saveData), #249
+  , auto_update             :{type:'checkbox'     ,typeV:'boolean'  ,default:true, app:true}
 
   // --- Notation des accords (cf. Notation.js) ---
   , notation_display        :{type:'select'       ,typeV:'string'   ,default:'bat', values: [

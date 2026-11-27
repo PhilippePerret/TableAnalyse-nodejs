@@ -530,6 +530,7 @@ prefs:
   color_segments:         {label: "片段"}
   animation_tempo:        {label: "动画速度"}
   autosave:               {label: "自动保存"}
+  auto_update:            {label: "自动更新应用程序", precision: "启动时检查版本，发布其他版本时提示更新"}
   mark_creation_click:    {label: "新建标记"}
   animate:                {label: "打开时启动动画", precision: "标记将逐步显示"}
   notation_display:       {label: "和弦音名显示"}
@@ -801,3 +802,15 @@ themes:
   discret:          "低调"
   gris:             "灰色"
   clair_de_gris:    "浅灰"
+
+# Version de l’application (préférences, #249)
+prefs_version:
+  check: "检查版本"
+  update_now: "立即更新"
+  later: "稍后"
+  checking: "正在检查…"
+  up_to_date: "版本 %{current}：应用程序已是最新"
+  available: "已发布版本：%{latest}（当前版本：%{current}）"
+  error: "无法检查（%{error}）"
+  dialog_message: "应用程序有新版本可用（%{latest}）"
+  dialog_detail: "当前版本：%{current}。“立即更新”将打开下载页面。"

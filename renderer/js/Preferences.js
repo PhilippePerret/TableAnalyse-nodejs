@@ -22,12 +22,29 @@ class PreferencesClass {
 init(){
   this.data = PreferencesAppData
   this.data.theme.values = this.themesAsMenu.bind(this)
+  this.loadAppPrefs()
+}
+
+/**
+ * Préférences de l'application (propriété app) : lues dans celles de
+ * l'application, jamais dans celles de l'analyse
+ */
+async loadAppPrefs(){
+  let values
+  try { values = await invoke('app:getPrefs') } catch(err) { return console.error(err) }
+  for ( const key in values ) {
+    if ( !this.data[key] || !this.data[key].app || null == values[key] ) continue
+    this.data[key].value = values[key]
+    const el = DGet(`#pref-${key}`)
+    el && this.data[key].type == 'checkbox' && (el.checked = !!values[key])
+  }
 }
 
 setValuesSaved(savedData){
   for(var prop in savedData){
     const dprop = this.data[prop]
     if ( !dprop ) continue // clé de préférence obsolète
+    if ( dprop.app ) continue // préférence de l'application
     const value = (function(v, type){
       switch(type){
       case 'boolean': return v === true || v == 'true';
@@ -122,6 +139,7 @@ themesAsMenu(){
 getData(){
   var prefs = {}
   Object.keys(PreferencesAppData).forEach( key => {
+    if ( PreferencesAppData[key].app ) return // (préférence de l'application)
     Object.assign(prefs, {[key]: this.get(key) })
   })
   return prefs
@@ -135,6 +153,12 @@ saveData(key,value){
   case 'number': value = '' === value ? '' : Number(value)
   }
   Object.assign(this.data[key], {value: value})
+  // Préférence de l'application : enregistrée tout de suite, l'analyse
+  // n'est pas modifiée
+  if ( this.data[key].app ) {
+    invoke('app:setPref', {key, value}).catch(err => erreur(err.message))
+    return
+  }
   key == 'autosave' && this.syncAutosaveMenu()
   setModified()
 }

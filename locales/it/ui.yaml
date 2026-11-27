@@ -530,6 +530,7 @@ prefs:
   color_segments:         {label: "Segmenti"}
   animation_tempo:        {label: "Tempo dell'animazione"}
   autosave:               {label: "Salvataggio automatico"}
+  auto_update:            {label: "Aggiornamento automatico dell’applicazione", precision: "All’avvio, la versione viene verificata e viene proposto l’aggiornamento quando è pubblicata un’altra versione"}
   mark_creation_click:    {label: "Creazione di un nuovo segno"}
   animate:                {label: "Avviare l'animazione all'apertura", precision: "I segni saranno mostrati progressivamente"}
   notation_display:       {label: "Visualizzazione delle note degli accordi"}
@@ -802,3 +803,15 @@ themes:
   discret:          "Discreto"
   gris:             "Grigio"
   clair_de_gris:    "Grigio chiaro"
+
+# Version de l’application (préférences, #249)
+prefs_version:
+  check: "Verifica la versione"
+  update_now: "Aggiorna ora"
+  later: "Più tardi"
+  checking: "Verifica…"
+  up_to_date: "Versione %{current}: l’applicazione è aggiornata"
+  available: "Versione pubblicata: %{latest} (versione attuale: %{current})"
+  error: "Verifica impossibile (%{error})"
+  dialog_message: "È disponibile una nuova versione dell’applicazione (%{latest})"
+  dialog_detail: "Versione attuale: %{current}. «Aggiorna ora» apre la pagina di download."

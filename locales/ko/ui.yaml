@@ -530,6 +530,7 @@ prefs:
   color_segments:         {label: "구간"}
   animation_tempo:        {label: "애니메이션 템포"}
   autosave:               {label: "자동 저장"}
+  auto_update:            {label: "애플리케이션 자동 업데이트", precision: "시작할 때 버전을 확인하고 다른 버전이 게시되면 업데이트를 제안합니다"}
   mark_creation_click:    {label: "새 표시 만들기"}
   animate:                {label: "열 때 애니메이션 시작", precision: "표시가 차례로 나타납니다"}
   notation_display:       {label: "코드 음이름 표시"}
@@ -801,3 +802,15 @@ themes:
   discret:          "은은하게"
   gris:             "회색"
   clair_de_gris:    "연회색"
+
+# Version de l’application (préférences, #249)
+prefs_version:
+  check: "버전 확인"
+  update_now: "지금 업데이트"
+  later: "나중에"
+  checking: "확인 중…"
+  up_to_date: "버전 %{current}: 애플리케이션이 최신입니다"
+  available: "게시된 버전: %{latest} (현재 버전: %{current})"
+  error: "확인할 수 없음 (%{error})"
+  dialog_message: "애플리케이션의 새 버전이 있습니다 (%{latest})"
+  dialog_detail: "현재 버전: %{current}. “지금 업데이트”를 누르면 다운로드 페이지가 열립니다."

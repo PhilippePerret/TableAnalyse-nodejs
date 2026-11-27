@@ -13,6 +13,7 @@ const DEFAULT_PREFERENCES = {
   , last_dialog_folder: null
   , score_image_command: null
   , link_types:         {}     // types de liaison {nom: style}
+  , auto_update:        true   // vérification de la version au lancement (#249)
 }
 
 class AppPrefsClass {

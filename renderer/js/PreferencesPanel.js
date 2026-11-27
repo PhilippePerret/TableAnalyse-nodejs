@@ -40,7 +40,7 @@ const CURRENT_VALUES = {
   , scroll: () => Math.round(window.scrollY)
 }
 const PREFS_GROUPS = [
-    {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme']}
+    {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme', 'auto_update']}
   , {id: 'notation', keys: ['notation_input', 'notation_display']}
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes', 'max_table_blank', 'export_systems_gap']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
@@ -291,6 +291,7 @@ build(){
     if ( group.id == 'layout' ) return o.appendChild(this.buildLayoutTable())
     if ( group.id == 'lines' )  return o.appendChild(this.buildLinesTable())
     prefs.forEach(dp => this.buildPref(o, dp))
+    group.id == 'general' && o.appendChild(this.buildVersionRow())
   })
 
   // Pied de page : « Réglages par défaut », « Enregistrer » (bouton par
@@ -308,6 +309,36 @@ build(){
 
   this.isBuilt = true
 
+}
+
+/**
+ * Version de l'application (#249) : « Vérifier la version » (version
+ * publiée comparée à celle chargée), « Actualiser maintenant » (page de
+ * téléchargement), possible quand les versions diffèrent
+ */
+buildVersionRow(){
+  const T = (k, d) => t(`ui.prefs_version.${k}`, d)
+  const status   = DCreate('SPAN', {class: 'pref-version-status'})
+  const btnCheck = DCreate('BUTTON', {class: 'btn-check-version', text: T('check')})
+  const btnNow   = DCreate('BUTTON', {class: 'btn-update-now', text: T('update_now')})
+  btnNow.disabled = true
+  listen(btnCheck, 'click', async (e) => {
+    stopEvent(e)
+    status.textContent = T('checking')
+    btnNow.disabled = true
+    try {
+      const res = await invoke('app:checkVersion')
+      status.textContent = T(res.different ? 'available' : 'up_to_date', res)
+      btnNow.disabled = !res.different
+    } catch(err) {
+      status.textContent = T('error', {error: err.message})
+    }
+  })
+  listen(btnNow, 'click', (e) => {
+    stopEvent(e)
+    invoke('app:openDownloadPage').catch(err => erreur(err.message))
+  })
+  return DCreate('DIV', {class: 'div-data pref-version', inner: [btnCheck, btnNow, status]})
 }
 
 /**

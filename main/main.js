@@ -23,6 +23,7 @@ import { Partage } from './Partage.js'
 import { loadYAML } from './yaml.js'
 import { APP_FOLDER, ASSETS_FOLDER, RENDERER_FOLDER } from './paths.js'
 import { locale, t, LANGUAGES, currentLang } from './i18n.js'
+import { checkVersion, forceLatestVersion, DOWNLOAD_PAGE } from './versionCheck.js'
 
 const SMOKE = !!process.env.SA_SMOKE // lancement de contrôle, sans fenêtre visible
 
@@ -346,6 +347,39 @@ function openManualAt(anchor){
   win.loadFile(file, {hash: anchor})
 }
 
+/* --- Version de l'application (#249) --- */
+
+// Préférences de l'application réglées dans le panneau des préférences
+const APP_PANEL_PREFS = ['auto_update']
+
+// Adresses ouvertes dans le navigateur (lancement de contrôle : aucune)
+const openedUrls = []
+function openUrl(url){
+  if ( SMOKE ) return openedUrls.push(url)
+  return shell.openExternal(url)
+}
+
+/**
+ * Actualisation automatique (préférence) : au lancement, si la version
+ * publiée diffère de celle chargée, proposition d'ouvrir la page de
+ * téléchargement. Hors connexion : rien.
+ */
+async function autoCheckVersion(){
+  if ( !AppPrefs.get('auto_update') ) return
+  let res
+  try { res = await checkVersion(APP_VERSION) } catch(err) { return console.warn('[version]', err.message) }
+  if ( !res.different ) return
+  const T = (k, d) => t(`ui.prefs_version.${k}`, d)
+  const {response} = await dialog.showMessageBox(mainWindow, {
+      type: 'info'
+    , message: T('dialog_message', res)
+    , detail:  T('dialog_detail', res)
+    , buttons: [T('update_now'), T('later')]
+    , defaultId: 0, cancelId: 1
+  })
+  response === 0 && openUrl(DOWNLOAD_PAGE)
+}
+
 function reloadWindow(){
   mainWindow && mainWindow.webContents.reload()
 }
@@ -573,6 +607,8 @@ function registerIpc(){
       return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
     })
     handle('test:windowTitle', () => mainWindow && mainWindow.getTitle())
+    handle('test:latestVersion', ({version}) => forceLatestVersion(version))
+    handle('test:openedUrls', () => openedUrls)
     handle('test:listFiles', ({rel}) => {
       const p = path.join(requireCurrent().path, rel || '')
       return fs.existsSync(p) ? fs.readdirSync(p) : null
@@ -959,6 +995,16 @@ function registerIpc(){
   // Nom de la fenêtre pour le système (listes de capture : OBS, Zoom…,
   // barre de titre de Windows et Linux), le même que celui de la bande
   // supérieure (#256)
+  // Préférences de l'application affichées dans le panneau des
+  // préférences (cf. Preferences_AppData, propriété app)
+  handle('app:getPrefs', () => Object.fromEntries(APP_PANEL_PREFS.map(k => [k, AppPrefs.get(k)])))
+  handle('app:setPref', ({key, value}) => {
+    if ( !APP_PANEL_PREFS.includes(key) ) throw new Error(`Préférence inconnue : ${key}`)
+    AppPrefs.set({[key]: value})
+  })
+  // Version de l'application (#249)
+  handle('app:checkVersion', () => checkVersion(APP_VERSION))
+  handle('app:openDownloadPage', () => openUrl(DOWNLOAD_PAGE))
   handle('window:setTitle', ({title}) => {
     mainWindow && mainWindow.setTitle(String(title || '').trim() || t('ui.app.untitled'))
   })
@@ -1139,6 +1185,7 @@ app.whenReady().then(() => {
   buildMenu()
   setCurrent(findStartAnalyse())
   createWindow()
+  SMOKE || autoCheckVersion()
   Partage.init({
       window:     () => mainWindow
     , current:    () => current

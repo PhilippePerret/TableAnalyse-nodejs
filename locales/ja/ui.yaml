@@ -530,6 +530,7 @@ prefs:
   color_segments:         {label: "セグメント"}
   animation_tempo:        {label: "アニメーションのテンポ"}
   autosave:               {label: "自動保存"}
+  auto_update:            {label: "アプリケーションの自動更新", precision: "起動時にバージョンを確認し、別のバージョンが公開されていれば更新を提案します"}
   mark_creation_click:    {label: "新しいマークの作成"}
   animate:                {label: "開くときにアニメーションを開始", precision: "マークが順に表示されます"}
   notation_display:       {label: "コードの音名の表示"}
@@ -801,3 +802,15 @@ themes:
   discret:          "控えめ"
   gris:             "グレー"
   clair_de_gris:    "ライトグレー"
+
+# Version de l’application (préférences, #249)
+prefs_version:
+  check: "バージョンを確認"
+  update_now: "今すぐ更新"
+  later: "後で"
+  checking: "確認中…"
+  up_to_date: "バージョン %{current}：アプリケーションは最新です"
+  available: "公開バージョン：%{latest}（現在のバージョン：%{current}）"
+  error: "確認できません（%{error}）"
+  dialog_message: "アプリケーションの新しいバージョンがあります（%{latest}）"
+  dialog_detail: "現在のバージョン：%{current}。「今すぐ更新」でダウンロードページを開きます。"

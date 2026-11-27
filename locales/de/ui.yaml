@@ -530,6 +530,7 @@ prefs:
   color_segments:         {label: "Segmente"}
   animation_tempo:        {label: "Tempo der Animation"}
   autosave:               {label: "Automatisch sichern"}
+  auto_update:            {label: "Automatische Aktualisierung der Anwendung", precision: "Beim Start wird die Version geprüft und eine Aktualisierung angeboten, wenn eine andere Version veröffentlicht ist"}
   mark_creation_click:    {label: "Neue Markierung erstellen"}
   animate:                {label: "Animation beim Öffnen starten", precision: "Die Markierungen werden nach und nach angezeigt"}
   notation_display:       {label: "Anzeige der Akkordnoten"}
@@ -802,3 +803,15 @@ themes:
   discret:          "Dezent"
   gris:             "Grau"
   clair_de_gris:    "Hellgrau"
+
+# Version de l’application (préférences, #249)
+prefs_version:
+  check: "Version prüfen"
+  update_now: "Jetzt aktualisieren"
+  later: "Später"
+  checking: "Prüfung…"
+  up_to_date: "Version %{current}: Die Anwendung ist aktuell"
+  available: "Veröffentlichte Version: %{latest} (aktuelle Version: %{current})"
+  error: "Prüfung nicht möglich (%{error})"
+  dialog_message: "Eine neue Version der Anwendung ist verfügbar (%{latest})"
+  dialog_detail: "Aktuelle Version: %{current}. „Jetzt aktualisieren“ öffnet die Download-Seite."

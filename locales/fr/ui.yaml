@@ -530,6 +530,7 @@ prefs:
   color_segments:         {label: "Segments"}
   animation_tempo:        {label: "Tempo de l’animation"}
   autosave:               {label: "Sauvegarde automatique"}
+  auto_update:            {label: "Actualisation automatique de l’application", precision: "Au lancement, vérification de la version et proposition d’actualiser l’application quand une autre version est publiée"}
   mark_creation_click:    {label: "Création d’une nouvelle marque"}
   animate:                {label: "Animer l’animation à l’ouverture", precision: "Les marques seront affichées progressivement"}
   notation_display:       {label: "Affichage des notes des accords"}
@@ -803,3 +804,15 @@ themes:
   discret:          "Discret"
   gris:             "Gris"
   clair_de_gris:    "Clair de gris"
+
+# Version de l’application (préférences, #249)
+prefs_version:
+  check: "Vérifier la version"
+  update_now: "Actualiser maintenant"
+  later: "Plus tard"
+  checking: "Vérification…"
+  up_to_date: "Version %{current} : l’application est à jour"
+  available: "Version publiée : %{latest} (version actuelle : %{current})"
+  error: "Vérification impossible (%{error})"
+  dialog_message: "Une nouvelle version de l’application est disponible (%{latest})"
+  dialog_detail: "Version actuelle : %{current}. « Actualiser maintenant » ouvre la page de téléchargement."
