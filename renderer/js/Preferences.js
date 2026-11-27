@@ -37,6 +37,7 @@ async loadAppPrefs(){
     this.data[key].value = values[key]
     const el = DGet(`#pref-${key}`)
     el && this.data[key].type == 'checkbox' && (el.checked = !!values[key])
+    el && this.data[key].type == 'select' && (el.value = values[key])
   }
 }
 

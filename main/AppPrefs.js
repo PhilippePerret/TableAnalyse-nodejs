@@ -14,6 +14,7 @@ const DEFAULT_PREFERENCES = {
   , score_image_command: null
   , link_types:         {}     // types de liaison {nom: style}
   , auto_update:        true   // vérification de la version au lancement (#249)
+  , help_format:        'html' // manuel ouvert par ⌘/Ctrl + Maj + M (#258)
 }
 
 class AppPrefsClass {

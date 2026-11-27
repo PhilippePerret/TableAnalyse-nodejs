@@ -155,3 +155,47 @@ T.test('boite à outils : ⌘ + Maj + O, plus Maj + O (#257)', async () => {
     cancelPendingShortcut()
   }
 })
+
+T.test('manuel : ⌘ + Maj + M (format des préférences), plus Maj + M ; demander la main : ⌘ + Maj + P (#258)', async () => {
+  const { Manuel } = await T.imp('Manuel')
+  const { Preferences } = await T.imp('Preferences')
+  const orig = Manuel.toggle
+  let n = 0
+  Manuel.toggle = function(){ n++ }
+  const opened = async () => (await T.invoke('test:openedUrls')).slice()
+  try {
+    kev('keydown', 'M', {code: 'KeyM', shiftKey: true}, document.body)
+    kev('keypress', 'M', {code: 'KeyM', shiftKey: true}, document.body)
+    kev('keyup', 'M', {code: 'KeyM', shiftKey: true}, document.body)
+    T.eq(n, 0, 'Maj + M : rien')
+    // Préférence (section « Général ») : HTML par défaut
+    const sel = document.querySelector('#pref-help_format')
+    T.ok(sel, 'menu des préférences')
+    T.eq(Array.from(sel.options).map(o => o.textContent), ['HTML', 'PDF', 'ePub'], 'choix')
+    T.eq(sel.closest('.div-data').querySelector('label').textContent, 'Aide ouverte par le raccourci ⌘Maj+M', 'libellé')
+    T.eq(Preferences.get('help_format'), 'html', 'HTML par défaut')
+    const before = (await opened()).length
+    kev('keydown', 'm', {code: 'KeyM', shiftKey: true, metaKey: true}, document.body)
+    T.eq((await opened()).length, before, 'touches pressées : rien')
+    kev('keyup', 'm', {code: 'KeyM', shiftKey: true, metaKey: true}, document.body)
+    await T.until(async () => (await opened()).length == before + 1, 'manuel ouvert au relâchement')
+    T.ok((await opened()).pop().endsWith('Manuel.html'), 'manuel HTML')
+    Preferences.saveData('help_format', 'epub')
+    await T.wait(100)
+    kev('keydown', 'm', {code: 'KeyM', shiftKey: true, metaKey: true}, document.body)
+    kev('keyup', 'm', {code: 'KeyM', shiftKey: true, metaKey: true}, document.body)
+    await T.until(async () => (await opened()).length == before + 2, 'manuel ePub ouvert')
+    T.ok((await opened()).pop().endsWith('Manuel.epub'), 'manuel ePub')
+    Preferences.saveData('help_format', 'html')
+    // ⌘ + Maj + P : demander la main (au relâchement)
+    const down = new KeyboardEvent('keydown', {bubbles: true, cancelable: true, key: 'p', code: 'KeyP', shiftKey: true, metaKey: true})
+    document.body.dispatchEvent(down)
+    T.ok(down.defaultPrevented && hasPendingShortcut(), '⌘ + Maj + P : raccourci en attente')
+    kev('keyup', 'p', {code: 'KeyP', shiftKey: true, metaKey: true}, document.body)
+    T.no(hasPendingShortcut(), 'joué au relâchement')
+    T.eq(n, 0, 'manuel interne jamais basculé')
+  } finally {
+    Manuel.toggle = orig
+    cancelPendingShortcut()
+  }
+})

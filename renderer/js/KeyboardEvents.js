@@ -7,13 +7,13 @@ import { AObjet } from './AObjet.js'
 import { AMark } from './AMark.js'
 import { Analyse } from './Analyse.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
-import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 import { MarksClipboard } from './MarksClipboard.js'
 import { Groups } from './Groups.js'
 import { Split } from './Split.js'
 import { Liaison } from './Liaison.js'
 import { onRelease, isCleanRelease } from './KeyRelease.js'
+import { invoke } from './api.js'
 
 // Saisie en cours dans un champ (panneaux) : touches laissées au champ
 export function inTextField(e){
@@ -25,12 +25,7 @@ export function onKeypressOnAnalyse(e){
 
   if ( inTextField(e) ) return
 
-  switch(e.key){
-
-    case 'M':
-      return onRelease(e, () => Manuel.toggle())
-
-  }
+  // (Maj + M, Maj + O : plus de raccourcis, #257, #258)
 }
 
 export function onKeyDownOnAnalyse(e){
@@ -135,6 +130,14 @@ export function onKeyDownUniversel(e){
         // Dans un champ : annulation de la saisie (celle du système)
         if ( inTextField(e) ) return null
         return onRelease(e, () => e.shiftKey ? Cancel.unzLast(e) : Cancel.zLast(e))
+      case 'm':
+        // Manuel (format choisi dans les préférences) : ⌘/Ctrl + Maj + M (#258)
+        if ( !e.shiftKey || e.altKey ) return null
+        return onRelease(e, () => invoke('app:openManualPref').catch(err => console.error(err)))
+      case 'p':
+        // Partage : demander la main, ⌘/Ctrl + Maj + P (#258)
+        if ( !e.shiftKey || e.altKey ) return null
+        return onRelease(e, () => invoke('partage:ask').catch(err => console.error(err)))
       case 'o':
         // Boite à outils : ⌘/Ctrl + Maj + O (#257)
         if ( !e.shiftKey || e.altKey ) return null

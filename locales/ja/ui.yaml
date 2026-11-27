@@ -50,7 +50,9 @@ menu:
   tools:            "ツールボックス…"
   animate:          "アニメーションを開始"
   help:             "ヘルプ"
+  help_manual:      "マニュアル"
   help_html:        "HTML"
+  help_pdf:         "PDF"
   help_epub:        "ePub"
   prefs:            "環境設定…"
   language:         "言語"
@@ -542,6 +544,7 @@ prefs:
   animation_tempo:        {label: "アニメーションのテンポ"}
   autosave:               {label: "自動保存"}
   auto_update:            {label: "アプリケーションの自動更新", precision: "起動時にバージョンを確認し、別のバージョンが公開されていれば更新を提案します"}
+  help_format:            {label: "⌘Shift+M で開くヘルプ"}
   mark_creation_click:    {label: "新しいマークの作成"}
   animate:                {label: "開くときにアニメーションを開始", precision: "マークが順に表示されます"}
   notation_display:       {label: "コードの音名の表示"}

@@ -50,7 +50,9 @@ menu:
   tools:            "Werkzeugkasten…"
   animate:          "Animation starten"
   help:             "Hilfe"
+  help_manual:      "Handbuch"
   help_html:        "HTML"
+  help_pdf:         "PDF"
   help_epub:        "ePub"
   prefs:            "Einstellungen…"
   language:         "Sprache"
@@ -542,6 +544,7 @@ prefs:
   animation_tempo:        {label: "Tempo der Animation"}
   autosave:               {label: "Automatisch sichern"}
   auto_update:            {label: "Automatische Aktualisierung der Anwendung", precision: "Beim Start wird die Version geprüft und eine Aktualisierung angeboten, wenn eine andere Version veröffentlicht ist"}
+  help_format:            {label: "Mit ⌘Umschalt+M geöffnete Hilfe"}
   mark_creation_click:    {label: "Neue Markierung erstellen"}
   animate:                {label: "Animation beim Öffnen starten", precision: "Die Markierungen werden nach und nach angezeigt"}
   notation_display:       {label: "Anzeige der Akkordnoten"}

@@ -1,4 +1,4 @@
-import { t } from './i18n.js'
+import { t, cmdText } from './i18n.js'
 import { NOTE_CHARS } from './lib/notation.js'
 
 /**
@@ -114,6 +114,11 @@ export const PreferencesAppData = {
   // Préférence de l'APPLICATION (app:true : enregistrée pour toutes les
   // analyses, cf. Preferences.saveData), #249
   , auto_update             :{type:'checkbox'     ,typeV:'boolean'  ,default:true, app:true}
+  // Format du manuel ouvert par ⌘/Ctrl + Maj + M (préférence de
+  // l'application, #258)
+  , help_format             :{type:'select'       ,typeV:'string'   ,default:'html', app:true, values: [
+        {name: 'HTML', value: 'html'}, {name: 'PDF', value: 'pdf'}, {name: 'ePub', value: 'epub'}
+    ]}
 
   // --- Notation des accords (cf. Notation.js) ---
   , notation_display        :{type:'select'       ,typeV:'string'   ,default:'bat', values: [
@@ -160,5 +165,8 @@ Object.entries(BORDER_KINDS).forEach(([name, kind]) => {
 Object.keys(PreferencesAppData).forEach(keyPref => {
     PreferencesAppData[keyPref].id = keyPref
     Object.assign(PreferencesAppData[keyPref], t(`ui.prefs.${keyPref}`))
+    // « ⌘ » : touche de commande du système
+    const label = PreferencesAppData[keyPref].label
+    typeof label == 'string' && (PreferencesAppData[keyPref].label = cmdText(label))
 })
 

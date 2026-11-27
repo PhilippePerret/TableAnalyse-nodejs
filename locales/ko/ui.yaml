@@ -50,7 +50,9 @@ menu:
   tools:            "도구 상자…"
   animate:          "애니메이션 시작"
   help:             "도움말"
+  help_manual:      "설명서"
   help_html:        "HTML"
+  help_pdf:         "PDF"
   help_epub:        "ePub"
   prefs:            "환경설정…"
   language:         "언어"
@@ -542,6 +544,7 @@ prefs:
   animation_tempo:        {label: "애니메이션 템포"}
   autosave:               {label: "자동 저장"}
   auto_update:            {label: "애플리케이션 자동 업데이트", precision: "시작할 때 버전을 확인하고 다른 버전이 게시되면 업데이트를 제안합니다"}
+  help_format:            {label: "⌘Shift+M 단축키로 여는 도움말"}
   mark_creation_click:    {label: "새 표시 만들기"}
   animate:                {label: "열 때 애니메이션 시작", precision: "표시가 차례로 나타납니다"}
   notation_display:       {label: "코드 음이름 표시"}

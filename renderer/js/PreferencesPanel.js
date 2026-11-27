@@ -40,7 +40,7 @@ const CURRENT_VALUES = {
   , scroll: () => Math.round(window.scrollY)
 }
 const PREFS_GROUPS = [
-    {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme', 'auto_update']}
+    {id: 'general',  keys: ['autosave', 'mark_creation_click', 'theme', 'auto_update', 'help_format']}
   , {id: 'notation', keys: ['notation_input', 'notation_display', 'note_char']}
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes', 'max_table_blank', 'export_systems_gap']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}

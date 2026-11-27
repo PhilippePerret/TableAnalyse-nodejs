@@ -50,7 +50,9 @@ menu:
   tools:            "Cassetta degli attrezzi…"
   animate:          "Avvia l'animazione"
   help:             "Aiuto"
+  help_manual:      "Manuale"
   help_html:        "HTML"
+  help_pdf:         "PDF"
   help_epub:        "ePub"
   prefs:            "Preferenze…"
   language:         "Lingua"
@@ -542,6 +544,7 @@ prefs:
   animation_tempo:        {label: "Tempo dell'animazione"}
   autosave:               {label: "Salvataggio automatico"}
   auto_update:            {label: "Aggiornamento automatico dell’applicazione", precision: "All’avvio, la versione viene verificata e viene proposto l’aggiornamento quando è pubblicata un’altra versione"}
+  help_format:            {label: "Guida aperta con la scorciatoia ⌘Maiusc+M"}
   mark_creation_click:    {label: "Creazione di un nuovo segno"}
   animate:                {label: "Avviare l'animazione all'apertura", precision: "I segni saranno mostrati progressivamente"}
   notation_display:       {label: "Visualizzazione delle note degli accordi"}

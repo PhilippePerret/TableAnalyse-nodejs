@@ -36,7 +36,8 @@
       "VERSION",
       "package.json",
       "Manuels/Manuel/Manuel.html",
-      "Manuels/Manuel/Manuel.epub"
+      "Manuels/Manuel/Manuel.epub",
+      "Manuels/Manuel/Manuel.pdf"
     ],
     "directories": {
       "output": "dist"

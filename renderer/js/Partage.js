@@ -287,6 +287,9 @@ class PartageClass {
     document.documentElement.classList.add('partage-spectateur')
     document.body.appendChild(DCreate('DIV', {id: 'partage-voile'}))
     const allowed = (e) => e.target instanceof Element && e.target.closest('#partage-bandeau, #partage-notifs, #partage-sidebar, .panneau-ui')
+      // « Demander la main » : ⌘/Ctrl + Maj + P (#258)
+      || (e.type.startsWith('key') && (e.metaKey || e.ctrlKey) && e.shiftKey && String(e.key).toLowerCase() == 'p')
+      || (e.type == 'keyup' && ['Meta', 'Control'].includes(e.key))
     ;['mousedown', 'mouseup', 'click', 'dblclick', 'contextmenu', 'wheel'].forEach(type => {
       window.addEventListener(type, (e) => {
         if ( allowed(e) ) return

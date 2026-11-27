@@ -50,7 +50,9 @@ menu:
   tools:            "Toolbox…"
   animate:          "Start Animation"
   help:             "Help"
+  help_manual:      "Manual"
   help_html:        "HTML"
+  help_pdf:         "PDF"
   help_epub:        "ePub"
   prefs:            "Preferences…"
   language:         "Language"
@@ -542,6 +544,7 @@ prefs:
   animation_tempo:        {label: "Animation tempo"}
   autosave:               {label: "Autosave"}
   auto_update:            {label: "Automatic application update", precision: "At launch, the version is checked and an update is offered when another version is published"}
+  help_format:            {label: "Help opened by the ⌘Shift+M shortcut"}
   mark_creation_click:    {label: "New mark creation"}
   animate:                {label: "Start the animation on opening", precision: "Marks will be displayed progressively"}
   notation_display:       {label: "Chord note display"}

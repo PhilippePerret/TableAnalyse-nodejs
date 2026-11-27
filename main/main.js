@@ -335,8 +335,11 @@ function showInFinder(p, reveal){
 // Manuel d'utilisation (HTML ou ePub), ouvert par l'application du système
 function openManual(ext){
   const file = path.join(APP_FOLDER, 'Manuels', 'Manuel', `Manuel.${ext}`)
-  if ( !fs.existsSync(file) ) return dialog.showErrorBox(t('ui.menu.help'), t('errors.manual_not_found', {path: file}))
-  showInFinder(file)
+  if ( !fs.existsSync(file) ) {
+    if ( SMOKE ) return openedUrls.push(`introuvable:${file}`)
+    return dialog.showErrorBox(t('ui.menu.help'), t('errors.manual_not_found', {path: file}))
+  }
+  SMOKE ? openedUrls.push(file) : showInFinder(file)
 }
 
 // Manuel HTML ouvert dans une fenêtre de l'application, à la section +anchor+
@@ -350,7 +353,13 @@ function openManualAt(anchor){
 /* --- Version de l'application (#249) --- */
 
 // Préférences de l'application réglées dans le panneau des préférences
-const APP_PANEL_PREFS = ['auto_update']
+const APP_PANEL_PREFS = ['auto_update', 'help_format']
+
+// Manuel au format choisi dans les préférences (⌘/Ctrl + Maj + M, #258)
+function openManualPref(){
+  const ext = ['html', 'pdf', 'epub'].includes(AppPrefs.get('help_format')) ? AppPrefs.get('help_format') : 'html'
+  return openManual(ext)
+}
 
 // Adresses ouvertes dans le navigateur (lancement de contrôle : aucune)
 const openedUrls = []
@@ -430,7 +439,10 @@ function buildMenu(){
         , {label: t('ui.menu.show_in_finder'),  click: () => current && showInFinder(current.path, true)}
         , {type: 'separator'}
         , {label: t('ui.menu.help'), submenu: [
-              {label: t('ui.menu.help_html'),   click: () => openManual('html')}
+              {label: t('ui.menu.help_manual'), accelerator: 'CmdOrCtrl+Shift+M', registerAccelerator: false, click: openManualPref}
+            , {type: 'separator'}
+            , {label: t('ui.menu.help_html'),   click: () => openManual('html')}
+            , {label: t('ui.menu.help_pdf'),    click: () => openManual('pdf')}
             , {label: t('ui.menu.help_epub'),   click: () => openManual('epub')}
           ]}
         , {type: 'separator'}
@@ -479,7 +491,7 @@ function buildMenu(){
             , {label: t('ui.menu.partage_stop'),   enabled: !!Partage.sharing, click: () => Partage.stop()}
             , {label: t('ui.menu.partage_takeback'), enabled: !!(Partage.sharing && Partage.sharing.given), click: () => Partage.takeback()}
             , {type: 'separator'}
-            , {label: t('ui.menu.partage_ask'),    accelerator: 'CmdOrCtrl+Shift+M', enabled: !!(Partage.following && Partage.following.ready && !Partage.following.control), click: () => Partage.ask()}
+            , {label: t('ui.menu.partage_ask'),    accelerator: 'CmdOrCtrl+Shift+P', registerAccelerator: false, enabled: !!(Partage.following && Partage.following.ready && !Partage.following.control), click: () => Partage.ask()}
             , {type: 'separator'}
             , {label: t('ui.menu.partage_join'),   click: () => sendMenuCommand('partageJoin')}
           ]}
@@ -1028,6 +1040,7 @@ function registerIpc(){
   // Version de l'application (#249)
   handle('app:checkVersion', () => checkVersion(APP_VERSION))
   handle('app:openDownloadPage', () => openUrl(DOWNLOAD_PAGE))
+  handle('app:openManualPref', () => openManualPref())
   handle('window:setTitle', ({title}) => {
     mainWindow && mainWindow.setTitle(String(title || '').trim() || t('ui.app.untitled'))
   })

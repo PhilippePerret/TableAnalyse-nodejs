@@ -50,7 +50,9 @@ menu:
   tools:            "工具箱…"
   animate:          "开始动画"
   help:             "帮助"
+  help_manual:      "手册"
   help_html:        "HTML"
+  help_pdf:         "PDF"
   help_epub:        "ePub"
   prefs:            "偏好设置…"
   language:         "语言"
@@ -542,6 +544,7 @@ prefs:
   animation_tempo:        {label: "动画速度"}
   autosave:               {label: "自动保存"}
   auto_update:            {label: "自动更新应用程序", precision: "启动时检查版本，发布其他版本时提示更新"}
+  help_format:            {label: "快捷键 ⌘Shift+M 打开的帮助"}
   mark_creation_click:    {label: "新建标记"}
   animate:                {label: "打开时启动动画", precision: "标记将逐步显示"}
   notation_display:       {label: "和弦音名显示"}
