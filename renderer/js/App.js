@@ -4,6 +4,8 @@ import { Analyse } from './Analyse.js'
 import { AnalyseSaver } from './AnalyseSaver.js'
 import { Preferences, pref } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
+import { QuickKeyboard } from './QuickKeyboard.js'
+import { IS_MIRROR } from './api.js'
 import { Manuel } from './Manuel.js'
 import { Tools } from './Tools.js'
 import { Forme } from './Forme.js'
@@ -50,6 +52,8 @@ class AppClass {
       analyse.applyWindowSize()
       analyse.scrollToLastPosition()
       PreferencesPanel.afterLoadingAnalyse()
+      // Saisie rapide : clavier de l'analyse (#260)
+      data.partage || IS_MIRROR || QuickKeyboard.init()
       // « Animer l’animation à l’ouverture » : animation lancée une fois
       // les systèmes affichés
       pref('animate') && !data.partage && once('systems:loaded', () => setTimeout(() => Animation.start(), 300))

@@ -908,3 +908,64 @@ div#sys_image_panel div.sie-mask .ui-resizable-n { top: 0; }
 div#sys_image_panel div.sie-mask .ui-resizable-s { bottom: 0; }
 div#sys_image_panel div.sie-mask .ui-resizable-e { right: 0; }
 div#sys_image_panel div.sie-mask .ui-resizable-w { left: 0; }
+
+/* Saisie rapide : clavier (#260, cf. QuickKeyboard.js), touches
+   réalistes ; rangées décalées comme un vrai clavier */
+div#quick_keyboard {
+  --u: 58px;
+  --gap: 6px;
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 90;
+  background: #d6d8dc;
+  padding: 10px 10px 4px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  cursor: move;
+  user-select: none;
+}
+div#quick_keyboard[hidden] { display: none; }
+div#quick_keyboard div.qk-row { display: flex; gap: var(--gap); margin-bottom: var(--gap); }
+div#quick_keyboard div.qk-row.r2 { margin-left: calc(var(--u) * 0.30); }
+div#quick_keyboard div.qk-row.r3 { margin-left: calc(var(--u) * 0.80); }
+div#quick_keyboard div.qk-key {
+  width: var(--u);
+  height: var(--u);
+  position: relative;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 1.5px 0 #9a9ca0, 0 0 0 0.5px #b8babe;
+  overflow: hidden;
+  cursor: default;
+}
+div#quick_keyboard div.qk-key.empty { background: #f3f3f4; }
+div#quick_keyboard div.qk-key.on { background: #e9f4ee; box-shadow: 0 0 0 3px #3a925e; }
+div#quick_keyboard div.qk-key.miss { background: #f8d7d7; box-shadow: 0 0 0 3px #c0392b; }
+div#quick_keyboard span.qk-letter {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font: 11px -apple-system, Helvetica, Arial, sans-serif;
+  line-height: 1;
+  color: #888;
+  z-index: 1;
+}
+div#quick_keyboard div.qk-mark {
+  position: absolute;
+  inset: 14px 3px 3px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+div#quick_keyboard div.qk-mark > .qk-sign {
+  position: relative !important;
+  flex: none;
+  transform-origin: center;
+  white-space: nowrap;
+  max-width: none;
+}
+div#quick_keyboard span.qk-text { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }

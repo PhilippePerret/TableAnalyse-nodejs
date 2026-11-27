@@ -186,7 +186,8 @@
       <option><hr/></option>
       <option value="fixSystemImage" data-always="true" data-i18n="ui.mark_menu.fix_system_image"></option>
       <option><hr/></option>
-      <!-- Sous-menu « Suggestions » placé ici (cf. MenusBar.js) -->
+      <!-- Sous-menus « Saisie », « Suggestions » placés ici (cf. MenusBar.js) -->
+      <option data-submenu="input_menu"></option>
       <option data-submenu="suggest_menu"></option>
       <option value="toggleCoordinates" data-always="true" data-checked="false" data-i18n="ui.options_menu.coordinates"></option>
     </select>
@@ -209,6 +210,12 @@
     <!-- Rempli par LockTypeMenu (MenuAMark.js) -->
     <select id="lock_type_menu">
       <option value="" data-i18n="ui.menu.lock_type"></option>
+    </select>
+
+    <select id="input_menu">
+      <option value="" data-i18n="ui.menu.input"></option>
+      <option value="normal" data-i18n="ui.input_menu.normal"></option>
+      <option value="quick" data-i18n="ui.input_menu.quick"></option>
     </select>
 
     <select id="suggest_menu">

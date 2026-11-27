@@ -62,6 +62,7 @@ menu:
   align:            "Aligner"
   align_text:       "Aligner le texte"
   lock_type:        "Bloquer le type à…"
+  input:            "Saisie"
   suggestions:      "Suggestions"
   adjust:           "Ajuster"
   selection:        "Sélection"
@@ -843,3 +844,11 @@ export_themes:
   cadre: "Cadres"
   classique: "Classique"
   tableau: "Tableau"
+
+# Saisie rapide (clavier, #260)
+input_menu:
+  normal: "Normal"
+  quick: "Rapide (clavier)"
+quick_keyboard:
+  rows: "azert qsdfg wxcvb"
+  clear: "Vider la touche"

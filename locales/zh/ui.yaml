@@ -62,6 +62,7 @@ menu:
   align:            "对齐"
   align_text:       "文本对齐"
   lock_type:        "锁定类型为…"
+  input:            "输入"
   suggestions:      "建议"
   adjust:           "调整"
   selection:        "选择"
@@ -841,3 +842,11 @@ export_themes:
   cadre: "边框"
   classique: "经典"
   tableau: "表格"
+
+# Saisie rapide (clavier, #260)
+input_menu:
+  normal: "普通"
+  quick: "快速（键盘）"
+quick_keyboard:
+  rows: "qwert asdfg zxcvb"
+  clear: "清空按键"

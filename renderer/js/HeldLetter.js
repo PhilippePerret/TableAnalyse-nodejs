@@ -28,6 +28,16 @@ export const HeldLetter = {
 
   get active(){ return !!this.letter || this.consumed.size > 0 },
 
+  // Lettre tenue, utilisée ou non par un clic (saisie rapide, cf.
+  // QuickKeyboard : plusieurs clics, plusieurs marques)
+  held(){
+    return this.letter || Array.from(this.consumed).pop() || null
+  },
+
+  // Appelée à chaque changement (cf. QuickKeyboard : touche en exergue)
+  onChange: null,
+  changed(){ 'function' == typeof this.onChange && this.onChange() },
+
   /**
    * Clic de création : la lettre tenue (avec la casse donnée par Maj),
    * désormais utilisée, ou null
@@ -50,7 +60,7 @@ export const HeldLetter = {
     const k = typeof e.key == 'string' ? e.key.toLowerCase() : ''
     if ( this.consumed.has(k) ) return this.swallow(e)
     if ( e.metaKey || e.ctrlKey || e.altKey || inTextField(e) ) return
-    if ( LETTER.test(e.key) ) this.letter = k
+    if ( LETTER.test(e.key) ) { this.letter = k ; this.changed() }
   },
 
   onKeyPress(e){
@@ -60,13 +70,17 @@ export const HeldLetter = {
 
   onKeyUp(e){
     const k = typeof e.key == 'string' ? e.key.toLowerCase() : ''
+    const was = this.held()
     if ( this.letter === k ) this.letter = null
-    if ( this.consumed.delete(k) ) return this.swallow(e)
+    const consumed = this.consumed.delete(k)
+    was !== this.held() && this.changed()
+    if ( consumed ) return this.swallow(e)
   },
 
   reset(){
     this.letter = null
     this.consumed.clear()
+    this.changed()
   },
 
   swallow(e){

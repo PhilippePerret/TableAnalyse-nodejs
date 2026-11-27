@@ -70,6 +70,8 @@ export const PreferencesAppData = {
   , export_document         :{type:'inputtext'    ,typeV:'string'   ,default:'normal'   ,hidden:true}
   , export_color            :{type:'checkbox'     ,typeV:'boolean'  ,default:false      ,hidden:true}
   , export_theme            :{type:'inputtext'    ,typeV:'string'   ,default:'classique',hidden:true} // (#255, cf. export_themes)
+  // Saisie rapide : marque de chaque touche du clavier {lettre: données} (#260)
+  , quick_keys              :{type:'inputtext'    ,typeV:'object'   ,default:null       ,hidden:true}
 
   // --- Window ---
   , window_width            :{type:'inputtext'    ,typeV:'number'   ,default:null ,current:'width'}

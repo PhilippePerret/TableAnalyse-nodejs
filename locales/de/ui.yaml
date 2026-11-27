@@ -62,6 +62,7 @@ menu:
   align:            "Ausrichten"
   align_text:       "Text ausrichten"
   lock_type:        "Typ festlegen auf…"
+  input:            "Eingabe"
   suggestions:      "Vorschläge"
   adjust:           "Anpassen"
   selection:        "Auswahl"
@@ -842,3 +843,11 @@ export_themes:
   cadre: "Rahmen"
   classique: "Klassisch"
   tableau: "Tabelle"
+
+# Saisie rapide (clavier, #260)
+input_menu:
+  normal: "Normal"
+  quick: "Schnell (Tastatur)"
+quick_keyboard:
+  rows: "qwert asdfg yxcvb"
+  clear: "Taste leeren"

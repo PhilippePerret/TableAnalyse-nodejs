@@ -11,6 +11,7 @@ import { message } from './lib/Message.js'
 import { FormeBuilder } from './FormeBuilder.js'
 import { t } from './i18n.js'
 import { HeldLetter } from './HeldLetter.js'
+import { QuickKeyboard } from './QuickKeyboard.js'
 
 export class TableAnalyse {
 
@@ -142,7 +143,16 @@ export class TableAnalyse {
     const down = this.downAt
     if ( down && (Math.abs(e.clientX - down.x) > 4 || Math.abs(e.clientY - down.y) > 4) ) return
     AObjet.deselectAll()
-    if ( HeldLetter.letter ) {
+    // Saisie rapide (#260) : touche du clavier tenue, sa marque posée
+    if ( QuickKeyboard.active ) {
+      const letter = HeldLetter.held()
+      if ( letter ) {
+        if ( e.metaKey || !this.isCreationTarget(e.target) || QuickKeyboard.keyAt(e.clientX, e.clientY) ) return
+        HeldLetter.letter && HeldLetter.take(e)
+        QuickKeyboard.createAt(e, letter)
+        return
+      }
+    } else if ( HeldLetter.letter ) {
       if ( e.metaKey || !this.isCreationTarget(e.target) ) return
       const letter = HeldLetter.take(e)
       return AMark.createNew(e, undefined, {type: HeldLetter.typeOf(letter), chooseType: true})
@@ -191,6 +201,8 @@ export class TableAnalyse {
     listen(window, 'click',       this.onClick.bind(this))
     listen(window, 'dblclick',    this.onDblClick.bind(this))
     HeldLetter.observe()
+    // Saisie rapide (#260) : classe des marques (pas d'import croisé)
+    QuickKeyboard.markClass = AMark
   }
 
   static get obj(){

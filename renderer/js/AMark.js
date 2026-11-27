@@ -7,6 +7,7 @@ import { draggable, resizable } from './lib/interact.js'
 import { AObjet } from './AObjet.js'
 import { Current, setModified } from './Current.js'
 import { pref } from './Preferences.js'
+import { QuickKeyboard } from './QuickKeyboard.js'
 import { contentForField, contentFromField } from './Notation.js'
 import { noteInTextRegex, bataveOf } from './lib/notation.js'
 import { supize } from './lib/exposants.js'
@@ -132,11 +133,16 @@ static instanciate(analyse, data){
   // Ancienne partie/section du type « Cadre » : marque de forme (version
   // cadre)
   if ( data.type == 'bbx' && TYPES_FORME[data.subtype] ) data.type = 'frm'
+  const cls = AMark.classOf(data)
+  return new cls(analyse, data)
+}
+// Classe de la marque de données +data+
+static classOf(data){
   switch(data.type){
-    case 'img': return new AMImage(analyse, data)
-    case 'ext': return new AMExtrait(analyse, data)
-    case 'lia': return new Liaison(analyse, data)
-    default:    return new AMark(analyse, data)
+    case 'img': return AMImage
+    case 'ext': return AMExtrait
+    case 'lia': return Liaison
+    default:    return AMark
   }
 }
 
@@ -788,6 +794,19 @@ observe(){
         // console.log("-> stop")
         // Maj au relâchement : un seul axe, celui du plus grand
         // déplacement (Maj pouvant être pressée en cours de route)
+        // Saisie rapide (#260) : marque lâchée sur une touche du clavier,
+        // affectée à la touche ; la marque (et la sélection) revient à
+        // sa place
+        if ( QuickKeyboard.dropMark(my, e.clientX, e.clientY) ) {
+          this.forDuplication && ui.helper[0] !== my.obj && ui.helper[0].remove()
+          ;[my, ...(my.isSelected ? (AObjet.selection || []) : [])].forEach(ao => {
+            if ( !ao.obj ) return
+            ao.obj.style.top  = px(ao.top)
+            ao.obj.style.left = px(ao.left)
+          })
+          my.justMoved = true
+          return
+        }
         e.shiftKey && keepOneAxis(ui, this.debLeft, this.debTop)
         my.isLayoutLine && (ui.position.left = this.debLeft)
         const diffTop   = this.debTop - ui.position.top

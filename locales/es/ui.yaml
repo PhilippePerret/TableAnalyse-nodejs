@@ -62,6 +62,7 @@ menu:
   align:            "Alinear"
   align_text:       "Alinear el texto"
   lock_type:        "Bloquear el tipo en…"
+  input:            "Entrada"
   suggestions:      "Sugerencias"
   adjust:           "Ajustar"
   selection:        "Selección"
@@ -842,3 +843,11 @@ export_themes:
   cadre: "Marcos"
   classique: "Clásico"
   tableau: "Tabla"
+
+# Saisie rapide (clavier, #260)
+input_menu:
+  normal: "Normal"
+  quick: "Rápida (teclado)"
+quick_keyboard:
+  rows: "qwert asdfg zxcvb"
+  clear: "Vaciar la tecla"

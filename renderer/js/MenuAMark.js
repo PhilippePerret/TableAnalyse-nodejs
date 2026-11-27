@@ -14,6 +14,7 @@ import { Liaison } from './Liaison.js'
 import { BorderEditor } from './BorderEditor.js'
 import { Aspect } from './Aspect.js'
 import { Systeme } from './Systeme.js'
+import { QuickKeyboard } from './QuickKeyboard.js'
 
 export class AmarkMenu extends MenusTool {
 
@@ -186,6 +187,27 @@ export class LockTypeMenu extends MenusTool {
 
   static check(value){
     Array.from(this.menu.options).forEach((o, i) => i && o.value && (o.dataset.checked = o.value == value ? 'true' : 'false'))
+  }
+}
+
+/**
+ * Sous-menu « Marque > Saisie » : « Normal » ou « Rapide (clavier) »
+ * (cf. QuickKeyboard, #260). Un seul choix coché.
+ */
+export class InputMenu extends MenusTool {
+
+  static init(){
+    super.init()
+    this.check(QuickKeyboard.mode)
+  }
+
+  static onActivate(e, value){
+    QuickKeyboard.mode = value
+    this.check(value)
+  }
+
+  static check(value){
+    Array.from(this.menu.options).forEach((o, i) => i && (o.dataset.checked = o.value == value ? 'true' : 'false'))
   }
 }
 

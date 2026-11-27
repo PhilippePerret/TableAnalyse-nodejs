@@ -62,6 +62,7 @@ menu:
   align:            "整列"
   align_text:       "テキストの整列"
   lock_type:        "種類を固定…"
+  input:            "入力"
   suggestions:      "候補"
   adjust:           "調整"
   selection:        "選択"
@@ -841,3 +842,11 @@ export_themes:
   cadre: "枠"
   classique: "クラシック"
   tableau: "表"
+
+# Saisie rapide (clavier, #260)
+input_menu:
+  normal: "通常"
+  quick: "クイック（キーボード）"
+quick_keyboard:
+  rows: "qwert asdfg zxcvb"
+  clear: "キーを空にする"
