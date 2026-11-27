@@ -285,7 +285,7 @@ onChooseFormStart(id){
 // raccourcis)
 backToSubtype(){
   this._amark_subtype = null
-  this._gettersubtype && this._gettersubtype.obj.remove()
+  this._gettersubtype && this._gettersubtype.destroy()
   this._gettersubtype = null
   this._amark_level = null
   this.getAMarkSubType()
@@ -296,7 +296,7 @@ backToSubtype(){
  * retour au choix du sous-type
  */
 getTitleLevel(){
-  this._getterlevel && this._getterlevel.obj && this._getterlevel.obj.remove()
+  this._getterlevel && this._getterlevel.obj && this._getterlevel.destroy()
   this._getterlevel = new GetterInList({
       values:         [1, 2, 3].map(n => ({name: t('ui.marks.layout.level', {n}), value: n, shortcut: String(n)}))
     , message:        t('ui.marks.layout.level_message')
@@ -318,7 +318,7 @@ onWantTypes(){
   this._amark_type    = null
   this._amark_subtype = null
   this._amark_start   = null
-  ;[this._gettertype, this._gettersubtype].forEach(g => g && g.obj.remove())
+  ;[this._gettertype, this._gettersubtype].forEach(g => g && g.destroy())
   this._gettertype    = null
   this._editorcontent && this._editorcontent.obj && this._editorcontent.obj.remove()
   this._editorcontent = null

@@ -93,6 +93,12 @@ export class GetterInList {
     this.obj.classList.add('hidden')
   }
 
+  // Détruire le getter : fermé (touches plus écoutées, #271), puis retiré
+  destroy(){
+    this.hide()
+    this.obj.remove()
+  }
+
   /**
    * Touches (raccourcis, Échap) écoutées tant que la liste est
    * affichée, avant tout autre gestionnaire (ceux de window ne sont
@@ -159,8 +165,10 @@ export class GetterInList {
     if ( inTextField(e) ) return
     //console.log("-> onKeyPressForShortcuts('%s')", e.key)
     //console.log("this.shortcuts", this.shortcuts)
+    // (liste retirée de la page : plus rien, #271)
+    if ( !this.obj.isConnected ) return this.listenKeys(false)
     const value = this.shortcuts[e.key]
-    if ( value ) return onRelease(e, () => this.listening && this.callChooseMethodWithValueAndHide(value))
+    if ( value ) return onRelease(e, () => this.listening && this.obj.isConnected && this.callChooseMethodWithValueAndHide(value))
     return stopEvent(e)
   }
   /**
@@ -169,6 +177,7 @@ export class GetterInList {
    * escape
    */
   onKeyUpForCancel(e){
+    if ( !this.obj.isConnected ) return this.listenKeys(false)
     if ( e.key == 'Escape' ) {
       isCleanRelease(e) && this.cancel()
       return stopEvent(e)
