@@ -25,6 +25,12 @@ T.test('aspect du panneau de valeur', async () => {
     T.eq(getComputedStyle(e.suggestList).display, 'grid', 'en grille')
     const foot = o.querySelector(':scope > div.panneau-foot')
     T.eq(Array.from(foot.querySelectorAll('button')).map(b => b.className.split(' ')[0]), ['cancel', 'ok'], '« Renoncer » puis « OK »')
+    // Numéros des valeurs lisibles (#266)
+    const num = e.suggestList.querySelector('div.suggestion span.letter')
+    const cs = getComputedStyle(num)
+    T.ok(parseFloat(cs.fontSize) >= 13, 'numéro : taille ≥ 13 px')
+    T.ok(cs.color.match(/\d+/g).slice(0, 3).every(v => Number(v) <= 0x66), 'numéro : couleur foncée')
+    T.ok(Number(cs.fontWeight) >= 600, 'numéro : gras')
     const r = o.getBoundingClientRect(), f = e.textField.getBoundingClientRect()
     T.ok(f.left - r.left >= 24 && r.right - f.right >= 24, 'marges du champ (≥ 24 px)')
   } finally {

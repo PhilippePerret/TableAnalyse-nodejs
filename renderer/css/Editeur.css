@@ -91,10 +91,13 @@ div.mini_editeur div.suggestion:hover {
   background-color: #eef5f1;
   border-color: #b9d8c5;
 }
+/* Numéro (ou lettre) de la valeur : lisible (#266) */
 div.mini_editeur div.suggestion span.letter {
   flex: none;
-  color: #999;
-  font-size: 11px;
+  min-width: 1.1em;
+  color: #555;
+  font: 600 13px system-ui, -apple-system, "Segoe UI", Helvetica, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 /* Accords, harmonies : valeurs affichées comme sur la table */
 div.mini_editeur div.suggestion span.value {
