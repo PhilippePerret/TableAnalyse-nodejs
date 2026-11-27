@@ -182,5 +182,12 @@ T.test('note de passage chromatique (#254)', async () => {
   T.eq(shortcuts.filter(s => s == 'P').length, 1, 'raccourci unique')
   const {mark} = create('not', 'pc')
   T.eq([mark.type, mark.subtype], ['not', 'pc'], 'marque créée')
+  const w = sub => {
+    const {mark: m} = create('not', sub)
+    const width = getComputedStyle(m.obj.querySelector('span.content')).width
+    AObjet.remove(m)
+    return width
+  }
+  T.eq(w('pc'), w('dac'), 'trois lettres : même largeur que DAC')
   AObjet.remove(mark)
 })

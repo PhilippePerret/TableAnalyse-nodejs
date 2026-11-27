@@ -296,7 +296,8 @@ div.amark.not span.content {
   text-align: center;
 }
 div.amark.not.da span.content,
-div.amark.not.dac span.content {
+div.amark.not.dac span.content,
+div.amark.not.pc span.content {
   width: 44px;
 }
 
