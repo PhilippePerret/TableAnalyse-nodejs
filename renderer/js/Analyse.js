@@ -26,7 +26,7 @@ import { t } from './i18n.js'
 import { addPanelHead } from './Panneau.js'
 import { Variables } from './Variables.js'
 import { History } from './History.js'
-import { supize } from './lib/exposants.js'
+import { supize, plainSup } from './lib/exposants.js'
 import { Verifications } from './Verifications.js'
 
 // Marge (px) à droite des systèmes dans la fenêtre (barre de défilement)
@@ -799,8 +799,11 @@ static async exportCurrentToHtml(){
 export function setWindowTitle(infos){
   infos = infos || {}
   // Exposants (« 1^er^ », #236)
-  DGet('#window-title').innerHTML = supize(escapeLt([infos.piece_title, infos.composer, infos.analyse_title]
-    .map(s => String(s || '').trim()).filter(Boolean).join(', ')))
+  const title = [infos.piece_title, infos.composer, infos.analyse_title]
+    .map(s => String(s || '').trim()).filter(Boolean).join(', ')
+  DGet('#window-title').innerHTML = supize(escapeLt(title))
+  // Nom de la fenêtre pour le système (exposants en texte brut, #256)
+  invoke('window:setTitle', {title: plainSup(title)}).catch(err => console.error(err))
 }
 
 /**

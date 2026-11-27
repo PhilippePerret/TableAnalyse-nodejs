@@ -572,6 +572,7 @@ function registerIpc(){
       const p = path.join(requireCurrent().path, rel)
       return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
     })
+    handle('test:windowTitle', () => mainWindow && mainWindow.getTitle())
     handle('test:listFiles', ({rel}) => {
       const p = path.join(requireCurrent().path, rel || '')
       return fs.existsSync(p) ? fs.readdirSync(p) : null
@@ -703,6 +704,7 @@ function registerIpc(){
   // touché) : retour à la table vide
   handle('analyse:close', () => {
     setCurrent(null)
+    mainWindow && mainWindow.setTitle(t('ui.app.untitled'))
     // Pas de réouverture au prochain lancement
     AppPrefs.set({last_analyse_path: null})
     setTimeout(reloadWindow, 10)
@@ -954,6 +956,12 @@ function registerIpc(){
     buildMenu()
   })
 
+  // Nom de la fenêtre pour le système (listes de capture : OBS, Zoom…,
+  // barre de titre de Windows et Linux), le même que celui de la bande
+  // supérieure (#256)
+  handle('window:setTitle', ({title}) => {
+    mainWindow && mainWindow.setTitle(String(title || '').trim() || t('ui.app.untitled'))
+  })
   handle('window:setSize', ({width, height}) => {
     // (analyse suivie : taille de la fenêtre de l'analyste ignorée)
     if ( Partage.spectator || Partage.following ) return

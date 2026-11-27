@@ -6,7 +6,7 @@
 export const IS_MIRROR = new URLSearchParams(location.search).has('mirror')
 const MIRROR_IGNORED = [
     'menu:setDynamic', 'menu:formShown', 'menu:variables', 'split:titlebar'
-  , 'window:setSize', 'analyse:saveWindowSize'
+  , 'window:setSize', 'window:setTitle', 'analyse:saveWindowSize'
   , 'history:load', 'history:append'
   , 'analyse:saveTags', 'analyse:saveInfos', 'analyse:savePreferences'
   , 'app:confirmClose', 'app:closeReady'
