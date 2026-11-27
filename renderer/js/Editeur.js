@@ -1,4 +1,5 @@
 import { DCreate, DGet, listen, stopEvent, cmdKey } from './dom.js'
+import { onRelease, isCleanRelease } from './KeyRelease.js'
 import { px, uiZoom, keepInView, escapeLt } from './handies.js'
 import { UI } from './UI.js'
 import { t } from './i18n.js'
@@ -284,8 +285,7 @@ export class Editeur {
     e.stopPropagation()
     const index = LETTERS.indexOf(e.key)
     if ( index < 0 ) return
-    e.preventDefault()
-    this.chooseSuggestion(index)
+    return onRelease(e, () => this.chooseSuggestion(index))
   }
   // Chiffre (1 à 9) tapé en tête du champ, vide ou entièrement
   // sélectionné : valeur déjà utilisée de ce numéro, appliquée
@@ -295,9 +295,8 @@ export class Editeur {
     const f = this.textField
     const whole = f.value == '' || (f.selectionStart == 0 && f.selectionEnd == f.value.length)
     if ( !whole || undefined === this.suggestValues[LETTERS.indexOf(e.key)] ) return
-    e.preventDefault()
-    e.stopPropagation()
-    this.chooseSuggestion(LETTERS.indexOf(e.key))
+    const index = LETTERS.indexOf(e.key)
+    return onRelease(e, () => this.chooseSuggestion(index))
   }
   onKeyPressSuggestions(e){
     if ( e.key.length == 1 ) e.stopPropagation()
@@ -375,7 +374,7 @@ export class Editeur {
           return true 
         }
       } else { 
-        return this.onClickOK.call(this, e) 
+        return onRelease(e, () => this.onClickOK.call(this, e))
       }
     }
     else if (e.key == 'Backspace') return stopEvent(e)
@@ -383,12 +382,12 @@ export class Editeur {
   }
   onKeyDown(e){
     if (this.isLongText && cmdKey(e) && e.key == 'Enter') {
-      return this.onClickOK.call(this, e)
+      return onRelease(e, () => this.onClickOK.call(this, e))
     }
   }
   onKeyUp(e){
     // console.log("e.key = '%s'", e)
-    if (e.key == 'Escape'){ 
+    if (e.key == 'Escape' && isCleanRelease(e)){ 
       return this.onClickCancel.call(this,e)
     }
   }

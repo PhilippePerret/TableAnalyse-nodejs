@@ -1,4 +1,5 @@
 import { DCreate, listen } from './dom.js'
+import { onRelease } from './KeyRelease.js'
 import { px } from './handies.js'
 import { analyseUrl } from './api.js'
 import { NUMBER_FONT } from './AMark.js'
@@ -366,14 +367,12 @@ export class ExtraitComposer {
     const del = ['Backspace', 'Delete'].includes(e.key)
     if ( this.currentNumber ) {
       if ( !del ) return
-      this.removeNumber(this.currentNumber)
-      e.preventDefault() ; e.stopPropagation()
-      return
+      const number = this.currentNumber
+      return onRelease(e, () => this.removeNumber(number))
     }
     if ( this.current && del ) {
-      this.removePiece(this.pieces.indexOf(this.current))
-      e.preventDefault() ; e.stopPropagation()
-      return
+      const piece = this.current
+      return onRelease(e, () => this.pieces.includes(piece) && this.removePiece(this.pieces.indexOf(piece)))
     }
     if ( !this.current || !e.key.startsWith('Arrow') ) return
     const d = (e.shiftKey ? 10 : 1) / this.scale
@@ -394,7 +393,7 @@ export class ExtraitComposer {
     const d = (e.shiftKey ? 10 : 1) / this.scale
     switch(e.key){
       case 'Backspace':
-      case 'Delete':     this.removeMask(div) ; break
+      case 'Delete':     return onRelease(e, () => div.isConnected && this.removeMask(div))
       case 'ArrowLeft':  m.x -= d ; break
       case 'ArrowRight': m.x += d ; break
       case 'ArrowUp':    m.y -= d ; break
@@ -438,8 +437,7 @@ export class ExtraitComposer {
     listen(this.numbersBox, 'change', () => { this.numbersBox.blur() ; this.toggleNumbers() })
     listen(this.field, 'keydown', e => {
       if ( e.key != 'Enter' ) return
-      e.preventDefault() ; e.stopPropagation()
-      this.field.blur()
+      return onRelease(e, () => this.field.blur())
     })
   }
 

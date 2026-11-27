@@ -1,4 +1,5 @@
 import { DCreate, DGet, listen } from './dom.js'
+import { onRelease } from './KeyRelease.js'
 import { invoke, onMain, IS_MIRROR, setSpectator } from './api.js'
 import { message, erreur } from './lib/Message.js'
 import { addPanelHead } from './Panneau.js'
@@ -172,7 +173,7 @@ class PartageClass {
     // Entrée : envoi ; Maj + Entrée : retour à la ligne
     listen(area, 'keydown', (e) => {
       e.stopPropagation()
-      if ( e.key == 'Enter' && !e.shiftKey ) { e.preventDefault() ; say() }
+      if ( e.key == 'Enter' && !e.shiftKey ) onRelease(e, say)
     })
     ;['keypress', 'keyup'].forEach(type => listen(area, type, (e) => e.stopPropagation()))
     const bar = DCreate('DIV', {id: 'partage-sidebar', class: 'panneau-ui', inner: [

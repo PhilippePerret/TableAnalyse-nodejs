@@ -1,4 +1,5 @@
 import { DCreate, listen } from './dom.js'
+import { onRelease } from './KeyRelease.js'
 import { t } from './i18n.js'
 /**
  * RangeField
@@ -29,7 +30,7 @@ export class RangeField {
       onInput && onInput(v)
     })
     // Entrée : la valeur est prise sans fermer la boite
-    listen(this.field, 'keydown', (e) => e.key == 'Enter' && (e.preventDefault(), e.stopPropagation(), this.field.blur()))
+    listen(this.field, 'keydown', (e) => e.key == 'Enter' && onRelease(e, () => this.field.blur()))
   }
 
   get elements(){ return [this.range, this.field] }

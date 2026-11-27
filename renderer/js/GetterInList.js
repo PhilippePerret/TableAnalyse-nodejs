@@ -1,4 +1,5 @@
 import { DCreate, DGet, listen, stopEvent } from './dom.js'
+import { onRelease, isCleanRelease } from './KeyRelease.js'
 import { inTextField } from './KeyboardEvents.js'
 import { px, uiZoom, keepInView } from './handies.js'
 import { addPanelHead } from './Panneau.js'
@@ -158,9 +159,8 @@ export class GetterInList {
     if ( inTextField(e) ) return
     //console.log("-> onKeyPressForShortcuts('%s')", e.key)
     //console.log("this.shortcuts", this.shortcuts)
-    if ( this.shortcuts[e.key] ){
-      this.callChooseMethodWithValueAndHide(this.shortcuts[e.key])
-    }
+    const value = this.shortcuts[e.key]
+    if ( value ) return onRelease(e, () => this.listening && this.callChooseMethodWithValueAndHide(value))
     return stopEvent(e)
   }
   /**
@@ -170,7 +170,7 @@ export class GetterInList {
    */
   onKeyUpForCancel(e){
     if ( e.key == 'Escape' ) {
-      this.cancel()
+      isCleanRelease(e) && this.cancel()
       return stopEvent(e)
     }
     // (p.e. Retour arrière : pas de suppression des marques sélectionnées)
@@ -279,8 +279,7 @@ export class GetterInList {
     // Note : les menus sont déjà surveillés (déplacement : en-tête)
     listen(this.newItemField,'keypress', e => {
       if ( e.key == 'Enter'){
-        my.onSetNew.call(my)
-        return stopEvent(e) // dans TOUS les cas
+        return onRelease(e, () => my.listening && my.onSetNew.call(my)) // arrêté dans TOUS les cas
       }
       e.stopPropagation()
     })

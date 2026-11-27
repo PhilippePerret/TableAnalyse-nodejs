@@ -1,4 +1,5 @@
 import { DCreate, DGet, listen } from './dom.js'
+import { onRelease } from './KeyRelease.js'
 import { px } from './handies.js'
 import { invoke, onMain, IS_MIRROR } from './api.js'
 import { erreur } from './lib/Message.js'
@@ -127,7 +128,7 @@ export class Split {
       window.addEventListener(type, (e) => {
         e.stopImmediatePropagation()
         // Raccourci de la fenêtre scindée : fermeture
-        if ( type == 'keydown' && isSplitShortcut(e) ) return this.open()
+        if ( type == 'keydown' && isSplitShortcut(e) ) return onRelease(e, () => this.open())
         SCROLL_KEYS.includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey || e.preventDefault()
       }, true)
     })

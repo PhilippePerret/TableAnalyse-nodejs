@@ -1,4 +1,5 @@
 import { DGet, listen } from './dom.js'
+import { onRelease } from './KeyRelease.js'
 import { isBool } from './lib/common.js'
 import { message, erreur } from './lib/Message.js'
 import { invoke } from './api.js'
@@ -19,7 +20,7 @@ export class Tools {
   static onKeyPress(e){
     var returnU = onKeyDownUniversel(e)
     if ( isBool(returnU) ) return returnU
-    if ( e.shiftKey && e.key == 'O' && !inTextField(e) ) return this.toggle()
+    if ( e.shiftKey && e.key == 'O' && !inTextField(e) ) return onRelease(e, () => this.toggle())
   }
 
   /**

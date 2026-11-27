@@ -1,4 +1,5 @@
 import { DCreate, DGet, listen } from './dom.js'
+import { onRelease } from './KeyRelease.js'
 import { draggable } from './lib/interact.js'
 import { raise, keepInView, moveBox, splitInset } from './handies.js'
 import { UI } from './UI.js'
@@ -133,8 +134,7 @@ export function addPanelHead(obj, {title, onClose, target, place = true}){
     if ( e.key != 'Enter' || e.isComposing || ['TEXTAREA', 'BUTTON', 'SELECT'].includes(e.target.tagName) ) return
     const btn = Array.from(obj.querySelectorAll('button.btn-default')).find(b => !b.disabled && b.offsetParent)
     if ( !btn ) return
-    e.preventDefault() ; e.stopPropagation()
-    btn.click()
+    return onRelease(e, () => btn.click())
   })
   let buttons = obj.querySelector(':scope > div.buttons')
   buttons || obj.appendChild(buttons = DCreate('DIV', {class: 'buttons'}))

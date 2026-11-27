@@ -2,6 +2,7 @@ import { not } from './lib/common.js'
 import { erreur } from './lib/Message.js'
 import { GetterInList } from './GetterInList.js'
 import { DCreate, DGet, listen } from './dom.js'
+import { onRelease } from './KeyRelease.js'
 import { px, uiZoom, keepInView, escapeLt } from './handies.js'
 import { addPanelHead } from './Panneau.js'
 import { UI } from './UI.js'
@@ -265,7 +266,7 @@ getFormStart(){
   listen(btnCancel, 'click', e => { e.stopPropagation() ; close(null) })
   listen(btnOK,     'click', e => { e.stopPropagation() ; close(Number(menu.value)) })
   // Entrée dans le menu : validation
-  listen(menu, 'keydown', e => { if ( e.key == 'Enter' && !btnOK.disabled ) { e.preventDefault() ; close(Number(menu.value)) } })
+  listen(menu, 'keydown', e => { if ( e.key == 'Enter' && !btnOK.disabled ) onRelease(e, () => o.isConnected && close(Number(menu.value))) })
   listen(o, 'click', e => e.stopPropagation())
   listen(o, 'dblclick', e => e.stopPropagation())
   UI.desactiveCurrentShortcuts()

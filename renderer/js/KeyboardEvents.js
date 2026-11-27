@@ -13,6 +13,7 @@ import { MarksClipboard } from './MarksClipboard.js'
 import { Groups } from './Groups.js'
 import { Split } from './Split.js'
 import { Liaison } from './Liaison.js'
+import { onRelease, isCleanRelease } from './KeyRelease.js'
 
 // Saisie en cours dans un champ (panneaux) : touches laissées au champ
 export function inTextField(e){
@@ -27,12 +28,10 @@ export function onKeypressOnAnalyse(e){
   switch(e.key){
 
     case 'M':
-      Manuel.toggle()
-      break
+      return onRelease(e, () => Manuel.toggle())
 
     case 'O':
-      Tools.toggle()
-      break
+      return onRelease(e, () => Tools.toggle())
   }
 }
 
@@ -53,7 +52,7 @@ export function onKeyDownOnAnalyse(e){
   // Copier, couper, coller des marques (cf. MarksClipboard)
   if ( cmdKey(e) && !e.shiftKey && !e.altKey ) {
     const ope = {c: 'copy', x: 'cut', v: 'paste'}[e.key.toLowerCase()]
-    if ( ope && MarksClipboard[ope]() ) return stopEvent(e)
+    if ( ope ) return onRelease(e, () => MarksClipboard[ope]())
   }
 
   switch(e.key){
@@ -71,15 +70,15 @@ export function onKeyDownOnAnalyse(e){
     if ( e.target instanceof Element && e.target.closest('button') ) return
     // Liaison sélectionnée : son édition
     if ( Liaison.selected ) {
-      Liaison.selected.edit()
-      return stopEvent(e)
+      const liaison = Liaison.selected
+      return onRelease(e, () => liaison.edit())
     }
     // Édition de la marque, seulement si elle est seule sélectionnée
     const sel = AObjet.selection
     // (marque verrouillée : édition seulement par son menu contextuel)
     if ( sel && sel.length == 1 && sel[0] instanceof AMark && !sel[0].isLocked ) {
-      sel[0].edit()
-      return stopEvent(e)
+      const mark = sel[0]
+      return onRelease(e, () => mark.edit())
     }
   }
 }
@@ -90,7 +89,7 @@ export function onKeyDownOnAnalyse(e){
  * Une liste de choix ouverte se ferme seule (cf. GetterInList).
  */
 export function onEscapeKey(e){
-  if ( e.key != 'Escape' ) return
+  if ( e.key != 'Escape' || !isCleanRelease(e) ) return
   if ( document.querySelector('div.container_getter_in_list:not(.hidden)') ) return
   document.querySelectorAll('.panneau-ui').forEach(box => {
     if ( !box.getClientRects().length ) return // boite fermée
@@ -101,7 +100,7 @@ export function onEscapeKey(e){
 }
 
 export function onKeyUpOnAnalyse(e){
-  if ( inTextField(e) ) return
+  if ( inTextField(e) || !isCleanRelease(e) ) return
   switch(e.key){
     case 'Backspace':
     case 'Delete':
@@ -127,29 +126,25 @@ export function isSplitShortcut(e){
 export function onKeyDownUniversel(e){
 
   if ( isSplitShortcut(e) ) {
-    Analyse.current && Split.toggle()
-    return stopEvent(e)
+    return onRelease(e, () => Analyse.current && Split.toggle())
   }
 
   if ( cmdKey(e) ) {
     switch(e.key.toLowerCase()) {
       case 's':
-        Analyse.current && AnalyseSaver.save()
-        return stopEvent(e)
+        return onRelease(e, () => Analyse.current && AnalyseSaver.save())
       case 'z':
         // Dans un champ : annulation de la saisie (celle du système)
         if ( inTextField(e) ) return null
-        if (e.shiftKey) {
-          return Cancel.unzLast(e)
-        } else {
-          return Cancel.zLast(e)
-        }
+        return onRelease(e, () => e.shiftKey ? Cancel.unzLast(e) : Cancel.zLast(e))
       case 'g':
         // Grouper (Maj : dégrouper) les marques sélectionnées
         if ( inTextField(e) || !AObjet.selection ) return null
-        e.shiftKey ? Groups.ungroup(AObjet.selection) : Groups.group(AObjet.selection)
-        AObjet.setMenusState()
-        return stopEvent(e)
+        return onRelease(e, () => {
+          if ( !AObjet.selection ) return
+          e.shiftKey ? Groups.ungroup(AObjet.selection) : Groups.group(AObjet.selection)
+          AObjet.setMenusState()
+        })
     }
   }
 
