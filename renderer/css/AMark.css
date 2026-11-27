@@ -287,7 +287,11 @@ div.amark.not {
   overflow: visible !important;
 }
 div.amark.not span.content {
-  display: inline-block;
+  /* lettres centrées (horizontalement et verticalement) dans l'ovale */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   border: 2px solid #333;
   border-radius: 50px;
   padding: 0px!important;
@@ -296,8 +300,7 @@ div.amark.not span.content {
   text-align: center;
 }
 div.amark.not.da span.content,
-div.amark.not.dac span.content,
-div.amark.not.pc span.content {
+div.amark.not.dac span.content {
   width: 44px;
 }
 

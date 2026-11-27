@@ -27,7 +27,7 @@ export const TAILLES_TEXTE = {
 // :full, nom entier (nomenclature de l'export) quand :name est abrégé
 export const TYPES_NOTES = {
   'np': {name:t('ui.marks.notes.np')   , value:'np', autocontent:'NP'  , shortcut:'p'}
-  , 'pc': {name:t('ui.marks.notes.pc')   , value:'pc', autocontent:'NPC' , shortcut:'P', full:t('ui.marks.notes_full.pc')}
+  , 'pc': {name:t('ui.marks.notes.pc')   , value:'pc', autocontent:'PC'  , shortcut:'P', full:t('ui.marks.notes_full.pc')}
   , 'ap': {name:t('ui.marks.notes.ap')      , value:'ap', autocontent:'AP'  , shortcut:'a'}
   , 'ac': {name:t('ui.marks.notes.ac') , value:'ac', autocontent:'AC'  , shortcut:'A', full:t('ui.marks.notes_full.ac')}
   , 'da': {name:t('ui.marks.notes.da') , value:'da', autocontent:'DAP' , shortcut:'g'}

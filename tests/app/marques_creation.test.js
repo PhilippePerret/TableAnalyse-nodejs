@@ -188,6 +188,6 @@ T.test('note de passage chromatique (#254)', async () => {
     AObjet.remove(m)
     return width
   }
-  T.eq(w('pc'), w('dac'), 'trois lettres : même largeur que DAC')
+  T.eq(w('pc'), w('np'), 'deux lettres (« PC ») : même largeur que NP')
   AObjet.remove(mark)
 })
