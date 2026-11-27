@@ -969,3 +969,5 @@ div#quick_keyboard div.qk-mark > .qk-sign {
   max-width: none;
 }
 div#quick_keyboard span.qk-text { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+/* Marque déplacée : au-dessus du clavier de la saisie rapide (#263) */
+div.amark.ui-draggable-dragging { z-index: 1000 !important; }

@@ -65,6 +65,45 @@ T.test('marque glissée sur une touche : affectée, et la marque revient à sa p
   } finally { setMode('normal') }
 })
 
+T.test('#263 : marque relâchée SUR la touche (au-dessus du clavier) : affectée, déplacement terminé', async () => {
+  setMode('quick')
+  try {
+    QuickKeyboard.clear('x')
+    const m = await T.mark({type: 'acc', content: 'G7', top: 900, left: 700})
+    const {top, left} = m
+    const from = center(m.obj), to = center(keyEl('x'))
+    T.mouse(m.obj, 'mousedown', {clientX: from.x, clientY: from.y, pageX: from.x, pageY: from.y + window.scrollY})
+    T.mouse(document, 'mousemove', {clientX: from.x + 20, clientY: from.y + 20, pageX: from.x + 20, pageY: from.y + 20 + window.scrollY})
+    T.mouse(document, 'mousemove', {clientX: to.x, clientY: to.y, pageX: to.x, pageY: to.y + window.scrollY})
+    const over = document.elementFromPoint(to.x, to.y)
+    T.ok(over && m.obj.contains(over), 'marque déplacée au-dessus du clavier')
+    T.mouse(keyEl('x'), 'mouseup', {clientX: to.x, clientY: to.y, pageX: to.x, pageY: to.y + window.scrollY})
+    const d = QuickKeyboard.dataOf('x')
+    T.eq(d && d.content, 'G7', 'marque affectée à la touche')
+    T.eq([m.top, m.left], [top, left], 'marque à sa place')
+    T.mouse(document, 'mousemove', {clientX: 300, clientY: 300, pageX: 300, pageY: 300 + window.scrollY})
+    T.eq([parseInt(m.obj.style.top), parseInt(m.obj.style.left)], [top, left], 'la marque ne suit plus la souris')
+    AObjet.remove(m)
+    QuickKeyboard.clear('x')
+  } finally { setMode('normal') }
+})
+
+T.test('#263 : clavier déplacé puis relâché : reposé, ne suit plus la souris', async () => {
+  setMode('quick')
+  try {
+    const o = kb(), r0 = o.getBoundingClientRect()
+    const x = r0.left + 4, y = r0.top + 4
+    T.mouse(o, 'mousedown', {clientX: x, clientY: y, pageX: x, pageY: y})
+    T.mouse(document, 'mousemove', {clientX: x + 30, clientY: y - 30, pageX: x + 30, pageY: y - 30})
+    T.mouse(o, 'mouseup', {clientX: x + 30, clientY: y - 30, pageX: x + 30, pageY: y - 30})
+    const r1 = o.getBoundingClientRect()
+    T.eq([Math.round(r1.left - r0.left), Math.round(r1.top - r0.top)], [30, -30], 'clavier déplacé')
+    T.mouse(document, 'mousemove', {clientX: x + 200, clientY: y - 200, pageX: x + 200, pageY: y - 200})
+    const r2 = o.getBoundingClientRect()
+    T.eq([r2.left, r2.top], [r1.left, r1.top], 'clavier reposé')
+  } finally { setMode('normal') }
+})
+
 T.test('touche tenue + simple clic : marque posée (plusieurs clics, plusieurs marques)', async () => {
   setMode('quick')
   const P = AMark_Editor.prototype, orig = P.getAMarkType

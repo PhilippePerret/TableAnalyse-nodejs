@@ -107,8 +107,9 @@ export const QuickKeyboard = {
       })
       o.appendChild(r)
     })
-    // Clic, double-clic sur le clavier : aucune marque créée
-    ;['click', 'dblclick', 'mousedown', 'mouseup'].forEach(type => listen(o, type, e => e.stopPropagation()))
+    // Clic, double-clic sur le clavier : aucune marque créée (le
+    // relâchement passe : il termine tout déplacement en cours, #263)
+    ;['click', 'dblclick', 'mousedown'].forEach(type => listen(o, type, e => e.stopPropagation()))
     document.body.appendChild(o)
     this.obj = o
     this.restorePosition()
