@@ -219,6 +219,9 @@ onChooseType(type){
  */
 getAMarkSubType(){
   this.getterOfAMarkSubtype.show(this.positionFixed)
+  // Réédition : sous-type courant de la marque sélectionné (#293)
+  const mark = this.data.markId && AObjet.get(this.data.markId)
+  mark && this.getterOfAMarkSubtype.setCurrent(mark.subtype)
 }
 onChooseSubtype(subtype){
   // Renoncer, case de fermeture, Échap : abandon (sans quoi la liste des

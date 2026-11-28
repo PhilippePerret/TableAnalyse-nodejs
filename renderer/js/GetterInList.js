@@ -86,6 +86,11 @@ export class GetterInList {
     this.listenKeys(true)
   }
 
+  // Item de valeur +value+ marqué comme courant (sélectionné)
+  setCurrent(value){
+    this.obj.querySelectorAll('ul.getter_in_list li').forEach(li => li.classList.toggle('current', null != value && li.getAttribute('value') == String(value)))
+  }
+
   // Fermer le getter
   hide(){
     // console.log("-> GetterInList #hide")

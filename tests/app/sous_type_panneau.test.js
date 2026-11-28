@@ -31,3 +31,21 @@ T.test('« Sous-type… » : liste à la place du panneau de valeur (#270)', asy
     e.onClickCancel()
   } finally { AObjet.remove(m) }
 })
+
+// Réédition : sous-type courant sélectionné dans la liste (#293)
+T.test('« Sous-type… » : sous-type courant sélectionné (#293)', async () => {
+  for ( const [type, subtype, content] of [['not', 'np', 'NP'], ['txt', 'size3', 'Texte'], ['seg', 'v-left', 's']] ) {
+    const m = await T.mark({type, subtype, content, top: 1500, left: 600})
+    try {
+      m.edit()
+      const e = m.editor
+      e.btnType.click()
+      const g = Array.from(document.querySelectorAll('div.container_getter_in_list:not(.hidden)')).pop()
+      const cur = Array.from(g.querySelectorAll('li.current'))
+      T.eq(cur.map(li => li.getAttribute('value')), [subtype], `${type} : « ${subtype} » sélectionné`)
+      T.eq(getComputedStyle(cur[0]).backgroundColor, 'rgb(37, 174, 255)', `${type} : sélection visible`)
+      g.querySelector('span.panneau-close').click()
+      e.onClickCancel()
+    } finally { AObjet.remove(m) }
+  }
+})

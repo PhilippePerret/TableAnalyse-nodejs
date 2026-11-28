@@ -34,6 +34,7 @@ ul.getter_in_list li {
   cursor: pointer;
 }
 ul.getter_in_list li:last-child { border-bottom: none; }
+ul.getter_in_list li.current,
 ul.getter_in_list li:hover {
   background-color: #25aeff;
   color: white;
