@@ -410,6 +410,10 @@ function chooseLanguage(code){
   app.quit()
 }
 
+// Nombre de marques sélectionnées (couper, copier) et copiées (coller),
+// cf. renderer MarksClipboard
+let marksCount = {cut: 0, copy: 0, paste: 0}
+
 function buildMenu(){
   const isMac = process.platform == 'darwin'
   const template = [
@@ -461,9 +465,18 @@ function buildMenu(){
       // Pas de rôle undo/redo : ⌘Z est géré par l'application
       label: t('ui.menu.edit'),
       submenu: [
-          {role: 'cut',       label: t('ui.menu.cut')}
-        , {role: 'copy',      label: t('ui.menu.copy')}
-        , {role: 'paste',     label: t('ui.menu.paste')}
+          ...['cut', 'copy', 'paste'].map(ope => ({
+              label: t(`ui.menu.${ope}`)
+            , submenu: [
+                  {label: t('ui.menu.edit_text'), click: () => mainWindow && mainWindow.webContents[ope]()}
+                  // Raccourci : marques gérées par le renderer, au
+                  // relâchement ; sur macOS, le menu y répond quand même
+                  // (texte des champs de saisie, cf. MarksClipboard)
+                , {label: t(marksCount[ope] > 1 ? 'ui.menu.edit_marks' : 'ui.menu.edit_mark')
+                  , accelerator: `CmdOrCtrl+${{cut: 'X', copy: 'C', paste: 'V'}[ope]}`, registerAccelerator: false
+                  , click: (item, win, event) => mainWindow && mainWindow.webContents.send(event && event.triggeredByAccelerator ? 'menu:editKey' : 'menu:marks', ope)}
+              ]
+          }))
         , {role: 'selectAll', label: t('ui.menu.select_all')}
         , ...dynamicSubmenus('edit')
       ]
@@ -632,6 +645,15 @@ function registerIpc(){
       for ( let i = 1 ; i <= 5 ; ++i ) wc.sendInputEvent({type: 'mouseMove', x: Math.round(x + dx * i / 5), y: Math.round(y + dy * i / 5), button: 'left', modifiers})
       wc.sendInputEvent({type: 'mouseUp', x: x + dx, y: y + dy, button: 'left', clickCount: 1, modifiers})
       await new Promise(r => setTimeout(r, 150))
+    })
+    // Menu Édition : structure, et clic sur un élément (chemin de libellés)
+    const editMenu = () => Menu.getApplicationMenu().items.find(i => i.label == t('ui.menu.edit')).submenu
+    const menuTree = m => m.items.map(i => ({label: i.label, role: i.role || null, visible: i.visible, enabled: i.enabled, accelerator: i.accelerator || null, submenu: i.submenu ? menuTree(i.submenu) : null}))
+    handle('test:editMenu', () => menuTree(editMenu()))
+    handle('test:editMenuClick', ({path: labels, accel}) => {
+      let item, menu = editMenu()
+      for ( const l of labels ) { item = menu.items.find(i => i.label == l) ; menu = item && item.submenu }
+      item.click(accel ? {triggeredByAccelerator: true} : {}, mainWindow, mainWindow.webContents)
     })
     handle('test:realMove', async ({x, y}) => {
       mainWindow.webContents.sendInputEvent({type: 'mouseMove', x, y})
@@ -1036,6 +1058,19 @@ function registerIpc(){
   })
 
   // Coche de « Forme > Voir la forme » (état de l'analyse)
+  // Couper, copier, coller le texte d'un champ de saisie (raccourcis du
+  // menu Édition, cf. MarksClipboard)
+  handle('edit:native', ({ope}) => {
+    ['cut', 'copy', 'paste'].includes(ope) && mainWindow && mainWindow.webContents[ope]()
+  })
+
+  handle('menu:marksCount', ({selected, copied}) => {
+    const n = {cut: selected | 0, copy: selected | 0, paste: copied | 0}
+    if ( ['cut', 'copy', 'paste'].every(k => n[k] == marksCount[k]) ) return
+    marksCount = n
+    buildMenu()
+  })
+
   handle('menu:formShown', ({shown}) => {
     if ( formShown == !!shown ) return
     formShown = !!shown

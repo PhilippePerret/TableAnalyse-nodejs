@@ -4,6 +4,8 @@ import { AMark } from './AMark.js'
 import { UI } from './UI.js'
 import { setModified } from './Current.js'
 import { Groups } from './Groups.js'
+import { invoke, onMain } from './api.js'
+import { on } from './events.js'
 
 // Dernière position de la souris dans la fenêtre (null : hors fenêtre)
 let mouseAt = null
@@ -23,6 +25,24 @@ window.addEventListener('blur', () => { mouseAt = null })
  */
 class MarksClipboardClass {
 
+  constructor(){
+    on('selection:changed', () => this.updateMenu())
+    onMain('menu:marks', ope => this[ope]())
+    // Raccourci du menu (macOS) : texte d'un champ de saisie ; les
+    // marques sont traitées au relâchement (cf. KeyboardEvents)
+    onMain('menu:editKey', ope => {
+      const el = document.activeElement
+      if ( el && (el.isContentEditable || ['INPUT', 'TEXTAREA'].includes(el.tagName)) ) invoke('edit:native', {ope})
+    })
+  }
+
+  // Menu Édition : « la marque » / « les marques », actif ou non
+  updateMenu(){
+    const selected = (AObjet.selection || []).filter(m => m instanceof AMark && m.obj).length
+    const copied   = this.items ? this.items.length : 0
+    invoke('menu:marksCount', {selected, copied}).catch(err => console.error(err))
+  }
+
   // @return true si des marques ont été copiées
   copy(){
     const selected = (AObjet.selection || []).filter(m => m instanceof AMark && m.obj)
@@ -34,6 +54,7 @@ class MarksClipboardClass {
       , width:  m.obj.offsetWidth
       , height: m.obj.offsetHeight
     }))
+    this.updateMenu()
     return true
   }
 
