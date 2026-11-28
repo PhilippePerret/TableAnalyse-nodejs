@@ -67,8 +67,35 @@ class BorderEditorClass {
         get value(){ const c = radios.map(r => r.querySelector('input')).find(i => i.checked) ; return c ? c.value : 'center' }
       , set value(v){ radios.forEach(r => { const i = r.querySelector('input') ; i.checked = i.value == v }) }
     }
+    // Motifs : position du nom, au-dessus ou au-dessous du cadre (#304)
+    const POSITIONS = ['above', 'below']
+    const posOf = m => m.data.name_pos == 'below' ? 'below' : 'above'
+    const previewPos = v => marks.forEach(m => m.spanContent.classList.toggle('below', v == 'below'))
+    const posPicto = v => {
+      const NS = 'http://www.w3.org/2000/svg'
+      const svg = document.createElementNS(NS, 'svg')
+      svg.setAttribute('viewBox', '0 0 16 16') ; svg.setAttribute('width', '16') ; svg.setAttribute('height', '16')
+      svg.setAttribute('class', 'align-picto')
+      const rect = (attrs) => { const r = document.createElementNS(NS, 'rect') ; Object.entries(attrs).forEach(([k, val]) => r.setAttribute(k, String(val))) ; svg.appendChild(r) }
+      rect({x: 2, y: 5, width: 12, height: 6, fill: 'none', stroke: 'currentColor', 'stroke-width': '1.2'})
+      rect({x: 5.5, y: v == 'above' ? 1 : 12.5, width: 5, height: 2.5, fill: 'currentColor'})
+      return svg
+    }
+    const posRadios = withAlign && POSITIONS.map(v => {
+      const input = DCreate('INPUT', {type: 'radio', name: 'mark-name-pos', value: v})
+      input.checked = v == posOf(marks[0])
+      listen(input, 'change', () => input.checked && previewPos(v))
+      return DCreate('LABEL', {class: `align-choice pos-${v}`, inner: [input, posPicto(v), DCreate('SPAN', {text: t(`ui.panels.border.pos_${v}`)})]})
+    })
+    const pos = posRadios && {
+        get value(){ const c = posRadios.map(r => r.querySelector('input')).find(i => i.checked) ; return c ? c.value : 'above' }
+      , set value(v){ posRadios.forEach(r => { const i = r.querySelector('input') ; i.checked = i.value == v }) }
+    }
     if ( align ) {
-      this.restoreAlign = () => marks.forEach(m => { ALIGNS.forEach(a => m.spanContent.classList.toggle(a, a == m.data.align)) })
+      this.restoreAlign = () => marks.forEach(m => {
+        ALIGNS.forEach(a => m.spanContent.classList.toggle(a, a == m.data.align))
+        m.spanContent.classList.toggle('below', m.data.name_pos == 'below')
+      })
     }
     const T = (k) => t(`ui.panels.liaison.${k}`)
     const st = mark.border
@@ -88,6 +115,7 @@ class BorderEditorClass {
       intensity.value = cur.intensity
       if ( text ) { marks.forEach(m => m.previewTextSize(null)) ; text.value = marks[0].textSize }
       if ( align ) { align.value = 'center' ; previewAlign('center') }
+      if ( pos ) { pos.value = 'above' ; previewPos('above') }
     })
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
     const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
@@ -95,6 +123,7 @@ class BorderEditorClass {
     listen(btnOk, 'click', () => {
       mark.confirmBorder()
       align && marks.forEach(m => { m.data.align = align.value ; setModified() })
+      pos && marks.forEach(m => { pos.value == 'below' ? (m.data.name_pos = 'below') : delete m.data.name_pos ; setModified() })
       this.restoreAlign = null
       this.close()
     })
@@ -105,6 +134,7 @@ class BorderEditorClass {
           , editorField(T('line'),  line)
           , ...(text ? [editorField(t('ui.panels.border.text'), [...text.elements, DCreate('SPAN', {text: 'px'})])] : [])
           , ...(radios ? [editorField(t('ui.panels.border.align'), radios)] : [])
+          , ...(posRadios ? [editorField(t('ui.panels.border.position'), posRadios)] : [])
           , editorField('', [btnDefault, toPrefsButton(() => this.toPrefs())])
         ]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})

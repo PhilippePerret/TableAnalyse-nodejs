@@ -448,6 +448,8 @@ div.amark.mot span.content {
    du cadre ; au centre par défaut */
 div.amark.mot span.content.left  { left: 0; right: auto; transform: none; text-align: left; }
 div.amark.mot span.content.right { left: auto; right: 0; transform: none; text-align: right; }
+/* Nom au-dessous du cadre (#304) */
+div.amark.mot span.content.below { bottom: auto; top: calc(100% - 1px + var(--bwx)); padding: 2px 0 0; }
 
 /* Texte dans une boite */
 div.amark.bbx.bxt {

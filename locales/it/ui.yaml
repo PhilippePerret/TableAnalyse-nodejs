@@ -424,6 +424,9 @@ panels:
     align_left:       "sinistra"
     align_center:     "centro"
     align_right:      "destra"
+    position:         "Posizione"
+    pos_above:        "sopra"
+    pos_below:        "sotto"
     intensity:        "Intensità"
     default:          "Valore predefinito"
   liaison:

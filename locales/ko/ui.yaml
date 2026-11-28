@@ -424,6 +424,9 @@ panels:
     align_left:       "왼쪽"
     align_center:     "가운데"
     align_right:      "오른쪽"
+    position:         "위치"
+    pos_above:        "위"
+    pos_below:        "아래"
     intensity:        "농도"
     default:          "기본값"
   liaison:

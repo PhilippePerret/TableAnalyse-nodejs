@@ -424,6 +424,9 @@ panels:
     align_left:       "左"
     align_center:     "中"
     align_right:      "右"
+    position:         "位置"
+    pos_above:        "上方"
+    pos_below:        "下方"
     intensity:        "浓度"
     default:          "默认值"
   liaison:

@@ -86,3 +86,39 @@ T.test('Aspect d’un motif : « Alignement » (à gauche, au centre, à droite)
     T.eq(mot.data.align, 'right', 'enregistré dans les données')
   } finally { BorderEditor.close() ; AObjet.remove(mot) ; AObjet.remove(seg) }
 })
+
+// Motif : position du nom (au-dessus, au-dessous) dans « Aspect » (#304)
+T.test('Aspect d’un motif : « Position » au-dessus / au-dessous (#304)', async () => {
+  const mot = await T.mark({type: 'mot', content: 'PosNom', top: 400, left: 300})
+  const posRow = () => [...document.querySelectorAll('#border_editor .rows > *')].find(r => r.textContent.startsWith('Position'))
+  const below = () => mot.contentSpan.getBoundingClientRect().top >= mot.obj.getBoundingClientRect().bottom - 2
+  const above = () => mot.contentSpan.getBoundingClientRect().bottom <= mot.obj.getBoundingClientRect().top + 2
+  try {
+    AObjet.deselectAll()
+    T.ok(above(), 'au-dessus par défaut')
+    BorderEditor.open([mot])
+    const rows = [...document.querySelectorAll('#border_editor .rows > *')].map(r => r.querySelector('label').textContent)
+    T.eq(rows.indexOf('Position'), rows.indexOf('Alignement') + 1, 'sous « Alignement »')
+    const labels = [...posRow().querySelectorAll('label.align-choice')]
+    T.eq(labels.map(l => l.textContent.trim()), ['au-dessus', 'au-dessous'], 'au-dessus, au-dessous')
+    T.ok(labels.every(l => l.querySelector('input[type="radio"]') && l.querySelector('svg.align-picto')), 'radios à picto')
+    posRow().querySelector('input[value="below"]').click()
+    T.ok(below(), 'aperçu : au-dessous')
+    BorderEditor.close()
+    T.ok(above(), 'Renoncer : au-dessus')
+    BorderEditor.open([mot])
+    posRow().querySelector('input[value="below"]').click()
+    document.querySelector('#border_editor .btn-default').click()
+    T.ok(below(), 'OK : au-dessous')
+    T.eq(mot.data.name_pos, 'below', 'enregistré')
+    // Reconstruction (réouverture) et export
+    mot.rebuild()
+    T.ok(below(), 'reconstruite : au-dessous')
+    const opts = {mode: 'book', width: 210, height: 297, margin: 10, gap: 20}
+    const stage = new Stage()
+    await stage.build() ; stage.respace(opts)
+    const clone = [...document.querySelectorAll('div.amark.mot')].find(e => e !== mot.obj && e.textContent.includes('PosNom'))
+    T.ok(clone && clone.querySelector('span.content').getBoundingClientRect().top >= clone.getBoundingClientRect().bottom - 2, 'export : au-dessous')
+    stage.remove()
+  } finally { BorderEditor.close() ; AObjet.remove(mot) }
+})

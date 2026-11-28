@@ -425,6 +425,8 @@ applyCss(){
   if ( this.data.align ) {
     this.spanContent.classList.add(this.data.align)
   }
+  // Motif : nom au-dessous du cadre (#304)
+  this.type == 'mot' && this.data.name_pos == 'below' && this.spanContent.classList.add('below')
   // Numéro de mesure sur la ligne des numéros (boite, cf. AMark.css)
   if ( this.data.line ) this.obj.classList.add('on-line')
 }

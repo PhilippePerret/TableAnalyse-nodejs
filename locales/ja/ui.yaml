@@ -424,6 +424,9 @@ panels:
     align_left:       "左"
     align_center:     "中央"
     align_right:      "右"
+    position:         "位置"
+    pos_above:        "上"
+    pos_below:        "下"
     intensity:        "濃さ"
     default:          "既定値"
   liaison:
