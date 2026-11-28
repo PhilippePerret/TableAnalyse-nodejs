@@ -24,8 +24,8 @@ T.test('préférences des titres : tableau, libellés une seule fois', async () 
   T.includes(PreferencesPanel.buildSelectorsInHead(), 'span.txt-title.t2 {font-size:50px;}', 'style appliqué')
 })
 
-T.test('titres dans un texte : « = », « == », « === »', async () => {
-  const m = await T.mark({type: 'txt', content: '= Grand titre__RET__Texte *courant*__RET__== Moyen__RET__=== Petit__RET__a == b', top: 1200, left: 300})
+T.test('titres dans un texte : « = … = », « == … == », « === … === »', async () => {
+  const m = await T.mark({type: 'txt', content: '= Grand titre =__RET__Texte *courant*__RET__== Moyen ==__RET__=== Petit ===__RET__a == b', top: 1200, left: 300})
   const span = m.obj.querySelector('span.content')
   const titles = [...span.querySelectorAll('span.txt-title')]
   T.eq(titles.map(e => [e.className, e.textContent]), [['txt-title t1', 'Grand titre'], ['txt-title t2', 'Moyen'], ['txt-title t3', 'Petit']], 'trois titres')

@@ -565,10 +565,11 @@ get formated_content(){
   }
 }
 markdownize(str){
-  // Titres : ligne commençant par « = », « == » ou « === » (niveaux 1 à
-  // 3, police et taille des titres de la mise en page)
+  // Titres : ligne entourée de « = », « == » ou « === » (« = Titre = »,
+  // niveaux 1 à 3, police et taille des titres de la mise en page) ;
+  // « = mes. 11-13 » reste un texte (#284)
   const titleLine = (line) => {
-    const m = line.match(/^\s*(={1,3})\s+(.+?)\s*$/)
+    const m = line.match(/^\s*(={1,3})\s+(.+?)\s+\1\s*$/)
     return m ? {title: true, html: `<span class="txt-title t${m[1].length}">${m[2]}</span>`} : {title: false, html: line}
   }
   const inline = (line) => line.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
