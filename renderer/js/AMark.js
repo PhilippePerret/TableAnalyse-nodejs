@@ -228,6 +228,9 @@ onDoubleClick(e){
  * 
  */
 edit(){
+  // Type de note : son texte ne se change jamais ; rééditer, c'est
+  // choisir un autre sous-type, directement (#303)
+  if ( this.type == 'not' ) return this.editNoteSubtype()
   // Valeurs déjà utilisées, comme à la création (#231)
   const dtype = AMARQUES_TYPES[this.type] || {}
   const subtype = (dtype.subdata || undefined != dtype.subtype) ? this.subtype : undefined
@@ -236,6 +239,27 @@ edit(){
   // (accord, harmonie : trait réglé par l'étirement, cf. stretchTo, #276)
   this.editor.value = contentForField(this.type, this.content) + (this.hasProlongLine && !this.isStretchable ? '--' : '')
   this.editor.show({top:this.top, left:this.left}, AMARQUES_TYPES[this.type].message)
+}
+
+// Liste des sous-types de note, à la place de la marque ; le choix
+// change le sous-type et le texte (cf. TYPES_NOTES), #303
+editNoteSubtype(){
+  const r = this.obj.getBoundingClientRect()
+  const x = Math.round(r.left + 40), y = Math.round(r.top + 40)
+  const editor = new AMark_Editor({
+      onReleaseMethod: (data) => {
+        if ( !data || !data.subtype ) return
+        if ( data.subtype == this.subtype ) return
+        this.changeType('not', data.subtype)
+        this.content = data.content
+        setModified()
+      }
+    , event:    {clientX: x, clientY: y, pageX: x + window.scrollX, pageY: y + window.scrollY}
+    , onlyType: true
+    , type:     'not'
+    , markId:   this.id
+  })
+  editor.proceed()
 }
 
 destroy(){

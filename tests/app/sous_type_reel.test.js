@@ -4,7 +4,7 @@ const { AObjet } = await T.imp('AObjet')
 
 T.test('clic réel sur « Sous-type… » : liste des sous-types ouverte', async () => {
   window.scrollTo({top: 0, behavior: 'instant'})
-  const m = await T.mark({type: 'not', subtype: 'np', content: 'NP', top: 300, left: 600})
+  const m = await T.mark({type: 'txt', subtype: 'size1', content: 'Texte', top: 300, left: 600})
   try {
     // Double-clic réel sur la marque : édition
     const mr = m.obj.getBoundingClientRect()
@@ -24,7 +24,7 @@ T.test('clic réel sur « Sous-type… » : liste des sous-types ouverte', async
   } finally { AObjet.remove(m) }
 })
 
-for ( const [type, subtype, content] of [['txt', 'size3', 'Texte'], ['bbx', 'cel', 'C1'], ['cad', 'par', 'I'], ['seg', 'h-up', 's'], ['txt', 'mes', '12'], ['not', 'ap', 'AP']] ) {
+for ( const [type, subtype, content] of [['txt', 'size3', 'Texte'], ['bbx', 'cel', 'C1'], ['cad', 'par', 'I'], ['seg', 'h-up', 's'], ['txt', 'mes', '12']] ) {
   T.test(`clic réel sur « Sous-type… » (${type}/${subtype}), page défilée, deux fois`, async () => {
     window.scrollTo({top: 1500, behavior: 'instant'})
     const m = await T.mark({type, subtype, content, top: 1500 + 300, left: 600})
@@ -46,6 +46,25 @@ for ( const [type, subtype, content] of [['txt', 'size3', 'Texte'], ['bbx', 'cel
     } finally { AObjet.remove(m) ; window.scrollTo({top: 0, behavior: 'instant'}) }
   })
 }
+
+// Type de note : double-clic réel → liste des sous-types directement (#303)
+T.test('note : double-clic réel, liste des sous-types directement (#303)', async () => {
+  window.scrollTo({top: 1500, behavior: 'instant'})
+  const m = await T.mark({type: 'not', subtype: 'ap', content: 'AP', top: 1800, left: 600})
+  try {
+    AObjet.deselectAll()
+    const mr = m.obj.getBoundingClientRect()
+    await T.invoke('test:realClick', {x: Math.round(mr.left + mr.width / 2), y: Math.round(mr.top + mr.height / 2), clickCount: 2})
+    await T.until(() => document.querySelectorAll('div.container_getter_in_list:not(.hidden)').length == 1, 'liste visible')
+    T.no(m.editor && !m.editor.obj.classList.contains('hidden'), 'aucun panneau de valeur')
+    const g = document.querySelector('div.container_getter_in_list:not(.hidden)')
+    const li = Array.from(g.querySelectorAll('li')).find(l => l.getAttribute('value') == 're')
+    const r = li.getBoundingClientRect()
+    await T.invoke('test:realClick', {x: Math.round(r.left + 20), y: Math.round(r.top + r.height / 2)})
+    await T.until(() => m.subtype == 're', 'sous-type changé')
+    T.eq(m.content, 'R', 'texte changé')
+  } finally { AObjet.remove(m) ; window.scrollTo({top: 0, behavior: 'instant'}) }
+})
 
 T.test('panneau de valeur déplacé par son entête, page défilée : il suit la souris (#275)', async () => {
   window.scrollTo({top: 1500, behavior: 'instant'})
