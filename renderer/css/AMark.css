@@ -24,8 +24,11 @@ div.amark.locked:hover {
   div.amark.locked {opacity: 0.45}
 }
 /* Marque verrouillée : sous toutes les autres marques (même sélectionnée),
-   pour atteindre ce qu'elle recouvre */
-div.amark.aobj.locked { z-index: 0 !important; }
+   pour atteindre ce qu'elle recouvre, mais au-dessus des images et des
+   extraits (même niveau, placée après eux, cf. AMark#lock), #286 */
+div.amark.aobj.locked { z-index: 1 !important; }
+div.amark.aobj.img:not(.selected):not(.locked),
+div.amark.aobj.ext:not(.selected):not(.locked) { z-index: 1; }
 
 div.amark.selected {
   background-color: rgba(150,180,250, 0.4);

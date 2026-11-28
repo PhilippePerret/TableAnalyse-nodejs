@@ -98,6 +98,9 @@ static displaySystems(analyse){
 
 static displayAnalyseTags(tags){
   tags.forEach(tag => tag.build_and_observe())
+  // Marques verrouillées après les autres : au-dessus des images et des
+  // extraits de même niveau (#286)
+  tags.forEach(tag => tag.isLocked && tag.obj && tag.obj.parentNode && tag.obj.parentNode.appendChild(tag.obj))
 }
 
 }// class AnalyseDisplayer

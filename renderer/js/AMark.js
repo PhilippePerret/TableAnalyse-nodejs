@@ -346,6 +346,8 @@ lock(){
   this.data.locked = true
   delete this.data.groups
   this.obj.classList.add('locked')
+  // Après les images et extraits (même niveau) : au-dessus d'eux (#286)
+  this.obj.parentNode && this.obj.parentNode.appendChild(this.obj)
   draggable(this.obj, "disable")
   this.isSelected && AObjet.removeFromSelection(this)
 }
