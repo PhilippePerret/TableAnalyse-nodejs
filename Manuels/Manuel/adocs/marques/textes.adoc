@@ -3,6 +3,42 @@
 
 Pour insérer un texte quelconque dans l'analyse de la partition.
 
-- documenter : utilisation des variables `{title}`, `{composer}`, `{analysis-title}`, `{analyst}`
+==== Mises en forme ====
+
+===== Titres =====
+
+Utiliser des signes '= titre =' pour définir les titres. Les titres peuvent aller jusqu'à 3 niveaux, suivant le nombre de signe '= '.
+
+NOTE: La taille de ces titres se règle dans les préférences, comme tous les autres aspects.
+
+===== Italiques et gras =====
+
+Pour mettre en italiques une portion de texte, entourez-le de deux traits plats. `__en italiques__` deviendra __en italiques__.
+
+Pour mettre en gras une portion de texte, entourez-le de deux astérisques. `**en gras**` deviendra **en gras**.
+
+===== Exposant =====
+
+Vous marquez les exposants en les entourant de `^`. Par exemple, pour écrire « 1er » avec le « er » en exposant, il vous suffit d'écrire le code ++#`1^er^`#
+
+==== Utilisation des variables ====
+
+|====
+2+| **Variables générales**
+| `{title}`
+| Inscription du titre de la pièce dans le texte. Voir les <<analyse-infos, informations générales de l'analyse>>.
+
+| `{composer}` 
+| Inscription du compositeur dans le texte.
+
+| `{analysis-title}`
+| Pour écrire le titre de l'analyse dans le texte.
+
+| `{analyst}`
+| Pour écrire le nom de l'analyste dans le texte.
+
+2+| **Variables personnalisées**
+
+|====
 // + {<variable-motif>}
 - obtenir le code grâce au menu "Outils > Variables" qui met dans le presse-papier
