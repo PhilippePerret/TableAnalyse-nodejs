@@ -7,6 +7,7 @@ TODO
 - documenter : un titre doit être entouré du signe "= titre" n'est pas bon, "= titre =" est bon
 - documenter : Segment, ouvrir à gauche et ouvrir à droite
 - documenter : Motif : alignement et taille du texte (Aspect…)
+                + position au-dessus ou en dessous
 - documenter : distance entre système et LNM (Ligne de numéros de mesure)
 
 TUTORIEL : 
