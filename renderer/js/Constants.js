@@ -149,10 +149,10 @@ export const CADENCES = {
 
 
 export const TYPES_SEGMENT = [
-    {name:t('ui.marks.segments.h-up')    , value:'h-up'    , shortcut: 'u'}
-  , {name:t('ui.marks.segments.h-down')   , value:'h-down'  , shortcut: 'd'}
-  , {name:t('ui.marks.segments.v-left') , value:'v-left'  , shortcut: 'l'}
-  , {name:t('ui.marks.segments.v-right') , value:'v-right' , shortcut: 'r'}
+    {name:t('ui.marks.segments.h-up')    , value:'h-up'    , shortcut: 'm'}
+  , {name:t('ui.marks.segments.h-down')   , value:'h-down'  , shortcut: 'u'}
+  , {name:t('ui.marks.segments.v-left') , value:'v-left'  , shortcut: 'd'}
+  , {name:t('ui.marks.segments.v-right') , value:'v-right' , shortcut: 'b'}
 ]
 
 

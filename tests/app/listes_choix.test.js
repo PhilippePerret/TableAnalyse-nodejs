@@ -28,3 +28,18 @@ T.test('liste retirée (retour aux types) : plus d’écoute du clavier (#271)',
   T.eq(chosen, [], 'aucun choix fait par une liste retirée')
   T.eq(document.querySelectorAll('div.mini_editeur:not(.hidden)').length, editorsBefore, 'aucun panneau ouvert')
 })
+
+// Sous-types de segment : m (au-dessus), u (au-dessous), d (à gauche),
+// b (à droite), #288
+T.test('segment : raccourcis m, u, d, b des sous-types (#288)', async () => {
+  for ( const [key, value] of [['m', 'h-up'], ['u', 'h-down'], ['d', 'v-left'], ['b', 'v-right']] ) {
+    const chosen = []
+    const ed = new AMark_Editor({event: ev, type: 'seg', onReleaseMethod: () => {}})
+    ed.onChooseSubtype = (v) => { chosen.push(v) }
+    ed.proceed()
+    kev('keydown', key) ; kev('keypress', key) ; kev('keyup', key)
+    T.eq(chosen, [value], `« ${key} » : ${value}`)
+    document.querySelectorAll('div.container_getter_in_list').forEach(e => e.remove())
+    ed._gettersubtype && ed._gettersubtype.destroy && ed._gettersubtype.destroy()
+  }
+})
