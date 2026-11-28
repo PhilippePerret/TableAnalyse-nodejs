@@ -47,6 +47,7 @@ const MARKS_KEYS = [
 const RANGES = {
     systeme_width: [200, 4000], window_width: [400, 5000], window_height: [300, 3000]
   , last_scroll: [0, 50000], animation_tempo: [10, 240], top_first_system: [0, 2000]
+  , measure_line_offset: [0, 2000]
 }
 const rangeOf = dp => RANGES[dp.id] || (dp.id.startsWith('intensity_') ? [0, 100] : [0, Math.max(10, Math.ceil(Number(dp.default || 0) * 3))])
 // Valeurs courantes (boutons des préférences de la fenêtre, #248)

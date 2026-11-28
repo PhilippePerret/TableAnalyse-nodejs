@@ -23,7 +23,7 @@ class MeasureOffsetEditorClass {
       sys.data.measure_offset = v
       sys.placeMeasureLine(sys.constructor.measureMarksOf(sys), v)
     }
-    const field = new RangeField({min: 0, max: 600, value: sys.measureOffset, onInput: v => v >= 0 && preview(v)})
+    const field = new RangeField({min: 0, max: 2000, value: sys.measureOffset, onInput: v => v >= 0 && preview(v)})
     this.field = field
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
     const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})

@@ -52,3 +52,16 @@ T.test('OK : distance fixe, préférences sans effet sur elle, enregistrée (#29
     PreferencesPanel.onChange_measure_line_offset()
   }
 })
+
+// Limite : 2000 px (#294)
+T.test('distance jusqu’à 2000 px (panneau du système, préférences) (#294)', async () => {
+  const sys = Systeme.all[3]
+  sys.editMeasureOffset()
+  const range = panel().querySelector('input[type="range"]')
+  T.eq(range.max, '2000', 'panneau : 2000')
+  range.value = '1500' ; range.dispatchEvent(new Event('input'))
+  T.eq(Math.round(gap(sys)), 1500, '1500 px appliqués')
+  MeasureOffsetEditor.close()
+  const pr = document.querySelector('#pref-measure_line_offset').closest('tr, .div-data').querySelector('input[type="range"]')
+  T.eq(pr.max, '2000', 'préférences : 2000')
+})
