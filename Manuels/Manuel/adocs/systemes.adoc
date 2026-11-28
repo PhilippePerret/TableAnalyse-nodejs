@@ -25,14 +25,19 @@ La __préparation des systèmes__ consiste surtout, après le découpage de la p
 * indication de mouvement au début de la partition,
 * etc.
 
-Ce nettoyage, pour le moment, se fait dans une application tierce, en control-cliquant sur le système (ou clic-droit) et en choisissant dans le menu contextuel « Ouvrir l'image ».
+Ce nettoyage se fait en choisissant « Corriger l'image » dans le <<tags-contextual, menu contextuel du système>>. L'image du système s'ouvre et vous pouvez appliquer des masques blancs sur les parties à « blanchir ». 
 
-Si vous êtes sur macOS, l'image du système s'ouvrira dans Aperçu. Les raccourcis à connaitre sont alors les suivants :
+Vous pouvez appliquer ses marques par rectangle ou par polyhèdre (en cliquant les différents points de la forme, qui se refermera toute seule). Vous pouvez ensuite appliquer le changement en cliquant sur le bouton idoïne en bas de panneau.
 
-* Ctrl + Cmd + r pour poser un rectangle (la première fois, lui donner des bords et un intérieur blanc) qui permettra de masquer les défauts (en le déplaçant sur les "taches" et en le redimensionnant).
-* Cmd + k pour découper l'image après avoir défini ses dimensions avec la sélection de souris^*^
+==== Appliquer à tous les systèmes ====
 
-^*^ Attention : ne découper l'image du système qu'en hauteur. Si vous changer la largeur de l'image du système, le système sera grossi à l'affichage par rapport aux autres.
+Vous pouvez appliquer le changement à tous les systèmes en cochant la case « Appliquer à tous les systèmes ».
+
+Mais attention, cette __application__ n'est pas rigoureuse, car la découpe des systèmes contient par nature une partie aléatoire. Aussi se peut-il que si vous voulez masquer tous les numéros de mesure avec un seul masque, ce masque tombe souvent à côté sur certain système.
+
+==== Revenir au système original ====
+
+Le masque peut même tomber au mauvais endroit et masquer des parties valides de ce système. Dans ce cas-là, on peut revenir facilement au système original en choisissant l'item « Revenir au système original » du <<tags-contextual, menu contextuel>> du système.
 
 [[systems-check-numeros]]
 === Contrôle de la numérotation ===

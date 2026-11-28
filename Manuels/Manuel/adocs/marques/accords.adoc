@@ -1,5 +1,5 @@
 [[tags-chord]]
-==== Marque Accord ====
+==== Marque de type Accord ====
 
 Une marque accord attend simplement la valeur de l'accord. Cette valeur doit respecter le <<chord-writing, format requis par l'application>>.
 
@@ -11,21 +11,4 @@ On peut ajouter un trait de prolongation simplement en tirant sur le bord droit 
 | Ligne de prolongation | "A --" | image:images/marques/marque-accord-prolongation.svg[Accord avec prolongation]
 |====
 
-
-[[chord-writing]]
-===== Écriture valide des accords =====
-
-* Tous les accords se mettent en **notation batave** (de A à G) sauf si la préférence « Entrée des notes » est réglée sur « Italien (note) ». 
-* Tous les accords, __même les accords mineurs__, se mettent en capital (contrairement à une tradition que nous déconseillons qui veut que les minuscules soit des accords mineurs — les minuscules, dans l'application, sont utilisées pour les notes).
-
-Pour le reste : 
-[cols="1,2,1", options="header"]
-|====
-| Nature | Description | exemple
-| Accord bémol    | Ajouter un « - » après la note de l'accord    | `B-` pour Si bémol
-| Accord dièse    | Ajouter un « + » après la note de l'accord    | `C+` pour Do dièse
-| Accord mineur   | Ajouter un « m » après la note de l'accord    |  `B-m` pour Si bémol mineur
-| Accord de quinte diminuée | Ajouter « 5- » | `B5-` pour Si quinte diminué (Si Ré Fa)
-| Accord (de) septième diminuée | AJouter « 7- » | `B7-` pour Si septième diminuée (Si Ré Fa La bémol)
-| Accord demi-diminué | Ajouter « m75- » | `Dm75+` pour D demi-diminué (Ré Fa La bémol Do)
-|====
+Voir <<chord-writing>> pour savoir comment écrire les accords de façon valide.

@@ -475,6 +475,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#tags-extrait">Extrait de partition</a></li>
 <li><a href="#tags-bords">Épaisseur des bords/traits</a></li>
 <li><a href="#tags-link">Trait de liaison entre deux marques</a></li>
+<li><a href="#tags-overlap">Chevauchement des marques</a></li>
+</ul>
+</li>
+<li><a href="#chords">Les Accords</a>
+<ul class="sectlevel2">
+<li><a href="#chord-writing">Écriture valide des accords</a></li>
+<li><a href="#chords-input">Entrée des accords</a></li>
+<li><a href="#chords-output">Affichage des accords</a></li>
 </ul>
 </li>
 <li><a href="#prefs">Préférences</a>
@@ -511,6 +519,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong><em>Table d&#8217;analyse</em></strong> est une application de bureau qui permet de procéder à des analyses musicales de façon très confortable. Elle a été conçue par Philippe Perret (Prix d&#8217;Analyse Musicale à l&#8217;unanimité et Prix SACEM pour son travail d&#8217;analyse) et codée par Claude (Opus 5.5).</p>
+</div>
+<div class="paragraph">
+<p>Quand vous êtes confronté(e) à un problème, un bug ou même une envie de fonctionnalité, vous pouvez <a href="https://github.com/PhilippePerret/TableAnalyse-nodejs/issues" target="_blank" rel="noopener">ouvrir une <em>issue</em></a> sur le site Github où l&#8217;application est hébergée (« issue » est le terme anglais pour « problème »).</p>
 </div>
 </div>
 </div>
@@ -890,23 +901,25 @@ Vous pouvez appliquer le zoom pour augmenter la partie visible (Cmd + « + » 
 </ul>
 </div>
 <div class="paragraph">
-<p>Ce nettoyage, pour le moment, se fait dans une application tierce, en control-cliquant sur le système (ou clic-droit) et en choisissant dans le menu contextuel « Ouvrir l&#8217;image ».</p>
+<p>Ce nettoyage se fait en choisissant « Corriger l&#8217;image » dans le <a href="#tags-contextual">menu contextuel du système</a>. L&#8217;image du système s&#8217;ouvre et vous pouvez appliquer des masques blancs sur les parties à « blanchir ».</p>
 </div>
 <div class="paragraph">
-<p>Si vous êtes sur macOS, l&#8217;image du système s&#8217;ouvrira dans Aperçu. Les raccourcis à connaitre sont alors les suivants :</p>
+<p>Vous pouvez appliquer ses marques par rectangle ou par polyhèdre (en cliquant les différents points de la forme, qui se refermera toute seule). Vous pouvez ensuite appliquer le changement en cliquant sur le bouton idoïne en bas de panneau.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Ctrl + Cmd + r pour poser un rectangle (la première fois, lui donner des bords et un intérieur blanc) qui permettra de masquer les défauts (en le déplaçant sur les "taches" et en le redimensionnant).</p>
-</li>
-<li>
-<p>Cmd + k pour découper l&#8217;image après avoir défini ses dimensions avec la sélection de souris<sup>*</sup></p>
-</li>
-</ul>
+<div class="sect3">
+<h4 id="_appliquer_à_tous_les_systèmes">Appliquer à tous les systèmes</h4>
+<div class="paragraph">
+<p>Vous pouvez appliquer le changement à tous les systèmes en cochant la case « Appliquer à tous les systèmes ».</p>
 </div>
 <div class="paragraph">
-<p><sup>*</sup> Attention : ne découper l&#8217;image du système qu&#8217;en hauteur. Si vous changer la largeur de l&#8217;image du système, le système sera grossi à l&#8217;affichage par rapport aux autres.</p>
+<p>Mais attention, cette <em>application</em> n&#8217;est pas rigoureuse, car la découpe des systèmes contient par nature une partie aléatoire. Aussi se peut-il que si vous voulez masquer tous les numéros de mesure avec un seul masque, ce masque tombe souvent à côté sur certain système.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_revenir_au_système_original">Revenir au système original</h4>
+<div class="paragraph">
+<p>Le masque peut même tomber au mauvais endroit et masquer des parties valides de ce système. Dans ce cas-là, on peut revenir facilement au système original en choisissant l&#8217;item « Revenir au système original » du <a href="#tags-contextual">menu contextuel</a> du système.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1079,6 +1092,9 @@ Vous pouvez appliquer le zoom pour augmenter la partie visible (Cmd + « + » 
 </li>
 <li>
 <p><a href="#tags-link">Lier deux marques</a></p>
+</li>
+<li>
+<p><a href="#tags-overlap">Chevauchement des marques</a></p>
 </li>
 </ul>
 </div>
@@ -1475,7 +1491,7 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 </table>
 </div>
 <div class="sect3">
-<h4 id="tags-chord">Marque Accord</h4>
+<h4 id="tags-chord">Marque de type Accord</h4>
 <div class="paragraph">
 <p>Une marque accord attend simplement la valeur de l&#8217;accord. Cette valeur doit respecter le <a href="#chord-writing">format requis par l&#8217;application</a>.</p>
 </div>
@@ -1503,67 +1519,8 @@ Pour accélérer la pose des marques, on peut <em>bloquer</em> un type (menu «�
 </tr>
 </tbody>
 </table>
-<div class="sect4">
-<h5 id="chord-writing">Écriture valide des accords</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Tous les accords se mettent en <strong>notation batave</strong> (de A à G) sauf si la préférence « Entrée des notes » est réglée sur « Italien (note) ».</p>
-</li>
-<li>
-<p>Tous les accords, <em>même les accords mineurs</em>, se mettent en capital (contrairement à une tradition que nous déconseillons qui veut que les minuscules soit des accords mineurs — les minuscules, dans l&#8217;application, sont utilisées pour les notes).</p>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>Pour le reste :</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 50%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Nature</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">exemple</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accord bémol</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « - » après la note de l&#8217;accord</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B-</code> pour Si bémol</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accord dièse</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « + » après la note de l&#8217;accord</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C+</code> pour Do dièse</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accord mineur</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « m » après la note de l&#8217;accord</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B-m</code> pour Si bémol mineur</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accord de quinte diminuée</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « 5- »</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B5-</code> pour Si quinte diminué (Si Ré Fa)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accord (de) septième diminuée</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AJouter « 7- »</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B7-</code> pour Si septième diminuée (Si Ré Fa La bémol)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accord demi-diminué</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « m75- »</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Dm75+</code> pour D demi-diminué (Ré Fa La bémol Do)</p></td>
-</tr>
-</tbody>
-</table>
+<p>Voir <a href="#chord-writing">Écriture valide des accords</a> pour savoir comment écrire les accords de façon valide.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2035,6 +1992,127 @@ Lorsque l&#8217;on choisit d&#8217;appliquer la nouvelle valeur de bord ou de tr
 <h3 id="tags-link">Trait de liaison entre deux marques</h3>
 <div class="paragraph">
 <p>On peut « tirer un trait », une liaison, entre deux marques</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tags-overlap">Chevauchement des marques</h3>
+<div class="paragraph">
+<p>Parfois, lorsque l&#8217;on passe de notation batave en notation italienne — ou simplement parce qu&#8217;on doit serrer les accords les uns contre les autres, un chevauchement se produit et les accords peuvent devenir illisibles. Quand cela se produit, l&#8217;application le signale à l&#8217;aide d&#8217;un voyant rouge en haut à droite de la bande supérieur de fenêtre (ne pas le confondre avec le voyant de modification, tout à droite).</p>
+</div>
+<div class="paragraph">
+<p>Pour trouver le chevauchement, cliquez sur ce voyant et cliquez sur la ligne voulue. Vous rejoindrez aussitôt la mesure en question et pourrez la corriger.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="chords">Les Accords</h2>
+<div class="sectionbody">
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#chord-writing">Écriture valide des accords</a></p>
+</li>
+<li>
+<p><a href="#chords-input">Entrée des accords</a></p>
+</li>
+<li>
+<p><a href="#chords-output">Affichage des accords</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><em>(ce qui est valide ici pour les </em>accords<em> l&#8217;est aussi pour les simples </em>notes<em>).</em></p>
+</div>
+<div class="sect2">
+<h3 id="chord-writing">Écriture valide des accords</h3>
+<div class="paragraph">
+<p>L&#8217;écriture des accords — et des notes en général — s&#8217;écrit différemment dans les textes et dans les marques de nature à recevoir des accords. Pour les textes, il faut indiquer un accord, surtout s&#8217;il est en notation batave, à l&#8217;aide du caractère défini dans les préférences (le trait plat par défaut).</p>
+</div>
+<div class="paragraph">
+<p>Cette exigence s&#8217;applique aux textes et de façon générale à tous les types de marques autres que : <strong>Accord</strong>, <strong>Modulation</strong>, <strong>Emprunt</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="chords-input">Entrée des accords</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Tous les accords se saisissent dans le style déterminé par les <a href="#prefs">préférences</a>, donc soit en <strong>notation batave</strong> (de A à G, par défaut), soit en notation italienne (Do, Ré, Mi…) si la préférence « Entrée des notes » est réglée sur « Italien (note) ».</p>
+</li>
+<li>
+<p>Tous les accords, <em>même les accords mineurs</em>, se mettent en capital (contrairement à une tradition que nous déconseillons qui veut que les minuscules soit des accords mineurs — les minuscules, dans l&#8217;application, sont utilisées pour les notes).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pour le reste :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 50%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nature</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord bémol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « - » après la note de l&#8217;accord</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B-</code> pour Si bémol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord dièse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « + » après la note de l&#8217;accord</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C+</code> pour Do dièse</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord mineur</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter un « m » après la note de l&#8217;accord</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B-m</code> pour Si bémol mineur</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord de quinte diminuée</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « 5- »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B5-</code> pour Si quinte diminué (Si Ré Fa)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord (de) septième diminuée</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AJouter « 7- »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B7-</code> pour Si septième diminuée (Si Ré Fa La bémol)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « o »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Bo</code> pour une écriture type jazz</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accord demi-diminué</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « m75- »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Dm75+</code> pour D demi-diminué (Ré Fa La bémol Do)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ajouter « o/ »</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Do/</code> pour une écriture type jazz</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="chords-output">Affichage des accords</h3>
+<div class="paragraph">
+<p>L&#8217;affiche des accords en note batave (A, B, C…) ou en note italienne (Do, Ré, Mi…) est déterminé par le réglage dans les préférences (section « Notation des acccords »).</p>
 </div>
 </div>
 </div>
@@ -2524,7 +2602,7 @@ Pour être en contact plus <em>serré</em> avec vos spectateurs, utilisez un moy
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-11-27 17:02:00 +0100
+Last updated 2026-11-28 09:10:42 +0100
 </div>
 </div>
 </body>

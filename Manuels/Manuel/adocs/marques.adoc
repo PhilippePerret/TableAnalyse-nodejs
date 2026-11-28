@@ -16,6 +16,7 @@ Les __marques__ (ou __tags__) sont tous les textes que l'on pose sur la table d'
 * <<tags-types, **Tous les types de marque**>>
 * <<tags-bords, Épaisseur des bords/traits>>
 * <<tags-link, Lier deux marques>>
+* <<tags-overlap, Chevauchement des marques>>
 ****
 
 [[tags-handing]]
@@ -281,3 +282,10 @@ NOTE: Lorsque l'on choisit d'appliquer la nouvelle valeur de bord ou de trait, l
 === Trait de liaison entre deux marques ===
 
 On peut « tirer un trait », une liaison, entre deux marques
+
+[[tags-overlap]]
+=== Chevauchement des marques ===
+
+Parfois, lorsque l'on passe de notation batave en notation italienne — ou simplement parce qu'on doit serrer les accords les uns contre les autres, un chevauchement se produit et les accords peuvent devenir illisibles. Quand cela se produit, l'application le signale à l'aide d'un voyant rouge en haut à droite de la bande supérieur de fenêtre (ne pas le confondre avec le voyant de modification, tout à droite).
+
+Pour trouver le chevauchement, cliquez sur ce voyant et cliquez sur la ligne voulue. Vous rejoindrez aussitôt la mesure en question et pourrez la corriger.

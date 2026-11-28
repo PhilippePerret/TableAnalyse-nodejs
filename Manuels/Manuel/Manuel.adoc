@@ -3,14 +3,27 @@
 
 ////
 TODO
-- documenter : on peut maintenant éditer l'image du système dans l'application
-  * possibilité de revenir à l'image originale (menu contextuel + menu "Marque > )
+- documenter : la limitation du type Forme à cadre ou borne (ou les deux)
+- documenter : l'utilisation de "^exposant^" pour marquer un exposant
+- documenter : un titre doit être entouré du signe "= titre" n'est pas bon, "= titre =" est bon
+- documenter : Segment, ouvrir à gauche et ouvrir à droite
+- documenter : Motif : alignement et taille du texte (Aspect…)
+- documenter : distance entre système et LNM (Ligne de numéros de mesure)
+
 TUTORIEL : 
   * utilisation des variables
+  * Nettoyage des systèmes
+  
 TUTORIEL : Définition de la forme
   * Mise des marques de forme
   * Affinements (textes, etc.)
   * Choix d'un thème à l'export
+
+TUTORIEL : écriture des textes
+  * titres (entourés de leur signe, sinon ne fonctionne pas)
+  * écriture des accords avec signe avant "_F"
+  * réglage ponctuel de la taille (p.e. motif), menu "Aspect…"
+    
 TUTORIEL : toutes les façons de créer une marque
   * méthode normal, mais avec simple ou double click
   * blocage d'un type en particulier
@@ -18,14 +31,8 @@ TUTORIEL : toutes les façons de créer une marque
   * lettre + click pour mettre direct la marque du type voulu (noter que là, c'est toujours click simple, même si double-click est réglé pour créer — ça n'est pas un bug mais un choix : le click simple peut être confondu avec la volonté de désélectionner ou fermer un panneau, lettre+click ne peut pas être confondu)
   * glisser une marque avec ALT/OPTION
   * + tenue de la lettre Maj pour créer sur la même horizontale ou verticale
-- Documenter : correction du système dans l'application
-  + possibilité d'appliquer à tous les systèmes
-  + possibilité de revenir à l'original par système (menu contextuel)
-- Documenter : l'écriture des accords dans les textes 
-  + bien préciser que ça ne s'applique pas aux accords, modulations, emprunt
-  + ajouter la préférence du signe avant une lettre pour indiquer que c'est une note ("_" par défaut)
-- Documenter : comment signaler un problème (issue sur Github)
-- documenter l'avertissement de chevauchement (quand on change de notation italienne/batave)
+  * copier-coller une marque ou un groupe de marques (Cmd+c)
+
 - documenter l'animation (fichier animation.adoc)
 - documenter Cmd+Maj+O pour ouvrir la boite à outils (voir à quoi elle sert encore)
 - documenter Cmd+Maj+M pour ouvrir le manuel
@@ -47,6 +54,8 @@ include::adocs/analyse/_main.adoc[]
 include::adocs/systemes.adoc[]
 
 include::adocs/marques.adoc[]
+
+include::adocs/accords.adoc[]
 
 include::adocs/preferences.adoc[]
 

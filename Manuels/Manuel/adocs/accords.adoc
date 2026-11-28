@@ -1,0 +1,42 @@
+[[chords]]
+== Les Accords ==
+
+****
+* <<chord-writing, Écriture valide des accords>>
+* <<chords-input, Entrée des accords>>
+* <<chords-output, Affichage des accords>>
+****
+
+__(ce qui est valide ici pour les __accords__ l'est aussi pour les simples __notes__).__
+
+[[chord-writing]]
+=== Écriture valide des accords ===
+
+L'écriture des accords — et des notes en général — s'écrit différemment dans les textes et dans les marques de nature à recevoir des accords. Pour les textes, il faut indiquer un accord, surtout s'il est en notation batave, à l'aide du caractère défini dans les préférences (le trait plat par défaut).
+
+Cette exigence s'applique aux textes et de façon générale à tous les types de marques autres que : **Accord**, **Modulation**, **Emprunt**
+
+[[chords-input]]
+=== Entrée des accords ===
+
+* Tous les accords se saisissent dans le style déterminé par les <<prefs, préférences>>, donc soit en **notation batave** (de A à G, par défaut), soit en notation italienne (Do, Ré, Mi…) si la préférence « Entrée des notes » est réglée sur « Italien (note) ». 
+* Tous les accords, __même les accords mineurs__, se mettent en capital (contrairement à une tradition que nous déconseillons qui veut que les minuscules soit des accords mineurs — les minuscules, dans l'application, sont utilisées pour les notes).
+
+Pour le reste : 
+[cols="1,2,1", options="header"]
+|====
+| Nature | Description | exemple
+| Accord bémol    | Ajouter un « - » après la note de l'accord    | `B-` pour Si bémol
+| Accord dièse    | Ajouter un « + » après la note de l'accord    | `C+` pour Do dièse
+| Accord mineur   | Ajouter un « m » après la note de l'accord    |  `B-m` pour Si bémol mineur
+| Accord de quinte diminuée | Ajouter « 5- » | `B5-` pour Si quinte diminué (Si Ré Fa)
+| Accord (de) septième diminuée | AJouter « 7- » | `B7-` pour Si septième diminuée (Si Ré Fa La bémol)
+|                               | Ajouter « o »  | `Bo` pour une écriture type jazz
+| Accord demi-diminué | Ajouter « m75- »  | `Dm75+` pour D demi-diminué (Ré Fa La bémol Do)
+|                     | Ajouter « o/ »    | `Do/` pour une écriture type jazz
+|====
+
+[[chords-output]]
+=== Affichage des accords ===
+
+L'affiche des accords en note batave (A, B, C…) ou en note italienne (Do, Ré, Mi…) est déterminé par le réglage dans les préférences (section « Notation des acccords »).
