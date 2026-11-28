@@ -101,6 +101,33 @@ export class Panneau {
  * (élément(s) concerné(s)) sans le masquer (cf. placePanel) ; +place+
  * false : le panneau se place lui-même.
  */
+/**
+ * Molette sur +obj+ (panneau) : le défilement reste dans le panneau (ou
+ * l'élément défilant qu'il contient) ; arrivé au bout, la table ne
+ * défile pas (#297)
+ */
+export function blockPageScroll(obj){
+  if ( obj._wheelBlocked ) return
+  obj._wheelBlocked = true
+  const canScroll = (el, dx, dy) => {
+    const cs = getComputedStyle(el)
+    if ( dy && /(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight ) {
+      if ( dy > 0 ? el.scrollTop + el.clientHeight < el.scrollHeight - 1 : el.scrollTop > 0 ) return true
+    }
+    if ( dx && /(auto|scroll)/.test(cs.overflowX) && el.scrollWidth > el.clientWidth ) {
+      if ( dx > 0 ? el.scrollLeft + el.clientWidth < el.scrollWidth - 1 : el.scrollLeft > 0 ) return true
+    }
+    return false
+  }
+  obj.addEventListener('wheel', (e) => {
+    for ( let el = e.target instanceof Element ? e.target : null ; el ; el = el.parentElement ) {
+      if ( canScroll(el, e.deltaX, e.deltaY) ) return
+      if ( el === obj ) break
+    }
+    e.preventDefault()
+  }, {passive: false})
+}
+
 export function addPanelHead(obj, {title, onClose, target, place = true}){
   obj.classList.add('panneau-ui')
   // Jamais hors de la fenêtre : à l'ouverture et à chaque changement de
@@ -113,6 +140,9 @@ export function addPanelHead(obj, {title, onClose, target, place = true}){
     , DCreate('SPAN', {class: 'panneau-spacer'}) // pour centrer le titre
   ]})
   obj.insertBefore(head, obj.firstChild)
+  // Molette sur le panneau : jamais de défilement de la table, même au
+  // bout du contenu du panneau (#297)
+  blockPageScroll(obj)
   // Aucun clic ne sort du panneau (création de marque sur la table)
   listen(obj, 'click', (e) => e.stopPropagation())
   listen(obj, 'dblclick', (e) => e.stopPropagation())

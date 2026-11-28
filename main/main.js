@@ -680,6 +680,12 @@ function registerIpc(){
       click && item.click({}, mainWindow, mainWindow.webContents)
       return {label: item.label, checked: item.checked}
     })
+    handle('test:realWheel', async ({x, y, dy}) => {
+      const wc = mainWindow.webContents
+      wc.sendInputEvent({type: 'mouseMove', x, y})
+      for ( let i = 0 ; i < 5 ; ++i ) wc.sendInputEvent({type: 'mouseWheel', x, y, deltaX: 0, deltaY: -dy / 5, canScroll: true})
+      await new Promise(r => setTimeout(r, 300))
+    })
     handle('test:realMove', async ({x, y}) => {
       mainWindow.webContents.sendInputEvent({type: 'mouseMove', x, y})
       await new Promise(r => setTimeout(r, 100))
