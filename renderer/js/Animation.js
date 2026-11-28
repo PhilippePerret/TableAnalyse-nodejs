@@ -216,7 +216,7 @@ class AnimationClass {
    */
   demarcation(i){
     const sys = this.systems[i]
-    return sys.top + sys.obj.offsetHeight + Systeme.measureLineOffset
+    return sys.top + sys.obj.offsetHeight + sys.measureOffset
   }
 
   // Curseur sur la bande du système courant, table défilée pour la montrer
