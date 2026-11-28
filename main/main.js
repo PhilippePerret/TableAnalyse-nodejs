@@ -633,6 +633,10 @@ function registerIpc(){
       wc.sendInputEvent({type: 'mouseUp', x: x + dx, y: y + dy, button: 'left', clickCount: 1, modifiers})
       await new Promise(r => setTimeout(r, 150))
     })
+    handle('test:realMove', async ({x, y}) => {
+      mainWindow.webContents.sendInputEvent({type: 'mouseMove', x, y})
+      await new Promise(r => setTimeout(r, 100))
+    })
     handle('test:realClick', async ({x, y, clickCount = 1, modifiers = []}) => {
       const wc = mainWindow.webContents
       for ( let n = 1 ; n <= clickCount ; ++n ) {

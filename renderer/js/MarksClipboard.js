@@ -5,25 +5,30 @@ import { UI } from './UI.js'
 import { setModified } from './Current.js'
 import { Groups } from './Groups.js'
 
-// Marge (px) entre les marques collées et le haut et la droite de la
-// fenêtre
-const MARGIN = 20
+// Dernière position de la souris dans la fenêtre (null : hors fenêtre)
+let mouseAt = null
+document.addEventListener('mousemove', e => { mouseAt = {x: e.clientX, y: e.clientY} }, true)
+document.documentElement.addEventListener('mouseleave', () => { mouseAt = null })
+window.addEventListener('blur', () => { mouseAt = null })
 
 /**
  * MarksClipboard
  * --------------
  * Copier (Cmd/Ctrl C), couper (Cmd/Ctrl X) et coller (Cmd/Ctrl V) les
  * marques sélectionnées (cf. KeyboardEvents). Presse-papier propre à
- * l'application. Les marques collées gardent leurs positions relatives
- * et sont placées en haut à droite de la fenêtre ; elles deviennent la
- * sélection.
+ * l'application. Une marque d'un groupe entraîne tout le groupe. Les
+ * marques collées gardent leurs positions relatives et sont placées à
+ * la souris (coin haut gauche de l'ensemble) si elle est sur la table,
+ * sinon au milieu de la fenêtre (#279) ; elles deviennent la sélection.
  */
 class MarksClipboardClass {
 
   // @return true si des marques ont été copiées
   copy(){
-    const marks = (AObjet.selection || []).filter(m => m instanceof AMark && m.obj)
-    if ( !marks.length ) return false
+    const selected = (AObjet.selection || []).filter(m => m instanceof AMark && m.obj)
+    if ( !selected.length ) return false
+    const outers = new Set(selected.map(m => Groups.outerOf(m)).filter(Boolean))
+    const marks = AObjet.items.filter(m => m instanceof AMark && m.obj && (selected.includes(m) || outers.has(Groups.outerOf(m))))
     this.items = marks.map(m => ({
         data:   JSON.parse(JSON.stringify(m.data))
       , width:  m.obj.offsetWidth
@@ -41,15 +46,29 @@ class MarksClipboardClass {
 
   paste(){
     if ( !this.items ) return false
+    const left   = Math.min(...this.items.map(i => i.data.left))
     const right  = Math.max(...this.items.map(i => i.data.left + i.width))
     const top    = Math.min(...this.items.map(i => i.data.top))
-    // Haut à droite de la fenêtre, sous la bande du haut, en coordonnées
-    // de la table
+    const bottom = Math.max(...this.items.map(i => i.data.top + i.height))
+    // Zone visible de la table, sous la bande du haut
     const table = UI.TableAnalyse.getBoundingClientRect()
     const band  = DGet('#titlebar')
-    const bandBottom = band ? band.getBoundingClientRect().bottom : 0
-    const dx = Math.round(Math.min(window.innerWidth, document.documentElement.clientWidth) - MARGIN - table.left - right)
-    const dy = Math.round(bandBottom + MARGIN - table.top - top)
+    const zone = {
+        left:   Math.max(0, table.left)
+      , top:    Math.max(band ? band.getBoundingClientRect().bottom : 0, table.top)
+      , right:  Math.min(document.documentElement.clientWidth, table.right)
+      , bottom: Math.min(document.documentElement.clientHeight, table.bottom)
+    }
+    const onTable = mouseAt
+      && mouseAt.x >= zone.left && mouseAt.x <= zone.right
+      && mouseAt.y >= zone.top  && mouseAt.y <= zone.bottom
+      && UI.TableAnalyse.contains(document.elementFromPoint(mouseAt.x, mouseAt.y))
+    const at = onTable ? mouseAt : {
+        x: (zone.left + zone.right) / 2 - (right - left) / 2
+      , y: (zone.top + zone.bottom) / 2 - (bottom - top) / 2
+    }
+    const dx = Math.round(at.x - table.left - left)
+    const dy = Math.round(at.y - table.top - top)
     // Groupes des originaux : nouveaux groupes pour les copies
     const newGroups = {}
     const news = this.items.map(i => {

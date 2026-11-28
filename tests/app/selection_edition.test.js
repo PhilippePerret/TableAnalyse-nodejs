@@ -84,7 +84,7 @@ T.test('copier / coller, couper / coller', async () => {
   T.ok(copies.every(m => ![a.id, b.id].includes(m.id)), 'nouveaux identifiants')
   const [ca, cb] = copies.sort((x, y) => x.left - y.left)
   T.eq(cb.left - ca.left, b.left - a.left, 'positions relatives gardées')
-  T.ok(cb.obj.getBoundingClientRect().right <= innerWidth, 'copies visibles (à droite de la fenêtre)')
+  T.ok(cb.obj.getBoundingClientRect().right <= innerWidth, 'copies visibles')
   // Couper
   AObjet.deselectAll() ; AObjet.addToSelection(c)
   T.key(document.body, 'x', CMD)
@@ -93,6 +93,78 @@ T.test('copier / coller, couper / coller', async () => {
   const pasted = AObjet.selection[0]
   T.eq([pasted.type, pasted.content], ['har', 'V'], '⌘V après ⌘X : marque recréée')
   clean(a, b, ca, cb, pasted)
+})
+
+// Collage à la souris, sinon au milieu de la fenêtre ; groupe entier
+// copié (#279). Vrai déplacement de souris, page défilée.
+const rectOf = ms => {
+  const rs = ms.map(m => m.obj.getBoundingClientRect())
+  return {left: Math.min(...rs.map(r => r.left)), top: Math.min(...rs.map(r => r.top)), right: Math.max(...rs.map(r => r.right)), bottom: Math.max(...rs.map(r => r.bottom))}
+}
+T.test('coller à l’endroit de la souris (#279)', async () => {
+  window.scrollTo({top: 1000, behavior: 'instant'})
+  const a = await T.mark({type: 'acc', content: 'A', top: 1150, left: 300})
+  const b = await T.mark({type: 'har', content: 'V', top: 1250, left: 450})
+  const made = []
+  try {
+    AObjet.deselectAll() ; AObjet.addToSelection(a) ; AObjet.addToSelection(b)
+    T.key(document.body, 'c', CMD)
+    await T.invoke('test:realMove', {x: 700, y: 400})
+    T.key(document.body, 'v', CMD)
+    made.push(...AObjet.selection)
+    T.eq(made.length, 2, 'deux copies')
+    const r = rectOf(made)
+    T.ok(Math.abs(r.left - 700) <= 2 && Math.abs(r.top - 400) <= 2, `coin haut gauche à la souris (${Math.round(r.left)}, ${Math.round(r.top)})`)
+    const [ca, cb] = made.slice().sort((x, y) => x.left - y.left)
+    T.eq([cb.left - ca.left, cb.top - ca.top], [b.left - a.left, b.top - a.top], 'positions relatives gardées')
+    // Deuxième collage ailleurs
+    await T.invoke('test:realMove', {x: 400, y: 500})
+    T.key(document.body, 'v', CMD)
+    const second = AObjet.selection.slice()
+    made.push(...second)
+    const r2 = rectOf(second)
+    T.ok(Math.abs(r2.left - 400) <= 2 && Math.abs(r2.top - 500) <= 2, 'deuxième collage à la nouvelle position')
+  } finally { clean(a, b, ...made) }
+})
+
+T.test('coller au milieu de la fenêtre quand la souris est hors de la table (#279)', async () => {
+  window.scrollTo({top: 1000, behavior: 'instant'})
+  const a = await T.mark({type: 'acc', content: 'A', top: 1150, left: 300})
+  const made = []
+  try {
+    AObjet.deselectAll() ; AObjet.addToSelection(a)
+    T.key(document.body, 'c', CMD)
+    document.documentElement.dispatchEvent(new MouseEvent('mouseleave'))
+    T.key(document.body, 'v', CMD)
+    made.push(...AObjet.selection)
+    const r = rectOf(made)
+    const cx = (r.left + r.right) / 2, cy = (r.top + r.bottom) / 2
+    const band = document.querySelector('#titlebar')
+    const top = band ? band.getBoundingClientRect().bottom : 0
+    const W = document.documentElement.clientWidth, H = document.documentElement.clientHeight
+    T.ok(Math.abs(cx - W / 2) <= 40, `centré horizontalement (${Math.round(cx)} / ${W / 2})`)
+    T.ok(Math.abs(cy - (top + H) / 2) <= 40, `centré verticalement (${Math.round(cy)} / ${(top + H) / 2})`)
+  } finally { clean(a, ...made) }
+})
+
+T.test('copier une marque d’un groupe : tout le groupe est collé (#279)', async () => {
+  const [a, b, c] = await three()
+  const made = []
+  try {
+    ;[a, b].forEach(m => AObjet.addToSelection(m))
+    Groups.group([a, b])
+    const g = Groups.outerOf(a)
+    AObjet.deselectAll() ; AObjet.addToSelection(a) ; AObjet.addToSelection(c)
+    T.key(document.body, 'c', CMD)
+    await T.invoke('test:realMove', {x: 300, y: 450})
+    T.key(document.body, 'v', CMD)
+    made.push(...AObjet.selection)
+    T.eq(made.map(m => m.content).sort(), ['A', 'B', 'V'], 'groupe entier + marque seule')
+    const byC = Object.fromEntries(made.map(m => [m.content, m]))
+    const ng = Groups.outerOf(byC.A)
+    T.ok(ng && ng != g && Groups.outerOf(byC.B) == ng, 'copies du groupe : nouveau groupe')
+    T.no(Groups.outerOf(byC.V), 'marque seule : sans groupe')
+  } finally { clean(a, b, c, ...made) }
 })
 
 T.test('groupes : ⌘G, sélection du groupe entier, ⌘⇧G', async () => {
