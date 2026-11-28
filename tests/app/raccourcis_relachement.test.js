@@ -172,7 +172,7 @@ T.test('manuel : ⌘ + Maj + M (format des préférences), plus Maj + M ; demand
     const sel = document.querySelector('#pref-help_format')
     T.ok(sel, 'menu des préférences')
     T.eq(Array.from(sel.options).map(o => o.textContent), ['HTML', 'PDF', 'ePub'], 'choix')
-    T.eq(sel.closest('.div-data').querySelector('label').textContent, 'Aide ouverte par le raccourci ⌘Maj+M', 'libellé')
+    T.eq(sel.closest('.div-data').querySelector('label').textContent, 'Aide ouverte par le raccourci ⌘ + Maj + m', 'libellé')
     T.eq(Preferences.get('help_format'), 'html', 'HTML par défaut')
     const before = (await opened()).length
     kev('keydown', 'm', {code: 'KeyM', shiftKey: true, metaKey: true}, document.body)
