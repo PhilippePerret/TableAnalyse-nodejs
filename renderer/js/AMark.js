@@ -514,6 +514,7 @@ build(){
   // Css suplémentaires
   this.applyCss()
   this.applyBorder()
+  this.applyTextSize()
   this.isBorne && (o.title = this.content)
   this.isBorne && Forme.shown && this.toggleExpanded(true)
 
@@ -967,7 +968,8 @@ get contextMenuItems(){
   // Marque de forme : passage de la version borne à la version cadre et
   // inversement
   FORME_CADRE_BORNE[this.subtype] && this.isForme && items.push({label: T(this.isBorne ? 'to_frame' : 'to_marker'), value: 'toggleFrame'})
-  this.borderTarget && items.push({label: T('border'), value: 'border'})
+  // Trait et texte : « Aspect » (bord et taille du texte, #287)
+  this.borderTarget && items.push({label: T(this.hasAspectText ? 'aspect' : 'border'), value: 'border'})
   // Mode gris : sortir la marque du mode gris (ou l'y remettre)
   Aspect.isGray && !this.isLongText && items.push({label: T(this.isUngray ? 'regray' : 'ungray'), value: 'toggleGray'})
   this.type == 'ext' && items.push({type: 'separator'}, {label: t('ui.system_menu.open_image'), value: 'openImage'}, {label: T('reload_image'), value: 'reloadImage', enabled: !!this.data.file})
@@ -1030,6 +1032,33 @@ get borderTarget(){
   if ( this.type == 'bbx' && ['box', 'cel', 'bxt'].includes(this.subtype) ) return 'obj'
   return null
 }
+
+// Marque à trait et texte (sauf accord, harmonie, modulation) : taille
+// du texte réglable dans « Aspect » (#287)
+get hasAspectText(){
+  return !!this.borderTarget && !['acc', 'har', 'mod'].includes(this.type)
+    && !!this.contentSpan && '' !== String(this.content || '').trim()
+}
+
+// Taille (px) du texte : réglée (data.text_size, aperçu), sinon celle
+// de son style
+get textSize(){
+  const v = this.textSizePreview !== undefined ? this.textSizePreview : this.data.text_size
+  return null != v ? Number(v) : Math.round(parseFloat(getComputedStyle(this.contentSpan).fontSize))
+}
+applyTextSize(){
+  if ( !this.contentSpan ) return
+  const v = this.textSizePreview !== undefined ? this.textSizePreview : this.data.text_size
+  null != v ? this.contentSpan.style.setProperty('font-size', px(v), 'important') : this.contentSpan.style.removeProperty('font-size')
+}
+previewTextSize(v){ this.textSizePreview = v ; this.applyTextSize() }
+confirmTextSize(){
+  if ( this.textSizePreview === undefined ) return
+  null == this.textSizePreview ? delete this.data.text_size : (this.data.text_size = this.textSizePreview)
+  delete this.textSizePreview
+  setModified()
+}
+cancelTextSize(){ delete this.textSizePreview ; this.applyTextSize() }
 
 /**
  * Bords de la marque {width, line, intensity} : réglés (data.border,

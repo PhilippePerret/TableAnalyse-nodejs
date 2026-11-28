@@ -24,11 +24,15 @@ class BorderEditorClass {
     marks = [marks].flat().filter(m => m.borderTarget)
     if ( !marks.length ) return
     this.marks = marks
+    // « Aspect » : marques à trait et texte, taille du texte en plus (#287)
+    const withText = marks.every(m => m.hasAspectText)
     const mark = {
         previewBorder: (v) => marks.forEach(m => m.previewBorder(v))
-      , confirmBorder: () => marks.forEach(m => m.confirmBorder())
+      , confirmBorder: () => marks.forEach(m => { m.confirmBorder() ; withText && m.confirmTextSize() })
       , get border(){ return marks[0].border }
     }
+    const text = withText && new RangeField({min: 6, max: 120, value: marks[0].textSize, onInput: v => v > 0 && marks.forEach(m => m.previewTextSize(v))})
+    this.withText = withText
     const T = (k) => t(`ui.panels.liaison.${k}`)
     const st = mark.border
     const line  = DCreate('SELECT', {inner: ['solid', 'dashed'].map(v => DCreate('OPTION', {value: v, text: T('lines')[v]}))})
@@ -45,6 +49,7 @@ class BorderEditorClass {
       line.value  = cur.line
       width.value = cur.width
       intensity.value = cur.intensity
+      if ( text ) { marks.forEach(m => m.previewTextSize(null)) ; text.value = marks[0].textSize }
     })
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
     const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
@@ -55,13 +60,14 @@ class BorderEditorClass {
             editorField(T('width'), [...width.elements, DCreate('SPAN', {text: 'px'})])
           , editorField(t('ui.panels.border.intensity'), intensity.elements)
           , editorField(T('line'),  line)
+          , ...(text ? [editorField(t('ui.panels.border.text'), [...text.elements, DCreate('SPAN', {text: 'px'})])] : [])
           , editorField('', [btnDefault, toPrefsButton(() => this.toPrefs())])
         ]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
     ]})
     document.body.appendChild(panel)
     this.panel = panel
-    addPanelHead(panel, {title: t('ui.panels.border.title'), onClose: this.close.bind(this), target: marks.map(m => m.obj)})
+    addPanelHead(panel, {title: t(withText ? 'ui.panels.border.aspect' : 'ui.panels.border.title'), onClose: this.close.bind(this), target: marks.map(m => m.obj)})
   }
 
   /**
@@ -88,7 +94,7 @@ class BorderEditorClass {
   // Fermeture sans OK (Renoncer, croix…) : les marques reprennent leurs
   // bords
   close(){
-    this.marks && this.marks.forEach(m => m.cancelBorder())
+    this.marks && this.marks.forEach(m => { m.cancelBorder() ; m.cancelTextSize() })
     this.panel && this.panel.remove()
     this.panel = null
     this.marks = null

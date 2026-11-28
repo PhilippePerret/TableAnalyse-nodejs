@@ -179,6 +179,7 @@ mark_context:
   unlock:           "Sblocca"
   edit:             "Modifica…"
   border:           "Bordo/linea…"
+  aspect:           "Aspetto"
   align:            "Allinea ai segni dello stesso tipo"
   align_harmony:    "Allinea con l'armonia"
   align_chord:      "Allinea con l'accordo"
@@ -408,6 +409,8 @@ panels:
     count_many:       "%{n} segni trovati"
   border:
     title:            "Bordi"
+    aspect:           "Aspetto"
+    text:             "Testo"
     intensity:        "Intensità"
     default:          "Valore predefinito"
   liaison:

@@ -179,6 +179,7 @@ mark_context:
   unlock:           "Unlock"
   edit:             "Edit…"
   border:           "Border/Line…"
+  aspect:           "Appearance"
   align:            "Align with Marks of the Same Type"
   align_harmony:    "Align with the Harmony"
   align_chord:      "Align with the Chord"
@@ -408,6 +409,8 @@ panels:
     count_many:       "%{n} marks found"
   border:
     title:            "Borders"
+    aspect:           "Appearance"
+    text:             "Text"
     intensity:        "Intensity"
     default:          "Default value"
   liaison:

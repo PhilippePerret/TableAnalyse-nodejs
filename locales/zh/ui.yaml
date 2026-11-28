@@ -179,6 +179,7 @@ mark_context:
   unlock:           "解锁"
   edit:             "编辑…"
   border:           "边框/线条…"
+  aspect:           "外观"
   align:            "与同类标记对齐"
   align_harmony:    "与和声标记对齐"
   align_chord:      "与和弦标记对齐"
@@ -408,6 +409,8 @@ panels:
     count_many:       "找到 %{n} 个标记"
   border:
     title:            "边框"
+    aspect:           "外观"
+    text:             "文本"
     intensity:        "浓度"
     default:          "默认值"
   liaison:

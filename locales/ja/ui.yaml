@@ -179,6 +179,7 @@ mark_context:
   unlock:           "ロックを解除"
   edit:             "編集…"
   border:           "枠線/線…"
+  aspect:           "外観"
   align:            "同じ種類のマークに揃える"
   align_harmony:    "和声記号に揃える"
   align_chord:      "コードに揃える"
@@ -408,6 +409,8 @@ panels:
     count_many:       "%{n} 個のマークが見つかりました"
   border:
     title:            "枠線"
+    aspect:           "外観"
+    text:             "テキスト"
     intensity:        "濃さ"
     default:          "既定値"
   liaison:
