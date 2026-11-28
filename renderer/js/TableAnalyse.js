@@ -116,7 +116,8 @@ export class TableAnalyse {
     AObjet.items.forEach(ao => {
       if ( !(ao instanceof AMark) || !ao.obj || ao.isLocked ) return
       const m = ao.obj.getBoundingClientRect()
-      if ( m.right < r.left || m.left > r.right || m.bottom < r.top || m.top > r.bottom ) return
+      // Marque entièrement dans le rectangle (#302)
+      if ( m.left < r.left || m.right > r.right || m.top < r.top || m.bottom > r.bottom ) return
       ao.isSelected ? AObjet.removeFromSelection(ao) : AObjet.addToSelection(ao)
     })
     // Pas de désélection par le clic qui suit le relâchement

@@ -55,6 +55,30 @@ T.test('sélection par rectangle', async () => {
   clean(a, b, c)
 })
 
+// Marque entièrement dans le rectangle, quel que soit le sens (#302)
+T.test('sélection par rectangle : seulement les marques entièrement dedans (#302)', async () => {
+  const drag = (from, to) => {
+    AObjet.deselectAll()
+    T.mouse(document.body, 'mousedown', from)
+    T.mouse(document, 'mousemove', {clientX: from.clientX + (to.clientX > from.clientX ? 10 : -10), clientY: from.clientY + (to.clientY > from.clientY ? 10 : -10)})
+    T.mouse(document, 'mousemove', to)
+    T.mouse(document.body, 'mouseup', to)
+    T.mouse(document.body, 'click', Object.assign({detail: 1}, to))
+  }
+  const [a, b, c] = await three()
+  const r1 = a.obj.getBoundingClientRect(), r2 = b.obj.getBoundingClientRect()
+  // Haut-gauche → bas-droite : b coupé à droite
+  drag({clientX: r1.left - 10, clientY: r1.top - 10}, {clientX: r2.right - 5, clientY: r2.bottom + 10})
+  T.eq(sel(), ids(a), 'haut-gauche → bas-droite : b (coupée) exclue')
+  // Bas-droite → haut-gauche : a coupée à gauche
+  drag({clientX: r2.right + 10, clientY: r2.bottom + 10}, {clientX: r1.left + 5, clientY: r1.top - 10})
+  T.eq(sel(), ids(b), 'bas-droite → haut-gauche : a (coupée) exclue')
+  // Coupées en haut
+  drag({clientX: r1.left - 10, clientY: r1.top + 3}, {clientX: r2.right + 10, clientY: r2.bottom + 10})
+  T.eq(sel(), [], 'coupées en haut : aucune')
+  clean(a, b, c)
+})
+
 T.test('déplacement aux flèches (4 px, Maj ×10, Alt 1 px) et annulation ⌘Z', async () => {
   const [a, b, c] = await three()
   AObjet.addToSelection(a) ; AObjet.addToSelection(b)
