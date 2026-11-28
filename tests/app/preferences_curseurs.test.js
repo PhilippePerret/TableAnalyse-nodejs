@@ -17,17 +17,14 @@ const ctrl = key => {
 const ptToPx = pt => Math.round(pt * 96 / 72 * 100) / 100
 const sizeOf = m => Math.round(parseFloat(getComputedStyle(m.obj.querySelector('span.content')).fontSize) * 100) / 100
 
-T.test('taille des marques : tableau, parties, sections, segments', async () => {
-  const table = panel().querySelector('table#prefs-marks-table')
-  T.ok(table, 'tableau')
-  T.eq([...table.querySelectorAll('th')].map(e => e.textContent).filter(Boolean), ['Taille'], 'colonne « Taille »')
-  const labels = [...table.querySelectorAll('td.row-label')].map(e => e.textContent)
-  for ( const l of ['Accords', 'Harmonies', 'Parties', 'Sections', 'Segments'] ) T.ok(labels.includes(l), `ligne « ${l} »`)
-  ;[...table.querySelectorAll('tr')].slice(1).forEach(tr => {
-    T.eq(tr.querySelectorAll('input[type="text"]').length, 1, 'un champ')
-    T.eq(tr.querySelectorAll('input[type="range"]').length, 1, 'un curseur')
-    T.eq([...tr.querySelectorAll('button.pref-step')].map(b => b.textContent), ['<', '>'], 'flèches')
-  })
+T.test('taille des marques : une ligne par marque, parties, sections, segments', async () => {
+  const rows = ['Accords', 'Harmonies', 'Parties', 'Sections', 'Segments']
+  const labels = [...panel().querySelectorAll('div.pref-row label')].map(l => l.textContent)
+  rows.forEach(l => T.ok(labels.includes(l), `ligne « ${l} »`))
+  for ( const k of ['accords', 'harmonie', 'partie', 'section', 'segment'] ) {
+    const c = ctrl(`marque_${k}_size`)
+    T.ok(c.slider && c.minus && c.plus, `${k} : curseur et flèches`)
+  }
 })
 
 T.test('valeurs par défaut : partie 24 pt, section 18 pt, segment 13 pt', async () => {

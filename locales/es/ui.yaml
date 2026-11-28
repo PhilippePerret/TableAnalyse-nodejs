@@ -494,10 +494,10 @@ dialogs:
 
 # Preferencias del análisis (etiqueta y precisión)
 prefs:
-  form_position:          {label: "Ubicación de la forma construida"}
-  form_height_1:          {label: "Altura de las marcas de parte (encima del sistema)"}
-  form_height_2:          {label: "Altura de las marcas de sección (encima del sistema)"}
-  form_height_3:          {label: "Altura de las marcas de segmento (encima del sistema)"}
+  form_position:          {label: "Construcción de la forma"}
+  form_height_1:          {label: "Altura de las marcas de parte"}
+  form_height_2:          {label: "Altura de las marcas de sección"}
+  form_height_3:          {label: "Altura de las marcas de segmento"}
   theme:                  {label: "Aspecto del análisis"}
   lock_systems:           {label: "Bloquear los sistemas"}
   grid_horizontal_space:  {label: "Paso horizontal de la cuadrícula"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "Anchura de los sistemas"}
   top_first_system:       {label: "Desplazamiento superior del primer sistema"}
   distance_systemes:      {label: "Distancia por defecto de los sistemas"}
-  max_table_blank:        {label: "Espacio en blanco vertical máximo (en la mesa)"}
+  max_table_blank:        {label: "Espacio en blanco vertical máximo (mesa)"}
   layout_title_1_font: {label: "Fuente de los títulos de nivel 1"}
   layout_title_1_size: {label: "Tamaño de los títulos de nivel 1"}
   layout_title_1_before: {label: "Espacio antes de los títulos de nivel 1"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "Espacio antes de los títulos de nivel 3"}
   layout_title_3_after: {label: "Espacio después de los títulos de nivel 3"}
   export_systems_gap:     {label: "Espacio en blanco vertical máximo (exportación)"}
-  adjust_same_mark:       {label: "Igualar en altura las marcas del mismo tipo"}
-  snap_for_adjust_pos:    {label: "Distancia máxima de imantación de las marcas"}
+  adjust_same_mark:       {label: "Alinear marcas del mismo tipo"}
+  snap_for_adjust_pos:    {label: "Distancia de imantación (marcas)"}
   marque_accords_size:    {label: "Tamaño de las marcas de acorde"}
   marque_harmonie_size:   {label: "Tamaño de las marcas de armonía"}
   marque_cadence_type_size: {label: "Tamaño de letra del texto de la marca de cadencia (p. ej. “C.P.”)"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "Tamaño de los pedales"}
   marque_texte_size_1:    {label: "Tamaño de los textos grandes"}
   marque_texte_size_2:    {label: "Tamaño de los textos medianos"}
-  measure_line_offset:    {label: "Distancia entre sistema y números de compás"}
-  distance_after_measure_line: {label: "Distancia entre números de compás y sistema siguiente"}
+  measure_line_offset:    {label: "Distancia sistema ←→ núm. compases"}
+  distance_after_measure_line: {label: "Distancia núm. compases ←→ sist. siguiente"}
   marque_measure:         {label: "Tamaño de los números de compás"}
   marque_texte_size_3:    {label: "Tamaño de los textos pequeños"}
   marque_texte_size_4:    {label: "Tamaño de los textos muy pequeños"}
   marque_partie_size:     {label: "Tamaño de las partes"}
   marque_section_size:    {label: "Tamaño de las secciones"}
   marque_segment_size:    {label: "Tamaño de los segmentos"}
-  window_width:           {label: "Anchura de la ventana al abrir"}
-  window_height:          {label: "Altura de la ventana al abrir"}
-  last_scroll:            {label: "Desplazamiento al abrir"}
+  window_width:           {label: "Anchura de la ventana"}
+  window_height:          {label: "Altura de la ventana"}
+  last_scroll:            {label: "Desplazamiento"}
   color_mesure:           {label: "Color de los números de compás"}
   color_accords:          {label: "Nombres de acordes"}
   color_harmonie:         {label: "Cifrados armónicos"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "Actualización automática de la aplicación"}
   help_format:            {label: "Ayuda abierta con el atajo ⌘ + Mayús + m"}
   mark_creation_click:    {label: "Creación de una nueva marca"}
-  animate:                {label: "Iniciar la animación al abrir", precision: "Las marcas se mostrarán progresivamente"}
+  animate:                {label: "Iniciar la animación al abrir"}
   notation_display:       {label: "Visualización de las notas de los acordes"}
   notation_input:         {label: "Entrada de las notas de los acordes"}
-  note_char:              {label: "Carácter que precede a una nota en los textos"}
+  note_char:              {label: "Signo antes de una nota (texto)"}
 
 prefs_layout:
   title:  "Título"
   font:   "Fuente"
   size:   "Tamaño"
   spaces: "Espacio antes y después (exportación)"
-  level:  "Nivel %{n}"
+  level:  "Títulos de nivel %{n}"
 
 prefs_marks:
   size: "Tamaño"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "Secciones"
     segment: "Segmentos"
 
+prefs_rows:
+  thickness: "grosor"
+  intensity: "intensidad"
+  font: "fuente"
+  size: "tamaño"
+  before: "espacio antes"
+  after: "espacio después"
+
 prefs_lines:
   border:    "Borde"
   width:     "Grosor"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "Línea de préstamos"
     cadence: "Línea de cadencia"
     note: "Contorno de tipo de nota"
-    form: "Porción (versión marco)"
-    measure: "Marco de número de compás"
+    form: "Porción (marco)"
+    measure: "Borde núm. compás"
 
 prefs_current:
   width:  "Anchura actual"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "Tamaño de las marcas"
   lines:                  "Trazos"
   colors:                 "Colores"
-  window:                 "Ventana"
+  window:                 "Ventana al abrir"
   others:                 "Otros"
   form:                   "Forma"
 

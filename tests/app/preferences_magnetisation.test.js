@@ -12,7 +12,7 @@ const cb    = () => document.querySelector('#pref-adjust_same_mark')
 T.test('libellé, valeur par défaut, position, sans texte explicatif', async () => {
   T.eq(PreferencesAppData.snap_for_adjust_pos.default, 30, '30 px par défaut')
   const row = field().closest('.div-data')
-  T.eq(row.querySelector('label').textContent, 'Distance maximale de magnétisation des marques', 'libellé')
+  T.eq(row.querySelector('label').textContent, 'Distance de magnétisation (marques)', 'libellé')
   T.ok(cb().closest('.div-data').nextElementSibling === row, 'juste sous « Ajuster en hauteur »')
   T.no(row.nextElementSibling && row.nextElementSibling.classList.contains('description'), 'aucun texte explicatif')
 })

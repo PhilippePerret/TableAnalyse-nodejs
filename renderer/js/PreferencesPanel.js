@@ -161,9 +161,12 @@ onChange_adjust_same_mark(){
   field.disabled = !cb.checked
   const row = field.closest('.div-data')
   row.classList.toggle('pref-disabled', !cb.checked)
-  // Tout le texte de la ligne grisé (libellé, champ, unité)
-  row.style.opacity = cb.checked ? '' : '0.4'
-  row.style.pointerEvents = cb.checked ? '' : 'none'
+  // Tout le texte de la ligne grisé (libellé, champ, unité ; la ligne
+  // elle-même n'a pas de boite, cf. display: contents)
+  ;[row, ...row.children].forEach(e => {
+    e.style.opacity = cb.checked ? '' : '0.4'
+    e.style.pointerEvents = cb.checked ? '' : 'none'
+  })
 }
 onChange_notation_display(){
   Preferences.saveData('notation_display', Preferences.getValueOf('notation_display'))
@@ -319,9 +322,9 @@ build(){
     const prefs = group.keys.map(k => PreferencesAppData[k]).filter(dp => dp && !dp.hidden)
     if ( !prefs.length ) return
     o.appendChild(DCreate('DIV', {class:'pref-group', text: t(`ui.prefs_groups.${group.id}`)}))
-    if ( group.id == 'layout' ) return o.appendChild(this.buildLayoutTable())
-    if ( group.id == 'lines' )  return o.appendChild(this.buildLinesTable())
-    if ( group.id == 'marks' )  return o.appendChild(this.buildMarksTable())
+    if ( group.id == 'layout' ) return this.buildLayoutRows(o)
+    if ( group.id == 'lines' )  return this.buildLinesRows(o)
+    if ( group.id == 'marks' )  return this.buildMarksRows(o)
     prefs.forEach(dp => {
       this.buildPref(o, dp)
       dp.id == 'auto_update' && o.appendChild(this.buildVersionRow())
@@ -376,73 +379,47 @@ buildVersionRow(){
 }
 
 /**
- * Section en tableau : libellés des colonnes au-dessus (+heads+), une
- * ligne par élément ({label, cells: [[clés des préférences]…]}),
- * libellés à gauche, champs à droite. Un clic sur le libellé d'une
- * ligne place dans son premier champ.
+ * Ligne de la grille (colonne 1 : libellé, colonne 2 : réglage) de la
+ * préférence +key+, libellé +main+ et, éventuellement, sous-libellé
+ * discret +sub+ (aligné à droite dans la colonne 1), #306
  */
-buildPrefsTable(id, heads, rows){
-  // Cellules d'une préférence : champ | unité | bouton « Appliquer »
-  // (chacun dans sa colonne, pour aligner les libellés sur les champs)
-  const parts = key => {
-    const f = PreferencesAppData[key] && this.buildInputText(PreferencesAppData[key]).querySelector('.pref-field')
-    if ( !f ) return []
-    return [
-        {kind: 'field',  el: f.querySelector('input[type="text"]')}
-      , {kind: 'unit',   el: f.querySelector('.pref-unit')}
-      , {kind: 'slider', el: f.querySelector('.pref-slider')}
-      , {kind: 'button', el: f.querySelector('button.btn-apply, button.btn-current')}
-    ].filter(p => p.el || p.kind == 'unit')
-  }
-  const built = rows.map(({label, cells}) => ({label, groups: cells.map(keys => keys.flatMap(parts))}))
-  // En-tête : chaque libellé au-dessus des champs de sa colonne
-  const model = built[0].groups
-  const ths = [DCreate('TH', {text: heads[0]})]
-  model.forEach((group, g) => {
-    const fields = group.map((p, i) => p.kind == 'field' ? i : -1).filter(i => i >= 0)
-    const first = fields[0], last = fields[fields.length - 1]
-    for ( let i = 0 ; i < first ; ++i ) ths.push(DCreate('TH'))
-    ths.push(DCreate('TH', {class: 'col-head', text: heads[g + 1], colspan: last - first + 1}))
-    for ( let i = last + 1 ; i < group.length ; ++i ) ths.push(DCreate('TH'))
+subRow(o, key, main, sub){
+  const dp = PreferencesAppData[key]
+  if ( !dp ) return
+  const div = this.buildInputText(dp)
+  const lab = div.querySelector('label')
+  lab.textContent = ''
+  main && lab.appendChild(DCreate('SPAN', {class: 'main', text: main}))
+  sub  && lab.appendChild(DCreate('SPAN', {class: 'sub', text: sub}))
+  sub  && lab.classList.add('sublab')
+  div.classList.add('pref-row')
+  o.appendChild(div)
+}
+
+// Tailles (section « Taille des marques ») : une ligne par marque (#281)
+buildMarksRows(o){
+  MARKS_KEYS.forEach(([name, key]) => this.subRow(o, key, t(`ui.prefs_marks.kinds.${name}`)))
+}
+
+// Titres (section « Mise en page ») : police, taille, espace avant,
+// espace après, une ligne chacun
+buildLayoutRows(o){
+  const S = k => t(`ui.prefs_rows.${k}`)
+  ;[1, 2, 3].forEach(n => {
+    this.subRow(o, `layout_title_${n}_font`,   t('ui.prefs_layout.level', {n}), S('font'))
+    this.subRow(o, `layout_title_${n}_size`,   '', S('size'))
+    this.subRow(o, `layout_title_${n}_before`, '', S('before'))
+    this.subRow(o, `layout_title_${n}_after`,  '', S('after'))
   })
-  ths.forEach(th => th.getAttribute('colspan') || th.removeAttribute('colspan'))
-  const table = DCreate('TABLE', {id, class: 'prefs-table', inner: [
-      DCreate('TR', {inner: ths})
-    , ...built.map(({label, groups}) => {
-        const head = DCreate('TD', {class: 'row-label', text: label})
-        const tds = groups.flatMap(group => group.map(p => DCreate('TD', {class: `pt-${p.kind}`, inner: p.el ? [p.el] : []})))
-        const tr = DCreate('TR', {inner: [head, ...tds]})
-        listen(head, 'click', () => { const f = tr.querySelector('input, select') ; f && (f.focus(), f.select && f.select()) })
-        return tr
-      })
-  ]})
-  return DCreate('DIV', {class: 'div-prefs-table', inner: [table]})
 }
 
-// Tailles (section « Taille des marques ») : Taille (#281)
-buildMarksTable(){
-  return this.buildPrefsTable('prefs-marks-table', ['', t('ui.prefs_marks.size')], MARKS_KEYS.map(([name, key]) => ({
-      label: t(`ui.prefs_marks.kinds.${name}`)
-    , cells: [[key]]
-  })))
-}
-
-// Titres (section « Mise en page ») : Titre | Police | Taille | Espaces
-buildLayoutTable(){
-  const T = k => t(`ui.prefs_layout.${k}`)
-  return this.buildPrefsTable('prefs-layout-table', ['title', 'font', 'size', 'spaces'].map(T), [1, 2, 3].map(n => ({
-      label: t('ui.prefs_layout.level', {n})
-    , cells: [[`layout_title_${n}_font`], [`layout_title_${n}_size`], [`layout_title_${n}_before`, `layout_title_${n}_after`]]
-  })))
-}
-
-// Traits (section « Traits ») : Bord | Épaisseur | Intensité
-buildLinesTable(){
-  const T = k => t(`ui.prefs_lines.${k}`)
-  return this.buildPrefsTable('prefs-lines-table', ['border', 'width', 'intensity'].map(T), LINES_KEYS.map(([name, key]) => ({
-      label: T(`kinds.${name}`)
-    , cells: [[key], [BORDER_INTENSITY[key]]]
-  })))
+// Traits (section « Traits ») : épaisseur puis intensité, une ligne chacune
+buildLinesRows(o){
+  const S = k => t(`ui.prefs_rows.${k}`)
+  LINES_KEYS.forEach(([name, key]) => {
+    this.subRow(o, key, t(`ui.prefs_lines.kinds.${name}`), S('thickness'))
+    this.subRow(o, BORDER_INTENSITY[key], '', S('intensity'))
+  })
 }
 
 buildPref(o, dp){
@@ -522,7 +499,8 @@ buildMenuSelect(params){
  * 
  */
 buildCheckBox(params){
-  const d = DCreate('DIV', {class:'div-checkbox div-data'})
+  // Libellé en colonne 1, case en colonne 2 (#306)
+  const d = DCreate('DIV', {class:'div-checkbox div-data type-valeur'})
 
   /*
   |  ID DOM de l'élément
@@ -531,7 +509,6 @@ buildCheckBox(params){
 
   // La case à cocher    
   const cb = DCreate('INPUT',{type:'checkbox', id: domId, value:params.value})
-  d.appendChild(cb)
 
   if ( undefined == params.value ) {
     cb.checked = params.default
@@ -548,6 +525,7 @@ buildCheckBox(params){
   // Le label
   const lab = DCreate('LABEL', {for:domId, text: params.label})
   d.appendChild(lab)
+  d.appendChild(DCreate('SPAN', {class: 'pref-field', inner: [cb]}))
 
   // listen(lab, 'click', e => {
   //   e.stopPropagation()
@@ -657,6 +635,17 @@ buildInputText(params){
   const field = DCreate('INPUT', {type:'text', id:domId, value: value})
   // Champ et bouton éventuel dans une même cellule (cf. Preferences.css)
   const cell = DCreate('SPAN', {class:'pref-field', inner: [field]})
+  // Couleur : sélecteur de couleur avant le champ (#306)
+  if ( params.typeV == 'color' ) {
+    const hex = v => '#' + (String(v || '').replace(/^#/, '').match(/^[0-9a-f]{6}$/i) ? String(v).replace(/^#/, '') : '000000')
+    const picker = DCreate('INPUT', {type: 'color', class: 'pref-color', value: hex(value)})
+    listen(picker, 'input', () => {
+      field.value = picker.value.slice(1).toUpperCase()
+      field.dispatchEvent(new Event('input'))
+    })
+    listen(field, 'input', () => { /^#?[0-9a-f]{6}$/i.test(field.value) && (picker.value = hex(field.value)) })
+    cell.insertBefore(picker, field)
+  }
   // Unité après le champ
   params.unite && cell.appendChild(DCreate('SPAN', {class:'pref-unit', text: params.unite}))
   div.appendChild(cell)
@@ -690,6 +679,10 @@ buildInputText(params){
       field.value = String(CURRENT_VALUES[params.current]())
       field.dispatchEvent(new Event(params.typeV == 'number' ? 'change' : 'input'))
     })
+    // (sous le réglage, cf. Preferences.css)
+    cell.classList.add('with-current')
+    const line = DCreate('SPAN', {class: 'pref-line', inner: [...cell.childNodes]})
+    cell.appendChild(line)
     cell.appendChild(btn)
   }
   // La description (if any)

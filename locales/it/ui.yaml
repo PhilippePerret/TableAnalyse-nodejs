@@ -494,10 +494,10 @@ dialogs:
 
 # Preferenze dell'analisi (etichetta e precisazione)
 prefs:
-  form_position:          {label: "Posizione della forma costruita"}
-  form_height_1:          {label: "Altezza delle marche di parte (sopra il sistema)"}
-  form_height_2:          {label: "Altezza delle marche di sezione (sopra il sistema)"}
-  form_height_3:          {label: "Altezza delle marche di segmento (sopra il sistema)"}
+  form_position:          {label: "Costruzione della forma"}
+  form_height_1:          {label: "Altezza delle marche di parte"}
+  form_height_2:          {label: "Altezza delle marche di sezione"}
+  form_height_3:          {label: "Altezza delle marche di segmento"}
   theme:                  {label: "Aspetto dell'analisi"}
   lock_systems:           {label: "Blocca i sistemi"}
   grid_horizontal_space:  {label: "Passo orizzontale della griglia"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "Larghezza dei sistemi"}
   top_first_system:       {label: "Scostamento superiore del primo sistema"}
   distance_systemes:      {label: "Distanza predefinita dei sistemi"}
-  max_table_blank:        {label: "Spazio vuoto verticale massimo (sul tavolo)"}
+  max_table_blank:        {label: "Spazio vuoto verticale massimo (tavolo)"}
   layout_title_1_font: {label: "Carattere dei titoli di livello 1"}
   layout_title_1_size: {label: "Dimensione dei titoli di livello 1"}
   layout_title_1_before: {label: "Spazio prima dei titoli di livello 1"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "Spazio prima dei titoli di livello 3"}
   layout_title_3_after: {label: "Spazio dopo i titoli di livello 3"}
   export_systems_gap:     {label: "Spazio vuoto verticale massimo (esportazione)"}
-  adjust_same_mark:       {label: "Allinea in altezza i segni dello stesso tipo"}
-  snap_for_adjust_pos:    {label: "Distanza massima di aggancio dei segni"}
+  adjust_same_mark:       {label: "Allinea segni dello stesso tipo"}
+  snap_for_adjust_pos:    {label: "Distanza di aggancio (segni)"}
   marque_accords_size:    {label: "Dimensione dei segni d'accordo"}
   marque_harmonie_size:   {label: "Dimensione dei segni d'armonia"}
   marque_cadence_type_size: {label: "Dimensione del testo della marca di cadenza (p.es. “C.P.”)"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "Dimensione dei pedali"}
   marque_texte_size_1:    {label: "Dimensione dei testi grandi"}
   marque_texte_size_2:    {label: "Dimensione dei testi medi"}
-  measure_line_offset:    {label: "Distanza tra sistema e numeri di battuta"}
-  distance_after_measure_line: {label: "Distanza tra numeri di battuta e sistema seguente"}
+  measure_line_offset:    {label: "Distanza sistema ←→ num. battute"}
+  distance_after_measure_line: {label: "Distanza num. battute ←→ sist. seguente"}
   marque_measure:         {label: "Dimensione dei numeri di battuta"}
   marque_texte_size_3:    {label: "Dimensione dei testi piccoli"}
   marque_texte_size_4:    {label: "Dimensione dei testi molto piccoli"}
   marque_partie_size:     {label: "Dimensione delle parti"}
   marque_section_size:    {label: "Dimensione delle sezioni"}
   marque_segment_size:    {label: "Dimensione dei segmenti"}
-  window_width:           {label: "Larghezza della finestra all'apertura"}
-  window_height:          {label: "Altezza della finestra all'apertura"}
-  last_scroll:            {label: "Scorrimento all'apertura"}
+  window_width:           {label: "Larghezza della finestra"}
+  window_height:          {label: "Altezza della finestra"}
+  last_scroll:            {label: "Scorrimento"}
   color_mesure:           {label: "Colore dei numeri di battuta"}
   color_accords:          {label: "Nomi degli accordi"}
   color_harmonie:         {label: "Cifrature armoniche"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "Aggiornamento automatico dell’applicazione"}
   help_format:            {label: "Guida aperta con la scorciatoia ⌘ + Maiusc + m"}
   mark_creation_click:    {label: "Creazione di un nuovo segno"}
-  animate:                {label: "Avviare l'animazione all'apertura", precision: "I segni saranno mostrati progressivamente"}
+  animate:                {label: "Avviare l'animazione all'apertura"}
   notation_display:       {label: "Visualizzazione delle note degli accordi"}
   notation_input:         {label: "Inserimento delle note degli accordi"}
-  note_char:              {label: "Carattere che precede una nota nei testi"}
+  note_char:              {label: "Segno prima di una nota (testo)"}
 
 prefs_layout:
   title:  "Titolo"
   font:   "Carattere"
   size:   "Dimensione"
   spaces: "Spazio prima e dopo (esportazione)"
-  level:  "Livello %{n}"
+  level:  "Titoli di livello %{n}"
 
 prefs_marks:
   size: "Dimensione"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "Sezioni"
     segment: "Segmenti"
 
+prefs_rows:
+  thickness: "spessore"
+  intensity: "intensità"
+  font: "carattere"
+  size: "dimensione"
+  before: "spazio prima"
+  after: "spazio dopo"
+
 prefs_lines:
   border:    "Bordo"
   width:     "Spessore"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "Linea prestiti"
     cadence: "Linea cadenza"
     note: "Contorno tipo di nota"
-    form: "Porzione (versione riquadro)"
-    measure: "Riquadro numero di battuta"
+    form: "Porzione (riquadro)"
+    measure: "Bordo num. battuta"
 
 prefs_current:
   width:  "Larghezza attuale"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "Dimensione dei segni"
   lines:                  "Linee"
   colors:                 "Colori"
-  window:                 "Finestra"
+  window:                 "Finestra all'apertura"
   others:                 "Altro"
   form:                   "Forma"
 

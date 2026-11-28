@@ -9,8 +9,8 @@ const labelOf = key => {
 const groups = () => [...document.querySelectorAll('#preferences-panel div.pref-group')]
 
 T.test('libellés des numéros de mesure', async () => {
-  T.eq(labelOf('measure_line_offset'), 'Distance entre système et numéros de mesures', 'distance au système')
-  T.eq(labelOf('distance_after_measure_line'), 'Distance entre numéros de mesures et système suivant', 'distance au système suivant')
+  T.eq(labelOf('measure_line_offset'), 'Distance système ←→ num. mesures', 'distance au système')
+  T.eq(labelOf('distance_after_measure_line'), 'Distance num. mesures ←→ sys. suivant', 'distance au système suivant')
   T.eq(labelOf('marque_measure'), 'Taille des numéros de mesure', 'taille')
   T.eq(labelOf('color_mesure'), 'Couleur des numéros de mesure', 'couleur')
 })

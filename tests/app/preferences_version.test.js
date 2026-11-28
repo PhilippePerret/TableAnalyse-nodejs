@@ -32,7 +32,7 @@ T.test('sans baratin : libellés exacts, aucune description (#282)', async () =>
     T.no(next && next.classList.contains('description'), `${id} : aucune description`)
   }
   T.ok(divOf('help_format').textContent.includes('Aide ouverte par le raccourci ⌘ + Maj + m'), 'libellé de l’aide')
-  T.ok(divOf('note_char').textContent.includes('Caractère précédent une note dans les textes'), 'libellé du caractère des notes')
+  T.ok(divOf('note_char').textContent.includes('Signe avant une note (texte)'), 'libellé du caractère des notes')
   T.eq([...P.querySelectorAll('#pref-note_char option')].map(o => o.textContent), ['_ (_F)', ': (:F)', '! (!F)', '^ (^F)'], 'menu du caractère des notes')
 })
 
@@ -79,7 +79,7 @@ T.test('aide : libellé à gauche, menu étroit à droite ; panneau pas trop lar
     T.ok(Math.abs(lr.left - other.left) <= 2, 'libellé dans la colonne des libellés')
     T.ok(sr.width < 120, `menu étroit (${Math.round(sr.width)} px)`)
     const sel2 = P.querySelector('#pref-notation_input').getBoundingClientRect()
-    T.ok(Math.abs(sr.right - sel2.right) <= 2, 'aligné à droite comme les autres menus')
+    T.ok(Math.abs(sr.left - sel2.left) <= 2, 'fer à gauche comme les autres menus (#306)')
     T.ok(pr.width < 1300, `panneau pas trop large (${Math.round(pr.width)} px)`)
   } finally { PreferencesPanel.toggle() }
 })

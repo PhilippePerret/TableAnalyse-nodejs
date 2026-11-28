@@ -494,10 +494,10 @@ dialogs:
 
 # 分析の環境設定（ラベルと説明）
 prefs:
-  form_position:          {label: "形式を作成する位置"}
-  form_height_1:          {label: "部マークの高さ（段の上）"}
-  form_height_2:          {label: "セクションマークの高さ（段の上）"}
-  form_height_3:          {label: "セグメントマークの高さ（段の上）"}
+  form_position:          {label: "形式の作成"}
+  form_height_1:          {label: "部マークの高さ"}
+  form_height_2:          {label: "セクションマークの高さ"}
+  form_height_3:          {label: "セグメントマークの高さ"}
   theme:                  {label: "分析の外観"}
   lock_systems:           {label: "段をロック"}
   grid_horizontal_space:  {label: "グリッドの横の間隔"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "段の幅"}
   top_first_system:       {label: "最初の段の上の位置"}
   distance_systemes:      {label: "段の既定の間隔"}
-  max_table_blank:        {label: "垂直方向の最大余白（テーブル上）"}
+  max_table_blank:        {label: "垂直方向の最大余白（テーブル）"}
   layout_title_1_font: {label: "レベル 1 の見出しのフォント"}
   layout_title_1_size: {label: "レベル 1 の見出しのサイズ"}
   layout_title_1_before: {label: "レベル 1 の見出しの前の間隔"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "レベル 3 の見出しの前の間隔"}
   layout_title_3_after: {label: "レベル 3 の見出しの後の間隔"}
   export_systems_gap:     {label: "垂直方向の最大余白（書き出し）"}
-  adjust_same_mark:       {label: "同じ種類のマークの高さを揃える"}
-  snap_for_adjust_pos:    {label: "マークの最大吸着距離"}
+  adjust_same_mark:       {label: "同じ種類のマークを揃える"}
+  snap_for_adjust_pos:    {label: "吸着距離（マーク）"}
   marque_accords_size:    {label: "コードマークのサイズ"}
   marque_harmonie_size:   {label: "和声記号のサイズ"}
   marque_cadence_type_size: {label: "終止マークの文字サイズ（例：「C.P.」）"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "保続音のサイズ"}
   marque_texte_size_1:    {label: "大きいテキストのサイズ"}
   marque_texte_size_2:    {label: "中くらいのテキストのサイズ"}
-  measure_line_offset:    {label: "段と小節番号の距離"}
-  distance_after_measure_line: {label: "小節番号と次の段の距離"}
+  measure_line_offset:    {label: "距離 段 ←→ 小節番号"}
+  distance_after_measure_line: {label: "距離 小節番号 ←→ 次の段"}
   marque_measure:         {label: "小節番号のサイズ"}
   marque_texte_size_3:    {label: "小さいテキストのサイズ"}
   marque_texte_size_4:    {label: "とても小さいテキストのサイズ"}
   marque_partie_size:     {label: "部のサイズ"}
   marque_section_size:    {label: "セクションのサイズ"}
   marque_segment_size:    {label: "セグメントのサイズ"}
-  window_width:           {label: "開いたときのウインドウの幅"}
-  window_height:          {label: "開いたときのウインドウの高さ"}
-  last_scroll:            {label: "開いたときのスクロール位置"}
+  window_width:           {label: "ウインドウの幅"}
+  window_height:          {label: "ウインドウの高さ"}
+  last_scroll:            {label: "スクロール位置"}
   color_mesure:           {label: "小節番号の色"}
   color_accords:          {label: "コードネーム"}
   color_harmonie:         {label: "和声記号"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "アプリケーションの自動更新"}
   help_format:            {label: "⌘ + Shift + m で開くヘルプ"}
   mark_creation_click:    {label: "新しいマークの作成"}
-  animate:                {label: "開くときにアニメーションを開始", precision: "マークが順に表示されます"}
+  animate:                {label: "開くときにアニメーションを開始"}
   notation_display:       {label: "コードの音名の表示"}
   notation_input:         {label: "コードの音名の入力"}
-  note_char:              {label: "テキスト内で音名の前に置く文字"}
+  note_char:              {label: "音名の前の記号（テキスト）"}
 
 prefs_layout:
   title:  "見出し"
   font:   "フォント"
   size:   "サイズ"
   spaces: "前後の間隔（書き出し）"
-  level:  "レベル %{n}"
+  level:  "レベル %{n} の見出し"
 
 prefs_marks:
   size: "サイズ"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "セクション"
     segment: "セグメント"
 
+prefs_rows:
+  thickness: "太さ"
+  intensity: "濃さ"
+  font: "フォント"
+  size: "サイズ"
+  before: "前の間隔"
+  after: "後の間隔"
+
 prefs_lines:
   border:    "枠"
   width:     "太さ"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "借用線"
     cadence: "終止線"
     note: "音符の種類の輪郭"
-    form: "部分（枠版）"
-    measure: "小節番号の枠"
+    form: "部分（枠）"
+    measure: "小節番号の縁"
 
 prefs_current:
   width:  "現在の幅"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "マークのサイズ"
   lines:                  "線"
   colors:                 "色"
-  window:                 "ウインドウ"
+  window:                 "開いたときのウインドウ"
   others:                 "その他"
   form:                   "形式"
 

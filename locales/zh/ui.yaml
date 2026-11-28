@@ -494,10 +494,10 @@ dialogs:
 
 # 分析的偏好设置（标签与说明）
 prefs:
-  form_position:          {label: "构建曲式的位置"}
-  form_height_1:          {label: "部标记的高度（系统上方）"}
-  form_height_2:          {label: "段标记的高度（系统上方）"}
-  form_height_3:          {label: "片段标记的高度（系统上方）"}
+  form_position:          {label: "曲式构建"}
+  form_height_1:          {label: "部标记的高度"}
+  form_height_2:          {label: "段标记的高度"}
+  form_height_3:          {label: "片段标记的高度"}
   theme:                  {label: "分析的外观"}
   lock_systems:           {label: "锁定声部组"}
   grid_horizontal_space:  {label: "网格水平步长"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "声部组宽度"}
   top_first_system:       {label: "第一个声部组的顶部偏移"}
   distance_systemes:      {label: "声部组默认间距"}
-  max_table_blank:        {label: "最大垂直空白（分析表上）"}
+  max_table_blank:        {label: "最大垂直空白（分析表）"}
   layout_title_1_font: {label: "1 级标题字体"}
   layout_title_1_size: {label: "1 级标题大小"}
   layout_title_1_before: {label: "1 级标题前的间距"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "3 级标题前的间距"}
   layout_title_3_after: {label: "3 级标题后的间距"}
   export_systems_gap:     {label: "最大垂直空白（导出）"}
-  adjust_same_mark:       {label: "同类标记高度对齐"}
-  snap_for_adjust_pos:    {label: "标记的最大吸附距离"}
+  adjust_same_mark:       {label: "对齐同类标记"}
+  snap_for_adjust_pos:    {label: "吸附距离（标记）"}
   marque_accords_size:    {label: "和弦标记大小"}
   marque_harmonie_size:   {label: "和声标记大小"}
   marque_cadence_type_size: {label: "终止式标记文字的字号（例如“C.P.”）"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "持续音大小"}
   marque_texte_size_1:    {label: "大号文本大小"}
   marque_texte_size_2:    {label: "中号文本大小"}
-  measure_line_offset:    {label: "声部组与小节号的距离"}
-  distance_after_measure_line: {label: "小节号与下一个声部组的距离"}
+  measure_line_offset:    {label: "距离 声部组 ←→ 小节号"}
+  distance_after_measure_line: {label: "距离 小节号 ←→ 下一声部组"}
   marque_measure:         {label: "小节号大小"}
   marque_texte_size_3:    {label: "小号文本大小"}
   marque_texte_size_4:    {label: "极小文本大小"}
   marque_partie_size:     {label: "部的大小"}
   marque_section_size:    {label: "段的大小"}
   marque_segment_size:    {label: "片段的大小"}
-  window_width:           {label: "打开时的窗口宽度"}
-  window_height:          {label: "打开时的窗口高度"}
-  last_scroll:            {label: "打开时的滚动位置"}
+  window_width:           {label: "窗口宽度"}
+  window_height:          {label: "窗口高度"}
+  last_scroll:            {label: "滚动位置"}
   color_mesure:           {label: "小节号颜色"}
   color_accords:          {label: "和弦名称"}
   color_harmonie:         {label: "和声级数标记"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "自动更新应用程序"}
   help_format:            {label: "快捷键 ⌘ + Shift + m 打开的帮助"}
   mark_creation_click:    {label: "新建标记"}
-  animate:                {label: "打开时启动动画", precision: "标记将逐步显示"}
+  animate:                {label: "打开时启动动画"}
   notation_display:       {label: "和弦音名显示"}
   notation_input:         {label: "和弦音名输入"}
-  note_char:              {label: "文本中音符前的字符"}
+  note_char:              {label: "音符前的符号（文本）"}
 
 prefs_layout:
   title:  "标题"
   font:   "字体"
   size:   "大小"
   spaces: "前后间距（导出）"
-  level:  "级别 %{n}"
+  level:  "%{n} 级标题"
 
 prefs_marks:
   size: "大小"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "段"
     segment: "片段"
 
+prefs_rows:
+  thickness: "粗细"
+  intensity: "浓度"
+  font: "字体"
+  size: "大小"
+  before: "前间距"
+  after: "后间距"
+
 prefs_lines:
   border:    "边框"
   width:     "粗细"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "借用线"
     cadence: "终止线"
     note: "音符类型轮廓"
-    form: "部分（框版）"
-    measure: "小节号框"
+    form: "部分（框）"
+    measure: "小节号边框"
 
 prefs_current:
   width:  "当前宽度"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "标记大小"
   lines:                  "线条"
   colors:                 "颜色"
-  window:                 "窗口"
+  window:                 "打开时的窗口"
   others:                 "其他"
   form:                   "曲式"
 

@@ -494,10 +494,10 @@ dialogs:
 
 # 분석 환경설정(레이블과 설명)
 prefs:
-  form_position:          {label: "형식을 만들 위치"}
-  form_height_1:          {label: "부 표시의 높이 (보표 위)"}
-  form_height_2:          {label: "섹션 표시의 높이 (보표 위)"}
-  form_height_3:          {label: "세그먼트 표시의 높이 (보표 위)"}
+  form_position:          {label: "형식 만들기"}
+  form_height_1:          {label: "부 표시의 높이"}
+  form_height_2:          {label: "섹션 표시의 높이"}
+  form_height_3:          {label: "세그먼트 표시의 높이"}
   theme:                  {label: "분석의 모양"}
   lock_systems:           {label: "단 잠그기"}
   grid_horizontal_space:  {label: "격자 가로 간격"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "단 너비"}
   top_first_system:       {label: "첫 단의 위쪽 위치"}
   distance_systemes:      {label: "단 기본 간격"}
-  max_table_blank:        {label: "최대 세로 빈 공간 (테이블 위)"}
+  max_table_blank:        {label: "최대 세로 빈 공간 (테이블)"}
   layout_title_1_font: {label: "1단계 제목 글꼴"}
   layout_title_1_size: {label: "1단계 제목 크기"}
   layout_title_1_before: {label: "1단계 제목 앞 간격"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "3단계 제목 앞 간격"}
   layout_title_3_after: {label: "3단계 제목 뒤 간격"}
   export_systems_gap:     {label: "최대 세로 빈 공간 (내보내기)"}
-  adjust_same_mark:       {label: "같은 종류의 표시 높이 맞추기"}
-  snap_for_adjust_pos:    {label: "표시의 최대 자석 거리"}
+  adjust_same_mark:       {label: "같은 종류의 표시 맞추기"}
+  snap_for_adjust_pos:    {label: "자석 거리 (표시)"}
   marque_accords_size:    {label: "코드 표시 크기"}
   marque_harmonie_size:   {label: "화성 표시 크기"}
   marque_cadence_type_size: {label: "종지 표시 글자 크기 (예: “C.P.”)"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "지속음 크기"}
   marque_texte_size_1:    {label: "큰 텍스트 크기"}
   marque_texte_size_2:    {label: "중간 텍스트 크기"}
-  measure_line_offset:    {label: "단과 마디 번호 사이 거리"}
-  distance_after_measure_line: {label: "마디 번호와 다음 단 사이 거리"}
+  measure_line_offset:    {label: "거리 단 ←→ 마디 번호"}
+  distance_after_measure_line: {label: "거리 마디 번호 ←→ 다음 단"}
   marque_measure:         {label: "마디 번호 크기"}
   marque_texte_size_3:    {label: "작은 텍스트 크기"}
   marque_texte_size_4:    {label: "아주 작은 텍스트 크기"}
   marque_partie_size:     {label: "부의 크기"}
   marque_section_size:    {label: "섹션의 크기"}
   marque_segment_size:    {label: "세그먼트의 크기"}
-  window_width:           {label: "열 때 윈도우 너비"}
-  window_height:          {label: "열 때 윈도우 높이"}
-  last_scroll:            {label: "열 때 스크롤 위치"}
+  window_width:           {label: "윈도우 너비"}
+  window_height:          {label: "윈도우 높이"}
+  last_scroll:            {label: "스크롤"}
   color_mesure:           {label: "마디 번호 색"}
   color_accords:          {label: "코드 이름"}
   color_harmonie:         {label: "화성 기호"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "애플리케이션 자동 업데이트"}
   help_format:            {label: "⌘ + Shift + m 단축키로 여는 도움말"}
   mark_creation_click:    {label: "새 표시 만들기"}
-  animate:                {label: "열 때 애니메이션 시작", precision: "표시가 차례로 나타납니다"}
+  animate:                {label: "열 때 애니메이션 시작"}
   notation_display:       {label: "코드 음이름 표시"}
   notation_input:         {label: "코드 음이름 입력"}
-  note_char:              {label: "텍스트에서 음 앞에 오는 문자"}
+  note_char:              {label: "음 앞의 기호 (텍스트)"}
 
 prefs_layout:
   title:  "제목"
   font:   "글꼴"
   size:   "크기"
   spaces: "앞뒤 간격 (내보내기)"
-  level:  "수준 %{n}"
+  level:  "%{n}단계 제목"
 
 prefs_marks:
   size: "크기"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "섹션"
     segment: "세그먼트"
 
+prefs_rows:
+  thickness: "두께"
+  intensity: "농도"
+  font: "글꼴"
+  size: "크기"
+  before: "앞 간격"
+  after: "뒤 간격"
+
 prefs_lines:
   border:    "테두리"
   width:     "두께"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "차용 선"
     cadence: "종지 선"
     note: "음표 유형 윤곽"
-    form: "부분 (상자형)"
-    measure: "마디 번호 상자"
+    form: "부분 (틀)"
+    measure: "마디 번호 테두리"
 
 prefs_current:
   width:  "현재 너비"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "표시 크기"
   lines:                  "선"
   colors:                 "색"
-  window:                 "윈도우"
+  window:                 "열 때 윈도우"
   others:                 "기타"
   form:                   "형식"
 

@@ -494,10 +494,10 @@ dialogs:
 
 # Préférences de l'analyse (label et précision)
 prefs:
-  form_position:          {label: "Emplacement de la construction de la forme"}
-  form_height_1:          {label: "Hauteur des marques de partie (au-dessus du système)"}
-  form_height_2:          {label: "Hauteur des marques de section (au-dessus du système)"}
-  form_height_3:          {label: "Hauteur des marques de segment (au-dessus du système)"}
+  form_position:          {label: "Construction de la forme"}
+  form_height_1:          {label: "Hauteur des marques de partie"}
+  form_height_2:          {label: "Hauteur des marques de section"}
+  form_height_3:          {label: "Hauteur des marques de segment"}
   theme:                  {label: "Aspect de l’analyse"}
   lock_systems:           {label: "Verrouiller les systèmes"}
   grid_horizontal_space:  {label: "Pas horizontal de la grille"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "Largeur des systèmes"}
   top_first_system:       {label: "Décalage haut du premier système"}
   distance_systemes:      {label: "Distance par défaut des systèmes"}
-  max_table_blank:        {label: "Espace blanc vertical maximal (sur la table)"}
+  max_table_blank:        {label: "Espace blanc vertical maximal (table)"}
   layout_title_1_font: {label: "Police des titres de niveau 1"}
   layout_title_1_size: {label: "Taille des titres de niveau 1"}
   layout_title_1_before: {label: "Espace avant les titres de niveau 1"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "Espace avant les titres de niveau 3"}
   layout_title_3_after: {label: "Espace après les titres de niveau 3"}
   export_systems_gap:     {label: "Espace blanc vertical maximal (export)"}
-  adjust_same_mark:       {label: "Ajuster en hauteur les marques de même type"}
-  snap_for_adjust_pos:    {label: "Distance maximale de magnétisation des marques"}
+  adjust_same_mark:       {label: "Aligner marques de même type"}
+  snap_for_adjust_pos:    {label: "Distance de magnétisation (marques)"}
   marque_accords_size:    {label: "Taille des marques d'accord"}
   marque_harmonie_size:   {label: "Taille des marques d'harmonie"}
   marque_cadence_type_size: {label: "Taille de police du texte de marque de cadence (p.e. “C.P.”)"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "Taille des pédales"}
   marque_texte_size_1:    {label: "Taille des gros textes"}
   marque_texte_size_2:    {label: "Taille des textes moyens"}
-  measure_line_offset:    {label: "Distance entre système et numéros de mesures"}
-  distance_after_measure_line: {label: "Distance entre numéros de mesures et système suivant"}
+  measure_line_offset:    {label: "Distance système ←→ num. mesures"}
+  distance_after_measure_line: {label: "Distance num. mesures ←→ sys. suivant"}
   marque_measure:         {label: "Taille des numéros de mesure"}
   marque_texte_size_3:    {label: "Taille des petits textes"}
   marque_texte_size_4:    {label: "Taille des textes très petits"}
   marque_partie_size:     {label: "Taille des parties"}
   marque_section_size:    {label: "Taille des sections"}
   marque_segment_size:    {label: "Taille des segments"}
-  window_width:           {label: "Largeur de la fenêtre à l’ouverture"}
-  window_height:          {label: "Hauteur de la fenêtre à l’ouverture"}
-  last_scroll:            {label: "Scroll à l’ouverture"}
+  window_width:           {label: "Largeur de la fenêtre"}
+  window_height:          {label: "Hauteur de la fenêtre"}
+  last_scroll:            {label: "Scroll"}
   color_mesure:           {label: "Couleur des numéros de mesure"}
   color_accords:          {label: "Noms d’accords"}
   color_harmonie:         {label: "Chiffrages harmoniques"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "Actualisation automatique de l’application"}
   help_format:            {label: "Aide ouverte par le raccourci ⌘ + Maj + m"}
   mark_creation_click:    {label: "Création d’une nouvelle marque"}
-  animate:                {label: "Animer l’animation à l’ouverture", precision: "Les marques seront affichées progressivement"}
+  animate:                {label: "Animer l’animation à l’ouverture"}
   notation_display:       {label: "Affichage des notes des accords"}
   notation_input:         {label: "Entrée des notes des accords"}
-  note_char:              {label: "Caractère précédent une note dans les textes"}
+  note_char:              {label: "Signe avant une note (texte)"}
 
 prefs_layout:
   title:  "Titre"
   font:   "Police"
   size:   "Taille"
   spaces: "Espace avant et après (export)"
-  level:  "Niveau %{n}"
+  level:  "Titres de niveau %{n}"
 
 prefs_marks:
   size: "Taille"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "Sections"
     segment: "Segments"
 
+prefs_rows:
+  thickness: "épaisseur"
+  intensity: "intensité"
+  font: "police"
+  size: "taille"
+  before: "espace avant"
+  after: "espace après"
+
 prefs_lines:
   border:    "Bord"
   width:     "Épaisseur"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "Trait emprunts"
     cadence: "Trait cadence"
     note: "Contour type de note"
-    form: "Portion (version cadre)"
-    measure: "Cadre numéro mesure"
+    form: "Portion (cadre)"
+    measure: "Bord num. mesure"
 
 prefs_current:
   width:  "Largeur actuelle"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "Taille des marques"
   lines:                  "Traits"
   colors:                 "Couleurs"
-  window:                 "Fenêtre"
+  window:                 "Fenêtre à l’ouverture"
   others:                 "Autres"
   form:                   "Forme"
 

@@ -494,10 +494,10 @@ dialogs:
 
 # Analysis preferences (label and precision)
 prefs:
-  form_position:          {label: "Location of the built form"}
-  form_height_1:          {label: "Height of part marks (above the system)"}
-  form_height_2:          {label: "Height of section marks (above the system)"}
-  form_height_3:          {label: "Height of segment marks (above the system)"}
+  form_position:          {label: "Form construction"}
+  form_height_1:          {label: "Height of part marks"}
+  form_height_2:          {label: "Height of section marks"}
+  form_height_3:          {label: "Height of segment marks"}
   theme:                  {label: "Look of the analysis"}
   lock_systems:           {label: "Lock systems"}
   grid_horizontal_space:  {label: "Horizontal grid step"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "Width of the systems"}
   top_first_system:       {label: "Top offset of the first system"}
   distance_systemes:      {label: "Default space between systems"}
-  max_table_blank:        {label: "Maximum vertical blank space (on the table)"}
+  max_table_blank:        {label: "Maximum vertical blank space (table)"}
   layout_title_1_font: {label: "Font of level 1 titles"}
   layout_title_1_size: {label: "Size of level 1 titles"}
   layout_title_1_before: {label: "Space before level 1 titles"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "Space before level 3 titles"}
   layout_title_3_after: {label: "Space after level 3 titles"}
   export_systems_gap:     {label: "Maximum vertical blank space (export)"}
-  adjust_same_mark:       {label: "Align marks of the same type vertically"}
-  snap_for_adjust_pos:    {label: "Maximum mark snapping distance"}
+  adjust_same_mark:       {label: "Align marks of the same type"}
+  snap_for_adjust_pos:    {label: "Snapping distance (marks)"}
   marque_accords_size:    {label: "Size of chord marks"}
   marque_harmonie_size:   {label: "Size of harmony marks"}
   marque_cadence_type_size: {label: "Font size of the cadence mark text (e.g. “C.P.”)"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "Size of pedals"}
   marque_texte_size_1:    {label: "Size of large texts"}
   marque_texte_size_2:    {label: "Size of medium texts"}
-  measure_line_offset:    {label: "Distance between system and measure numbers"}
-  distance_after_measure_line: {label: "Distance between measure numbers and next system"}
+  measure_line_offset:    {label: "Distance system ←→ measure nos."}
+  distance_after_measure_line: {label: "Distance measure nos. ←→ next sys."}
   marque_measure:         {label: "Size of measure numbers"}
   marque_texte_size_3:    {label: "Size of small texts"}
   marque_texte_size_4:    {label: "Size of very small texts"}
   marque_partie_size:     {label: "Size of parts"}
   marque_section_size:    {label: "Size of sections"}
   marque_segment_size:    {label: "Size of segments"}
-  window_width:           {label: "Window width at opening"}
-  window_height:          {label: "Window height at opening"}
-  last_scroll:            {label: "Scroll at opening"}
+  window_width:           {label: "Window width"}
+  window_height:          {label: "Window height"}
+  last_scroll:            {label: "Scroll"}
   color_mesure:           {label: "Color of measure numbers"}
   color_accords:          {label: "Chord names"}
   color_harmonie:         {label: "Harmonic figures"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "Automatic application update"}
   help_format:            {label: "Help opened by the ⌘ + Shift + m shortcut"}
   mark_creation_click:    {label: "New mark creation"}
-  animate:                {label: "Start the animation on opening", precision: "Marks will be displayed progressively"}
+  animate:                {label: "Start the animation on opening"}
   notation_display:       {label: "Chord note display"}
   notation_input:         {label: "Chord note input"}
-  note_char:              {label: "Character preceding a note in texts"}
+  note_char:              {label: "Sign before a note (text)"}
 
 prefs_layout:
   title:  "Title"
   font:   "Font"
   size:   "Size"
   spaces: "Space before and after (export)"
-  level:  "Level %{n}"
+  level:  "Level %{n} titles"
 
 prefs_marks:
   size: "Size"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "Sections"
     segment: "Segments"
 
+prefs_rows:
+  thickness: "thickness"
+  intensity: "intensity"
+  font: "font"
+  size: "size"
+  before: "space before"
+  after: "space after"
+
 prefs_lines:
   border:    "Border"
   width:     "Width"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "Borrowing line"
     cadence: "Cadence line"
     note: "Note type outline"
-    form: "Portion (box version)"
-    measure: "Measure number box"
+    form: "Portion (frame)"
+    measure: "Measure no. border"
 
 prefs_current:
   width:  "Current width"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "Size of marks"
   lines:                  "Lines"
   colors:                 "Colors"
-  window:                 "Window"
+  window:                 "Window at opening"
   others:                 "Others"
   form:                   "Form"
 

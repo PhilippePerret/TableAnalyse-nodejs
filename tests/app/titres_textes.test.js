@@ -5,16 +5,12 @@ const { Preferences } = await T.imp('Preferences')
 const { AObjet } = await T.imp('AObjet')
 const { Stage } = await T.imp('Exporter')
 
-T.test('préférences des titres : tableau, libellés une seule fois', async () => {
-  const table = document.querySelector('#preferences-panel table#prefs-layout-table')
-  T.ok(table, 'tableau présent')
-  const heads = [...table.querySelectorAll('th')].map(th => th.textContent).filter(Boolean)
-  T.eq(heads, ['Titre', 'Police', 'Taille', 'Espace avant et après (export)'], 'libellés des colonnes')
-  const rows = [...table.querySelectorAll('tr')].slice(1)
-  T.eq(rows.map(r => r.querySelector('td').textContent), ['Niveau 1', 'Niveau 2', 'Niveau 3'], 'niveaux')
-  for ( const [i, r] of rows.entries() ) {
-    const n = i + 1
-    T.eq([...r.querySelectorAll('input[type="text"]')].map(e => e.id), ['font', 'size', 'before', 'after'].map(k => `pref-layout_title_${n}_${k}`), `champs du niveau ${n}`)
+T.test('préférences des titres : lignes police, taille, espace avant, espace après (#306)', async () => {
+  const P = document.querySelector('#preferences-panel')
+  for ( const n of [1, 2, 3] ) {
+    const lab = k => P.querySelector(`label[for="pref-layout_title_${n}_${k}"]`)
+    T.eq(lab('font').querySelector('span.main').textContent, `Titres de niveau ${n}`, `niveau ${n} : libellé`)
+    T.eq(['font', 'size', 'before', 'after'].map(k => lab(k).querySelector('span.sub').textContent), ['police', 'taille', 'espace avant', 'espace après'], `niveau ${n} : sous-libellés`)
   }
   T.no(document.querySelector('#preferences-panel').textContent.includes('Police des titres de niveau'), 'plus de libellés répétés')
   // Réglage toujours effectif (taille appliquée à chaque frappe, enregistrée)

@@ -494,10 +494,10 @@ dialogs:
 
 # Einstellungen der Analyse (Beschriftung und Erläuterung)
 prefs:
-  form_position:          {label: "Ort der erstellten Form"}
-  form_height_1:          {label: "Höhe der Teilmarken (über dem System)"}
-  form_height_2:          {label: "Höhe der Abschnittsmarken (über dem System)"}
-  form_height_3:          {label: "Höhe der Segmentmarken (über dem System)"}
+  form_position:          {label: "Aufbau der Form"}
+  form_height_1:          {label: "Höhe der Teilmarken"}
+  form_height_2:          {label: "Höhe der Abschnittsmarken"}
+  form_height_3:          {label: "Höhe der Segmentmarken"}
   theme:                  {label: "Aussehen der Analyse"}
   lock_systems:           {label: "Systeme sperren"}
   grid_horizontal_space:  {label: "Horizontaler Rasterschritt"}
@@ -505,7 +505,7 @@ prefs:
   systeme_width:          {label: "Breite der Systeme"}
   top_first_system:       {label: "Oberer Abstand des ersten Systems"}
   distance_systemes:      {label: "Standardabstand der Systeme"}
-  max_table_blank:        {label: "Maximaler vertikaler Leerraum (auf der Tafel)"}
+  max_table_blank:        {label: "Maximaler vertikaler Leerraum (Tafel)"}
   layout_title_1_font: {label: "Schrift der Titel Ebene 1"}
   layout_title_1_size: {label: "Größe der Titel Ebene 1"}
   layout_title_1_before: {label: "Abstand vor Titeln Ebene 1"}
@@ -519,8 +519,8 @@ prefs:
   layout_title_3_before: {label: "Abstand vor Titeln Ebene 3"}
   layout_title_3_after: {label: "Abstand nach Titeln Ebene 3"}
   export_systems_gap:     {label: "Maximaler vertikaler Leerraum (Export)"}
-  adjust_same_mark:       {label: "Markierungen gleichen Typs in der Höhe angleichen"}
-  snap_for_adjust_pos:    {label: "Maximaler Einrastabstand der Markierungen"}
+  adjust_same_mark:       {label: "Markierungen gleichen Typs angleichen"}
+  snap_for_adjust_pos:    {label: "Einrastabstand (Markierungen)"}
   marque_accords_size:    {label: "Größe der Akkordmarkierungen"}
   marque_harmonie_size:   {label: "Größe der Harmoniemarkierungen"}
   marque_cadence_type_size: {label: "Schriftgröße des Textes der Kadenzmarke (z. B. „C.P.“)"}
@@ -553,17 +553,17 @@ prefs:
   marque_pedale_size:     {label: "Größe der Orgelpunkte"}
   marque_texte_size_1:    {label: "Größe großer Texte"}
   marque_texte_size_2:    {label: "Größe mittlerer Texte"}
-  measure_line_offset:    {label: "Abstand zwischen System und Taktnummern"}
-  distance_after_measure_line: {label: "Abstand zwischen Taktnummern und nächstem System"}
+  measure_line_offset:    {label: "Abstand System ←→ Taktnr."}
+  distance_after_measure_line: {label: "Abstand Taktnr. ←→ nächstes Sys."}
   marque_measure:         {label: "Größe der Taktnummern"}
   marque_texte_size_3:    {label: "Größe kleiner Texte"}
   marque_texte_size_4:    {label: "Größe sehr kleiner Texte"}
   marque_partie_size:     {label: "Größe der Teile"}
   marque_section_size:    {label: "Größe der Abschnitte"}
   marque_segment_size:    {label: "Größe der Segmente"}
-  window_width:           {label: "Fensterbreite beim Öffnen"}
-  window_height:          {label: "Fensterhöhe beim Öffnen"}
-  last_scroll:            {label: "Bildlauf beim Öffnen"}
+  window_width:           {label: "Fensterbreite"}
+  window_height:          {label: "Fensterhöhe"}
+  last_scroll:            {label: "Bildlauf"}
   color_mesure:           {label: "Farbe der Taktnummern"}
   color_accords:          {label: "Akkordnamen"}
   color_harmonie:         {label: "Harmonische Bezifferung"}
@@ -578,17 +578,17 @@ prefs:
   auto_update:            {label: "Automatische Aktualisierung der Anwendung"}
   help_format:            {label: "Mit ⌘ + Umschalt + m geöffnete Hilfe"}
   mark_creation_click:    {label: "Neue Markierung erstellen"}
-  animate:                {label: "Animation beim Öffnen starten", precision: "Die Markierungen werden nach und nach angezeigt"}
+  animate:                {label: "Animation beim Öffnen starten"}
   notation_display:       {label: "Anzeige der Akkordnoten"}
   notation_input:         {label: "Eingabe der Akkordnoten"}
-  note_char:              {label: "Zeichen vor einer Note in Texten"}
+  note_char:              {label: "Zeichen vor einer Note (Text)"}
 
 prefs_layout:
   title:  "Titel"
   font:   "Schrift"
   size:   "Größe"
   spaces: "Abstand davor und danach (Export)"
-  level:  "Ebene %{n}"
+  level:  "Titel Ebene %{n}"
 
 prefs_marks:
   size: "Größe"
@@ -609,6 +609,14 @@ prefs_marks:
     section: "Abschnitte"
     segment: "Segmente"
 
+prefs_rows:
+  thickness: "Stärke"
+  intensity: "Intensität"
+  font: "Schrift"
+  size: "Größe"
+  before: "Abstand davor"
+  after: "Abstand danach"
+
 prefs_lines:
   border:    "Rand"
   width:     "Stärke"
@@ -623,8 +631,8 @@ prefs_lines:
     emprunt: "Entlehnungslinie"
     cadence: "Kadenzlinie"
     note: "Notentyp-Umriss"
-    form: "Abschnitt (Rahmenversion)"
-    measure: "Taktnummernrahmen"
+    form: "Abschnitt (Rahmen)"
+    measure: "Rand Taktnr."
 
 prefs_current:
   width:  "Aktuelle Breite"
@@ -642,7 +650,7 @@ prefs_groups:
   marks:                  "Größe der Markierungen"
   lines:                  "Linien"
   colors:                 "Farben"
-  window:                 "Fenster"
+  window:                 "Fenster beim Öffnen"
   others:                 "Sonstiges"
   form:                   "Form"
 
