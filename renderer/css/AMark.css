@@ -444,6 +444,11 @@ div.amark.mot span.content {
   font-size: 24px;
 }
 
+/* Alignement choisi (menu d'alignement du texte) : à gauche, à droite
+   du cadre ; au centre par défaut */
+div.amark.mot span.content.left  { left: 0; right: auto; transform: none; text-align: left; }
+div.amark.mot span.content.right { left: auto; right: 0; transform: none; text-align: right; }
+
 /* Texte dans une boite */
 div.amark.bbx.bxt {
   display: flex;
