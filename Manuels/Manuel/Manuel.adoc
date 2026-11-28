@@ -3,7 +3,6 @@
 
 ////
 TODO
-- documenter : la limitation du type Forme à cadre ou borne (ou les deux)
 - documenter : l'utilisation de "^exposant^" pour marquer un exposant
 - documenter : un titre doit être entouré du signe "= titre" n'est pas bon, "= titre =" est bon
 - documenter : Segment, ouvrir à gauche et ouvrir à droite
@@ -16,6 +15,7 @@ TUTORIEL :
   
 TUTORIEL : Définition de la forme
   * Mise des marques de forme
+  * Limiter les types affichés (choisissables) avec "Forme > Marques >"
   * Affinements (textes, etc.)
   * Choix d'un thème à l'export
 

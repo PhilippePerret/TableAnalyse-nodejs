@@ -50,3 +50,10 @@ NOTE: Si une marque de fin n'est pas définie, l'application considère que la f
 |====
 
 Pour les versions cadre, on peut allonger leur hauteur en "tirant" sur le bord bas de l'image.
+
+
+===== Limitation des types dans le menu des types =====
+
+Si on ne veut placer que des portions de type « Borne » ou « Cadre », on peut cocher ou décocher les items du menu « Forme > Marques > … ». De cette manière, seuls les sous-types cochés apparaitront dans le menu.
+
+NOTE: Notez que ce réglage n'affecte en rien l'affichage sur la table d'analyse, ni son exportation. Si le type « Cadre » est décoché, les portions de ce type resteront visibles.
