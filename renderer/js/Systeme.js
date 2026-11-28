@@ -96,6 +96,21 @@ export class Systeme extends AObjet {
     */
     if ( aobj.data && aobj.data.line ) return this.getSystemeOfMeasure(aobj)
     /*
+    |  Lignes des numéros de mesure (LNM) : la marque appartient au
+    |  système dont la LNM est la première sous son haut (entre la LNM du
+    |  système précédent et la sienne), #285
+    */
+    if ( this.hasMeasureLine ) {
+      const offset = this.measureLineOffset
+      let found = null
+      this.each(sys => {
+        if ( found ) return
+        const h = sys.obj && sys.obj.offsetHeight || sys.height || 0
+        if ( aobj.top < sys.top + h + offset ) found = sys
+      })
+      return found || this.all[this.all.length - 1]
+    }
+    /*
     |  Marque posée sur un système : elle lui appartient (le plus grand
     |  chevauchement s'il y en a plusieurs)
     */
@@ -612,9 +627,16 @@ export class Systeme extends AObjet {
   get objets(){
     return this._objets || (this._objets = this.getObjets() || [])
   }
+  // (retiré des autres systèmes : un objet n'appartient qu'à un seul,
+  // #285)
   addObjet(aobjet){
+    Systeme.each(sys => {
+      if ( sys === this || !sys._objets ) return
+      const i = sys._objets.indexOf(aobjet)
+      i >= 0 && sys._objets.splice(i, 1)
+    })
     this._objets || this.objets
-    this._objets.push(aobjet)
+    this._objets.includes(aobjet) || this._objets.push(aobjet)
   }
   getObjets(){
     if ( this.data.objets ) {
