@@ -550,13 +550,13 @@ prefs:
   color_segments:         {label: "Segments"}
   animation_tempo:        {label: "Animation tempo"}
   autosave:               {label: "Autosave"}
-  auto_update:            {label: "Automatic application update", precision: "At launch, the version is checked and an update is offered when another version is published"}
-  help_format:            {label: "Help opened by the ⌘Shift+M shortcut"}
+  auto_update:            {label: "Automatic application update"}
+  help_format:            {label: "Help opened by the ⌘ + Shift + m shortcut"}
   mark_creation_click:    {label: "New mark creation"}
   animate:                {label: "Start the animation on opening", precision: "Marks will be displayed progressively"}
   notation_display:       {label: "Chord note display"}
   notation_input:         {label: "Chord note input"}
-  note_char:              {label: "Character marking a note in texts", precision: "In texts, only letters (or note names) preceded by this character are notes: “_A”. Chords, modulations and borrowings are not affected."}
+  note_char:              {label: "Character preceding a note in texts"}
 
 prefs_layout:
   title:  "Title"

@@ -550,13 +550,13 @@ prefs:
   color_segments:         {label: "片段"}
   animation_tempo:        {label: "动画速度"}
   autosave:               {label: "自动保存"}
-  auto_update:            {label: "自动更新应用程序", precision: "启动时检查版本，发布其他版本时提示更新"}
-  help_format:            {label: "快捷键 ⌘Shift+M 打开的帮助"}
+  auto_update:            {label: "自动更新应用程序"}
+  help_format:            {label: "快捷键 ⌘ + Shift + m 打开的帮助"}
   mark_creation_click:    {label: "新建标记"}
   animate:                {label: "打开时启动动画", precision: "标记将逐步显示"}
   notation_display:       {label: "和弦音名显示"}
   notation_input:         {label: "和弦音名输入"}
-  note_char:              {label: "文本中表示音符的字符", precision: "在文本中，只有前面带有此字符的字母（或音名）才是音符：“_A”。和弦、转调和借用不受影响。"}
+  note_char:              {label: "文本中音符前的字符"}
 
 prefs_layout:
   title:  "标题"

@@ -133,8 +133,8 @@ export const PreferencesAppData = {
         {name: t('ui.notation.bat'), value: 'bat'}
       , {name: t('ui.notation.it'),  value: 'it'}
     ]}
-  // Caractère indiquant une note dans les textes (« _A », #250)
-  , note_char               :{type:'select'       ,typeV:'string'   ,default:'_', values: NOTE_CHARS.map(c => ({name: c, value: c}))}
+  // Caractère précédant une note dans les textes (« _A », #250)
+  , note_char               :{type:'select'       ,typeV:'string'   ,default:'_', values: NOTE_CHARS.map(c => ({name: `${c} (${c}F)`, value: c}))}
 }
 
 /**

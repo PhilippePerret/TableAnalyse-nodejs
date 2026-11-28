@@ -295,8 +295,10 @@ build(){
     o.appendChild(DCreate('DIV', {class:'pref-group', text: t(`ui.prefs_groups.${group.id}`)}))
     if ( group.id == 'layout' ) return o.appendChild(this.buildLayoutTable())
     if ( group.id == 'lines' )  return o.appendChild(this.buildLinesTable())
-    prefs.forEach(dp => this.buildPref(o, dp))
-    group.id == 'general' && o.appendChild(this.buildVersionRow())
+    prefs.forEach(dp => {
+      this.buildPref(o, dp)
+      dp.id == 'auto_update' && o.appendChild(this.buildVersionRow())
+    })
   })
 
   // Pied de page : « Réglages par défaut », « Enregistrer » (bouton par

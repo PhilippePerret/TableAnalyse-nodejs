@@ -550,13 +550,13 @@ prefs:
   color_segments:         {label: "セグメント"}
   animation_tempo:        {label: "アニメーションのテンポ"}
   autosave:               {label: "自動保存"}
-  auto_update:            {label: "アプリケーションの自動更新", precision: "起動時にバージョンを確認し、別のバージョンが公開されていれば更新を提案します"}
-  help_format:            {label: "⌘Shift+M で開くヘルプ"}
+  auto_update:            {label: "アプリケーションの自動更新"}
+  help_format:            {label: "⌘ + Shift + m で開くヘルプ"}
   mark_creation_click:    {label: "新しいマークの作成"}
   animate:                {label: "開くときにアニメーションを開始", precision: "マークが順に表示されます"}
   notation_display:       {label: "コードの音名の表示"}
   notation_input:         {label: "コードの音名の入力"}
-  note_char:              {label: "テキスト内で音名を示す文字", precision: "テキストでは、この文字が前に付いた文字（または音名）だけが音名になります：「_A」。コード、転調、借用は対象外です。"}
+  note_char:              {label: "テキスト内で音名の前に置く文字"}
 
 prefs_layout:
   title:  "見出し"

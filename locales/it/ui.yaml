@@ -550,13 +550,13 @@ prefs:
   color_segments:         {label: "Segmenti"}
   animation_tempo:        {label: "Tempo dell'animazione"}
   autosave:               {label: "Salvataggio automatico"}
-  auto_update:            {label: "Aggiornamento automatico dell’applicazione", precision: "All’avvio, la versione viene verificata e viene proposto l’aggiornamento quando è pubblicata un’altra versione"}
-  help_format:            {label: "Guida aperta con la scorciatoia ⌘Maiusc+M"}
+  auto_update:            {label: "Aggiornamento automatico dell’applicazione"}
+  help_format:            {label: "Guida aperta con la scorciatoia ⌘ + Maiusc + m"}
   mark_creation_click:    {label: "Creazione di un nuovo segno"}
   animate:                {label: "Avviare l'animazione all'apertura", precision: "I segni saranno mostrati progressivamente"}
   notation_display:       {label: "Visualizzazione delle note degli accordi"}
   notation_input:         {label: "Inserimento delle note degli accordi"}
-  note_char:              {label: "Carattere che indica una nota nei testi", precision: "Nei testi, solo le lettere (o i nomi delle note) precedute da questo carattere sono note: «_A». Accordi, modulazioni e prestiti non sono interessati."}
+  note_char:              {label: "Carattere che precede una nota nei testi"}
 
 prefs_layout:
   title:  "Titolo"
