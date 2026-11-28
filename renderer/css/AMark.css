@@ -279,6 +279,9 @@ div.amark.seg.h-down {
 div.amark.seg.v-right {
   border-left-width: 0px; 
 }
+/* Segment horizontal ouvert à droite, à gauche (#291) */
+div.amark.seg.open-right { border-right-width: 0 !important; }
+div.amark.seg.open-left  { border-left-width: 0 !important; }
 div.amark.seg.v-left {
   border-right-width: 0px;  
 }

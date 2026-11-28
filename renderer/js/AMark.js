@@ -515,6 +515,7 @@ build(){
   this.applyCss()
   this.applyBorder()
   this.applyTextSize()
+  this.applyOpenSides()
   this.isBorne && (o.title = this.content)
   this.isBorne && Forme.shown && this.toggleExpanded(true)
 
@@ -639,6 +640,21 @@ get isHresizable(){
 }
 get isVresizable(){
   return this._isvresize || (this._isvresize = (this.isBox || ['emp','mot','seg'].includes(this.type)))
+}
+get isSegmentHorizontal(){
+  return this.type == 'seg' && ['h-up','h-down'].includes(this.subtype)
+}
+// Segment horizontal ouvert à droite ou à gauche (+side+) : sans le petit
+// bout de barre verticale de ce côté (#291)
+setOpen(side, open){
+  open ? (this.data[`open_${side}`] = true) : delete this.data[`open_${side}`]
+  this.applyOpenSides()
+}
+applyOpenSides(){
+  if ( !this.obj ) return
+  const h = this.isSegmentHorizontal
+  this.obj.classList.toggle('open-right', h && !!this.data.open_right)
+  this.obj.classList.toggle('open-left',  h && !!this.data.open_left)
 }
 get isSegmentVertical(){
   return this.type == 'seg' && ['v-left','v-right'].includes(this.subtype)
@@ -968,6 +984,13 @@ get contextMenuItems(){
   // Marque de forme : passage de la version borne à la version cadre et
   // inversement
   FORME_CADRE_BORNE[this.subtype] && this.isForme && items.push({label: T(this.isBorne ? 'to_frame' : 'to_marker'), value: 'toggleFrame'})
+  // Segment horizontal : ouvert ou fermé à droite, à gauche (#291)
+  if ( this.isSegmentHorizontal ) {
+    items.push(
+        {label: T(this.data.open_right ? 'close_right' : 'open_right'), value: 'toggleOpenRight'}
+      , {label: T(this.data.open_left  ? 'close_left'  : 'open_left'),  value: 'toggleOpenLeft'}
+    )
+  }
   // Trait et texte : « Aspect » (bord et taille du texte, #287)
   this.borderTarget && items.push({label: T(this.hasAspectText ? 'aspect' : 'border'), value: 'border'})
   // Mode gris : sortir la marque du mode gris (ou l'y remettre)
@@ -1006,6 +1029,13 @@ onContextChoice(choice){
     case 'unlink':        return Liaison.unlink(AObjet.selection)
     case 'alignMeasure':  return targets.filter(m => m.isBorne).forEach(m => m.placeOnMeasure())
     case 'formHeight':    return targets.filter(m => m.isBorne).forEach(m => m.placeAtHeight())
+    case 'toggleOpenRight':
+    case 'toggleOpenLeft':
+      const side = choice == 'toggleOpenRight' ? 'right' : 'left'
+      const open = !this.data[`open_${side}`]
+      targets.filter(m => m.isSegmentHorizontal).forEach(m => m.setOpen(side, open))
+      setModified()
+      break
     case 'toggleFrame':
       // Toutes les marques de forme de la sélection prennent la version
       // de la marque cliquée
@@ -1531,6 +1561,7 @@ set subtype(v){
   this.data.subtype = v
   this.obj && this.obj.classList.add(this._subtype)
   this.obj && this.isCadence && this.marquerCadence()
+  this.applyOpenSides && this.applyOpenSides()
   v != subtype_ini && setModified()
 }
 
