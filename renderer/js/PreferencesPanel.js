@@ -95,7 +95,7 @@ apply(key, old){
   if ( dp.border ) return this.applyBorder(key, old)
   dp.selector && this.updateStylesInHead()
   dp.typeV == 'color' && Current.analyse && Current.analyse.updateModeColor()
-  'function' == typeof this[`onChange_${key}`] && this[`onChange_${key}`]()
+  'function' == typeof this[`onChange_${key}`] && this[`onChange_${key}`](old)
 }
 
 /**
@@ -116,8 +116,15 @@ async applyBorder(key, old){
   follow.length && setModified()
 }
 
-onChange_measure_line_offset(){
-  Systeme.placeMeasureNumbers(Number(Preferences.getValueOf('measure_line_offset')))
+// +old+ (valeur précédente) : tout ce qui suit la ligne de chaque système
+// (sans distance propre) est décalé d'autant (#300)
+onChange_measure_line_offset(old){
+  const value = Number(Preferences.getValueOf('measure_line_offset'))
+  if ( null == old || '' === old || isNaN(Number(old)) ) return Systeme.placeMeasureNumbers(value)
+  // (préférence déjà changée : ancienne valeur remise le temps de relever
+  // l'appartenance des marques)
+  Preferences.set('measure_line_offset', old)
+  Systeme.changeMeasureOffsets(() => Preferences.set('measure_line_offset', value))
 }
 onApply_top_first_system(){
   Systeme.moveToFirstSystemTop()

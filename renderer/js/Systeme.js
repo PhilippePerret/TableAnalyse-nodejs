@@ -196,6 +196,32 @@ export class Systeme extends AObjet {
     setModified()
   }
 
+  /**
+   * Changement de distance système ↔ ligne des numéros par +change+
+   * (fonction qui modifie les distances) : tout ce qui suit la ligne d'un
+   * système (systèmes suivants et leurs marques) est décalé d'autant
+   * (#300). Appartenance relevée AVANT le changement.
+   */
+  static changeMeasureOffsets(change){
+    const owner = new Map()
+    AObjet.items.forEach(ao => {
+      if ( !ao || ao.isSysteme || (ao.data && ao.data.line) ) return
+      owner.set(ao, this.getSystemeAssociated(ao))
+    })
+    const before = new Map(this.all.map(sys => [sys, sys.measureOffset]))
+    change()
+    const shifts = new Map()
+    let acc = 0
+    this.all.forEach(sys => { shifts.set(sys, acc) ; acc += sys.measureOffset - before.get(sys) })
+    if ( [...shifts.values()].some(Boolean) ) {
+      this.all.forEach(sys => { const d = shifts.get(sys) ; d && (sys.top = sys.top + d) })
+      owner.forEach((sys, ao) => { const d = sys && shifts.get(sys) ; d && (ao.top = ao.top + d) })
+      setModified()
+      emit('table:changed')
+    }
+    this.placeMeasureNumbers()
+  }
+
   static get measureLineOffset(){ return Number(Preferences.get('measure_line_offset')) }
 
   static measureMarksOf(sys){

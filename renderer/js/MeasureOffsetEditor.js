@@ -4,6 +4,7 @@ import { t } from './i18n.js'
 import { editorField } from './LiaisonEditor.js'
 import { RangeField } from './RangeField.js'
 import { setModified } from './Current.js'
+import { Systeme } from './Systeme.js'
 /**
  * MeasureOffsetEditor
  * -------------------
@@ -19,10 +20,9 @@ class MeasureOffsetEditorClass {
     this.close()
     this.sys = sys
     this.initial = sys.data.measure_offset
-    const preview = v => {
-      sys.data.measure_offset = v
-      sys.placeMeasureLine(sys.constructor.measureMarksOf(sys), v)
-    }
+    // Tout ce qui suit la ligne est décalé d'autant (#300)
+    const setOffset = v => Systeme.changeMeasureOffsets(() => { sys.data.measure_offset = v })
+    const preview = v => setOffset(v)
     const field = new RangeField({min: 0, max: 2000, value: sys.measureOffset, onInput: v => v >= 0 && preview(v)})
     this.field = field
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
@@ -49,8 +49,8 @@ class MeasureOffsetEditorClass {
   close(){
     if ( this.sys ) {
       const sys = this.sys
-      null == this.initial ? delete sys.data.measure_offset : (sys.data.measure_offset = this.initial)
-      sys.placeMeasureLine(sys.constructor.measureMarksOf(sys), sys.measureOffset)
+      const initial = this.initial
+      Systeme.changeMeasureOffsets(() => { null == initial ? delete sys.data.measure_offset : (sys.data.measure_offset = initial) })
     }
     this.sys = null
     this.panel && this.panel.remove()
