@@ -635,7 +635,7 @@ get isHresizable(){
   return this._ishresize || (this._ishresize = this.isBox || ['cir','seg','emp','txt','mot'].includes(this.type))
 }
 get isVresizable(){
-  return this._isvresize || (this._isvresize = (this.isBox || ['emp','mot'].includes(this.type) || this.isSegmentVertical))
+  return this._isvresize || (this._isvresize = (this.isBox || ['emp','mot','seg'].includes(this.type)))
 }
 get isSegmentVertical(){
   return this.type == 'seg' && ['v-left','v-right'].includes(this.subtype)
