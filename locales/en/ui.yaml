@@ -180,7 +180,7 @@ mark_context:
   unlock:           "Unlock"
   edit:             "Edit…"
   border:           "Border/Line…"
-  aspect:           "Appearance"
+  aspect:           "Appearance…"
   align:            "Align with Marks of the Same Type"
   align_harmony:    "Align with the Harmony"
   align_chord:      "Align with the Chord"

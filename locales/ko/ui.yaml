@@ -180,7 +180,7 @@ mark_context:
   unlock:           "잠금 해제"
   edit:             "편집…"
   border:           "테두리/선…"
-  aspect:           "모양"
+  aspect:           "모양…"
   align:            "같은 종류의 표시에 맞추기"
   align_harmony:    "화성 표시에 맞추기"
   align_chord:      "코드에 맞추기"

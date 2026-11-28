@@ -15,9 +15,9 @@ T.test('menu : « Aspect » pour trait + texte, « Bord/trait… » sinon (#287)
   const seg = await T.mark({type: 'seg', subtype: 'h-up', content: 'a', top: 1400, left: 300})
   const acc = await T.mark({type: 'acc', content: 'C', top: 1600, left: 300})
   try {
-    T.ok(labels(mot).includes('Aspect') && !labels(mot).includes('Bord/trait…'), 'motif : Aspect')
-    T.ok(labels(seg).includes('Aspect'), 'segment : Aspect')
-    T.no(labels(acc).includes('Aspect'), 'accord : pas d’Aspect')
+    T.ok(labels(mot).includes('Aspect…') && !labels(mot).includes('Bord/trait…'), 'motif : « Aspect… »')
+    T.ok(labels(seg).includes('Aspect…'), 'segment : Aspect')
+    T.no(labels(acc).includes('Aspect…'), 'accord : pas d’Aspect')
   } finally { [mot, seg, acc].forEach(m => AObjet.remove(m)) }
 })
 

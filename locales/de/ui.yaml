@@ -180,7 +180,7 @@ mark_context:
   unlock:           "Entsperren"
   edit:             "Bearbeiten…"
   border:           "Rand/Linie…"
-  aspect:           "Aussehen"
+  aspect:           "Aussehen…"
   align:            "An Markierungen gleichen Typs ausrichten"
   align_harmony:    "An der Harmonie ausrichten"
   align_chord:      "Am Akkord ausrichten"

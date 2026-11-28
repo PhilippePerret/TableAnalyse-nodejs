@@ -180,7 +180,7 @@ mark_context:
   unlock:           "Sblocca"
   edit:             "Modifica…"
   border:           "Bordo/linea…"
-  aspect:           "Aspetto"
+  aspect:           "Aspetto…"
   align:            "Allinea ai segni dello stesso tipo"
   align_harmony:    "Allinea con l'armonia"
   align_chord:      "Allinea con l'accordo"
