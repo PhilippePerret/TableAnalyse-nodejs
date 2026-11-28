@@ -537,11 +537,13 @@ export class Systeme extends AObjet {
     if ( diff == 0 ) return 
     else { setModified() }
     // console.log("DATA: Top actuel = %i, Nouveau top = %i, différence = %i", iniTop,top,diff)
+    // (objets du système relevés avant son déplacement)
+    const objets = onlySystem ? [] : this.objets
     this.top = top
     /*
     |  Déplacement de tous ses objets associés
     */
-    onlySystem || this.objets.forEach(ao => { ao.top = ao.top + diff })
+    objets.forEach(ao => { ao.top = ao.top + diff })
     Systeme.placeMeasureNumbers()
   }
 
@@ -652,27 +654,17 @@ export class Systeme extends AObjet {
   }
 
   /**
-   * @return la liste des AObjets associés au système
+   * @return la liste des AObjets associés au système, calculée à chaque
+   * fois d'après leur position (cf. getSystemeAssociated : entre la ligne
+   * des numéros du système précédent et la sienne) ; jamais une liste
+   * gardée, qui deviendrait fausse (#301). Numéros de la ligne exclus
+   * (placés avec elle).
    */
   get objets(){
-    return this._objets || (this._objets = this.getObjets() || [])
+    return AObjet.items.filter(ao => ao && ao.obj && !(ao.data && ao.data.line) && !ao.isSysteme && Systeme.getSystemeAssociated(ao) === this)
   }
-  // (retiré des autres systèmes : un objet n'appartient qu'à un seul,
-  // #285)
-  addObjet(aobjet){
-    Systeme.each(sys => {
-      if ( sys === this || !sys._objets ) return
-      const i = sys._objets.indexOf(aobjet)
-      i >= 0 && sys._objets.splice(i, 1)
-    })
-    this._objets || this.objets
-    this._objets.includes(aobjet) || this._objets.push(aobjet)
-  }
-  getObjets(){
-    if ( this.data.objets ) {
-      return this.data.objets.map( oid => AObjet.get(oid))
-    }
-  }
+  // (appartenance calculée, cf. objets)
+  addObjet(aobjet){}
 
   lock(){
     this.isLocked = true
@@ -699,6 +691,10 @@ export class Systeme extends AObjet {
       const onlySystem = true == e.altKey
       const onlyAllSystems = onlySystem && e.shiftKey
       const initTop = this.top
+      // Objets de ce système et des précédents (relevés avant le
+      // déplacement) : jamais déplacés avec les suivants (#301)
+      const saufs = Systeme.all.filter(sys => sys.index <= this.index).flatMap(sys => sys.objets).map(ao => ao.domId)
+      saufs.push(this.domId)
       this.positionne(e.clientY - this.rectTop, onlySystem)
       this.obj.classList.remove('selected')
       /*
@@ -716,8 +712,6 @@ export class Systeme extends AObjet {
         /*
         |  Pour déplacer tous les systèmes et les objets suivants
         */
-        var saufs = this.objets.map(ao => {return ao.domId})
-        saufs.push(this.domId)
         AObjet.moveAllBelow({
           top:    initTop,
           offset: this.top - initTop, 
