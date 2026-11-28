@@ -66,3 +66,20 @@ T.test('« Vérifier la version », puis « Actualiser maintenant »', async () 
   T.ok(row().querySelector('.btn-update-now').disabled, 'actualisation impossible')
   await T.invoke('test:latestVersion', {version: null})
 })
+
+// Mise en page : libellé à gauche, menu étroit aligné à droite, boutons de
+// la version sur toute la largeur (#306)
+T.test('aide : libellé à gauche, menu étroit à droite ; panneau pas trop large (#306)', async () => {
+  PreferencesPanel.toggle() ; await T.wait(150)
+  try {
+    const P = document.querySelector('#preferences-panel')
+    const sel = P.querySelector('#pref-help_format'), lab = P.querySelector('label[for="pref-help_format"]')
+    const pr = P.getBoundingClientRect(), sr = sel.getBoundingClientRect(), lr = lab.getBoundingClientRect()
+    const other = P.querySelector('label[for="pref-notation_input"]').getBoundingClientRect()
+    T.ok(Math.abs(lr.left - other.left) <= 2, 'libellé dans la colonne des libellés')
+    T.ok(sr.width < 120, `menu étroit (${Math.round(sr.width)} px)`)
+    const sel2 = P.querySelector('#pref-notation_input').getBoundingClientRect()
+    T.ok(Math.abs(sr.right - sel2.right) <= 2, 'aligné à droite comme les autres menus')
+    T.ok(pr.width < 1300, `panneau pas trop large (${Math.round(pr.width)} px)`)
+  } finally { PreferencesPanel.toggle() }
+})

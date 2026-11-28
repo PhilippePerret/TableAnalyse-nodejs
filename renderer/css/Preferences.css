@@ -88,3 +88,11 @@ section#preferences-panel span.pref-slider { display: inline-flex; align-items: 
 section#preferences-panel span.pref-slider input[type="range"] { width: 120px; accent-color: #3a925e; }
 section#preferences-panel button.pref-step { width: 22px; height: 22px; padding: 0; font-size: 13px; line-height: 1; border: 1px solid #bbb; background: #f7f7f7; border-radius: 4px; color: #444; }
 section#preferences-panel button.pref-step:hover { background: #e6e6e6; }
+
+/* Boutons de la version : sur toute la largeur, sous « Actualisation
+   automatique » (#306) */
+section#preferences-panel > div.pref-version { grid-column: 1 / -1; }
+/* Menus : largeur de leur plus long choix, alignés à droite (#306) */
+section#preferences-panel div.type-valeur > select { width: auto; justify-self: end; }
+/* Tableaux : sur toute la largeur (pas dans la colonne des libellés) */
+section#preferences-panel > div.div-prefs-table { grid-column: 1 / -1; }
