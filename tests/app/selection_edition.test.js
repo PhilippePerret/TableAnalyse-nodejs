@@ -228,3 +228,28 @@ T.test('Entrée : édition de la marque seule sélectionnée', async () => {
   T.no(b.editor, 'plusieurs marques sélectionnées : pas d’édition')
   clean(a, b, c)
 })
+
+// Plusieurs marques déplacées : TOUTES se calent sur les marques déjà
+// posées (#305). Vrai glissement, page défilée.
+T.test('déplacement de plusieurs accords : tous calés sur les marques posées (#305)', async () => {
+  const { Preferences } = await T.imp('Preferences')
+  const oldAdj = Preferences.get('adjust_same_mark')
+  Preferences.set('adjust_same_mark', true)
+  window.scrollTo({top: 1000, behavior: 'instant'})
+  const p1 = await T.mark({type: 'acc', content: 'C', top: 1300, left: 300})
+  const p2 = await T.mark({type: 'har', content: 'I', top: 1300, left: 900})
+  const g  = await T.mark({type: 'acc', content: 'G', top: 1500, left: 500})
+  const d  = await T.mark({type: 'acc', content: 'D', top: 1508, left: 700})
+  const h  = await T.mark({type: 'har', content: 'V', top: 1512, left: 600})
+  try {
+    AObjet.deselectAll()
+    ;[g, d, h].forEach(m => AObjet.addToSelection(m))
+    const r = g.obj.getBoundingClientRect()
+    await T.invoke('test:realDrag', {x: Math.round(r.left + Math.min(8, r.width / 2)), y: Math.round(r.top + Math.min(8, r.height / 2)), dx: 0, dy: -195})
+    T.eq([g.top, d.top, h.top], [1300, 1300, 1300], `toutes calées (${g.top}, ${d.top}, ${h.top})`)
+    T.eq([p1.top, p2.top], [1300, 1300], 'marques posées immobiles')
+  } finally {
+    Preferences.set('adjust_same_mark', oldAdj)
+    clean(p1, p2, g, d, h) ; window.scrollTo({top: 0, behavior: 'instant'})
+  }
+})

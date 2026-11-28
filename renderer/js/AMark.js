@@ -930,7 +930,10 @@ observe(){
           newMark.isBorne && newMark.placeAtHeight()
           saufId = newMark.id
         } else {
-          my.ajustePosition(ui.position.left, ui.position.top)
+          // (calée sur les marques déjà posées, pas sur celles déplacées
+          // avec elle, #305)
+          const moved = my.isSelected ? (AObjet.selection || []).slice() : []
+          my.ajustePosition(ui.position.left, ui.position.top, moved)
           // Marque de forme : toujours à sa hauteur
           my.isBorne && my.placeAtHeight()
           my.justMoved = true // pour empêcher le re-select
@@ -938,13 +941,18 @@ observe(){
         }
         /**
          * S'il y a d'autres objets sélectionnés, on les 
-         * déplace aussi
+         * déplace aussi ; chacun se cale sur les marques déjà posées
+         * (#305)
          */
-        this.forDuplication || AObjet.eachSelection(ao => {
-          if ( ao.id == saufId ) return
-          ao.left = ao.left - diffLeft
-          ao.top  = ao.top - diffTop
-        })
+        if ( !this.forDuplication ) {
+          const others = (AObjet.selection || []).filter(ao => ao.id != saufId)
+          others.forEach(ao => {
+            ao.left = ao.left - diffLeft
+            ao.top  = ao.top - diffTop
+          })
+          const moved = AObjet.selection.slice()
+          others.forEach(ao => ao.ajustePosition && !ao.isBorne && ao.ajustePosition(ao.left, ao.top, moved))
+        }
         // La copie devient la sélection
         if ( this.forDuplication ) {
           AObjet.deselectAll()
@@ -1328,7 +1336,7 @@ unsetSelected(){
  * la position de ces marques.
  * 
  */
-ajustePosition(left = this.left, top = this.top){
+ajustePosition(left = this.left, top = this.top, exclude = []){
   const initTop = 0 + this.data.top
   this.left = left
   this.top  = top
@@ -1336,7 +1344,7 @@ ajustePosition(left = this.left, top = this.top){
     /*
     |  Ajustement précis de l'objet par rapport aux autres marques
     */
-    AObjet.checkPositionAndAdjust(this)
+    AObjet.checkPositionAndAdjust(this, exclude)
   } else if ( this.isGridAjustable && Grid.on ) {
     /*
     |  Sinon, si la grille est activée, on ajuste aussi la longueur

@@ -294,7 +294,9 @@ export class AObjet {
  * mettre l'élément en place.
  * 
  */
-static checkPositionAndAdjust(amark){
+// (+exclude+ : marques à ne pas prendre pour référence, p.e. les autres
+// marques déplacées avec elle, #305)
+static checkPositionAndAdjust(amark, exclude = []){
   /*
   |  La marque prend la hauteur de la marque ajustable (même type ou
   |  type associé) la plus proche verticalement, si l'écart ne dépasse
@@ -303,7 +305,7 @@ static checkPositionAndAdjust(amark){
   const snap = pref('snap_for_adjust_pos')
   let nearest = null, best = Infinity
   for (var aobj of this.items){
-    if ( aobj === amark || aobj.type == 'systeme' ) continue
+    if ( aobj === amark || aobj.type == 'systeme' || exclude.includes(aobj) ) continue
     if ( this.areNotAjustable(aobj.type, amark.type) && this.areNotAjustable(aobj.subtype, amark.subtype)){ 
       continue ;
     }
