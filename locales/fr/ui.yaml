@@ -196,6 +196,7 @@ mark_context:
   unlink:           "Délier"
 
 system_menu:
+  measure_offset:   "Distance avec la numérotation…"
   fix_image:        "Corriger l’image…"
   restore_image:    "Remettre l’image originale"
   unlock:           "Déverrouiller"
@@ -411,6 +412,9 @@ panels:
     systems:          "Systèmes"
     count_one:        "%{n} marque trouvée"
     count_many:       "%{n} marques trouvées"
+  measure_offset:
+    title:            "Distance avec la numérotation"
+    distance:         "Distance"
   border:
     title:            "Bords"
     aspect:           "Aspect"

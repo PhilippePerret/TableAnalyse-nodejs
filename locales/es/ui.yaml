@@ -196,6 +196,7 @@ mark_context:
   unlink:           "Separar"
 
 system_menu:
+  measure_offset:   "Distancia con la numeración…"
   fix_image:        "Corregir la imagen…"
   restore_image:    "Restaurar la imagen original"
   unlock:           "Desbloquear"
@@ -411,6 +412,9 @@ panels:
     systems:          "Sistemas"
     count_one:        "%{n} marca encontrada"
     count_many:       "%{n} marcas encontradas"
+  measure_offset:
+    title:            "Distancia con la numeración"
+    distance:         "Distancia"
   border:
     title:            "Bordes"
     aspect:           "Aspecto"

@@ -1,3 +1,4 @@
+import { MeasureOffsetEditor } from './MeasureOffsetEditor.js'
 import { DCreate, listen, stopEvent } from './dom.js'
 import { not } from './lib/common.js'
 import { message } from './lib/Message.js'
@@ -101,12 +102,11 @@ export class Systeme extends AObjet {
     |  système précédent et la sienne), #285
     */
     if ( this.hasMeasureLine ) {
-      const offset = this.measureLineOffset
       let found = null
       this.each(sys => {
         if ( found ) return
         const h = sys.obj && sys.obj.offsetHeight || sys.height || 0
-        if ( aobj.top < sys.top + h + offset ) found = sys
+        if ( aobj.top < sys.top + h + sys.measureOffset ) found = sys
       })
       return found || this.all[this.all.length - 1]
     }
@@ -209,7 +209,8 @@ export class Systeme extends AObjet {
       bySystem.has(sys) || bySystem.set(sys, [])
       bySystem.get(sys).push(ao)
     })
-    this.each(sys => sys.placeMeasureLine(bySystem.get(sys) || [], offset))
+    // (distance propre au système : fixe, cf. measureOffset, #292)
+    this.each(sys => sys.placeMeasureLine(bySystem.get(sys) || [], sys.hasOwnMeasureOffset ? sys.measureOffset : offset))
   }
 
   /**
@@ -235,11 +236,10 @@ export class Systeme extends AObjet {
    */
   static spaceAfterMeasureLines(){
     const gap = Number(Preferences.get('distance_after_measure_line'))
-    const offset = this.measureLineOffset
     this.each((sys, i) => {
       const next = this.all[i + 1]
       if ( !next || !sys.measureLine ) return
-      const lineY = sys.top + sys.obj.offsetHeight + offset
+      const lineY = sys.top + sys.obj.offsetHeight + sys.measureOffset
       const below = AObjet.items.filter(ao => ao !== next && ao.top > lineY && ao.top < next.top && !(ao.data && ao.data.line))
       const firstTop = Math.min(next.top, ...below.map(ao => ao.top))
       const diff = Math.round(lineY + gap - firstTop)
@@ -463,7 +463,25 @@ export class Systeme extends AObjet {
       , left:   this.data.left
       // Fin de la dernière mesure (proportion de la largeur, cf. découpe)
       , measures_end: this.data.measures_end
+      // Distance propre système ↔ ligne des numéros (#292)
+      , measure_offset: this.data.measure_offset
     }
+  }
+
+  /**
+   * Distance (px) entre le système et sa ligne des numéros de mesure :
+   * la sienne (« Distance avec la numérotation… », fixe : les
+   * préférences n'y touchent pas), sinon celle des préférences (#292)
+   */
+  get hasOwnMeasureOffset(){ return null != this.data.measure_offset }
+  get measureOffset(){
+    return this.hasOwnMeasureOffset ? Number(this.data.measure_offset) : Systeme.measureLineOffset
+  }
+
+  // « Distance avec la numérotation… » : curseur (px), aperçu immédiat,
+  // gardée par OK
+  editMeasureOffset(){
+    MeasureOffsetEditor.open(this)
   }
 
   get domId(){return this._domid || (this._domid = `systeme-${this.index}`)}
@@ -562,12 +580,13 @@ export class Systeme extends AObjet {
   onContextMenu(e){
     stopEvent(e)
     const locked = !!Preferences.get('lock_systems')
-    invoke('menu:systemContext', {image: this.image_name, locked})
+    invoke('menu:systemContext', {image: this.image_name, locked, measureLine: !!this.measureLine})
       .then(choice => {
         switch(choice){
           case 'toggleLock':   return Systeme.toggleLock(null, !locked)
           case 'fixImage':     return Systeme.fixImage(this)
           case 'restoreImage': return this.restoreImage()
+          case 'measureOffset': return this.editMeasureOffset()
         }
       })
       .catch(err => console.error(err))
@@ -745,7 +764,7 @@ export class Systeme extends AObjet {
     const top = e.clientY - this.rectTop
     this.obj.style.top = px(top)
     // La ligne des numéros (et ses numéros) suit le système
-    this.measureLine && this.placeMeasureLine(Systeme.measureMarksOf(this), Systeme.measureLineOffset, top)
+    this.measureLine && this.placeMeasureLine(Systeme.measureMarksOf(this), this.measureOffset, top)
   }
 
 

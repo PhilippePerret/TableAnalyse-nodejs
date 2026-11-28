@@ -196,6 +196,7 @@ mark_context:
   unlink:           "取消连接"
 
 system_menu:
+  measure_offset:   "与编号的距离…"
   fix_image:        "修正图像…"
   restore_image:    "恢复原始图像"
   unlock:           "解锁"
@@ -411,6 +412,9 @@ panels:
     systems:          "声部组"
     count_one:        "找到 %{n} 个标记"
     count_many:       "找到 %{n} 个标记"
+  measure_offset:
+    title:            "与编号的距离"
+    distance:         "距离"
   border:
     title:            "边框"
     aspect:           "外观"

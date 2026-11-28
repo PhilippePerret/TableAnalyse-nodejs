@@ -196,6 +196,7 @@ mark_context:
   unlink:           "Trennen"
 
 system_menu:
+  measure_offset:   "Abstand zur Nummerierung…"
   fix_image:        "Bild korrigieren…"
   restore_image:    "Originalbild wiederherstellen"
   unlock:           "Entsperren"
@@ -411,6 +412,9 @@ panels:
     systems:          "Systeme"
     count_one:        "%{n} Markierung gefunden"
     count_many:       "%{n} Markierungen gefunden"
+  measure_offset:
+    title:            "Abstand zur Nummerierung"
+    distance:         "Abstand"
   border:
     title:            "Ränder"
     aspect:           "Aussehen"

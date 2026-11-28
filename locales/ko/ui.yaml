@@ -196,6 +196,7 @@ mark_context:
   unlink:           "연결 해제"
 
 system_menu:
+  measure_offset:   "번호와의 거리…"
   fix_image:        "이미지 수정…"
   restore_image:    "원본 이미지로 되돌리기"
   unlock:           "잠금 해제"
@@ -411,6 +412,9 @@ panels:
     systems:          "단"
     count_one:        "표시 %{n}개 찾음"
     count_many:       "표시 %{n}개 찾음"
+  measure_offset:
+    title:            "번호와의 거리"
+    distance:         "거리"
   border:
     title:            "테두리"
     aspect:           "모양"

@@ -196,6 +196,7 @@ mark_context:
   unlink:           "つなぎを解除"
 
 system_menu:
+  measure_offset:   "番号との距離…"
   fix_image:        "画像を修正…"
   restore_image:    "元の画像に戻す"
   unlock:           "ロックを解除"
@@ -411,6 +412,9 @@ panels:
     systems:          "段"
     count_one:        "%{n} 個のマークが見つかりました"
     count_many:       "%{n} 個のマークが見つかりました"
+  measure_offset:
+    title:            "番号との距離"
+    distance:         "距離"
   border:
     title:            "枠線"
     aspect:           "外観"

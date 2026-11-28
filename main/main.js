@@ -1017,12 +1017,13 @@ function registerIpc(){
    * Menu contextuel d'un système. Renvoie la commande à exécuter par le
    * renderer (null si aucune).
    */
-  handle('menu:systemContext', ({image, locked}) => {
+  handle('menu:systemContext', ({image, locked, measureLine}) => {
     const analyse = requireCurrent()
     const file = path.join(analyse.systemsFolder, path.basename(image))
     return new Promise(resolve => {
       const menu = Menu.buildFromTemplate([
           {label: t(locked ? 'ui.system_menu.unlock' : 'ui.system_menu.lock'), click: () => resolve('toggleLock')}
+        , ...(measureLine ? [{type: 'separator'}, {label: t('ui.system_menu.measure_offset'), click: () => resolve('measureOffset')}] : [])
         , {type: 'separator'}
         , {label: t('ui.system_menu.fix_image'),      click: () => resolve('fixImage')}
         , {label: t('ui.system_menu.restore_image'),  enabled: analyse.hasOriginalImage(image), click: () => resolve('restoreImage')}
