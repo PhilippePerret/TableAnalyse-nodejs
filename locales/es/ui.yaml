@@ -421,6 +421,9 @@ panels:
     aspect:           "Aspecto"
     text:             "Texto"
     align:            "Alineación"
+    align_left:       "izquierda"
+    align_center:     "centro"
+    align_right:      "derecha"
     intensity:        "Intensidad"
     default:          "Valor por defecto"
   liaison:

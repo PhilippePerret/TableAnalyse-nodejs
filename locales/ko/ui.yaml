@@ -421,6 +421,9 @@ panels:
     aspect:           "모양"
     text:             "텍스트"
     align:            "정렬"
+    align_left:       "왼쪽"
+    align_center:     "가운데"
+    align_right:      "오른쪽"
     intensity:        "농도"
     default:          "기본값"
   liaison:

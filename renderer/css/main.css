@@ -319,6 +319,10 @@ div#liaison_editor div.fields,
 div#border_editor div.fields,
 div#measure_offset_editor div.fields { display: flex; align-items: center; gap: 6px; }
 
+/* « Aspect » d'un motif : alignement du nom, boutons radio à picto (#299) */
+div#border_editor label.align-choice { display: inline-flex; align-items: center; gap: 4px; margin-right: 10px; cursor: pointer; }
+div#border_editor label.align-choice svg.align-picto { color: #444; }
+
 /* Boite de contrôle de l'animation (cf. Animation.js) */
 div#animation_box {
   position: fixed;

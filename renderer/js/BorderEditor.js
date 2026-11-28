@@ -39,10 +39,35 @@ class BorderEditorClass {
     const ALIGNS = ['left', 'center', 'right']
     const alignOf = m => ALIGNS.includes(m.data.align) ? m.data.align : 'center'
     const previewAlign = v => marks.forEach(m => { ALIGNS.forEach(a => m.spanContent.classList.toggle(a, a == v)) })
-    const align = withAlign && DCreate('SELECT', {inner: ALIGNS.map(v => DCreate('OPTION', {value: v, text: t(`ui.text_align_menu.${v}`)}))})
+    // Choix par boutons radio, chacun avec son picto (#299)
+    const PICTO = {
+        left:   [[2, 14], [2, 10], [2, 14], [2, 8]]
+      , center: [[2, 14], [5, 11], [2, 14], [6, 10]]
+      , right:  [[2, 14], [6, 14], [2, 14], [8, 14]]
+    }
+    const picto = v => {
+      const NS = 'http://www.w3.org/2000/svg'
+      const svg = document.createElementNS(NS, 'svg')
+      svg.setAttribute('viewBox', '0 0 16 16') ; svg.setAttribute('width', '16') ; svg.setAttribute('height', '16')
+      svg.setAttribute('class', 'align-picto')
+      PICTO[v].forEach(([x1, x2], i) => {
+        const l = document.createElementNS(NS, 'line')
+        Object.entries({x1, x2, y1: 3 + i * 3.5, y2: 3 + i * 3.5, stroke: 'currentColor', 'stroke-width': '1.6', 'stroke-linecap': 'round'}).forEach(([k, val]) => l.setAttribute(k, String(val)))
+        svg.appendChild(l)
+      })
+      return svg
+    }
+    const radios = withAlign && ALIGNS.map(v => {
+      const input = DCreate('INPUT', {type: 'radio', name: 'mark-align', value: v})
+      input.checked = v == alignOf(marks[0])
+      listen(input, 'change', () => input.checked && previewAlign(v))
+      return DCreate('LABEL', {class: `align-choice align-${v}`, inner: [input, picto(v), DCreate('SPAN', {text: t(`ui.panels.border.align_${v}`)})]})
+    })
+    const align = radios && {
+        get value(){ const c = radios.map(r => r.querySelector('input')).find(i => i.checked) ; return c ? c.value : 'center' }
+      , set value(v){ radios.forEach(r => { const i = r.querySelector('input') ; i.checked = i.value == v }) }
+    }
     if ( align ) {
-      align.value = alignOf(marks[0])
-      listen(align, 'change', () => previewAlign(align.value))
       this.restoreAlign = () => marks.forEach(m => { ALIGNS.forEach(a => m.spanContent.classList.toggle(a, a == m.data.align)) })
     }
     const T = (k) => t(`ui.panels.liaison.${k}`)
@@ -79,7 +104,7 @@ class BorderEditorClass {
           , editorField(t('ui.panels.border.intensity'), intensity.elements)
           , editorField(T('line'),  line)
           , ...(text ? [editorField(t('ui.panels.border.text'), [...text.elements, DCreate('SPAN', {text: 'px'})])] : [])
-          , ...(align ? [editorField(t('ui.panels.border.align'), align)] : [])
+          , ...(radios ? [editorField(t('ui.panels.border.align'), radios)] : [])
           , editorField('', [btnDefault, toPrefsButton(() => this.toPrefs())])
         ]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})

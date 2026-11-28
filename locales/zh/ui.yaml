@@ -421,6 +421,9 @@ panels:
     aspect:           "外观"
     text:             "文本"
     align:            "对齐"
+    align_left:       "左"
+    align_center:     "中"
+    align_right:      "右"
     intensity:        "浓度"
     default:          "默认值"
   liaison:

@@ -421,6 +421,9 @@ panels:
     aspect:           "外観"
     text:             "テキスト"
     align:            "揃え"
+    align_left:       "左"
+    align_center:     "中央"
+    align_right:      "右"
     intensity:        "濃さ"
     default:          "既定値"
   liaison:
