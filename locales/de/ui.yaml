@@ -420,6 +420,7 @@ panels:
     title:            "Ränder"
     aspect:           "Aussehen"
     text:             "Text"
+    align:            "Ausrichtung"
     intensity:        "Intensität"
     default:          "Standardwert"
   liaison:

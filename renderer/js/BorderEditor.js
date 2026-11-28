@@ -5,6 +5,7 @@ import { editorField } from './LiaisonEditor.js'
 import { RangeField, toPrefsButton } from './RangeField.js'
 import { Preferences } from './Preferences.js'
 import { PreferencesPanel } from './PreferencesPanel.js'
+import { setModified } from './Current.js'
 /**
  * BorderEditor
  * ------------
@@ -33,6 +34,17 @@ class BorderEditorClass {
     }
     const text = withText && new RangeField({min: 6, max: 120, value: marks[0].textSize, onInput: v => v > 0 && marks.forEach(m => m.previewTextSize(v))})
     this.withText = withText
+    // Motifs : alignement du nom (à gauche, au centre, à droite)
+    const withAlign = marks.every(m => m.type == 'mot')
+    const ALIGNS = ['left', 'center', 'right']
+    const alignOf = m => ALIGNS.includes(m.data.align) ? m.data.align : 'center'
+    const previewAlign = v => marks.forEach(m => { ALIGNS.forEach(a => m.spanContent.classList.toggle(a, a == v)) })
+    const align = withAlign && DCreate('SELECT', {inner: ALIGNS.map(v => DCreate('OPTION', {value: v, text: t(`ui.text_align_menu.${v}`)}))})
+    if ( align ) {
+      align.value = alignOf(marks[0])
+      listen(align, 'change', () => previewAlign(align.value))
+      this.restoreAlign = () => marks.forEach(m => { ALIGNS.forEach(a => m.spanContent.classList.toggle(a, a == m.data.align)) })
+    }
     const T = (k) => t(`ui.panels.liaison.${k}`)
     const st = mark.border
     const line  = DCreate('SELECT', {inner: ['solid', 'dashed'].map(v => DCreate('OPTION', {value: v, text: T('lines')[v]}))})
@@ -50,17 +62,24 @@ class BorderEditorClass {
       width.value = cur.width
       intensity.value = cur.intensity
       if ( text ) { marks.forEach(m => m.previewTextSize(null)) ; text.value = marks[0].textSize }
+      if ( align ) { align.value = 'center' ; previewAlign('center') }
     })
     const btnCancel = DCreate('BUTTON', {class: 'btn-close', text: t('ui.buttons.renounce'), style: 'float:left;'})
     const btnOk     = DCreate('BUTTON', {class: 'btn-default', text: t('ui.buttons.ok')})
     listen(btnCancel, 'click', this.close.bind(this))
-    listen(btnOk, 'click', () => { mark.confirmBorder() ; this.close() })
+    listen(btnOk, 'click', () => {
+      mark.confirmBorder()
+      align && marks.forEach(m => { m.data.align = align.value ; setModified() })
+      this.restoreAlign = null
+      this.close()
+    })
     const panel = DCreate('DIV', {id: 'border_editor', inner: [
         DCreate('DIV', {class: 'rows', inner: [
             editorField(T('width'), [...width.elements, DCreate('SPAN', {text: 'px'})])
           , editorField(t('ui.panels.border.intensity'), intensity.elements)
           , editorField(T('line'),  line)
           , ...(text ? [editorField(t('ui.panels.border.text'), [...text.elements, DCreate('SPAN', {text: 'px'})])] : [])
+          , ...(align ? [editorField(t('ui.panels.border.align'), align)] : [])
           , editorField('', [btnDefault, toPrefsButton(() => this.toPrefs())])
         ]})
       , DCreate('DIV', {class: 'buttons', inner: [btnCancel, btnOk]})
@@ -95,6 +114,8 @@ class BorderEditorClass {
   // bords
   close(){
     this.marks && this.marks.forEach(m => { m.cancelBorder() ; m.cancelTextSize() })
+    this.restoreAlign && this.restoreAlign()
+    this.restoreAlign = null
     this.panel && this.panel.remove()
     this.panel = null
     this.marks = null

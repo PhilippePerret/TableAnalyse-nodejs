@@ -55,3 +55,33 @@ T.test('Aspect : curseur « Texte », taille réglée, gardée par OK, enregistr
     T.ok(m && Math.abs(Number(m[1]) - 40) < 0.5, `taille dans l’export SVG (${m && m[1]})`)
   } finally { BorderEditor.close() ; AObjet.remove(mot) }
 })
+
+// Motif : alignement du nom dans « Aspect »
+T.test('Aspect d’un motif : « Alignement » (à gauche, au centre, à droite)', async () => {
+  const mot = await T.mark({type: 'mot', content: 'AlignAspect', top: 400, left: 300})
+  const seg = await T.mark({type: 'seg', subtype: 'h-up', content: 'a', top: 1400, left: 300})
+  const alignRow = () => [...document.querySelectorAll('#border_editor .rows > *')].find(r => r.textContent.startsWith('Alignement'))
+  const offRight = () => Math.round(mot.obj.getBoundingClientRect().right - mot.contentSpan.getBoundingClientRect().right)
+  try {
+    AObjet.deselectAll()
+    mot.obj.style.width = '500px'
+    BorderEditor.open([seg])
+    T.no(alignRow(), 'segment : pas d’alignement')
+    BorderEditor.close()
+    BorderEditor.open([mot])
+    const sel = alignRow() && alignRow().querySelector('select')
+    T.ok(sel, 'motif : réglage « Alignement »')
+    T.eq([...sel.options].map(o => o.textContent), ['À gauche', 'Au centre', 'À droite'], 'choix')
+    T.eq(sel.value, 'center', 'au centre par défaut')
+    sel.value = 'right' ; sel.dispatchEvent(new Event('change'))
+    T.ok(Math.abs(offRight()) <= 1, 'aperçu : à droite')
+    BorderEditor.close()
+    T.ok(Math.abs(offRight()) > 10, 'Renoncer : de nouveau au centre')
+    BorderEditor.open([mot])
+    const sel2 = alignRow().querySelector('select')
+    sel2.value = 'right' ; sel2.dispatchEvent(new Event('change'))
+    document.querySelector('#border_editor .btn-default').click()
+    T.ok(Math.abs(offRight()) <= 1, 'OK : à droite')
+    T.eq(mot.data.align, 'right', 'enregistré dans les données')
+  } finally { BorderEditor.close() ; AObjet.remove(mot) ; AObjet.remove(seg) }
+})

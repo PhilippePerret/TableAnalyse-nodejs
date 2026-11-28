@@ -420,6 +420,7 @@ panels:
     title:            "Bords"
     aspect:           "Aspect"
     text:             "Texte"
+    align:            "Alignement"
     intensity:        "Intensité"
     default:          "Valeur par défaut"
   liaison:

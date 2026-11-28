@@ -420,6 +420,7 @@ panels:
     title:            "边框"
     aspect:           "外观"
     text:             "文本"
+    align:            "对齐"
     intensity:        "浓度"
     default:          "默认值"
   liaison:
