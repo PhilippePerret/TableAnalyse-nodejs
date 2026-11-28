@@ -429,10 +429,13 @@ div.amark.mot {
   width: 220px;
   height: 100px;
 }
+/* Nom toujours au centre du motif (#290) */
 div.amark.mot span.content {
   position: absolute;
   bottom: calc(100% - 1px + var(--bwx));
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
   padding: 0 0 2px;
   width: max-content;
   font-size: 24px;
