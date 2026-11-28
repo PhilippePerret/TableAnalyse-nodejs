@@ -99,6 +99,7 @@ options_menu:
   grid_h:           "Magnétiser horizontalement"
   color:            "Version couleur"
   lock_systems:     "Verrouiller les systèmes"
+  lock_measures:    "Verrouiller les numéros de mesure"
   coordinates:      "Afficher les coordonnées"
   form_names:       "Afficher noms des portions"
   autosave:         "Enregistrement automatique"

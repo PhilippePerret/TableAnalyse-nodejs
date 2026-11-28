@@ -9,6 +9,9 @@ import { NOTE_CHARS } from './lib/notation.js'
 export const PreferencesAppData = {
     theme                   :{type:'select'       ,typeV:'string'   ,default:null, values: null /* défini par Preferences */}
   , lock_systems            :{type:'checkbox'     ,typeV:'boolean'  ,default:true}
+  // Numéros de mesure (et leur ligne) verrouillés : acte volontaire,
+  // menu Options (#295)
+  , lock_measures           :{type:'checkbox'     ,typeV:'boolean'  ,default:false, hidden:true}
   , grid_horizontal_space   :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px' ,apply:true}
   , grid_vertical_space     :{type:'inputtext'    ,typeV:'number'   ,default:50 ,unite:'px' ,apply:true}
   , systeme_width           :{type:'inputtext'    ,typeV:'number'   ,default:1860, selector:'img.systeme', selector_value:"width:__VALUE__px;" ,unite:'px' ,apply:true}

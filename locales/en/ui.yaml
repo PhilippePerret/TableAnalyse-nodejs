@@ -99,6 +99,7 @@ options_menu:
   grid_h:           "Snap Horizontally"
   color:            "Color Version"
   lock_systems:     "Lock Systems"
+  lock_measures:    "Lock measure numbers"
   coordinates:      "Show Coordinates"
   form_names:       "Show Portion Names"
   autosave:         "Autosave"

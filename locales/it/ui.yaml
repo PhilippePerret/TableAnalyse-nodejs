@@ -99,6 +99,7 @@ options_menu:
   grid_h:           "Magnetizza orizzontalmente"
   color:            "Versione a colori"
   lock_systems:     "Blocca i sistemi"
+  lock_measures:    "Blocca i numeri di battuta"
   coordinates:      "Mostra le coordinate"
   form_names:       "Mostra i nomi delle porzioni"
   autosave:         "Salvataggio automatico"

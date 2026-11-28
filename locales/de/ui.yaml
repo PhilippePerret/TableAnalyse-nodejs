@@ -99,6 +99,7 @@ options_menu:
   grid_h:           "Horizontal einrasten"
   color:            "Farbversion"
   lock_systems:     "Systeme sperren"
+  lock_measures:    "Taktnummern sperren"
   coordinates:      "Koordinaten anzeigen"
   form_names:       "Namen der Formteile anzeigen"
   autosave:         "Automatisch speichern"

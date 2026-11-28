@@ -99,6 +99,7 @@ options_menu:
   grid_h:           "가로로 맞춤"
   color:            "컬러 버전"
   lock_systems:     "단 잠그기"
+  lock_measures:    "마디 번호 잠그기"
   coordinates:      "좌표 보기"
   form_names:       "부분 이름 표시"
   autosave:         "자동 저장"

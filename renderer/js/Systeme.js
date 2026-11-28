@@ -185,6 +185,25 @@ export class Systeme extends AObjet {
   }
   static get hasMeasureLine(){ return this.measureMarks.length > 0 }
 
+  /**
+   * « Verrouiller les numéros de mesure » (menu Options, #295) : numéros
+   * verrouillés (ni sélection ni déplacement) et ligne figée (distance
+   * gardée malgré les préférences, « Distance avec la numérotation… »
+   * inaccessible) ; déverrouillage : l'inverse
+   */
+  static lockMeasures(locked){
+    Preferences.set('lock_measures', !!locked)
+    Preferences.saveData('lock_measures', !!locked)
+    this.measureMarks.forEach(m => locked ? m.lock() : m.unlock())
+    this.each(sys => {
+      if ( locked ) { null == sys.data.measure_offset && (sys.data.measure_offset_locked = sys.measureOffset) }
+      else delete sys.data.measure_offset_locked
+    })
+    setModified()
+    this.placeMeasureNumbers()
+  }
+  static get measuresLocked(){ return !!Preferences.get('lock_measures') }
+
   static get measureLineOffset(){ return Number(Preferences.get('measure_line_offset')) }
 
   static measureMarksOf(sys){
@@ -465,6 +484,8 @@ export class Systeme extends AObjet {
       , measures_end: this.data.measures_end
       // Distance propre système ↔ ligne des numéros (#292)
       , measure_offset: this.data.measure_offset
+      // Distance figée par le verrouillage des numéros de mesure (#295)
+      , measure_offset_locked: this.data.measure_offset_locked
     }
   }
 
@@ -473,14 +494,17 @@ export class Systeme extends AObjet {
    * la sienne (« Distance avec la numérotation… », fixe : les
    * préférences n'y touchent pas), sinon celle des préférences (#292)
    */
-  get hasOwnMeasureOffset(){ return null != this.data.measure_offset }
+  get hasOwnMeasureOffset(){ return null != this.data.measure_offset || null != this.data.measure_offset_locked }
   get measureOffset(){
-    return this.hasOwnMeasureOffset ? Number(this.data.measure_offset) : Systeme.measureLineOffset
+    if ( null != this.data.measure_offset ) return Number(this.data.measure_offset)
+    if ( null != this.data.measure_offset_locked ) return Number(this.data.measure_offset_locked)
+    return Systeme.measureLineOffset
   }
 
   // « Distance avec la numérotation… » : curseur (px), aperçu immédiat,
   // gardée par OK
   editMeasureOffset(){
+    if ( Systeme.measuresLocked ) return
     MeasureOffsetEditor.open(this)
   }
 
@@ -580,7 +604,7 @@ export class Systeme extends AObjet {
   onContextMenu(e){
     stopEvent(e)
     const locked = !!Preferences.get('lock_systems')
-    invoke('menu:systemContext', {image: this.image_name, locked, measureLine: !!this.measureLine})
+    invoke('menu:systemContext', {image: this.image_name, locked, measureLine: !!this.measureLine, measuresLocked: Systeme.measuresLocked})
       .then(choice => {
         switch(choice){
           case 'toggleLock':   return Systeme.toggleLock(null, !locked)

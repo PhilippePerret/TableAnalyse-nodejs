@@ -27,6 +27,7 @@ export class OptionsTool extends MenusTool {
     Cancel.zMenu = DGet('option[value="cancel"]', this.menu)
     Cancel.defineZMenu()
     on('systems:locked', ({locked}) => this.setLockSystemsMenu(locked))
+    on('systems:loaded', () => this.setLockMeasuresMenu(!!pref('lock_measures')))
   }
 
   // Coche du menu « Verrouiller les systèmes »
@@ -34,6 +35,11 @@ export class OptionsTool extends MenusTool {
     DGet('option[value="toggleLockSystems"]', this.menu).dataset.checked = locked ? 'true' : 'false'
   }
 
+
+  // Coche du menu « Verrouiller les numéros de mesure » (#295)
+  static setLockMeasuresMenu(locked){
+    DGet('option[value="toggleLockMeasures"]', this.menu).dataset.checked = locked ? 'true' : 'false'
+  }
 
   /* --- Gestionnaires d'évènement menu ---  */
 
@@ -67,6 +73,12 @@ export class OptionsTool extends MenusTool {
 
   static onActivate_toggleFormNames(e, option){
     Forme.show(option.dataset.checked != 'true')
+  }
+
+  static onActivate_toggleLockMeasures(e, option){
+    const locked = option.dataset.checked != 'true'
+    Systeme.lockMeasures(locked)
+    this.setLockMeasuresMenu(locked)
   }
 
   static onActivate_toggleLockSystems(){

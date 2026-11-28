@@ -99,6 +99,7 @@ options_menu:
   grid_h:           "Imantar horizontalmente"
   color:            "Versión en color"
   lock_systems:     "Bloquear los sistemas"
+  lock_measures:    "Bloquear los números de compás"
   coordinates:      "Mostrar las coordenadas"
   form_names:       "Mostrar nombres de las porciones"
   autosave:         "Guardado automático"
