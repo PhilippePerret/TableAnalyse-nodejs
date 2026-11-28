@@ -15,6 +15,7 @@ const DEFAULT_PREFERENCES = {
   , link_types:         {}     // types de liaison {nom: style}
   , auto_update:        true   // vérification de la version au lancement (#249)
   , help_format:        'html' // manuel ouvert par ⌘/Ctrl + Maj + M (#258)
+  , form_marks:         {bounds: true, frames: true} // sous-types de forme proposés (#280)
 }
 
 class AppPrefsClass {

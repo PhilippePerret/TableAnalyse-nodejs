@@ -3,7 +3,7 @@ import { message } from './lib/Message.js'
 import { Panneau } from './Panneau.js'
 import { pref, Preferences } from './Preferences.js'
 import { on } from './events.js'
-import { invoke } from './api.js'
+import { invoke, onMain } from './api.js'
 import { Current, setModified } from './Current.js'
 import { FormeBuilder } from './FormeBuilder.js'
 import { AObjet } from './AObjet.js'
@@ -35,10 +35,19 @@ export class Forme {
    * dès que les systèmes sont chargés
    */
   static init(){
+    // Sous-types proposés : bornes, cadres (menu Forme > Marques, #280)
+    this.marks = {bounds: true, frames: true}
+    invoke('forme:getMarks').then(m => m && (this.marks = m)).catch(err => console.error(err))
+    onMain('forme:marks', m => { this.marks = m })
     on('systems:loaded', () => {
       this.syncMenus()
       pref('form_built') && FormeBuilder.build()
     })
+  }
+
+  // Sous-types de forme proposés dans le panneau des sous-types (#280)
+  static offeredSubtypes(){
+    return Object.values(TYPES_FORME).filter(d => d.frame ? this.marks.frames !== false : this.marks.bounds !== false)
   }
 
   /**

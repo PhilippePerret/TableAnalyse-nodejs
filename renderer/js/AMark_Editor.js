@@ -545,7 +545,7 @@ get paramsGetterOfSubtype(){
   var d = {}
   if ( this.dataOfType.subdata) {
     d = {
-        values: Object.values(this.dataOfType.subdata)
+        values: this.amark_type == 'frm' ? Forme.offeredSubtypes() : Object.values(this.dataOfType.subdata)
       , message: this.dataOfType.message
     }
   } else {

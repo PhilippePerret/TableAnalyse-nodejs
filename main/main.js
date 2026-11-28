@@ -414,6 +414,19 @@ function chooseLanguage(code){
 // cf. renderer MarksClipboard
 let marksCount = {cut: 0, copy: 0, paste: 0}
 
+// Sous-types de forme proposés : bornes, cadres (#280). Jamais aucun :
+// le dernier coché le reste
+function formMarks(){
+  return Object.assign({bounds: true, frames: true}, AppPrefs.get('form_marks'))
+}
+function setFormMarks(kind, checked){
+  const marks = Object.assign(formMarks(), {[kind]: checked})
+  if ( !marks.bounds && !marks.frames ) marks[kind] = true
+  AppPrefs.set({form_marks: marks})
+  buildMenu()
+  mainWindow && mainWindow.webContents.send('forme:marks', marks)
+}
+
 function buildMenu(){
   const isMac = process.platform == 'darwin'
   const template = [
@@ -493,6 +506,10 @@ function buildMenu(){
               formShown = item.checked
               sendMenuCommand(formShown ? 'showForm' : 'hideForm')
           }}
+        , {label: t('ui.menu.form_marks'), submenu: ['bounds', 'frames'].map(kind => ({
+              label: t(`ui.menu.form_${kind}`), type: 'checkbox', checked: formMarks()[kind] !== false
+            , click: (item) => setFormMarks(kind, item.checked)
+          }))}
         , {type: 'separator'}
         , {label: t('ui.menu.build_form'),      click: () => sendMenuCommand('buildForm')}
       ]
@@ -654,6 +671,14 @@ function registerIpc(){
       let item, menu = editMenu()
       for ( const l of labels ) { item = menu.items.find(i => i.label == l) ; menu = item && item.submenu }
       item.click(accel ? {triggeredByAccelerator: true} : {}, mainWindow, mainWindow.webContents)
+    })
+    // Menu de l'application : élément au chemin de libellés (cliqué si
+    // +click+), {label, checked}
+    handle('test:appMenu', ({path: labels, click}) => {
+      let item, menu = Menu.getApplicationMenu()
+      for ( const l of labels ) { item = menu.items.find(i => i.label == l) ; menu = item && item.submenu }
+      click && item.click({}, mainWindow, mainWindow.webContents)
+      return {label: item.label, checked: item.checked}
     })
     handle('test:realMove', async ({x, y}) => {
       mainWindow.webContents.sendInputEvent({type: 'mouseMove', x, y})
@@ -1063,6 +1088,8 @@ function registerIpc(){
   handle('edit:native', ({ope}) => {
     ['cut', 'copy', 'paste'].includes(ope) && mainWindow && mainWindow.webContents[ope]()
   })
+
+  handle('forme:getMarks', () => formMarks())
 
   handle('menu:marksCount', ({selected, copied}) => {
     const n = {cut: selected | 0, copy: selected | 0, paste: copied | 0}
