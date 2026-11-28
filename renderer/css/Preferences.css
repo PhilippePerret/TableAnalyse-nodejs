@@ -70,9 +70,9 @@ section#preferences-panel div.pref-disabled { opacity: .4; pointer-events: none;
 /* Sections en tableau (Mise en page, Traits) : libellés à gauche, champs
    (avec le libellé de leur colonne au-dessus, centré) à droite, de l'air
    entre les deux. Champ, unité et bouton chacun dans sa colonne. */
-section#preferences-panel table.prefs-table { width: 100%; border-collapse: collapse; margin: 4px 0 8px; }
+section#preferences-panel table.prefs-table { width: auto; border-collapse: collapse; margin: 4px 0 8px; }
 section#preferences-panel table.prefs-table th { font-weight: normal; color: #777; font-size: 14px; padding: 2px 4px; white-space: nowrap; }
-section#preferences-panel table.prefs-table th:first-child { text-align: left; padding-left: 0; width: 100%; }
+section#preferences-panel table.prefs-table th:first-child { text-align: left; padding-left: 0; }
 section#preferences-panel table.prefs-table th.col-head { text-align: center; }
 section#preferences-panel table.prefs-table td { padding: 3px 4px; vertical-align: middle; white-space: nowrap; }
 section#preferences-panel table.prefs-table td.row-label { padding-left: 0; padding-right: 32px; cursor: pointer; }

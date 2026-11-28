@@ -71,3 +71,15 @@ T.test('clic sur un libellé : champ correspondant activé', async () => {
   check(rowLayout, 'pref-layout_title_1_font', 'ligne de « Mise en page »')
   PreferencesPanel.toggle()
 })
+
+// Champs près de leur libellé (Taille des marques, Traits), #296
+T.test('tableaux : champs près de leur libellé (#296)', async () => {
+  PreferencesPanel.toggle() ; await T.wait(150)
+  for ( const id of ['prefs-marks-table', 'prefs-lines-table'] ) {
+    const table = panel().querySelector(`#${id}`)
+    const labelsRight = Math.max(...[...table.querySelectorAll('td.row-label')].map(td => { const r = document.createRange() ; r.selectNodeContents(td) ; return r.getBoundingClientRect().right }))
+    const firstField = Math.min(...[...table.querySelectorAll('input[type="text"]')].map(i => i.getBoundingClientRect().left))
+    T.ok(firstField - labelsRight <= 60, `${id} : écart libellés ↔ champs ${Math.round(firstField - labelsRight)} px`)
+  }
+  PreferencesPanel.toggle()
+})
