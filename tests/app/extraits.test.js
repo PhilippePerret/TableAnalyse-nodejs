@@ -37,3 +37,34 @@ T.test('création, assemblage, image enregistrée', async () => {
   T.includes(await T.readFile('analyse_tags.yaml'), `file: ${m.data.file}`, 'fichier enregistré dans les données')
   AObjet.remove(m)
 })
+
+// Anacrouse : « 0-4 » = mesures 1 à 4 et l'anacrouse de la mesure 1,
+// mesure 0 sans numéro (#283)
+T.test('mesure 0 (anacrouse) : « 0-4 » = anacrouse + mesures 1 à 4 (#283)', async () => {
+  const { Forme } = await T.imp('Forme')
+  const { Systeme } = await T.imp('Systeme')
+  const marks = Forme.measureMarks.map(x => x.mark)
+  const saved = marks.map(m => m.content)
+  const setContent = (m, c) => { m.content = c ; m.data && (m.data.content = c) }
+  try {
+    // Premier numéro du premier système : anacrouse (sans numéro), les
+    // suivants décalés (2 → 1, 3 → 2…)
+    const first = Forme.measureMarks.slice().sort((a, b) => a.number - b.number)[0]
+    marks.forEach(m => {
+      const n = Number(String(m.content).trim())
+      if ( m === first.mark ) m.subtype = 'anacrouse' ; else setContent(m, String(n - 1))
+    })
+    T.no(Forme.measureMarks.some(x => x.number == 0), 'aucune mesure numérotée 0')
+    const sys = Systeme.getSystemeAssociated(first.mark)
+    const ext = AMExtrait.extractOf('0-4')
+    T.ok(ext, 'extrait produit')
+    T.eq(ext.numbers.items.map(n => n.n), [1, 2, 3, 4], 'numéros 1 à 4')
+    const body = ext.pieces.filter(p => p.image == sys.image_name)[1]
+    const head = AMExtrait.headerOf(sys)
+    T.eq(body && body.x1, head.x2, 'début après l’en-tête du système : anacrouse comprise')
+    T.ok(ext.numbers.items[0].x > head.x2, 'numéro 1 sur la mesure 1, après l’anacrouse')
+    const ext14 = AMExtrait.extractOf('1-4')
+    const b14 = ext14.pieces.filter(p => p.image == sys.image_name)[1]
+    T.ok(b14.x1 > body.x1, '« 1-4 » : sans l’anacrouse')
+  } finally { marks.forEach((m, i) => setContent(m, saved[i])) ; marks.forEach(m => m.subtype == 'anacrouse' && (m.subtype = 'mes')) }
+})

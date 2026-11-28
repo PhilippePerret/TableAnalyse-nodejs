@@ -1634,6 +1634,11 @@ static measureGroups(spec){
  * début de chaque mesure (px de l'image de son système)
  */
 static bodyOf(from, to){
+  // Mesure 0 sans numéro : anacrouse de la mesure 1, du début du
+  // système de la mesure 1 (après son en-tête) à cette mesure (#283)
+  const upbeat = from == 0 && !Forme.measureMarks.some(x => x.number == 0)
+  upbeat && (from = 1)
+  if ( from > to ) return message(t('messages.measure_not_found', {num: 0})), null
   const found = Forme.measureMarks.find(x => x.number == from)
   if ( !found ) return message(t('messages.measure_not_found', {num: from})), null
   const sys0 = Systeme.getSystemeAssociated(found.mark)
@@ -1647,9 +1652,14 @@ static bodyOf(from, to){
     const marks = Forme.measureMarksOf(sys)
     if ( !marks.length ) break
     const nums   = marks.map(mk => Number(String(mk.content).trim()))
+    const headX2 = this.headerOf(sys).x2
     const starts = marks.map((mk, j) => {
       const x = Forme.measureRect(mk).left
-      return j == 0 ? r.left : (Forme.barlineNear(sys, x, 25) ?? x)
+      if ( j > 0 ) return Forme.barlineNear(sys, x, 25) ?? x
+      // Premier système : première mesure après une anacrouse (sa barre,
+      // au-delà de l'en-tête), #283
+      const bar = i == 0 && Forme.barlineNear(sys, x, 25)
+      return bar && (bar - r.left) * k > headX2 + 4 ? bar : r.left
     })
     const iFrom = sys === sys0 ? nums.indexOf(from) : 0
     if ( nums[iFrom] > to ) break
@@ -1658,9 +1668,9 @@ static bodyOf(from, to){
     const end = iTo + 1 < starts.length ? starts[iTo + 1] + 3 : Forme.systemEndX(sys)
     // Suite dans un autre système : sans son en-tête (clé, armure)
     // Mesure qui commence son système : sans l'en-tête de celui-ci
-    const x1 = iFrom > 0
-      ? Math.max(0, Math.round((starts[iFrom] - r.left) * k))
-      : this.headerOf(sys).x2
+    const startPx = j => Math.max(0, Math.round((starts[j] - r.left) * k))
+    const x1 = upbeat && sys === sys0 ? headX2
+      : (iFrom > 0 || startPx(iFrom) > headX2) ? startPx(iFrom) : headX2
     pieces.push({
         image: sys.image_name
       , x1
@@ -1668,7 +1678,7 @@ static bodyOf(from, to){
       , y1: 0, y2: img.naturalHeight
     })
     for ( let j = iFrom ; j <= iTo ; ++j ) {
-      numbers.push({n: nums[j], image: sys.image_name, x: j == iFrom ? x1 : Math.round((starts[j] - r.left) * k)})
+      numbers.push({n: nums[j], image: sys.image_name, x: Math.max(x1, startPx(j))})
     }
     if ( iTo + 1 < nums.length || nums[iTo] >= to ) break
   }
