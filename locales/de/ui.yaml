@@ -539,6 +539,9 @@ prefs:
   marque_measure:         {label: "Größe der Taktnummern"}
   marque_texte_size_3:    {label: "Größe kleiner Texte"}
   marque_texte_size_4:    {label: "Größe sehr kleiner Texte"}
+  marque_partie_size:     {label: "Größe der Teile"}
+  marque_section_size:    {label: "Größe der Abschnitte"}
+  marque_segment_size:    {label: "Größe der Segmente"}
   window_width:           {label: "Fensterbreite beim Öffnen"}
   window_height:          {label: "Fensterhöhe beim Öffnen"}
   last_scroll:            {label: "Bildlauf beim Öffnen"}
@@ -567,6 +570,25 @@ prefs_layout:
   size:   "Größe"
   spaces: "Abstand davor und danach (Export)"
   level:  "Ebene %{n}"
+
+prefs_marks:
+  size: "Größe"
+  kinds:
+    accords: "Akkorde"
+    harmonie: "Harmonien"
+    cadence: "Kadenzen (Text)"
+    modulation: "Modulationen"
+    emprunt: "Entlehnungen"
+    cellule: "Zellen"
+    motif: "Motive"
+    pedale: "Pedale"
+    texte_1: "Große Texte"
+    texte_2: "Mittlere Texte"
+    texte_3: "Kleine Texte"
+    texte_4: "Sehr kleine Texte"
+    partie: "Teile"
+    section: "Abschnitte"
+    segment: "Segmente"
 
 prefs_lines:
   border:    "Rand"

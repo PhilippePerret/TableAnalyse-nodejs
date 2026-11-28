@@ -14,7 +14,7 @@ T.test('section « Traits » : tableau Bord | Épaisseur | Intensité, noms exac
   const rows = [...table.querySelectorAll('tr')].slice(1)
   T.eq(rows.map(r => r.querySelector('td.row-label').textContent), NAMES, 'noms des bords')
   rows.forEach((r, i) => {
-    const ids = [...r.querySelectorAll('input')].map(e => e.id)
+    const ids = [...r.querySelectorAll('input[type="text"]')].map(e => e.id)
     T.eq(ids.length, 2, `deux champs ${NAMES[i]}`)
     T.eq(ids[0], `pref-${KEYS[i]}`, `épaisseur ${NAMES[i]}`)
     T.ok(/^pref-intensity_/.test(ids[1]), `intensité ${NAMES[i]}`)
@@ -29,7 +29,7 @@ T.test('tableaux : libellés à gauche, champs à droite, libellés des colonnes
     const tr = table.querySelectorAll('tr')[1]
     const range = document.createRange() ; range.selectNodeContents(tr.querySelector('td.row-label'))
     const label = range.getBoundingClientRect()
-    const inputs = [...tr.querySelectorAll('input')].map(i => i.getBoundingClientRect())
+    const inputs = [...tr.querySelectorAll('input[type="text"]')].map(i => i.getBoundingClientRect())
     const lastCell = tr.lastElementChild.getBoundingClientRect()
     T.ok(Math.abs(label.left - tR.left) < 2, `${id} : libellé à gauche`)
     T.ok(tR.right - lastCell.right < 2, `${id} : valeurs à droite`)
@@ -38,7 +38,7 @@ T.test('tableaux : libellés à gauche, champs à droite, libellés des colonnes
     const heads = [...table.querySelectorAll('th.col-head')]
     const cols = heads.length
     for ( const tr of [...table.querySelectorAll('tr')].slice(1) ) {
-      const ins = [...tr.querySelectorAll('input')].map(i => i.getBoundingClientRect())
+      const ins = [...tr.querySelectorAll('input[type="text"]')].map(i => i.getBoundingClientRect())
       // Regroupement des champs par colonne : 1 champ par colonne, sauf la
       // dernière de « Mise en page » (2 : avant et après)
       const groups = ins.length == cols ? ins.map(r => [r]) : [...ins.slice(0, cols - 1).map(r => [r]), ins.slice(cols - 1)]

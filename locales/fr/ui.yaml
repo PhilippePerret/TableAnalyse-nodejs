@@ -539,6 +539,9 @@ prefs:
   marque_measure:         {label: "Taille des numéros de mesure"}
   marque_texte_size_3:    {label: "Taille des petits textes"}
   marque_texte_size_4:    {label: "Taille des textes très petits"}
+  marque_partie_size:     {label: "Taille des parties"}
+  marque_section_size:    {label: "Taille des sections"}
+  marque_segment_size:    {label: "Taille des segments"}
   window_width:           {label: "Largeur de la fenêtre à l’ouverture"}
   window_height:          {label: "Hauteur de la fenêtre à l’ouverture"}
   last_scroll:            {label: "Scroll à l’ouverture"}
@@ -567,6 +570,25 @@ prefs_layout:
   size:   "Taille"
   spaces: "Espace avant et après (export)"
   level:  "Niveau %{n}"
+
+prefs_marks:
+  size: "Taille"
+  kinds:
+    accords: "Accords"
+    harmonie: "Harmonies"
+    cadence: "Cadences (texte)"
+    modulation: "Modulations"
+    emprunt: "Emprunts"
+    cellule: "Cellules"
+    motif: "Motifs"
+    pedale: "Pédales"
+    texte_1: "Gros textes"
+    texte_2: "Textes moyens"
+    texte_3: "Petits textes"
+    texte_4: "Textes très petits"
+    partie: "Parties"
+    section: "Sections"
+    segment: "Segments"
 
 prefs_lines:
   border:    "Bord"

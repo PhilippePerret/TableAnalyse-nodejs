@@ -539,6 +539,9 @@ prefs:
   marque_measure:         {label: "小節番号のサイズ"}
   marque_texte_size_3:    {label: "小さいテキストのサイズ"}
   marque_texte_size_4:    {label: "とても小さいテキストのサイズ"}
+  marque_partie_size:     {label: "部のサイズ"}
+  marque_section_size:    {label: "セクションのサイズ"}
+  marque_segment_size:    {label: "セグメントのサイズ"}
   window_width:           {label: "開いたときのウインドウの幅"}
   window_height:          {label: "開いたときのウインドウの高さ"}
   last_scroll:            {label: "開いたときのスクロール位置"}
@@ -567,6 +570,25 @@ prefs_layout:
   size:   "サイズ"
   spaces: "前後の間隔（書き出し）"
   level:  "レベル %{n}"
+
+prefs_marks:
+  size: "サイズ"
+  kinds:
+    accords: "コード"
+    harmonie: "和声"
+    cadence: "カデンツ（テキスト）"
+    modulation: "転調"
+    emprunt: "借用"
+    cellule: "細胞"
+    motif: "動機"
+    pedale: "ペダル"
+    texte_1: "大きいテキスト"
+    texte_2: "中くらいのテキスト"
+    texte_3: "小さいテキスト"
+    texte_4: "とても小さいテキスト"
+    partie: "部"
+    section: "セクション"
+    segment: "セグメント"
 
 prefs_lines:
   border:    "枠"

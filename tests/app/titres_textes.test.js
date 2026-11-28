@@ -14,7 +14,7 @@ T.test('préférences des titres : tableau, libellés une seule fois', async () 
   T.eq(rows.map(r => r.querySelector('td').textContent), ['Niveau 1', 'Niveau 2', 'Niveau 3'], 'niveaux')
   for ( const [i, r] of rows.entries() ) {
     const n = i + 1
-    T.eq([...r.querySelectorAll('input')].map(e => e.id), ['font', 'size', 'before', 'after'].map(k => `pref-layout_title_${n}_${k}`), `champs du niveau ${n}`)
+    T.eq([...r.querySelectorAll('input[type="text"]')].map(e => e.id), ['font', 'size', 'before', 'after'].map(k => `pref-layout_title_${n}_${k}`), `champs du niveau ${n}`)
   }
   T.no(document.querySelector('#preferences-panel').textContent.includes('Police des titres de niveau'), 'plus de libellés répétés')
   // Réglage toujours effectif (taille appliquée à chaque frappe, enregistrée)

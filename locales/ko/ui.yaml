@@ -539,6 +539,9 @@ prefs:
   marque_measure:         {label: "마디 번호 크기"}
   marque_texte_size_3:    {label: "작은 텍스트 크기"}
   marque_texte_size_4:    {label: "아주 작은 텍스트 크기"}
+  marque_partie_size:     {label: "부의 크기"}
+  marque_section_size:    {label: "섹션의 크기"}
+  marque_segment_size:    {label: "세그먼트의 크기"}
   window_width:           {label: "열 때 윈도우 너비"}
   window_height:          {label: "열 때 윈도우 높이"}
   last_scroll:            {label: "열 때 스크롤 위치"}
@@ -567,6 +570,25 @@ prefs_layout:
   size:   "크기"
   spaces: "앞뒤 간격 (내보내기)"
   level:  "수준 %{n}"
+
+prefs_marks:
+  size: "크기"
+  kinds:
+    accords: "코드"
+    harmonie: "화성"
+    cadence: "종지 (텍스트)"
+    modulation: "전조"
+    emprunt: "차용"
+    cellule: "세포"
+    motif: "동기"
+    pedale: "페달"
+    texte_1: "큰 텍스트"
+    texte_2: "중간 텍스트"
+    texte_3: "작은 텍스트"
+    texte_4: "아주 작은 텍스트"
+    partie: "부"
+    section: "섹션"
+    segment: "세그먼트"
 
 prefs_lines:
   border:    "테두리"

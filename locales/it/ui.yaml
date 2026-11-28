@@ -539,6 +539,9 @@ prefs:
   marque_measure:         {label: "Dimensione dei numeri di battuta"}
   marque_texte_size_3:    {label: "Dimensione dei testi piccoli"}
   marque_texte_size_4:    {label: "Dimensione dei testi molto piccoli"}
+  marque_partie_size:     {label: "Dimensione delle parti"}
+  marque_section_size:    {label: "Dimensione delle sezioni"}
+  marque_segment_size:    {label: "Dimensione dei segmenti"}
   window_width:           {label: "Larghezza della finestra all'apertura"}
   window_height:          {label: "Altezza della finestra all'apertura"}
   last_scroll:            {label: "Scorrimento all'apertura"}
@@ -567,6 +570,25 @@ prefs_layout:
   size:   "Dimensione"
   spaces: "Spazio prima e dopo (esportazione)"
   level:  "Livello %{n}"
+
+prefs_marks:
+  size: "Dimensione"
+  kinds:
+    accords: "Accordi"
+    harmonie: "Armonie"
+    cadence: "Cadenze (testo)"
+    modulation: "Modulazioni"
+    emprunt: "Prestiti"
+    cellule: "Cellule"
+    motif: "Motivi"
+    pedale: "Pedali"
+    texte_1: "Testi grandi"
+    texte_2: "Testi medi"
+    texte_3: "Testi piccoli"
+    texte_4: "Testi molto piccoli"
+    partie: "Parti"
+    section: "Sezioni"
+    segment: "Segmenti"
 
 prefs_lines:
   border:    "Bordo"

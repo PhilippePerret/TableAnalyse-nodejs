@@ -33,6 +33,22 @@ const LINES_KEYS = [
   , ['emprunt', 'border_emprunt'], ['cadence', 'border_cadence'], ['note', 'border_note']
   , ['form', 'border_form'], ['measure', 'border_measure']
 ]
+// Tailles (tableau de la section « Taille des marques », #281) : [nom,
+// préférence]
+const MARKS_KEYS = [
+    ['accords', 'marque_accords_size'], ['harmonie', 'marque_harmonie_size'], ['cadence', 'marque_cadence_type_size']
+  , ['modulation', 'marque_modulation_size'], ['emprunt', 'marque_emprunt_size'], ['cellule', 'marque_cellule_size']
+  , ['motif', 'marque_motif_size'], ['pedale', 'marque_pedale_size']
+  , ['partie', 'marque_partie_size'], ['section', 'marque_section_size'], ['segment', 'marque_segment_size']
+  , ['texte_1', 'marque_texte_size_1'], ['texte_2', 'marque_texte_size_2'], ['texte_3', 'marque_texte_size_3'], ['texte_4', 'marque_texte_size_4']
+]
+// Bornes du curseur des valeurs numériques (#281) ; sinon de 0 au triple
+// de la valeur par défaut
+const RANGES = {
+    systeme_width: [200, 4000], window_width: [400, 5000], window_height: [300, 3000]
+  , last_scroll: [0, 50000], animation_tempo: [10, 240], top_first_system: [0, 2000]
+}
+const rangeOf = dp => RANGES[dp.id] || (dp.id.startsWith('intensity_') ? [0, 100] : [0, Math.max(10, Math.ceil(Number(dp.default || 0) * 3))])
 // Valeurs courantes (boutons des préférences de la fenêtre, #248)
 const CURRENT_VALUES = {
     width:  () => window.outerWidth
@@ -45,7 +61,7 @@ const PREFS_GROUPS = [
   , {id: 'systems',  keys: ['lock_systems', 'systeme_width', 'top_first_system', 'distance_systemes', 'max_table_blank', 'export_systems_gap']}
   , {id: 'measures', keys: ['measure_line_offset', 'distance_after_measure_line', 'marque_measure', 'color_mesure']}
   , {id: 'grid',     keys: ['adjust_same_mark', 'snap_for_adjust_pos', 'grid_horizontal_space', 'grid_vertical_space']}
-  , {id: 'marks',    keys: ['marque_accords_size', 'marque_harmonie_size', 'marque_cadence_type_size', 'marque_modulation_size', 'marque_emprunt_size', 'marque_cellule_size', 'marque_motif_size', 'marque_pedale_size', 'marque_texte_size_1', 'marque_texte_size_2', 'marque_texte_size_3', 'marque_texte_size_4']}
+  , {id: 'marks',    keys: MARKS_KEYS.map(([, k]) => k)}
   , {id: 'form',     keys: ['form_height_1', 'form_height_2', 'form_height_3', 'form_position']}
   , {id: 'layout',   keys: [1, 2, 3].flatMap(n => ['font', 'size', 'before', 'after'].map(k => `layout_title_${n}_${k}`))}
   , {id: 'lines',    keys: LINES_KEYS.flatMap(([, k]) => [k, BORDER_INTENSITY[k]])}
@@ -192,6 +208,8 @@ prepareOnChangeMethods(){
   Object.values(PreferencesAppData).forEach(dpref => {
     if ( dpref.hidden ) return
     const key = dpref.id
+    // Valeurs numériques : cf. buildNumberControl
+    if ( dpref.type == 'inputtext' && dpref.typeV == 'number' ) return
     const methChange = `onChange_${key}`
     const obj = DGet(`#pref-${key}`)
     if ( 'function' == typeof my[methChange] ) {
@@ -295,6 +313,7 @@ build(){
     o.appendChild(DCreate('DIV', {class:'pref-group', text: t(`ui.prefs_groups.${group.id}`)}))
     if ( group.id == 'layout' ) return o.appendChild(this.buildLayoutTable())
     if ( group.id == 'lines' )  return o.appendChild(this.buildLinesTable())
+    if ( group.id == 'marks' )  return o.appendChild(this.buildMarksTable())
     prefs.forEach(dp => {
       this.buildPref(o, dp)
       dp.id == 'auto_update' && o.appendChild(this.buildVersionRow())
@@ -361,10 +380,11 @@ buildPrefsTable(id, heads, rows){
     const f = PreferencesAppData[key] && this.buildInputText(PreferencesAppData[key]).querySelector('.pref-field')
     if ( !f ) return []
     return [
-        {kind: 'field',  el: f.querySelector('input')}
+        {kind: 'field',  el: f.querySelector('input[type="text"]')}
       , {kind: 'unit',   el: f.querySelector('.pref-unit')}
-      , {kind: 'button', el: f.querySelector('button')}
-    ]
+      , {kind: 'slider', el: f.querySelector('.pref-slider')}
+      , {kind: 'button', el: f.querySelector('button.btn-apply, button.btn-current')}
+    ].filter(p => p.el || p.kind == 'unit')
   }
   const built = rows.map(({label, cells}) => ({label, groups: cells.map(keys => keys.flatMap(parts))}))
   // En-tête : chaque libellé au-dessus des champs de sa colonne
@@ -389,6 +409,14 @@ buildPrefsTable(id, heads, rows){
       })
   ]})
   return DCreate('DIV', {class: 'div-prefs-table', inner: [table]})
+}
+
+// Tailles (section « Taille des marques ») : Taille (#281)
+buildMarksTable(){
+  return this.buildPrefsTable('prefs-marks-table', ['', t('ui.prefs_marks.size')], MARKS_KEYS.map(([name, key]) => ({
+      label: t(`ui.prefs_marks.kinds.${name}`)
+    , cells: [[key]]
+  })))
 }
 
 // Titres (section « Mise en page ») : Titre | Police | Taille | Espaces
@@ -567,6 +595,48 @@ buildChoixPressoirs(params){
  * doit être "default-snap_width"
  * 
  */
+/**
+ * Curseur « < [====] > » de la valeur numérique +params+ (champ +field+) :
+ * le champ, le curseur et les flèches (± 1) changent la valeur, enregistrée
+ * et appliquée tout de suite (cf. apply). Épaisseurs et intensités de bord
+ * par défaut : styles à chaque changement, marques à valeur propre à la
+ * fin du réglage seulement (question, cf. applyBorder)
+ */
+buildNumberControl(params, field){
+  const [min, max] = rangeOf(params)
+  const slider = DCreate('INPUT', {type: 'range', min: String(min), max: String(max), step: '1'})
+  const minus  = DCreate('BUTTON', {class: 'pref-step', text: '<'})
+  const plus   = DCreate('BUTTON', {class: 'pref-step', text: '>'})
+  const syncSlider = () => { const n = Number(field.value) ; '' !== field.value && !isNaN(n) && (slider.value = String(n)) }
+  syncSlider()
+  let borderOld = null
+  const set = (value, commit) => {
+    const n = Number(value)
+    if ( '' === String(value).trim() || isNaN(n) ) return
+    const old = Preferences.get(params.id)
+    if ( params.border && null === borderOld ) borderOld = old
+    field.value = String(value)
+    syncSlider()
+    Preferences.saveData(params.id, field.value)
+    if ( params.border ) {
+      this.updateStylesInHead()
+      if ( commit ) { const o = borderOld ; borderOld = null ; this.applyBorder(params.id, o) }
+    } else {
+      this.apply(params.id, old)
+    }
+  }
+  // (frappe : styles seulement, tout de suite ; le reste — systèmes,
+  // fenêtre… — à la validation, pour ne pas suivre « 1 », « 18 »…)
+  listen(field,  'input',  () => params.selector ? set(field.value, false) : syncSlider())
+  listen(field,  'change', () => set(field.value, true))
+  listen(slider, 'input',  () => set(slider.value, false))
+  listen(slider, 'change', () => set(slider.value, true))
+  const step = d => (e) => { stopEvent(e) ; set(Math.round(Number(field.value) || 0) + d, true) }
+  listen(minus, 'click', step(-1))
+  listen(plus,  'click', step(+1))
+  return DCreate('SPAN', {class: 'pref-slider', inner: [minus, slider, plus]})
+}
+
 buildInputText(params){
   const my = this
   const domId = `pref-${params.id}`
@@ -582,6 +652,11 @@ buildInputText(params){
   // Unité après le champ
   params.unite && cell.appendChild(DCreate('SPAN', {class:'pref-unit', text: params.unite}))
   div.appendChild(cell)
+  // Valeur numérique : curseur entre « < » et « > » (pas de 1), effet
+  // immédiat sur l'analyse (#281)
+  if ( params.typeV == 'number' ) {
+    cell.appendChild(this.buildNumberControl(params, field))
+  } else {
   // Bouton « Appliquer » (méthode onApply_<id>) pour régler tout de
   // suite l'analyse ouverte. Inutile pour les styles (taille,
   // épaisseur…), appliqués à chaque frappe (cf. prepareOnChangeMethods)
@@ -597,6 +672,7 @@ buildInputText(params){
     })
     cell.appendChild(btn)
   }
+  }
   // Bouton de la valeur courante (« Largeur actuelle », « Scroll
   // courant »…) : mise dans le champ (et enregistrée), #248
   if ( params.current ) {
@@ -604,7 +680,7 @@ buildInputText(params){
     listen(btn, 'click', (e) => {
       stopEvent(e)
       field.value = String(CURRENT_VALUES[params.current]())
-      field.dispatchEvent(new Event('input'))
+      field.dispatchEvent(new Event(params.typeV == 'number' ? 'change' : 'input'))
     })
     cell.appendChild(btn)
   }

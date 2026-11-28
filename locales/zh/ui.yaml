@@ -539,6 +539,9 @@ prefs:
   marque_measure:         {label: "小节号大小"}
   marque_texte_size_3:    {label: "小号文本大小"}
   marque_texte_size_4:    {label: "极小文本大小"}
+  marque_partie_size:     {label: "部的大小"}
+  marque_section_size:    {label: "段的大小"}
+  marque_segment_size:    {label: "片段的大小"}
   window_width:           {label: "打开时的窗口宽度"}
   window_height:          {label: "打开时的窗口高度"}
   last_scroll:            {label: "打开时的滚动位置"}
@@ -567,6 +570,25 @@ prefs_layout:
   size:   "大小"
   spaces: "前后间距（导出）"
   level:  "级别 %{n}"
+
+prefs_marks:
+  size: "大小"
+  kinds:
+    accords: "和弦"
+    harmonie: "和声"
+    cadence: "终止式（文本）"
+    modulation: "转调"
+    emprunt: "借用"
+    cellule: "细胞"
+    motif: "动机"
+    pedale: "踏板"
+    texte_1: "大文本"
+    texte_2: "中文本"
+    texte_3: "小文本"
+    texte_4: "极小文本"
+    partie: "部"
+    section: "段"
+    segment: "片段"
 
 prefs_lines:
   border:    "边框"

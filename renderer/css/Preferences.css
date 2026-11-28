@@ -82,3 +82,9 @@ section#preferences-panel table.prefs-table td.pt-unit span.pref-unit { min-widt
 section#preferences-panel table.prefs-table td:last-child { padding-right: 0; }
 section#preferences-panel table.prefs-table input[type="text"] { width: 50px; text-align: center; }
 section#preferences-panel table#prefs-layout-table td:nth-child(2) input[type="text"] { width: 120px; text-align: left; }
+
+/* Valeurs numériques : champ, unité, puis « < curseur > » (#281) */
+section#preferences-panel span.pref-slider { display: inline-flex; align-items: center; gap: 4px; }
+section#preferences-panel span.pref-slider input[type="range"] { width: 120px; accent-color: #3a925e; }
+section#preferences-panel button.pref-step { width: 22px; height: 22px; padding: 0; font-size: 13px; line-height: 1; border: 1px solid #bbb; background: #f7f7f7; border-radius: 4px; color: #444; }
+section#preferences-panel button.pref-step:hover { background: #e6e6e6; }

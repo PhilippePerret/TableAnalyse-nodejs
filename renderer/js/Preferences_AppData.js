@@ -42,6 +42,10 @@ export const PreferencesAppData = {
   , distance_after_measure_line :{type:'inputtext' ,typeV:'number'  ,default:250, apply:true ,unite:'px'}
   , marque_measure          :{type:'inputtext'    ,typeV:'number'   ,default:24        ,unite:'px' ,selector:'div.amark.txt.mes span.content'    ,selector_value:'font-size:__VALUE__px;' ,apply:true}
   , marque_texte_size_3     :{type:'inputtext'    ,typeV:'number'   ,default:24         ,unite:'px' ,selector:'div.amark.txt.size3 span.content'  ,selector_value:'font-size:__VALUE__px;' ,apply:true}
+  // Parties, sections (cadres) et segments (#281)
+  , marque_partie_size      :{type:'inputtext'    ,typeV:'number'   ,default:24     ,unite:'pt' ,selector:'div.amark.prt span.content, div.amark.prtz span.content'  ,selector_value:'font-size:__VALUE__pt;' ,apply:true}
+  , marque_section_size     :{type:'inputtext'    ,typeV:'number'   ,default:18     ,unite:'pt' ,selector:'div.amark.sec span.content, div.amark.secz span.content'  ,selector_value:'font-size:__VALUE__pt;' ,apply:true}
+  , marque_segment_size     :{type:'inputtext'    ,typeV:'number'   ,default:13     ,unite:'pt' ,selector:'div.amark.seg span.content'  ,selector_value:'font-size:__VALUE__pt;' ,apply:true}
   , marque_texte_size_4     :{type:'inputtext'    ,typeV:'number'   ,default:16     ,unite:'px' ,selector:'div.amark.txt.size4 span.content'  ,selector_value:'font-size:__VALUE__px;' ,apply:true}
   
   // --- Mise en page : titres (espaces avant et après : à l'export) ---

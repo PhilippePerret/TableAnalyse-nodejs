@@ -539,6 +539,9 @@ prefs:
   marque_measure:         {label: "Tamaño de los números de compás"}
   marque_texte_size_3:    {label: "Tamaño de los textos pequeños"}
   marque_texte_size_4:    {label: "Tamaño de los textos muy pequeños"}
+  marque_partie_size:     {label: "Tamaño de las partes"}
+  marque_section_size:    {label: "Tamaño de las secciones"}
+  marque_segment_size:    {label: "Tamaño de los segmentos"}
   window_width:           {label: "Anchura de la ventana al abrir"}
   window_height:          {label: "Altura de la ventana al abrir"}
   last_scroll:            {label: "Desplazamiento al abrir"}
@@ -567,6 +570,25 @@ prefs_layout:
   size:   "Tamaño"
   spaces: "Espacio antes y después (exportación)"
   level:  "Nivel %{n}"
+
+prefs_marks:
+  size: "Tamaño"
+  kinds:
+    accords: "Acordes"
+    harmonie: "Armonías"
+    cadence: "Cadencias (texto)"
+    modulation: "Modulaciones"
+    emprunt: "Préstamos"
+    cellule: "Células"
+    motif: "Motivos"
+    pedale: "Pedales"
+    texte_1: "Textos grandes"
+    texte_2: "Textos medianos"
+    texte_3: "Textos pequeños"
+    texte_4: "Textos muy pequeños"
+    partie: "Partes"
+    section: "Secciones"
+    segment: "Segmentos"
 
 prefs_lines:
   border:    "Borde"
